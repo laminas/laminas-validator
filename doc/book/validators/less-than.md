@@ -1,16 +1,16 @@
 # LessThan Validator
 
-`Zend\Validator\LessThan` allows you to validate if a given value is less than a
+`Laminas\Validator\LessThan` allows you to validate if a given value is less than a
 maximum value.
 
 > Supports only number validation
 >
-> `Zend\Validator\LessThan` supports only the validation of numbers. Strings or
+> `Laminas\Validator\LessThan` supports only the validation of numbers. Strings or
 > dates can not be validated with this validator.
 
 ## Supported options
 
-The following options are supported for `Zend\Validator\LessThan`:
+The following options are supported for `Laminas\Validator\LessThan`:
 
 - `inclusive`: Defines if the validation is inclusive the maximum value or
   exclusive. It defaults to `false`.
@@ -21,7 +21,7 @@ The following options are supported for `Zend\Validator\LessThan`:
 To validate if a given value is less than a defined maximum:
 
 ```php
-$valid  = new Zend\Validator\LessThan(['max' => 10]);
+$valid  = new Laminas\Validator\LessThan(['max' => 10]);
 $value  = 12;
 $return = $valid->isValid($value);
 // returns false
@@ -34,7 +34,7 @@ The above example returns `true` for all values lower than 10.
 Sometimes it is useful to validate a value by including the maximum value:
 
 ```php
-$valid  = new Zend\Validator\LessThan([
+$valid  = new Laminas\Validator\LessThan([
     'max' => 10,
     'inclusive' => true,
 ]);

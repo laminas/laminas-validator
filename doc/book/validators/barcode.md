@@ -1,11 +1,11 @@
 # Barcode Validator
 
-`Zend\Validator\Barcode` allows you to check if a given value can be represented
+`Laminas\Validator\Barcode` allows you to check if a given value can be represented
 as a barcode.
 
 ## Supported barcodes
 
-`Zend\Validator\Barcode` supports multiple barcode standards and can be extended
+`Laminas\Validator\Barcode` supports multiple barcode standards and can be extended
 with proprietary barcode implementations. The following barcode standards are
 supported:
 
@@ -251,7 +251,7 @@ small products where a UPCA barcode would not fit.
 
 ## Supported options
 
-The following options are supported for `Zend\Validator\Barcode`:
+The following options are supported for `Laminas\Validator\Barcode`:
 
 - `adapter`: Sets the barcode adapter which will be used. Supported are all
   above noted adapters. When using a self defined adapter, then you have to set
@@ -267,7 +267,7 @@ To validate if a given string is a barcode you must know its type. See the
 following example for an EAN13 barcode:
 
 ```php
-$valid = new Zend\Validator\Barcode('EAN13');
+$valid = new Laminas\Validator\Barcode('EAN13');
 if ($valid->isValid($input)) {
     // input appears to be valid
 } else {
@@ -284,7 +284,7 @@ validation. By using the `checksum` option you can define if the checksum will
 be validated or ignored.
 
 ```php
-$valid = new Zend\Validator\Barcode([
+$valid = new Laminas\Validator\Barcode([
     'adapter'  => 'EAN13',
     'checksum' => false,
 ]);
@@ -305,7 +305,7 @@ if ($valid->isValid($input)) {
 
 ## Writing custom adapters
 
-You may write custom barcode validators for usage with `Zend\Validator\Barcode`;
+You may write custom barcode validators for usage with `Laminas\Validator\Barcode`;
 this is often necessary when dealing with proprietary barcode types. To write
 your own barcode validator, you need the following information.
 
@@ -324,8 +324,8 @@ your own barcode validator, you need the following information.
 - `Checksum`: A string which will be used as callback for a method which does
   the checksum validation.
 
-Your custom barcode validator must extend `Zend\Validator\Barcode\AbstractAdapter`
-or implement `Zend\Validator\Barcode\AdapterInterface`.
+Your custom barcode validator must extend `Laminas\Validator\Barcode\AbstractAdapter`
+or implement `Laminas\Validator\Barcode\AdapterInterface`.
 
 As an example, let's create a validator that expects an even number of
 characters that include all digits and the letters 'ABCDE', and which requires a
@@ -334,8 +334,8 @@ checksum.
 ```php
 namespace My\Barcode;
 
-use Zend\Validator\Barcode;
-use Zend\Validator\Barcode\AbstractAdapter;
+use Laminas\Validator\Barcode;
+use Laminas\Validator\Barcode\AbstractAdapter;
 
 class MyBar extends AbstractAdapter
 {
