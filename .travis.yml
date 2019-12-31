@@ -1,5 +1,3 @@
-sudo: false
-
 language: php
 
 branches:
@@ -13,7 +11,7 @@ cache:
 
 env:
   global:
-    - TESTS_ZEND_VALIDATOR_ONLINE_ENABLED=true
+    - TESTS_LAMINAS_VALIDATOR_ONLINE_ENABLED=true
 
 matrix:
   fast_finish: true
@@ -43,15 +41,14 @@ matrix:
     - php: hhvm
 
 notifications:
-  irc: "irc.freenode.org#zftalk.dev"
   email: false
 
 before_install:
   - if [[ $EXECUTE_TEST_COVERALLS != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
   - composer self-update
   - if [[ $EXECUTE_TEST_COVERALLS == 'true' ]]; then composer require --dev --no-update satooshi/php-coveralls ; fi
-  - if [[ $SERVICE_MANAGER_VERSION != '' ]]; then composer require --dev --no-update "zendframework/zend-servicemanager:$SERVICE_MANAGER_VERSION" ; fi
-  - if [[ $SERVICE_MANAGER_VERSION == '' ]]; then composer require --dev --no-update "zendframework/zend-servicemanager:^3.0.3" ; fi
+  - if [[ $SERVICE_MANAGER_VERSION != '' ]]; then composer require --dev --no-update "laminas/laminas-servicemanager:$SERVICE_MANAGER_VERSION" ; fi
+  - if [[ $SERVICE_MANAGER_VERSION == '' ]]; then composer require --dev --no-update "laminas/laminas-servicemanager:^3.0.3" ; fi
 
 install:
   - travis_retry composer install --no-interaction --ignore-platform-reqs
