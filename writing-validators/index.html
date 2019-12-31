@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Validation classes for a wide range of domains, and the ability to chain validators to create complex validation criteria.">  
+    <link rel="canonical" href="https://docs.laminas.dev/writing-validators/">
+    <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
+
+    <title>Writing Validators - laminas-validator - Laminas Docs</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body id="page-top" class="components">
+
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+        </a>
+        <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
+            Documentation
+        </a>
+
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
+                </li>
+            </ul>
+
+            
+            
+                <div class="d-block d-sm-none">
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">laminas-validator</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../validator-chains/" class="subnavigation__link">Validator Chains</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Writing Validators</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../messages/" class="subnavigation__link">Validation Messages</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../set/" class="subnavigation__link">Standard Validation Classes</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Validators</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/barcode/" class="subnavigation__link">Barcode</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/between/" class="subnavigation__link">Between</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/callback/" class="subnavigation__link">Callback</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/credit-card/" class="subnavigation__link">CreditCard</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/date/" class="subnavigation__link">Date</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/db/" class="subnavigation__link">Db\RecordExists and Db\NoRecordExists</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/digits/" class="subnavigation__link">Digits</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/email-address/" class="subnavigation__link">EmailAddress</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/explode/" class="subnavigation__link">Explode</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/greater-than/" class="subnavigation__link">GreaterThan</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/hex/" class="subnavigation__link">Hex</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/hostname/" class="subnavigation__link">Hostname</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/iban/" class="subnavigation__link">Iban</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/identical/" class="subnavigation__link">Identical</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/in-array/" class="subnavigation__link">InArray</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/ip/" class="subnavigation__link">Ip</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/isbn/" class="subnavigation__link">Isbn</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/is-countable/" class="subnavigation__link">IsCountable</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/isinstanceof/" class="subnavigation__link">IsInstanceOf</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/less-than/" class="subnavigation__link">LessThan</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/not-empty/" class="subnavigation__link">NotEmpty</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/regex/" class="subnavigation__link">Regex</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/sitemap/" class="subnavigation__link">Sitemap</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/step/" class="subnavigation__link">Step</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/string-length/" class="subnavigation__link">StringLength</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/timezone/" class="subnavigation__link">Timezone</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/uri/" class="subnavigation__link">Uri</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/uuid/" class="subnavigation__link">Uuid</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">File Validators</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/intro/" class="subnavigation__link">Introduction</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/count/" class="subnavigation__link">Count</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/crc32/" class="subnavigation__link">Crc32</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/exclude-extension/" class="subnavigation__link">ExcludeExtension</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/exclude-mime-type/" class="subnavigation__link">ExcludeMimeType</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/exists/" class="subnavigation__link">Exists</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/extension/" class="subnavigation__link">Extension</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/files-size/" class="subnavigation__link">FilesSize</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/hash/" class="subnavigation__link">Hash</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/image-size/" class="subnavigation__link">ImageSize</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/is-compressed/" class="subnavigation__link">IsCompressed</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/is-image/" class="subnavigation__link">IsImage</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/md5/" class="subnavigation__link">Md5</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/mime-type/" class="subnavigation__link">MimeType</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/not-exists/" class="subnavigation__link">NotExists</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/sha1/" class="subnavigation__link">Sha1</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/size/" class="subnavigation__link">Size</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/upload/" class="subnavigation__link">Upload</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/upload-file/" class="subnavigation__link">UploadFile</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/word-count/" class="subnavigation__link">WordCount</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                </div>
+            
+
+            
+            <div class="d-block d-sm-none">
+                <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <header class="header">
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="col-6 offset-md-2">
+                <h1 class="header__title">
+                    Components
+
+                    
+                        <small class="header__subtitle">laminas-validator</small>
+                    
+                </h1>
+            </div>
+
+            
+            <div class="col-4 text-sm-right">
+                
+                    
+
+                    <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                    <a href="https://github.com/laminas/laminas-validator/" class="header__link header__link--github" title="Go to repository of laminas-validator">
+                        <i class="fa fa-github"></i> GitHub
+                    </a>
+                
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-12">
+                
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#creating-a-validation-class" class="toc__link">Creating a Validation Class</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#writing-a-validation-class-having-dependent-conditions" class="toc__link">Writing a Validation Class having Dependent Conditions</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#validation-with-independent-conditions-multiple-reasons-for-failure" class="toc__link">Validation with Independent Conditions, Multiple Reasons for Failure</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+            </div>
+            <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
+                
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="">Overview</a></li>
+
+            
+                <li class="breadcrumb-item"><a href="..">laminas-validator</a></li>
+
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Reference</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">Writing Validators</li>
+            
+        
+    </ol>
+</nav>
+
+
+
+
+
+
+    
+    
+        <h2 class="chapter__headline">Reference</h2>
+    
+
+    <h1 id="writing-validators">Writing Validators</h1>
+<p>laminas-validator supplies a set of commonly needed validators, but many
+applications have needs for custom validators. The component allows this via
+implementations of <code>Laminas\Validator\ValidatorInterface</code>.</p>
+<p><code>Laminas\Validator\ValidatorInterface</code> defines two methods: <code>isValid()</code> and
+<code>getMessages()</code>. An object that implements the interface may be added to a
+validator chain using <code>Laminas\Validator\ValidatorChain::addValidator()</code>. Such
+objects may also be used with
+<a href="https://docs.laminas.dev/laminas-inputfilter">laminas-inputfilter</a>.</p>
+<p>Validators will return a boolean value from <code>isValid()</code>, and report information
+regarding <strong>why</strong> a value failed validation via <code>getMessages()</code>. The
+availability of the reasons for validation failures may be valuable to an
+application for various purposes, such as providing statistics for usability
+analysis.</p>
+<p>Basic validation failure message functionality is implemented in
+<code>Laminas\Validator\AbstractValidator</code>, which you may extend for your custom
+validators.  Extending class you would implement the <code>isValid()</code> method logic
+and define the message variables and message templates that correspond to the
+types of validation failures that can occur. If a value fails your validation
+tests, then <code>isValid()</code> should return <code>false</code>. If the value passes your
+validation tests, then <code>isValid()</code> should return <code>true</code>.</p>
+<p>In general, the <code>isValid()</code> method should not throw any exceptions, except where
+it is impossible to determine whether or not the input value is valid. A few
+examples of reasonable cases for throwing an exception might be if a file cannot
+be opened, an LDAP server could not be contacted, or a database connection is
+unavailable, where such a thing may be required for validation success or
+failure to be determined.</p>
+<h2 id="creating-a-validation-class">Creating a Validation Class</h2>
+<p>The following example demonstrates how a custom validator might be written. In
+this case, the validator tests that a value is a floating point value.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>namespace MyValid;</span>
+
+<span class=x>use Laminas\Validator\AbstractValidator;</span>
+
+<span class=x>class Float extends AbstractValidator</span>
+<span class=x>{</span>
+<span class=x>    const FLOAT = &#39;float&#39;;</span>
+
+<span class=x>    protected $messageTemplates = [</span>
+<span class=x>        self::FLOAT =&gt; &quot;&#39;%value%&#39; is not a floating point value&quot;,</span>
+<span class=x>    ];</span>
+
+<span class=x>    public function isValid($value)</span>
+<span class=x>    {</span>
+<span class=x>        $this-&gt;setValue($value);</span>
+
+<span class=x>        if (! is_float($value)) {</span>
+<span class=x>            $this-&gt;error(self::FLOAT);</span>
+<span class=x>            return false;</span>
+<span class=x>        }</span>
+
+<span class=x>        return true;</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>The class defines a template for its single validation failure message, which
+includes the built-in magic parameter, <code>%value%</code>. The call to <code>setValue()</code>
+prepares the object to insert the tested value into the failure message
+automatically, should the value fail validation. The call to <code>error()</code> tracks a
+reason for validation failure. Since this class only defines one failure
+message, it is not necessary to provide <code>error()</code> with the name of the failure
+message template.</p>
+<h2 id="writing-a-validation-class-having-dependent-conditions">Writing a Validation Class having Dependent Conditions</h2>
+<p>The following example demonstrates a more complex set of validation rules:</p>
+<ul>
+<li>The input must be numeric.</li>
+<li>The input must fall within a range of boundary values.</li>
+</ul>
+<p>An input value would fail validation for exactly one of the following reasons:</p>
+<ul>
+<li>The input value is not numeric.</li>
+<li>The input value is less than the minimum allowed value.</li>
+<li>The input value is more than the maximum allowed value.</li>
+</ul>
+<p>These validation failure reasons are then translated to definitions in the
+class:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>namespace MyValid;</span>
+
+<span class=x>use Laminas\Validator\AbstractValidator;</span>
+
+<span class=x>class NumericBetween extends AbstractValidator</span>
+<span class=x>{</span>
+<span class=x>    const MSG_NUMERIC = &#39;msgNumeric&#39;;</span>
+<span class=x>    const MSG_MINIMUM = &#39;msgMinimum&#39;;</span>
+<span class=x>    const MSG_MAXIMUM = &#39;msgMaximum&#39;;</span>
+
+<span class=x>    public $minimum = 0;</span>
+<span class=x>    public $maximum = 100;</span>
+
+<span class=x>    protected $messageVariables = [</span>
+<span class=x>        &#39;min&#39; =&gt; &#39;minimum&#39;,</span>
+<span class=x>        &#39;max&#39; =&gt; &#39;maximum&#39;,</span>
+<span class=x>    ];</span>
+
+<span class=x>    protected $messageTemplates = [</span>
+<span class=x>        self::MSG_NUMERIC =&gt; &quot;&#39;%value%&#39; is not numeric&quot;,</span>
+<span class=x>        self::MSG_MINIMUM =&gt; &quot;&#39;%value%&#39; must be at least &#39;%min%&#39;&quot;,</span>
+<span class=x>        self::MSG_MAXIMUM =&gt; &quot;&#39;%value%&#39; must be no more than &#39;%max%&#39;&quot;,</span>
+<span class=x>    ];</span>
+
+<span class=x>    public function isValid($value)</span>
+<span class=x>    {</span>
+<span class=x>        $this-&gt;setValue($value);</span>
+
+<span class=x>        if (! is_numeric($value)) {</span>
+<span class=x>            $this-&gt;error(self::MSG_NUMERIC);</span>
+<span class=x>            return false;</span>
+<span class=x>        }</span>
+
+<span class=x>        if ($value &lt; $this-&gt;minimum) {</span>
+<span class=x>            $this-&gt;error(self::MSG_MINIMUM);</span>
+<span class=x>            return false;</span>
+<span class=x>        }</span>
+
+<span class=x>        if ($value &gt; $this-&gt;maximum) {</span>
+<span class=x>            $this-&gt;error(self::MSG_MAXIMUM);</span>
+<span class=x>            return false;</span>
+<span class=x>        }</span>
+
+<span class=x>        return true;</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>The public properties <code>$minimum</code> and <code>$maximum</code> have been established to provide
+the minimum and maximum boundaries, respectively, for a value to successfully
+validate. The class also defines two message variables that correspond to the
+public properties and allow <code>min</code> and <code>max</code> to be used in message templates as
+magic parameters, just as with <code>value</code>.</p>
+<p>Note that if any one of the validation checks in <code>isValid()</code> fails, an
+appropriate failure message is prepared, and the method immediately returns
+<code>false</code>. These validation rules are therefore sequentially dependent; that is,
+if one test should fail, there is no need to test any subsequent validation
+rules. This need not be the case, however. The following example illustrates how
+to write a class having independent validation rules, where the validation
+object may return multiple reasons why a particular validation attempt failed.</p>
+<h2 id="validation-with-independent-conditions-multiple-reasons-for-failure">Validation with Independent Conditions, Multiple Reasons for Failure</h2>
+<p>Consider writing a validation class for password strength enforcement - when a
+user is required to choose a password that meets certain criteria for helping
+secure user accounts. Let us assume that the password security criteria enforce
+that the password:</p>
+<ul>
+<li>is at least 8 characters in length,</li>
+<li>contains at least one uppercase letter,</li>
+<li>contains at least one lowercase letter,</li>
+<li>and contains at least one digit character.</li>
+</ul>
+<p>The following class implements these validation criteria:</p>
+<p> <div class=codehilite><pre><span></span><span class=x>namespace MyValid;</span>
+
+<span class=x>use Laminas\Validator\AbstractValidator;</span>
+
+<span class=x>class PasswordStrength extends AbstractValidator</span>
+<span class=x>{</span>
+<span class=x>    const LENGTH = &#39;length&#39;;</span>
+<span class=x>    const UPPER  = &#39;upper&#39;;</span>
+<span class=x>    const LOWER  = &#39;lower&#39;;</span>
+<span class=x>    const DIGIT  = &#39;digit&#39;;</span>
+
+<span class=x>    protected $messageTemplates = [</span>
+<span class=x>        self::LENGTH =&gt; &quot;&#39;%value%&#39; must be at least 8 characters in length&quot;,</span>
+<span class=x>        self::UPPER  =&gt; &quot;&#39;%value%&#39; must contain at least one uppercase letter&quot;,</span>
+<span class=x>        self::LOWER  =&gt; &quot;&#39;%value%&#39; must contain at least one lowercase letter&quot;,</span>
+<span class=x>        self::DIGIT  =&gt; &quot;&#39;%value%&#39; must contain at least one digit character&quot;,</span>
+<span class=x>    ];</span>
+
+<span class=x>    public function isValid($value)</span>
+<span class=x>    {</span>
+<span class=x>        $this-&gt;setValue($value);</span>
+
+<span class=x>        $isValid = true;</span>
+
+<span class=x>        if (strlen($value) &lt; 8) {</span>
+<span class=x>            $this-&gt;error(self::LENGTH);</span>
+<span class=x>            $isValid = false;</span>
+<span class=x>        }</span>
+
+<span class=x>        if (! preg_match(&#39;/[A-Z]/&#39;, $value)) {</span>
+<span class=x>            $this-&gt;error(self::UPPER);</span>
+<span class=x>            $isValid = false;</span>
+<span class=x>        }</span>
+
+<span class=x>        if (! preg_match(&#39;/[a-z]/&#39;, $value)) {</span>
+<span class=x>            $this-&gt;error(self::LOWER);</span>
+<span class=x>            $isValid = false;</span>
+<span class=x>        }</span>
+
+<span class=x>        if (! preg_match(&#39;/\d/&#39;, $value)) {</span>
+<span class=x>            $this-&gt;error(self::DIGIT);</span>
+<span class=x>            $isValid = false;</span>
+<span class=x>        }</span>
+
+<span class=x>        return $isValid;</span>
+<span class=x>    }</span>
+<span class=x>}</span>
+</pre></div></p>
+<p>Note that the four criteria tests in <code>isValid()</code> do not immediately return
+<code>false</code>. This allows the validation class to provide <strong>all</strong> of the reasons that
+the input password failed to meet the validation requirements. If, for example,
+a user were to input the string <code>#$%</code> as a password, <code>isValid()</code> would cause
+all four validation failure messages to be returned by a subsequent call to
+<code>getMessages()</code>.</p>
+
+
+
+
+    <nav>
+    <ul class="page-nav hidden-print">
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../validator-chains/">
+                    <i class="fa fa-chevron-left"></i> Previous
+                </a>
+            
+        </li>
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../messages/">
+                    Next <i class="fa fa-chevron-right"></i>
+                </a>
+            
+        </li>
+    </ul>
+</nav>
+
+
+
+
+    <div class="help-wanted">
+        <p>
+            Found a mistake or want to contribute to the documentation?
+            <a href="https://github.com/laminas/laminas-validator/edit/master/docs/book/writing-validators.md" target="_blank" class="help-wanted__link">
+                Edit this page on GitHub!
+            </a>
+        </p>
+    </div>
+
+                
+            </div>
+            <div class="col-md-3 col-sm-12 sidebar">
+                
+                    <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="..">laminas-validator</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../validator-chains/" class="subnavigation__link">Validator Chains</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Writing Validators</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../messages/" class="subnavigation__link">Validation Messages</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../set/" class="subnavigation__link">Standard Validation Classes</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Validators</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/barcode/" class="subnavigation__link">Barcode</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/between/" class="subnavigation__link">Between</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/callback/" class="subnavigation__link">Callback</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/credit-card/" class="subnavigation__link">CreditCard</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/date/" class="subnavigation__link">Date</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/db/" class="subnavigation__link">Db\RecordExists and Db\NoRecordExists</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/digits/" class="subnavigation__link">Digits</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/email-address/" class="subnavigation__link">EmailAddress</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/explode/" class="subnavigation__link">Explode</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/greater-than/" class="subnavigation__link">GreaterThan</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/hex/" class="subnavigation__link">Hex</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/hostname/" class="subnavigation__link">Hostname</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/iban/" class="subnavigation__link">Iban</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/identical/" class="subnavigation__link">Identical</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/in-array/" class="subnavigation__link">InArray</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/ip/" class="subnavigation__link">Ip</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/isbn/" class="subnavigation__link">Isbn</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/is-countable/" class="subnavigation__link">IsCountable</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/isinstanceof/" class="subnavigation__link">IsInstanceOf</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/less-than/" class="subnavigation__link">LessThan</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/not-empty/" class="subnavigation__link">NotEmpty</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/regex/" class="subnavigation__link">Regex</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/sitemap/" class="subnavigation__link">Sitemap</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/step/" class="subnavigation__link">Step</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/string-length/" class="subnavigation__link">StringLength</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/timezone/" class="subnavigation__link">Timezone</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/uri/" class="subnavigation__link">Uri</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/uuid/" class="subnavigation__link">Uuid</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">File Validators</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/intro/" class="subnavigation__link">Introduction</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/count/" class="subnavigation__link">Count</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/crc32/" class="subnavigation__link">Crc32</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/exclude-extension/" class="subnavigation__link">ExcludeExtension</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/exclude-mime-type/" class="subnavigation__link">ExcludeMimeType</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/exists/" class="subnavigation__link">Exists</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/extension/" class="subnavigation__link">Extension</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/files-size/" class="subnavigation__link">FilesSize</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/hash/" class="subnavigation__link">Hash</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/image-size/" class="subnavigation__link">ImageSize</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/is-compressed/" class="subnavigation__link">IsCompressed</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/is-image/" class="subnavigation__link">IsImage</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/md5/" class="subnavigation__link">Md5</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/mime-type/" class="subnavigation__link">MimeType</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/not-exists/" class="subnavigation__link">NotExists</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/sha1/" class="subnavigation__link">Sha1</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/size/" class="subnavigation__link">Size</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/upload/" class="subnavigation__link">Upload</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/upload-file/" class="subnavigation__link">UploadFile</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/file/word-count/" class="subnavigation__link">WordCount</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <footer class="footer">
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="footer__button" href="#page-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 offset-md-2">
+                <h5>Laminas</h5>
+                <ul>
+                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
+                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+
+            
+            <div class="col-md-4 offset-md-2">
+                <h4 class="footer__headline">Support</h4>
+                <ul class="support__list">
+                    <li class="support__list-item">
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
+                    </li>
+                </ul>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">License</h4>
+                <p>
+                    Code licensed under <a
+                        href="https://github.com/laminas/laminas-validator//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                </p>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">Copyright</h4>
+                <p>
+                    <!--Built with love by the Laminas team with the help of our
+                    <a href="https://github.com/laminas/laminas-validator//graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let base_url = '..',
+            project  = "components",
+            siteName = 'laminas-validator';
+    </script>
+    <script src="/js/scripts.js"></script>
+        <script src="../search/main.js"></script>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search in laminas-validator" id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>

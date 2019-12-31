@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Validation classes for a wide range of domains, and the ability to chain validators to create complex validation criteria.">  
+    <link rel="canonical" href="https://docs.laminas.dev/validators/date/">
+    <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
+
+    <title>Date - laminas-validator - Laminas Docs</title>
+
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body id="page-top" class="components">
+
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+        </a>
+        <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
+            Documentation
+        </a>
+
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
+                </li>
+            </ul>
+
+            
+            
+                <div class="d-block d-sm-none">
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="../..">laminas-validator</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../validator-chains/" class="subnavigation__link">Validator Chains</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../writing-validators/" class="subnavigation__link">Writing Validators</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../messages/" class="subnavigation__link">Validation Messages</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../set/" class="subnavigation__link">Standard Validation Classes</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Validators</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../barcode/" class="subnavigation__link">Barcode</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../between/" class="subnavigation__link">Between</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../callback/" class="subnavigation__link">Callback</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../credit-card/" class="subnavigation__link">CreditCard</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Date</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../db/" class="subnavigation__link">Db\RecordExists and Db\NoRecordExists</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../digits/" class="subnavigation__link">Digits</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../email-address/" class="subnavigation__link">EmailAddress</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../explode/" class="subnavigation__link">Explode</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../greater-than/" class="subnavigation__link">GreaterThan</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../hex/" class="subnavigation__link">Hex</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../hostname/" class="subnavigation__link">Hostname</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../iban/" class="subnavigation__link">Iban</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../identical/" class="subnavigation__link">Identical</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../in-array/" class="subnavigation__link">InArray</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../ip/" class="subnavigation__link">Ip</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../isbn/" class="subnavigation__link">Isbn</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../is-countable/" class="subnavigation__link">IsCountable</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../isinstanceof/" class="subnavigation__link">IsInstanceOf</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../less-than/" class="subnavigation__link">LessThan</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../not-empty/" class="subnavigation__link">NotEmpty</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../regex/" class="subnavigation__link">Regex</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../sitemap/" class="subnavigation__link">Sitemap</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../step/" class="subnavigation__link">Step</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../string-length/" class="subnavigation__link">StringLength</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../timezone/" class="subnavigation__link">Timezone</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../uri/" class="subnavigation__link">Uri</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../uuid/" class="subnavigation__link">Uuid</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">File Validators</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/intro/" class="subnavigation__link">Introduction</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/count/" class="subnavigation__link">Count</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/crc32/" class="subnavigation__link">Crc32</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/exclude-extension/" class="subnavigation__link">ExcludeExtension</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/exclude-mime-type/" class="subnavigation__link">ExcludeMimeType</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/exists/" class="subnavigation__link">Exists</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/extension/" class="subnavigation__link">Extension</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/files-size/" class="subnavigation__link">FilesSize</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/hash/" class="subnavigation__link">Hash</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/image-size/" class="subnavigation__link">ImageSize</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/is-compressed/" class="subnavigation__link">IsCompressed</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/is-image/" class="subnavigation__link">IsImage</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/md5/" class="subnavigation__link">Md5</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/mime-type/" class="subnavigation__link">MimeType</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/not-exists/" class="subnavigation__link">NotExists</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/sha1/" class="subnavigation__link">Sha1</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/size/" class="subnavigation__link">Size</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/upload/" class="subnavigation__link">Upload</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/upload-file/" class="subnavigation__link">UploadFile</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/word-count/" class="subnavigation__link">WordCount</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                </div>
+            
+
+            
+            <div class="d-block d-sm-none">
+                <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <header class="header">
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="col-6 offset-md-2">
+                <h1 class="header__title">
+                    Components
+
+                    
+                        <small class="header__subtitle">laminas-validator</small>
+                    
+                </h1>
+            </div>
+
+            
+            <div class="col-4 text-sm-right">
+                
+                    
+
+                    <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                    <a href="https://github.com/laminas/laminas-validator/" class="header__link header__link--github" title="Go to repository of laminas-validator">
+                        <i class="fa fa-github"></i> GitHub
+                    </a>
+                
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-sm-12">
+                
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#supported-options" class="toc__link">Supported options</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#default-date-validation" class="toc__link">Default date validation</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#specifying-a-date-format" class="toc__link">Specifying a date format</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#strict-mode" class="toc__link">Strict mode</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+            </div>
+            <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
+                
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="">Overview</a></li>
+
+            
+                <li class="breadcrumb-item"><a href="../..">laminas-validator</a></li>
+
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Reference</li>
+                        
+                    
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Validators</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">Date</li>
+            
+        
+    </ol>
+</nav>
+
+
+
+
+
+
+    
+    
+        <h2 class="chapter__headline">Validators</h2>
+    
+
+    <h1 id="date-validator">Date Validator</h1>
+<p><code>Laminas\Validator\Date</code> allows you to validate if a given value contains a date.</p>
+<h2 id="supported-options">Supported options</h2>
+<p>The following options are supported for <code>Laminas\Validator\Date</code>:</p>
+<ul>
+<li><code>format</code>: Sets the format which is used to write the date.</li>
+<li><code>locale</code>: Sets the locale which will be used to validate date values.</li>
+</ul>
+<h2 id="default-date-validation">Default date validation</h2>
+<p>The easiest way to validate a date is by using the default date format,
+<code>Y-m-d</code>.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\Date();</span>
+
+<span class=x>$validator-&gt;isValid(&#39;2000-10-10&#39;);   // returns true</span>
+<span class=x>$validator-&gt;isValid(&#39;10.10.2000&#39;); // returns false</span>
+</pre></div></p>
+<h2 id="specifying-a-date-format">Specifying a date format</h2>
+<p><code>Laminas\Validator\Date</code> also supports custom date formats. When you want to
+validate such a date, use the <code>format</code> option. This option accepts any format
+allowed by the PHP <a href="http://php.net/manual/en/datetime.createfromformat.php#refsect1-datetime.createfromformat-parameters">DateTime::createFromFormat()</a> method.</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\Date([&#39;format&#39; =&gt; &#39;Y&#39;]);</span>
+
+<span class=x>$validator-&gt;isValid(&#39;2010&#39;); // returns true</span>
+<span class=x>$validator-&gt;isValid(&#39;May&#39;);  // returns false</span>
+</pre></div></p>
+<h2 id="strict-mode">Strict mode</h2>
+<ul>
+<li><strong>Since 2.13.0</strong></li>
+</ul>
+<p>By default, <code>Laminas\Validator\Date</code> only validates that it can convert the
+provided value to a valid <code>DateTime</code> value.</p>
+<p>If you want to require that the date is specified in a specific format, you can
+provide both the <a href="#specifying-a-date-format">date format</a> and the <code>strict</code>
+options. In such a scenario, the value must both be covertable to a <code>DateTime</code>
+value <strong>and</strong> be in the same format as provided to the validator. (Generally,
+this will mean the value must be a string.)</p>
+<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\Date([&#39;format&#39; =&gt; &#39;Y-m-d&#39;, &#39;strict&#39; =&gt; true]);</span>
+
+<span class=x>$validator-&gt;isValid(&#39;2010-10-10&#39;); // returns true</span>
+<span class=x>$validator-&gt;isValid(new DateTime(&#39;2010-10-10)); // returns false; value is not a string</span>
+<span class=x>$validator-&gt;isValid(&#39;2010.10.10&#39;); // returns false; format differs</span>
+</pre></div></p>
+
+
+
+
+    <nav>
+    <ul class="page-nav hidden-print">
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../credit-card/">
+                    <i class="fa fa-chevron-left"></i> Previous
+                </a>
+            
+        </li>
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../db/">
+                    Next <i class="fa fa-chevron-right"></i>
+                </a>
+            
+        </li>
+    </ul>
+</nav>
+
+
+
+
+    <div class="help-wanted">
+        <p>
+            Found a mistake or want to contribute to the documentation?
+            <a href="https://github.com/laminas/laminas-validator/edit/master/docs/book/validators/date.md" target="_blank" class="help-wanted__link">
+                Edit this page on GitHub!
+            </a>
+        </p>
+    </div>
+
+                
+            </div>
+            <div class="col-md-3 col-sm-12 sidebar">
+                
+                    <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="../..">laminas-validator</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../../intro/" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item">
+                                <span class="subnavigation__headline">Reference</span>
+                                <ul class="subnavigation__list">
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../validator-chains/" class="subnavigation__link">Validator Chains</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../writing-validators/" class="subnavigation__link">Writing Validators</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../messages/" class="subnavigation__link">Validation Messages</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item ">
+        <a href="../../set/" class="subnavigation__link">Standard Validation Classes</a>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Validators</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../barcode/" class="subnavigation__link">Barcode</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../between/" class="subnavigation__link">Between</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../callback/" class="subnavigation__link">Callback</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../credit-card/" class="subnavigation__link">CreditCard</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Date</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../db/" class="subnavigation__link">Db\RecordExists and Db\NoRecordExists</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../digits/" class="subnavigation__link">Digits</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../email-address/" class="subnavigation__link">EmailAddress</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../explode/" class="subnavigation__link">Explode</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../greater-than/" class="subnavigation__link">GreaterThan</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../hex/" class="subnavigation__link">Hex</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../hostname/" class="subnavigation__link">Hostname</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../iban/" class="subnavigation__link">Iban</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../identical/" class="subnavigation__link">Identical</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../in-array/" class="subnavigation__link">InArray</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../ip/" class="subnavigation__link">Ip</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../isbn/" class="subnavigation__link">Isbn</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../is-countable/" class="subnavigation__link">IsCountable</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../isinstanceof/" class="subnavigation__link">IsInstanceOf</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../less-than/" class="subnavigation__link">LessThan</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../not-empty/" class="subnavigation__link">NotEmpty</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../regex/" class="subnavigation__link">Regex</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../sitemap/" class="subnavigation__link">Sitemap</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../step/" class="subnavigation__link">Step</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../string-length/" class="subnavigation__link">StringLength</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../timezone/" class="subnavigation__link">Timezone</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../uri/" class="subnavigation__link">Uri</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../uuid/" class="subnavigation__link">Uuid</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                                    
+                                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">File Validators</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/intro/" class="subnavigation__link">Introduction</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/count/" class="subnavigation__link">Count</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/crc32/" class="subnavigation__link">Crc32</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/exclude-extension/" class="subnavigation__link">ExcludeExtension</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/exclude-mime-type/" class="subnavigation__link">ExcludeMimeType</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/exists/" class="subnavigation__link">Exists</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/extension/" class="subnavigation__link">Extension</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/files-size/" class="subnavigation__link">FilesSize</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/hash/" class="subnavigation__link">Hash</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/image-size/" class="subnavigation__link">ImageSize</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/is-compressed/" class="subnavigation__link">IsCompressed</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/is-image/" class="subnavigation__link">IsImage</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/md5/" class="subnavigation__link">Md5</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/mime-type/" class="subnavigation__link">MimeType</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/not-exists/" class="subnavigation__link">NotExists</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/sha1/" class="subnavigation__link">Sha1</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/size/" class="subnavigation__link">Size</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/upload/" class="subnavigation__link">Upload</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/upload-file/" class="subnavigation__link">UploadFile</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/word-count/" class="subnavigation__link">WordCount</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                                    
+                                </ul>
+                            </li>
+                        
+                    
+                
+            
+        </ul>
+    </div>
+
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <footer class="footer">
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="footer__button" href="#page-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7 offset-md-2">
+                <h5>Laminas</h5>
+                <ul>
+                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
+                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+
+            
+            <div class="col-md-4 offset-md-2">
+                <h4 class="footer__headline">Support</h4>
+                <ul class="support__list">
+                    <li class="support__list-item">
+                        <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/blog/feed-rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                    </li>
+                    <li class="support__list-item">
+                        <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
+                    </li>
+                </ul>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">License</h4>
+                <p>
+                    Code licensed under <a
+                        href="https://github.com/laminas/laminas-validator//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                </p>
+            </div>
+
+            
+            <div class="col-md-3">
+                <h4 class="footer__headline">Copyright</h4>
+                <p>
+                    <!--Built with love by the Laminas team with the help of our
+                    <a href="https://github.com/laminas/laminas-validator//graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let base_url = '../..',
+            project  = "components",
+            siteName = 'laminas-validator';
+    </script>
+    <script src="/js/scripts.js"></script>
+        <script src="../../search/main.js"></script>
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search in laminas-validator" id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>
