@@ -1,25 +1,24 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
-use Zend\Validator\Explode;
+use Laminas\Validator\Explode;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class ExplodeTest extends \PHPUnit_Framework_TestCase
 {
     public function testRaisesExceptionWhenValidatorIsMissing()
     {
         $validator = new Explode();
-        $this->setExpectedException('Zend\Validator\Exception\RuntimeException', 'validator');
+        $this->setExpectedException('Laminas\Validator\Exception\RuntimeException', 'validator');
         $validator->isValid('foo,bar');
     }
 
@@ -52,7 +51,7 @@ class ExplodeTest extends \PHPUnit_Framework_TestCase
      */
     public function testExpectedBehavior($value, $delimiter, $breakOnFirst, $numIsValidCalls, $isValidReturn, $messages, $expects)
     {
-        $mockValidator = $this->getMock('Zend\Validator\ValidatorInterface');
+        $mockValidator = $this->getMock('Laminas\Validator\ValidatorInterface');
         $mockValidator->expects($this->exactly($numIsValidCalls))->method('isValid')->will($this->returnValue($isValidReturn));
         $mockValidator->expects($this->any())->method('getMessages')->will($this->returnValue('X'));
 
@@ -100,16 +99,16 @@ class ExplodeTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        /** @var $inArrayValidator \Zend\Validator\InArray */
+        /** @var $inArrayValidator \Laminas\Validator\InArray */
         $inArrayValidator = $validator->getValidator();
-        $this->assertInstanceOf('Zend\Validator\InArray', $inArrayValidator);
+        $this->assertInstanceOf('Laminas\Validator\InArray', $inArrayValidator);
         $this->assertSame(
             array('a', 'b', 'c'), $inArrayValidator->getHaystack()
         );
     }
 
     /**
-     * @expectedException \Zend\Validator\Exception\RuntimeException
+     * @expectedException \Laminas\Validator\Exception\RuntimeException
      */
     public function testSetValidatorMissingName()
     {
@@ -122,7 +121,7 @@ class ExplodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Zend\Validator\Exception\RuntimeException
+     * @expectedException \Laminas\Validator\Exception\RuntimeException
      */
     public function testSetValidatorInvalidParam()
     {
