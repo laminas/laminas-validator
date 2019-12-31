@@ -1,22 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_I18n
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\I18n\Validator;
+namespace LaminasTest\I18n\Validator;
 
-use Zend\Validator\Iban as IbanValidator;
+use Laminas\Validator\Iban as IbanValidator;
 
 /**
- * @category   Zend
- * @package    Zend_Validator
+ * @category   Laminas
+ * @package    Laminas_Validator
  * @subpackage UnitTests
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class IbanTest extends \PHPUnit_Framework_TestCase
 {
@@ -114,7 +112,7 @@ class IbanTest extends \PHPUnit_Framework_TestCase
         $validator->setCountryCode('DE');
         $this->assertEquals('DE', $validator->getCountryCode());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'ISO 3166-1');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'ISO 3166-1');
         $validator->setCountryCode('foo');
     }
 
@@ -123,7 +121,7 @@ class IbanTest extends \PHPUnit_Framework_TestCase
         $validator = new IbanValidator(array('country_code' => 'AT'));
         $this->assertEquals('AT', $validator->getCountryCode());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'ISO 3166-1');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'ISO 3166-1');
         $validator = new IbanValidator(array('country_code' => 'BAR'));
     }
 
@@ -144,7 +142,7 @@ class IbanTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-10556
+     * @group Laminas-10556
      */
     public function testIbanDetectionWithoutCountryCode()
     {
