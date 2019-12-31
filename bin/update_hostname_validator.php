@@ -1,28 +1,27 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-use Zend\Http\Client;
-use Zend\Validator\Hostname;
+use Laminas\Http\Client;
+use Laminas\Validator\Hostname;
 
 require __DIR__ . '/../vendor/autoload.php';
 
 define('IANA_URL', 'https://data.iana.org/TLD/tlds-alpha-by-domain.txt');
-define('ZF2_HOSTNAME_VALIDATOR_FILE', __DIR__.'/../src/Hostname.php');
+define('Laminas_HOSTNAME_VALIDATOR_FILE', __DIR__.'/../src/Hostname.php');
 
 
-if (! file_exists(ZF2_HOSTNAME_VALIDATOR_FILE) || ! is_readable(ZF2_HOSTNAME_VALIDATOR_FILE)) {
-    printf("Error: cannont read file '%s'%s", ZF2_HOSTNAME_VALIDATOR_FILE, PHP_EOL);
+if (! file_exists(Laminas_HOSTNAME_VALIDATOR_FILE) || ! is_readable(Laminas_HOSTNAME_VALIDATOR_FILE)) {
+    printf("Error: cannont read file '%s'%s", Laminas_HOSTNAME_VALIDATOR_FILE, PHP_EOL);
     exit(1);
 }
 
-if (! is_writable(ZF2_HOSTNAME_VALIDATOR_FILE)) {
-    printf("Error: Cannot update file '%s'%s", ZF2_HOSTNAME_VALIDATOR_FILE, PHP_EOL);
+if (! is_writable(Laminas_HOSTNAME_VALIDATOR_FILE)) {
+    printf("Error: Cannot update file '%s'%s", Laminas_HOSTNAME_VALIDATOR_FILE, PHP_EOL);
     exit(1);
 }
 
@@ -32,7 +31,7 @@ $insertFinish     = false; // becomes 'true' when we find end of $validTlds decl
 $checkOnly        = isset($argv[1]) ? $argv[1] === '--check-only' : false;
 $response         = getOfficialTLDs();
 $ianaVersion      = getVersionFromString('Version', strtok($response->getBody(), "\n"));
-$validatorVersion = getVersionFromString('IanaVersion', file_get_contents(ZF2_HOSTNAME_VALIDATOR_FILE));
+$validatorVersion = getVersionFromString('IanaVersion', file_get_contents(Laminas_HOSTNAME_VALIDATOR_FILE));
 
 if ($checkOnly && $ianaVersion > $validatorVersion) {
     printf(
@@ -47,7 +46,7 @@ if ($checkOnly) {
     exit(0);
 }
 
-foreach (file(ZF2_HOSTNAME_VALIDATOR_FILE) as $line) {
+foreach (file(Laminas_HOSTNAME_VALIDATOR_FILE) as $line) {
     // Replace old version number with new one
     if (preg_match('/\*\s+IanaVersion\s+\d+/', $line, $matches)) {
         $newFileContent[] = sprintf("     * IanaVersion %s\n", $ianaVersion);
@@ -90,8 +89,8 @@ if (!$insertFinish) {
     exit(1);
 }
 
-if (false === @file_put_contents(ZF2_HOSTNAME_VALIDATOR_FILE, $newFileContent)) {
-    printf('Error: cannot write info file "%s"%s', ZF2_HOSTNAME_VALIDATOR_FILE, PHP_EOL);
+if (false === @file_put_contents(Laminas_HOSTNAME_VALIDATOR_FILE, $newFileContent)) {
+    printf('Error: cannot write info file "%s"%s', Laminas_HOSTNAME_VALIDATOR_FILE, PHP_EOL);
     exit(1);
 }
 
@@ -101,14 +100,14 @@ exit(0);
 /**
  * Get Official TLDs
  *
- * @return \Zend\Http\Response
+ * @return \Laminas\Http\Response
  * @throws Exception
  */
 function getOfficialTLDs()
 {
     $client = new Client();
     $client->setOptions([
-        'adapter' => 'Zend\Http\Client\Adapter\Curl',
+        'adapter' => 'Laminas\Http\Client\Adapter\Curl',
     ]);
     $client->setUri(IANA_URL);
     $client->setMethod('GET');
