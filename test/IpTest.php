@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
+use Laminas\Validator\Exception\InvalidArgumentException;
+use Laminas\Validator\Ip;
 use PHPUnit\Framework\TestCase;
-use Zend\Validator\Exception\InvalidArgumentException;
-use Zend\Validator\Ip;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class IpTest extends TestCase
 {
@@ -62,7 +61,7 @@ class IpTest extends TestCase
         $this->assertFalse($this->validator->isValid('1.2.3.4.5'));
     }
 
-    public function testZeroIpForZF2420()
+    public function testZeroIpForLaminas420()
     {
         $this->assertTrue($this->validator->isValid('0.0.0.0'));
     }
@@ -139,19 +138,19 @@ class IpTest extends TestCase
         $this->validator->setOptions($this->options);
     }
 
-    public function testInvalidIpForZF4809()
+    public function testInvalidIpForLaminas4809()
     {
         $this->assertFalse($this->validator->isValid('1.2.333'));
     }
 
-    public function testInvalidIpForZF3435()
+    public function testInvalidIpForLaminas435()
     {
         $this->assertFalse($this->validator->isValid('192.168.0.2 adfs'));
     }
 
     /**
-     * @group ZF-2694
-     * @group ZF-8253
+     * @group Laminas-2694
+     * @group Laminas-8253
      */
     public function testIPv6addresses()
     {
@@ -248,7 +247,7 @@ class IpTest extends TestCase
     }
 
     /**
-     * @ZF-4352
+     * @Laminas-4352
      */
     public function testNonStringValidation()
     {
@@ -256,7 +255,7 @@ class IpTest extends TestCase
     }
 
     /**
-     * @ZF-8640
+     * @Laminas-8640
      */
     public function testNonNewlineValidation()
     {
@@ -264,7 +263,7 @@ class IpTest extends TestCase
     }
 
     /**
-     * @group ZF-10621
+     * @group Laminas-10621
      */
     public function testIPv4AddressNotations()
     {

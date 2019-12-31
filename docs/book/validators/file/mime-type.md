@@ -1,6 +1,6 @@
 # MimeType
 
-`Zend\Validator\File\MimeType` checks the MIME type of files. It will assert
+`Laminas\Validator\File\MimeType` checks the MIME type of files. It will assert
 `true` when a given file matches any defined MIME type.
 
 This validator is inversely related to the
@@ -31,7 +31,7 @@ The following set of options are supported:
 ## Basic Usage
 
 ```php
-use Zend\Validator\File\MimeType;
+use Laminas\Validator\File\MimeType;
 
 // Only allow 'gif' or 'jpg' files
 $validator = new MimeType('image/gif,image/jpeg');

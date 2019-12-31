@@ -1,9 +1,9 @@
-# zend-validator
+# laminas-validator
 
-[![Build Status](https://secure.travis-ci.org/zendframework/zend-validator.svg?branch=master)](https://secure.travis-ci.org/zendframework/zend-validator)
-[![Coverage Status](https://coveralls.io/repos/github/zendframework/zend-validator/badge.svg?branch=master)](https://coveralls.io/github/zendframework/zend-validator?branch=master)
+[![Build Status](https://travis-ci.org/laminas/laminas-validator.svg?branch=master)](https://travis-ci.org/laminas/laminas-validator)
+[![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-validator/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-validator?branch=master)
 
-zend-validator provides a set of commonly needed validators. It also provides a
+laminas-validator provides a set of commonly needed validators. It also provides a
 simple validator chaining mechanism by which multiple validators may be applied
 to a single datum in a user-defined order.
 
@@ -12,15 +12,15 @@ to a single datum in a user-defined order.
 Run the following to install this library:
 
 ```bash
-$ composer require zendframework/zend-validator
+$ composer require laminas/laminas-validator
 ```
 
 ## Documentation
 
-Browse the documentation online at https://docs.zendframework.com/zend-validator/
+Browse the documentation online at https://docs.laminas.dev/laminas-validator/
 
 ## Support
 
-* [Issues](https://github.com/zendframework/zend-validator/issues/)
-* [Chat](https://zendframework-slack.herokuapp.com/)
-* [Forum](https://discourse.zendframework.com/)
+* [Issues](https://github.com/laminas/laminas-validator/issues/)
+* [Chat](https://laminas.dev/chat/)
+* [Forum](https://discourse.laminas.dev/)
