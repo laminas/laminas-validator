@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
-use Zend\Validator\ValidatorPluginManager;
+use Laminas\Validator\ValidatorPluginManager;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class ValidatorPluginManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -23,10 +22,10 @@ class ValidatorPluginManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testAllowsInjectingTranslator()
     {
-        $translator = $this->getMock('ZendTest\Validator\TestAsset\Translator');
+        $translator = $this->getMock('LaminasTest\Validator\TestAsset\Translator');
 
         $slContents = array(array('MvcTranslator', $translator));
-        $serviceLocator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface');
+        $serviceLocator = $this->getMock('Laminas\ServiceManager\ServiceLocatorInterface');
         $serviceLocator->expects($this->once())
             ->method('get')
             ->will($this->returnValueMap($slContents));
@@ -44,7 +43,7 @@ class ValidatorPluginManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testNoTranslatorInjectedWhenTranslatorIsNotPresent()
     {
-        $serviceLocator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface');
+        $serviceLocator = $this->getMock('Laminas\ServiceManager\ServiceLocatorInterface');
         $serviceLocator->expects($this->once())
             ->method('has')
             ->with($this->equalTo('MvcTranslator'))
@@ -59,14 +58,14 @@ class ValidatorPluginManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testRegisteringInvalidValidatorRaisesException()
     {
-        $this->setExpectedException('Zend\Validator\Exception\RuntimeException');
+        $this->setExpectedException('Laminas\Validator\Exception\RuntimeException');
         $this->validators->setService('test', $this);
     }
 
     public function testLoadingInvalidValidatorRaisesException()
     {
         $this->validators->setInvokableClass('test', get_class($this));
-        $this->setExpectedException('Zend\Validator\Exception\RuntimeException');
+        $this->setExpectedException('Laminas\Validator\Exception\RuntimeException');
         $this->validators->get('test');
     }
 

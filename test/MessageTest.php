@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
-use Zend\Validator\StringLength;
+use Laminas\Validator\StringLength;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class MessageTest extends \PHPUnit_Framework_TestCase
 {
@@ -52,7 +51,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     /**
      * Ensures that if we don't specify the message key, it uses
      * the first one in the list of message templates.
-     * In the case of Zend_Validate_StringLength, TOO_SHORT is
+     * In the case of Laminas_Validate_StringLength, TOO_SHORT is
      * the one we should expect to change.
      *
      * @return void
@@ -92,7 +91,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     /**
      * Ensures that we can include another parameter, defined on a
      * class-by-class basis, in the message string.
-     * In the case of Zend_Validate_StringLength, one such parameter
+     * In the case of Laminas_Validate_StringLength, one such parameter
      * is %max%.
      *
      * @return void
@@ -140,7 +139,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     {
         $keyInvalid = 'invalidKey';
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'No message template exists for key');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'No message template exists for key');
         $this->validator->setMessage(
             'Your value is too long',
             $keyInvalid
@@ -215,7 +214,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $messages = $this->validator->getMessages();
         $this->assertEquals('Your value is too long', current($messages));
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'No property exists by the name ');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'No property exists by the name ');
         $this->validator->unknownProperty;
     }
 

@@ -1,21 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator\File;
+namespace LaminasTest\Validator\File;
 
-use Zend\Validator\File;
-use Zend\Validator;
+use Laminas\Validator;
+use Laminas\Validator\File;
 
 /**
  * MimeType testbed
  *
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class MimeTypeTest extends \PHPUnit_Framework_TestCase
 {
@@ -58,7 +57,7 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that the validator follows expected behavior for legacy Zend\Transfer API
+     * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
      * @dataProvider basicBehaviorDataProvider
      * @return void
@@ -148,7 +147,7 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals($magic, $mimetype);
         }
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'could not be');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'could not be');
         $validator->setMagicFile('/unknown/magic/file');
     }
 
@@ -158,7 +157,7 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('This PHP Version has no finfo installed');
         }
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidMagicMimeFileException', 'could not be used by ext/finfo');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidMagicMimeFileException', 'could not be used by ext/finfo');
         $validator = new File\MimeType(array('image/gif', 'magicFile' => __FILE__));
     }
 
@@ -174,9 +173,9 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-11258
+     * @group Laminas-11258
      */
-    public function testZF11258()
+    public function testLaminas11258()
     {
         $validator = new File\MimeType(array(
             'image/gif',
@@ -206,7 +205,7 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-10461
+     * @group Laminas-10461
      */
     public function testDisablingMagicFileByConstructor()
     {

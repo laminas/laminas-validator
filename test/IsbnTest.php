@@ -1,19 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
-use Zend\Validator\Isbn;
-
+use Laminas\Validator\Isbn;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class IsbnTest extends \PHPUnit_Framework_TestCase
 {
@@ -65,7 +63,7 @@ class IsbnTest extends \PHPUnit_Framework_TestCase
         $validator->setType(Isbn::ISBN13);
         $this->assertTrue($validator->getType() == Isbn::ISBN13);
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'Invalid ISBN type');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'Invalid ISBN type');
         $validator->setType('X');
     }
 
@@ -87,7 +85,7 @@ class IsbnTest extends \PHPUnit_Framework_TestCase
         $validator->setSeparator('');
         $this->assertTrue($validator->getSeparator() == '');
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'Invalid ISBN separator');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'Invalid ISBN separator');
         $validator->setSeparator('X');
     }
 
@@ -205,7 +203,7 @@ class IsbnTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-9605
+     * @group Laminas-9605
      */
     public function testInvalidTypeGiven()
     {

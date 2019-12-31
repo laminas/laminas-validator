@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
-use Zend\Validator\StringLength;
+use Laminas\Validator\StringLength;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class StringLengthTest extends \PHPUnit_Framework_TestCase
 {
@@ -110,7 +109,7 @@ class StringLengthTest extends \PHPUnit_Framework_TestCase
         $max = 1;
         $min = 2;
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'The minimum must be less than or equal to the maximum length, but');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'The minimum must be less than or equal to the maximum length, but');
         $this->validator->setMax($max)->setMin($min);
     }
 
@@ -124,7 +123,7 @@ class StringLengthTest extends \PHPUnit_Framework_TestCase
         $max = 1;
         $min = 2;
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'The maximum must be greater than or equal to the minimum length, but ');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'The maximum must be greater than or equal to the minimum length, but ');
         $this->validator->setMin($min)->setMax($max);
     }
 
@@ -148,7 +147,7 @@ class StringLengthTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @ZF-4352
+     * @Laminas-4352
      */
     public function testNonStringValidation()
     {

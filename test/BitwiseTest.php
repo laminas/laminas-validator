@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
-use Zend\Validator\Bitwise;
+use Laminas\Validator\Bitwise;
 
 class BitwiseTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Zend\Validator\Bitwise
+     * @var \Laminas\Validator\Bitwise
      */
     public $validator;
 
@@ -24,7 +23,7 @@ class BitwiseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Zend\Validator\Bitwise::__construct()
+     * @covers \Laminas\Validator\Bitwise::__construct()
      * @dataProvider constructDataProvider
      *
      * @param array $args
@@ -63,7 +62,7 @@ class BitwiseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Zend\Validator\Bitwise::isvalid()
+     * @covers \Laminas\Validator\Bitwise::isvalid()
      */
     public function testBitwiseAndNotStrict()
     {
@@ -89,7 +88,7 @@ class BitwiseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Zend\Validator\Bitwise::isvalid()
+     * @covers \Laminas\Validator\Bitwise::isvalid()
      */
     public function testBitwiseAndStrict()
     {
@@ -116,7 +115,7 @@ class BitwiseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Zend\Validator\Bitwise::isvalid()
+     * @covers \Laminas\Validator\Bitwise::isvalid()
      */
     public function testBitwiseXor()
     {
@@ -144,7 +143,7 @@ class BitwiseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Zend\Validator\Bitwise::setOperator()
+     * @covers \Laminas\Validator\Bitwise::setOperator()
      */
     public function testSetOperator()
     {
@@ -158,7 +157,7 @@ class BitwiseTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Zend\Validator\Bitwise::setStrict()
+     * @covers \Laminas\Validator\Bitwise::setStrict()
      */
     public function testSetStrict()
     {
