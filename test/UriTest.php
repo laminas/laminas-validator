@@ -1,28 +1,26 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Validator
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
-use Zend\Validator;
-use Zend\Uri\Exception\InvalidArgumentException;
+use Laminas\Uri\Exception\InvalidArgumentException;
+use Laminas\Validator;
 
 /**
- * @category   Zend
- * @package    Zend_Validator
+ * @category   Laminas
+ * @package    Laminas_Validator
  * @subpackage UnitTests
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class UriTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Zend\Validator\Uri
+     * @var \Laminas\Validator\Uri
      */
     protected $validator;
 
@@ -40,14 +38,14 @@ class UriTest extends \PHPUnit_Framework_TestCase
     {
         $validator = $this->validator;
         $uriHandler = $validator->getUriHandler();
-        $this->assertInstanceOf('Zend\Uri\Uri', $uriHandler);
+        $this->assertInstanceOf('Laminas\Uri\Uri', $uriHandler);
         $this->assertTrue($validator->getAllowRelative());
         $this->assertTrue($validator->getAllowAbsolute());
     }
 
     public function testConstructorWithArraySetsOptions()
     {
-        $uriMock = $this->getMock('Zend\Uri\Uri');
+        $uriMock = $this->getMock('Laminas\Uri\Uri');
         $validator = new Validator\Uri(array(
             'uriHandler' => $uriMock,
             'allowRelative' => false,
@@ -60,7 +58,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructorWithArgsSetsOptions()
     {
-        $uriMock = $this->getMock('Zend\Uri\Uri');
+        $uriMock = $this->getMock('Laminas\Uri\Uri');
         $validator = new Validator\Uri($uriMock, false, false);
         $this->assertEquals($uriMock, $validator->getUriHandler());
         $this->assertFalse($validator->getAllowRelative());
@@ -90,7 +88,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
         $allowAbsolute, $allowRelative, $isAbsolute, $isRelative, $isValid, $expects
     ) {
         $uriMock = $this->getMock(
-            'Zend\Uri\Uri',
+            'Laminas\Uri\Uri',
             array('parse', 'isValid', 'isAbsolute', 'isValidRelative')
         );
         $uriMock->expects($this->once())
@@ -109,7 +107,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
 
     public function testUriHandlerThrowsExceptionInParseMethodNotValid()
     {
-        $uriMock = $this->getMock('Zend\Uri\Uri');
+        $uriMock = $this->getMock('Laminas\Uri\Uri');
         $uriMock->expects($this->once())
             ->method('parse')
             ->will($this->throwException(new InvalidArgumentException()));
@@ -137,12 +135,12 @@ class UriTest extends \PHPUnit_Framework_TestCase
 
     public function testUriHandlerCanBeSpecifiedAsString()
     {
-        $this->validator->setUriHandler('Zend\Uri\Http');
-        $this->assertInstanceOf('Zend\Uri\Http', $this->validator->getUriHandler());
+        $this->validator->setUriHandler('Laminas\Uri\Http');
+        $this->assertInstanceOf('Laminas\Uri\Http', $this->validator->getUriHandler());
     }
 
     /**
-     * @expectedException Zend\Validator\Exception\InvalidArgumentException
+     * @expectedException Laminas\Validator\Exception\InvalidArgumentException
      */
     public function testUriHandlerStringInvalidClassThrowsException()
     {
@@ -150,7 +148,7 @@ class UriTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Validator\Exception\InvalidArgumentException
+     * @expectedException Laminas\Validator\Exception\InvalidArgumentException
      */
     public function testUriHandlerInvalidTypeThrowsException()
     {
