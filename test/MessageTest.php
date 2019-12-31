@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
+use Laminas\Validator\Exception\InvalidArgumentException;
+use Laminas\Validator\StringLength;
 use PHPUnit\Framework\TestCase;
-use Zend\Validator\StringLength;
-use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class MessageTest extends TestCase
 {
@@ -54,7 +53,7 @@ class MessageTest extends TestCase
     /**
      * Ensures that if we don't specify the message key, it uses
      * the first one in the list of message templates.
-     * In the case of Zend_Validate_StringLength, TOO_SHORT is
+     * In the case of Laminas_Validate_StringLength, TOO_SHORT is
      * the one we should expect to change.
      *
      * @return void
@@ -113,7 +112,7 @@ class MessageTest extends TestCase
     /**
      * Ensures that we can include another parameter, defined on a
      * class-by-class basis, in the message string.
-     * In the case of Zend_Validate_StringLength, one such parameter
+     * In the case of Laminas_Validate_StringLength, one such parameter
      * is %max%.
      *
      * @return void

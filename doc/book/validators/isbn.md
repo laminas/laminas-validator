@@ -1,15 +1,15 @@
 # Isbn Validator
 
-`Zend\Validator\Isbn` allows you to validate an ISBN-10 or ISBN-13 value.
+`Laminas\Validator\Isbn` allows you to validate an ISBN-10 or ISBN-13 value.
 
 ## Supported options
 
-The following options are supported for `Zend\Validator\Isbn`:
+The following options are supported for `Laminas\Validator\Isbn`:
 
 - `separator`: Defines the allowed separator for the ISBN number. It defaults to
   an empty string.
 - `type`: Defines the allowed ISBN types. It defaults to
-  `Zend\Validator\Isbn::AUTO`. For details, take a look at the section on
+  `Laminas\Validator\Isbn::AUTO`. For details, take a look at the section on
   [explicit types](#setting-an-explicit-isbn-validation-type).
 
 ## Basic usage
@@ -17,7 +17,7 @@ The following options are supported for `Zend\Validator\Isbn`:
 A basic example of usage is below:
 
 ```php
-$validator = new Zend\Validator\Isbn();
+$validator = new Laminas\Validator\Isbn();
 
 if ($validator->isValid($isbn)) {
     // isbn is valid
@@ -33,7 +33,7 @@ This will validate any ISBN-10 and ISBN-13 without separator.
 An example of an ISBN type restriction follows:
 
 ```php
-use Zend\Validator\Isbn;
+use Laminas\Validator\Isbn;
 
 $validator = new Isbn();
 $validator->setType(Isbn::ISBN13);
@@ -52,20 +52,20 @@ The above will validate only ISBN-13 values.
 
 Valid types include:
 
-- `Zend\Validator\Isbn::AUTO` (default)
-- `Zend\Validator\Isbn::ISBN10`
-- `Zend\Validator\Isbn::ISBN13`
+- `Laminas\Validator\Isbn::AUTO` (default)
+- `Laminas\Validator\Isbn::ISBN10`
+- `Laminas\Validator\Isbn::ISBN13`
 
 ## Specifying a separator restriction
 
 An example of separator restriction:
 
 ```php
-$validator = new Zend\Validator\Isbn();
+$validator = new Laminas\Validator\Isbn();
 $validator->setSeparator('-');
 
 // OR
-$validator = new Zend\Validator\Isbn(['separator' => '-']);
+$validator = new Laminas\Validator\Isbn(['separator' => '-']);
 
 if ($validator->isValid($isbn)) {
     // this is a valid ISBN with separator
