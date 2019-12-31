@@ -1,12 +1,12 @@
 # Step Validator
 
-`Zend\Validator\Step` allows you to validate if a given value is a valid step
+`Laminas\Validator\Step` allows you to validate if a given value is a valid step
 value. This validator requires the value to be a numeric value (either string,
 int or float).
 
 ## Supported options
 
-The following options are supported for `Zend\Validator\Step`:
+The following options are supported for `Laminas\Validator\Step`:
 
 - `baseValue`: This is the base value from which the step should be computed.
   This option defaults to `0`
@@ -15,7 +15,7 @@ The following options are supported for `Zend\Validator\Step`:
 ## Basic usage
 
 ```php
-$validator = new Zend\Validator\Step();
+$validator = new Laminas\Validator\Step();
 
 if ($validator->isValid(1)) {
     // value is a valid step value
@@ -29,7 +29,7 @@ if ($validator->isValid(1)) {
 The `Step` validator also supports floating-point base and step values:
 
 ```php
-$validator = new Zend\Validator\Step([
+$validator = new Laminas\Validator\Step([
     'baseValue' => 1.1,
     'step'      => 2.2,
 ]);

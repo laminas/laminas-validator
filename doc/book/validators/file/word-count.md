@@ -1,6 +1,6 @@
 # WordCount
 
-`Zend\Validator\File\WordCount` validates that the number of words within a file
+`Laminas\Validator\File\WordCount` validates that the number of words within a file
 match the specified criteria.
 
 ## Supported Options
@@ -13,7 +13,7 @@ The following set of options are supported:
 ## Basic Usage
 
 ```php
-use Zend\Validator\File\WordCount;
+use Laminas\Validator\File\WordCount;
 
 // Limit the amount of words to a maximum of 2000:
 $validator = new WordCount(2000);

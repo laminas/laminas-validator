@@ -1,6 +1,6 @@
 # Sha1
 
-`Zend\Validator\File\Sha1` allows you to validate if a given file's hashed
+`Laminas\Validator\File\Sha1` allows you to validate if a given file's hashed
 contents matches the supplied sha1 hash(es). It is subclassed from the
 [Hash validator](hash.md) to provide a validator that only supports the `sha1`
 algorithm.
@@ -19,7 +19,7 @@ The following set of options are supported:
 ## Basic Usage
 
 ```php
-use Zend\Validator\File\Sha1;
+use Laminas\Validator\File\Sha1;
 
 // Does file have the given hash?
 $validator = new Sha1('3b3652f336522365223');
