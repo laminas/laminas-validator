@@ -1,27 +1,26 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
-use Zend\Validator\Barcode;
+use Laminas\Validator\Barcode;
 
 /**
- * \Zend\Barcode
+ * \Laminas\Barcode
  *
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class BarcodeTest extends \PHPUnit_Framework_TestCase
 {
     public function testNoneExisting()
     {
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'not found');
-        $barcode = new Barcode('\Zend\Validate\BarcodeTest\NonExistentClassName');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'not found');
+        $barcode = new Barcode('\Laminas\Validate\BarcodeTest\NonExistentClassName');
     }
 
     public function testSetAdapter()
@@ -36,14 +35,14 @@ class BarcodeTest extends \PHPUnit_Framework_TestCase
     public function testSetCustomAdapter()
     {
         $barcode = new Barcode(array(
-            'adapter' => $this->getMock('Zend\Validator\Barcode\AdapterInterface')
+            'adapter' => $this->getMock('Laminas\Validator\Barcode\AdapterInterface')
         ));
 
-        $this->assertInstanceOf('Zend\Validator\Barcode\AdapterInterface', $barcode->getAdapter());
+        $this->assertInstanceOf('Laminas\Validator\Barcode\AdapterInterface', $barcode->getAdapter());
     }
 
     /**
-     * @ZF-4352
+     * @Laminas-4352
      */
     public function testNonStringValidation()
     {
@@ -120,7 +119,7 @@ class BarcodeTest extends \PHPUnit_Framework_TestCase
     {
         $barcode = new Barcode('Ean13');
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'does not implement');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'does not implement');
         require_once __DIR__ . "/_files/MyBarcode5.php";
         $barcode->setAdapter('MyBarcode5');
     }
@@ -141,7 +140,7 @@ class BarcodeTest extends \PHPUnit_Framework_TestCase
     public function testConfigConstructAdapter()
     {
         $array = array('adapter' => 'Ean13', 'options' => 'unknown', 'useChecksum' => false);
-        $config = new \Zend\Config\Config($array);
+        $config = new \Laminas\Config\Config($array);
 
         $barcode = new Barcode($config);
         $this->assertTrue($barcode->isValid('0075678164125'));
@@ -397,7 +396,7 @@ class BarcodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-10116
+     * @group Laminas-10116
      */
     public function testArrayLengthMessage()
     {
@@ -409,7 +408,7 @@ class BarcodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-8673
+     * @group Laminas-8673
      */
     public function testCODABAR()
     {
@@ -424,7 +423,7 @@ class BarcodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-11532
+     * @group Laminas-11532
      */
     public function testIssnWithMod0()
     {
@@ -433,7 +432,7 @@ class BarcodeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-8674
+     * @group Laminas-8674
      */
     public function testCODE128()
     {
@@ -455,7 +454,7 @@ class BarcodeTest extends \PHPUnit_Framework_TestCase
     /**
      * Test if EAN-13 contains only numeric characters
      *
-     * @group ZF-3297
+     * @group Laminas-3297
      */
     public function testEan13ContainsOnlyNumeric()
     {

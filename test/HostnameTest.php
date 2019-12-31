@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
-use Zend\Validator\Hostname;
+use Laminas\Validator\Hostname;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class HostnameTest extends \PHPUnit_Framework_TestCase
 {
@@ -258,10 +257,10 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test changed with ZF-6676, as IP check is only involved when IP patterns match
+     * Test changed with Laminas-6676, as IP check is only involved when IP patterns match
      *
-     * @group ZF-2861
-     * @group ZF-6676
+     * @group Laminas-2861
+     * @group Laminas-6676
      */
     public function testValidatorMessagesShouldBeTranslated()
     {
@@ -294,7 +293,7 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-6033
+     * @group Laminas-6033
      */
     public function testNumberNames()
     {
@@ -313,7 +312,7 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-6133
+     * @group Laminas-6133
      */
     public function testPunycodeDecoding()
     {
@@ -332,7 +331,7 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @ZF-4352
+     * @Laminas-4352
      */
     public function testNonStringValidation()
     {
@@ -340,7 +339,7 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @ZF-7323
+     * @Laminas-7323
      */
     public function testLatinSpecialChars()
     {
@@ -350,7 +349,7 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-7277
+     * @group Laminas-7277
      */
     public function testDifferentIconvEncoding()
     {
@@ -375,7 +374,7 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @ZF-8312
+     * @Laminas-8312
      */
     public function testInvalidDoubledIdn()
     {
@@ -383,7 +382,7 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-10267
+     * @group Laminas-10267
      */
     public function testURI()
     {
@@ -402,7 +401,7 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
     /**
      * Ensure that a trailing "." in a local hostname is permitted
      *
-     * @group ZF-6363
+     * @group Laminas-6363
      */
     public function testTrailingDot()
     {
@@ -423,7 +422,7 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-11334
+     * @group Laminas-11334
      */
     public function testSupportsIpv6AddressesWhichContainHexDigitF()
     {
@@ -441,7 +440,7 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
     /**
      * Test extended greek charset
      *
-     * @group ZF-11751
+     * @group Laminas-11751
      */
     public function testExtendedGreek()
     {
@@ -450,7 +449,7 @@ class HostnameTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-11796
+     * @group Laminas-11796
      */
     public function testIDNSI()
     {
