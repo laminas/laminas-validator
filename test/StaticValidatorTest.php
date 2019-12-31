@@ -1,25 +1,24 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
+use Laminas\I18n\Validator\Alpha;
+use Laminas\ServiceManager\Exception\ServiceNotFoundException;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\Validator\AbstractValidator;
+use Laminas\Validator\Between;
+use Laminas\Validator\StaticValidator;
+use Laminas\Validator\ValidatorPluginManager;
 use PHPUnit\Framework\TestCase;
-use Zend\I18n\Validator\Alpha;
-use Zend\ServiceManager\Exception\ServiceNotFoundException;
-use Zend\ServiceManager\ServiceManager;
-use Zend\Validator\AbstractValidator;
-use Zend\Validator\Between;
-use Zend\Validator\ValidatorPluginManager;
-use Zend\Validator\StaticValidator;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class StaticValidatorTest extends TestCase
 {
@@ -173,9 +172,9 @@ class StaticValidatorTest extends TestCase
      * Ensures that if we specify a validator class basename that doesn't
      * exist in the namespace, is() throws an exception.
      *
-     * Refactored to conform with ZF-2724.
+     * Refactored to conform with Laminas-2724.
      *
-     * @group  ZF-2724
+     * @group  Laminas-2724
      * @return void
      */
     public function testStaticFactoryClassNotFound()

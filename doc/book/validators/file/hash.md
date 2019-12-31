@@ -1,6 +1,6 @@
 # Hash
 
-`Zend\Validator\File\Hash` allows you to validate if a given file's hashed
+`Laminas\Validator\File\Hash` allows you to validate if a given file's hashed
 contents matches the supplied hash(es) and algorithm(s).
 
 > ### Requires the hash extension
@@ -19,7 +19,7 @@ The following set of options are supported:
 ## Basic Usage
 
 ```php
-use Zend\Validator\File\Hash;
+use Laminas\Validator\File\Hash;
 
 // Does file have the given hash?
 $validator = new Hash('3b3652f', 'crc32');

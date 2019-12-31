@@ -1,19 +1,20 @@
 <?php
+
 /**
- * @link      http://github.com/zendframework/zend-validator for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
 use Interop\Container\ContainerInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Validator\Digits;
+use Laminas\Validator\ValidatorInterface;
+use Laminas\Validator\ValidatorPluginManager;
+use Laminas\Validator\ValidatorPluginManagerFactory;
 use PHPUnit\Framework\TestCase;
-use Zend\Validator\Digits;
-use Zend\Validator\ValidatorInterface;
-use Zend\Validator\ValidatorPluginManager;
-use Zend\Validator\ValidatorPluginManagerFactory;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
 class ValidatorPluginManagerFactoryTest extends TestCase
 {
@@ -26,10 +27,10 @@ class ValidatorPluginManagerFactoryTest extends TestCase
         $this->assertInstanceOf(ValidatorPluginManager::class, $validators);
 
         if (method_exists($validators, 'configure')) {
-            // zend-servicemanager v3
+            // laminas-servicemanager v3
             $this->assertAttributeSame($container, 'creationContext', $validators);
         } else {
-            // zend-servicemanager v2
+            // laminas-servicemanager v2
             $this->assertSame($container, $validators->getServiceLocator());
         }
     }

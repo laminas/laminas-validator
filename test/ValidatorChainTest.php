@@ -1,25 +1,24 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
+use Laminas\Validator\AbstractValidator;
+use Laminas\Validator\Between;
+use Laminas\Validator\GreaterThan;
+use Laminas\Validator\NotEmpty;
+use Laminas\Validator\StaticValidator;
+use Laminas\Validator\ValidatorChain;
+use Laminas\Validator\ValidatorInterface;
 use PHPUnit\Framework\TestCase;
-use Zend\Validator\AbstractValidator;
-use Zend\Validator\Between;
-use Zend\Validator\NotEmpty;
-use Zend\Validator\StaticValidator;
-use Zend\Validator\ValidatorChain;
-use Zend\Validator\ValidatorInterface;
-use Zend\Validator\GreaterThan;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class ValidatorChainTest extends TestCase
 {
@@ -188,7 +187,7 @@ class ValidatorChainTest extends TestCase
     /**
      * Handle file not found errors
      *
-     * @group  ZF-2724
+     * @group  Laminas-2724
      * @param  int    $errnum
      * @param  string $errstr
      * @return void
@@ -201,7 +200,7 @@ class ValidatorChainTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Zend\Validator\ValidatorInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Laminas\Validator\ValidatorInterface
      */
     public function getValidatorTrue()
     {
@@ -213,7 +212,7 @@ class ValidatorChainTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Zend\Validator\ValidatorInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Laminas\Validator\ValidatorInterface
      */
     public function getValidatorFalse()
     {
@@ -228,7 +227,7 @@ class ValidatorChainTest extends TestCase
     }
 
     /**
-     * @group ZF-412
+     * @group Laminas-412
      */
     public function testCanAttachMultipleValidatorsOfTheSameTypeAsDiscreteInstances()
     {
@@ -295,7 +294,7 @@ class ValidatorChainTest extends TestCase
     }
 
     /**
-     * @group zfcampus_zf-apigility-admin_89
+     * @group laminascampus_api-tools-admin_89
      * @dataProvider breakChainFlags
      */
     public function testAttachByNameAllowsSpecifyingBreakChainOnFailureFlagViaOptions($option)

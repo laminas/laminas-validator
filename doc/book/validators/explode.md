@@ -1,11 +1,11 @@
 # Explode Validator
 
-`Zend\Validator\Explode` executes a validator for each item exploded from an
+`Laminas\Validator\Explode` executes a validator for each item exploded from an
 array.
 
 ## Supported options
 
-The following options are supported for `Zend\Validator\Explode`:
+The following options are supported for `Laminas\Validator\Explode`:
 
 - `valueDelimiter`: Defines the delimiter used to explode values from an array.
   It defaults to `,`. If the given value is an array, this option isn't used.
@@ -17,11 +17,11 @@ The following options are supported for `Zend\Validator\Explode`:
 To validate if every item in an array is in a specified haystack:
 
 ```php
-$inArrayValidator = new Zend\Validator\InArray([
+$inArrayValidator = new Laminas\Validator\InArray([
     'haystack' => [1, 2, 3, 4, 5, 6],
 ]);
 
-$explodeValidator = new Zend\Validator\Explode([
+$explodeValidator = new Laminas\Validator\Explode([
     'validator' => $inArrayValidator
 ]);
 
@@ -34,11 +34,11 @@ $explodeValidator->isValid([1, 4, 6, 8]); // returns false
 To validate if every e-mail in a string is contained in a list of names:
 
 ```php
-$inEmailListValidator = new Zend\Validator\InArray([
+$inEmailListValidator = new Laminas\Validator\InArray([
     'haystack' => ['joseph@test.com', 'mark@test.com', 'lucia@test.com'],
 ]);
 
-$explodeValidator = new Zend\Validator\Explode([
+$explodeValidator = new Laminas\Validator\Explode([
     'validator' => $inEmailListValidator,
     'valueDelimiter' => ','
 ]);
