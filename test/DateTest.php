@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
 use DateTime;
+use Laminas\Validator;
 use stdClass;
-use Zend\Validator;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class DateTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,7 +23,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
     protected $validator;
 
     /**
-     * Creates a new Zend\Validator\Date object for each test method
+     * Creates a new Laminas\Validator\Date object for each test method
      *
      * @return void
      */
@@ -109,7 +108,7 @@ class DateTest extends \PHPUnit_Framework_TestCase
     /**
      * Ensures that the validator can handle different manual dateformats
      *
-     * @group  ZF-2003
+     * @group  Laminas-2003
      * @return void
      */
     public function testUseManualFormat()
