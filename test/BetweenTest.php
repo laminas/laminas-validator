@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
-use Zend\Validator\Between;
+use Laminas\Validator\Between;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class BetweenTest extends \PHPUnit_Framework_TestCase
 {
@@ -104,7 +103,7 @@ class BetweenTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Zend\Validator\Between::__construct()
+     * @covers Laminas\Validator\Between::__construct()
      * @dataProvider constructBetweenValidatorInvalidDataProvider
      *
      * @param array $args
@@ -112,7 +111,7 @@ class BetweenTest extends \PHPUnit_Framework_TestCase
     public function testMissingMinOrMax(array $args)
     {
         $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
+            'Laminas\Validator\Exception\InvalidArgumentException',
             "Missing option. 'min' and 'max' have to be given"
         );
 
