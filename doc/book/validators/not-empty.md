@@ -6,7 +6,7 @@ use it to ensure required elements have values associated with them.
 
 ## Supported options
 
-The following options are supported for `Zend\Validator\NotEmpty`:
+The following options are supported for `Laminas\Validator\NotEmpty`:
 
 - `type`: Sets the type of validation which will be processed; for details, see
   the section on [specifying empty behavior](#specifying-empty-behavior).
@@ -18,7 +18,7 @@ worked with PHP's `empty()` operator. In particular, this validator will
 evaluate both the integer `0` and string `'0'` as empty.
 
 ```php
-$valid = new Zend\Validator\NotEmpty();
+$valid = new Laminas\Validator\NotEmpty();
 $value  = '';
 $result = $valid->isValid($value);
 // returns false
@@ -29,7 +29,7 @@ $result = $valid->isValid($value);
 Some projects have differing opinions of what is considered an "empty" value: a
 string with only whitespace might be considered empty, or `0` may be
 considered non-empty (particularly for boolean sequences). To accommodate
-differing needs, `Zend\Validator\NotEmpty` allows you to configure which types
+differing needs, `Laminas\Validator\NotEmpty` allows you to configure which types
 should be validated as empty and which not.
 
 The following types can be handled:
@@ -61,7 +61,7 @@ give one or multiple types and add them, you can provide an array, you can use
 constants, or you can provide a textual string. See the following examples:
 
 ```php
-use Zend\Validator\NotEmpty;
+use Laminas\Validator\NotEmpty;
 
 // Returns false on 0
 $validator = new NotEmpty(NotEmpty::INTEGER);

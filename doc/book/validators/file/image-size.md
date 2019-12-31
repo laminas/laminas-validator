@@ -1,6 +1,6 @@
 # ImageSize
 
-`Zend\Validator\File\ImageSize` checks the size of image files. Minimum and/or
+`Laminas\Validator\File\ImageSize` checks the size of image files. Minimum and/or
 maximum dimensions can be set to validate against.
 
 ## Supported Options
@@ -19,7 +19,7 @@ The following set of options are supported:
 ## Basic Usage
 
 ```php
-use Zend\Validator\File\ImageSize;
+use Laminas\Validator\File\ImageSize;
 
 // Is image size between 320x200 (min) and 640x480 (max)?
 $validator = new ImageSize(320, 200, 640, 480);

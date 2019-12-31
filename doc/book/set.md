@@ -1,6 +1,6 @@
 # Standard Validation Classes
 
-The following validators come with the zend-validator distribution.
+The following validators come with the laminas-validator distribution.
 
 - [Barcode](validators/barcode.md)
 - [Between](validators/between.md)
@@ -34,7 +34,7 @@ The following validators come with the zend-validator distribution.
 
 Several other components offer validators as well:
 
-- [zend-i18n](http://zendframework.github.io/zend-i18n/validators/)
+- [laminas-i18n](http://docs.laminas.dev/laminas-i18n/validators/)
 
 ## Deprecated Validators
 
