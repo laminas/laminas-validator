@@ -1,15 +1,14 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Validator;
+namespace Laminas\Validator;
 
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 class StaticValidator
 {
@@ -28,7 +27,7 @@ class StaticValidator
     {
         // Don't share by default to allow different arguments on subsequent calls
         if ($plugins instanceof ValidatorPluginManager) {
-            // Vary how the share by default flag is set based on zend-servicemanager version
+            // Vary how the share by default flag is set based on laminas-servicemanager version
             if (method_exists($plugins, 'configure')) {
                 $plugins->configure(['shared_by_default' => false]);
             } else {
