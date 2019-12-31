@@ -1,42 +1,22 @@
 {
-    "name": "zendframework/zend-validator",
+    "name": "laminas/laminas-validator",
     "description": "provides a set of commonly needed validators",
     "license": "BSD-3-Clause",
     "keywords": [
-        "zf2",
+        "laminas",
         "validator"
     ],
-    "homepage": "https://github.com/zendframework/zend-validator",
-    "autoload": {
-        "psr-4": {
-            "Zend\\Validator\\": "src/"
-        }
+    "homepage": "https://laminas.dev",
+    "support": {
+        "docs": "https://docs.laminas.dev/laminas-validator/",
+        "issues": "https://github.com/laminas/laminas-validator/issues",
+        "source": "https://github.com/laminas/laminas-validator",
+        "rss": "https://github.com/laminas/laminas-validator/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
     },
-    "require": {
-        "php": ">=5.3.23",
-        "zendframework/zend-stdlib": "self.version"
-    },
-    "require-dev": {
-        "zendframework/zend-db": "self.version",
-        "zendframework/zend-filter": "self.version",
-        "zendframework/zend-i18n": "self.version",
-        "zendframework/zend-math": "self.version",
-        "zendframework/zend-servicemanager": "self.version",
-        "zendframework/zend-session": "self.version",
-        "zendframework/zend-uri": "self.version",
-        "fabpot/php-cs-fixer": "1.7.*",
-        "satooshi/php-coveralls": "dev-master",
-        "phpunit/PHPUnit": "~4.0"
-    },
-    "suggest": {
-        "zendframework/zend-db": "Zend\\Db component",
-        "zendframework/zend-filter": "Zend\\Filter component, required by the Digits validator",
-        "zendframework/zend-i18n": "Zend\\I18n component to allow translation of validation error messages as well as to use the various Date validators",
-        "zendframework/zend-math": "Zend\\Math component",
-        "zendframework/zend-resources": "Translations of validator messages",
-        "zendframework/zend-servicemanager": "Zend\\ServiceManager component to allow using the ValidatorPluginManager and validator chains",
-        "zendframework/zend-session": "Zend\\Session component",
-        "zendframework/zend-uri": "Zend\\Uri component, required by the Uri and Sitemap\\Loc validators"
+    "config": {
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {
@@ -44,9 +24,44 @@
             "dev-develop": "2.5-dev"
         }
     },
+    "require": {
+        "php": ">=5.3.23",
+        "laminas/laminas-stdlib": "self.version",
+        "laminas/laminas-zendframework-bridge": "^1.0"
+    },
+    "require-dev": {
+        "fabpot/php-cs-fixer": "1.7.*",
+        "laminas/laminas-db": "self.version",
+        "laminas/laminas-filter": "self.version",
+        "laminas/laminas-i18n": "self.version",
+        "laminas/laminas-math": "self.version",
+        "laminas/laminas-servicemanager": "self.version",
+        "laminas/laminas-session": "self.version",
+        "laminas/laminas-uri": "self.version",
+        "phpunit/phpunit": "~4.0",
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "suggest": {
+        "laminas/laminas-db": "Laminas\\Db component",
+        "laminas/laminas-filter": "Laminas\\Filter component, required by the Digits validator",
+        "laminas/laminas-i18n": "Laminas\\I18n component to allow translation of validation error messages as well as to use the various Date validators",
+        "laminas/laminas-math": "Laminas\\Math component",
+        "laminas/laminas-resources": "Translations of validator messages",
+        "laminas/laminas-servicemanager": "Laminas\\ServiceManager component to allow using the ValidatorPluginManager and validator chains",
+        "laminas/laminas-session": "Laminas\\Session component",
+        "laminas/laminas-uri": "Laminas\\Uri component, required by the Uri and Sitemap\\Loc validators"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laminas\\Validator\\": "src/"
+        }
+    },
     "autoload-dev": {
         "psr-4": {
-            "ZendTest\\Validator\\": "test/"
+            "LaminasTest\\Validator\\": "test/"
         }
+    },
+    "replace": {
+        "zendframework/zend-validator": "self.version"
     }
 }
