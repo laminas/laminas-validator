@@ -1,24 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Validator
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator\File;
+namespace LaminasTest\Validator\File;
 
-use Zend\Validator\File;
+use Laminas\Validator\File;
 
 /**
  * Hash testbed
  *
- * @category   Zend
- * @package    Zend_Validator_File
+ * @category   Laminas
+ * @package    Laminas_Validator_File
  * @subpackage UnitTests
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class HashTest extends \PHPUnit_Framework_TestCase
 {
@@ -143,9 +141,9 @@ class HashTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-11258
+     * @group Laminas-11258
      */
-    public function testZF11258()
+    public function testLaminas11258()
     {
         $validator = new File\Hash('3f8d07e2');
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));

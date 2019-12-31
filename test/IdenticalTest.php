@@ -1,22 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Validator
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
-use Zend\Validator\Identical;
+use Laminas\Validator\Identical;
 
 /**
- * @category   Zend
- * @package    Zend
+ * @category   Laminas
+ * @package    Laminas
  * @subpackage UnitTests
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class IdenticalTest extends \PHPUnit_Framework_TestCase
 {
@@ -78,7 +76,7 @@ class IdenticalTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-6953
+     * @group Laminas-6953
      */
     public function testValidatingAgainstEmptyToken()
     {
@@ -87,7 +85,7 @@ class IdenticalTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-7128
+     * @group Laminas-7128
      */
     public function testValidatingAgainstNonStrings()
     {

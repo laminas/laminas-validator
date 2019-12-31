@@ -1,18 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Validator
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Validator;
+namespace Laminas\Validator;
 
 /**
- * @category   Zend
- * @package    Zend_Validator
+ * @category   Laminas
+ * @package    Laminas_Validator
  */
 class EmailAddress extends AbstractValidator
 {
@@ -60,7 +58,7 @@ class EmailAddress extends AbstractValidator
     protected $localPart;
 
     /**
-     * Returns the found mx record informations
+     * Returns the found mx record information
      *
      * @var array
      */
@@ -81,8 +79,8 @@ class EmailAddress extends AbstractValidator
      * Instantiates hostname validator for local use
      *
      * The following additional option keys are supported:
-     * 'hostnameValidator' => A hostname validator, see Zend\Validator\Hostname
-     * 'allow'             => Options for the hostname validator, see Zend\Validator\Hostname::ALLOW_*
+     * 'hostnameValidator' => A hostname validator, see Laminas\Validator\Hostname
+     * 'allow'             => Options for the hostname validator, see Laminas\Validator\Hostname::ALLOW_*
      * 'useMxCheck'        => If MX check should be enabled, boolean
      * 'useDeepMxCheck'    => If a deep MX check should be done, boolean
      *
@@ -478,7 +476,7 @@ class EmailAddress extends AbstractValidator
     }
 
     /**
-     * Defined by Zend\Validator\ValidatorInterface
+     * Defined by Laminas\Validator\ValidatorInterface
      *
      * Returns true if and only if $value is a valid email address
      * according to RFC2822
