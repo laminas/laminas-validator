@@ -1,24 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Validator
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
+use Laminas\I18n\Translator\Translator;
+use Laminas\Validator\AbstractValidator;
 use ReflectionMethod;
-use Zend\I18n\Translator\Translator;
-use Zend\Validator\AbstractValidator;
 
 /**
- * @category   Zend
- * @package    Zend_Validator
+ * @category   Laminas
+ * @package    Laminas_Validator
  * @subpackage UnitTests
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class AbstractTest extends \PHPUnit_Framework_TestCase
 {
@@ -133,7 +131,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-4463
+     * @group Laminas-4463
      */
     public function testDoesNotFailOnObjectInput()
     {
@@ -198,7 +196,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testTranslatorMethods()
     {
-        $translatorMock = $this->getMock('Zend\I18n\Translator\Translator');
+        $translatorMock = $this->getMock('Laminas\I18n\Translator\Translator');
         $this->validator->setTranslator($translatorMock, 'foo');
 
         $this->assertEquals($translatorMock, $this->validator->getTranslator());
@@ -218,7 +216,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($this->validator->hasTranslator());
 
-        $translatorMock = $this->getMock('Zend\I18n\Translator\Translator');
+        $translatorMock = $this->getMock('Laminas\I18n\Translator\Translator');
         AbstractValidator::setDefaultTranslator($translatorMock, 'foo');
 
         $this->assertEquals($translatorMock, AbstractValidator::getDefaultTranslator());

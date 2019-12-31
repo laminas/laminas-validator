@@ -1,20 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Validator
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Validator\File;
+namespace Laminas\Validator\File;
 
 /**
  * Validator which checks if the destination file does not exist
  *
- * @category  Zend
- * @package   Zend_Validator
+ * @category  Laminas
+ * @package   Laminas_Validator
  */
 class NotExists extends Exists
 {
@@ -34,7 +32,7 @@ class NotExists extends Exists
      * Returns true if and only if the file does not exist in the set destinations
      *
      * @param  string  $value Real file to check for
-     * @param  array   $file  File data from \Zend\File\Transfer\Transfer
+     * @param  array   $file  File data from \Laminas\File\Transfer\Transfer
      * @return bool
      */
     public function isValid($value, $file = null)
