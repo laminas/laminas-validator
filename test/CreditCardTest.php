@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
-use Zend\Config;
-use Zend\Validator\CreditCard;
+use Laminas\Config;
+use Laminas\Validator\CreditCard;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class CreditCardTest extends \PHPUnit_Framework_TestCase
 {
@@ -143,7 +142,7 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
     {
         $validator = new CreditCard();
         $this->assertEquals(null, $validator->getService());
-        $validator->setService(array('ZendTest\Validator\CreditCardTest', 'staticCallback'));
+        $validator->setService(array('LaminasTest\Validator\CreditCardTest', 'staticCallback'));
         $this->assertEquals($expected, $validator->isValid($input));
     }
 
@@ -168,7 +167,7 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
         $validator = new CreditCard(
             array(
                 'type' => CreditCard::VISA,
-                'service' => array('ZendTest\Validator\CreditCardTest', 'staticCallback')
+                'service' => array('LaminasTest\Validator\CreditCardTest', 'staticCallback')
             )
         );
 
@@ -223,8 +222,8 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
         $validator = new CreditCard();
         $this->assertEquals(null, $validator->getService());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'Invalid callback given');
-        $validator->setService(array('ZendTest\Validator\CreditCardTest', 'nocallback'));
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'Invalid callback given');
+        $validator->setService(array('LaminasTest\Validator\CreditCardTest', 'nocallback'));
     }
 
     /**
@@ -248,11 +247,11 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
      */
     public function testOptionalConstructorParameterByConfigObject()
     {
-        $config = new Config\Config(array('type' => 'Visa', 'service' => array('ZendTest\Validator\CreditCardTest', 'staticCallback')));
+        $config = new Config\Config(array('type' => 'Visa', 'service' => array('LaminasTest\Validator\CreditCardTest', 'staticCallback')));
 
         $validator = new CreditCard($config);
         $this->assertEquals(array('Visa'), $validator->getType());
-        $this->assertEquals(array('ZendTest\Validator\CreditCardTest', 'staticCallback'), $validator->getService());
+        $this->assertEquals(array('LaminasTest\Validator\CreditCardTest', 'staticCallback'), $validator->getService());
     }
 
     /**
@@ -262,13 +261,13 @@ class CreditCardTest extends \PHPUnit_Framework_TestCase
      */
     public function testOptionalConstructorParameter()
     {
-        $validator = new CreditCard('Visa', array('ZendTest\Validator\CreditCardTest', 'staticCallback'));
+        $validator = new CreditCard('Visa', array('LaminasTest\Validator\CreditCardTest', 'staticCallback'));
         $this->assertEquals(array('Visa'), $validator->getType());
-        $this->assertEquals(array('ZendTest\Validator\CreditCardTest', 'staticCallback'), $validator->getService());
+        $this->assertEquals(array('LaminasTest\Validator\CreditCardTest', 'staticCallback'), $validator->getService());
     }
 
     /**
-     * @group ZF-9477
+     * @group Laminas-9477
      */
     public function testMultiInstitute()
     {
