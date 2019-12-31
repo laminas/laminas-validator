@@ -1,24 +1,23 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
+use Laminas\Validator\Barcode;
+use Laminas\Validator\Barcode\AdapterInterface;
+use Laminas\Validator\Barcode\Ean13;
+use Laminas\Validator\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Zend\Validator\Barcode;
-use Zend\Validator\Exception\InvalidArgumentException;
-use Zend\Validator\Barcode\AdapterInterface;
-use Zend\Validator\Barcode\Ean13;
 
 /**
- * \Zend\Barcode
+ * \Laminas\Barcode
  *
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class BarcodeTest extends TestCase
 {
@@ -42,7 +41,7 @@ class BarcodeTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('not found');
-        $barcode = new Barcode('\Zend\Validate\BarcodeTest\NonExistentClassName');
+        $barcode = new Barcode('\Laminas\Validate\BarcodeTest\NonExistentClassName');
     }
 
     public function testSetAdapter()
@@ -64,7 +63,7 @@ class BarcodeTest extends TestCase
     }
 
     /**
-     * @ZF-4352
+     * @Laminas-4352
      */
     public function testNonStringValidation()
     {
@@ -163,7 +162,7 @@ class BarcodeTest extends TestCase
     public function testConfigConstructAdapter()
     {
         $array = ['adapter' => 'Ean13', 'options' => 'unknown', 'useChecksum' => false];
-        $config = new \Zend\Config\Config($array);
+        $config = new \Laminas\Config\Config($array);
 
         $barcode = new Barcode($config);
         $this->assertTrue($barcode->isValid('0075678164125'));
@@ -420,7 +419,7 @@ class BarcodeTest extends TestCase
     }
 
     /**
-     * @group ZF-10116
+     * @group Laminas-10116
      */
     public function testArrayLengthMessage()
     {
@@ -432,7 +431,7 @@ class BarcodeTest extends TestCase
     }
 
     /**
-     * @group ZF-8673
+     * @group Laminas-8673
      */
     public function testCODABAR()
     {
@@ -447,7 +446,7 @@ class BarcodeTest extends TestCase
     }
 
     /**
-     * @group ZF-11532
+     * @group Laminas-11532
      */
     public function testIssnWithMod0()
     {
@@ -456,7 +455,7 @@ class BarcodeTest extends TestCase
     }
 
     /**
-     * @group ZF-8674
+     * @group Laminas-8674
      */
     public function testCODE128()
     {
@@ -477,7 +476,7 @@ class BarcodeTest extends TestCase
     /**
      * Test if EAN-13 contains only numeric characters
      *
-     * @group ZF-3297
+     * @group Laminas-3297
      */
     public function testEan13ContainsOnlyNumeric()
     {
