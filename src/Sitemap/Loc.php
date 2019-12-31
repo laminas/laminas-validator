@@ -1,23 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Validator\Sitemap;
+namespace Laminas\Validator\Sitemap;
 
-use Zend\Uri;
-use Zend\Validator\AbstractValidator;
+use Laminas\Uri;
+use Laminas\Validator\AbstractValidator;
 
 /**
  * Validates whether a given value is valid as a sitemap <loc> value
  *
  * @link       http://www.sitemaps.org/protocol.php Sitemaps XML format
  *
- * @see        Zend\Uri\Uri
+ * @see        Laminas\Uri\Uri
  */
 class Loc extends AbstractValidator
 {

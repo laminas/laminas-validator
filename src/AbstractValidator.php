@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Validator;
+namespace Laminas\Validator;
 
+use Laminas\I18n\Translator\Translator;
+use Laminas\I18n\Translator\TranslatorAwareInterface;
+use Laminas\Stdlib\ArrayUtils;
+use Laminas\Validator\Exception\InvalidArgumentException;
 use Traversable;
-use Zend\I18n\Translator\Translator;
-use Zend\I18n\Translator\TranslatorAwareInterface;
-use Zend\Stdlib\ArrayUtils;
-use Zend\Validator\Exception\InvalidArgumentException;
 
 abstract class AbstractValidator implements
     TranslatorAwareInterface,
@@ -49,7 +48,7 @@ abstract class AbstractValidator implements
         'messages'             => array(), // Array of validation failure messages
         'messageTemplates'     => array(), // Array of validation failure message templates
         'messageVariables'     => array(), // Array of additional variables available for validation failure messages
-        'translator'           => null,    // Translation object to used -> Zend\I18n\Translator\Translator
+        'translator'           => null,    // Translation object to used -> Laminas\I18n\Translator\Translator
         'translatorTextDomain' => null,    // Translation text domain
         'translatorEnabled'    => true,    // Is translation enabled?
         'valueObscured'        => false,   // Flag indicating whether or not value should be obfuscated
