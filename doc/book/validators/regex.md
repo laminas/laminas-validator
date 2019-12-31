@@ -5,7 +5,7 @@ regular expression.
 
 ## Supported options
 
-The following options are supported for `Zend\Validator\Regex`:
+The following options are supported for `Laminas\Validator\Regex`:
 
 - `pattern`: Sets the regular expression pattern for this validator.
 
@@ -15,7 +15,7 @@ Validation with regular expressions allows complex validations
 without writing a custom validator.
 
 ```php
-$validator = new Zend\Validator\Regex(['pattern' => '/^Test/']);
+$validator = new Laminas\Validator\Regex(['pattern' => '/^Test/']);
 
 $validator->isValid("Test"); // returns true
 $validator->isValid("Testing"); // returns true
@@ -32,7 +32,7 @@ It is also possible to set a different pattern afterwards by using
 `setPattern()` and to get the actual set pattern with `getPattern()`.
 
 ```php
-$validator = new Zend\Validator\Regex(['pattern' => '/^Test/']);
+$validator = new Laminas\Validator\Regex(['pattern' => '/^Test/']);
 $validator->setPattern('ing$/');
 
 $validator->isValid("Test"); // returns false

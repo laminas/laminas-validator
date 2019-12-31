@@ -1,16 +1,17 @@
 <?php
+
 /**
- * @link      http://github.com/zendframework/zend-validator for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Validator;
+namespace Laminas\Validator;
 
 class Module
 {
     /**
-     * Return default zend-validator configuration for zend-mvc applications.
+     * Return default laminas-validator configuration for laminas-mvc applications.
      */
     public function getConfig()
     {
@@ -24,7 +25,7 @@ class Module
     /**
      * Register a specification for the ValidatorManager with the ServiceListener.
      *
-     * @param \Zend\ModuleManager\ModuleManager $moduleManager
+     * @param \Laminas\ModuleManager\ModuleManager $moduleManager
      * @return void
      */
     public function init($moduleManager)
@@ -36,7 +37,7 @@ class Module
         $serviceListener->addServiceManager(
             'ValidatorManager',
             'validators',
-            'Zend\ModuleManager\Feature\ValidatorProviderInterface',
+            'Laminas\ModuleManager\Feature\ValidatorProviderInterface',
             'getValidatorConfig'
         );
     }

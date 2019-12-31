@@ -1,11 +1,11 @@
 # Identical Validator
 
-`Zend\Validator\Identical` allows you to validate if a given value is identical
+`Laminas\Validator\Identical` allows you to validate if a given value is identical
 with a set token.
 
 ## Supported options
 
-The following options are supported for `Zend\Validator\Identical`:
+The following options are supported for `Laminas\Validator\Identical`:
 
 - `strict`: Defines if the validation should be strict (i.e., if types should
   also be considered). The default value is `true`.
@@ -21,7 +21,7 @@ the token, as demonstrated in the following example:
 token.
 
 ```php
-$valid = new Zend\Validator\Identical('origin');
+$valid = new Laminas\Validator\Identical('origin');
 
 if ($valid->isValid($value)) {
     return true;
@@ -35,12 +35,12 @@ You can set the token after instantiation by using the method `setToken()`.
 
 ## Identical objects
 
-`Zend\Validator\Identical` can validate not only strings, but any other variable
+`Laminas\Validator\Identical` can validate not only strings, but any other variable
 type, such as booleans, integers, floats, arrays, or even objects. As already
 noted, the token and value must be identical.
 
 ```php
-$valid = new Zend\Validator\Identical(123);
+$valid = new Laminas\Validator\Identical(123);
 
 if ($valid->isValid($input)) {
     // input appears to be valid
@@ -57,7 +57,7 @@ if ($valid->isValid($input)) {
 
 ## Form elements
 
-`Zend\Validator\Identical` supports the comparison of form elements. This can be
+`Laminas\Validator\Identical` supports the comparison of form elements. This can be
 done by using the element's name as the `token`:
 
 ```php
@@ -90,11 +90,11 @@ Sometimes you will need to validate an input that lives inside a fieldset, and
 this can be accomplished as follows:
 
 ```php
-use Zend\Form\Element;
-use Zend\Form\Fieldset;
-use Zend\Form\Form;
-use Zend\InputFilter\Input;
-use Zend\InputFilter\InputFilter;
+use Laminas\Form\Element;
+use Laminas\Form\Fieldset;
+use Laminas\Form\Form;
+use Laminas\InputFilter\Input;
+use Laminas\InputFilter\InputFilter;
 
 $userFieldset = new Fieldset('user'); // (1)
 $userFieldset->add([
@@ -178,12 +178,12 @@ $signUpForm->setInputFilter($inputFilter);
 
 ## Strict validation
 
-As mentioned before, `Zend\Validator\Identical` validates tokens using strict
+As mentioned before, `Laminas\Validator\Identical` validates tokens using strict
 typing. You can change this behaviour by using the `strict` option. The default
 value for this property is `true`.
 
 ```php
-$valid = new Zend\Validator\Identical(['token' => 123, 'strict' => false]);
+$valid = new Laminas\Validator\Identical(['token' => 123, 'strict' => false]);
 $input = '123';
 if ($valid->isValid($input)) {
     // input appears to be valid
@@ -200,7 +200,7 @@ For convenience you can also use `setStrict()` and `getStrict()`.
 
 ## Configuration
 
-As all other validators, `Zend\Validator\Identical` also supports the usage of
+As all other validators, `Laminas\Validator\Identical` also supports the usage of
 configuration settings during instantiation. This means that you can configure
 this validator with a `Traversable` object.
 
@@ -211,7 +211,7 @@ token, and it contains a `token` key, you should wrap it within another
 ```php
 // This will not validate ['token' => 123], it will actually validate the
 // integer 123
-$valid = new Zend\Validator\Identical(['token' => 123]);
+$valid = new Laminas\Validator\Identical(['token' => 123]);
 if ($valid->isValid($input)) {
     // input appears to be valid
 } else {
@@ -227,7 +227,7 @@ So, when you are using an array as the token, and it contains one element with a
 
 ```php
 // Unlike the previous example, this will validate ['token' => 123]
-$valid = new Zend\Validator\Identical(['token' => ['token' => 123]]);
+$valid = new Laminas\Validator\Identical(['token' => ['token' => 123]]);
 if ($valid->isValid($input)) {
     // input appears to be valid
 } else {

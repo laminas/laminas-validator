@@ -1,6 +1,6 @@
 # Count
 
-`Zend\Validator\File\Count` allows you to validate that the number of files
+`Laminas\Validator\File\Count` allows you to validate that the number of files
 uploaded matches criteria, including a minimum number of files and/or a maximum
 number of files.
 
@@ -16,12 +16,12 @@ The following options are supported:
 ## Basic Usage
 
 ```php
-$validator = new Zend\Validator\File\Count([
+$validator = new Laminas\Validator\File\Count([
     'min' => 1,
     'max' => 5,
 ]);
 
-// Setting to the $_FILES superglobal; could also use the zend-http
+// Setting to the $_FILES superglobal; could also use the laminas-http
 // request's `getFiles()` or PSR-7 ServerRequest's `getUploadedFiles()`.
 $files = $_FILES;
 
