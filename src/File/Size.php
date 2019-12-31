@@ -1,24 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Validator
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Validator\File;
+namespace Laminas\Validator\File;
 
-use Zend\Stdlib\ErrorHandler;
-use Zend\Validator\AbstractValidator;
-use Zend\Validator\Exception;
+use Laminas\Stdlib\ErrorHandler;
+use Laminas\Validator\AbstractValidator;
+use Laminas\Validator\Exception;
 
 /**
  * Validator for the maximum size of a file up to a max of 2GB
  *
- * @category  Zend
- * @package   Zend_Validate
+ * @category  Laminas
+ * @package   Laminas_Validate
  */
 class Size extends AbstractValidator
 {
@@ -233,7 +231,7 @@ class Size extends AbstractValidator
      * not bigger than max (when max is not null).
      *
      * @param  string $value Real file to check for size
-     * @param  array  $file  File data from \Zend\File\Transfer\Transfer
+     * @param  array  $file  File data from \Laminas\File\Transfer\Transfer
      * @return boolean
      */
     public function isValid($value, $file = null)
