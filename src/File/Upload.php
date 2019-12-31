@@ -1,17 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Validator\File;
+namespace Laminas\Validator\File;
 
 use Countable;
-use Zend\Validator\AbstractValidator;
-use Zend\Validator\Exception;
+use Laminas\Validator\AbstractValidator;
+use Laminas\Validator\Exception;
 
 /**
  * Validator for the maximum size of a file up to a max of 2GB
@@ -56,11 +55,11 @@ class Upload extends AbstractValidator
     /**
      * Sets validator options
      *
-     * The array $files must be given in syntax of Zend\File\Transfer\Transfer to be checked
+     * The array $files must be given in syntax of Laminas\File\Transfer\Transfer to be checked
      * If no files are given the $_FILES array will be used automatically.
      * NOTE: This validator will only work with HTTP POST uploads!
      *
-     * @param  array|\Traversable $options Array of files in syntax of \Zend\File\Transfer\Transfer
+     * @param  array|\Traversable $options Array of files in syntax of \Laminas\File\Transfer\Transfer
      */
     public function __construct($options = [])
     {
@@ -105,7 +104,7 @@ class Upload extends AbstractValidator
     /**
      * Sets the files to be checked
      *
-     * @param  array $files The files to check in syntax of \Zend\File\Transfer\Transfer
+     * @param  array $files The files to check in syntax of \Laminas\File\Transfer\Transfer
      * @return Upload Provides a fluent interface
      */
     public function setFiles($files = [])

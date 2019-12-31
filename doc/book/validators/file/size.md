@@ -1,6 +1,6 @@
 # Size
 
-`Zend\Validator\File\Size` checks for the size of a file.
+`Laminas\Validator\File\Size` checks for the size of a file.
 
 ## Supported Options
 
@@ -19,7 +19,7 @@ using 1024 as the base value (ie. 1kB == 1024 bytes, 1MB == 1024kB).
 ## Basic Usage
 
 ```php
-use Zend\Validator\File\Size;
+use Laminas\Validator\File\Size;
 
 // Limit the file size to 40000 bytes
 $validator = new Size(40000);
