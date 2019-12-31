@@ -1,6 +1,6 @@
 # Md5
 
-`Zend\Validator\File\Md5` allows you to validate if a given file's hashed
+`Laminas\Validator\File\Md5` allows you to validate if a given file's hashed
 contents matches the supplied md5 hash(es). It is subclassed from the
 [Hash validator](hash.md) to provide a validator that supports only the MD5
 algorithm.
@@ -19,7 +19,7 @@ The following set of options are supported:
 ## Basic Usage
 
 ```php
-use Zend\Validator\File\Md5;
+use Laminas\Validator\File\Md5;
 
 // Does file have the given hash?
 $validator = new Md5('3b3652f336522365223');

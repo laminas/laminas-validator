@@ -2,7 +2,7 @@
 
 - **Since 2.10.0**
 
-`Zend\Validator\IsCountable` allows you to validate that a value can be counted
+`Laminas\Validator\IsCountable` allows you to validate that a value can be counted
 (i.e., it's an array or implements `Countable`), and, optionally:
 
 - the exact count of the value
@@ -16,7 +16,7 @@ the validator operates similar to the [Between validator](between.md).
 
 ## Supported options
 
-The following options are supported for `Zend\Validator\IsCountable`:
+The following options are supported for `Laminas\Validator\IsCountable`:
 
 - `count`: Defines if the validation should look for a specific, exact count for
   the value provided.
@@ -31,7 +31,7 @@ Given no options, the validator simply tests to see that the value may be
 counted (i.e., it's an array or `Countable` instance):
 
 ```php
-$validator = new Zend\Validator\IsCountable();
+$validator = new Laminas\Validator\IsCountable();
 
 $validator->isValid(10);                    // false; not an array or Countable
 $validator->isValid([10]);                  // true; value is an array
@@ -45,7 +45,7 @@ You can also specify an exact count; if the value is countable, and its count
 matches, the the value is valid.
 
 ```php
-$validator = new Zend\Validator\IsCountable(['count' => 3]);
+$validator = new Laminas\Validator\IsCountable(['count' => 3]);
 
 $validator->isValid([1, 2, 3]);                  // true; countable, and count is 3
 $validator->isValid(new ArrayObject([1, 2, 3])); // true; countable, and count is 3
@@ -59,7 +59,7 @@ You may specify a minimum count. When you do, the value must be countable, and
 greater than or equal to the minimum count you specify in order to be valid.
 
 ```php
-$validator = new Zend\Validator\IsCountable(['min' => 2]);
+$validator = new Laminas\Validator\IsCountable(['min' => 2]);
 
 $validator->isValid([1, 2, 3]);                  // true; countable, and count is 3
 $validator->isValid(new ArrayObject([1, 2, 3])); // true; countable, and count is 3
@@ -75,7 +75,7 @@ You may specify a maximum count. When you do, the value must be countable, and
 less than or equal to the maximum count you specify in order to be valid.
 
 ```php
-$validator = new Zend\Validator\IsCountable(['max' => 2]);
+$validator = new Laminas\Validator\IsCountable(['max' => 2]);
 
 $validator->isValid([1, 2, 3]);                  // false; countable, but count is 3
 $validator->isValid(new ArrayObject([1, 2, 3])); // false; countable, but count is 3
@@ -91,7 +91,7 @@ If you specify both a minimum and maximum, the count must be _between_ the two,
 inclusively (i.e., it may be the minimum or maximum, and any value between).
 
 ```php
-$validator = new Zend\Validator\IsCountable([
+$validator = new Laminas\Validator\IsCountable([
     'min' => 3,
     'max' => 5,
 ]);

@@ -1,15 +1,16 @@
 <?php
+
 /**
- * @link      http://github.com/zendframework/zend-validator for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
+use Laminas\Validator\Uuid;
 use PHPUnit\Framework\TestCase;
 use stdClass;
-use Zend\Validator\Uuid;
 
 /**
  * Class UuidTest.
@@ -74,7 +75,7 @@ final class UuidTest extends TestCase
     public function invalidUuidProvider()
     {
         return [
-            'invalid-characters' => ['zf6f8cb0-c57d-11e1-9b21-0800200c9a66', Uuid::INVALID],
+            'invalid-characters' => ['laminas6f8cb0-c57d-11e1-9b21-0800200c9a66', Uuid::INVALID],
             'missing-separators' => ['af6f8cb0c57d11e19b210800200c9a66', Uuid::INVALID],
             'invalid-segment-2'  => ['ff6f8cb0-c57da-51e1-9b21-0800200c9a66', Uuid::INVALID],
             'invalid-segment-1'  => ['af6f8cb-c57d-11e1-9b21-0800200c9a66', Uuid::INVALID],
