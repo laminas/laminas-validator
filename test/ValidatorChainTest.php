@@ -1,22 +1,21 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
-use Zend\Validator\AbstractValidator;
-use Zend\Validator\Between;
-use Zend\Validator\NotEmpty;
-use Zend\Validator\StaticValidator;
-use Zend\Validator\ValidatorChain;
+use Laminas\Validator\AbstractValidator;
+use Laminas\Validator\Between;
+use Laminas\Validator\NotEmpty;
+use Laminas\Validator\StaticValidator;
+use Laminas\Validator\ValidatorChain;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class ValidatorChainTest extends \PHPUnit_Framework_TestCase
 {
@@ -107,14 +106,14 @@ class ValidatorChainTest extends \PHPUnit_Framework_TestCase
      * Ensures that if we specify a validator class basename that doesn't
      * exist in the namespace, is() throws an exception.
      *
-     * Refactored to conform with ZF-2724.
+     * Refactored to conform with Laminas-2724.
      *
-     * @group  ZF-2724
+     * @group  Laminas-2724
      * @return void
      */
     public function testStaticFactoryClassNotFound()
     {
-        $this->setExpectedException('Zend\ServiceManager\Exception\ServiceNotFoundException');
+        $this->setExpectedException('Laminas\ServiceManager\Exception\ServiceNotFoundException');
         StaticValidator::execute('1234', 'UnknownValidator');
     }
 
@@ -169,7 +168,7 @@ class ValidatorChainTest extends \PHPUnit_Framework_TestCase
     /**
      * Handle file not found errors
      *
-     * @group  ZF-2724
+     * @group  Laminas-2724
      * @param  int    $errnum
      * @param  string $errstr
      * @return void
@@ -197,11 +196,11 @@ class ValidatorChainTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Zend\Validator\ValidatorInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Laminas\Validator\ValidatorInterface
      */
     public function getValidatorTrue()
     {
-        $validator = $this->getMock('Zend\Validator\ValidatorInterface');
+        $validator = $this->getMock('Laminas\Validator\ValidatorInterface');
         $validator->expects($this->any())
             ->method('isValid')
             ->will($this->returnValue(true));
@@ -209,11 +208,11 @@ class ValidatorChainTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Zend\Validator\ValidatorInterface
+     * @return \PHPUnit_Framework_MockObject_MockObject|\Laminas\Validator\ValidatorInterface
      */
     public function getValidatorFalse()
     {
-        $validator = $this->getMock('Zend\Validator\ValidatorInterface');
+        $validator = $this->getMock('Laminas\Validator\ValidatorInterface');
         $validator->expects($this->any())
             ->method('isValid')
             ->will($this->returnValue(false));
@@ -224,7 +223,7 @@ class ValidatorChainTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-412
+     * @group Laminas-412
      */
     public function testCanAttachMultipleValidatorsOfTheSameTypeAsDiscreteInstances()
     {
@@ -277,7 +276,7 @@ class ValidatorChainTest extends \PHPUnit_Framework_TestCase
         $serialized = serialize($this->validator);
 
         $unserialized = unserialize($serialized);
-        $this->assertInstanceOf('Zend\Validator\ValidatorChain', $unserialized);
+        $this->assertInstanceOf('Laminas\Validator\ValidatorChain', $unserialized);
         $this->assertEquals(2, count($unserialized));
         $this->assertFalse($unserialized->isValid(''));
     }
@@ -291,7 +290,7 @@ class ValidatorChainTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group zfcampus_zf-apigility-admin_89
+     * @group laminascampus_api-tools-admin_89
      * @dataProvider breakChainFlags
      */
     public function testAttachByNameAllowsSpecifyingBreakChainOnFailureFlagViaOptions($option)
@@ -307,7 +306,7 @@ class ValidatorChainTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $spec);
         $this->assertArrayHasKey('instance', $spec);
         $validator = $spec['instance'];
-        $this->assertInstanceOf('Zend\Validator\GreaterThan', $validator);
+        $this->assertInstanceOf('Laminas\Validator\GreaterThan', $validator);
         $this->assertArrayHasKey('breakChainOnFailure', $spec);
         $this->assertTrue($spec['breakChainOnFailure']);
     }
