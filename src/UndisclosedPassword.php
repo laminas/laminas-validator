@@ -1,11 +1,12 @@
 <?php
+
 /**
- * @link      http://github.com/zendframework/zend-validator for the canonical source repository
- * @copyright Copyright (c) 2019 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Validator;
+namespace Laminas\Validator;
 
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
@@ -16,7 +17,7 @@ final class UndisclosedPassword extends AbstractValidator
 {
     private const HIBP_API_URI = 'https://api.pwnedpasswords.com';
     private const HIBP_API_REQUEST_TIMEOUT = 300;
-    private const HIBP_CLIENT_USER_AGENT_STRING = 'zend-validator';
+    private const HIBP_CLIENT_USER_AGENT_STRING = 'laminas-validator';
     private const HIBP_CLIENT_ACCEPT_HEADER = 'application/vnd.haveibeenpwned.v2+json';
     private const HIBP_K_ANONYMITY_HASH_RANGE_LENGTH = 5;
     private const HIBP_K_ANONYMITY_HASH_RANGE_BASE = 0;

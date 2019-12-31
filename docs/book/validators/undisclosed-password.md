@@ -2,7 +2,7 @@
 
 - **Since 2.13.0**
 
-`Zend\Validator\UndisclosedPassword` allows you to validate if a given password was found in data breaches using the service [Have I Been Pwned?](https://www.haveibeenpwned.com), in a secure, anonymous way using [K-Anonymity](https://www.troyhunt.com/ive-just-launched-pwned-passwords-version-2) to ensure passwords are not send in full over the wire.
+`Laminas\Validator\UndisclosedPassword` allows you to validate if a given password was found in data breaches using the service [Have I Been Pwned?](https://www.haveibeenpwned.com), in a secure, anonymous way using [K-Anonymity](https://www.troyhunt.com/ive-just-launched-pwned-passwords-version-2) to ensure passwords are not send in full over the wire.
 
 > ### Installation requirements
 > 
@@ -28,7 +28,7 @@ Once you have an instance, you can then pass a password to its `isValid()` metho
 If the password was found via the service, `isValid()` will return `false`. If the password was not found, `isValid()` will return `true`.
 
 ```php
-$validator = new Zend\Validator\UndisclosedPassword(
+$validator = new Laminas\Validator\UndisclosedPassword(
     $httpClient, // a PSR-18 HttpClientInterface
     $requestFactory, // a PSR-17 RequestFactoryInterface
     $responseFactory // a PSR-17 ResponseFactoryInterface
@@ -43,7 +43,7 @@ $result = $validator->isValid('8aDk=XiW2E.77tLfuAcB');
 
 ## A simple command line example
 
-In this example, I'm using `zendframework/zend-diactoros` to provide HTTP messages, and `php-http/curl-client` as the HTTP client. Let's begin with installation of all required packages:
+In this example, I'm using `laminas/laminas-diactoros` to provide HTTP messages, and `php-http/curl-client` as the HTTP client. Let's begin with installation of all required packages:
 
 ```bash
 $ composer require \
@@ -51,8 +51,8 @@ $ composer require \
     php-http/message-factory \
     php-http/discovery \
     php-http/curl-client \
-    zendframework/zend-diactoros \
-    zendframework/zend-validator
+    laminas/laminas-diactoros \
+    laminas/laminas-validator
 ```
 
 Next, I create a file, `undisclosed.php`, where I put my code:
@@ -63,9 +63,9 @@ Next, I create a file, `undisclosed.php`, where I put my code:
 namespace Undisclosed;
 
 use Http\Client\Curl\Client;
-use Zend\Diactoros\RequestFactory;
-use Zend\Diactoros\ResponseFactory;
-use Zend\Validator\UndisclosedPassword;
+use Laminas\Diactoros\RequestFactory;
+use Laminas\Diactoros\ResponseFactory;
+use Laminas\Validator\UndisclosedPassword;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
