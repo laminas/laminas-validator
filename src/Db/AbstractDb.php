@@ -1,23 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Validator\Db;
+namespace Laminas\Validator\Db;
 
+use Laminas\Db\Adapter\Adapter as DbAdapter;
+use Laminas\Db\Adapter\Driver\DriverInterface as DbDriverInterface;
+use Laminas\Db\Sql\Select;
+use Laminas\Db\Sql\Sql;
+use Laminas\Db\Sql\TableIdentifier;
+use Laminas\Stdlib\ArrayUtils;
+use Laminas\Validator\AbstractValidator;
+use Laminas\Validator\Exception;
 use Traversable;
-use Zend\Db\Adapter\Adapter as DbAdapter;
-use Zend\Db\Adapter\Driver\DriverInterface as DbDriverInterface;
-use Zend\Db\Sql\Sql;
-use Zend\Db\Sql\Select;
-use Zend\Db\Sql\TableIdentifier;
-use Zend\Stdlib\ArrayUtils;
-use Zend\Validator\AbstractValidator;
-use Zend\Validator\Exception;
 
 /**
  * Class for Database record validation
@@ -68,12 +67,12 @@ abstract class AbstractDb extends AbstractValidator
     /**
      * Database adapter to use. If null isValid() will throw an exception
      *
-     * @var \Zend\Db\Adapter\Adapter
+     * @var \Laminas\Db\Adapter\Adapter
      */
     protected $adapter = null;
 
     /**
-     * Provides basic configuration for use with Zend\Validator\Db Validators
+     * Provides basic configuration for use with Laminas\Validator\Db Validators
      * Setting $exclude allows a single record to be excluded from matching.
      * Exclude can either be a String containing a where clause, or an array with `field` and `value` keys
      * to define the where clause added to the sql.
@@ -87,7 +86,7 @@ abstract class AbstractDb extends AbstractValidator
      * 'adapter' => An optional database adapter to use
      *
      * @param array|Traversable|Select $options Options to use for this validator
-     * @throws \Zend\Validator\Exception\InvalidArgumentException
+     * @throws \Laminas\Validator\Exception\InvalidArgumentException
      */
     public function __construct($options = null)
     {
@@ -151,7 +150,7 @@ abstract class AbstractDb extends AbstractValidator
     /**
      * Returns the set adapter
      *
-     * @throws \Zend\Validator\Exception\RuntimeException When no database adapter is defined
+     * @throws \Laminas\Validator\Exception\RuntimeException When no database adapter is defined
      * @return DbAdapter
      */
     public function getAdapter()
