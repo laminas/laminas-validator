@@ -1,17 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Validator\Barcode;
+namespace Laminas\Validator\Barcode;
 
-use Zend\Stdlib\StringUtils;
-use Zend\Stdlib\StringWrapper\StringWrapperInterface;
-use Zend\Validator\Exception;
+use Laminas\Stdlib\StringUtils;
+use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
+use Laminas\Validator\Exception;
 
 class Code128 extends AbstractAdapter
 {

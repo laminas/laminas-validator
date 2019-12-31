@@ -1,61 +1,71 @@
 {
-    "name": "zendframework/zend-validator",
+    "name": "laminas/laminas-validator",
     "description": "provides a set of commonly needed validators",
     "license": "BSD-3-Clause",
     "keywords": [
-        "zf2",
+        "laminas",
         "validator"
     ],
-    "homepage": "https://github.com/zendframework/zend-validator",
-    "autoload": {
-        "psr-4": {
-            "Zend\\Validator\\": "src/"
-        }
+    "homepage": "https://laminas.dev",
+    "support": {
+        "docs": "https://docs.laminas.dev/laminas-validator/",
+        "issues": "https://github.com/laminas/laminas-validator/issues",
+        "source": "https://github.com/laminas/laminas-validator",
+        "rss": "https://github.com/laminas/laminas-validator/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
     },
-    "require": {
-        "php": "^5.6 || ^7.0",
-        "zendframework/zend-stdlib": "^2.7.6 || ^3.1",
-        "container-interop/container-interop": "^1.1"
+    "config": {
+        "sort-packages": true
     },
-    "require-dev": {
-        "zendframework/zend-cache": "^2.6.1",
-        "zendframework/zend-config": "^2.6",
-        "zendframework/zend-db": "^2.7",
-        "zendframework/zend-filter": "^2.6",
-        "zendframework/zend-http": "^2.5.4",
-        "zendframework/zend-i18n": "^2.6",
-        "zendframework/zend-math": "^2.6",
-        "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3",
-        "zendframework/zend-session": "^2.6.2",
-        "zendframework/zend-uri": "^2.5",
-        "phpunit/PHPUnit": "^6.0.8 || ^5.7.15",
-        "zendframework/zend-coding-standard": "~1.0.0"
-    },
-    "suggest": {
-        "zendframework/zend-db": "Zend\\Db component, required by the (No)RecordExists validator",
-        "zendframework/zend-filter": "Zend\\Filter component, required by the Digits validator",
-        "zendframework/zend-i18n": "Zend\\I18n component to allow translation of validation error messages",
-        "zendframework/zend-math": "Zend\\Math component, required by the Csrf validator",
-        "zendframework/zend-i18n-resources": "Translations of validator messages",
-        "zendframework/zend-servicemanager": "Zend\\ServiceManager component to allow using the ValidatorPluginManager and validator chains",
-        "zendframework/zend-session": "Zend\\Session component, required by the Csrf validator",
-        "zendframework/zend-uri": "Zend\\Uri component, required by the Uri and Sitemap\\Loc validators"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "extra": {
         "branch-alias": {
             "dev-master": "2.9-dev",
             "dev-develop": "2.10-dev"
         },
-        "zf": {
-            "component": "Zend\\Validator",
-            "config-provider": "Zend\\Validator\\ConfigProvider"
+        "laminas": {
+            "component": "Laminas\\Validator",
+            "config-provider": "Laminas\\Validator\\ConfigProvider"
+        }
+    },
+    "require": {
+        "php": "^5.6 || ^7.0",
+        "container-interop/container-interop": "^1.1",
+        "laminas/laminas-stdlib": "^2.7.6 || ^3.1",
+        "laminas/laminas-zendframework-bridge": "^1.0"
+    },
+    "require-dev": {
+        "laminas/laminas-cache": "^2.6.1",
+        "laminas/laminas-coding-standard": "~1.0.0",
+        "laminas/laminas-config": "^2.6",
+        "laminas/laminas-db": "^2.7",
+        "laminas/laminas-filter": "^2.6",
+        "laminas/laminas-http": "^2.5.4",
+        "laminas/laminas-i18n": "^2.6",
+        "laminas/laminas-math": "^2.6",
+        "laminas/laminas-servicemanager": "^2.7.5 || ^3.0.3",
+        "laminas/laminas-session": "^2.6.2",
+        "laminas/laminas-uri": "^2.5",
+        "phpunit/phpunit": "^6.0.8 || ^5.7.15"
+    },
+    "suggest": {
+        "laminas/laminas-db": "Laminas\\Db component, required by the (No)RecordExists validator",
+        "laminas/laminas-filter": "Laminas\\Filter component, required by the Digits validator",
+        "laminas/laminas-i18n": "Laminas\\I18n component to allow translation of validation error messages",
+        "laminas/laminas-i18n-resources": "Translations of validator messages",
+        "laminas/laminas-math": "Laminas\\Math component, required by the Csrf validator",
+        "laminas/laminas-servicemanager": "Laminas\\ServiceManager component to allow using the ValidatorPluginManager and validator chains",
+        "laminas/laminas-session": "Laminas\\Session component, required by the Csrf validator",
+        "laminas/laminas-uri": "Laminas\\Uri component, required by the Uri and Sitemap\\Loc validators"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laminas\\Validator\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "ZendTest\\Validator\\": "test/"
+            "LaminasTest\\Validator\\": "test/"
         }
     },
     "scripts": {
@@ -68,5 +78,8 @@
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
         "upload-coverage": "coveralls -v"
+    },
+    "replace": {
+        "zendframework/zend-validator": "self.version"
     }
 }
