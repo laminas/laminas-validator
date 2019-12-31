@@ -1,11 +1,11 @@
 # Iban Validator
 
-`Zend\Validator\Iban` validates if a given value could be a IBAN number. IBAN is
+`Laminas\Validator\Iban` validates if a given value could be a IBAN number. IBAN is
 the abbreviation for "International Bank Account Number".
 
 ## Supported options
 
-The following options are supported for `Zend\Validator\Iban`:
+The following options are supported for `Laminas\Validator\Iban`:
 
 - `country_code`: Sets the country code which is used to get the IBAN format
   for validation.
@@ -15,7 +15,7 @@ The following options are supported for `Zend\Validator\Iban`:
 IBAN numbers are always related to a country. This means that different
 countries use different formats for their IBAN numbers. This is the reason why
 IBAN numbers always need a country code. By knowing this we already know how
-to use `Zend\Validator\Iban`.
+to use `Laminas\Validator\Iban`.
 
 ### Ungreedy IBAN validation
 
@@ -24,7 +24,7 @@ not. This means that you don't want to validate it against a defined country.
 This can be done by using `false` as locale.
 
 ```php
-$validator = new Zend\Validator\Iban(['country_code' => false]);
+$validator = new Laminas\Validator\Iban(['country_code' => false]);
 // Note: you can also provide FALSE as the sole parameter
 
 if ($validator->isValid('AT611904300234573201')) {
@@ -45,7 +45,7 @@ do this during instaniation via the option `country_code`, or afterwards by
 using `setCountryCode()`.
 
 ```php
-$validator = new Zend\Validator\Iban(['country_code' => 'AT']);
+$validator = new Laminas\Validator\Iban(['country_code' => 'AT']);
 
 if ($validator->isValid('AT611904300234573201')) {
     // IBAN appears to be valid

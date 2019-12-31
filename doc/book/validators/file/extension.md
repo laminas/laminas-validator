@@ -1,6 +1,6 @@
 # Extension
 
-`Zend\Validator\File\Extension` checks the extension of files. It will assert
+`Laminas\Validator\File\Extension` checks the extension of files. It will assert
 `true` when a given file matches any of the defined extensions.
 
 This validator is inversely related to the
@@ -18,7 +18,7 @@ The following set of options are supported:
 ## Usage Examples
 
 ```php
-use Zend\Validator\File\Extension;
+use Laminas\Validator\File\Extension;
 
 // Allow files with 'php' or 'exe' extensions
 $validator = new Extension('php,exe');

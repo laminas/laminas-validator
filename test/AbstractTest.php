@@ -1,21 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
+use Laminas\Validator\AbstractValidator;
+use Laminas\Validator\EmailAddress;
+use Laminas\Validator\Hostname;
 use ReflectionMethod;
-use Zend\Validator\AbstractValidator;
-use Zend\Validator\EmailAddress;
-use Zend\Validator\Hostname;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class AbstractTest extends \PHPUnit_Framework_TestCase
 {
@@ -116,7 +115,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-4463
+     * @group Laminas-4463
      */
     public function testDoesNotFailOnObjectInput()
     {
@@ -187,7 +186,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
     public function testTranslatorMethods()
     {
-        $translatorMock = $this->getMock('ZendTest\Validator\TestAsset\Translator');
+        $translatorMock = $this->getMock('LaminasTest\Validator\TestAsset\Translator');
         $this->validator->setTranslator($translatorMock, 'foo');
 
         $this->assertEquals($translatorMock, $this->validator->getTranslator());
@@ -207,7 +206,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($this->validator->hasTranslator());
 
-        $translatorMock = $this->getMock('ZendTest\Validator\TestAsset\Translator');
+        $translatorMock = $this->getMock('LaminasTest\Validator\TestAsset\Translator');
         AbstractValidator::setDefaultTranslator($translatorMock, 'foo');
 
         $this->assertEquals($translatorMock, AbstractValidator::getDefaultTranslator());
@@ -293,7 +292,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     {
         $option = 'foo';
         $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
+            'Laminas\Validator\Exception\InvalidArgumentException',
             sprintf("Invalid option '%s'", $option)
         );
         $this->validator->getOption($option);
@@ -320,7 +319,7 @@ class AbstractTest extends \PHPUnit_Framework_TestCase
     public function testSettingOptionsWithNonTraversableRaisesException($options)
     {
         $this->setExpectedException(
-            'Zend\Validator\Exception\InvalidArgumentException',
+            'Laminas\Validator\Exception\InvalidArgumentException',
             'setOptions expects an array or Traversable'
         );
         $this->validator->setOptions($options);

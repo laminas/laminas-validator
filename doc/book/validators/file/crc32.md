@@ -1,6 +1,6 @@
 # Crc32
 
-`Zend\Validator\File\Crc32` allows you to validate if a given file's hashed
+`Laminas\Validator\File\Crc32` allows you to validate if a given file's hashed
 contents matches the supplied crc32 hash(es). It is subclassed from the [Hash
 validator](hash.md) to provide a validator that only supports the `crc32`
 algorithm.
@@ -21,10 +21,10 @@ The following options are supported:
 
 ```php
 // Does file have the given hash?
-$validator = new \Zend\Validator\File\Crc32('3b3652f');
+$validator = new \Laminas\Validator\File\Crc32('3b3652f');
 
 // Or, check file against multiple hashes
-$validator = new \Zend\Validator\File\Crc32(array('3b3652f', 'e612b69'));
+$validator = new \Laminas\Validator\File\Crc32(array('3b3652f', 'e612b69'));
 
 // Perform validation with file path
 if ($validator->isValid('./myfile.txt')) {
