@@ -1,12 +1,15 @@
 <?php
+
 /**
- * @link      http://github.com/zendframework/zend-validator for the canonical source repository
- * @copyright Copyright (c) 2019 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
+use Laminas\Validator\UndisclosedPassword;
+use LaminasTest\Validator\TestAsset\HttpClientException;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
@@ -15,8 +18,6 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionClass;
-use Zend\Validator\UndisclosedPassword;
-use ZendTest\Validator\TestAsset\HttpClientException;
 
 class UndisclosedPasswordTest extends TestCase
 {
@@ -113,8 +114,8 @@ class UndisclosedPasswordTest extends TestCase
     /**
      * Testing that we reject invalid password types
      *
-     * @covers \Zend\Validator\UndisclosedPassword
-     * @covers \Zend\Validator\AbstractValidator
+     * @covers \Laminas\Validator\UndisclosedPassword
+     * @covers \Laminas\Validator\AbstractValidator
      * @todo Can be replaced by a \TypeError being thrown in PHP 7.0 or up
      */
     public function testValidationFailsForInvalidInput()
@@ -130,14 +131,14 @@ class UndisclosedPasswordTest extends TestCase
      *
      * @param string $password
      *
-     * @covers \Zend\Validator\UndisclosedPassword
+     * @covers \Laminas\Validator\UndisclosedPassword
      * @dataProvider goodPasswordProvider
      */
     public function testStrongUnseenPasswordsPassValidation($password)
     {
         $this->httpResponse->method('getBody')
             ->will($this->returnCallback(function () use ($password) {
-                $hash = \sha1('zend-validator');
+                $hash = \sha1('laminas-validator');
                 return sprintf(
                     '%s:%d',
                     strtoupper(substr($hash, $this->getConstant(
@@ -159,8 +160,8 @@ class UndisclosedPasswordTest extends TestCase
      *
      * @param string $password
      * @dataProvider seenPasswordProvider
-     * @covers \Zend\Validator\UndisclosedPassword
-     * @covers \Zend\Validator\AbstractValidator
+     * @covers \Laminas\Validator\UndisclosedPassword
+     * @covers \Laminas\Validator\AbstractValidator
      */
     public function testBreachedPasswordsDoNotPassValidation($password)
     {
@@ -189,7 +190,7 @@ class UndisclosedPasswordTest extends TestCase
      * @param string $password
      * @depends testBreachedPasswordsDoNotPassValidation
      * @dataProvider seenPasswordProvider
-     * @covers \Zend\Validator\UndisclosedPassword
+     * @covers \Laminas\Validator\UndisclosedPassword
      */
     public function testBreachedPasswordReturnErrorMessages($password)
     {
@@ -208,7 +209,7 @@ class UndisclosedPasswordTest extends TestCase
      * @param string $password
      * @depends testBreachedPasswordsDoNotPassValidation
      * @dataProvider seenPasswordProvider
-     * @covers \Zend\Validator\UndisclosedPassword
+     * @covers \Laminas\Validator\UndisclosedPassword
      */
     public function testValidationDegradesGracefullyWhenNoConnectionCanBeMade($password)
     {

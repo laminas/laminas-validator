@@ -4,11 +4,11 @@
 
 > ### Installation requirements
 >
-> The validator chain depends on the zend-servicemanager component, so be sure
+> The validator chain depends on the laminas-servicemanager component, so be sure
 > to have it installed before getting started:
 >
 > ```bash
-> $ composer require zendframework/zend-servicemanager
+> $ composer require laminas/laminas-servicemanager
 > ```
 
 Often, multiple validations should be applied to some value in a particular
@@ -17,9 +17,9 @@ order. The following code demonstrates a way to solve the example from the
 characters:
 
 ```php
-use Zend\I18n\Validator\Alnum;
-use Zend\Validator\StringLength;
-use Zend\Validator\ValidatorChain;
+use Laminas\I18n\Validator\Alnum;
+use Laminas\Validator\StringLength;
+use Laminas\Validator\ValidatorChain;
 
 // Create a validator chain and add validators to it
 $validatorChain = new ValidatorChain();
@@ -58,7 +58,7 @@ $chain->attach(new StringLength(['min' => 6, 'max' => 12]), true);
 $chain->attach(new Alnum());
 ```
 
-Any object that implements `Zend\Validator\ValidatorInterface` may be used in a
+Any object that implements `Laminas\Validator\ValidatorInterface` may be used in a
 validator chain.
 
 ## Setting Validator Chain Order
@@ -73,9 +73,9 @@ length is between 7 and 9 characters, and then it is checked to ensure that its
 length is between 3 and 5 characters.
 
 ```php
-use Zend\I18n\Validator\Alnum;
-use Zend\Validator\StringLength;
-use Zend\Validator\ValidatorChain;
+use Laminas\I18n\Validator\Alnum;
+use Laminas\Validator\StringLength;
+use Laminas\Validator\ValidatorChain;
 
 $username = 'ABCDFE';
 

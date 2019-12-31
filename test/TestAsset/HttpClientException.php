@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ZendTest\Validator\TestAsset;
+namespace LaminasTest\Validator\TestAsset;
 
 use Psr\Http\Client\ClientExceptionInterface;
 

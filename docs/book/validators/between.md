@@ -1,16 +1,16 @@
 # Between Validator
 
-`Zend\Validator\Between` allows you to validate if a given value is between two
+`Laminas\Validator\Between` allows you to validate if a given value is between two
 other values.
 
 > ### Only supports number validation
 >
-> `Zend\Validator\Between` supports only the validation of numbers. Strings or
+> `Laminas\Validator\Between` supports only the validation of numbers. Strings or
 > dates can not be validated with this validator.
 
 ## Supported options
 
-The following options are supported for `Zend\Validator\Between`:
+The following options are supported for `Laminas\Validator\Between`:
 
 - `inclusive`: Defines if the validation is inclusive of the minimum and maximum
   border values, or exclusive. It defaults to `true`.
@@ -23,7 +23,7 @@ Per default, this validator checks if a value is between `min` and `max` where
 both border values are allowed as value.
 
 ```php
-$valid  = new Zend\Validator\Between(['min' => 0, 'max' => 10]);
+$valid  = new Laminas\Validator\Between(['min' => 0, 'max' => 10]);
 $value  = 10;
 $result = $valid->isValid($value);
 // returns true
@@ -39,7 +39,7 @@ Sometimes it is useful to validate a value by excluding the border values. See
 the following example:
 
 ```php
-$valid  = new Zend\Validator\Between([
+$valid  = new Laminas\Validator\Between([
     'min' => 0,
     'max' => 10,
     'inclusive' => false,

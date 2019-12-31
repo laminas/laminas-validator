@@ -1,24 +1,23 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
+use Laminas\Session\Config\StandardConfig;
+use Laminas\Session\Container;
+use Laminas\Session\Storage\ArrayStorage;
+use Laminas\Validator\Csrf;
 use PHPUnit\Framework\TestCase;
-use Zend\Session\Config\StandardConfig;
-use Zend\Session\Container;
-use Zend\Validator\Csrf;
-use Zend\Session\Storage\ArrayStorage;
 
 /**
- * Zend\Csrf
+ * Laminas\Csrf
  *
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class CsrfTest extends TestCase
 {

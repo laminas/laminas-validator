@@ -1,24 +1,23 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Validator;
+namespace Laminas\Validator;
 
-use Zend\Stdlib\StringUtils;
+use Laminas\Stdlib\StringUtils;
 
 /**
  * Please note there are two standalone test scripts for testing IDN characters due to problems
  * with file encoding.
  *
- * The first is tests/Zend/Validator/HostnameTestStandalone.php which is designed to be run on
+ * The first is tests/Laminas/Validator/HostnameTestStandalone.php which is designed to be run on
  * the command line.
  *
- * The second is tests/Zend/Validator/HostnameTestForm.php which is designed to be run via HTML
+ * The second is tests/Laminas/Validator/HostnameTestForm.php which is designed to be run via HTML
  * to allow users to test entering UTF-8 characters in a form.
  */
 class Hostname extends AbstractValidator

@@ -1,13 +1,14 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-validator for the canonical source repository
- * @copyright Copyright (c) 2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-validator/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator\TestAsset;
+namespace LaminasTest\Validator\TestAsset;
 
-use Zend\Validator\CreditCard;
+use Laminas\Validator\CreditCard;
 
 class CreditCardValidatorExtension extends CreditCard
 {

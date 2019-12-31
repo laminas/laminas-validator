@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
+use Laminas\Validator\Exception\InvalidArgumentException;
+use Laminas\Validator\Iban as IbanValidator;
 use PHPUnit\Framework\TestCase;
-use Zend\Validator\Exception\InvalidArgumentException;
-use Zend\Validator\Iban as IbanValidator;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class IbanTest extends TestCase
 {
@@ -149,7 +148,7 @@ class IbanTest extends TestCase
     }
 
     /**
-     * @group ZF-10556
+     * @group Laminas-10556
      */
     public function testIbanDetectionWithoutCountryCode()
     {
