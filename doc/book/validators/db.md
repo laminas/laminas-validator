@@ -1,23 +1,23 @@
 # Db\\RecordExists and Db\\NoRecordExists Validators
 
-`Zend\Validator\Db\RecordExists` and `Zend\Validator\Db\NoRecordExists` provide
+`Laminas\Validator\Db\RecordExists` and `Laminas\Validator\Db\NoRecordExists` provide
 a means to test whether a record exists in a given table of a database, with a
 given value.
 
 > ### Installation requirements
 >
-> `Zend\Validator\Db\NoRecordExists` and `Zend\Validator\Db\RecordExists` 
-> depends on the zend-db component, so be sure to have it installed before
+> `Laminas\Validator\Db\NoRecordExists` and `Laminas\Validator\Db\RecordExists` 
+> depends on the laminas-db component, so be sure to have it installed before
 > getting started:
 >
 > ```bash
-> $ composer require zendframework/zend-db`
+> $ composer require laminas/laminas-db`
 > ```
 
 ## Supported options
 
-The following options are supported for `Zend\Validator\Db\NoRecordExists` and
-`Zend\Validator\Db\RecordExists`:
+The following options are supported for `Laminas\Validator\Db\NoRecordExists` and
+`Laminas\Validator\Db\RecordExists`:
 
 - `adapter`: The database adapter that will be used for the search.
 - `exclude`: Sets records that will be excluded from the search.
@@ -31,7 +31,7 @@ An example of basic usage of the validators:
 
 ```php
 // Check that the email address exists in the database
-$validator = new Zend\Validator\Db\RecordExists([
+$validator = new Laminas\Validator\Db\RecordExists([
     'table'   => 'users',
     'field'   => 'emailaddress',
     'adapter' => $dbAdapter,
@@ -53,7 +53,7 @@ then an error message is displayed.
 
 ```php
 // Check that the username is not present in the database
-$validator = new Zend\Validator\Db\NoRecordExists([
+$validator = new Laminas\Validator\Db\NoRecordExists([
     'table'   => 'users',
     'field'   => 'username',
     'adapter' => $dbAdapter,
@@ -76,7 +76,7 @@ then an error message is displayed.
 
 ## Excluding records
 
-`Zend\Validator\Db\RecordExists` and `Zend\Validator\Db\NoRecordExists` also
+`Laminas\Validator\Db\RecordExists` and `Laminas\Validator\Db\NoRecordExists` also
 provide a means to test the database, excluding a part of the table, either by
 providing a `WHERE` clause as a string, or an array with the keys `field` and
 `value`.
@@ -88,7 +88,7 @@ example on a user profile form)
 ```php
 // Check no other users have the username
 $user_id   = $user->getId();
-$validator = new Zend\Validator\Db\NoRecordExists([
+$validator = new Laminas\Validator\Db\NoRecordExists([
     'table' => 'users',
     'field' => 'username',
     'exclude' => [
@@ -117,7 +117,7 @@ other than `!=`. This can be useful for testing against composite keys.
 ```php
 $email     = 'user@example.com';
 $clause    = $dbAdapter->quoteIdentifier('email') . ' = ' . $dbAdapter->quoteValue($email);
-$validator = new Zend\Validator\Db\RecordExists([
+$validator = new Laminas\Validator\Db\RecordExists([
     'table'   => 'users',
     'field'   => 'username',
     'adapter' => $dbAdapter,
@@ -145,7 +145,7 @@ and DB/2 by supplying an array with `table` and `schema` keys, as demonstrated
 below:
 
 ```php
-$validator = new Zend\Validator\Db\RecordExists([
+$validator = new Laminas\Validator\Db\RecordExists([
     'table'  => 'users',
     'schema' => 'my',
     'field'  => 'id',
@@ -154,14 +154,14 @@ $validator = new Zend\Validator\Db\RecordExists([
 
 ## Using a Select object
 
-It is also possible to supply the validators with a `Zend\Db\Sql\Select` object
+It is also possible to supply the validators with a `Laminas\Db\Sql\Select` object
 in place of options. The validator then uses this object instead of building its
 own. This allows for greater flexibility with selection of records used for
 validation.
 
 ```php
-use Zend\Db\Sql\Select;
-use Zend\Validator\Db\RecordExists;
+use Laminas\Db\Sql\Select;
+use Laminas\Validator\Db\RecordExists;
 
 $select = new Select();
 $select

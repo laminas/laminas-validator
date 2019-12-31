@@ -1,6 +1,6 @@
 # Exists
 
-`Zend\Validator\File\Exists` checks for the existence of files in specified
+`Laminas\Validator\File\Exists` checks for the existence of files in specified
 directories.
 
 This validator is inversely related to the [NotExists validator](not-exists.md).
@@ -14,7 +14,7 @@ The following set of options are supported:
 ## Usage Examples
 
 ```php
-use Zend\Validator\File\Exists;
+use Laminas\Validator\File\Exists;
 
 // Only allow files that exist in ~both~ directories
 $validator = new Exists('/tmp,/var/tmp');
