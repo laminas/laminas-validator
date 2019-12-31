@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
+use Laminas\Validator\EmailAddress;
+use Laminas\Validator\Hostname;
 use PHPUnit\Framework\TestCase;
-use Zend\Validator\EmailAddress;
-use Zend\Validator\Hostname;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class EmailAddressTest extends TestCase
 {
@@ -453,7 +452,7 @@ class EmailAddressTest extends TestCase
     }
 
     /**
-     * @group ZF-2861
+     * @group Laminas-2861
      */
     public function testHostnameValidatorMessagesShouldBeTranslated()
     {
@@ -495,7 +494,7 @@ class EmailAddressTest extends TestCase
     }
 
     /**
-     * @group ZF-4888
+     * @group Laminas-4888
      */
     public function testEmailsExceedingLength()
     {
@@ -511,7 +510,7 @@ class EmailAddressTest extends TestCase
     }
 
     /**
-     * @group ZF-4352
+     * @group Laminas-4352
      */
     public function testNonStringValidation()
     {
@@ -519,7 +518,7 @@ class EmailAddressTest extends TestCase
     }
 
     /**
-     * @group ZF-7490
+     * @group Laminas-7490
      */
     public function testSettingHostnameMessagesThroughEmailValidator()
     {
@@ -568,7 +567,7 @@ class EmailAddressTest extends TestCase
             $this->assertEquals(Hostname::ALLOW_ALL, $options['allow']);
             $this->assertTrue($options['useMxCheck']);
             set_error_handler($handler);
-        } catch (\Zend\Validator\Exception\InvalidArgumentException $e) {
+        } catch (\Laminas\Validator\Exception\InvalidArgumentException $e) {
             $this->markTestSkipped('MX not available on this system');
         }
     }
@@ -637,7 +636,7 @@ class EmailAddressTest extends TestCase
     /**
      * Testing setMessage for all messages
      *
-     * @group ZF-10690
+     * @group Laminas-10690
      */
     public function testSetMultipleMessages()
     {
@@ -668,8 +667,8 @@ class EmailAddressTest extends TestCase
     }
 
     /**
-     * @group ZF-11222
-     * @group ZF-11451
+     * @group Laminas-11222
+     * @group Laminas-11451
      */
     public function testEmailAddressesWithTrailingDotInHostPartAreRejected()
     {
@@ -679,7 +678,7 @@ class EmailAddressTest extends TestCase
     }
 
     /**
-     * @group ZF-11239
+     * @group Laminas-11239
      */
     public function testNotSetHostnameValidator()
     {
@@ -731,7 +730,7 @@ class EmailAddressTest extends TestCase
     }
 
     /**
-     * @group ZF2-130
+     * @group Laminas-130
      */
     public function testUseMxCheckBasicValid()
     {
@@ -767,7 +766,7 @@ class EmailAddressTest extends TestCase
     }
 
     /**
-     * @group ZF2-130
+     * @group Laminas-130
      */
     public function testUseMxRecordsBasicInvalid()
     {
@@ -806,7 +805,7 @@ class EmailAddressTest extends TestCase
     }
 
     /**
-     * @group ZF-12349
+     * @group Laminas-12349
      */
     public function testReservedIpRangeValidation()
     {
@@ -858,7 +857,7 @@ class EmailAddressTest extends TestCase
     }
 
     /**
-     * @group ZF-12349
+     * @group Laminas-12349
      */
     public function testIpRangeValidationOnRangesNoLongerMarkedAsReserved()
     {
@@ -881,7 +880,7 @@ class EmailAddressTest extends TestCase
      */
     private function skipIfOnlineTestsDisabled()
     {
-        if (! getenv('TESTS_ZEND_VALIDATOR_ONLINE_ENABLED')) {
+        if (! getenv('TESTS_LAMINAS_VALIDATOR_ONLINE_ENABLED')) {
             $this->markTestSkipped('Testing MX records has been disabled');
         }
     }

@@ -1,6 +1,6 @@
 # FilesSize
 
-`Zend\Validator\File\FilesSize` allows validating the total size of all file
+`Laminas\Validator\File\FilesSize` allows validating the total size of all file
 uploads in aggregate, allowing specifying a minimum upload size and/or a maximum
 upload size.
 
@@ -10,7 +10,7 @@ range.
 
 ## Supported Options
 
-`Zend\Validator\File\FilesSize` supports the following options:
+`Laminas\Validator\File\FilesSize` supports the following options:
 
 - `min`: The minimum aggregate size of all file uploads. May be specified as an
   integer or using SI units. `null` indicates no minimum size is required.
@@ -25,7 +25,7 @@ units.
 ## Basic Usage
 
 ```php
-use Zend\Validator\File\FilesSize;
+use Laminas\Validator\File\FilesSize;
 
 $validator = new FilesSize([
     'min' => '1kB`,  // minimum of 1kB
