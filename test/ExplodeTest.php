@@ -1,29 +1,27 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Validator
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
-use Zend\Validator\Explode;
+use Laminas\Validator\Explode;
 
 /**
- * @category   Zend
- * @package    Zend_Validator
+ * @category   Laminas
+ * @package    Laminas_Validator
  * @subpackage UnitTests
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class ExplodeTest extends \PHPUnit_Framework_TestCase
 {
     public function testRaisesExceptionWhenValidatorIsMissing()
     {
         $validator = new Explode();
-        $this->setExpectedException('Zend\Validator\Exception\RuntimeException', 'validator');
+        $this->setExpectedException('Laminas\Validator\Exception\RuntimeException', 'validator');
         $validator->isValid('foo,bar');
     }
 
@@ -53,7 +51,7 @@ class ExplodeTest extends \PHPUnit_Framework_TestCase
      */
     public function testExpectedBehavior($value, $delimiter, $breakOnFirst, $numIsValidCalls, $isValidReturn, $messages, $expects)
     {
-        $mockValidator = $this->getMock('Zend\Validator\ValidatorInterface');
+        $mockValidator = $this->getMock('Laminas\Validator\ValidatorInterface');
         $mockValidator->expects($this->exactly($numIsValidCalls))->method('isValid')->will($this->returnValue($isValidReturn));
         $mockValidator->expects($this->any())->method('getMessages')->will($this->returnValue('X'));
 
