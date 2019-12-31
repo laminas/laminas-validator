@@ -1,23 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
+use Laminas\Validator\AbstractValidator;
+use Laminas\Validator\EmailAddress;
+use Laminas\Validator\Exception\InvalidArgumentException;
+use Laminas\Validator\Hostname;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
-use Zend\Validator\AbstractValidator;
-use Zend\Validator\EmailAddress;
-use Zend\Validator\Exception\InvalidArgumentException;
-use Zend\Validator\Hostname;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class AbstractTest extends TestCase
 {
@@ -118,7 +117,7 @@ class AbstractTest extends TestCase
     }
 
     /**
-     * @group ZF-4463
+     * @group Laminas-4463
      */
     public function testDoesNotFailOnObjectInput()
     {

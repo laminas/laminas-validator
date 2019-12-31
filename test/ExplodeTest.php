@@ -1,24 +1,23 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
+use Laminas\Validator\Callback;
+use Laminas\Validator\Exception\RuntimeException;
+use Laminas\Validator\Explode;
+use Laminas\Validator\InArray;
+use Laminas\Validator\Regex;
+use Laminas\Validator\ValidatorInterface;
 use PHPUnit\Framework\TestCase;
-use Zend\Validator\Explode;
-use Zend\Validator\Regex;
-use Zend\Validator\Callback;
-use Zend\Validator\Exception\RuntimeException;
-use Zend\Validator\ValidatorInterface;
-use Zend\Validator\InArray;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class ExplodeTest extends TestCase
 {
@@ -122,7 +121,7 @@ class ExplodeTest extends TestCase
             ]
         );
 
-        /** @var $inArrayValidator \Zend\Validator\InArray */
+        /** @var $inArrayValidator \Laminas\Validator\InArray */
         $inArrayValidator = $validator->getValidator();
         $this->assertInstanceOf(InArray::class, $inArrayValidator);
         $this->assertSame(
@@ -150,7 +149,7 @@ class ExplodeTest extends TestCase
     }
 
     /**
-     * @group ZF2-5796
+     * @group Laminas-5796
      */
     public function testGetMessagesMultipleInvalid()
     {
@@ -169,7 +168,7 @@ class ExplodeTest extends TestCase
             ],
         ];
 
-        $this->assertFalse($validator->isValid('zf-devteam@zend.com,abc,defghij'));
+        $this->assertFalse($validator->isValid('api-tools-devteam@zend.com,abc,defghij'));
         $this->assertEquals($messages, $validator->getMessages());
     }
 

@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
+use Laminas\Validator\GpsPoint;
 use PHPUnit\Framework\TestCase;
-use Zend\Validator\GpsPoint;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class GPSPointTest extends TestCase
 {
@@ -31,7 +30,7 @@ class GPSPointTest extends TestCase
 
     /**
      * @dataProvider basicDataProvider
-     * @covers \Zend\Validator\GPSPoint::isValid
+     * @covers \Laminas\Validator\GPSPoint::isValid
      */
     public function testBasic($gpsPoint)
     {
@@ -39,7 +38,7 @@ class GPSPointTest extends TestCase
     }
 
     /**
-     * @covers \Zend\Validator\GPSPoint::isValid
+     * @covers \Laminas\Validator\GPSPoint::isValid
      */
     public function testBoundariesAreRespected()
     {
@@ -50,7 +49,7 @@ class GPSPointTest extends TestCase
     }
 
     /**
-     * @covers \Zend\Validator\GPSPoint::isValid
+     * @covers \Laminas\Validator\GPSPoint::isValid
      * @dataProvider ErrorMessageTestValues
      */
     public function testErrorsSetOnOccur($value, $messageKey, $messageValue)
