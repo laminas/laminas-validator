@@ -1,52 +1,50 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Validator
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator\Db;
+namespace LaminasTest\Validator\Db;
 
 use ArrayObject;
-use Zend\Db\Adapter\Adapter;
-use Zend\Validator\Db\RecordExists;
+use Laminas\Db\Adapter\Adapter;
+use Laminas\Validator\Db\RecordExists;
 
 /**
- * @category   Zend
- * @package    Zend_Validator
+ * @category   Laminas
+ * @package    Laminas_Validator
  * @subpackage UnitTests
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class RecordExistsTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Return a Mock object for a Db result with rows
      *
-     * @return \Zend\Db\Adapter\Adapter
+     * @return \Laminas\Db\Adapter\Adapter
      */
     protected function getMockHasResult()
     {
         // mock the adapter, driver, and parts
-        $mockConnection = $this->getMock('Zend\Db\Adapter\Driver\ConnectionInterface');
+        $mockConnection = $this->getMock('Laminas\Db\Adapter\Driver\ConnectionInterface');
 
         // Mock has result
         $mockHasResultRow      = new ArrayObject();
         $mockHasResultRow->one = 'one';
 
-        $mockHasResult = $this->getMock('Zend\Db\Adapter\Driver\ResultInterface');
+        $mockHasResult = $this->getMock('Laminas\Db\Adapter\Driver\ResultInterface');
         $mockHasResult->expects($this->any())
                       ->method('current')
                       ->will($this->returnValue($mockHasResultRow));
 
-        $mockHasResultStatement = $this->getMock('Zend\Db\Adapter\Driver\StatementInterface');
+        $mockHasResultStatement = $this->getMock('Laminas\Db\Adapter\Driver\StatementInterface');
         $mockHasResultStatement->expects($this->any())
                                ->method('execute')
                                ->will($this->returnValue($mockHasResult));
 
-        $mockHasResultDriver = $this->getMock('Zend\Db\Adapter\Driver\DriverInterface');
+        $mockHasResultDriver = $this->getMock('Laminas\Db\Adapter\Driver\DriverInterface');
         $mockHasResultDriver->expects($this->any())
                             ->method('createStatement')
                             ->will($this->returnValue($mockHasResultStatement));
@@ -54,30 +52,30 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
                             ->method('getConnection')
                             ->will($this->returnValue($mockConnection));
 
-        return $this->getMock('Zend\Db\Adapter\Adapter', null, array($mockHasResultDriver));
+        return $this->getMock('Laminas\Db\Adapter\Adapter', null, array($mockHasResultDriver));
     }
 
     /**
      * Return a Mock object for a Db result without rows
      *
-     * @return \Zend\Db\Adapter\Adapter
+     * @return \Laminas\Db\Adapter\Adapter
      */
     protected function getMockNoResult()
     {
         // mock the adapter, driver, and parts
-        $mockConnection = $this->getMock('Zend\Db\Adapter\Driver\ConnectionInterface');
+        $mockConnection = $this->getMock('Laminas\Db\Adapter\Driver\ConnectionInterface');
 
-        $mockNoResult = $this->getMock('Zend\Db\Adapter\Driver\ResultInterface');
+        $mockNoResult = $this->getMock('Laminas\Db\Adapter\Driver\ResultInterface');
         $mockNoResult->expects($this->any())
                      ->method('current')
                      ->will($this->returnValue(null));
 
-        $mockNoResultStatement = $this->getMock('Zend\Db\Adapter\Driver\StatementInterface');
+        $mockNoResultStatement = $this->getMock('Laminas\Db\Adapter\Driver\StatementInterface');
         $mockNoResultStatement->expects($this->any())
                               ->method('execute')
                               ->will($this->returnValue($mockNoResult));
 
-        $mockNoResultDriver = $this->getMock('Zend\Db\Adapter\Driver\DriverInterface');
+        $mockNoResultDriver = $this->getMock('Laminas\Db\Adapter\Driver\DriverInterface');
         $mockNoResultDriver->expects($this->any())
                            ->method('createStatement')
                            ->will($this->returnValue($mockNoResultStatement));
@@ -85,7 +83,7 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
                            ->method('getConnection')
                            ->will($this->returnValue($mockConnection));
 
-        return $this->getMock('Zend\Db\Adapter\Adapter', null, array($mockNoResultDriver));
+        return $this->getMock('Laminas\Db\Adapter\Adapter', null, array($mockNoResultDriver));
     }
 
     /**
@@ -173,7 +171,7 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-8863
+     * @group Laminas-8863
      */
     public function testExcludeConstructor()
     {
@@ -190,7 +188,7 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
     public function testThrowsExceptionWithNoAdapter()
     {
         $validator = new RecordExists('users', 'field1', 'id != 1');
-        $this->setExpectedException('Zend\Validator\Exception\RuntimeException',
+        $this->setExpectedException('Laminas\Validator\Exception\RuntimeException',
                                     'No database adapter present');
         $validator->isValid('nosuchvalue');
     }
@@ -228,16 +226,16 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
         $validator = new RecordExists(array('table' => 'users', 'schema' => 'my'),
                                       'field1', null, $this->getMockHasResult());
         $table = $validator->getSelect()->getRawState('table');
-        $this->assertInstanceOf('Zend\Db\Sql\TableIdentifier', $table);
+        $this->assertInstanceOf('Laminas\Db\Sql\TableIdentifier', $table);
         $this->assertEquals(array('users','my'), $table->getTableAndSchema());
     }
 
     /**
-     * @group ZF-10642
+     * @group Laminas-10642
      */
     public function testCreatesQueryBasedOnNamedOrPositionalAvailability()
     {
-        $this->markTestIncomplete('This test (and code) need to be refactored to the new Zend\Db');
+        $this->markTestIncomplete('This test (and code) need to be refactored to the new Laminas\Db');
 
         $adapterHasResult = $this->getMockHasResult();
 
@@ -263,7 +261,7 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Test that we don't get a mix of positional and named parameters
-     * @group ZF2-502
+     * @group Laminas-502
      */
     public function testSelectDoesNotMixPositionalAndNamedParameters()
     {
@@ -287,7 +285,7 @@ class RecordExistsTest extends \PHPUnit_Framework_TestCase
             $adapter
         );
         $select = $validator->getSelect();
-        $this->assertInstanceOf('Zend\Db\Sql\Select', $select);
+        $this->assertInstanceOf('Laminas\Db\Sql\Select', $select);
         $string = $select->getSqlString();
         if (preg_match('/:[a-zA-Z]+/', $string)) {
             $this->assertNotContains(' != ?', $string);
