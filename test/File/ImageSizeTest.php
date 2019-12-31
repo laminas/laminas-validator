@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator\File;
+namespace LaminasTest\Validator\File;
 
-use Zend\Validator\File;
+use Laminas\Validator\File;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class ImageSizeTest extends \PHPUnit_Framework_TestCase
 {
@@ -109,14 +108,14 @@ class ImageSizeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that the validator follows expected behavior for legacy Zend\Transfer API
+     * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
      * @dataProvider basicBehaviorDataProvider
      * @return void
      */
     public function testLegacy($options, $isValidParam, $expected, $messageKeys)
     {
-        // Test legacy Zend\Transfer API
+        // Test legacy Laminas\Transfer API
         if (is_array($isValidParam)) {
             $validator = new File\ImageSize($options);
             $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
@@ -141,7 +140,7 @@ class ImageSizeTest extends \PHPUnit_Framework_TestCase
         $validator = new File\ImageSize(array('minWidth' => 1, 'minHeight' => 10, 'maxWidth' => 100, 'maxHeight' => 1000));
         $this->assertEquals(array('minWidth' => 1, 'minHeight' => 10), $validator->getImageMin());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'greater than or equal');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'greater than or equal');
         $validator = new File\ImageSize(array('minWidth' => 1000, 'minHeight' => 100, 'maxWidth' => 10, 'maxHeight' => 1));
     }
 
@@ -159,7 +158,7 @@ class ImageSizeTest extends \PHPUnit_Framework_TestCase
         $validator->setImageMin(array('minWidth' => 9, 'minHeight' => 100));
         $this->assertEquals(array('minWidth' => 9, 'minHeight' => 100), $validator->getImageMin());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'less than or equal');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'less than or equal');
         $validator->setImageMin(array('minWidth' => 20000, 'minHeight' => 20000));
     }
 
@@ -173,7 +172,7 @@ class ImageSizeTest extends \PHPUnit_Framework_TestCase
         $validator = new File\ImageSize(array('minWidth' => 10, 'minHeight' => 100, 'maxWidth' => 1000, 'maxHeight' => 10000));
         $this->assertEquals(array('maxWidth' => 1000, 'maxHeight' => 10000), $validator->getImageMax());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'greater than or equal');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'greater than or equal');
         $validator = new File\ImageSize(array('minWidth' => 10000, 'minHeight' => 1000, 'maxWidth' => 100, 'maxHeight' => 10));
     }
 
@@ -197,7 +196,7 @@ class ImageSizeTest extends \PHPUnit_Framework_TestCase
         $validator->setImageMax(array('maxWidth' => 120));
         $this->assertEquals(array('maxWidth' => 120, 'maxHeight' => 1100), $validator->getImageMax());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'greater than or equal');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'greater than or equal');
         $validator->setImageMax(array('maxWidth' => 10000, 'maxHeight' => 1));
     }
 
@@ -223,7 +222,7 @@ class ImageSizeTest extends \PHPUnit_Framework_TestCase
         $validator->setImageWidth(array('minWidth' => 2000, 'maxWidth' => 2200));
         $this->assertEquals(array('minWidth' => 2000, 'maxWidth' => 2200), $validator->getImageWidth());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'less than or equal');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'less than or equal');
         $validator->setImageWidth(array('minWidth' => 20000, 'maxWidth' => 200));
     }
 
@@ -249,14 +248,14 @@ class ImageSizeTest extends \PHPUnit_Framework_TestCase
         $validator->setImageHeight(array('minHeight' => 2000, 'maxHeight' => 2200));
         $this->assertEquals(array('minHeight' => 2000, 'maxHeight' => 2200), $validator->getImageHeight());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'less than or equal');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'less than or equal');
         $validator->setImageHeight(array('minHeight' => 20000, 'maxHeight' => 200));
     }
 
     /**
-     * @group ZF-11258
+     * @group Laminas-11258
      */
-    public function testZF11258()
+    public function testLaminas11258()
     {
         $validator = new File\ImageSize(array('minWidth' => 100, 'minHeight' => 1000, 'maxWidth' => 10000, 'maxHeight' => 100000));
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
