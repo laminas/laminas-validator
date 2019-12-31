@@ -1,23 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator\Db;
+namespace LaminasTest\Validator\Db;
 
+use Laminas\Db\Adapter\Adapter;
+use Laminas\Db\Adapter\AdapterAwareInterface;
+use Laminas\Db\Sql\Select;
+use Laminas\Validator\Exception\InvalidArgumentException;
+use LaminasTest\Validator\Db\TestAsset\ConcreteDbValidator;
 use PHPUnit\Framework\TestCase;
-use ZendTest\Validator\Db\TestAsset\ConcreteDbValidator;
-use Zend\Db\Adapter\AdapterAwareInterface;
-use Zend\Db\Adapter\Adapter;
-use Zend\Db\Sql\Select;
-use Zend\Validator\Exception\InvalidArgumentException;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class AbstractDbTest extends TestCase
 {

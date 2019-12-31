@@ -1,6 +1,6 @@
 # File Validation Classes
 
-Zend Framework comes with a set of classes for validating both files and
+Laminas comes with a set of classes for validating both files and
 uploaded files, such as file size validation and CRC checking.
 
 - [Count](count.md)

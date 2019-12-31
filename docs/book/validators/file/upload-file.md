@@ -1,13 +1,13 @@
 # UploadFile
 
-`Zend\Validator\File\UploadFile` checks whether a single file has been uploaded
+`Laminas\Validator\File\UploadFile` checks whether a single file has been uploaded
 via a form `POST` and will return descriptive messages for any upload errors.
 
 ## Basic Usage
 
 ```php
-use Zend\Http\PhpEnvironment\Request;
-use Zend\Validator\File\UploadFile;
+use Laminas\Http\PhpEnvironment\Request;
+use Laminas\Validator\File\UploadFile;
 
 $request = new Request();
 $files   = $request->getFiles();
@@ -37,7 +37,7 @@ if ($validator->isValid($uploadedFile)) {
 }
 ```
 
-## Usage with zend-inputfilter
+## Usage with laminas-inputfilter
 
-When using zend-inputfilter's [FileInput](https://docs.zendframework.com/zend-inputfilter/file-input/),
+When using laminas-inputfilter's [FileInput](https://docs.laminas.dev/laminas-inputfilter/file-input/),
 this validator will be automatically prepended to the validator chain.
