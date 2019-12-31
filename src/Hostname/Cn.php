@@ -1,20 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Validator
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Validator\Hostname;
+namespace Laminas\Validator\Hostname;
 
 /**
  * Resource file for chinese idn validation
  *
- * @category   Zend
- * @package    Zend_Validate
+ * @category   Laminas
+ * @package    Laminas_Validate
  */
 return array(
     1  => '/^[\x{002d}0-9a-z\x{3447}\x{3473}\x{359E}\x{360E}\x{361A}\x{3918}\x{396E}\x{39CF}\x{39D0}' .

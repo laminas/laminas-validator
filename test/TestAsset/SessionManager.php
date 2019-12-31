@@ -1,27 +1,25 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Validator
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator\TestAsset;
+namespace LaminasTest\Validator\TestAsset;
 
-use Zend\Session\AbstractManager;
-use Zend\Session\Configuration as SessionConfiguration;
-use Zend\Session\Storage as SessionStorage;
-use Zend\Session\SaveHandler as SessionSaveHandler;
-use Zend\EventManager\EventManagerInterface;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\Session\AbstractManager;
+use Laminas\Session\Configuration as SessionConfiguration;
+use Laminas\Session\SaveHandler as SessionSaveHandler;
+use Laminas\Session\Storage as SessionStorage;
 
 class SessionManager extends AbstractManager
 {
     public $started = false;
 
-    protected $configDefaultClass  = 'Zend\Session\Configuration\StandardConfiguration';
-    protected $storageDefaultClass = 'Zend\Session\Storage\ArrayStorage';
+    protected $configDefaultClass  = 'Laminas\Session\Configuration\StandardConfiguration';
+    protected $storageDefaultClass = 'Laminas\Session\Storage\ArrayStorage';
 
     public function start()
     {

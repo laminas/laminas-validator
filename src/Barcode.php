@@ -1,20 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Validator
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Validator;
+namespace Laminas\Validator;
 
 use Traversable;
 
 /**
- * @category   Zend
- * @package    Zend_Validate
+ * @category   Laminas
+ * @package    Laminas_Validate
  */
 class Barcode extends AbstractValidator
 {
@@ -40,7 +38,7 @@ class Barcode extends AbstractValidator
     );
 
     protected $options = array(
-        'adapter'     => null,  // Barcode adapter Zend\Validator\Barcode\AbstractAdapter
+        'adapter'     => null,  // Barcode adapter Laminas\Validator\Barcode\AbstractAdapter
         'options'     => null,  // Options for this adapter
         'length'      => null,
         'useChecksum' => null,
@@ -90,7 +88,7 @@ class Barcode extends AbstractValidator
     {
         if (is_string($adapter)) {
             $adapter = ucfirst(strtolower($adapter));
-            $adapter = 'Zend\\Validator\\Barcode\\' . $adapter;
+            $adapter = 'Laminas\\Validator\\Barcode\\' . $adapter;
 
             if (!class_exists($adapter)) {
                 throw new Exception\InvalidArgumentException('Barcode adapter matching "' . $adapter . '" not found');
@@ -101,7 +99,7 @@ class Barcode extends AbstractValidator
 
         if (!$this->options['adapter'] instanceof Barcode\AdapterInterface) {
             throw new Exception\InvalidArgumentException(
-                "Adapter $adapter does not implement Zend\\Validate\\Barcode\\AdapterInterface"
+                "Adapter $adapter does not implement Laminas\\Validate\\Barcode\\AdapterInterface"
             );
         }
 
@@ -130,7 +128,7 @@ class Barcode extends AbstractValidator
     }
 
     /**
-     * Defined by Zend\Validator\ValidatorInterface
+     * Defined by Laminas\Validator\ValidatorInterface
      *
      * Returns true if and only if $value contains a valid barcode
      *

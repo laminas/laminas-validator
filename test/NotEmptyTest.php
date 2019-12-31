@@ -1,23 +1,21 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Validator
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator;
+namespace LaminasTest\Validator;
 
+use Laminas\Validator\NotEmpty;
 use stdClass;
-use Zend\Validator\NotEmpty;
 
 /**
- * @category   Zend
- * @package    Zend_Validator
+ * @category   Laminas
+ * @package    Laminas_Validator
  * @subpackage UnitTests
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class NotEmptyTest extends \PHPUnit_Framework_TestCase
 {
@@ -34,10 +32,10 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
-     * ZF-6708 introduces a change for validating integer 0; it is a valid
+     * Laminas-6708 introduces a change for validating integer 0; it is a valid
      * integer value. '0' is also valid.
      *
-     * @group ZF-6708
+     * @group Laminas-6708
      * @return void
      */
     public function testBasic()
@@ -444,7 +442,7 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
     public function testConfigObject()
     {
         $options = array('type' => 'all');
-        $config  = new \Zend\Config\Config($options);
+        $config  = new \Laminas\Config\Config($options);
 
         $filter = new NotEmpty(
             $config
@@ -472,7 +470,7 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
      */
     public function testSettingFalseType()
     {
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'Unknown');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'Unknown');
         $this->validator->setType(true);
     }
 
@@ -487,7 +485,7 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-3236
+     * @group Laminas-3236
      */
     public function testStringWithZeroShouldNotBeTreatedAsEmpty()
     {
@@ -505,7 +503,7 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @ZF-4352
+     * @Laminas-4352
      */
     public function testNonStringValidation()
     {
@@ -514,11 +512,11 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @ZF-8767
+     * @Laminas-8767
      *
      * @return void
      */
-    public function testZF8767()
+    public function testLaminas8767()
     {
         $valid = new NotEmpty(NotEmpty::STRING);
 
@@ -560,7 +558,7 @@ class NotEmptyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-11566
+     * @group Laminas-11566
      */
     public function testArrayConfigNotationWithoutKey()
     {
