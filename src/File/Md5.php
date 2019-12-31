@@ -1,15 +1,14 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Validator\File;
+namespace Laminas\Validator\File;
 
-use Zend\Validator\Exception;
+use Laminas\Validator\Exception;
 
 /**
  * Validator for the md5 hash of given files
@@ -80,13 +79,13 @@ class Md5 extends Hash
      * Returns true if and only if the given file confirms the set hash
      *
      * @param  string|array $value Filename to check for hash
-     * @param  array        $file  File data from \Zend\File\Transfer\Transfer (optional)
+     * @param  array        $file  File data from \Laminas\File\Transfer\Transfer (optional)
      * @return bool
      */
     public function isValid($value, $file = null)
     {
         if (is_string($value) && is_array($file)) {
-            // Legacy Zend\Transfer API support
+            // Legacy Laminas\Transfer API support
             $filename = $file['name'];
             $file     = $file['tmp_name'];
         } elseif (is_array($value)) {
