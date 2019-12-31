@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator\File;
+namespace LaminasTest\Validator\File;
 
-use Zend\Validator\File;
-use Zend\Validator;
+use Laminas\Validator;
+use Laminas\Validator\File;
 
 /**
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class SizeTest extends \PHPUnit_Framework_TestCase
 {
@@ -60,7 +59,7 @@ class SizeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that the validator follows expected behavior for legacy Zend\Transfer API
+     * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
      * @dataProvider basicBehaviorDataProvider
      * @return void
@@ -86,7 +85,7 @@ class SizeTest extends \PHPUnit_Framework_TestCase
         $validator = new File\Size(['min' => 1, 'max' => 100, 'useByteString' => false]);
         $this->assertEquals(1, $validator->getMin());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'greater than or equal');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'greater than or equal');
         $validator = new File\Size(['min' => 100, 'max' => 1]);
     }
 
@@ -105,7 +104,7 @@ class SizeTest extends \PHPUnit_Framework_TestCase
         $validator->setMin(100);
         $this->assertEquals(100, $validator->getMin());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'less than or equal');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'less than or equal');
         $validator->setMin(20000);
     }
 
@@ -125,7 +124,7 @@ class SizeTest extends \PHPUnit_Framework_TestCase
         $validator = new File\Size(2000);
         $this->assertEquals('1.95kB', $validator->getMax());
 
-        $this->setExpectedException('Zend\Validator\Exception\InvalidArgumentException', 'greater than or equal');
+        $this->setExpectedException('Laminas\Validator\Exception\InvalidArgumentException', 'greater than or equal');
         $validator = new File\Size(['min' => 100, 'max' => 1]);
     }
 
@@ -194,9 +193,9 @@ class SizeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @group ZF-11258
+     * @group Laminas-11258
      */
-    public function testZF11258()
+    public function testLaminas11258()
     {
         $validator = new File\Size(['min' => 1, 'max' => 10000]);
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));

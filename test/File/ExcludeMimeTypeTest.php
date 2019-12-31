@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-validator for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Validator\File;
+namespace LaminasTest\Validator\File;
 
-use Zend\Validator\File\ExcludeMimeType;
+use Laminas\Validator\File\ExcludeMimeType;
 
 /**
  * ExcludeMimeType testbed
  *
- * @group      Zend_Validator
+ * @group      Laminas_Validator
  */
 class ExcludeMimeTypeTest extends \PHPUnit_Framework_TestCase
 {
@@ -54,7 +53,7 @@ class ExcludeMimeTypeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that the validator follows expected behavior for legacy Zend\Transfer API
+     * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
      * @dataProvider basicBehaviorDataProvider
      * @return void
