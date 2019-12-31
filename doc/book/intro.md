@@ -1,6 +1,6 @@
 # Introduction
 
-zend-validator provides a set of commonly needed validators. It also provides a
+laminas-validator provides a set of commonly needed validators. It also provides a
 simple validator chaining mechanism by which multiple validators may be applied
 to a single datum in a user-defined order.
 
@@ -21,7 +21,7 @@ useful to know which of the requirements the username fails to meet.
 ## Basic usage of validators
 
 Having defined validation in this way provides the foundation for
-`Zend\Validator\ValidatorInterface`, which defines two methods, `isValid()` and
+`Laminas\Validator\ValidatorInterface`, which defines two methods, `isValid()` and
 `getMessages()`. The `isValid()` method performs validation upon the provided
 value, returning `true` if and only if the value passes against the validation
 criteria.
@@ -44,7 +44,7 @@ failure messages and the unique keys that identify them. Each class also has a
 The following example illustrates validation of an e-mail address:
 
 ```php
-use Zend\Validator\EmailAddress;
+use Laminas\Validator\EmailAddress;
 
 $validator = new EmailAddress();
 
@@ -67,7 +67,7 @@ can include tokens in this string which will be substituted with data relevant
 to the validator. The token `%value%` is supported by all validators; this is
 substituted with the value you passed to `isValid()`. Other tokens may be
 supported on a case-by-case basis in each validation class. For example, `%max%`
-is a token supported by `Zend\Validator\LessThan`. The `getMessageVariables()`
+is a token supported by `Laminas\Validator\LessThan`. The `getMessageVariables()`
 method returns an array of variable tokens supported by the validator.
 
 The second optional argument is a string that identifies the validation failure
@@ -79,7 +79,7 @@ message template defined, so there is no need to specify which message template
 you are changing.
 
 ```php
-use Zend\Validator\StringLength;
+use Laminas\Validator\StringLength;
 
 $validator = new StringLength(8);
 
@@ -100,7 +100,7 @@ You can set multiple messages using the `setMessages()` method. Its argument is
 an array containing key/message pairs.
 
 ```php
-use Zend\Validator\StringLength;
+use Laminas\Validator\StringLength;
 
 $validator = new StringLength(['min' => 8, 'max' => 12]);
 
@@ -118,7 +118,7 @@ available in a validator; it is the value you specified as the argument of
 validation class.
 
 ```php
-use Zend\Validator\StringLength;
+use Laminas\Validator\StringLength;
 
 $validator = new StringLength(['min' => 8, 'max' => 12]);
 
@@ -136,42 +136,42 @@ if (! $validator->isValid('word')) {
 
 > ### Translation compatibility
 >
-> In versions 2.0 - 2.1, `Zend\Validator\AbstractValidator` implemented
-> `Zend\I18n\Translator\TranslatorAwareInterface` and accepted instances of
-> `Zend\I18n\Translator\Translator`. Starting in version 2.2.0, zend-validator
-> now defines a translator interface, > `Zend\Validator\Translator\TranslatorInterface`,
-> as well as it's own -aware variant, > `Zend\Validator\Translator\TranslatorAwareInterface`.
+> In versions 2.0 - 2.1, `Laminas\Validator\AbstractValidator` implemented
+> `Laminas\I18n\Translator\TranslatorAwareInterface` and accepted instances of
+> `Laminas\I18n\Translator\Translator`. Starting in version 2.2.0, laminas-validator
+> now defines a translator interface, > `Laminas\Validator\Translator\TranslatorInterface`,
+> as well as it's own -aware variant, > `Laminas\Validator\Translator\TranslatorAwareInterface`.
 > This was done to reduce dependencies for the component, and follows the
 > principal of Separated Interfaces.
 >
 > The upshot is that if you are migrating from a pre-2.2 version, and receiving
 > errors indicating that the translator provided does not implement
-> `Zend\Validator\Translator\TranslatorInterface`, you will need to make a
+> `Laminas\Validator\Translator\TranslatorInterface`, you will need to make a
 > change to your code.
 >
-> An implementation of `Zend\Validator\Translator\TranslatorInterface` is
-> provided in `Zend\Mvc\I18n\Translator`, which also extends
-> `Zend\I18n\Translator\Translator`. This version can be instantiated and used
-> just as the original `Zend\I18n` version.
+> An implementation of `Laminas\Validator\Translator\TranslatorInterface` is
+> provided in `Laminas\Mvc\I18n\Translator`, which also extends
+> `Laminas\I18n\Translator\Translator`. This version can be instantiated and used
+> just as the original `Laminas\I18n` version.
 >
 > A new service has also been registered with the MVC, `MvcTranslator`, which
 > will return this specialized, bridge instance.
 >
-> Most users should see no issues, as `Zend\Validator\ValidatorPluginManager`
+> Most users should see no issues, as `Laminas\Validator\ValidatorPluginManager`
 > has been modified to use the `MvcTranslator` service internally, which is how
 > most developers were getting the translator instance into validators in the
 > first place. You will only need to change code if you were manually injecting
 > the instance previously.
 
 Validator classes provide a `setTranslator()` method with which you can specify
-an instance of `Zend\Validator\Translator\TranslatorInterface` which will
+an instance of `Laminas\Validator\Translator\TranslatorInterface` which will
 translate the messages in case of a validation failure. The `getTranslator()`
-method returns the translator instance. `Zend\Mvc\I18n\Translator` provides an
+method returns the translator instance. `Laminas\Mvc\I18n\Translator` provides an
 implementation compatible with the validator component.
 
 ```php
-use Zend\Mvc\I18n\Translator;
-use Zend\Validator\StringLength;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\StringLength;
 
 $validator = new StringLength(['min' => 8, 'max' => 12]);
 $translate = new Translator();
@@ -181,13 +181,13 @@ $validator->setTranslator($translate);
 ```
 
 With the static `AbstractValidator::setDefaultTranslator()` method you can set a
-instance of `Zend\Validator\Translator\TranslatorInterface` which will be used
+instance of `Laminas\Validator\Translator\TranslatorInterface` which will be used
 for all validation classes, and can be retrieved with `getDefaultTranslator()`.
 This prevents the need for setting a translator manually with each validator.
 
 ```php
-use Zend\Mvc\I18n\Translator;
-use Zend\Validator\AbstractValidator;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\AbstractValidator;
 
 $translate = new Translator();
 // configure the translator...
@@ -200,7 +200,7 @@ achieve this you can use the `setDisableTranslator()` method, which accepts a
 boolean parameter, and `isTranslatorDisabled()` to get the set value.
 
 ```php
-use Zend\Validator\StringLength;
+use Laminas\Validator\StringLength;
 
 $validator = new StringLength(['min' => 8, 'max' => 12]);
 if (! $validator->isTranslatorDisabled()) {

@@ -1,11 +1,11 @@
 # InArray Validator
 
-`Zend\Validator\InArray` allows you to validate if a given value is contained
+`Laminas\Validator\InArray` allows you to validate if a given value is contained
 within an array. It is also able to validate multidimensional arrays.
 
 ## Supported options
 
-The following options are supported for `Zend\Validator\InArray`:
+The following options are supported for `Laminas\Validator\InArray`:
 
 - `haystack`: Sets the haystack for the validation.  `recursive`: Defines if the
 - validation should be done recursively. This option
@@ -34,7 +34,7 @@ The following options are supported for `Zend\Validator\InArray`:
 Basic usage is to provide an array during instantiation:
 
 ```php
-$validator = new Zend\Validator\InArray([
+$validator = new Laminas\Validator\InArray([
     'haystack' => ['value1', 'value2',...'valueN']
 ]);
 
@@ -58,7 +58,7 @@ construction by using the `setHaystack()` method. `getHaystack()` returns the
 actual set haystack array.
 
 ```php
-$validator = new Zend\Validator\InArray();
+$validator = new Laminas\Validator\InArray();
 $validator->setHaystack(['value1', 'value2',...'valueN']);
 
 if ($validator->isValid('value')) {
@@ -82,18 +82,18 @@ It's possible to set the strict mode at initialisation and afterwards with the
 
 ```php
 // defaults to InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY
-$validator = new Zend\Validator\InArray([
+$validator = new Laminas\Validator\InArray([
     'haystack' => array('value1', 'value2', /* ... */ 'valueN'),
 ]);
 
 // set strict mode
-$validator = new Zend\Validator\InArray([
+$validator = new Laminas\Validator\InArray([
     'haystack' => ['value1', 'value2', /* ... */ 'valueN'],
     'strict'   => InArray::COMPARE_STRICT,  // equates to ``true``
 ]);
 
 // set non-strict mode  
-$validator = new Zend\Validator\InArray([
+$validator = new Laminas\Validator\InArray([
     'haystack' => ['value1', 'value2', /* ... */ 'valueN'],
     'strict'   => InArray:COMPARE_NOT_STRICT,  // equates to ``false``
 ]);
@@ -117,7 +117,7 @@ validate multidimensional arrays.
 To validate multidimensional arrays you have to set the `recursive` option.
 
 ```php
-$validator = new Zend\Validator\InArray([
+$validator = new Laminas\Validator\InArray([
     'haystack' => array(
         'firstDimension' => ['value1', 'value2', / ... */ 'valueN'],
         'secondDimension' => ['foo1', 'foo2', /* ... */ 'fooN'],
@@ -137,7 +137,7 @@ contained. Additionally you could use `setRecursive()` to set this option
 afterwards and `getRecursive()` to retrieve it.
 
 ```php
-$validator = new Zend\Validator\InArray([
+$validator = new Laminas\Validator\InArray([
     'firstDimension' => ['value1', 'value2', /* ... */ 'valueN'],
     'secondDimension' => ['foo1', 'foo2', /* ... */ 'fooN'],
 ]);

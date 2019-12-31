@@ -1,14 +1,14 @@
 # Writing Validators
 
-zend-validator supplies a set of commonly needed validators, but many
+laminas-validator supplies a set of commonly needed validators, but many
 applications have needs for custom validators. The component allows this via
-implementations of `Zend\Validator\ValidatorInterface`.
+implementations of `Laminas\Validator\ValidatorInterface`.
 
-`Zend\Validator\ValidatorInterface` defines two methods: `isValid()` and
+`Laminas\Validator\ValidatorInterface` defines two methods: `isValid()` and
 `getMessages()`. An object that implements the interface may be added to a
-validator chain using `Zend\Validator\ValidatorChain::addValidator()`. Such
+validator chain using `Laminas\Validator\ValidatorChain::addValidator()`. Such
 objects may also be used with
-[zend-inputfilter](https://zendframework.github.io/zend-inputfilter).
+[laminas-inputfilter](https://docs.laminas.dev/laminas-inputfilter).
 
 Validators will return a boolean value from `isValid()`, and report information
 regarding **why** a value failed validation via `getMessages()`. The
@@ -17,7 +17,7 @@ application for various purposes, such as providing statistics for usability
 analysis.
 
 Basic validation failure message functionality is implemented in
-`Zend\Validator\AbstractValidator`, which you may extend for your custom
+`Laminas\Validator\AbstractValidator`, which you may extend for your custom
 validators.  Extending class you would implement the `isValid()` method logic
 and define the message variables and message templates that correspond to the
 types of validation failures that can occur. If a value fails your validation
@@ -39,7 +39,7 @@ this case, the validator tests that a value is a floating point value.
 ```php
 namespace MyValid;
 
-use Zend\Validator\AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 class Float extends AbstractValidator
 {
@@ -90,7 +90,7 @@ class:
 ```php
 namespace MyValid;
 
-use Zend\Validator\AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 class NumericBetween extends AbstractValidator
 {
@@ -167,7 +167,7 @@ The following class implements these validation criteria:
 ```php
 namespace MyValid;
 
-use Zend\Validator\AbstractValidator;
+use Laminas\Validator\AbstractValidator;
 
 class PasswordStrength extends AbstractValidator
 {

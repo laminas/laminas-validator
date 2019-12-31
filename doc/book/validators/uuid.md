@@ -1,6 +1,6 @@
 # UUID Validator
 
-`Zend\Validator\Uuid` allows validating [Universally Unique IDentifiers](https://en.wikipedia.org/wiki/Universally_unique_identifier)
+`Laminas\Validator\Uuid` allows validating [Universally Unique IDentifiers](https://en.wikipedia.org/wiki/Universally_unique_identifier)
 (UUIDs). UUIDs are 128-bit values that are guaranteed to be "practically unique"
 in order to help prevent identifier conflicts. Five separate UUID versions
 exist:
@@ -19,7 +19,7 @@ however, only that it is well-formed.
 
 > ### Introduced in 2.8.0
 >
-> `Zend\Validator\Uuid` was introduced with version 2.8.0.
+> `Laminas\Validator\Uuid` was introduced with version 2.8.0.
 
 ## Supported options
 
@@ -28,7 +28,7 @@ The `Uuid` validator has no additional options.
 ## Basic usage
 
 ```php
-$validator = new Zend\Validator\Uuid();
+$validator = new Laminas\Validator\Uuid();
 
 if ($validator->isValid($uuid)) {
     // UUID was valid

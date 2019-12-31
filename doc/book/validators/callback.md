@@ -1,11 +1,11 @@
 # Callback Validator
 
-`Zend\Validator\Callback` allows you to provide a callback with which to
+`Laminas\Validator\Callback` allows you to provide a callback with which to
 validate a given value.
 
 ## Supported options
 
-The following options are supported for `Zend\Validator\Callback`:
+The following options are supported for `Laminas\Validator\Callback`:
 
 - `callback`: Sets the callback which will be called for the validation.
 - `options`: Sets the additional options which will be given to the validator
@@ -24,10 +24,10 @@ function myMethod($value)
 }
 ```
 
-To use it within `Zend\Validator\Callback`, pass it to the constructor
+To use it within `Laminas\Validator\Callback`, pass it to the constructor
 
 ```php
-$valid = new Zend\Validator\Callback('myMethod');
+$valid = new Laminas\Validator\Callback('myMethod');
 if ($valid->isValid($input)) {
     // input appears to be valid
 } else {
@@ -41,7 +41,7 @@ The `Callback` validator supports any PHP callable, including PHP
 [closures](http://php.net/functions.anonymous).
 
 ```php
-$valid = new Zend\Validator\Callback(function($value) {
+$valid = new Laminas\Validator\Callback(function($value) {
     // some validation
     return true;
 });
@@ -73,7 +73,7 @@ To use it with the `Callback` validator, pass a callable using an instance of
 the class:
 
 ```php
-$valid = new Zend\Validator\Callback([new MyClass, 'myMethod']);
+$valid = new Laminas\Validator\Callback([new MyClass, 'myMethod']);
 if ($valid->isValid($input)) {
     // input appears to be valid
 } else {
@@ -94,7 +94,7 @@ class MyClass
     }
 }
 
-$valid = new Zend\Validator\Callback(MyClass::class, 'test']);
+$valid = new Laminas\Validator\Callback(MyClass::class, 'test']);
 if ($valid->isValid($input)) {
     // input appears to be valid
 } else {
@@ -115,7 +115,7 @@ class MyClass
     }
 }
 
-$valid = new Zend\Validator\Callback(new MyClass());
+$valid = new Laminas\Validator\Callback(new MyClass());
 if ($valid->isValid($input)) {
     // input appears to be valid
 } else {
@@ -125,7 +125,7 @@ if ($valid->isValid($input)) {
 
 ## Adding options
 
-`Zend\Validator\Callback` also allows the usage of options which are provided as
+`Laminas\Validator\Callback` also allows the usage of options which are provided as
 additional arguments to the callback.
 
 Consider the following class and method definition:
@@ -158,7 +158,7 @@ To pass them to the constructor, you would need to pass an array containing two
 keys, `callback` and `callbackOptions`:
 
 ```php
-$valid = new Zend\Validator\Callback([
+$valid = new Laminas\Validator\Callback([
     'callback'        => [MyClass::class, 'myMethod'],
     'callbackOptions' => $options,
 ]);
@@ -173,7 +173,7 @@ if ($valid->isValid($input)) {
 Otherwise, you may pass them to the validator after instantiation:
 
 ```php
-$valid = new Zend\Validator\Callback([MyClass::class, 'myMethod']);
+$valid = new Laminas\Validator\Callback([MyClass::class, 'myMethod']);
 $valid->setOptions($options);
 
 if ($valid->isValid($input)) {
@@ -187,7 +187,7 @@ When there are additional values given to `isValid()`, then these values will be
 passed as an additional argument:
 
 ```php
-$valid = new Zend\Validator\Callback([MyClass::class, 'myMethod']);
+$valid = new Laminas\Validator\Callback([MyClass::class, 'myMethod']);
 $valid->setOptions($options);
 
 if ($valid->isValid($input, $context)) {
