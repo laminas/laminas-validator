@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -560,7 +564,7 @@
 <h3>Installation requirements</h3>
 <p>This validator needs to make a request over HTTP; therefore it requires an HTTP client. The validator provides support only for HTTP clients implementing <a href="https://www.php-fig.org/psr/psr-18/">PSR-18</a> and <a href="https://www.php-fig.org/psr/psr-17/">PSR-17</a> request and response factories.</p>
 <p>To ensure you have these installed before using this validator, run the following:</p>
-<pre class=codehilite><code class=language-bash>
+<pre class="codehilite"><code class="language-bash">
 $ composer require psr/http-client
 $ composer require psr/http-factory
 </code></pre>
@@ -574,56 +578,51 @@ $ composer require psr/http-factory
 </ul>
 <p>Once you have an instance, you can then pass a password to its <code>isValid()</code> method to determine if it has been disclosed in a known data breach.</p>
 <p>If the password was found via the service, <code>isValid()</code> will return <code>false</code>. If the password was not found, <code>isValid()</code> will return <code>true</code>.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\UndisclosedPassword(</span>
-<span class=x>    $httpClient, // a PSR-18 HttpClientInterface</span>
-<span class=x>    $requestFactory, // a PSR-17 RequestFactoryInterface</span>
-<span class=x>    $responseFactory // a PSR-17 ResponseFactoryInterface</span>
-<span class=x>);</span>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\UndisclosedPassword(
+    $httpClient, // a PSR-18 HttpClientInterface
+    $requestFactory, // a PSR-17 RequestFactoryInterface
+    $responseFactory // a PSR-17 ResponseFactoryInterface
+);
 
-<span class=x>$result = $validator-&gt;isValid(&#39;password&#39;);</span>
-<span class=x>// $result is FALSE because &quot;password&quot; was found in a data breach</span>
+$result = $validator-&gt;isValid('password');
+// $result is FALSE because &quot;password&quot; was found in a data breach
 
-<span class=x>$result = $validator-&gt;isValid(&#39;8aDk=XiW2E.77tLfuAcB&#39;); </span>
-<span class=x>// $result is TRUE because &quot;8aDk=XiW2E.77tLfuAcB&quot; was not found in a data breach</span>
-</pre></div></p>
+$result = $validator-&gt;isValid('8aDk=XiW2E.77tLfuAcB'); 
+// $result is TRUE because &quot;8aDk=XiW2E.77tLfuAcB&quot; was not found in a data breach</code></pre>
 <h2 id="a-simple-command-line-example">A simple command line example</h2>
 <p>In this example, I'm using <code>laminas/laminas-diactoros</code> to provide HTTP messages, and <code>php-http/curl-client</code> as the HTTP client. Let's begin with installation of all required packages:</p>
-<p> <div class=codehilite><pre><span></span>$ composer require <span class=se>\</span>
-    php-http/message <span class=se>\</span>
-    php-http/message-factory <span class=se>\</span>
-    php-http/discovery <span class=se>\</span>
-    php-http/curl-client <span class=se>\</span>
-    laminas/laminas-diactoros <span class=se>\</span>
-    laminas/laminas-validator
-</pre></div></p>
+<pre class=codehilite><code class=language-bash>$ composer require \
+    php-http/message \
+    php-http/message-factory \
+    php-http/discovery \
+    php-http/curl-client \
+    laminas/laminas-diactoros \
+    laminas/laminas-validator</code></pre>
 <p>Next, I create a file, <code>undisclosed.php</code>, where I put my code:</p>
-<p> <div class=codehilite><pre><span></span><span class=cp>&lt;?php</span>
+<pre class=codehilite><code class=language-php>&lt;?php
 
-<span class=k>namespace</span> <span class=nx>Undisclosed</span><span class=p>;</span>
+namespace Undisclosed;
 
-<span class=k>use</span> <span class=nx>Http\Client\Curl\Client</span><span class=p>;</span>
-<span class=k>use</span> <span class=nx>Laminas\Diactoros\RequestFactory</span><span class=p>;</span>
-<span class=k>use</span> <span class=nx>Laminas\Diactoros\ResponseFactory</span><span class=p>;</span>
-<span class=k>use</span> <span class=nx>Laminas\Validator\UndisclosedPassword</span><span class=p>;</span>
+use Http\Client\Curl\Client;
+use Laminas\Diactoros\RequestFactory;
+use Laminas\Diactoros\ResponseFactory;
+use Laminas\Validator\UndisclosedPassword;
 
-<span class=k>require_once</span> <span class=no>__DIR__</span> <span class=o>.</span> <span class=s1>&#39;/vendor/autoload.php&#39;</span><span class=p>;</span>
+require_once __DIR__ . '/vendor/autoload.php';
 
 
-<span class=nv>$requestFactory</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>RequestFactory</span><span class=p>();</span>
-<span class=nv>$responseFactory</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>ResponseFactory</span><span class=p>();</span>
-<span class=nv>$client</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>Client</span><span class=p>(</span><span class=nv>$responseFactory</span><span class=p>,</span> <span class=k>null</span><span class=p>);</span>
+$requestFactory = new RequestFactory();
+$responseFactory = new ResponseFactory();
+$client = new Client($responseFactory, null);
 
-<span class=nv>$undisclosedPassword</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>UndisclosedPassword</span><span class=p>(</span><span class=nv>$client</span><span class=p>,</span> <span class=nv>$requestFactory</span><span class=p>,</span> <span class=nv>$responseFactory</span><span class=p>);</span>
-<span class=k>echo</span> <span class=s1>&#39;Password &quot;password&quot; is &#39;</span> <span class=o>.</span> <span class=p>(</span><span class=nv>$undisclosedPassword</span><span class=o>-&gt;</span><span class=na>isValid</span><span class=p>(</span><span class=s1>&#39;password&#39;</span><span class=p>)</span> <span class=o>?</span> <span class=s1>&#39;not disclosed&#39;</span> <span class=o>:</span> <span class=s1>&#39;disclosed&#39;</span><span class=p>)</span> <span class=o>.</span> <span class=nx>PHP_EOL</span><span class=p>;</span>
-<span class=k>echo</span> <span class=s1>&#39;Password &quot;NVt3MpvQ&quot; is &#39;</span> <span class=o>.</span> <span class=p>(</span><span class=nv>$undisclosedPassword</span><span class=o>-&gt;</span><span class=na>isValid</span><span class=p>(</span><span class=s1>&#39;NVt3MpvQ&#39;</span><span class=p>)</span> <span class=o>?</span> <span class=s1>&#39;not disclosed&#39;</span> <span class=o>:</span> <span class=s1>&#39;disclosed&#39;</span><span class=p>)</span> <span class=o>.</span> <span class=nx>PHP_EOL</span><span class=p>;</span>
-</pre></div></p>
+$undisclosedPassword = new UndisclosedPassword($client, $requestFactory, $responseFactory);
+echo 'Password &quot;password&quot; is ' . ($undisclosedPassword-&gt;isValid('password') ? 'not disclosed' : 'disclosed') . PHP_EOL;
+echo 'Password &quot;NVt3MpvQ&quot; is ' . ($undisclosedPassword-&gt;isValid('NVt3MpvQ') ? 'not disclosed' : 'disclosed') . PHP_EOL;</code></pre>
 <p>To run it, I use the PHP command line interpreter:</p>
-<p> <div class=codehilite><pre><span></span>$ php undisclosed.php
-</pre></div></p>
+<pre class=codehilite><code class=language-bash>$ php undisclosed.php</code></pre>
 <p>And it gives me the following output:</p>
-<p> <div class=codehilite><pre><span></span>Password <span class=s2>&quot;password&quot;</span> is disclosed
-Password <span class=s2>&quot;NVt3MpvQ&quot;</span> is not disclosed
-</pre></div></p>
+<pre class=codehilite><code class=language-bash>Password &quot;password&quot; is disclosed
+Password &quot;NVt3MpvQ&quot; is not disclosed</code></pre>
 
 
 
@@ -1075,9 +1074,10 @@ Password <span class=s2>&quot;NVt3MpvQ&quot;</span> is not disclosed
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -1114,7 +1114,7 @@ Password <span class=s2>&quot;NVt3MpvQ&quot;</span> is not disclosed
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-validator//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-validator/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -1123,8 +1123,8 @@ Password <span class=s2>&quot;NVt3MpvQ&quot;</span> is not disclosed
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-validator//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

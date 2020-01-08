@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -576,150 +580,139 @@ validate a given value.</p>
 <h2 id="basic-usage">Basic usage</h2>
 <p>The simplest use case is to pass a function as a callback. Consider the
 following function:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>function myMethod($value)</span>
-<span class=x>{</span>
-<span class=x>    // some validation</span>
-<span class=x>    return true;</span>
-<span class=x>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>function myMethod($value)
+{
+    // some validation
+    return true;
+}</code></pre>
 <p>To use it within <code>Laminas\Validator\Callback</code>, pass it to the constructor</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$valid = new Laminas\Validator\Callback(&#39;myMethod&#39;);</span>
-<span class=x>if ($valid-&gt;isValid($input)) {</span>
-<span class=x>    // input appears to be valid</span>
-<span class=x>} else {</span>
-<span class=x>    // input is invalid</span>
-<span class=x>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$valid = new Laminas\Validator\Callback('myMethod');
+if ($valid-&gt;isValid($input)) {
+    // input appears to be valid
+} else {
+    // input is invalid
+}</code></pre>
 <h2 id="usage-with-closures">Usage with closures</h2>
 <p>The <code>Callback</code> validator supports any PHP callable, including PHP
 <a href="http://php.net/functions.anonymous">closures</a>.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$valid = new Laminas\Validator\Callback(function($value) {</span>
-<span class=x>    // some validation</span>
-<span class=x>    return true;</span>
-<span class=x>});</span>
+<pre class=codehilite><code class=language-php>$valid = new Laminas\Validator\Callback(function($value) {
+    // some validation
+    return true;
+});
 
-<span class=x>if ($valid-&gt;isValid($input)) {</span>
-<span class=x>    // input appears to be valid</span>
-<span class=x>} else {</span>
-<span class=x>    // input is invalid</span>
-<span class=x>}</span>
-</pre></div></p>
+if ($valid-&gt;isValid($input)) {
+    // input appears to be valid
+} else {
+    // input is invalid
+}</code></pre>
 <h2 id="usage-with-class-based-callbacks">Usage with class-based callbacks</h2>
 <p>Of course it's also possible to use a class method as callback. Consider the
 following class definition:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>class MyClass</span>
-<span class=x>{</span>
-<span class=x>    public function myMethod($value)</span>
-<span class=x>    {</span>
-<span class=x>        // some validation</span>
-<span class=x>        return true;</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>class MyClass
+{
+    public function myMethod($value)
+    {
+        // some validation
+        return true;
+    }
+}</code></pre>
 <p>To use it with the <code>Callback</code> validator, pass a callable using an instance of
 the class:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$valid = new Laminas\Validator\Callback([new MyClass, &#39;myMethod&#39;]);</span>
-<span class=x>if ($valid-&gt;isValid($input)) {</span>
-<span class=x>    // input appears to be valid</span>
-<span class=x>} else {</span>
-<span class=x>    // input is invalid</span>
-<span class=x>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$valid = new Laminas\Validator\Callback([new MyClass, 'myMethod']);
+if ($valid-&gt;isValid($input)) {
+    // input appears to be valid
+} else {
+    // input is invalid
+}</code></pre>
 <p>You may also define a static method as a callback. Consider the following class
 definition and validator usage:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>class MyClass</span>
-<span class=x>{</span>
-<span class=x>    public static function test($value)</span>
-<span class=x>    {</span>
-<span class=x>        // some validation</span>
-<span class=x>        return true;</span>
-<span class=x>    }</span>
-<span class=x>}</span>
+<pre class=codehilite><code class=language-php>class MyClass
+{
+    public static function test($value)
+    {
+        // some validation
+        return true;
+    }
+}
 
-<span class=x>$valid = new Laminas\Validator\Callback(MyClass::class, &#39;test&#39;]);</span>
-<span class=x>if ($valid-&gt;isValid($input)) {</span>
-<span class=x>    // input appears to be valid</span>
-<span class=x>} else {</span>
-<span class=x>    // input is invalid</span>
-<span class=x>}</span>
-</pre></div></p>
+$valid = new Laminas\Validator\Callback(MyClass::class, 'test']);
+if ($valid-&gt;isValid($input)) {
+    // input appears to be valid
+} else {
+    // input is invalid
+}</code></pre>
 <p>Finally, you may define the magic method <code>__invoke()</code> in your class. If you do
 so, you can provide a class instance itself as the callback:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>class MyClass</span>
-<span class=x>{</span>
-<span class=x>    public function __invoke($value)</span>
-<span class=x>    {</span>
-<span class=x>        // some validation</span>
-<span class=x>        return true;</span>
-<span class=x>    }</span>
-<span class=x>}</span>
+<pre class=codehilite><code class=language-php>class MyClass
+{
+    public function __invoke($value)
+    {
+        // some validation
+        return true;
+    }
+}
 
-<span class=x>$valid = new Laminas\Validator\Callback(new MyClass());</span>
-<span class=x>if ($valid-&gt;isValid($input)) {</span>
-<span class=x>    // input appears to be valid</span>
-<span class=x>} else {</span>
-<span class=x>    // input is invalid</span>
-<span class=x>}</span>
-</pre></div></p>
+$valid = new Laminas\Validator\Callback(new MyClass());
+if ($valid-&gt;isValid($input)) {
+    // input appears to be valid
+} else {
+    // input is invalid
+}</code></pre>
 <h2 id="adding-options">Adding options</h2>
 <p><code>Laminas\Validator\Callback</code> also allows the usage of options which are provided as
 additional arguments to the callback.</p>
 <p>Consider the following class and method definition:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>class MyClass</span>
-<span class=x>{</span>
-<span class=x>    public static function myMethod($value, $option)</span>
-<span class=x>    {</span>
-<span class=x>        // some validation</span>
-<span class=x>        return true;</span>
-<span class=x>    }</span>
+<pre class=codehilite><code class=language-php>class MyClass
+{
+    public static function myMethod($value, $option)
+    {
+        // some validation
+        return true;
+    }
 
-<span class=x>    /**</span>
-<span class=x>     * Or, to use with contextual validation</span>
-<span class=x>     */</span>
-<span class=x>    public static function myMethod($value, $context, $option)</span>
-<span class=x>    {</span>
-<span class=x>        // some validation</span>
-<span class=x>        return true;</span>
-<span class=x>    }</span>
+    /**
+     * Or, to use with contextual validation
+     */
+    public static function myMethod($value, $context, $option)
+    {
+        // some validation
+        return true;
+    }
 
-<span class=x>}</span>
-</pre></div></p>
+}</code></pre>
 <p>There are two ways to inform the validator of additional options: pass them in
 the constructor, or pass them to the <code>setOptions()</code> method.</p>
 <p>To pass them to the constructor, you would need to pass an array containing two
 keys, <code>callback</code> and <code>callbackOptions</code>:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$valid = new Laminas\Validator\Callback([</span>
-<span class=x>    &#39;callback&#39;        =&gt; [MyClass::class, &#39;myMethod&#39;],</span>
-<span class=x>    &#39;callbackOptions&#39; =&gt; $options,</span>
-<span class=x>]);</span>
+<pre class=codehilite><code class=language-php>$valid = new Laminas\Validator\Callback([
+    'callback'        =&gt; [MyClass::class, 'myMethod'],
+    'callbackOptions' =&gt; $options,
+]);
 
-<span class=x>if ($valid-&gt;isValid($input)) {</span>
-<span class=x>    // input appears to be valid</span>
-<span class=x>} else {</span>
-<span class=x>    // input is invalid</span>
-<span class=x>}</span>
-</pre></div></p>
+if ($valid-&gt;isValid($input)) {
+    // input appears to be valid
+} else {
+    // input is invalid
+}</code></pre>
 <p>Otherwise, you may pass them to the validator after instantiation:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$valid = new Laminas\Validator\Callback([MyClass::class, &#39;myMethod&#39;]);</span>
-<span class=x>$valid-&gt;setOptions($options);</span>
+<pre class=codehilite><code class=language-php>$valid = new Laminas\Validator\Callback([MyClass::class, 'myMethod']);
+$valid-&gt;setOptions($options);
 
-<span class=x>if ($valid-&gt;isValid($input)) {</span>
-<span class=x>    // input appears to be valid</span>
-<span class=x>} else {</span>
-<span class=x>    // input is invalid</span>
-<span class=x>}</span>
-</pre></div></p>
+if ($valid-&gt;isValid($input)) {
+    // input appears to be valid
+} else {
+    // input is invalid
+}</code></pre>
 <p>When there are additional values given to <code>isValid()</code>, then these values will be
 passed as an additional argument:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$valid = new Laminas\Validator\Callback([MyClass::class, &#39;myMethod&#39;]);</span>
-<span class=x>$valid-&gt;setOptions($options);</span>
+<pre class=codehilite><code class=language-php>$valid = new Laminas\Validator\Callback([MyClass::class, 'myMethod']);
+$valid-&gt;setOptions($options);
 
-<span class=x>if ($valid-&gt;isValid($input, $context)) {</span>
-<span class=x>    // input appears to be valid</span>
-<span class=x>} else {</span>
-<span class=x>    // input is invalid</span>
-<span class=x>}</span>
-</pre></div></p>
+if ($valid-&gt;isValid($input, $context)) {
+    // input appears to be valid
+} else {
+    // input is invalid
+}</code></pre>
 <p>When making the call to the callback, the value to be validated will always be
 passed as the first argument to the callback followed by all other values given
 to <code>isValid()</code>; all other options will follow it. The amount and type of options
@@ -1175,9 +1168,10 @@ which can be used is not limited.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -1214,7 +1208,7 @@ which can be used is not limited.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-validator//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-validator/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -1223,8 +1217,8 @@ which can be used is not limited.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-validator//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

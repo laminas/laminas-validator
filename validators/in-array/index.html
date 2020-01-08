@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -591,16 +595,15 @@ of converting strings to int in such cases. Therefore, <code>'foo'</code> would 
 </blockquote>
 <h2 id="array-validation">Array validation</h2>
 <p>Basic usage is to provide an array during instantiation:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\InArray([</span>
-<span class=x>    &#39;haystack&#39; =&gt; [&#39;value1&#39;, &#39;value2&#39;,...&#39;valueN&#39;],</span>
-<span class=x>]);</span>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\InArray([
+    'haystack' =&gt; ['value1', 'value2',...'valueN'],
+]);
 
-<span class=x>if ($validator-&gt;isValid(&#39;value&#39;)) {</span>
-<span class=x>    // value found</span>
-<span class=x>} else {</span>
-<span class=x>    // no value found</span>
-<span class=x>}</span>
-</pre></div></p>
+if ($validator-&gt;isValid('value')) {
+    // value found
+} else {
+    // no value found
+}</code></pre>
 <p>This will behave exactly like PHP's <code>in_array()</code> method when passed only a
 needle and haystack.</p>
 <blockquote>
@@ -611,15 +614,14 @@ multidimensional arrays.</p>
 <p>Alternately, you can define the array to validate against after object
 construction by using the <code>setHaystack()</code> method. <code>getHaystack()</code> returns the
 actual set haystack array.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\InArray();</span>
-<span class=x>$validator-&gt;setHaystack([&#39;value1&#39;, &#39;value2&#39;,...&#39;valueN&#39;]);</span>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\InArray();
+$validator-&gt;setHaystack(['value1', 'value2',...'valueN']);
 
-<span class=x>if ($validator-&gt;isValid(&#39;value&#39;)) {</span>
-<span class=x>    // value found</span>
-<span class=x>} else {</span>
-<span class=x>    // no value found</span>
-<span class=x>}</span>
-</pre></div></p>
+if ($validator-&gt;isValid('value')) {
+    // value found
+} else {
+    // no value found
+}</code></pre>
 <h2 id="array-validation-modes">Array validation modes</h2>
 <p>As previously mentioned, there are possible security issues when using the
 default non-strict comparison mode, so rather than restricting the developer,
@@ -629,29 +631,28 @@ middle-ground.</p>
 <code>setStrict</code> method. <code>InArray::COMPARE_STRICT</code> equates to <code>true</code> and
 <code>InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY</code> equates to
 <code>false</code>.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// defaults to InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY</span>
-<span class=x>$validator = new Laminas\Validator\InArray([</span>
-<span class=x>    &#39;haystack&#39; =&gt; [&#39;value1&#39;, &#39;value2&#39;, /* ... */ &#39;valueN&#39;],</span>
-<span class=x>]);</span>
+<pre class=codehilite><code class=language-php>// defaults to InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY
+$validator = new Laminas\Validator\InArray([
+    'haystack' =&gt; ['value1', 'value2', /* ... */ 'valueN'],
+]);
 
-<span class=x>// set strict mode</span>
-<span class=x>$validator = new Laminas\Validator\InArray([</span>
-<span class=x>    &#39;haystack&#39; =&gt; [&#39;value1&#39;, &#39;value2&#39;, /* ... */ &#39;valueN&#39;],</span>
-<span class=x>    &#39;strict&#39;   =&gt; InArray::COMPARE_STRICT,  // equates to ``true``</span>
-<span class=x>]);</span>
+// set strict mode
+$validator = new Laminas\Validator\InArray([
+    'haystack' =&gt; ['value1', 'value2', /* ... */ 'valueN'],
+    'strict'   =&gt; InArray::COMPARE_STRICT,  // equates to ``true``
+]);
 
-<span class=x>// set non-strict mode</span>
-<span class=x>$validator = new Laminas\Validator\InArray([</span>
-<span class=x>    &#39;haystack&#39; =&gt; [&#39;value1&#39;, &#39;value2&#39;, /* ... */ &#39;valueN&#39;],</span>
-<span class=x>    &#39;strict&#39;   =&gt; InArray:COMPARE_NOT_STRICT,  // equates to ``false``</span>
-<span class=x>]);</span>
+// set non-strict mode
+$validator = new Laminas\Validator\InArray([
+    'haystack' =&gt; ['value1', 'value2', /* ... */ 'valueN'],
+    'strict'   =&gt; InArray:COMPARE_NOT_STRICT,  // equates to ``false``
+]);
 
-<span class=x>// or</span>
+// or
 
-<span class=x>$validator-&gt;setStrict(InArray::COMPARE_STRICT);</span>
-<span class=x>$validator-&gt;setStrict(InArray::COMPARE_NOT_STRICT);</span>
-<span class=x>$validator-&gt;setStrict(InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY);</span>
-</pre></div></p>
+$validator-&gt;setStrict(InArray::COMPARE_STRICT);
+$validator-&gt;setStrict(InArray::COMPARE_NOT_STRICT);
+$validator-&gt;setStrict(InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY);</code></pre>
 <blockquote>
 <h3>Non-strict safe-mode by default</h3>
 <p>Note that the <code>strict</code> setting is per default <code>false</code>.</p>
@@ -660,36 +661,34 @@ middle-ground.</p>
 <p>In addition to PHP's <code>in_array()</code> method, this validator can also be used to
 validate multidimensional arrays.</p>
 <p>To validate multidimensional arrays you have to set the <code>recursive</code> option.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\InArray([</span>
-<span class=x>    &#39;haystack&#39; =&gt; [</span>
-<span class=x>        &#39;firstDimension&#39; =&gt; [&#39;value1&#39;, &#39;value2&#39;, / ... */ &#39;valueN&#39;],</span>
-<span class=x>        &#39;secondDimension&#39; =&gt; [&#39;foo1&#39;, &#39;foo2&#39;, /* ... */ &#39;fooN&#39;],</span>
-<span class=x>    ],</span>
-<span class=x>    &#39;recursive&#39; =&gt; true,</span>
-<span class=x>]);</span>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\InArray([
+    'haystack' =&gt; [
+        'firstDimension' =&gt; ['value1', 'value2', / ... */ 'valueN'],
+        'secondDimension' =&gt; ['foo1', 'foo2', /* ... */ 'fooN'],
+    ],
+    'recursive' =&gt; true,
+]);
 
-<span class=x>if ($validator-&gt;isValid(&#39;value&#39;)) {</span>
-<span class=x>    // value found</span>
-<span class=x>} else {</span>
-<span class=x>    // no value found</span>
-<span class=x>}</span>
-</pre></div></p>
+if ($validator-&gt;isValid('value')) {
+    // value found
+} else {
+    // no value found
+}</code></pre>
 <p>Your array will then be validated recursively to see if the given value is
 contained. Additionally you could use <code>setRecursive()</code> to set this option
 afterwards and <code>getRecursive()</code> to retrieve it.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\InArray([</span>
-<span class=x>    &#39;firstDimension&#39; =&gt; [&#39;value1&#39;, &#39;value2&#39;, /* ... */ &#39;valueN&#39;],</span>
-<span class=x>    &#39;secondDimension&#39; =&gt; [&#39;foo1&#39;, &#39;foo2&#39;, /* ... */ &#39;fooN&#39;],</span>
-<span class=x>]);</span>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\InArray([
+    'firstDimension' =&gt; ['value1', 'value2', /* ... */ 'valueN'],
+    'secondDimension' =&gt; ['foo1', 'foo2', /* ... */ 'fooN'],
+]);
 
-<span class=x>$validator-&gt;setRecursive(true);</span>
+$validator-&gt;setRecursive(true);
 
-<span class=x>if ($validator-&gt;isValid(&#39;value&#39;)) {</span>
-<span class=x>    // value found</span>
-<span class=x>} else {</span>
-<span class=x>    // no value found</span>
-<span class=x>}</span>
-</pre></div></p>
+if ($validator-&gt;isValid('value')) {
+    // value found
+} else {
+    // no value found
+}</code></pre>
 <blockquote>
 <h3>Default setting for recursion</h3>
 <p>By default, the recursive validation is turned off.</p>
@@ -1148,9 +1147,10 @@ your haystack, then you must wrap the <code>haystack</code> key.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -1187,7 +1187,7 @@ your haystack, then you must wrap the <code>haystack</code> key.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-validator//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-validator/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -1196,8 +1196,8 @@ your haystack, then you must wrap the <code>haystack</code> key.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-validator//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -552,26 +556,23 @@ validator could return to something different.</p>
 <p>Validation messages are defined as constant/template pairs, with the constant
 representing a translation key. Such constants are defined per-class.  Let's
 look into <code>Laminas\Validator\GreaterThan</code> for a descriptive example:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>protected $messageTemplates = [</span>
-<span class=x>    self::NOT_GREATER =&gt; &quot;&#39;%value%&#39; is not greater than &#39;%min%&#39;&quot;,</span>
-<span class=x>];</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>protected $messageTemplates = [
+    self::NOT_GREATER =&gt; &quot;'%value%' is not greater than '%min%'&quot;,
+];</code></pre>
 <p>The constant <code>self::NOT_GREATER</code> refers to the failure and is used as the
 message key, and the message template itself is used as the value within the
 message array.</p>
 <p>You can retrieve all message templates from a validator by using the
 <code>getMessageTemplates()</code> method. It returns the above array containing all
 messages a validator could return in the case of a failed validation.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\GreaterThan();</span>
-<span class=x>$messages  = $validator-&gt;getMessageTemplates();</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\GreaterThan();
+$messages  = $validator-&gt;getMessageTemplates();</code></pre>
 <p>Using the <code>setMessage()</code> method you can set another message to be returned in
 case of the specified failure.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Validator\GreaterThan;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Validator\GreaterThan;
 
-<span class=x>$validator = new GreaterThan();</span>
-<span class=x>$validator-&gt;setMessage(&#39;Please enter a lower value&#39;, GreaterThan::NOT_GREATER);</span>
-</pre></div></p>
+$validator = new GreaterThan();
+$validator-&gt;setMessage('Please enter a lower value', GreaterThan::NOT_GREATER);</code></pre>
 <p>The second parameter defines the failure which will be overridden. When you omit
 this parameter, then the given message will be set for all possible failures of
 this validator.</p>
@@ -581,23 +582,21 @@ this validator.</p>
 messages. For your convenience, pre-translated messages are provided in the
 <a href="https://docs.laminas.dev/laminas-i18n-resources/">laminas/laminas-i18n-resources</a>
 package:</p>
-<p> <div class=codehilite><pre><span></span>$ composer require laminas/laminas-i18n-resources
-</pre></div></p>
+<pre class=codehilite><code class=language-bash>$ composer require laminas/laminas-i18n-resources</code></pre>
 <p>To translate all validation messages to German for example, attach a translator
 to <code>Laminas\Validator\AbstractValidator</code> using these resource files.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\I18n\Translator\Resources;</span>
-<span class=x>use Laminas\Mvc\I18n\Translator;</span>
-<span class=x>use Laminas\Validator\AbstractValidator;</span>
+<pre class=codehilite><code class=language-php>use Laminas\I18n\Translator\Resources;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\AbstractValidator;
 
-<span class=x>$translator = new Laminas\Mvc\I18n\Translator();</span>
-<span class=x>$translator-&gt;addTranslationFilePattern(</span>
-<span class=x>    &#39;phpArray&#39;,</span>
-<span class=x>    Resources::getBasePath(),</span>
-<span class=x>    Resources::getPatternForValidator()</span>
-<span class=x>);</span>
+$translator = new Laminas\Mvc\I18n\Translator();
+$translator-&gt;addTranslationFilePattern(
+    'phpArray',
+    Resources::getBasePath(),
+    Resources::getPatternForValidator()
+);
 
-<span class=x>AbstractValidator::setDefaultTranslator($translator);</span>
-</pre></div></p>
+AbstractValidator::setDefaultTranslator($translator);</code></pre>
 <blockquote>
 <h3>Supported languages</h3>
 <p>The supported languages may not be complete. New languages will be added with
@@ -619,8 +618,7 @@ behaviour.</p>
 Set it to any integer size you need. When the returned message exceeds the set
 size, then the message will be truncated and the string <code>**...**</code> will be added
 instead of the rest of the message.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>Laminas\Validator\AbstractValidator::setMessageLength(100);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>Laminas\Validator\AbstractValidator::setMessageLength(100);</code></pre>
 <blockquote>
 <h3>Where is this parameter used?</h3>
 <p>The set message length is used for all validators, even for self defined ones,
@@ -1077,9 +1075,10 @@ as long as they extend <code>Laminas\Validator\AbstractValidator</code>.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -1116,7 +1115,7 @@ as long as they extend <code>Laminas\Validator\AbstractValidator</code>.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-validator//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-validator/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -1125,8 +1124,8 @@ as long as they extend <code>Laminas\Validator\AbstractValidator</code>.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-validator//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -571,45 +575,42 @@ maximum dimensions can be set to validate against.</p>
   indicates no maximum.</li>
 </ul>
 <h2 id="basic-usage">Basic Usage</h2>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Validator\File\ImageSize;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Validator\File\ImageSize;
 
-<span class=x>// Is image size between 320x200 (min) and 640x480 (max)?</span>
-<span class=x>$validator = new ImageSize(320, 200, 640, 480);</span>
+// Is image size between 320x200 (min) and 640x480 (max)?
+$validator = new ImageSize(320, 200, 640, 480);
 
-<span class=x>// ...or with array notation</span>
-<span class=x>$validator = new ImageSize([</span>
-<span class=x>    &#39;minWidth&#39; =&gt; 320,</span>
-<span class=x>    &#39;minHeight&#39; =&gt; 200,</span>
-<span class=x>    &#39;maxWidth&#39; =&gt; 640,</span>
-<span class=x>    &#39;maxHeight&#39; =&gt; 480,</span>
-<span class=x>]);</span>
+// ...or with array notation
+$validator = new ImageSize([
+    'minWidth' =&gt; 320,
+    'minHeight' =&gt; 200,
+    'maxWidth' =&gt; 640,
+    'maxHeight' =&gt; 480,
+]);
 
-<span class=x>// Is image size equal to or larger than 320x200?</span>
-<span class=x>$validator = new ImageSize([</span>
-<span class=x>    &#39;minWidth&#39; =&gt; 320,</span>
-<span class=x>    &#39;minHeight&#39; =&gt; 200,</span>
-<span class=x>]);</span>
+// Is image size equal to or larger than 320x200?
+$validator = new ImageSize([
+    'minWidth' =&gt; 320,
+    'minHeight' =&gt; 200,
+]);
 
-<span class=x>// Is image size equal to or smaller than 640x480?</span>
-<span class=x>$validator = new ImageSize([</span>
-<span class=x>    &#39;maxWidth&#39; =&gt; 640,</span>
-<span class=x>    &#39;maxHeight&#39; =&gt; 480,</span>
-<span class=x>]);</span>
+// Is image size equal to or smaller than 640x480?
+$validator = new ImageSize([
+    'maxWidth' =&gt; 640,
+    'maxHeight' =&gt; 480,
+]);
 
-<span class=x>// Perform validation with file path</span>
-<span class=x>if ($validator-&gt;isValid(&#39;./myfile.jpg&#39;)) {</span>
-<span class=x>    // file is valid</span>
-<span class=x>}</span>
-</pre></div></p>
+// Perform validation with file path
+if ($validator-&gt;isValid('./myfile.jpg')) {
+    // file is valid
+}</code></pre>
 <h2 id="public-methods">Public Methods</h2>
 <h3>getImageMin</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>getImageMin() : array</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>getImageMin() : array</code></pre>
 <p>Returns the minimum valid dimensions as an array with the keys <code>width</code> and
 <code>height</code>.</p>
 <h3>getImageMax</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>getImageMax() : array</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>getImageMax() : array</code></pre>
 <p>Returns the maximum valid dimensions as an array with the keys <code>width</code> and
 <code>height</code>.</p>
 
@@ -1063,9 +1064,10 @@ maximum dimensions can be set to validate against.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -1102,7 +1104,7 @@ maximum dimensions can be set to validate against.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-validator//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-validator/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -1111,8 +1113,8 @@ maximum dimensions can be set to validate against.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-validator//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

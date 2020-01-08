@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -578,31 +582,30 @@ failure to be determined.</p>
 <h2 id="creating-a-validation-class">Creating a Validation Class</h2>
 <p>The following example demonstrates how a custom validator might be written. In
 this case, the validator tests that a value is a floating point value.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace MyValid;</span>
+<pre class=codehilite><code class=language-php>namespace MyValid;
 
-<span class=x>use Laminas\Validator\AbstractValidator;</span>
+use Laminas\Validator\AbstractValidator;
 
-<span class=x>class Float extends AbstractValidator</span>
-<span class=x>{</span>
-<span class=x>    const FLOAT = &#39;float&#39;;</span>
+class Float extends AbstractValidator
+{
+    const FLOAT = 'float';
 
-<span class=x>    protected $messageTemplates = [</span>
-<span class=x>        self::FLOAT =&gt; &quot;&#39;%value%&#39; is not a floating point value&quot;,</span>
-<span class=x>    ];</span>
+    protected $messageTemplates = [
+        self::FLOAT =&gt; &quot;'%value%' is not a floating point value&quot;,
+    ];
 
-<span class=x>    public function isValid($value)</span>
-<span class=x>    {</span>
-<span class=x>        $this-&gt;setValue($value);</span>
+    public function isValid($value)
+    {
+        $this-&gt;setValue($value);
 
-<span class=x>        if (! is_float($value)) {</span>
-<span class=x>            $this-&gt;error(self::FLOAT);</span>
-<span class=x>            return false;</span>
-<span class=x>        }</span>
+        if (! is_float($value)) {
+            $this-&gt;error(self::FLOAT);
+            return false;
+        }
 
-<span class=x>        return true;</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+        return true;
+    }
+}</code></pre>
 <p>The class defines a template for its single validation failure message, which
 includes the built-in magic parameter, <code>%value%</code>. The call to <code>setValue()</code>
 prepares the object to insert the tested value into the failure message
@@ -624,53 +627,52 @@ message template.</p>
 </ul>
 <p>These validation failure reasons are then translated to definitions in the
 class:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace MyValid;</span>
+<pre class=codehilite><code class=language-php>namespace MyValid;
 
-<span class=x>use Laminas\Validator\AbstractValidator;</span>
+use Laminas\Validator\AbstractValidator;
 
-<span class=x>class NumericBetween extends AbstractValidator</span>
-<span class=x>{</span>
-<span class=x>    const MSG_NUMERIC = &#39;msgNumeric&#39;;</span>
-<span class=x>    const MSG_MINIMUM = &#39;msgMinimum&#39;;</span>
-<span class=x>    const MSG_MAXIMUM = &#39;msgMaximum&#39;;</span>
+class NumericBetween extends AbstractValidator
+{
+    const MSG_NUMERIC = 'msgNumeric';
+    const MSG_MINIMUM = 'msgMinimum';
+    const MSG_MAXIMUM = 'msgMaximum';
 
-<span class=x>    public $minimum = 0;</span>
-<span class=x>    public $maximum = 100;</span>
+    public $minimum = 0;
+    public $maximum = 100;
 
-<span class=x>    protected $messageVariables = [</span>
-<span class=x>        &#39;min&#39; =&gt; &#39;minimum&#39;,</span>
-<span class=x>        &#39;max&#39; =&gt; &#39;maximum&#39;,</span>
-<span class=x>    ];</span>
+    protected $messageVariables = [
+        'min' =&gt; 'minimum',
+        'max' =&gt; 'maximum',
+    ];
 
-<span class=x>    protected $messageTemplates = [</span>
-<span class=x>        self::MSG_NUMERIC =&gt; &quot;&#39;%value%&#39; is not numeric&quot;,</span>
-<span class=x>        self::MSG_MINIMUM =&gt; &quot;&#39;%value%&#39; must be at least &#39;%min%&#39;&quot;,</span>
-<span class=x>        self::MSG_MAXIMUM =&gt; &quot;&#39;%value%&#39; must be no more than &#39;%max%&#39;&quot;,</span>
-<span class=x>    ];</span>
+    protected $messageTemplates = [
+        self::MSG_NUMERIC =&gt; &quot;'%value%' is not numeric&quot;,
+        self::MSG_MINIMUM =&gt; &quot;'%value%' must be at least '%min%'&quot;,
+        self::MSG_MAXIMUM =&gt; &quot;'%value%' must be no more than '%max%'&quot;,
+    ];
 
-<span class=x>    public function isValid($value)</span>
-<span class=x>    {</span>
-<span class=x>        $this-&gt;setValue($value);</span>
+    public function isValid($value)
+    {
+        $this-&gt;setValue($value);
 
-<span class=x>        if (! is_numeric($value)) {</span>
-<span class=x>            $this-&gt;error(self::MSG_NUMERIC);</span>
-<span class=x>            return false;</span>
-<span class=x>        }</span>
+        if (! is_numeric($value)) {
+            $this-&gt;error(self::MSG_NUMERIC);
+            return false;
+        }
 
-<span class=x>        if ($value &lt; $this-&gt;minimum) {</span>
-<span class=x>            $this-&gt;error(self::MSG_MINIMUM);</span>
-<span class=x>            return false;</span>
-<span class=x>        }</span>
+        if ($value &lt; $this-&gt;minimum) {
+            $this-&gt;error(self::MSG_MINIMUM);
+            return false;
+        }
 
-<span class=x>        if ($value &gt; $this-&gt;maximum) {</span>
-<span class=x>            $this-&gt;error(self::MSG_MAXIMUM);</span>
-<span class=x>            return false;</span>
-<span class=x>        }</span>
+        if ($value &gt; $this-&gt;maximum) {
+            $this-&gt;error(self::MSG_MAXIMUM);
+            return false;
+        }
 
-<span class=x>        return true;</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+        return true;
+    }
+}</code></pre>
 <p>The public properties <code>$minimum</code> and <code>$maximum</code> have been established to provide
 the minimum and maximum boundaries, respectively, for a value to successfully
 validate. The class also defines two message variables that correspond to the
@@ -695,54 +697,53 @@ that the password:</p>
 <li>and contains at least one digit character.</li>
 </ul>
 <p>The following class implements these validation criteria:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace MyValid;</span>
+<pre class=codehilite><code class=language-php>namespace MyValid;
 
-<span class=x>use Laminas\Validator\AbstractValidator;</span>
+use Laminas\Validator\AbstractValidator;
 
-<span class=x>class PasswordStrength extends AbstractValidator</span>
-<span class=x>{</span>
-<span class=x>    const LENGTH = &#39;length&#39;;</span>
-<span class=x>    const UPPER  = &#39;upper&#39;;</span>
-<span class=x>    const LOWER  = &#39;lower&#39;;</span>
-<span class=x>    const DIGIT  = &#39;digit&#39;;</span>
+class PasswordStrength extends AbstractValidator
+{
+    const LENGTH = 'length';
+    const UPPER  = 'upper';
+    const LOWER  = 'lower';
+    const DIGIT  = 'digit';
 
-<span class=x>    protected $messageTemplates = [</span>
-<span class=x>        self::LENGTH =&gt; &quot;&#39;%value%&#39; must be at least 8 characters in length&quot;,</span>
-<span class=x>        self::UPPER  =&gt; &quot;&#39;%value%&#39; must contain at least one uppercase letter&quot;,</span>
-<span class=x>        self::LOWER  =&gt; &quot;&#39;%value%&#39; must contain at least one lowercase letter&quot;,</span>
-<span class=x>        self::DIGIT  =&gt; &quot;&#39;%value%&#39; must contain at least one digit character&quot;,</span>
-<span class=x>    ];</span>
+    protected $messageTemplates = [
+        self::LENGTH =&gt; &quot;'%value%' must be at least 8 characters in length&quot;,
+        self::UPPER  =&gt; &quot;'%value%' must contain at least one uppercase letter&quot;,
+        self::LOWER  =&gt; &quot;'%value%' must contain at least one lowercase letter&quot;,
+        self::DIGIT  =&gt; &quot;'%value%' must contain at least one digit character&quot;,
+    ];
 
-<span class=x>    public function isValid($value)</span>
-<span class=x>    {</span>
-<span class=x>        $this-&gt;setValue($value);</span>
+    public function isValid($value)
+    {
+        $this-&gt;setValue($value);
 
-<span class=x>        $isValid = true;</span>
+        $isValid = true;
 
-<span class=x>        if (strlen($value) &lt; 8) {</span>
-<span class=x>            $this-&gt;error(self::LENGTH);</span>
-<span class=x>            $isValid = false;</span>
-<span class=x>        }</span>
+        if (strlen($value) &lt; 8) {
+            $this-&gt;error(self::LENGTH);
+            $isValid = false;
+        }
 
-<span class=x>        if (! preg_match(&#39;/[A-Z]/&#39;, $value)) {</span>
-<span class=x>            $this-&gt;error(self::UPPER);</span>
-<span class=x>            $isValid = false;</span>
-<span class=x>        }</span>
+        if (! preg_match('/[A-Z]/', $value)) {
+            $this-&gt;error(self::UPPER);
+            $isValid = false;
+        }
 
-<span class=x>        if (! preg_match(&#39;/[a-z]/&#39;, $value)) {</span>
-<span class=x>            $this-&gt;error(self::LOWER);</span>
-<span class=x>            $isValid = false;</span>
-<span class=x>        }</span>
+        if (! preg_match('/[a-z]/', $value)) {
+            $this-&gt;error(self::LOWER);
+            $isValid = false;
+        }
 
-<span class=x>        if (! preg_match(&#39;/\d/&#39;, $value)) {</span>
-<span class=x>            $this-&gt;error(self::DIGIT);</span>
-<span class=x>            $isValid = false;</span>
-<span class=x>        }</span>
+        if (! preg_match('/\d/', $value)) {
+            $this-&gt;error(self::DIGIT);
+            $isValid = false;
+        }
 
-<span class=x>        return $isValid;</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+        return $isValid;
+    }
+}</code></pre>
 <p>Note that the four criteria tests in <code>isValid()</code> do not immediately return
 <code>false</code>. This allows the validation class to provide <strong>all</strong> of the reasons that
 the input password failed to meet the validation requirements. If, for example,
@@ -1200,9 +1201,10 @@ all four validation failure messages to be returned by a subsequent call to
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -1239,7 +1241,7 @@ all four validation failure messages to be returned by a subsequent call to
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-validator//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-validator/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -1248,8 +1250,8 @@ all four validation failure messages to be returned by a subsequent call to
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-validator//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

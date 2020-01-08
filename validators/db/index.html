@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -572,7 +576,7 @@ given value.</p>
 <p><code>Laminas\Validator\Db\NoRecordExists</code> and <code>Laminas\Validator\Db\RecordExists</code>
 depends on the laminas-db component, so be sure to have it installed before
 getting started:</p>
-<pre class=codehilite><code class=language-bash>
+<pre class="codehilite"><code class="language-bash">
 $ composer require laminas/laminas-db
 </code></pre>
 </blockquote>
@@ -588,42 +592,40 @@ $ composer require laminas/laminas-db
 </ul>
 <h2 id="basic-usage">Basic usage</h2>
 <p>An example of basic usage of the validators:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// Check that the email address exists in the database</span>
-<span class=x>$validator = new Laminas\Validator\Db\RecordExists([</span>
-<span class=x>    &#39;table&#39;   =&gt; &#39;users&#39;,</span>
-<span class=x>    &#39;field&#39;   =&gt; &#39;emailaddress&#39;,</span>
-<span class=x>    &#39;adapter&#39; =&gt; $dbAdapter,</span>
-<span class=x>]);</span>
+<pre class=codehilite><code class=language-php>// Check that the email address exists in the database
+$validator = new Laminas\Validator\Db\RecordExists([
+    'table'   =&gt; 'users',
+    'field'   =&gt; 'emailaddress',
+    'adapter' =&gt; $dbAdapter,
+]);
 
-<span class=x>if ($validator-&gt;isValid($emailaddress)) {</span>
-<span class=x>    // email address appears to be valid</span>
-<span class=x>} else {</span>
-<span class=x>    // email address is invalid; print the reasons</span>
-<span class=x>    foreach ($validator-&gt;getMessages() as $message) {</span>
-<span class=x>        echo &quot;$message\n&quot;;</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+if ($validator-&gt;isValid($emailaddress)) {
+    // email address appears to be valid
+} else {
+    // email address is invalid; print the reasons
+    foreach ($validator-&gt;getMessages() as $message) {
+        echo &quot;$message\n&quot;;
+    }
+}</code></pre>
 <p>The above will test that a given email address is in the database table. If no
 record is found containing the value of <code>$emailaddress</code> in the specified column,
 then an error message is displayed.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// Check that the username is not present in the database</span>
-<span class=x>$validator = new Laminas\Validator\Db\NoRecordExists([</span>
-<span class=x>    &#39;table&#39;   =&gt; &#39;users&#39;,</span>
-<span class=x>    &#39;field&#39;   =&gt; &#39;username&#39;,</span>
-<span class=x>    &#39;adapter&#39; =&gt; $dbAdapter,</span>
-<span class=x>]);</span>
+<pre class=codehilite><code class=language-php>// Check that the username is not present in the database
+$validator = new Laminas\Validator\Db\NoRecordExists([
+    'table'   =&gt; 'users',
+    'field'   =&gt; 'username',
+    'adapter' =&gt; $dbAdapter,
+]);
 
-<span class=x>if ($validator-&gt;isValid($username)) {</span>
-<span class=x>    // username appears to be valid</span>
-<span class=x>} else {</span>
-<span class=x>    // username is invalid; print the reason</span>
-<span class=x>    $messages = $validator-&gt;getMessages();</span>
-<span class=x>    foreach ($messages as $message) {</span>
-<span class=x>        echo &quot;$message\n&quot;;</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+if ($validator-&gt;isValid($username)) {
+    // username appears to be valid
+} else {
+    // username is invalid; print the reason
+    $messages = $validator-&gt;getMessages();
+    foreach ($messages as $message) {
+        echo &quot;$message\n&quot;;
+    }
+}</code></pre>
 <p>The above will test that a given username is <em>not</em> in the database table. If a
 record is found containing the value of <code>$username</code> in the specified column,
 then an error message is displayed.</p>
@@ -635,92 +637,88 @@ providing a <code>WHERE</code> clause as a string, or an array with the keys <co
 <p>When providing an array for the exclude clause, the <code>!=</code> operator is used, so
 you can check the rest of a table for a value before altering a record (for
 example on a user profile form)</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// Check no other users have the username</span>
-<span class=x>$user_id   = $user-&gt;getId();</span>
-<span class=x>$validator = new Laminas\Validator\Db\NoRecordExists([</span>
-<span class=x>    &#39;table&#39; =&gt; &#39;users&#39;,</span>
-<span class=x>    &#39;field&#39; =&gt; &#39;username&#39;,</span>
-<span class=x>    &#39;exclude&#39; =&gt; [</span>
-<span class=x>        &#39;field&#39; =&gt; &#39;id&#39;,</span>
-<span class=x>        &#39;value&#39; =&gt; $user_id,</span>
-<span class=x>    ],</span>
-<span class=x>]);</span>
+<pre class=codehilite><code class=language-php>// Check no other users have the username
+$user_id   = $user-&gt;getId();
+$validator = new Laminas\Validator\Db\NoRecordExists([
+    'table' =&gt; 'users',
+    'field' =&gt; 'username',
+    'exclude' =&gt; [
+        'field' =&gt; 'id',
+        'value' =&gt; $user_id,
+    ],
+]);
 
-<span class=x>if ($validator-&gt;isValid($username)) {</span>
-<span class=x>    // username appears to be valid</span>
-<span class=x>} else {</span>
-<span class=x>    // username is invalid; print the reason</span>
-<span class=x>    $messages = $validator-&gt;getMessages();</span>
-<span class=x>    foreach ($messages as $message) {</span>
-<span class=x>        echo &quot;$message\n&quot;;</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+if ($validator-&gt;isValid($username)) {
+    // username appears to be valid
+} else {
+    // username is invalid; print the reason
+    $messages = $validator-&gt;getMessages();
+    foreach ($messages as $message) {
+        echo &quot;$message\n&quot;;
+    }
+}</code></pre>
 <p>The above example will check the table to ensure no records other than the one
 where <code>id = $user_id</code> contains the value <code>$username</code>.</p>
 <p>You can also provide a string to the exclude clause so you can use an operator
 other than <code>!=</code>. This can be useful for testing against composite keys.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$email     = &#39;user@example.com&#39;;</span>
-<span class=x>$clause    = $dbAdapter-&gt;quoteIdentifier(&#39;email&#39;) . &#39; = &#39; . $dbAdapter-&gt;quoteValue($email);</span>
-<span class=x>$validator = new Laminas\Validator\Db\RecordExists([</span>
-<span class=x>    &#39;table&#39;   =&gt; &#39;users&#39;,</span>
-<span class=x>    &#39;field&#39;   =&gt; &#39;username&#39;,</span>
-<span class=x>    &#39;adapter&#39; =&gt; $dbAdapter,</span>
-<span class=x>    &#39;exclude&#39; =&gt; $clause,</span>
-<span class=x>]);</span>
+<pre class=codehilite><code class=language-php>$email     = 'user@example.com';
+$clause    = $dbAdapter-&gt;quoteIdentifier('email') . ' = ' . $dbAdapter-&gt;quoteValue($email);
+$validator = new Laminas\Validator\Db\RecordExists([
+    'table'   =&gt; 'users',
+    'field'   =&gt; 'username',
+    'adapter' =&gt; $dbAdapter,
+    'exclude' =&gt; $clause,
+]);
 
-<span class=x>if ($validator-&gt;isValid($username)) {</span>
-<span class=x>    // username appears to be valid</span>
-<span class=x>} else {</span>
-<span class=x>    // username is invalid; print the reason</span>
-<span class=x>    $messages = $validator-&gt;getMessages();</span>
-<span class=x>    foreach ($messages as $message) {</span>
-<span class=x>        echo &quot;$message\n&quot;;</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+if ($validator-&gt;isValid($username)) {
+    // username appears to be valid
+} else {
+    // username is invalid; print the reason
+    $messages = $validator-&gt;getMessages();
+    foreach ($messages as $message) {
+        echo &quot;$message\n&quot;;
+    }
+}</code></pre>
 <p>The above example will check the <code>users</code> table to ensure that only a record with
 both the username <code>$username</code> and with the email <code>$email</code> is valid.</p>
 <h2 id="database-schemas">Database Schemas</h2>
 <p>You can specify a schema within your database for adapters such as PostgreSQL
 and DB/2 by supplying an array with <code>table</code> and <code>schema</code> keys, as demonstrated
 below:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\Db\RecordExists([</span>
-<span class=x>    &#39;table&#39;  =&gt; &#39;users&#39;,</span>
-<span class=x>    &#39;schema&#39; =&gt; &#39;my&#39;,</span>
-<span class=x>    &#39;field&#39;  =&gt; &#39;id&#39;,</span>
-<span class=x>]);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Db\RecordExists([
+    'table'  =&gt; 'users',
+    'schema' =&gt; 'my',
+    'field'  =&gt; 'id',
+]);</code></pre>
 <h2 id="using-a-select-object">Using a Select object</h2>
 <p>It is also possible to supply the validators with a <code>Laminas\Db\Sql\Select</code> object
 in place of options. The validator then uses this object instead of building its
 own. This allows for greater flexibility with selection of records used for
 validation.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Db\Sql\Select;</span>
-<span class=x>use Laminas\Validator\Db\RecordExists;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Db\Sql\Select;
+use Laminas\Validator\Db\RecordExists;
 
-<span class=x>$select = new Select();</span>
-<span class=x>$select</span>
-<span class=x>    -&gt;from(&#39;users&#39;)</span>
-<span class=x>    -&gt;where-&gt;equalTo(&#39;id&#39;, $user_id)</span>
-<span class=x>    -&gt;where-&gt;equalTo(&#39;email&#39;, $email);</span>
+$select = new Select();
+$select
+    -&gt;from('users')
+    -&gt;where-&gt;equalTo('id', $user_id)
+    -&gt;where-&gt;equalTo('email', $email);
 
-<span class=x>$validator = new RecordExists($select);</span>
+$validator = new RecordExists($select);
 
-<span class=x>// We still need to set our database adapter</span>
-<span class=x>$validator-&gt;setAdapter($dbAdapter);</span>
+// We still need to set our database adapter
+$validator-&gt;setAdapter($dbAdapter);
 
-<span class=x>// Validation is then performed as usual</span>
-<span class=x>if ($validator-&gt;isValid($username)) {</span>
-<span class=x>    // username appears to be valid</span>
-<span class=x>} else {</span>
-<span class=x>    // username is invalid; print the reason</span>
-<span class=x>    $messages = $validator-&gt;getMessages();</span>
-<span class=x>    foreach ($messages as $message) {</span>
-<span class=x>        echo &quot;$message\n&quot;;</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+// Validation is then performed as usual
+if ($validator-&gt;isValid($username)) {
+    // username appears to be valid
+} else {
+    // username is invalid; print the reason
+    $messages = $validator-&gt;getMessages();
+    foreach ($messages as $message) {
+        echo &quot;$message\n&quot;;
+    }
+}</code></pre>
 <p>The above example will check the <code>users</code> table to ensure that only a record with
 both the username <code>$username</code> and with the email <code>$email</code> is valid.</p>
 
@@ -1174,9 +1172,10 @@ both the username <code>$username</code> and with the email <code>$email</code> 
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -1213,7 +1212,7 @@ both the username <code>$username</code> and with the email <code>$email</code> 
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-validator//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-validator/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -1222,8 +1221,8 @@ both the username <code>$username</code> and with the email <code>$email</code> 
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-validator//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

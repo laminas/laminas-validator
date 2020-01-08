@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -559,18 +563,17 @@
 <p><code>Laminas\Validator\File\UploadFile</code> checks whether a single file has been uploaded
 via a form <code>POST</code> and will return descriptive messages for any upload errors.</p>
 <h2 id="basic-usage">Basic Usage</h2>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Http\PhpEnvironment\Request;</span>
-<span class=x>use Laminas\Validator\File\UploadFile;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Http\PhpEnvironment\Request;
+use Laminas\Validator\File\UploadFile;
 
-<span class=x>$request = new Request();</span>
-<span class=x>$files   = $request-&gt;getFiles();</span>
-<span class=x>// i.e. $files[&#39;my-upload&#39;][&#39;error&#39;] == 0</span>
+$request = new Request();
+$files   = $request-&gt;getFiles();
+// i.e. $files['my-upload']['error'] == 0
 
-<span class=x>$validator = new UploadFile();</span>
-<span class=x>if ($validator-&gt;isValid($files[&#39;my-upload&#39;])) {</span>
-<span class=x>    // file is valid</span>
-<span class=x>}</span>
-</pre></div></p>
+$validator = new UploadFile();
+if ($validator-&gt;isValid($files['my-upload'])) {
+    // file is valid
+}</code></pre>
 <h2 id="psr-7-support">PSR-7 Support</h2>
 <ul>
 <li>Since 2.11.0</li>
@@ -578,14 +581,13 @@ via a form <code>POST</code> and will return descriptive messages for any upload
 <p>Starting in 2.11.0, you can also pass <a href="https://www.php-fig.org/psr/psr-7/#uploadedfileinterface">PSR-7 UploadedFileInterface</a>
 instances as values to the validator. When valid, <code>getValue()</code> will return the
 instance validated verbatim:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new UploadFile();</span>
+<pre class=codehilite><code class=language-php>$validator = new UploadFile();
 
-<span class=x>// @var Psr\Http\Message\UploadedFileInterface $uploadedFile</span>
-<span class=x>if ($validator-&gt;isValid($uploadedFile)) {</span>
-<span class=x>    // file is valid</span>
-<span class=x>    $validInstance = $validator-&gt;getValue(); // === $uploadedFile</span>
-<span class=x>}</span>
-</pre></div></p>
+// @var Psr\Http\Message\UploadedFileInterface $uploadedFile
+if ($validator-&gt;isValid($uploadedFile)) {
+    // file is valid
+    $validInstance = $validator-&gt;getValue(); // === $uploadedFile
+}</code></pre>
 <h2 id="usage-with-laminas-inputfilter">Usage with laminas-inputfilter</h2>
 <p>When using laminas-inputfilter's <a href="https://docs.laminas.dev/laminas-inputfilter/file-input/">FileInput</a>,
 this validator will be automatically prepended to the validator chain.</p>
@@ -1040,9 +1042,10 @@ this validator will be automatically prepended to the validator chain.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -1079,7 +1082,7 @@ this validator will be automatically prepended to the validator chain.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-validator//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-validator/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -1088,8 +1091,8 @@ this validator will be automatically prepended to the validator chain.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-validator//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

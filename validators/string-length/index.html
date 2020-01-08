@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -598,54 +602,48 @@ string.</p>
 <h2 id="limiting-the-maximum-string-length">Limiting the maximum string length</h2>
 <p>To limit the maximum allowed length of a string you need to set the <code>max</code>
 property. It accepts an integer value as input.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\StringLength([&#39;max&#39; =&gt; 6]);</span>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\StringLength(['max' =&gt; 6]);
 
-<span class=x>$validator-&gt;isValid(&quot;Test&quot;); // returns true</span>
-<span class=x>$validator-&gt;isValid(&quot;Testing&quot;); // returns false</span>
-</pre></div></p>
+$validator-&gt;isValid(&quot;Test&quot;); // returns true
+$validator-&gt;isValid(&quot;Testing&quot;); // returns false</code></pre>
 <p>You can set the maximum allowed length after instantiation by using the
 <code>setMax()</code> method; <code>getMax()</code> retrieves the value.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\StringLength();</span>
-<span class=x>$validator-&gt;setMax(6);</span>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\StringLength();
+$validator-&gt;setMax(6);
 
-<span class=x>$validator-&gt;isValid(&quot;Test&quot;); // returns true</span>
-<span class=x>$validator-&gt;isValid(&quot;Testing&quot;); // returns false</span>
-</pre></div></p>
+$validator-&gt;isValid(&quot;Test&quot;); // returns true
+$validator-&gt;isValid(&quot;Testing&quot;); // returns false</code></pre>
 <h2 id="limiting-the-minimum-string-length">Limiting the minimum string length</h2>
 <p>To limit the minimal required string length, set the <code>min</code>
 property using an integer value:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\StringLength([&#39;min&#39; =&gt; 5]);</span>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\StringLength(['min' =&gt; 5]);
 
-<span class=x>$validator-&gt;isValid(&quot;Test&quot;); // returns false</span>
-<span class=x>$validator-&gt;isValid(&quot;Testing&quot;); // returns true</span>
-</pre></div></p>
+$validator-&gt;isValid(&quot;Test&quot;); // returns false
+$validator-&gt;isValid(&quot;Testing&quot;); // returns true</code></pre>
 <p>You can set the value after instantiation using the <code>setMin()</code>
 method; <code>getMin()</code> retrieves the value.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\StringLength();</span>
-<span class=x>$validator-&gt;setMin(5);</span>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\StringLength();
+$validator-&gt;setMin(5);
 
-<span class=x>$validator-&gt;isValid(&quot;Test&quot;); // returns false</span>
-<span class=x>$validator-&gt;isValid(&quot;Testing&quot;); // returns true</span>
-</pre></div></p>
+$validator-&gt;isValid(&quot;Test&quot;); // returns false
+$validator-&gt;isValid(&quot;Testing&quot;); // returns true</code></pre>
 <h2 id="limiting-both-minimum-and-maximum-string-length">Limiting both minimum and maximum string length</h2>
 <p>Sometimes you will need to set both a minimum and a maximum string length;
 as an example, in a username input, you may want to limit the name to a maximum
 of 30 characters, but require at least three charcters:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\StringLength([&#39;min&#39; =&gt; 3, &#39;max&#39; =&gt; 30]);</span>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\StringLength(['min' =&gt; 3, 'max' =&gt; 30]);
 
-<span class=x>$validator-&gt;isValid(&quot;.&quot;); // returns false</span>
-<span class=x>$validator-&gt;isValid(&quot;Test&quot;); // returns true</span>
-<span class=x>$validator-&gt;isValid(&quot;Testing&quot;); // returns true</span>
-</pre></div></p>
+$validator-&gt;isValid(&quot;.&quot;); // returns false
+$validator-&gt;isValid(&quot;Test&quot;); // returns true
+$validator-&gt;isValid(&quot;Testing&quot;); // returns true</code></pre>
 <h2 id="limiting-to-a-strict-length">Limiting to a strict length</h2>
 <p>If you need a strict length, then set the <code>min</code> and <code>max</code> properties to the same
 value:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\StringLength([&#39;min&#39; =&gt; 4, &#39;max&#39; =&gt; 4]);</span>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\StringLength(['min' =&gt; 4, 'max' =&gt; 4]);
 
-<span class=x>$validator-&gt;isValid(&#39;Tes&#39;); // returns false</span>
-<span class=x>$validator-&gt;isValid(&#39;Test&#39;); // returns true</span>
-<span class=x>$validator-&gt;isValid(&#39;Testi&#39;); // returns false</span>
-</pre></div></p>
+$validator-&gt;isValid('Tes'); // returns false
+$validator-&gt;isValid('Test'); // returns true
+$validator-&gt;isValid('Testi'); // returns false</code></pre>
 <blockquote>
 <h3>Setting a maximum lower than the minimum</h3>
 <p>When you try to set a lower maximum value than the specified minimum value, or
@@ -659,25 +657,23 @@ than PHP itself, you should set an encoding manually.</p>
 <p>You can set an encoding at instantiation with the <code>encoding</code> option, or by using
 the <code>setEncoding()</code> method. We assume that your installation uses ISO and your
 application it set to ISO. In this case you will see the below behaviour.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\StringLength([&#39;min&#39; =&gt; 6]);</span>
-<span class=x>$validator-&gt;isValid(&quot;Ärger&quot;); // returns false</span>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\StringLength(['min' =&gt; 6]);
+$validator-&gt;isValid(&quot;Ärger&quot;); // returns false
 
-<span class=x>$validator-&gt;setEncoding(&quot;UTF-8&quot;);</span>
-<span class=x>$validator-&gt;isValid(&quot;Ärger&quot;); // returns true</span>
+$validator-&gt;setEncoding(&quot;UTF-8&quot;);
+$validator-&gt;isValid(&quot;Ärger&quot;); // returns true
 
-<span class=x>$validator2 = new Laminas\Validator\StringLength([</span>
-<span class=x>    &#39;min&#39; =&gt; 6,</span>
-<span class=x>    &#39;encoding&#39; =&gt; &#39;UTF-8&#39;,</span>
-<span class=x>]);</span>
-<span class=x>$validator2-&gt;isValid(&quot;Ärger&quot;); // returns true</span>
-</pre></div></p>
+$validator2 = new Laminas\Validator\StringLength([
+    'min' =&gt; 6,
+    'encoding' =&gt; 'UTF-8',
+]);
+$validator2-&gt;isValid(&quot;Ärger&quot;); // returns true</code></pre>
 <p>When your installation and your application are using different encodings, then
 you should always set an encoding manually.</p>
 <h2 id="validation-messages">Validation Messages</h2>
 <p>Using the setMessage() method you can set another message to be returned in case of the specified failure.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\StringLength([&#39;min&#39; =&gt; 3, &#39;max&#39; =&gt; 30]);</span>
-<span class=x>$validator-&gt;setMessage(&#39;Youre string is too long. You typed &#39;%length%&#39; chars.&#39;, Laminas\Validator\StringLength::TOO_LONG);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\StringLength(['min' =&gt; 3, 'max' =&gt; 30]);
+$validator-&gt;setMessage('Youre string is too long. You typed '%length%' chars.', Laminas\Validator\StringLength::TOO_LONG);</code></pre>
 
 
 
@@ -1129,9 +1125,10 @@ you should always set an encoding manually.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -1168,7 +1165,7 @@ you should always set an encoding manually.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-validator//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-validator/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -1177,8 +1174,8 @@ you should always set an encoding manually.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-validator//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

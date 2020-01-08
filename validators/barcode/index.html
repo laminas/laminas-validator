@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -737,29 +741,27 @@ small products where a UPCA barcode would not fit.</p>
 <h2 id="basic-usage">Basic usage</h2>
 <p>To validate if a given string is a barcode you must know its type. See the
 following example for an EAN13 barcode:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$valid = new Laminas\Validator\Barcode(&#39;EAN13&#39;);</span>
-<span class=x>if ($valid-&gt;isValid($input)) {</span>
-<span class=x>    // input appears to be valid</span>
-<span class=x>} else {</span>
-<span class=x>    // input is invalid</span>
-<span class=x>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$valid = new Laminas\Validator\Barcode('EAN13');
+if ($valid-&gt;isValid($input)) {
+    // input appears to be valid
+} else {
+    // input is invalid
+}</code></pre>
 <h2 id="optional-checksum">Optional checksum</h2>
 <p>Some barcodes can be provided with an optional checksum. These barcodes would be
 valid even without checksum. Still, when you provide a checksum, then you should
 also validate it. By default, these barcode types perform no checksum
 validation. By using the <code>checksum</code> option you can define if the checksum will
 be validated or ignored.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$valid = new Laminas\Validator\Barcode([</span>
-<span class=x>    &#39;adapter&#39;  =&gt; &#39;EAN13&#39;,</span>
-<span class=x>    &#39;checksum&#39; =&gt; false,</span>
-<span class=x>]);</span>
-<span class=x>if ($valid-&gt;isValid($input)) {</span>
-<span class=x>    // input appears to be valid</span>
-<span class=x>} else {</span>
-<span class=x>    // input is invalid</span>
-<span class=x>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$valid = new Laminas\Validator\Barcode([
+    'adapter'  =&gt; 'EAN13',
+    'checksum' =&gt; false,
+]);
+if ($valid-&gt;isValid($input)) {
+    // input appears to be valid
+} else {
+    // input is invalid
+}</code></pre>
 <blockquote>
 <h3>Reduced security by disabling checksum validation</h3>
 <p>By switching off checksum validation you will also reduce the security of the
@@ -795,30 +797,29 @@ or implement <code>Laminas\Validator\Barcode\AdapterInterface</code>.</p>
 <p>As an example, let's create a validator that expects an even number of
 characters that include all digits and the letters 'ABCDE', and which requires a
 checksum.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace My\Barcode;</span>
+<pre class=codehilite><code class=language-php>namespace My\Barcode;
 
-<span class=x>use Laminas\Validator\Barcode;</span>
-<span class=x>use Laminas\Validator\Barcode\AbstractAdapter;</span>
+use Laminas\Validator\Barcode;
+use Laminas\Validator\Barcode\AbstractAdapter;
 
-<span class=x>class MyBar extends AbstractAdapter</span>
-<span class=x>{</span>
-<span class=x>    protected $length     = &#39;even&#39;;</span>
-<span class=x>    protected $characters = &#39;0123456789ABCDE&#39;;</span>
-<span class=x>    protected $checksum   = &#39;mod66&#39;;</span>
+class MyBar extends AbstractAdapter
+{
+    protected $length     = 'even';
+    protected $characters = '0123456789ABCDE';
+    protected $checksum   = 'mod66';
 
-<span class=x>    protected function mod66($barcode)</span>
-<span class=x>    {</span>
-<span class=x>        // do some validations and return a boolean</span>
-<span class=x>    }</span>
-<span class=x>}</span>
+    protected function mod66($barcode)
+    {
+        // do some validations and return a boolean
+    }
+}
 
-<span class=x>$valid = Barcode(MyBar::class);</span>
-<span class=x>if ($valid-&gt;isValid($input)) {</span>
-<span class=x>    // input appears to be valid</span>
-<span class=x>} else {</span>
-<span class=x>    // input is invalid</span>
-<span class=x>}</span>
-</pre></div></p>
+$valid = Barcode(MyBar::class);
+if ($valid-&gt;isValid($input)) {
+    // input appears to be valid
+} else {
+    // input is invalid
+}</code></pre>
 
 
 
@@ -1270,9 +1271,10 @@ checksum.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -1309,7 +1311,7 @@ checksum.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-validator//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-validator/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -1318,8 +1320,8 @@ checksum.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-validator//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -572,31 +576,29 @@
 </ul>
 <h2 id="basic-usage">Basic usage</h2>
 <p>A basic example of usage is below:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\Isbn();</span>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Isbn();
 
-<span class=x>if ($validator-&gt;isValid($isbn)) {</span>
-<span class=x>    // isbn is valid</span>
-<span class=x>} else {</span>
-<span class=x>    // isbn is not valid</span>
-<span class=x>}</span>
-</pre></div></p>
+if ($validator-&gt;isValid($isbn)) {
+    // isbn is valid
+} else {
+    // isbn is not valid
+}</code></pre>
 <p>This will validate any ISBN-10 and ISBN-13 without separator.</p>
 <h2 id="setting-an-explicit-isbn-validation-type">Setting an explicit ISBN validation type</h2>
 <p>An example of an ISBN type restriction follows:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Validator\Isbn;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Validator\Isbn;
 
-<span class=x>$validator = new Isbn();</span>
-<span class=x>$validator-&gt;setType(Isbn::ISBN13);</span>
+$validator = new Isbn();
+$validator-&gt;setType(Isbn::ISBN13);
 
-<span class=x>// OR</span>
-<span class=x>$validator = new Isbn([ &#39;type&#39; =&gt; Isbn::ISBN13]);</span>
+// OR
+$validator = new Isbn([ 'type' =&gt; Isbn::ISBN13]);
 
-<span class=x>if ($validator-&gt;isValid($isbn)) {</span>
-<span class=x>    // this is a valid ISBN-13 value</span>
-<span class=x>} else {</span>
-<span class=x>    // this is an invalid ISBN-13 value</span>
-<span class=x>}</span>
-</pre></div></p>
+if ($validator-&gt;isValid($isbn)) {
+    // this is a valid ISBN-13 value
+} else {
+    // this is an invalid ISBN-13 value
+}</code></pre>
 <p>The above will validate only ISBN-13 values.</p>
 <p>Valid types include:</p>
 <ul>
@@ -606,18 +608,17 @@
 </ul>
 <h2 id="specifying-a-separator-restriction">Specifying a separator restriction</h2>
 <p>An example of separator restriction:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\Isbn();</span>
-<span class=x>$validator-&gt;setSeparator(&#39;-&#39;);</span>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Isbn();
+$validator-&gt;setSeparator('-');
 
-<span class=x>// OR</span>
-<span class=x>$validator = new Laminas\Validator\Isbn([&#39;separator&#39; =&gt; &#39;-&#39;]);</span>
+// OR
+$validator = new Laminas\Validator\Isbn(['separator' =&gt; '-']);
 
-<span class=x>if ($validator-&gt;isValid($isbn)) {</span>
-<span class=x>    // this is a valid ISBN with separator</span>
-<span class=x>} else {</span>
-<span class=x>    // this is an invalid ISBN with separator</span>
-<span class=x>}</span>
-</pre></div></p>
+if ($validator-&gt;isValid($isbn)) {
+    // this is a valid ISBN with separator
+} else {
+    // this is an invalid ISBN with separator
+}</code></pre>
 <blockquote>
 <h3>Values without separators</h3>
 <p>This will return <code>false</code> if <code>$isbn</code> doesn't contain a separator <strong>or</strong> if it's
@@ -1080,9 +1081,10 @@ an invalid <em>ISBN</em> value.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -1119,7 +1121,7 @@ an invalid <em>ISBN</em> value.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-validator//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-validator/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -1128,8 +1130,8 @@ an invalid <em>ISBN</em> value.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-validator//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

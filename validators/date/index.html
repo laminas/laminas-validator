@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -570,20 +574,18 @@
 <h2 id="default-date-validation">Default date validation</h2>
 <p>The easiest way to validate a date is by using the default date format,
 <code>Y-m-d</code>.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\Date();</span>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Date();
 
-<span class=x>$validator-&gt;isValid(&#39;2000-10-10&#39;);   // returns true</span>
-<span class=x>$validator-&gt;isValid(&#39;10.10.2000&#39;); // returns false</span>
-</pre></div></p>
+$validator-&gt;isValid('2000-10-10');   // returns true
+$validator-&gt;isValid('10.10.2000'); // returns false</code></pre>
 <h2 id="specifying-a-date-format">Specifying a date format</h2>
 <p><code>Laminas\Validator\Date</code> also supports custom date formats. When you want to
 validate such a date, use the <code>format</code> option. This option accepts any format
 allowed by the PHP <a href="http://php.net/manual/en/datetime.createfromformat.php#refsect1-datetime.createfromformat-parameters">DateTime::createFromFormat()</a> method.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\Date([&#39;format&#39; =&gt; &#39;Y&#39;]);</span>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Date(['format' =&gt; 'Y']);
 
-<span class=x>$validator-&gt;isValid(&#39;2010&#39;); // returns true</span>
-<span class=x>$validator-&gt;isValid(&#39;May&#39;);  // returns false</span>
-</pre></div></p>
+$validator-&gt;isValid('2010'); // returns true
+$validator-&gt;isValid('May');  // returns false</code></pre>
 <h2 id="strict-mode">Strict mode</h2>
 <ul>
 <li><strong>Since 2.13.0</strong></li>
@@ -595,12 +597,11 @@ provide both the <a href="#specifying-a-date-format">date format</a> and the <co
 options. In such a scenario, the value must both be covertable to a <code>DateTime</code>
 value <strong>and</strong> be in the same format as provided to the validator. (Generally,
 this will mean the value must be a string.)</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\Date([&#39;format&#39; =&gt; &#39;Y-m-d&#39;, &#39;strict&#39; =&gt; true]);</span>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Date(['format' =&gt; 'Y-m-d', 'strict' =&gt; true]);
 
-<span class=x>$validator-&gt;isValid(&#39;2010-10-10&#39;); // returns true</span>
-<span class=x>$validator-&gt;isValid(new DateTime(&#39;2010-10-10)); // returns false; value is not a string</span>
-<span class=x>$validator-&gt;isValid(&#39;2010.10.10&#39;); // returns false; format differs</span>
-</pre></div></p>
+$validator-&gt;isValid('2010-10-10'); // returns true
+$validator-&gt;isValid(new DateTime('2010-10-10)); // returns false; value is not a string
+$validator-&gt;isValid('2010.10.10'); // returns false; format differs</code></pre>
 
 
 
@@ -1052,9 +1053,10 @@ this will mean the value must be a string.)</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -1091,7 +1093,7 @@ this will mean the value must be a string.)</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-validator//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-validator/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -1100,8 +1102,8 @@ this will mean the value must be a string.)</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-validator//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

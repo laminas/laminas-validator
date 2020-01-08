@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -579,19 +583,18 @@ errors caused by a previous <code>isValid()</code> call, because it's likely tha
 call to <code>isValid()</code> is made for a different input value.</p>
 </blockquote>
 <p>The following example illustrates validation of an e-mail address:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Validator\EmailAddress;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Validator\EmailAddress;
 
-<span class=x>$validator = new EmailAddress();</span>
+$validator = new EmailAddress();
 
-<span class=x>if ($validator-&gt;isValid($email)) {</span>
-<span class=x>    // email appears to be valid</span>
-<span class=x>} else {</span>
-<span class=x>    // email is invalid; print the reasons</span>
-<span class=x>    foreach ($validator-&gt;getMessages() as $messageId =&gt; $message) {</span>
-<span class=x>        printf(&quot;Validation failure &#39;%s&#39;: %s\n&quot;, $messageId, $message);</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+if ($validator-&gt;isValid($email)) {
+    // email appears to be valid
+} else {
+    // email is invalid; print the reasons
+    foreach ($validator-&gt;getMessages() as $messageId =&gt; $message) {
+        printf(&quot;Validation failure '%s': %s\n&quot;, $messageId, $message);
+    }
+}</code></pre>
 <h2 id="customizing-messages">Customizing messages</h2>
 <p>Validator classes provide a <code>setMessage()</code> method with which you can specify the
 format of a message returned by <code>getMessages()</code> in case of validation failure.
@@ -609,58 +612,55 @@ assumes the message you specify should be used for the first message template
 declared in the validation class. Many validation classes only have one error
 message template defined, so there is no need to specify which message template
 you are changing.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Validator\StringLength;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Validator\StringLength;
 
-<span class=x>$validator = new StringLength(8);</span>
+$validator = new StringLength(8);
 
-<span class=x>$validator-&gt;setMessage(</span>
-<span class=x>    &#39;The string \&#39;%value%\&#39; is too short; it must be at least %min% characters&#39;,</span>
-<span class=x>    StringLength::TOO_SHORT</span>
-<span class=x>);</span>
+$validator-&gt;setMessage(
+    'The string \'%value%\' is too short; it must be at least %min% characters',
+    StringLength::TOO_SHORT
+);
 
-<span class=x>if (! $validator-&gt;isValid(&#39;word&#39;)) {</span>
-<span class=x>    $messages = $validator-&gt;getMessages();</span>
-<span class=x>    echo current($messages);</span>
+if (! $validator-&gt;isValid('word')) {
+    $messages = $validator-&gt;getMessages();
+    echo current($messages);
 
-<span class=x>    // &quot;The string &#39;word&#39; is too short; it must be at least 8 characters&quot;</span>
-<span class=x>}</span>
-</pre></div></p>
+    // &quot;The string 'word' is too short; it must be at least 8 characters&quot;
+}</code></pre>
 <p>You can set multiple messages using the <code>setMessages()</code> method. Its argument is
 an array containing key/message pairs.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Validator\StringLength;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Validator\StringLength;
 
-<span class=x>$validator = new StringLength([&#39;min&#39; =&gt; 8, &#39;max&#39; =&gt; 12]);</span>
+$validator = new StringLength(['min' =&gt; 8, 'max' =&gt; 12]);
 
-<span class=x>$validator-&gt;setMessages([</span>
-<span class=x>    StringLength::TOO_SHORT =&gt; &#39;The string \&#39;%value%\&#39; is too short&#39;,</span>
-<span class=x>    StringLength::TOO_LONG  =&gt; &#39;The string \&#39;%value%\&#39; is too long&#39;,</span>
-<span class=x>]);</span>
-</pre></div></p>
+$validator-&gt;setMessages([
+    StringLength::TOO_SHORT =&gt; 'The string \'%value%\' is too short',
+    StringLength::TOO_LONG  =&gt; 'The string \'%value%\' is too long',
+]);</code></pre>
 <p>If your application requires even greater flexibility with which it reports
 validation failures, you can access properties by the same name as the message
 tokens supported by a given validation class. The <code>value</code> property is always
 available in a validator; it is the value you specified as the argument of
 <code>isValid()</code>. Other properties may be supported on a case-by-case basis in each
 validation class.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Validator\StringLength;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Validator\StringLength;
 
-<span class=x>$validator = new StringLength([&#39;min&#39; =&gt; 8, &#39;max&#39; =&gt; 12]);</span>
+$validator = new StringLength(['min' =&gt; 8, 'max' =&gt; 12]);
 
-<span class=x>if (! $validator-&gt;isValid(&#39;word&#39;)) {</span>
-<span class=x>    printf(</span>
-<span class=x>        &quot;Word failed: %s; its length is not between %d and %d\n&quot;,</span>
-<span class=x>        $validator-&gt;value,</span>
-<span class=x>        $validator-&gt;min,</span>
-<span class=x>        $validator-&gt;max</span>
-<span class=x>    );</span>
-<span class=x>}</span>
-</pre></div></p>
+if (! $validator-&gt;isValid('word')) {
+    printf(
+        &quot;Word failed: %s; its length is not between %d and %d\n&quot;,
+        $validator-&gt;value,
+        $validator-&gt;min,
+        $validator-&gt;max
+    );
+}</code></pre>
 <h2 id="translating-messages">Translating messages</h2>
 <blockquote>
 <h3>Installation requirements</h3>
 <p>The translation of validator messages depends on the laminas-i18n component, so
 be sure to have it installed before getting started:</p>
-<pre class=codehilite><code class=language-bash>
+<pre class="codehilite"><code class="language-bash">
 $ composer require laminas/laminas-i18n
 </code></pre>
 </blockquote>
@@ -669,37 +669,34 @@ an instance of <code>Laminas\Validator\Translator\TranslatorInterface</code> whi
 translate the messages in case of a validation failure. The <code>getTranslator()</code>
 method returns the translator instance. <code>Laminas\Mvc\I18n\Translator</code> provides an
 implementation compatible with the validator component.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Mvc\I18n\Translator;</span>
-<span class=x>use Laminas\Validator\StringLength;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\StringLength;
 
-<span class=x>$validator = new StringLength([&#39;min&#39; =&gt; 8, &#39;max&#39; =&gt; 12]);</span>
-<span class=x>$translate = new Translator();</span>
-<span class=x>// configure the translator...</span>
+$validator = new StringLength(['min' =&gt; 8, 'max' =&gt; 12]);
+$translate = new Translator();
+// configure the translator...
 
-<span class=x>$validator-&gt;setTranslator($translate);</span>
-</pre></div></p>
+$validator-&gt;setTranslator($translate);</code></pre>
 <p>With the static <code>AbstractValidator::setDefaultTranslator()</code> method you can set a
 instance of <code>Laminas\Validator\Translator\TranslatorInterface</code> which will be used
 for all validation classes, and can be retrieved with <code>getDefaultTranslator()</code>.
 This prevents the need for setting a translator manually with each validator.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Mvc\I18n\Translator;</span>
-<span class=x>use Laminas\Validator\AbstractValidator;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Mvc\I18n\Translator;
+use Laminas\Validator\AbstractValidator;
 
-<span class=x>$translate = new Translator();</span>
-<span class=x>// configure the translator...</span>
+$translate = new Translator();
+// configure the translator...
 
-<span class=x>AbstractValidator::setDefaultTranslator($translate);</span>
-</pre></div></p>
+AbstractValidator::setDefaultTranslator($translate);</code></pre>
 <p>Sometimes it is necessary to disable the translator within a validator. To
 achieve this you can use the <code>setDisableTranslator()</code> method, which accepts a
 boolean parameter, and <code>isTranslatorDisabled()</code> to get the set value.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Validator\StringLength;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Validator\StringLength;
 
-<span class=x>$validator = new StringLength([&#39;min&#39; =&gt; 8, &#39;max&#39; =&gt; 12]);</span>
-<span class=x>if (! $validator-&gt;isTranslatorDisabled()) {</span>
-<span class=x>    $validator-&gt;setDisableTranslator();</span>
-<span class=x>}</span>
-</pre></div></p>
+$validator = new StringLength(['min' =&gt; 8, 'max' =&gt; 12]);
+if (! $validator-&gt;isTranslatorDisabled()) {
+    $validator-&gt;setDisableTranslator();
+}</code></pre>
 <p>It is also possible to use a translator instead of setting own messages with
 <code>setMessage()</code>. But doing so, you should keep in mind, that the translator works
 also on messages you set your own.</p>
@@ -1179,9 +1176,10 @@ the instance previously.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -1218,7 +1216,7 @@ the instance previously.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-validator//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-validator/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -1227,8 +1225,8 @@ the instance previously.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-validator//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -611,13 +615,12 @@ invalid.</p>
 <p>There are several credit card institutes which can be validated by
 <code>Laminas\Validator\CreditCard</code>. Per default, all known institutes will be accepted.
 See the following example:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$valid = new Laminas\Validator\CreditCard();</span>
-<span class=x>if ($valid-&gt;isValid($input)) {</span>
-<span class=x>    // input appears to be valid</span>
-<span class=x>} else {</span>
-<span class=x>    // input is invalid</span>
-<span class=x>}</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$valid = new Laminas\Validator\CreditCard();
+if ($valid-&gt;isValid($input)) {
+    // input appears to be valid
+} else {
+    // input is invalid
+}</code></pre>
 <p>The above example would validate against all known credit card institutes.</p>
 <h2 id="accepting-only-specific-credit-cards">Accepting only specific credit cards</h2>
 <p>Sometimes it is necessary to accept only specific credit card institutes instead
@@ -627,37 +630,33 @@ limiting it to exactly these institutes.</p>
 <p>To use a limitation you can either provide specific institutes at initiation, or
 afterwards by using <code>setType()</code>. Each can take several arguments.</p>
 <p>You can provide a single institute:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Validator\CreditCard;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Validator\CreditCard;
 
-<span class=x>$valid = new CreditCard(CreditCard::AMERICAN_EXPRESS);</span>
-</pre></div></p>
+$valid = new CreditCard(CreditCard::AMERICAN_EXPRESS);</code></pre>
 <p>When you want to allow multiple institutes, then you can provide them as array:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Validator\CreditCard;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Validator\CreditCard;
 
-<span class=x>$valid = new CreditCard([</span>
-<span class=x>    CreditCard::AMERICAN_EXPRESS,</span>
-<span class=x>    CreditCard::VISA</span>
-<span class=x>]);</span>
-</pre></div></p>
+$valid = new CreditCard([
+    CreditCard::AMERICAN_EXPRESS,
+    CreditCard::VISA
+]);</code></pre>
 <p>And, as with all validators, you can also pass an associative array of options
 or an instance of <code>Traversable</code>. In this case you have to provide the institutes
 with the <code>type</code> array key as demostrated here:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Validator\CreditCard;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Validator\CreditCard;
 
-<span class=x>$valid = new CreditCard([</span>
-<span class=x>    &#39;type&#39; =&gt; [CreditCard::AMERICAN_EXPRESS]</span>
-<span class=x>]);</span>
-</pre></div></p>
+$valid = new CreditCard([
+    'type' =&gt; [CreditCard::AMERICAN_EXPRESS]
+]);</code></pre>
 <p>You can also manipulate institutes after instantiation by using the methods
 <code>setType()</code>, <code>addType()</code>, and <code>getType()</code>.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Validator\CreditCard;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Validator\CreditCard;
 
-<span class=x>$valid = new CreditCard();</span>
-<span class=x>$valid-&gt;setType([</span>
-<span class=x>    CreditCard::AMERICAN_EXPRESS,</span>
-<span class=x>    CreditCard::VISA</span>
-<span class=x>]);</span>
-</pre></div></p>
+$valid = new CreditCard();
+$valid-&gt;setType([
+    CreditCard::AMERICAN_EXPRESS,
+    CreditCard::VISA
+]);</code></pre>
 <blockquote>
 <h3>Default institute</h3>
 <p>When no institute is given at initiation then <code>ALL</code> will be used, which sets
@@ -680,22 +679,21 @@ performance of the application.</p>
 As a configuration option, you can give the array key <code>service</code> at instantiatio.
 For details about possible options, read the
 <a href="../callback/">Callback validator documentation</a>.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Validator\CreditCard;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Validator\CreditCard;
 
-<span class=x>// Your service class</span>
-<span class=x>class CcService</span>
-<span class=x>{</span>
-<span class=x>    public function checkOnline($cardnumber, $types)</span>
-<span class=x>    {</span>
-<span class=x>        // some online validation</span>
-<span class=x>    }</span>
-<span class=x>}</span>
+// Your service class
+class CcService
+{
+    public function checkOnline($cardnumber, $types)
+    {
+        // some online validation
+    }
+}
 
-<span class=x>// The validation</span>
-<span class=x>$service = new CcService();</span>
-<span class=x>$valid   = new CreditCard(CreditCard::VISA);</span>
-<span class=x>$valid-&gt;setService([$service, &#39;checkOnline&#39;]);</span>
-</pre></div></p>
+// The validation
+$service = new CcService();
+$valid   = new CreditCard(CreditCard::VISA);
+$valid-&gt;setService([$service, 'checkOnline']);</code></pre>
 <p>The callback method will be called with the credit card number as the first
 parameter, and the accepted types as the second parameter.</p>
 
@@ -1149,9 +1147,10 @@ parameter, and the accepted types as the second parameter.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -1188,7 +1187,7 @@ parameter, and the accepted types as the second parameter.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-validator//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-validator/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -1197,8 +1196,8 @@ parameter, and the accepted types as the second parameter.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-validator//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

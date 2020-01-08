@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -585,17 +589,16 @@ validator first splits the email address on <code>local-part @ hostname</code> a
 to match these against known specifications for email addresses and hostnames.</p>
 <h2 id="basic-usage">Basic usage</h2>
 <p>A basic example of usage is below:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\EmailAddress();</span>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\EmailAddress();
 
-<span class=x>if ($validator-&gt;isValid($email)) {</span>
-<span class=x>    // email appears to be valid</span>
-<span class=x>} else {</span>
-<span class=x>    // email is invalid; print the reasons</span>
-<span class=x>    foreach ($validator-&gt;getMessages() as $message) {</span>
-<span class=x>        echo &quot;$message\n&quot;;</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+if ($validator-&gt;isValid($email)) {
+    // email appears to be valid
+} else {
+    // email is invalid; print the reasons
+    foreach ($validator-&gt;getMessages() as $message) {
+        echo &quot;$message\n&quot;;
+    }
+}</code></pre>
 <p>This will match the email address <code>$email</code> and on failure populate
 <code>getMessages()</code> with useful error messages.</p>
 <h2 id="supported-options">Supported Options</h2>
@@ -643,9 +646,8 @@ or a <code>\\</code> character in an email address).</p>
 email address, and want to disable validation of the hostname, you can set the
 <code>domain</code> option to <code>false</code>. This forces <code>Laminas\Validator\EmailAddress</code> not to
 validate the hostname part of the email address.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\EmailAddress();</span>
-<span class=x>$validator-&gt;setOptions([&#39;domain&#39; =&gt; FALSE]);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\EmailAddress();
+$validator-&gt;setOptions(['domain' =&gt; FALSE]);</code></pre>
 <h2 id="validating-different-types-of-hostnames">Validating different types of hostnames</h2>
 <p>The hostname part of an email address is validated against the <a href="../hostname/">Hostname validator</a>.
 By default only DNS hostnames of the form <code>domain.com</code> are accepted, though if
@@ -654,20 +656,19 @@ you wish you can accept IP addresses and Local hostnames too.</p>
 parameter to indicate the type of hostnames you want to accept. More details are
 included in <code>Laminas\Validator\Hostname</code>, though an example of how to accept both
 DNS and Local hostnames appears below:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Validator\EmailAddress;</span>
-<span class=x>use Laminas\Validator\Hostname;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Validator\EmailAddress;
+use Laminas\Validator\Hostname;
 
-<span class=x>$validator = new EmailAddress( Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL);</span>
+$validator = new EmailAddress( Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL);
 
-<span class=x>if ($validator-&gt;isValid($email)) {</span>
-<span class=x>    // email appears to be valid</span>
-<span class=x>} else {</span>
-<span class=x>    // email is invalid; print the reasons</span>
-<span class=x>    foreach ($validator-&gt;getMessages() as $message) {</span>
-<span class=x>        echo &quot;$message\n&quot;;</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+if ($validator-&gt;isValid($email)) {
+    // email appears to be valid
+} else {
+    // email is invalid; print the reasons
+    foreach ($validator-&gt;getMessages() as $message) {
+        echo &quot;$message\n&quot;;
+    }
+}</code></pre>
 <h2 id="checking-if-the-hostname-actually-accepts-email">Checking if the hostname actually accepts email</h2>
 <p>Just because an email address is in the correct format, it doesn't necessarily
 mean that email address actually exists. To help solve this problem, you can use
@@ -676,11 +677,10 @@ the email's hostname. This tells you that the hostname accepts email, but
 doesn't tell you the exact email address itself is valid.</p>
 <p>MX checking is not enabled by default. To enable MX checking you can pass a
 second parameter to the <code>Laminas\Validator\EmailAddress</code> constructor.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\EmailAddress([</span>
-<span class=x>    &#39;allow&#39; =&gt; Laminas\Validator\Hostname::ALLOW_DNS,</span>
-<span class=x>    &#39;useMxCheck&#39;    =&gt; true,</span>
-<span class=x>]);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\EmailAddress([
+    'allow' =&gt; Laminas\Validator\Hostname::ALLOW_DNS,
+    'useMxCheck'    =&gt; true,
+]);</code></pre>
 <p>Alternatively you can either pass <code>true</code> or <code>false</code> to <code>setValidateMx()</code> to
 enable or disable MX validation.</p>
 <p>By enabling this setting, network functions will be used to check for the
@@ -692,12 +692,11 @@ even if they do not provide a MX record. In this case they can provide <code>A</
 <code>A6</code>, or <code>AAAA</code> records. To allow <code>Laminas\Validator\EmailAddress</code> to check also
 for these other records, you need to set deep MX validation. This can be done at
 initiation by setting the <code>deep</code> option or by using <code>setOptions()</code>.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\EmailAddress([</span>
-<span class=x>    &#39;allow&#39; =&gt; Laminas\Validator\Hostname::ALLOW_DNS,</span>
-<span class=x>    &#39;useMxCheck&#39;    =&gt; true,</span>
-<span class=x>    &#39;useDeepMxCheck&#39;  =&gt; true,</span>
-<span class=x>]);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\EmailAddress([
+    'allow' =&gt; Laminas\Validator\Hostname::ALLOW_DNS,
+    'useMxCheck'    =&gt; true,
+    'useDeepMxCheck'  =&gt; true,
+]);</code></pre>
 <p>Sometimes it can be useful to get the server's MX information which have been
 used to do further processing. Simply use <code>getMXRecord()</code> after validation. This
 method returns the received MX record including weight and sorted by it.</p>
@@ -717,8 +716,7 @@ exist in some domains. This is known as International Domain Name (IDN) support.
 This is enabled by default, though you can disable this by changing the setting
 via the internal <code>Laminas\Validator\Hostname</code> object that exists within
 <code>Laminas\Validator\EmailAddress</code>.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator-&gt;getHostnameValidator()-&gt;setValidateIdn(false);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$validator-&gt;getHostnameValidator()-&gt;setValidateIdn(false);</code></pre>
 <p>More information on the usage of <code>setValidateIdn()</code> appears in the
 <a href="../hostname/">Hostname documentation</a>.</p>
 <p>Please note IDNs are only validated if you allow DNS hostnames to be validated.</p>
@@ -727,8 +725,7 @@ via the internal <code>Laminas\Validator\Hostname</code> object that exists with
 enabled by default, though you can disable this by changing the setting via the
 internal <code>Laminas\Validator\Hostname</code> object that exists within
 <code>Laminas\Validator\EmailAddress</code>.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator-&gt;getHostnameValidator()-&gt;setValidateTld(false);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$validator-&gt;getHostnameValidator()-&gt;setValidateTld(false);</code></pre>
 <p>More information on the usage of <code>setValidateTld()</code> appears in the
 <a href="../hostname/">Hostname documentation</a>.</p>
 <p>Please note TLDs are only validated if you allow DNS hostnames to be validated.</p>
@@ -736,11 +733,10 @@ internal <code>Laminas\Validator\Hostname</code> object that exists within
 <p><code>Laminas\Validator\EmailAddress</code> makes also use of <code>Laminas\Validator\Hostname</code> to
 check the hostname part of a given email address. You can specify messages for
 <code>Laminas\Validator\Hostname</code> from within <code>Laminas\Validator\EmailAddress</code>.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$validator = new Laminas\Validator\EmailAddress();</span>
-<span class=x>$validator-&gt;setMessages([</span>
-<span class=x>    Laminas\Validator\Hostname::UNKNOWN_TLD =&gt; &#39;I don\&#39;t know the TLD you gave&#39;</span>
-<span class=x>]);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\EmailAddress();
+$validator-&gt;setMessages([
+    Laminas\Validator\Hostname::UNKNOWN_TLD =&gt; 'I don\'t know the TLD you gave'
+]);</code></pre>
 
 
 
@@ -1192,9 +1188,10 @@ check the hostname part of a given email address. You can specify messages for
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -1231,7 +1228,7 @@ check the hostname part of a given email address. You can specify messages for
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-validator//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-validator/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -1240,8 +1237,8 @@ check the hostname part of a given email address. You can specify messages for
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-validator//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

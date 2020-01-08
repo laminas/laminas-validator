@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../../../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../../../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -567,19 +571,18 @@ successful.</p>
   normalizes the array).</li>
 </ul>
 <h2 id="basic-usage">Basic Usage</h2>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Validator\File\Upload;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Validator\File\Upload;
 
-<span class=x>// Using laminas-http&#39;s request:</span>
-<span class=x>$validator = new Upload($request-&gt;getFiles());</span>
+// Using laminas-http's request:
+$validator = new Upload($request-&gt;getFiles());
 
-<span class=x>// Or using options notation:</span>
-<span class=x>$validator = new Upload([&#39;files&#39; =&gt; $request-&gt;getFiles()]);</span>
+// Or using options notation:
+$validator = new Upload(['files' =&gt; $request-&gt;getFiles()]);
 
-<span class=x>// Validate:</span>
-<span class=x>if ($validator-&gt;isValid(&#39;foo&#39;)) {</span>
-<span class=x>    // &quot;foo&quot; file upload was successful</span>
-<span class=x>}</span>
-</pre></div></p>
+// Validate:
+if ($validator-&gt;isValid('foo')) {
+    // &quot;foo&quot; file upload was successful
+}</code></pre>
 <h2 id="psr-7-support">PSR-7 Support</h2>
 <ul>
 <li>Since 2.11.0</li>
@@ -588,21 +591,20 @@ successful.</p>
 instances to the constructor, the <code>setFiles()</code> method, or the <code>isValid()</code>
 method (in the latter case, you are validating that <em>all</em> uploaded files were
 valid).</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Validator\File\Upload;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Validator\File\Upload;
 
-<span class=x>// @var Psr\Http\Message\ServerRequestInterface $request</span>
-<span class=x>$validator = new Upload($request-&gt;getUploadedFiles());</span>
+// @var Psr\Http\Message\ServerRequestInterface $request
+$validator = new Upload($request-&gt;getUploadedFiles());
 
-<span class=x>// Or using options notation:</span>
-<span class=x>$validator = new Upload([</span>
-<span class=x>    &#39;files&#39; =&gt; $request-&gt;getUploadedFiles(),</span>
-<span class=x>]);</span>
+// Or using options notation:
+$validator = new Upload([
+    'files' =&gt; $request-&gt;getUploadedFiles(),
+]);
 
-<span class=x>// Validate:</span>
-<span class=x>if ($validator-&gt;isValid(&#39;foo&#39;)) {</span>
-<span class=x>    // &quot;foo&quot; file upload was successful</span>
-<span class=x>}</span>
-</pre></div></p>
+// Validate:
+if ($validator-&gt;isValid('foo')) {
+    // &quot;foo&quot; file upload was successful
+}</code></pre>
 
 
 
@@ -1054,9 +1056,10 @@ valid).</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -1093,7 +1096,7 @@ valid).</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-validator//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-validator/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -1102,8 +1105,8 @@ valid).</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-validator//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>
