@@ -104,7 +104,7 @@ class HostnameTest extends TestCase
     {
         $valuesExpected = [
             [Hostname::ALLOW_DNS, true, ['domain.com', 'doma-in.com']],
-            [Hostname::ALLOW_DNS, false, ['-domain.com', 'domain-.com', 'do--main.com']]
+            [Hostname::ALLOW_DNS, false, ['-domain.com', 'domain-.com', 'do--main.com', 'do-main-.com']]
             ];
         foreach ($valuesExpected as $element) {
             $validator = new Hostname($element[0]);
