@@ -396,7 +396,7 @@ class EmailAddressTest extends TestCase
             $this->markTestSkipped('Testing MX records is not supported with this configuration');
         }
 
-        $email = 'good@example.com';
+        $email = 'good@www.getlaminas.org';
         $host = preg_replace('/.*@/', null, $email);
 
         //Assert that email host contains no MX records.
@@ -755,8 +755,8 @@ class EmailAddressTest extends TestCase
         ];
 
         if (extension_loaded('intl')) {
-            $emailAddresses[] = 'test@письмо.рф';
-            $emailAddresses[] = 'test@xn--h1aigbl0e.xn--p1ai';
+            $emailAddresses[] = 'test@кц.рф'; // Registry for .рф-TLD
+            $emailAddresses[] = 'test@xn--j1ay.xn--p1ai';
         }
 
         foreach ($emailAddresses as $input) {
