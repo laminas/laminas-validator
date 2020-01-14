@@ -22,7 +22,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#32](https://github.com/laminas/laminas-validator/pull/32) fixes PHP 7.4 compatibility.
 
 ## 2.13.0 - 2019-12-27
 
