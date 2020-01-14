@@ -303,7 +303,7 @@ class ImageSizeTest extends TestCase
         ]);
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
         $this->assertArrayHasKey('fileImageSizeNotReadable', $validator->getMessages());
-        $this->assertContains("does not exist", current($validator->getMessages()));
+        $this->assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage()

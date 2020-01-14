@@ -20,7 +20,7 @@ class FilesSizeTest extends TestCase
     /** @var bool */
     public $multipleOptionsDetected;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->multipleOptionsDetected = false;
     }
@@ -166,8 +166,8 @@ class FilesSizeTest extends TestCase
             __DIR__ . '/_files/testsize2.mo',
         ]));
         $messages = $validator->getMessages();
-        $this->assertContains('9.76kB', current($messages));
-        $this->assertContains('1.55kB', current($messages));
+        $this->assertStringContainsString('9.76kB', current($messages));
+        $this->assertStringContainsString('1.55kB', current($messages));
 
         $validator = new File\FilesSize(['min' => 9999, 'max' => 10000, 'useByteString' => false]);
         $this->assertFalse($validator->isValid([
@@ -176,8 +176,8 @@ class FilesSizeTest extends TestCase
             __DIR__ . '/_files/testsize2.mo',
         ]));
         $messages = $validator->getMessages();
-        $this->assertContains('9999', current($messages));
-        $this->assertContains('1588', current($messages));
+        $this->assertStringContainsString('9999', current($messages));
+        $this->assertStringContainsString('1588', current($messages));
     }
 
     public function errorHandler($errno, $errstr)

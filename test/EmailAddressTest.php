@@ -25,7 +25,7 @@ class EmailAddressTest extends TestCase
     /** @var bool */
     public $multipleOptionsDetected;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->validator = new EmailAddress();
     }
@@ -90,8 +90,8 @@ class EmailAddressTest extends TestCase
     {
         $this->assertFalse($this->validator->isValid('@example.com'));
         $messages = $this->validator->getMessages();
-        $this->assertEquals(1, count($messages));
-        $this->assertContains('local-part@hostname', current($messages));
+        $this->assertCount(1, $messages);
+        $this->assertStringContainsString('local-part@hostname', current($messages));
     }
 
     /**
@@ -105,16 +105,16 @@ class EmailAddressTest extends TestCase
 
         $messages = $this->validator->getMessages();
 
-        $this->assertEquals(3, count($messages));
+        $this->assertCount(3, $messages);
 
-        $this->assertContains('Some User', current($messages));
-        $this->assertContains('dot-atom', current($messages));
+        $this->assertStringContainsString('Some User', current($messages));
+        $this->assertStringContainsString('dot-atom', current($messages));
 
-        $this->assertContains('Some User', next($messages));
-        $this->assertContains('quoted-string', current($messages));
+        $this->assertStringContainsString('Some User', next($messages));
+        $this->assertStringContainsString('quoted-string', current($messages));
 
-        $this->assertContains('Some User', next($messages));
-        $this->assertContains('not a valid local part', current($messages));
+        $this->assertStringContainsString('Some User', next($messages));
+        $this->assertStringContainsString('not a valid local part', current($messages));
     }
 
     /**
@@ -128,8 +128,8 @@ class EmailAddressTest extends TestCase
 
         $messages = $this->validator->getMessages();
 
-        $this->assertInternalType('array', $messages);
-        $this->assertEquals(0, count($messages));
+        $this->assertIsArray($messages);
+        $this->assertCount(0, $messages);
     }
 
     /**
@@ -141,8 +141,8 @@ class EmailAddressTest extends TestCase
     {
         $this->assertFalse($this->validator->isValid('username@ example . com'));
         $messages = $this->validator->getMessages();
-        $this->assertThat(count($messages), $this->greaterThanOrEqual(1));
-        $this->assertContains('not a valid hostname', current($messages));
+        $this->assertGreaterThanOrEqual(1, count($messages));
+        $this->assertStringContainsString('not a valid hostname', current($messages));
     }
 
     /**
@@ -211,10 +211,10 @@ class EmailAddressTest extends TestCase
     {
         $this->assertFalse($this->validator->isValid('User Name <username@example.com>'));
         $messages = $this->validator->getMessages();
-        $this->assertThat(count($messages), $this->greaterThanOrEqual(3));
-        $this->assertContains('not a valid hostname', current($messages));
-        $this->assertContains('cannot match TLD', next($messages));
-        $this->assertContains('does not appear to be a valid local network name', next($messages));
+        $this->assertGreaterThanOrEqual(3, count($messages));
+        $this->assertStringContainsString('not a valid hostname', current($messages));
+        $this->assertStringContainsString('cannot match TLD', next($messages));
+        $this->assertStringContainsString('does not appear to be a valid local network name', next($messages));
     }
 
     public function validEmailAddresses()
@@ -689,7 +689,7 @@ class EmailAddressTest extends TestCase
     public function testIsMxSupported()
     {
         $validator = new EmailAddress(['useMxCheck' => true, 'allow' => Hostname::ALLOW_ALL]);
-        $this->assertInternalType('bool', $validator->isMxSupported());
+        $this->assertIsBool($validator->isMxSupported());
     }
     /**
      * Test getMXRecord

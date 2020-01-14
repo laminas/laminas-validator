@@ -23,7 +23,7 @@ class NotEmptyTest extends TestCase
      */
     protected $validator;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->validator = new NotEmpty();
     }
@@ -910,7 +910,7 @@ class NotEmptyTest extends TestCase
         $this->assertFalse($valid->isValid(''));
         $messages = $valid->getMessages();
         $this->assertArrayHasKey('isEmpty', $messages);
-        $this->assertContains("can't be empty", $messages['isEmpty']);
+        $this->assertStringContainsString("can't be empty", $messages['isEmpty']);
     }
 
     /**

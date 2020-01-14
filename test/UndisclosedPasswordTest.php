@@ -44,7 +44,7 @@ class UndisclosedPasswordTest extends TestCase
     /**
      * @inheritDoc
      */
-    public function setUp()
+    protected function setUp() : void
     {
         $this->httpClient = $this->getMockBuilder(ClientInterface::class)
             ->getMockForAbstractClass();
@@ -65,7 +65,7 @@ class UndisclosedPasswordTest extends TestCase
     /**
      * @inheritDoc
      */
-    protected function tearDown()
+    protected function tearDown() : void
     {
         $this->httpClient = null;
     }

@@ -30,12 +30,12 @@ class AbstractTest extends TestCase
      */
     protected $errorOccurred = false;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->validator = new TestAsset\ConcreteValidator();
     }
 
-    public function tearDown()
+    protected function tearDown() : void
     {
         AbstractValidator::setDefaultTranslator(null, 'default');
     }
@@ -82,8 +82,8 @@ class AbstractTest extends TestCase
         $this->assertFalse($this->validator->isValid('bar'));
         $messages = $this->validator->getMessages();
         $this->assertArrayHasKey('fooMessage', $messages);
-        $this->assertContains('bar', $messages['fooMessage'], var_export($messages, 1));
-        $this->assertContains('This is the translated message for ', $messages['fooMessage']);
+        $this->assertStringContainsString('bar', $messages['fooMessage'], var_export($messages, 1));
+        $this->assertStringContainsString('This is the translated message for ', $messages['fooMessage']);
     }
 
     public function testObscureValueFlagFalseByDefault()
@@ -107,8 +107,8 @@ class AbstractTest extends TestCase
         $messages = $this->validator->getMessages();
         $this->assertTrue(isset($messages['fooMessage']));
         $message = $messages['fooMessage'];
-        $this->assertNotContains('foobar', $message);
-        $this->assertContains('******', $message);
+        $this->assertStringNotContainsString('foobar', $message);
+        $this->assertStringContainsString('******', $message);
     }
 
     /**
@@ -147,8 +147,8 @@ class AbstractTest extends TestCase
         $this->assertFalse($this->validator->isValid('bar'));
         $messages = $this->validator->getMessages();
         $this->assertArrayHasKey('fooMessage', $messages);
-        $this->assertContains('bar', $messages['fooMessage']);
-        $this->assertContains('This is the translated message for ', $messages['fooMessage']);
+        $this->assertStringContainsString('bar', $messages['fooMessage']);
+        $this->assertStringContainsString('This is the translated message for ', $messages['fooMessage']);
 
         $this->validator->setTranslatorEnabled(false);
         $this->assertFalse($this->validator->isTranslatorEnabled());
@@ -156,8 +156,8 @@ class AbstractTest extends TestCase
         $this->assertFalse($this->validator->isValid('bar'));
         $messages = $this->validator->getMessages();
         $this->assertArrayHasKey('fooMessage', $messages);
-        $this->assertContains('bar', $messages['fooMessage']);
-        $this->assertContains('bar was passed', $messages['fooMessage']);
+        $this->assertStringContainsString('bar', $messages['fooMessage']);
+        $this->assertStringContainsString('bar was passed', $messages['fooMessage']);
     }
 
     public function testGetMessageTemplates()
@@ -178,7 +178,7 @@ class AbstractTest extends TestCase
     {
         $validator = new TestAsset\ConcreteValidator;
         $this->assertFalse($validator('foo'));
-        $this->assertContains("foo was passed", $validator->getMessages());
+        $this->assertContains('foo was passed', $validator->getMessages());
     }
 
     public function testTranslatorMethods()
@@ -219,9 +219,9 @@ class AbstractTest extends TestCase
         $r->setAccessible(true);
 
         $message = $r->invoke($this->validator, 'fooMessage', ['foo' => ['bar' => 'baz']]);
-        $this->assertContains('foo', $message);
-        $this->assertContains('bar', $message);
-        $this->assertContains('baz', $message);
+        $this->assertStringContainsString('foo', $message);
+        $this->assertStringContainsString('bar', $message);
+        $this->assertStringContainsString('baz', $message);
     }
 
     public function testNonIdenticalMessagesAllReturned()

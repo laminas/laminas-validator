@@ -81,4 +81,12 @@ class ValidatorPluginManagerCompatibilityTest extends TestCase
             yield $alias => [$alias, $target];
         }
     }
+
+    /**
+     * Provided only for compatibility with the lowest integration tests from Laminas\ServiceManager (v2)
+     */
+    private function setExpectedException(string $exceptionClassName) : void
+    {
+        $this->expectException($exceptionClassName);
+    }
 }

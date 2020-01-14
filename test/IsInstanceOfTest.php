@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
 /**
- * @covers     Laminas\Validator\IsInstanceOf
+ * @covers \Laminas\Validator\IsInstanceOf
  * @copyright  Copyright (c) 2005-2015 Laminas (https://www.zend.com)
  * @license    https://getlaminas.org/license/new-bsd     New BSD License
  * @group      Laminas_Validator

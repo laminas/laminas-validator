@@ -21,7 +21,7 @@ class PriorityTest extends TestCase
      */
     protected $validator;
 
-    protected function setUp()
+    protected function setUp() : void
     {
         $this->validator = new Priority();
     }
@@ -39,7 +39,7 @@ class PriorityTest extends TestCase
         ];
 
         foreach ($values as $value) {
-            $this->assertSame(true, $this->validator->isValid($value));
+            $this->assertTrue($this->validator->isValid($value));
         }
     }
 
@@ -54,9 +54,9 @@ class PriorityTest extends TestCase
         ];
 
         foreach ($values as $value) {
-            $this->assertSame(false, $this->validator->isValid($value));
+            $this->assertFalse($this->validator->isValid($value));
             $messages = $this->validator->getMessages();
-            $this->assertContains('is not a valid', current($messages));
+            $this->assertStringContainsString('is not a valid', current($messages));
         }
     }
 
@@ -71,9 +71,9 @@ class PriorityTest extends TestCase
         ];
 
         foreach ($values as $value) {
-            $this->assertSame(false, $this->validator->isValid($value));
+            $this->assertFalse($this->validator->isValid($value));
             $messages = $this->validator->getMessages();
-            $this->assertContains('integer or float expected', current($messages));
+            $this->assertStringContainsString('integer or float expected', current($messages));
         }
     }
 }

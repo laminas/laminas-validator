@@ -356,7 +356,7 @@ class CreditCardTest extends TestCase
         $validator      = new CreditCard(['type' => CreditCard::MASTERCARD]);
         $this->assertFalse($validator->isValid('4111111111111111'));
         $message = $validator->getMessages();
-        $this->assertContains('not from an allowed institute', current($message));
+        $this->assertStringContainsString('not from an allowed institute', current($message));
     }
 
     public function testEqualsMessageTemplates()

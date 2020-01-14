@@ -20,7 +20,7 @@ class InArrayTest extends TestCase
     /** @var InArray */
     protected $validator;
 
-    protected function setUp()
+    protected function setUp() : void
     {
         $this->validator = new InArray(
             [

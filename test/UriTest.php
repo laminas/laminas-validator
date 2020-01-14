@@ -29,7 +29,7 @@ class UriTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    protected function setUp() : void
     {
         $this->validator = new Validator\Uri();
     }

@@ -204,7 +204,7 @@ class Md5Test extends TestCase
         $validator = new File\Md5('12345');
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
         $this->assertArrayHasKey('fileMd5NotFound', $validator->getMessages());
-        $this->assertContains("does not exist", current($validator->getMessages()));
+        $this->assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage()

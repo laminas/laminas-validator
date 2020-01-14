@@ -21,7 +21,7 @@ class DigitsTest extends TestCase
      */
     protected $validator;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->validator = new Digits();
     }
@@ -69,7 +69,7 @@ class DigitsTest extends TestCase
         $arrayExpected = [
             Digits::STRING_EMPTY => 'The input is an empty string'
             ];
-        $this->assertThat($messages, $this->identicalTo($arrayExpected));
+        $this->assertSame($arrayExpected, $messages);
     }
 
     /**
@@ -82,7 +82,7 @@ class DigitsTest extends TestCase
         $arrayExpected = [
             Digits::NOT_DIGITS => 'The input must contain only digits'
             ];
-        $this->assertThat($messages, $this->identicalTo($arrayExpected));
+        $this->assertSame($arrayExpected, $messages);
     }
 
     /**
