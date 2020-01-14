@@ -51,13 +51,18 @@ class Barcode extends AbstractValidator
             $options = [];
         }
 
-        if (! is_array($options) && ! ($options instanceof Traversable)) {
+        if (is_array($options)) {
+            if (array_key_exists('options', $options)) {
+                $options['options'] = ['options' => $options['options']];
+            }
+        } else if ($options instanceof Traversable) {
+            if (property_exists($options, 'options')) {
+                $options['options'] = ['options' => $options['options']];
+            }
+        } else {
             $options = ['adapter' => $options];
         }
 
-        if (array_key_exists('options', $options)) {
-            $options['options'] = ['options' => $options['options']];
-        }
 
         parent::__construct($options);
     }
