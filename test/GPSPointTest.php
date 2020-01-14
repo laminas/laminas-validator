@@ -22,7 +22,7 @@ class GPSPointTest extends TestCase
      */
     protected $validator;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->validator = new GpsPoint();
     }
@@ -57,7 +57,7 @@ class GPSPointTest extends TestCase
         $this->assertFalse($this->validator->isValid($value));
         $messages = $this->validator->getMessages();
         $this->assertArrayHasKey($messageKey, $messages);
-        $this->assertContains($messageValue, $messages[$messageKey]);
+        $this->assertStringContainsString($messageValue, $messages[$messageKey]);
     }
 
     public function basicDataProvider()

@@ -22,7 +22,7 @@ class MessageTest extends TestCase
      */
     protected $validator;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->validator = new StringLength(4, 8);
     }
@@ -250,7 +250,7 @@ class MessageTest extends TestCase
     {
         $vars = $this->validator->getMessageVariables();
 
-        $this->assertInternalType('array', $vars);
+        $this->assertIsArray($vars);
         $this->assertEquals(['min', 'max', 'length'], $vars);
         $message = 'variables: %notvar% ';
         foreach ($vars as $var) {

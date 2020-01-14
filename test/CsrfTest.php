@@ -27,7 +27,7 @@ class CsrfTest extends TestCase
     /** @var TestAsset\SessionManager */
     public $sessionManager;
 
-    public function setUp()
+    protected function setUp() : void
     {
         // Setup session handling
         $_SESSION = [];
@@ -41,7 +41,7 @@ class CsrfTest extends TestCase
         $this->validator = new Csrf;
     }
 
-    public function tearDown()
+    protected function tearDown() : void
     {
         if (! class_exists(Container::class)) {
             return;

@@ -138,7 +138,7 @@ class NotExistsTest extends TestCase
         $validator = new File\NotExists();
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/testsize.mo'));
         $this->assertArrayHasKey('fileNotExistsDoesExist', $validator->getMessages());
-        $this->assertContains("File exists", current($validator->getMessages()));
+        $this->assertStringContainsString('File exists', current($validator->getMessages()));
     }
 
     public function testIsValidShouldThrowInvalidArgumentExceptionForArrayNotInFilesFormat()

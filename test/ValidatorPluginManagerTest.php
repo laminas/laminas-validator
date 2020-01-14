@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ValidatorPluginManagerTest extends TestCase
 {
-    public function setUp()
+    protected function setUp() : void
     {
         $this->validators = new ValidatorPluginManager(new ServiceManager);
     }
@@ -56,9 +56,9 @@ class ValidatorPluginManagerTest extends TestCase
         try {
             $this->validators->setService('test', $this);
         } catch (InvalidServiceException $e) {
-            $this->assertContains(ValidatorInterface::class, $e->getMessage());
+            $this->assertStringContainsString(ValidatorInterface::class, $e->getMessage());
         } catch (RuntimeException $e) {
-            $this->assertContains(ValidatorInterface::class, $e->getMessage());
+            $this->assertStringContainsString(ValidatorInterface::class, $e->getMessage());
         } catch (\Exception $e) {
             $this->fail(sprintf(
                 'Unexpected exception of type "%s" when testing for invalid validator types',
@@ -73,9 +73,9 @@ class ValidatorPluginManagerTest extends TestCase
         try {
             $this->validators->get('test');
         } catch (InvalidServiceException $e) {
-            $this->assertContains(ValidatorInterface::class, $e->getMessage());
+            $this->assertStringContainsString(ValidatorInterface::class, $e->getMessage());
         } catch (RuntimeException $e) {
-            $this->assertContains(ValidatorInterface::class, $e->getMessage());
+            $this->assertStringContainsString(ValidatorInterface::class, $e->getMessage());
         } catch (\Exception $e) {
             $this->fail(sprintf(
                 'Unexpected exception of type "%s" when testing for invalid validator types',

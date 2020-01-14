@@ -136,7 +136,7 @@ class ExistsTest extends TestCase
         $validator = new File\Exists(__DIR__);
         $this->assertFalse($validator->isValid('nofile.mo'));
         $this->assertArrayHasKey('fileExistsDoesNotExist', $validator->getMessages());
-        $this->assertContains("does not exist", current($validator->getMessages()));
+        $this->assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
     public function testEmptyFileArrayShouldReturnFalse()

@@ -35,7 +35,7 @@ class IpTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    protected function setUp() : void
     {
         $this->validator = new Ip();
         $this->options   = [

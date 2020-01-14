@@ -248,7 +248,7 @@ class BetweenTest extends TestCase
     }
 
     /**
-     * @covers Laminas\Validator\Between::__construct()
+     * @covers \Laminas\Validator\Between::__construct()
      * @dataProvider constructBetweenValidatorInvalidDataProvider
      *
      * @param array $args
