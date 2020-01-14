@@ -23,7 +23,7 @@ class FileInformationTraitTest extends TestCase
     /** @var ObjectProphecy */
     public $upload;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->stream = $this->prophesize(StreamInterface::class);
         $this->upload = $this->prophesize(UploadedFileInterface::class);

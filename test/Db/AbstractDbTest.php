@@ -23,7 +23,7 @@ class AbstractDbTest extends TestCase
 
     protected $validator;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->validator = new ConcreteDbValidator([
             'table' => 'table',

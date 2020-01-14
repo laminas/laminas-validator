@@ -21,7 +21,7 @@ class IdenticalTest extends TestCase
     /** @var Identical */
     public $validator;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->validator = new Identical;
     }

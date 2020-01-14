@@ -30,14 +30,14 @@ class StaticValidatorTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    protected function setUp() : void
     {
         AbstractValidator::setDefaultTranslator(null);
         StaticValidator::setPluginManager(null);
         $this->validator = new Alpha();
     }
 
-    public function tearDown()
+    protected function tearDown() : void
     {
         AbstractValidator::setDefaultTranslator(null);
         AbstractValidator::setMessageLength(-1);

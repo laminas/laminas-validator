@@ -188,7 +188,7 @@ class MimeTypeTest extends TestCase
             'headerCheck' => true]);
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
         $this->assertArrayHasKey('fileMimeTypeNotReadable', $validator->getMessages());
-        $this->assertContains("does not exist", current($validator->getMessages()));
+        $this->assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
     public function testDisableMagicFile()

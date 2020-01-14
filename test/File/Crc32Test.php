@@ -190,7 +190,7 @@ class Crc32Test extends TestCase
         $validator = new File\Crc32('3f8d07e2');
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
         $this->assertArrayHasKey('fileCrc32NotFound', $validator->getMessages());
-        $this->assertContains("does not exist", current($validator->getMessages()));
+        $this->assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage()

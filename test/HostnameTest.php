@@ -28,7 +28,7 @@ class HostnameTest extends TestCase
      */
     protected $origEncoding;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->origEncoding = PHP_VERSION_ID < 50600
             ? iconv_get_encoding('internal_encoding')
@@ -39,7 +39,7 @@ class HostnameTest extends TestCase
     /**
      * Reset iconv
      */
-    public function tearDown()
+    protected function tearDown() : void
     {
         if (PHP_VERSION_ID < 50600) {
             iconv_set_encoding('internal_encoding', $this->origEncoding);
