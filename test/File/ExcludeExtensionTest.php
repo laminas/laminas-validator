@@ -161,7 +161,7 @@ class ExcludeExtensionTest extends TestCase
         $validator = new File\ExcludeExtension('mo');
         $this->assertEquals(false, $validator->isValid(__DIR__ . '/_files/nofile.mo'));
         $this->assertArrayHasKey('fileExcludeExtensionNotFound', $validator->getMessages());
-        $this->assertContains("does not exist", current($validator->getMessages()));
+        $this->assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage()

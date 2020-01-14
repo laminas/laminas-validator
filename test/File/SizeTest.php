@@ -186,14 +186,14 @@ class SizeTest extends TestCase
         $validator = new File\Size(['min' => 9999, 'max' => 10000]);
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/testsize.mo'));
         $messages = $validator->getMessages();
-        $this->assertContains('9.76kB', current($messages));
-        $this->assertContains('794B', current($messages));
+        $this->assertStringContainsString('9.76kB', current($messages));
+        $this->assertStringContainsString('794B', current($messages));
 
         $validator = new File\Size(['min' => 9999, 'max' => 10000, 'useByteString' => false]);
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/testsize.mo'));
         $messages = $validator->getMessages();
-        $this->assertContains('9999', current($messages));
-        $this->assertContains('794', current($messages));
+        $this->assertStringContainsString('9999', current($messages));
+        $this->assertStringContainsString('794', current($messages));
     }
 
     /**
@@ -204,7 +204,7 @@ class SizeTest extends TestCase
         $validator = new File\Size(['min' => 1, 'max' => 10000]);
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
         $this->assertArrayHasKey('fileSizeNotFound', $validator->getMessages());
-        $this->assertContains("does not exist", current($validator->getMessages()));
+        $this->assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage()

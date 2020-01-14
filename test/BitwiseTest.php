@@ -18,7 +18,7 @@ class BitwiseTest extends TestCase
      */
     public $validator;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->validator = new Bitwise();
     }

@@ -393,7 +393,7 @@ class UploadTest extends TestCase
         $validator = new File\Upload();
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
         $this->assertArrayHasKey('fileUploadErrorFileNotFound', $validator->getMessages());
-        $this->assertContains("nofile.mo'", current($validator->getMessages()));
+        $this->assertStringContainsString("nofile.mo'", current($validator->getMessages()));
     }
 
     /**

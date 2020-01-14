@@ -427,7 +427,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('123'));
         $message = $barcode->getMessages();
         $this->assertArrayHasKey('barcodeInvalidLength', $message);
-        $this->assertContains("length of 7/8 characters", $message['barcodeInvalidLength']);
+        $this->assertStringContainsString('length of 7/8 characters', $message['barcodeInvalidLength']);
     }
 
     /**

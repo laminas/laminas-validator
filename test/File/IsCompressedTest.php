@@ -257,6 +257,6 @@ class IsCompressedTest extends TestCase
         $validator = new File\IsCompressed();
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
         $this->assertArrayHasKey('fileIsCompressedNotReadable', $validator->getMessages());
-        $this->assertContains("does not exist", current($validator->getMessages()));
+        $this->assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 }
