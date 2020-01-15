@@ -2090,11 +2090,7 @@ class Hostname extends AbstractValidator
                                 && $utf8StrWrapper->strpos($domainPart, '-', 2) == 2
                                 && $utf8StrWrapper->strpos($domainPart, '-', 3) == 3
                             )
-                            || (
-                                $utf8StrWrapper->strpos($domainPart, '-') === (
-                                $utf8StrWrapper->strlen($domainPart) - 1
-                                )
-                            )
+                            || $utf8StrWrapper->substr($domainPart, -1) === '-'
                         ) {
                             $this->error(self::INVALID_DASH);
                             $status = false;
