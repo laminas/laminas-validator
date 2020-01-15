@@ -47,7 +47,7 @@ class ValidatorChainTest extends TestCase
 
     public function testValidatorChainIsEmptyByDefault()
     {
-        $this->assertEquals(0, count($this->validator->getValidators()));
+        $this->assertCount(0, $this->validator->getValidators());
     }
 
     /**
@@ -181,7 +181,7 @@ class ValidatorChainTest extends TestCase
     public function testCountGivesCountOfAttachedValidators()
     {
         $this->populateValidatorChain();
-        $this->assertEquals(2, count($this->validator->getValidators()));
+        $this->assertCount(2, $this->validator->getValidators());
     }
 
     /**
@@ -205,9 +205,9 @@ class ValidatorChainTest extends TestCase
     public function getValidatorTrue()
     {
         $validator = $this->createMock(ValidatorInterface::class);
-        $validator->expects($this->any())
+        $validator
             ->method('isValid')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
         return $validator;
     }
 
@@ -217,12 +217,12 @@ class ValidatorChainTest extends TestCase
     public function getValidatorFalse()
     {
         $validator = $this->createMock(ValidatorInterface::class);
-        $validator->expects($this->any())
+        $validator
             ->method('isValid')
-            ->will($this->returnValue(false));
-        $validator->expects($this->any())
+            ->willReturn(false);
+        $validator
             ->method('getMessages')
-            ->will($this->returnValue(['error' => 'validation failed']));
+            ->willReturn(['error' => 'validation failed']);
         return $validator;
     }
 
@@ -248,7 +248,7 @@ class ValidatorChainTest extends TestCase
             ],
         ]);
 
-        $this->assertEquals(2, count($this->validator));
+        $this->assertCount(2, $this->validator);
         $validators = $this->validator->getValidators();
         $compare = null;
         foreach ($validators as $validator) {
@@ -281,7 +281,7 @@ class ValidatorChainTest extends TestCase
 
         $unserialized = unserialize($serialized);
         $this->assertInstanceOf(ValidatorChain::class, $unserialized);
-        $this->assertEquals(2, count($unserialized));
+        $this->assertCount(2, $unserialized);
         $this->assertFalse($unserialized->isValid(''));
     }
 
@@ -303,7 +303,7 @@ class ValidatorChainTest extends TestCase
             $option => true,
             'min' => 1,
         ]);
-        $this->assertEquals(1, count($this->validator));
+        $this->assertCount(1, $this->validator);
         $validators = $this->validator->getValidators();
         $spec       = array_shift($validators);
 
