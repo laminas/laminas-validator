@@ -98,18 +98,18 @@ class HostnameTest extends TestCase
 
     /**
      * Ensure the dash character tests work as expected
-     *
      */
     public function testDashes()
     {
         $valuesExpected = [
             [Hostname::ALLOW_DNS, true, ['domain.com', 'doma-in.com']],
-            [Hostname::ALLOW_DNS, false, ['-domain.com', 'domain-.com', 'do--main.com']]
-            ];
+            [Hostname::ALLOW_DNS, false, ['-domain.com', 'domain-.com', 'do--main.com', 'do-main-.com']],
+        ];
+
         foreach ($valuesExpected as $element) {
             $validator = new Hostname($element[0]);
             foreach ($element[2] as $input) {
-                $this->assertEquals(
+                $this->assertSame(
                     $element[1],
                     $validator->isValid($input),
                     implode("\n", $validator->getMessages()) . $input
