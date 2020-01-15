@@ -59,7 +59,7 @@ class CreditCardTest extends TestCase
     public function testGetSetType()
     {
         $validator = new CreditCard();
-        $this->assertEquals(12, count($validator->getType()));
+        $this->assertCount(12, $validator->getType());
 
         $validator->setType(CreditCard::MAESTRO);
         $this->assertEquals([CreditCard::MAESTRO], $validator->getType());

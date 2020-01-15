@@ -39,26 +39,26 @@ class NoRecordExistsTest extends TestCase
         $mockHasResultRow->one = 'one';
 
         $mockHasResult = $this->createMock(ResultInterface::class);
-        $mockHasResult->expects($this->any())
+        $mockHasResult
             ->method('current')
-            ->will($this->returnValue($mockHasResultRow));
+            ->willReturn($mockHasResultRow);
 
         $mockHasResultStatement = $this->createMock(StatementInterface::class);
-        $mockHasResultStatement->expects($this->any())
+        $mockHasResultStatement
             ->method('execute')
-            ->will($this->returnValue($mockHasResult));
+            ->willReturn($mockHasResult);
 
-        $mockHasResultStatement->expects($this->any())
+        $mockHasResultStatement
             ->method('getParameterContainer')
-            ->will($this->returnValue(new ParameterContainer()));
+            ->willReturn(new ParameterContainer());
 
         $mockHasResultDriver = $this->createMock(DriverInterface::class);
-        $mockHasResultDriver->expects($this->any())
+        $mockHasResultDriver
             ->method('createStatement')
-            ->will($this->returnValue($mockHasResultStatement));
-        $mockHasResultDriver->expects($this->any())
+            ->willReturn($mockHasResultStatement);
+        $mockHasResultDriver
             ->method('getConnection')
-            ->will($this->returnValue($mockConnection));
+            ->willReturn($mockConnection);
 
         return $this->getMockBuilder(Adapter::class)
             ->setMethods(null)
@@ -77,26 +77,26 @@ class NoRecordExistsTest extends TestCase
         $mockConnection = $this->createMock(ConnectionInterface::class);
 
         $mockNoResult = $this->createMock(ResultInterface::class);
-        $mockNoResult->expects($this->any())
+        $mockNoResult
             ->method('current')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $mockNoResultStatement = $this->createMock(StatementInterface::class);
-        $mockNoResultStatement->expects($this->any())
+        $mockNoResultStatement
             ->method('execute')
-            ->will($this->returnValue($mockNoResult));
+            ->willReturn($mockNoResult);
 
-        $mockNoResultStatement->expects($this->any())
+        $mockNoResultStatement
             ->method('getParameterContainer')
-            ->will($this->returnValue(new ParameterContainer()));
+            ->willReturn(new ParameterContainer());
 
         $mockNoResultDriver = $this->createMock(DriverInterface::class);
-        $mockNoResultDriver->expects($this->any())
+        $mockNoResultDriver
             ->method('createStatement')
-            ->will($this->returnValue($mockNoResultStatement));
-        $mockNoResultDriver->expects($this->any())
+            ->willReturn($mockNoResultStatement);
+        $mockNoResultDriver
             ->method('getConnection')
-            ->will($this->returnValue($mockConnection));
+            ->willReturn($mockConnection);
 
         return $this->getMockBuilder(Adapter::class)
             ->setMethods(null)

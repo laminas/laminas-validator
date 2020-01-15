@@ -137,7 +137,7 @@ class UndisclosedPasswordTest extends TestCase
     public function testStrongUnseenPasswordsPassValidation($password)
     {
         $this->httpResponse->method('getBody')
-            ->will($this->returnCallback(function () use ($password) {
+            ->willReturnCallback(function () use ($password) {
                 $hash = \sha1('laminas-validator');
                 return sprintf(
                     '%s:%d',
@@ -147,9 +147,9 @@ class UndisclosedPasswordTest extends TestCase
                     ))),
                     rand(0, 100000)
                 );
-            }));
+            });
         $this->httpClient->method('sendRequest')
-            ->will($this->returnValue($this->httpResponse));
+            ->willReturn($this->httpResponse);
 
         $this->assertTrue($this->validator->isValid($password));
     }
@@ -166,7 +166,7 @@ class UndisclosedPasswordTest extends TestCase
     public function testBreachedPasswordsDoNotPassValidation($password)
     {
         $this->httpResponse->method('getBody')
-            ->will($this->returnCallback(function () use ($password) {
+            ->willReturnCallback(function () use ($password) {
                 $hash = \sha1($password);
                 return sprintf(
                     '%s:%d',
@@ -176,9 +176,9 @@ class UndisclosedPasswordTest extends TestCase
                     ))),
                     rand(0, 100000)
                 );
-            }));
+            });
         $this->httpClient->method('sendRequest')
-            ->will($this->returnValue($this->httpResponse));
+            ->willReturn($this->httpResponse);
 
         $this->assertFalse($this->validator->isValid($password));
     }
