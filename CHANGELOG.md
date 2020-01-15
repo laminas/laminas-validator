@@ -26,6 +26,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - [#34](https://github.com/laminas/laminas-validator/pull/34) fixes hostname validation for domain parts with 2+ dashes and with dash at the end.
 
+- Updates the TLD list to the latest version from the IANA.
+
 ## 2.13.0 - 2019-12-27
 
 ### Added

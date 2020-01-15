@@ -68,7 +68,7 @@ class Hostname extends AbstractValidator
 
     /**
      * Array of valid top-level-domains
-     * IanaVersion 2019122700
+     * IanaVersion 2020011400
      *
      * @see ftp://data.iana.org/TLD/tlds-alpha-by-domain.txt  List of all TLDs by domain
      * @see http://www.iana.org/domains/root/db/ Official list of supported TLDs
@@ -788,7 +788,6 @@ class Hostname extends AbstractValidator
         'lexus',
         'lgbt',
         'li',
-        'liaison',
         'lidl',
         'life',
         'lifeinsurance',
