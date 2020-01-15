@@ -1,277 +1,277 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-     <loc>https://docs.laminas.dev/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/intro/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/intro/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validator-chains/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validator-chains/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/writing-validators/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/writing-validators/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/messages/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/messages/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/set/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/set/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/barcode/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/barcode/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/between/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/between/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/callback/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/callback/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/credit-card/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/credit-card/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/date/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/date/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/db/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/db/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/digits/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/digits/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/email-address/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/email-address/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/explode/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/explode/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/greater-than/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/greater-than/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/hex/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/hex/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/hostname/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/hostname/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/iban/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/iban/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/identical/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/identical/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/in-array/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/in-array/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/ip/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/ip/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/isbn/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/isbn/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/is-countable/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/is-countable/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/isinstanceof/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/isinstanceof/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/less-than/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/less-than/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/not-empty/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/not-empty/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/regex/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/regex/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/sitemap/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/sitemap/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/step/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/step/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/string-length/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/string-length/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/timezone/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/timezone/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/undisclosed-password/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/undisclosed-password/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/uri/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/uri/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/uuid/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/uuid/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/file/intro/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/file/intro/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/file/count/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/file/count/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/file/crc32/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/file/crc32/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/file/exclude-extension/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/file/exclude-extension/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/file/exclude-mime-type/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/file/exclude-mime-type/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/file/exists/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/file/exists/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/file/extension/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/file/extension/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/file/files-size/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/file/files-size/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/file/hash/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/file/hash/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/file/image-size/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/file/image-size/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/file/is-compressed/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/file/is-compressed/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/file/is-image/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/file/is-image/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/file/md5/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/file/md5/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/file/mime-type/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/file/mime-type/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/file/not-exists/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/file/not-exists/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/file/sha1/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/file/sha1/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/file/size/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/file/size/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/file/upload/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/file/upload/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/file/upload-file/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/file/upload-file/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://docs.laminas.dev/validators/file/word-count/</loc>
+     <loc>https://docs.laminas.dev/laminas-validator/validators/file/word-count/</loc>
      <lastmod>2020-01-15</lastmod>
      <changefreq>daily</changefreq>
     </url>
