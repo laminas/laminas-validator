@@ -66,10 +66,13 @@ class ExplodeTest extends TestCase
         $expects
     ) {
         $mockValidator = $this->createMock(ValidatorInterface::class);
-        $mockValidator->expects(
-            $this->exactly($numIsValidCalls)
-        )->method('isValid')->will($this->returnValue($isValidReturn));
-        $mockValidator->expects($this->any())->method('getMessages')->will($this->returnValue('X'));
+        $mockValidator
+            ->expects($this->exactly($numIsValidCalls))
+            ->method('isValid')
+            ->willReturn($isValidReturn);
+        $mockValidator
+            ->method('getMessages')
+            ->willReturn('X');
 
         $validator = new Explode([
             'validator'           => $mockValidator,

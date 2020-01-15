@@ -95,14 +95,19 @@ class UriTest extends TestCase
         $uriMock = $this->getMockBuilder(Uri::class)
             ->setConstructorArgs(['parse', 'isValid', 'isAbsolute', 'isValidRelative'])
             ->getMock();
-        $uriMock->expects($this->once())
-            ->method('isValid')->will($this->returnValue($isValid));
-        $uriMock->expects($this->any())
-            ->method('isAbsolute')->will($this->returnValue($isAbsolute));
-        $uriMock->expects($this->any())
-            ->method('isValidRelative')->will($this->returnValue($isRelative));
+        $uriMock
+            ->expects($this->once())
+            ->method('isValid')
+            ->willReturn($isValid);
+        $uriMock
+            ->method('isAbsolute')
+            ->willReturn($isAbsolute);
+        $uriMock
+            ->method('isValidRelative')
+            ->willReturn($isRelative);
 
-        $this->validator->setUriHandler($uriMock)
+        $this->validator
+            ->setUriHandler($uriMock)
             ->setAllowAbsolute($allowAbsolute)
             ->setAllowRelative($allowRelative);
 

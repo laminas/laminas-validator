@@ -940,7 +940,7 @@ class NotEmptyTest extends TestCase
 
         $object->expects($this->atLeastOnce())
             ->method('__toString')
-            ->will($this->returnValue('Test'));
+            ->willReturn('Test');
 
         $this->assertFalse($valid->isValid($object));
 
@@ -952,7 +952,7 @@ class NotEmptyTest extends TestCase
             ->getMock();
         $object->expects($this->atLeastOnce())
             ->method('__toString')
-            ->will($this->returnValue(''));
+            ->willReturn('');
 
         $this->assertFalse($valid->isValid($object));
     }

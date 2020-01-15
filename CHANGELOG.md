@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.13.1 - TBD
+## 2.13.1 - 2020-01-15
 
 ### Added
 
@@ -25,6 +25,8 @@ All notable changes to this project will be documented in this file, in reverse 
 - [#32](https://github.com/laminas/laminas-validator/pull/32) fixes PHP 7.4 compatibility.
 
 - [#34](https://github.com/laminas/laminas-validator/pull/34) fixes hostname validation for domain parts with 2+ dashes and with dash at the end.
+
+- Updates the TLD list to the latest version from the IANA.
 
 ## 2.13.0 - 2019-12-27
 
