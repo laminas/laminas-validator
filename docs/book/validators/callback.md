@@ -94,7 +94,7 @@ class MyClass
     }
 }
 
-$valid = new Laminas\Validator\Callback(MyClass::class, 'test']);
+$valid = new Laminas\Validator\Callback([MyClass::class, 'test']);
 if ($valid->isValid($input)) {
     // input appears to be valid
 } else {
