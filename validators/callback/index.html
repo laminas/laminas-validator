@@ -639,7 +639,7 @@ definition and validator usage:</p>
     }
 }
 
-$valid = new Laminas\Validator\Callback(MyClass::class, 'test']);
+$valid = new Laminas\Validator\Callback([MyClass::class, 'test']);
 if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
