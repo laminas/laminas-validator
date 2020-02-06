@@ -12,26 +12,26 @@ use Laminas\Validator\Hostname;
 require __DIR__ . '/../vendor/autoload.php';
 
 define('IANA_URL', 'https://data.iana.org/TLD/tlds-alpha-by-domain.txt');
-define('Laminas_HOSTNAME_VALIDATOR_FILE', __DIR__.'/../src/Hostname.php');
+define('LAMINAS_HOSTNAME_VALIDATOR_FILE', __DIR__.'/../src/Hostname.php');
 
 
-if (! file_exists(Laminas_HOSTNAME_VALIDATOR_FILE) || ! is_readable(Laminas_HOSTNAME_VALIDATOR_FILE)) {
-    printf("Error: cannont read file '%s'%s", Laminas_HOSTNAME_VALIDATOR_FILE, PHP_EOL);
+if (! file_exists(LAMINAS_HOSTNAME_VALIDATOR_FILE) || ! is_readable(LAMINAS_HOSTNAME_VALIDATOR_FILE)) {
+    printf("Error: cannot read file '%s'%s", LAMINAS_HOSTNAME_VALIDATOR_FILE, PHP_EOL);
     exit(1);
 }
 
-if (! is_writable(Laminas_HOSTNAME_VALIDATOR_FILE)) {
-    printf("Error: Cannot update file '%s'%s", Laminas_HOSTNAME_VALIDATOR_FILE, PHP_EOL);
+if (! is_writable(LAMINAS_HOSTNAME_VALIDATOR_FILE)) {
+    printf("Error: cannot update file '%s'%s", LAMINAS_HOSTNAME_VALIDATOR_FILE, PHP_EOL);
     exit(1);
 }
 
-$newFileContent   = [];     // new file content
+$newFileContent   = [];    // new file content
 $insertDone       = false; // becomes 'true' when we find start of $validTlds declaration
 $insertFinish     = false; // becomes 'true' when we find end of $validTlds declaration
 $checkOnly        = isset($argv[1]) ? $argv[1] === '--check-only' : false;
 $response         = getOfficialTLDs();
 $ianaVersion      = getVersionFromString('Version', strtok($response->getBody(), "\n"));
-$validatorVersion = getVersionFromString('IanaVersion', file_get_contents(Laminas_HOSTNAME_VALIDATOR_FILE));
+$validatorVersion = getVersionFromString('IanaVersion', file_get_contents(LAMINAS_HOSTNAME_VALIDATOR_FILE));
 
 if ($checkOnly && $ianaVersion > $validatorVersion) {
     printf(
@@ -46,7 +46,7 @@ if ($checkOnly) {
     exit(0);
 }
 
-foreach (file(Laminas_HOSTNAME_VALIDATOR_FILE) as $line) {
+foreach (file(LAMINAS_HOSTNAME_VALIDATOR_FILE) as $line) {
     // Replace old version number with new one
     if (preg_match('/\*\s+IanaVersion\s+\d+/', $line, $matches)) {
         $newFileContent[] = sprintf("     * IanaVersion %s\n", $ianaVersion);
@@ -89,8 +89,8 @@ if (!$insertFinish) {
     exit(1);
 }
 
-if (false === @file_put_contents(Laminas_HOSTNAME_VALIDATOR_FILE, $newFileContent)) {
-    printf('Error: cannot write info file "%s"%s', Laminas_HOSTNAME_VALIDATOR_FILE, PHP_EOL);
+if (false === @file_put_contents(LAMINAS_HOSTNAME_VALIDATOR_FILE, $newFileContent)) {
+    printf('Error: cannot write info file "%s"%s', LAMINAS_HOSTNAME_VALIDATOR_FILE, PHP_EOL);
     exit(1);
 }
 
