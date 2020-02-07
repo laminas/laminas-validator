@@ -58,6 +58,8 @@ final class UndisclosedPassword extends AbstractValidator
         $this->httpClient = $httpClient;
         $this->makeHttpRequest = $makeHttpRequest;
         $this->makeHttpResponse = $makeHttpResponse;
+
+        parent::__construct();
     }
 
     /**
