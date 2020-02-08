@@ -343,6 +343,7 @@ class EmailAddress extends AbstractValidator
         if (preg_match('/^[' . $atext . ']+(\x2e+[' . $atext . ']+)*$/', $this->localPart)) {
             return true;
         }
+
         if ($this->validateInternationalizedLocalPart($this->localPart)) {
             return true;
         }
@@ -355,9 +356,11 @@ class EmailAddress extends AbstractValidator
         if (preg_match('/^"(['. $qtext .']|\x5c[' . $quotedPair . '])*"$/', $this->localPart)) {
             return true;
         }
+
         $this->error(self::DOT_ATOM);
         $this->error(self::QUOTED_STRING);
         $this->error(self::INVALID_LOCAL_PART);
+
         return false;
     }
 
