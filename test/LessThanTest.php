@@ -129,15 +129,24 @@ class LessThanTest extends TestCase
     public function testEqualsMessageTemplates(): void
     {
         $validator = new LessThan(10);
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertSame(
+            [
+                LessThan::NOT_LESS,
+                LessThan::NOT_LESS_INCLUSIVE,
+            ],
+            array_keys($validator->getMessageTemplates())
+        );
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
     {
-        $validator = new LessThan(10);
-        $this->assertObjectHasAttribute('messageVariables', $validator);
-        $this->assertEquals(array_keys($validator->getOption('messageVariables')), $validator->getMessageVariables());
+        $validator        = new LessThan(10);
+        $messageVariables = [
+            'max' => 'max',
+        ];
+        $this->assertSame($messageVariables, $validator->getOption('messageVariables'));
+        $this->assertEquals(array_keys($messageVariables), $validator->getMessageVariables());
     }
 
     public function testConstructorAllowsSettingAllOptionsAsDiscreteArguments(): void

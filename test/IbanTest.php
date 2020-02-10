@@ -6,6 +6,7 @@ use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Iban as IbanValidator;
 use PHPUnit\Framework\TestCase;
 
+use function array_keys;
 use function array_merge;
 use function implode;
 
@@ -157,7 +158,15 @@ class IbanTest extends TestCase
     public function testEqualsMessageTemplates(): void
     {
         $validator = new IbanValidator();
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertSame(
+            [
+                IbanValidator::NOTSUPPORTED,
+                IbanValidator::SEPANOTSUPPORTED,
+                IbanValidator::FALSEFORMAT,
+                IbanValidator::CHECKFAILED,
+            ],
+            array_keys($validator->getMessageTemplates())
+        );
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 

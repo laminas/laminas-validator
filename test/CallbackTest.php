@@ -7,6 +7,7 @@ use Laminas\Validator\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
+use function array_keys;
 use function func_get_args;
 
 /**
@@ -73,7 +74,13 @@ class CallbackTest extends TestCase
     public function testEqualsMessageTemplates(): void
     {
         $validator = new Callback([$this, 'objectCallback']);
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertSame(
+            [
+                Callback::INVALID_VALUE,
+                Callback::INVALID_CALLBACK,
+            ],
+            array_keys($validator->getMessageTemplates())
+        );
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 

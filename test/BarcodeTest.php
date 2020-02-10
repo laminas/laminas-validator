@@ -489,14 +489,25 @@ class BarcodeTest extends TestCase
     public function testEqualsMessageTemplates(): void
     {
         $validator = new Barcode('code25');
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertSame(
+            [
+                Barcode::FAILED,
+                Barcode::INVALID_CHARS,
+                Barcode::INVALID_LENGTH,
+                Barcode::INVALID,
+            ],
+            array_keys($validator->getMessageTemplates())
+        );
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
     {
-        $validator = new Barcode('code25');
-        $this->assertObjectHasAttribute('messageVariables', $validator);
-        $this->assertEquals(array_keys($validator->getOption('messageVariables')), $validator->getMessageVariables());
+        $validator        = new Barcode('code25');
+        $messageVariables = [
+            'length' => ['options' => 'length'],
+        ];
+        $this->assertSame($messageVariables, $validator->getOption('messageVariables'));
+        $this->assertEquals(array_keys($messageVariables), $validator->getMessageVariables());
     }
 }

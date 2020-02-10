@@ -6,6 +6,8 @@ use Laminas\Validator\Exception\RuntimeException;
 use Laminas\Validator\InArray;
 use PHPUnit\Framework\TestCase;
 
+use function array_keys;
+
 use const PHP_MAJOR_VERSION;
 
 /**
@@ -417,9 +419,13 @@ class InArrayTest extends TestCase
 
     public function testEqualsMessageTemplates(): void
     {
-        $validator = $this->validator;
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        $this->assertSame(
+            [
+                InArray::NOT_IN_ARRAY,
+            ],
+            array_keys($this->validator->getMessageTemplates())
+        );
+        $this->assertEquals($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 
     /**

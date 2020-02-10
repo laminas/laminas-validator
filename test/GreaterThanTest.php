@@ -133,15 +133,24 @@ class GreaterThanTest extends TestCase
     public function testEqualsMessageTemplates(): void
     {
         $validator = new GreaterThan(1);
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertSame(
+            [
+                GreaterThan::NOT_GREATER,
+                GreaterThan::NOT_GREATER_INCLUSIVE,
+            ],
+            array_keys($validator->getMessageTemplates())
+        );
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
     {
-        $validator = new GreaterThan(1);
-        $this->assertObjectHasAttribute('messageVariables', $validator);
-        $this->assertEquals(array_keys($validator->getOption('messageVariables')), $validator->getMessageVariables());
+        $validator        = new GreaterThan(1);
+        $messageVariables = [
+            'min' => 'min',
+        ];
+        $this->assertSame($messageVariables, $validator->getOption('messageVariables'));
+        $this->assertEquals(array_keys($messageVariables), $validator->getMessageVariables());
     }
 
     /**

@@ -5,6 +5,8 @@ namespace LaminasTest\Validator;
 use Laminas\Validator\Hex;
 use PHPUnit\Framework\TestCase;
 
+use function array_keys;
+
 /**
  * @group      Laminas_Validator
  */
@@ -32,7 +34,7 @@ class HexTest extends TestCase
 
     /**
      * @psalm-return array<string, array{
-     *     0: mixed,
+     *     0: int|string,
      *     1: bool
      * }>
      */
@@ -74,8 +76,13 @@ class HexTest extends TestCase
 
     public function testEqualsMessageTemplates(): void
     {
-        $validator = $this->validator;
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        $this->assertSame(
+            [
+                Hex::INVALID,
+                Hex::NOT_HEX,
+            ],
+            array_keys($this->validator->getMessageTemplates())
+        );
+        $this->assertEquals($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 }
