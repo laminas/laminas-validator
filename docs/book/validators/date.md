@@ -51,6 +51,6 @@ this will mean the value must be a string.)
 $validator = new Laminas\Validator\Date(['format' => 'Y-m-d', 'strict' => true]);
 
 $validator->isValid('2010-10-10'); // returns true
-$validator->isValid(new DateTime('2010-10-10)); // returns false; value is not a string
+$validator->isValid(new DateTime('2010-10-10')); // returns false; value is not a string
 $validator->isValid('2010.10.10'); // returns false; format differs
 ```
