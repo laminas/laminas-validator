@@ -604,7 +604,7 @@ this will mean the value must be a string.)</p>
 <pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Date(['format' =&gt; 'Y-m-d', 'strict' =&gt; true]);
 
 $validator-&gt;isValid('2010-10-10'); // returns true
-$validator-&gt;isValid(new DateTime('2010-10-10)); // returns false; value is not a string
+$validator-&gt;isValid(new DateTime('2010-10-10')); // returns false; value is not a string
 $validator-&gt;isValid('2010.10.10'); // returns false; format differs</code></pre>
 
 
