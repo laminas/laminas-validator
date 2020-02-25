@@ -705,8 +705,9 @@ use Laminas\Validator\Db\RecordExists;
 $select = new Select();
 $select
     -&gt;from('users')
-    -&gt;where-&gt;equalTo('id', $user_id)
-    -&gt;where-&gt;equalTo('email', $email);
+    -&gt;where
+    -&gt;equalTo('id', $user_id)
+    -&gt;equalTo('email', $email);
 
 $validator = new RecordExists($select);
 
