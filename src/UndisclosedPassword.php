@@ -23,8 +23,8 @@ final class UndisclosedPassword extends AbstractValidator
     private const HIBP_K_ANONYMITY_HASH_RANGE_BASE = 0;
     private const SHA1_STRING_LENGTH = 40;
 
-    private const PASSWORD_BREACHED = 'passwordBreached';
-    private const NOT_A_STRING = 'wrongInput';
+    public const PASSWORD_BREACHED = 'passwordBreached';
+    public const NOT_A_STRING = 'wrongInput';
 
     protected $messageTemplates = [
         self::PASSWORD_BREACHED =>
