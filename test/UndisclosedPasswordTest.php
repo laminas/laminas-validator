@@ -206,16 +206,9 @@ class UndisclosedPasswordTest extends TestCase
      * Test that the message templates are getting initialized via
      * the parent::_construct call
      */
-    public function testMessageTemplatesAreInitialized()
+    public function testMessageTemplatesAreInitialized() : void
     {
-        $this->assertTrue(array_key_exists(
-            UndisclosedPassword::NOT_A_STRING,
-            $this->validator->getMessageTemplates()
-        ));
-        $this->assertTrue(array_key_exists(
-            UndisclosedPassword::PASSWORD_BREACHED,
-            $this->validator->getMessageTemplates()
-        ));
+        $this->assertNotEmpty($this->validator->getMessageTemplates());
     }
 
     /**

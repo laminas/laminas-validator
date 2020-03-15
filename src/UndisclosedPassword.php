@@ -23,8 +23,8 @@ final class UndisclosedPassword extends AbstractValidator
     private const HIBP_K_ANONYMITY_HASH_RANGE_BASE = 0;
     private const SHA1_STRING_LENGTH = 40;
 
-    public const PASSWORD_BREACHED = 'passwordBreached';
-    public const NOT_A_STRING = 'wrongInput';
+    private const PASSWORD_BREACHED = 'passwordBreached';
+    private const NOT_A_STRING = 'wrongInput';
 
     protected $messageTemplates = [
         self::PASSWORD_BREACHED =>
@@ -55,11 +55,11 @@ final class UndisclosedPassword extends AbstractValidator
         RequestFactoryInterface $makeHttpRequest,
         ResponseFactoryInterface $makeHttpResponse
     ) {
+        parent::__construct();
+
         $this->httpClient = $httpClient;
         $this->makeHttpRequest = $makeHttpRequest;
         $this->makeHttpResponse = $makeHttpResponse;
-
-        parent::__construct();
     }
 
     /**
