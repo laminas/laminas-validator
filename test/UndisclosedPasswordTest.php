@@ -192,7 +192,7 @@ class UndisclosedPasswordTest extends TestCase
 
         $this->expectException(\Exception::class);
         $this->validator->isValid($password);
-        $this->fail('Excpected exception was not thrown');
+        $this->fail('Expected exception was not thrown');
     }
 
     /**
