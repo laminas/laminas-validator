@@ -15,7 +15,6 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionClass;
 
@@ -52,14 +51,8 @@ class UndisclosedPasswordTest extends TestCase
             ->getMockForAbstractClass();
         $this->httpResponse = $this->getMockBuilder(ResponseInterface::class)
             ->getMockForAbstractClass();
-        $responseFactoryInterface = $this->getMockBuilder(ResponseFactoryInterface::class)
-            ->getMockForAbstractClass();
 
-        $this->validator = new UndisclosedPassword(
-            $this->httpClient,
-            $this->httpRequest,
-            $responseFactoryInterface
-        );
+        $this->validator = new UndisclosedPassword($this->httpClient, $this->httpRequest);
     }
 
     /**
