@@ -11,7 +11,14 @@ namespace Laminas\Validator;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
+
+use function array_filter;
+use function explode;
+use function is_string;
+use function sha1;
+use function strcmp;
+use function strtoupper;
+use function substr;
 
 final class UndisclosedPassword extends AbstractValidator
 {
@@ -32,38 +39,22 @@ final class UndisclosedPassword extends AbstractValidator
         self::NOT_A_STRING => 'The provided password is not a string, please provide a correct password',
     ];
 
-    /**
-     * @var ClientInterface
-     */
+    /** @var ClientInterface */
     private $httpClient;
 
-    /**
-     * @var RequestFactoryInterface
-     */
+    /** @var RequestFactoryInterface */
     private $makeHttpRequest;
 
-    /**
-     * @var ResponseFactoryInterface
-     */
-    private $makeHttpResponse;
-
-    /**
-     * PasswordBreach constructor.
-     */
-    public function __construct(
-        ClientInterface $httpClient,
-        RequestFactoryInterface $makeHttpRequest,
-        ResponseFactoryInterface $makeHttpResponse
-    ) {
+    public function __construct(ClientInterface $httpClient, RequestFactoryInterface $makeHttpRequest)
+    {
         $this->httpClient = $httpClient;
         $this->makeHttpRequest = $makeHttpRequest;
-        $this->makeHttpResponse = $makeHttpResponse;
     }
 
     /**
      * @inheritDoc
      */
-    public function isValid($value)
+    public function isValid($value) : bool
     {
         if (! is_string($value)) {
             $this->error(self::NOT_A_STRING);
@@ -83,19 +74,18 @@ final class UndisclosedPassword extends AbstractValidator
         $sha1Hash = $this->hashPassword($password);
         $rangeHash = $this->getRangeHash($sha1Hash);
         $hashList = $this->retrieveHashList($rangeHash);
+
         return $this->hashInResponse($sha1Hash, $hashList);
     }
 
     /**
      * We use a SHA1 hashed password for checking it against
      * the breached data set of HIBP.
-     *
-     * @param string $password
-     * @return string
      */
     private function hashPassword(string $password) : string
     {
-        $hashedPassword = \sha1($password);
+        $hashedPassword = sha1($password);
+
         return strtoupper($hashedPassword);
     }
 
@@ -103,8 +93,6 @@ final class UndisclosedPassword extends AbstractValidator
      * Creates a hash range that will be send to HIBP API
      * applying K-Anonymity
      *
-     * @param string $passwordHash
-     * @return string
      * @see https://www.troyhunt.com/enhancing-pwned-passwords-privacy-by-exclusively-supporting-anonymity/
      */
     private function getRangeHash(string $passwordHash) : string
@@ -117,8 +105,6 @@ final class UndisclosedPassword extends AbstractValidator
      * list of hashes that all have the same range as we
      * provided.
      *
-     * @param string $passwordRange
-     * @return string
      * @throws ClientExceptionInterface
      */
     private function retrieveHashList(string $passwordRange) : string
@@ -134,24 +120,16 @@ final class UndisclosedPassword extends AbstractValidator
 
     /**
      * Checks if the password is in the response from HIBP
-     *
-     * @param string $sha1Hash
-     * @param string $resultStream
-     * @return bool
      */
     private function hashInResponse(string $sha1Hash, string $resultStream) : bool
     {
         $data = explode("\r\n", $resultStream);
-        $hashes = array_filter($data, function ($value) use ($sha1Hash) {
-            list($hash, $count) = explode(':', $value);
-            if (0 === strcmp($hash, substr($sha1Hash, self::HIBP_K_ANONYMITY_HASH_RANGE_LENGTH))) {
-                return true;
-            }
-            return false;
+        $hashes = array_filter($data, static function ($value) use ($sha1Hash) {
+            [$hash, $count] = explode(':', $value);
+
+            return strcmp($hash, substr($sha1Hash, self::HIBP_K_ANONYMITY_HASH_RANGE_LENGTH)) === 0;
         });
-        if ([] === $hashes) {
-            return false;
-        }
-        return true;
+
+        return $hashes !== [];
     }
 }
