@@ -17,11 +17,10 @@
 
 ## Basic usage
 
-The validator has three required constructor arguments:
+The validator has two required constructor arguments:
 
 - an HTTP Client that implements `Psr\Http\Client\ClientInterface`
 - a `Psr\Http\Message\RequestFactoryInterface` instance
-- a `Psr\Http\Message\ResponseFactoryInterface` instance
 
 Once you have an instance, you can then pass a password to its `isValid()` method to determine if it has been disclosed in a known data breach.
 
@@ -30,8 +29,7 @@ If the password was found via the service, `isValid()` will return `false`. If t
 ```php
 $validator = new Laminas\Validator\UndisclosedPassword(
     $httpClient, // a PSR-18 HttpClientInterface
-    $requestFactory, // a PSR-17 RequestFactoryInterface
-    $responseFactory // a PSR-17 ResponseFactoryInterface
+    $requestFactory // a PSR-17 RequestFactoryInterface
 );
 
 $result = $validator->isValid('password');
@@ -58,23 +56,18 @@ $ composer require \
 Next, I create a file, `undisclosed.php`, where I put my code:
 
 ```php
-<?php
-
-namespace Undisclosed;
+require_once __DIR__ . '/vendor/autoload.php';
 
 use Http\Client\Curl\Client;
 use Laminas\Diactoros\RequestFactory;
 use Laminas\Diactoros\ResponseFactory;
 use Laminas\Validator\UndisclosedPassword;
 
-require_once __DIR__ . '/vendor/autoload.php';
-
-
 $requestFactory = new RequestFactory();
 $responseFactory = new ResponseFactory();
 $client = new Client($responseFactory, null);
 
-$undisclosedPassword = new UndisclosedPassword($client, $requestFactory, $responseFactory);
+$undisclosedPassword = new UndisclosedPassword($client, $requestFactory);
 echo 'Password "password" is ' . ($undisclosedPassword->isValid('password') ? 'not disclosed' : 'disclosed') . PHP_EOL;
 echo 'Password "NVt3MpvQ" is ' . ($undisclosedPassword->isValid('NVt3MpvQ') ? 'not disclosed' : 'disclosed') . PHP_EOL;
 ```
