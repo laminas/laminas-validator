@@ -629,18 +629,16 @@ $ composer require psr/http-factory
 </code></pre>
 </blockquote>
 <h2 id="basic-usage">Basic usage</h2>
-<p>The validator has three required constructor arguments:</p>
+<p>The validator has two required constructor arguments:</p>
 <ul>
 <li>an HTTP Client that implements <code>Psr\Http\Client\ClientInterface</code></li>
 <li>a <code>Psr\Http\Message\RequestFactoryInterface</code> instance</li>
-<li>a <code>Psr\Http\Message\ResponseFactoryInterface</code> instance</li>
 </ul>
 <p>Once you have an instance, you can then pass a password to its <code>isValid()</code> method to determine if it has been disclosed in a known data breach.</p>
 <p>If the password was found via the service, <code>isValid()</code> will return <code>false</code>. If the password was not found, <code>isValid()</code> will return <code>true</code>.</p>
 <pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\UndisclosedPassword(
     $httpClient, // a PSR-18 HttpClientInterface
-    $requestFactory, // a PSR-17 RequestFactoryInterface
-    $responseFactory // a PSR-17 ResponseFactoryInterface
+    $requestFactory // a PSR-17 RequestFactoryInterface
 );
 
 $result = $validator-&gt;isValid('password');
@@ -658,23 +656,18 @@ $result = $validator-&gt;isValid('8aDk=XiW2E.77tLfuAcB');
     laminas/laminas-diactoros \
     laminas/laminas-validator</code></pre>
 <p>Next, I create a file, <code>undisclosed.php</code>, where I put my code:</p>
-<pre class=codehilite><code class=language-php>&lt;?php
-
-namespace Undisclosed;
+<pre class=codehilite><code class=language-php>require_once __DIR__ . '/vendor/autoload.php';
 
 use Http\Client\Curl\Client;
 use Laminas\Diactoros\RequestFactory;
 use Laminas\Diactoros\ResponseFactory;
 use Laminas\Validator\UndisclosedPassword;
 
-require_once __DIR__ . '/vendor/autoload.php';
-
-
 $requestFactory = new RequestFactory();
 $responseFactory = new ResponseFactory();
 $client = new Client($responseFactory, null);
 
-$undisclosedPassword = new UndisclosedPassword($client, $requestFactory, $responseFactory);
+$undisclosedPassword = new UndisclosedPassword($client, $requestFactory);
 echo 'Password &quot;password&quot; is ' . ($undisclosedPassword-&gt;isValid('password') ? 'not disclosed' : 'disclosed') . PHP_EOL;
 echo 'Password &quot;NVt3MpvQ&quot; is ' . ($undisclosedPassword-&gt;isValid('NVt3MpvQ') ? 'not disclosed' : 'disclosed') . PHP_EOL;</code></pre>
 <p>To run it, I use the PHP command line interpreter:</p>
