@@ -22,7 +22,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#57](https://github.com/laminas/laminas-validator/pull/57) removes redundant third argument in `UndisclosedPassword` validator constructor.
 
 ## 2.13.1 - 2020-01-15
 
