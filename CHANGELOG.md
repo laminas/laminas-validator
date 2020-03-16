@@ -24,7 +24,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - Nothing.
 
-## 2.13.2 - TBD
+## 2.13.2 - 2020-03-16
 
 ### Added
 
