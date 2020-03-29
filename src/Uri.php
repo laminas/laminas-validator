@@ -89,22 +89,17 @@ class Uri extends AbstractValidator
             // Instantiate string Uri handler that references a class
             $this->uriHandler = new $this->uriHandler;
         }
-
-        if (! $this->uriHandler instanceof UriHandler) {
-            throw new InvalidArgumentException('URI handler is expected to be a Laminas\Uri\Uri object');
-        }
-
         return $this->uriHandler;
     }
 
     /**
-     * @param  UriHandler $uriHandler
+     * @param  UriHandler|string  $uriHandler
      * @throws InvalidArgumentException
      * @return Uri
      */
     public function setUriHandler($uriHandler)
     {
-        if (! is_subclass_of($uriHandler, 'Laminas\Uri\Uri')) {
+        if (! is_a($uriHandler, UriHandler::class, true)) {
             throw new InvalidArgumentException(sprintf(
                 'Expecting a subclass name or instance of %s as $uriHandler',
                 UriHandler::class
