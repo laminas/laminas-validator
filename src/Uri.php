@@ -105,7 +105,10 @@ class Uri extends AbstractValidator
     public function setUriHandler($uriHandler)
     {
         if (! is_subclass_of($uriHandler, 'Laminas\Uri\Uri')) {
-            throw new InvalidArgumentException('Expecting a subclass name or instance of Laminas\Uri\Uri as $uriHandler');
+            throw new InvalidArgumentException(sprintf(
+                'Expecting a subclass name or instance of %s as $uriHandler',
+                UriHandler::class
+            ));
         }
 
         $this->uriHandler = $uriHandler;
