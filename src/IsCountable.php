@@ -38,7 +38,7 @@ class IsCountable extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = [
-        self::NOT_COUNTABLE => "The input must be an array or an instance of \\Countable",
+        self::NOT_COUNTABLE => 'The input must be an array or an instance of \\Countable',
         self::NOT_EQUALS    => "The input count must equal '%count%'",
         self::GREATER_THAN  => "The input count must be less than '%max%', inclusively",
         self::LESS_THAN     => "The input count must be greater than '%min%', inclusively",

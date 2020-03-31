@@ -81,7 +81,7 @@ class Code128 extends AbstractAdapter
     {
         if (! $utf8StringWrapper->isSupported('UTF-8')) {
             throw new Exception\InvalidArgumentException(
-                "The string wrapper needs to support UTF-8 character encoding"
+                'The string wrapper needs to support UTF-8 character encoding'
             );
         }
         $this->utf8StringWrapper = $utf8StringWrapper;
@@ -428,7 +428,7 @@ class Code128 extends AbstractAdapter
             }
         } elseif ($set == 'C') {
             if (($value >= 0) && ($value <= 9)) {
-                return "0" . (string) $value;
+                return '0' . (string) $value;
             } elseif ($value <= 99) {
                 return (string) $value;
             } elseif ($value <= 106) {

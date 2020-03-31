@@ -18,10 +18,10 @@ class Barcode extends AbstractValidator
     const INVALID_LENGTH = 'barcodeInvalidLength';
 
     protected $messageTemplates = [
-        self::FAILED         => "The input failed checksum validation",
-        self::INVALID_CHARS  => "The input contains invalid characters",
-        self::INVALID_LENGTH => "The input should have a length of %length% characters",
-        self::INVALID        => "Invalid type given. String expected",
+        self::FAILED         => 'The input failed checksum validation',
+        self::INVALID_CHARS  => 'The input contains invalid characters',
+        self::INVALID_LENGTH => 'The input should have a length of %length% characters',
+        self::INVALID        => 'Invalid type given. String expected',
     ];
 
     /**
@@ -104,7 +104,7 @@ class Barcode extends AbstractValidator
         if (! $adapter instanceof Barcode\AdapterInterface) {
             throw new Exception\InvalidArgumentException(
                 sprintf(
-                    "Adapter %s does not implement Laminas\\Validator\\Barcode\\AdapterInterface",
+                    'Adapter %s does not implement Laminas\\Validator\\Barcode\\AdapterInterface',
                     (is_object($adapter) ? get_class($adapter) : gettype($adapter))
                 )
             );
@@ -158,9 +158,9 @@ class Barcode extends AbstractValidator
         if (! $result) {
             if (is_array($this->options['length'])) {
                 $temp = $this->options['length'];
-                $this->options['length'] = "";
+                $this->options['length'] = '';
                 foreach ($temp as $length) {
-                    $this->options['length'] .= "/";
+                    $this->options['length'] .= '/';
                     $this->options['length'] .= $length;
                 }
 

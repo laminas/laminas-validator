@@ -31,8 +31,8 @@ class Extension extends AbstractValidator
      * @var array Error message templates
      */
     protected $messageTemplates = [
-        self::FALSE_EXTENSION => "File has an incorrect extension",
-        self::NOT_FOUND       => "File is not readable or does not exist",
+        self::FALSE_EXTENSION => 'File has an incorrect extension',
+        self::NOT_FOUND       => 'File is not readable or does not exist',
     ];
 
     /**

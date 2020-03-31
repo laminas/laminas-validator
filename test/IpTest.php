@@ -111,7 +111,7 @@ class IpTest extends TestCase
         $this->assertFalse($this->validator->isValid('[[a:b:c:d:e::1.2.3.4'));
         $this->assertFalse($this->validator->isValid('[a:b:c:d:e::1.2.3.4]]'));
         $this->assertFalse($this->validator->isValid('a:b:c:d:e::1.2.3.4]]'));
-        $this->assertTrue($this->validator->isValid("[v1.ZZ:ZZ]"));
+        $this->assertTrue($this->validator->isValid('[v1.ZZ:ZZ]'));
     }
 
     /**
@@ -328,31 +328,31 @@ class IpTest extends TestCase
             ["v1.09azAZ-._~!$&'()", true],
             ["v1.09azAZ-._~!$&'(", true],
             ["v1.09azAZ-._~!$&'", true],
-            ["v1.09azAZ-._~!$&", true],
-            ["v1.09azAZ-._~!$", true],
-            ["v1.09azAZ-._~!", true],
-            ["v1.09azAZ-._~", true],
-            ["v1.09azAZ-._", true],
-            ["v1.09azAZ-.", true],
-            ["v1.09azAZ-", true],
-            ["v1.09azAZ", true],
-            ["v1.09azA", true],
-            ["v1.09az", true],
-            ["v1.09a", true],
-            ["v1.09", true],
-            ["v1.0", true],
-            ["v1.", false],
-            ["v1", false],
-            ["v", false],
-            ["", false],
-            ["vFF.Z", true],
-            ["vFG./", false],
-            ["v1./", false],
-            ["v1.?", false],
-            ["v1.#", false],
-            ["v1.[", false],
-            ["v1.]", false],
-            ["v1.@", false],
+            ['v1.09azAZ-._~!$&', true],
+            ['v1.09azAZ-._~!$', true],
+            ['v1.09azAZ-._~!', true],
+            ['v1.09azAZ-._~', true],
+            ['v1.09azAZ-._', true],
+            ['v1.09azAZ-.', true],
+            ['v1.09azAZ-', true],
+            ['v1.09azAZ', true],
+            ['v1.09azA', true],
+            ['v1.09az', true],
+            ['v1.09a', true],
+            ['v1.09', true],
+            ['v1.0', true],
+            ['v1.', false],
+            ['v1', false],
+            ['v', false],
+            ['', false],
+            ['vFF.Z', true],
+            ['vFG./', false],
+            ['v1./', false],
+            ['v1.?', false],
+            ['v1.#', false],
+            ['v1.[', false],
+            ['v1.]', false],
+            ['v1.@', false],
         ];
     }
 

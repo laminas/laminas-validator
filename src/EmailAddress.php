@@ -438,9 +438,9 @@ class EmailAddress extends AbstractValidator
             }
 
             if (! $res
-                && (checkdnsrr($hostname, "A")
-                || checkdnsrr($hostname, "AAAA")
-                || checkdnsrr($hostname, "A6"))
+                && (checkdnsrr($hostname, 'A')
+                || checkdnsrr($hostname, 'AAAA')
+                || checkdnsrr($hostname, 'A6'))
             ) {
                 $validAddress = true;
                 break;

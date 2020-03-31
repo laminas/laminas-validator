@@ -26,7 +26,7 @@ class Csrf extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = [
-        self::NOT_SAME => "The form submitted did not originate from the expected site",
+        self::NOT_SAME => 'The form submitted did not originate from the expected site',
     ];
 
     /**

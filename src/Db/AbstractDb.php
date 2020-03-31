@@ -36,8 +36,8 @@ abstract class AbstractDb extends AbstractValidator implements AdapterAwareInter
      * @var array Message templates
      */
     protected $messageTemplates = [
-        self::ERROR_NO_RECORD_FOUND => "No record matching the input was found",
-        self::ERROR_RECORD_FOUND    => "A record matching the input was found",
+        self::ERROR_NO_RECORD_FOUND => 'No record matching the input was found',
+        self::ERROR_RECORD_FOUND    => 'A record matching the input was found',
     ];
 
     /**

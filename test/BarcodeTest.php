@@ -78,7 +78,7 @@ class BarcodeTest extends TestCase
 
     public function testInvalidChecksumAdapter()
     {
-        require_once __DIR__ . "/_files/MyBarcode1.php";
+        require_once __DIR__ . '/_files/MyBarcode1.php';
         $barcode = new Barcode('MyBarcode1');
         $this->assertFalse($barcode->isValid('0000000'));
         $this->assertArrayHasKey('barcodeFailed', $barcode->getMessages());
@@ -87,28 +87,28 @@ class BarcodeTest extends TestCase
 
     public function testInvalidCharAdapter()
     {
-        require_once __DIR__ . "/_files/MyBarcode1.php";
+        require_once __DIR__ . '/_files/MyBarcode1.php';
         $barcode = new Barcode('MyBarcode1');
         $this->assertFalse($barcode->getAdapter()->hasValidCharacters(123));
     }
 
     public function testAscii128CharacterAdapter()
     {
-        require_once __DIR__ . "/_files/MyBarcode2.php";
+        require_once __DIR__ . '/_files/MyBarcode2.php';
         $barcode = new Barcode('MyBarcode2');
         $this->assertTrue($barcode->getAdapter()->hasValidCharacters('1234QW!"'));
     }
 
     public function testInvalidLengthAdapter()
     {
-        require_once __DIR__ . "/_files/MyBarcode2.php";
+        require_once __DIR__ . '/_files/MyBarcode2.php';
         $barcode = new Barcode('MyBarcode2');
         $this->assertFalse($barcode->getAdapter()->hasValidLength(123));
     }
 
     public function testArrayLengthAdapter()
     {
-        require_once __DIR__ . "/_files/MyBarcode2.php";
+        require_once __DIR__ . '/_files/MyBarcode2.php';
         $barcode = new Barcode('MyBarcode2');
         $this->assertTrue($barcode->getAdapter()->hasValidLength('1'));
         $this->assertFalse($barcode->getAdapter()->hasValidLength('12'));
@@ -118,7 +118,7 @@ class BarcodeTest extends TestCase
 
     public function testArrayLengthAdapter2()
     {
-        require_once __DIR__ . "/_files/MyBarcode3.php";
+        require_once __DIR__ . '/_files/MyBarcode3.php';
         $barcode = new Barcode('MyBarcode3');
         $this->assertTrue($barcode->getAdapter()->hasValidLength('1'));
         $this->assertTrue($barcode->getAdapter()->hasValidLength('12'));
@@ -128,7 +128,7 @@ class BarcodeTest extends TestCase
 
     public function testOddLengthAdapter()
     {
-        require_once __DIR__ . "/_files/MyBarcode4.php";
+        require_once __DIR__ . '/_files/MyBarcode4.php';
         $barcode = new Barcode('MyBarcode4');
         $this->assertTrue($barcode->getAdapter()->hasValidLength('1'));
         $this->assertFalse($barcode->getAdapter()->hasValidLength('12'));
@@ -142,7 +142,7 @@ class BarcodeTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('does not implement');
-        require_once __DIR__ . "/_files/MyBarcode5.php";
+        require_once __DIR__ . '/_files/MyBarcode5.php';
         $barcode->setAdapter('MyBarcode5');
     }
 

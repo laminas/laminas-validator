@@ -33,7 +33,7 @@ class Size extends AbstractValidator
     protected $messageTemplates = [
         self::TOO_BIG   => "Maximum allowed size for file is '%max%' but '%size%' detected",
         self::TOO_SMALL => "Minimum expected size for file is '%min%' but '%size%' detected",
-        self::NOT_FOUND => "File is not readable or does not exist",
+        self::NOT_FOUND => 'File is not readable or does not exist',
     ];
 
     /**
@@ -248,7 +248,7 @@ class Size extends AbstractValidator
 
         // limited to 4GB files
         ErrorHandler::start();
-        $size = sprintf("%u", filesize($fileInfo['file']));
+        $size = sprintf('%u', filesize($fileInfo['file']));
         ErrorHandler::stop();
         $this->size = $size;
 

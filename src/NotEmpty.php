@@ -65,7 +65,7 @@ class NotEmpty extends AbstractValidator
      */
     protected $messageTemplates = [
         self::IS_EMPTY => "Value is required and can't be empty",
-        self::INVALID  => "Invalid type given. String, integer, float, boolean or array expected",
+        self::INVALID  => 'Invalid type given. String, integer, float, boolean or array expected',
     ];
 
     /**
@@ -203,7 +203,7 @@ class NotEmpty extends AbstractValidator
             $object = true;
 
             if ((is_object($value) && (! method_exists($value, '__toString'))) ||
-                (is_object($value) && (method_exists($value, '__toString')) && (((string) $value) == ""))) {
+                (is_object($value) && (method_exists($value, '__toString')) && (((string) $value) == ''))) {
                 $this->error(self::IS_EMPTY);
                 return false;
             }

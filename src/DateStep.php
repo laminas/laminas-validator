@@ -24,10 +24,10 @@ class DateStep extends Date
      * @var array
      */
     protected $messageTemplates = [
-        self::INVALID      => "Invalid type given. String, integer, array or DateTime expected",
-        self::INVALID_DATE => "The input does not appear to be a valid date",
+        self::INVALID      => 'Invalid type given. String, integer, array or DateTime expected',
+        self::INVALID_DATE => 'The input does not appear to be a valid date',
         self::FALSEFORMAT  => "The input does not fit the date format '%format%'",
-        self::NOT_STEP     => "The input is not a valid step",
+        self::NOT_STEP     => 'The input is not a valid step',
     ];
 
     /**
@@ -221,7 +221,7 @@ class DateStep extends Date
         $timeDiff  = $absoluteValueDate->diff($absoluteBaseDate, 1);
         $diffParts = array_combine($unitKeys, explode('|', $timeDiff->format('%y|%m|%d|%h|%i|%s')));
 
-        if (5 === $partCounts["0"]) {
+        if (5 === $partCounts['0']) {
             // Find the unit with the non-zero interval
             $intervalUnit = null;
             $stepValue    = null;

@@ -35,8 +35,8 @@ class MimeType extends AbstractValidator
      */
     protected $messageTemplates = [
         self::FALSE_TYPE   => "File has an incorrect mimetype of '%type%'",
-        self::NOT_DETECTED => "The mimetype could not be detected from the file",
-        self::NOT_READABLE => "File is not readable or does not exist",
+        self::NOT_DETECTED => 'The mimetype could not be detected from the file',
+        self::NOT_READABLE => 'File is not readable or does not exist',
     ];
 
     /**
@@ -303,7 +303,7 @@ class MimeType extends AbstractValidator
         if (is_string($mimetype)) {
             $mimetype = explode(',', $mimetype);
         } elseif (! is_array($mimetype)) {
-            throw new Exception\InvalidArgumentException("Invalid options to validator provided");
+            throw new Exception\InvalidArgumentException('Invalid options to validator provided');
         }
 
         if (isset($mimetype['magicFile'])) {

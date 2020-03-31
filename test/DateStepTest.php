@@ -118,7 +118,7 @@ class DateStepTest extends TestCase
         $validator = new Validator\DateStep([
             'format'       => 'Y-m-d',
             'baseValue'    => '2012-01-23',
-            'step' => new DateInterval("P10D"),
+            'step' => new DateInterval('P10D'),
         ]);
 
         $this->assertFalse($validator->isValid('2012-02-23'));
@@ -143,7 +143,7 @@ class DateStepTest extends TestCase
         $validator = new Validator\DateStep([
             'format' => 'd-m-Y',
             'baseValue' => date('d-m-Y', 0),
-            'step' => new DateInterval("P1D"),
+            'step' => new DateInterval('P1D'),
             'timezone' => new DateTimeZone('Europe/Moscow'),
         ]);
 
@@ -166,7 +166,7 @@ class DateStepTest extends TestCase
     {
         $validator = new Validator\DateStep();
 
-        $newTimezone = new DateTimeZone("Europe/Vienna");
+        $newTimezone = new DateTimeZone('Europe/Vienna');
         $validator->setTimezone($newTimezone);
 
         $retrievedTimezone = $validator->getTimezone();
@@ -177,9 +177,9 @@ class DateStepTest extends TestCase
     public function testCanProvideOptionsToConstructorAsDiscreteArguments()
     {
         $baseValue = '2012-01-23';
-        $step      = new DateInterval("P1D");
+        $step      = new DateInterval('P1D');
         $format    = 'd-m-Y';
-        $timezone  = new DateTimeZone("Europe/Vienna");
+        $timezone  = new DateTimeZone('Europe/Vienna');
 
         $validator = new Validator\DateStep($baseValue, $step, $format, $timezone);
 
@@ -199,7 +199,7 @@ class DateStepTest extends TestCase
         $validator = new Validator\DateStep([
             'format'    => 'Y-m-d',
             'baseValue' => '2012-01-23',
-            'step'      => new DateInterval("P10D"),
+            'step'      => new DateInterval('P10D'),
         ]);
 
         $r = new ReflectionMethod($validator, 'convertString');

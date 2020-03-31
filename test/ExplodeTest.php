@@ -160,7 +160,7 @@ class ExplodeTest extends TestCase
 
         $messages = [
             0 => [
-                'regexNotMatch' => "The input does not match against pattern "
+                'regexNotMatch' => 'The input does not match against pattern '
                     . "'/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/'",
             ],
         ];

@@ -38,8 +38,8 @@ class ImageSize extends AbstractValidator
         self::WIDTH_TOO_SMALL  => "Minimum expected width for image should be '%minwidth%' but '%width%' detected",
         self::HEIGHT_TOO_BIG   => "Maximum allowed height for image should be '%maxheight%' but '%height%' detected",
         self::HEIGHT_TOO_SMALL => "Minimum expected height for image should be '%minheight%' but '%height%' detected",
-        self::NOT_DETECTED     => "The size of image could not be detected",
-        self::NOT_READABLE     => "File is not readable or does not exist",
+        self::NOT_DETECTED     => 'The size of image could not be detected',
+        self::NOT_READABLE     => 'File is not readable or does not exist',
     ];
 
     /**
@@ -133,7 +133,7 @@ class ImageSize extends AbstractValidator
     {
         if (($this->getMaxWidth() !== null) && ($minWidth > $this->getMaxWidth())) {
             throw new Exception\InvalidArgumentException(
-                "The minimum image width must be less than or equal to the "
+                'The minimum image width must be less than or equal to the '
                 . " maximum image width, but {$minWidth} > {$this->getMaxWidth()}"
             );
         }
@@ -163,7 +163,7 @@ class ImageSize extends AbstractValidator
     {
         if (($this->getMinWidth() !== null) && ($maxWidth < $this->getMinWidth())) {
             throw new Exception\InvalidArgumentException(
-                "The maximum image width must be greater than or equal to the "
+                'The maximum image width must be greater than or equal to the '
                 . "minimum image width, but {$maxWidth} < {$this->getMinWidth()}"
             );
         }
@@ -193,7 +193,7 @@ class ImageSize extends AbstractValidator
     {
         if (($this->getMaxHeight() !== null) && ($minHeight > $this->getMaxHeight())) {
             throw new Exception\InvalidArgumentException(
-                "The minimum image height must be less than or equal to the "
+                'The minimum image height must be less than or equal to the '
                 . " maximum image height, but {$minHeight} > {$this->getMaxHeight()}"
             );
         }
@@ -223,7 +223,7 @@ class ImageSize extends AbstractValidator
     {
         if (($this->getMinHeight() !== null) && ($maxHeight < $this->getMinHeight())) {
             throw new Exception\InvalidArgumentException(
-                "The maximum image height must be greater than or equal to the "
+                'The maximum image height must be greater than or equal to the '
                 . "minimum image height, but {$maxHeight} < {$this->getMinHeight()}"
             );
         }

@@ -27,7 +27,7 @@ class NotExists extends Exists
      * @var array Error message templates
      */
     protected $messageTemplates = [
-        self::DOES_EXIST => "File exists",
+        self::DOES_EXIST => 'File exists',
     ];
 
     /**
