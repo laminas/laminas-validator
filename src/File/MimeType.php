@@ -12,7 +12,6 @@ use Laminas\Stdlib\ArrayUtils;
 use Laminas\Stdlib\ErrorHandler;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception;
-use Laminas\Validator\File\FileInformationTrait;
 use Traversable;
 
 /**
@@ -35,15 +34,15 @@ class MimeType extends AbstractValidator
      */
     protected $messageTemplates = [
         self::FALSE_TYPE   => "File has an incorrect mimetype of '%type%'",
-        self::NOT_DETECTED => "The mimetype could not be detected from the file",
-        self::NOT_READABLE => "File is not readable or does not exist",
+        self::NOT_DETECTED => 'The mimetype could not be detected from the file',
+        self::NOT_READABLE => 'File is not readable or does not exist',
     ];
 
     /**
      * @var array
      */
     protected $messageVariables = [
-        'type' => 'type'
+        'type' => 'type',
     ];
 
     /**
@@ -181,7 +180,7 @@ class MimeType extends AbstractValidator
      * @throws Exception\RuntimeException When finfo can not read the magicfile
      * @throws Exception\InvalidArgumentException
      * @throws Exception\InvalidMagicMimeFileException
-     * @return self Provides fluid interface
+     * @return $this Provides fluid interface
      */
     public function setMagicFile($file)
     {
@@ -189,7 +188,7 @@ class MimeType extends AbstractValidator
             $this->options['magicFile'] = false;
         } elseif (empty($file)) {
             $this->options['magicFile'] = null;
-        } elseif (! (class_exists('finfo', false))) {
+        } elseif (! class_exists('finfo', false)) {
             $this->options['magicFile'] = null;
             throw new Exception\RuntimeException('Magicfile can not be set; there is no finfo extension installed');
         } elseif (! is_file($file) || ! is_readable($file)) {
@@ -218,7 +217,7 @@ class MimeType extends AbstractValidator
      * Disables usage of MagicFile
      *
      * @param $disable boolean False disables usage of magic file
-     * @return self Provides fluid interface
+     * @return $this Provides fluid interface
      */
     public function disableMagicFile($disable)
     {
@@ -251,7 +250,7 @@ class MimeType extends AbstractValidator
      * Note that this is unsafe and therefor the default value is false
      *
      * @param  bool $headerCheck
-     * @return self Provides fluid interface
+     * @return $this Provides fluid interface
      */
     public function enableHeaderCheck($headerCheck = true)
     {
@@ -280,7 +279,7 @@ class MimeType extends AbstractValidator
      * Sets the mimetypes
      *
      * @param  string|array $mimetype The mimetypes to validate
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setMimeType($mimetype)
     {
@@ -294,7 +293,7 @@ class MimeType extends AbstractValidator
      *
      * @param  string|array $mimetype The mimetypes to add for validation
      * @throws Exception\InvalidArgumentException
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function addMimeType($mimetype)
     {
@@ -303,7 +302,7 @@ class MimeType extends AbstractValidator
         if (is_string($mimetype)) {
             $mimetype = explode(',', $mimetype);
         } elseif (! is_array($mimetype)) {
-            throw new Exception\InvalidArgumentException("Invalid options to validator provided");
+            throw new Exception\InvalidArgumentException('Invalid options to validator provided');
         }
 
         if (isset($mimetype['magicFile'])) {

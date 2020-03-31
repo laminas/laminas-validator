@@ -113,16 +113,12 @@ class ExplodeTest extends TestCase
     public function testSetValidatorAsArray()
     {
         $validator = new Explode();
-        $validator->setValidator(
-            [
-                'name' => 'inarray',
-                'options' => [
-                    'haystack' => [
-                        'a', 'b', 'c'
-                    ]
-                ]
-            ]
-        );
+        $validator->setValidator([
+            'name' => 'inarray',
+            'options' => [
+                'haystack' => ['a', 'b', 'c'],
+            ],
+        ]);
 
         /** @var $inArrayValidator \Laminas\Validator\InArray */
         $inArrayValidator = $validator->getValidator();
@@ -137,11 +133,9 @@ class ExplodeTest extends TestCase
     {
         $validator = new Explode();
         $this->expectException(RuntimeException::class);
-        $validator->setValidator(
-            [
-                'options' => []
-            ]
-        );
+        $validator->setValidator([
+            'options' => [],
+        ]);
     }
 
     public function testSetValidatorInvalidParam()
@@ -166,7 +160,7 @@ class ExplodeTest extends TestCase
 
         $messages = [
             0 => [
-                'regexNotMatch' => "The input does not match against pattern "
+                'regexNotMatch' => 'The input does not match against pattern '
                     . "'/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/'",
             ],
         ];
@@ -184,7 +178,7 @@ class ExplodeTest extends TestCase
         $contextSame   = false;
         $validator = new Explode([
             'validator'           => new Callback(function ($v, $c) use ($context, &$contextSame) {
-                $contextSame = ($context === $c);
+                $contextSame = $context === $c;
                 return true;
             }),
             'valueDelimiter'      => ',',

@@ -37,7 +37,7 @@ class GreaterThanTest extends TestCase
             [['min' => 0, 'inclusive' => true], true, [0, 0.00, 0.01, 1, 100]],
             [['min' => 0, 'inclusive' => true], false, [-0.01, -1, -100]],
             [['min' => 0, 'inclusive' => false], true, [0.01, 1, 100]],
-            [['min' => 0, 'inclusive' => false], false, [0, 0.00, -0.01, -1, -100]]
+            [['min' => 0, 'inclusive' => false], false, [0, 0.00, -0.01, -1, -100]],
         ];
 
         foreach ($valuesExpected as $element) {

@@ -20,21 +20,7 @@ class IsImageTest extends TestCase
 {
     protected function getMagicMime()
     {
-        // PHP 7 uses yet another version of libmagic, and thus a new magic
-        // database format.
-        if (version_compare(PHP_VERSION, '7.0', '>=')) {
-            return __DIR__ . '/_files/magic.7.mime';
-        }
-
-        // As of PHP >= 5.3.11 and >= 5.4.1 the magic database format has changed.
-        // http://doc.php.net/downloads/pdf/split/de/File-Information.pdf (page 11)
-        if (version_compare(PHP_VERSION, '5.4', '>=')
-                && version_compare(PHP_VERSION, '5.4.1', '<')
-        ) {
-            return __DIR__ . '/_files/magic.lte.5.3.10.mime';
-        }
-
-        return __DIR__ . '/_files/magic.mime';
+        return __DIR__ . '/_files/magic.7.mime';
     }
 
     /**
@@ -44,21 +30,24 @@ class IsImageTest extends TestCase
     {
         $testFile = __DIR__ . '/_files/picture.jpg';
         $fileUpload = [
-            'tmp_name' => $testFile, 'name' => basename($testFile),
-            'size' => 200, 'error' => 0, 'type' => 'image/jpeg'
+            'tmp_name' => $testFile,
+            'name'     => basename($testFile),
+            'size'     => 200,
+            'error'    => 0,
+            'type'     => 'image/jpeg',
         ];
         return [
             //    Options, isValid Param, Expected value
-            [null,                              $fileUpload, true],
-            ['jpeg',                            $fileUpload, true],
-            ['test/notype',                     $fileUpload, false],
-            ['image/gif, image/jpeg',           $fileUpload, true],
+            [null,                         $fileUpload, true],
+            ['jpeg',                       $fileUpload, true],
+            ['test/notype',                $fileUpload, false],
+            ['image/gif, image/jpeg',      $fileUpload, true],
             [['image/vasa', 'image/jpeg'], $fileUpload, true],
             [['image/jpeg', 'gif'],        $fileUpload, true],
             [['image/gif', 'gif'],         $fileUpload, false],
-            ['image/jp',                        $fileUpload, false],
-            ['image/jpg2000',                   $fileUpload, false],
-            ['image/jpeg2000',                  $fileUpload, false],
+            ['image/jp',                   $fileUpload, false],
+            ['image/jpg2000',              $fileUpload, false],
+            ['image/jpeg2000',             $fileUpload, false],
         ];
     }
 
@@ -163,7 +152,7 @@ class IsImageTest extends TestCase
             'type'     => 'image/jpeg',
             'size'     => 200,
             'tmp_name' => __DIR__ . '/_files/picture.jpg',
-            'error'    => 0
+            'error'    => 0,
         ];
 
         $validator = new File\IsImage('test/notype');
@@ -183,8 +172,9 @@ class IsImageTest extends TestCase
         $validator = new File\IsImage([
             'image/gif',
             'image/jpg',
-            'magicFile'   => $magicFile,
-            'enableHeaderCheck' => true]);
+            'magicFile'         => $magicFile,
+            'enableHeaderCheck' => true,
+        ]);
 
         $this->assertEquals($magicFile, $validator->getMagicFile());
         $this->assertTrue($validator->getHeaderCheck());

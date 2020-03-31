@@ -20,7 +20,7 @@ class Ip extends AbstractValidator
      */
     protected $messageTemplates = [
         self::INVALID        => 'Invalid type given. String expected',
-        self::NOT_IP_ADDRESS => "The input does not appear to be a valid IP address",
+        self::NOT_IP_ADDRESS => 'The input does not appear to be a valid IP address',
     ];
 
     /**
@@ -116,7 +116,7 @@ class Ip extends AbstractValidator
             return false;
         }
 
-        return ($value == long2ip($ip2long));
+        return $value == long2ip($ip2long);
     }
 
     /**
@@ -184,6 +184,6 @@ class Ip extends AbstractValidator
          * "As such, implementations must not provide the version flag for the
          *  existing IPv4 and IPv6 literal address forms described below."
          */
-        return ($result && $matches[1] != 4 && $matches[1] != 6);
+        return $result && $matches[1] != 4 && $matches[1] != 6;
     }
 }

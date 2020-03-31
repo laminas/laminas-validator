@@ -52,10 +52,10 @@ abstract class AbstractAdapter implements AdapterInterface
             $found = true;
         } elseif ($length == 'even') {
             $count = $fixum % 2;
-            $found = (0 == $count);
+            $found = 0 == $count;
         } elseif ($length == 'odd') {
             $count = $fixum % 2;
-            $found = (1 == $count);
+            $found = 1 == $count;
         }
 
         return $found;
@@ -143,7 +143,7 @@ abstract class AbstractAdapter implements AdapterInterface
      * Sets the checksum validation method
      *
      * @param callable $checksum Checksum method to call
-     * @return AbstractAdapter
+     * @return $this
      */
     protected function setChecksum($checksum)
     {
@@ -171,7 +171,7 @@ abstract class AbstractAdapter implements AdapterInterface
      * Sets the length of this barcode
      *
      * @param int|array $length
-     * @return AbstractAdapter
+     * @return $this
      */
     protected function setLength($length)
     {
@@ -183,7 +183,7 @@ abstract class AbstractAdapter implements AdapterInterface
      * Sets the allowed characters of this barcode
      *
      * @param int $characters
-     * @return AbstractAdapter
+     * @return $this
      */
     protected function setCharacters($characters)
     {
@@ -213,7 +213,7 @@ abstract class AbstractAdapter implements AdapterInterface
         }
 
         $calc     = $sum % 10;
-        $checksum = ($calc === 0) ? 0 : (10 - $calc);
+        $checksum = $calc === 0 ? 0 : 10 - $calc;
         if ($value[$length + 1] != $checksum) {
             return false;
         }
@@ -243,7 +243,7 @@ abstract class AbstractAdapter implements AdapterInterface
         }
 
         $calc     = $sum % 10;
-        $checksum = ($calc === 0) ? 0 : (10 - $calc);
+        $checksum = $calc === 0 ? 0 : 10 - $calc;
         if ($value[$length + 1] != $checksum) {
             return false;
         }
@@ -273,7 +273,7 @@ abstract class AbstractAdapter implements AdapterInterface
         }
 
         $calc     = $sum % 10;
-        $checksum = ($calc === 0) ? 0 : (10 - $calc);
+        $checksum = $calc === 0 ? 0 : 10 - $calc;
         if ($value[$length + 1] != $checksum) {
             return false;
         }

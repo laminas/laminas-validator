@@ -67,13 +67,13 @@ class CreditCardTest extends TestCase
         $validator->setType(
             [
                 CreditCard::AMERICAN_EXPRESS,
-                CreditCard::MAESTRO
+                CreditCard::MAESTRO,
             ]
         );
         $this->assertEquals(
             [
                 CreditCard::AMERICAN_EXPRESS,
-                CreditCard::MAESTRO
+                CreditCard::MAESTRO,
             ],
             $validator->getType()
         );
@@ -85,7 +85,7 @@ class CreditCardTest extends TestCase
             [
                 CreditCard::AMERICAN_EXPRESS,
                 CreditCard::MAESTRO,
-                CreditCard::MASTERCARD
+                CreditCard::MASTERCARD,
             ],
             $validator->getType()
         );
@@ -169,7 +169,7 @@ class CreditCardTest extends TestCase
         $validator = new CreditCard(
             [
                 'type' => CreditCard::VISA,
-                'service' => [CreditCardTest::class, 'staticCallback']
+                'service' => [CreditCardTest::class, 'staticCallback'],
             ]
         );
 

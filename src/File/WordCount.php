@@ -10,7 +10,6 @@ namespace Laminas\Validator\File;
 
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception;
-use Laminas\Validator\File\FileInformationTrait;
 
 /**
  * Validator for counting all words in a file
@@ -32,7 +31,7 @@ class WordCount extends AbstractValidator
     protected $messageTemplates = [
         self::TOO_MUCH  => "Too many words, maximum '%max%' are allowed but '%count%' were counted",
         self::TOO_LESS  => "Too few words, minimum '%min%' are expected but '%count%' were counted",
-        self::NOT_FOUND => "File is not readable or does not exist",
+        self::NOT_FOUND => 'File is not readable or does not exist',
     ];
 
     /**
@@ -41,7 +40,7 @@ class WordCount extends AbstractValidator
     protected $messageVariables = [
         'min'   => ['options' => 'min'],
         'max'   => ['options' => 'max'],
-        'count' => 'count'
+        'count' => 'count',
     ];
 
     /**
@@ -106,7 +105,7 @@ class WordCount extends AbstractValidator
      *
      * @param  int|array $min The minimum word count
      * @throws Exception\InvalidArgumentException When min is greater than max
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setMin($min)
     {
@@ -144,7 +143,7 @@ class WordCount extends AbstractValidator
      *
      * @param  int|array $max The maximum word count
      * @throws Exception\InvalidArgumentException When max is smaller than min
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setMax($max)
     {

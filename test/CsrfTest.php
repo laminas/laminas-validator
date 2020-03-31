@@ -97,8 +97,8 @@ class CsrfTest extends TestCase
             //    timeout  expected
             [600,     600],
             [null,    null],
-            ["0",     0],
-            ["100",   100],
+            ['0',     0],
+            ['100',   100],
         ];
     }
 
@@ -167,7 +167,7 @@ class CsrfTest extends TestCase
         $this->validator->isValid('foo');
         $messages = $this->validator->getMessages();
         $this->assertArrayHasKey(Csrf::NOT_SAME, $messages);
-        $this->assertEquals("The form submitted did not originate from the expected site", $messages[Csrf::NOT_SAME]);
+        $this->assertEquals('The form submitted did not originate from the expected site', $messages[Csrf::NOT_SAME]);
     }
 
     public function testIsValidReturnsTrueWhenValueMatchesHash()

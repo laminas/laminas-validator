@@ -75,7 +75,7 @@ class ValidatorChain implements
      * Set plugin manager instance
      *
      * @param  ValidatorPluginManager $plugins Plugin manager
-     * @return ValidatorChain
+     * @return $this
      */
     public function setPluginManager(ValidatorPluginManager $plugins)
     {
@@ -109,7 +109,7 @@ class ValidatorChain implements
      *
      * @throws Exception\InvalidArgumentException
      *
-     * @return self
+     * @return $this
      */
     public function attach(
         ValidatorInterface $validator,
@@ -152,7 +152,7 @@ class ValidatorChain implements
      *
      * @param  ValidatorInterface      $validator
      * @param  bool                 $breakChainOnFailure
-     * @return ValidatorChain Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function prependValidator(ValidatorInterface $validator, $breakChainOnFailure = false)
     {
@@ -181,7 +181,7 @@ class ValidatorChain implements
      * @param  array $options
      * @param  bool $breakChainOnFailure
      * @param  int $priority
-     * @return ValidatorChain
+     * @return $this
      */
     public function attachByName($name, $options = [], $breakChainOnFailure = false, $priority = self::DEFAULT_PRIORITY)
     {
@@ -218,7 +218,7 @@ class ValidatorChain implements
      * @param  string $name
      * @param  array  $options
      * @param  bool   $breakChainOnFailure
-     * @return ValidatorChain
+     * @return $this
      */
     public function prependByName($name, $options = [], $breakChainOnFailure = false)
     {
@@ -259,7 +259,7 @@ class ValidatorChain implements
      * Merge the validator chain with the one given in parameter
      *
      * @param ValidatorChain $validatorChain
-     * @return ValidatorChain
+     * @return $this
      */
     public function merge(ValidatorChain $validatorChain)
     {

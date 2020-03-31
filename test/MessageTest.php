@@ -38,7 +38,7 @@ class MessageTest extends TestCase
         $inputInvalid = 'abcdefghij';
         $this->assertFalse($this->validator->isValid($inputInvalid));
         $messages = $this->validator->getMessages();
-        $this->assertEquals("The input is more than 8 characters long", current($messages));
+        $this->assertEquals('The input is more than 8 characters long', current($messages));
 
         $this->validator->setMessage(
             'Your value is too long',
@@ -180,7 +180,7 @@ class MessageTest extends TestCase
         $this->validator->setMessages(
             [
                 StringLength::TOO_LONG  => 'Your value is too long',
-                StringLength::TOO_SHORT => 'Your value is too short'
+                StringLength::TOO_SHORT => 'Your value is too short',
             ]
         );
 

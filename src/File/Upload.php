@@ -47,7 +47,7 @@ class Upload extends AbstractValidator
         self::EXTENSION      => "A PHP extension stopped uploading the file '%value%'",
         self::ATTACK         => "File '%value%' was illegally uploaded. This could be a possible attack",
         self::FILE_NOT_FOUND => "File '%value%' was not found",
-        self::UNKNOWN        => "Unknown error while uploading file '%value%'"
+        self::UNKNOWN        => "Unknown error while uploading file '%value%'",
     ];
 
     protected $options = [
@@ -111,7 +111,7 @@ class Upload extends AbstractValidator
      * Sets the files to be checked
      *
      * @param  array $files The files to check in syntax of \Laminas\File\Transfer\Transfer
-     * @return Upload Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setFiles($files = [])
     {
@@ -165,7 +165,6 @@ class Upload extends AbstractValidator
                     // from form field.
                     continue;
                 }
-
 
                 if (isset($content['name']) && ($content['name'] === $value)) {
                     $files = array_merge($files, $this->getFiles($file));

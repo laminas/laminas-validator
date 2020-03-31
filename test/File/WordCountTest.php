@@ -34,8 +34,11 @@ class WordCountTest extends TestCase
         // Dupe data in File Upload format
         foreach ($testData as $data) {
             $fileUpload = [
-                'tmp_name' => $data[1], 'name' => basename($data[1]),
-                'size' => 200, 'error' => 0, 'type' => 'text'
+                'tmp_name' => $data[1],
+                'name'     => basename($data[1]),
+                'size'     => 200,
+                'error'    => 0,
+                'type'     => 'text',
             ];
             $testData[] = [$data[0], $fileUpload, $data[2]];
         }

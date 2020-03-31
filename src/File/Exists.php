@@ -10,7 +10,6 @@ namespace Laminas\Validator\File;
 
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception;
-use Laminas\Validator\File\FileInformationTrait;
 
 /**
  * Validator which checks if the file already exists in the directory
@@ -28,7 +27,7 @@ class Exists extends AbstractValidator
      * @var array Error message templates
      */
     protected $messageTemplates = [
-        self::DOES_NOT_EXIST => "File does not exist",
+        self::DOES_NOT_EXIST => 'File does not exist',
     ];
 
     /**
@@ -131,7 +130,7 @@ class Exists extends AbstractValidator
             }
         }
 
-        $this->options['directory'] = (! empty($directory))
+        $this->options['directory'] = ! empty($directory)
             ? implode(',', $directories) : null;
 
         return $this;

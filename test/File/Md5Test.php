@@ -29,19 +29,19 @@ class Md5Test extends TestCase
             //    Options, isValid Param, Expected value, Expected message
             [
                 'ed74c22109fe9f110579f77b053b8bc3',
-                $testFile, true, ''
+                $testFile, true, '',
             ],
             [
                 '4d74c22109fe9f110579f77b053b8bc3',
-                $testFile, false, 'fileMd5DoesNotMatch'
+                $testFile, false, 'fileMd5DoesNotMatch',
             ],
             [
                 ['4d74c22109fe9f110579f77b053b8bc3', 'ed74c22109fe9f110579f77b053b8bc3'],
-                $testFile, true, ''
+                $testFile, true, '',
             ],
             [
                 ['4d74c22109fe9f110579f77b053b8bc3', '7d74c22109fe9f110579f77b053b8bc3'],
-                $testFile, false, 'fileMd5DoesNotMatch'
+                $testFile, false, 'fileMd5DoesNotMatch',
             ],
         ];
 
@@ -62,8 +62,11 @@ class Md5Test extends TestCase
         $testData = array_merge($pictureTests, $noFileTests, $sizeFileTests);
         foreach ($testData as $data) {
             $fileUpload = [
-                'tmp_name' => $data[1], 'name' => basename($data[1]),
-                'size' => 200, 'error' => 0, 'type' => 'text'
+                'tmp_name' => $data[1],
+                'name'     => basename($data[1]),
+                'size'     => 200,
+                'error'    => 0,
+                'type'     => 'text',
             ];
             $testData[] = [$data[0], $fileUpload, $data[2], $data[3]];
         }

@@ -31,11 +31,11 @@ class Sha1Test extends TestCase
             ['52a5334847b4328e7d19d9b41fd874dffa911c98', $testFile, false, 'fileSha1DoesNotMatch'],
             [
                 ['42a5334847b4328e7d19d9b41fd874dffa911c98', 'b2a5334847b4328e7d19d9b41fd874dffa911c98'],
-                $testFile, true, ''
+                $testFile, true, '',
             ],
             [
                 ['42a5334847b4328e7d19d9b41fd874dffa911c98', '72a5334847b4328e7d19d9b41fd874dffa911c98'],
-                $testFile, false, 'fileSha1DoesNotMatch'
+                $testFile, false, 'fileSha1DoesNotMatch',
             ],
         ];
 
@@ -49,8 +49,11 @@ class Sha1Test extends TestCase
         $testData = array_merge($pictureTests, $noFileTests);
         foreach ($testData as $data) {
             $fileUpload = [
-                'tmp_name' => $data[1], 'name' => basename($data[1]),
-                'size' => 200, 'error' => 0, 'type' => 'text'
+                'tmp_name' => $data[1],
+                'name'     => basename($data[1]),
+                'size'     => 200,
+                'error'    => 0,
+                'type'     => 'text',
             ];
             $testData[] = [$data[0], $fileUpload, $data[2], $data[3]];
         }

@@ -34,7 +34,7 @@ class ChangefreqTest extends TestCase
     {
         $values = [
             'always',  'hourly', 'daily', 'weekly',
-            'monthly', 'yearly', 'never'
+            'monthly', 'yearly', 'never',
         ];
 
         foreach ($values as $value) {
@@ -68,7 +68,7 @@ class ChangefreqTest extends TestCase
     public function testNotString()
     {
         $values = [
-            1, 1.4, null, new \stdClass(), true, false
+            1, 1.4, null, new \stdClass(), true, false,
         ];
 
         foreach ($values as $value) {

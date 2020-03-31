@@ -42,7 +42,7 @@ class DigitsTest extends TestCase
             '0x9f'    => false,
             '123'     => true,
             '09'      => true,
-            ''        => false
+            ''        => false,
             ];
         foreach ($valuesExpected as $input => $result) {
             $this->assertEquals($result, $this->validator->isValid($input));
@@ -67,8 +67,8 @@ class DigitsTest extends TestCase
         $this->assertFalse($this->validator->isValid(''));
         $messages = $this->validator->getMessages();
         $arrayExpected = [
-            Digits::STRING_EMPTY => 'The input is an empty string'
-            ];
+            Digits::STRING_EMPTY => 'The input is an empty string',
+        ];
         $this->assertSame($arrayExpected, $messages);
     }
 
@@ -80,8 +80,8 @@ class DigitsTest extends TestCase
         $this->assertFalse($this->validator->isValid('#'));
         $messages = $this->validator->getMessages();
         $arrayExpected = [
-            Digits::NOT_DIGITS => 'The input must contain only digits'
-            ];
+            Digits::NOT_DIGITS => 'The input must contain only digits',
+        ];
         $this->assertSame($arrayExpected, $messages);
     }
 

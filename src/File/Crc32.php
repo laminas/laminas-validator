@@ -8,8 +8,6 @@
 
 namespace Laminas\Validator\File;
 
-use Laminas\Validator\File\FileInformationTrait;
-
 /**
  * Validator for the crc32 hash of given files
  */
@@ -28,9 +26,9 @@ class Crc32 extends Hash
      * @var array Error message templates
      */
     protected $messageTemplates = [
-        self::DOES_NOT_MATCH => "File does not match the given crc32 hashes",
-        self::NOT_DETECTED   => "A crc32 hash could not be evaluated for the given file",
-        self::NOT_FOUND      => "File is not readable or does not exist",
+        self::DOES_NOT_MATCH => 'File does not match the given crc32 hashes',
+        self::NOT_DETECTED   => 'A crc32 hash could not be evaluated for the given file',
+        self::NOT_FOUND      => 'File is not readable or does not exist',
     ];
 
     /**
@@ -57,7 +55,7 @@ class Crc32 extends Hash
      * Sets the crc32 hash for one or multiple files
      *
      * @param  string|array $options
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setCrc32($options)
     {
@@ -69,7 +67,7 @@ class Crc32 extends Hash
      * Adds the crc32 hash for one or multiple files
      *
      * @param  string|array $options
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function addCrc32($options)
     {

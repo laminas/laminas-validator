@@ -27,35 +27,35 @@ class ImageSizeTest extends TestCase
             //    Options, isValid Param, Expected value, Expected message
             [
                 ['minWidth' => 0,   'minHeight' => 10,  'maxWidth' => 1000, 'maxHeight' => 2000],
-                $testFile, true, ''
+                $testFile, true, '',
             ],
             [
                 ['minWidth' => 0,   'minHeight' => 0,   'maxWidth' => 200,  'maxHeight' => 200],
-                $testFile, true, ''
+                $testFile, true, '',
             ],
             [
                 ['minWidth' => 150, 'minHeight' => 150, 'maxWidth' => 200,  'maxHeight' => 200],
-                $testFile, false, ['fileImageSizeWidthTooSmall', 'fileImageSizeHeightTooSmall']
+                $testFile, false, ['fileImageSizeWidthTooSmall', 'fileImageSizeHeightTooSmall'],
             ],
             [
                 ['minWidth' => 80,  'minHeight' => 0,   'maxWidth' => 80,   'maxHeight' => 200],
-                $testFile, true, ''
+                $testFile, true, '',
             ],
             [
                 ['minWidth' => 0,   'minHeight' => 0,   'maxWidth' => 60,   'maxHeight' => 200],
-                $testFile, false, 'fileImageSizeWidthTooBig'
+                $testFile, false, 'fileImageSizeWidthTooBig',
             ],
             [
                 ['minWidth' => 90,  'minHeight' => 0,   'maxWidth' => 200,  'maxHeight' => 200],
-                $testFile, false, 'fileImageSizeWidthTooSmall'
+                $testFile, false, 'fileImageSizeWidthTooSmall',
             ],
             [
                 ['minWidth' => 0,   'minHeight' => 0,   'maxWidth' => 200,  'maxHeight' => 80],
-                $testFile, false, 'fileImageSizeHeightTooBig'
+                $testFile, false, 'fileImageSizeHeightTooBig',
             ],
             [
                 ['minWidth' => 0,   'minHeight' => 110, 'maxWidth' => 200,  'maxHeight' => 140],
-                $testFile, false, 'fileImageSizeHeightTooSmall'
+                $testFile, false, 'fileImageSizeHeightTooSmall',
             ],
         ];
 
@@ -64,7 +64,7 @@ class ImageSizeTest extends TestCase
             //    Options, isValid Param, Expected value, message
             [
                 ['minWidth' => 0, 'minHeight' => 10, 'maxWidth' => 1000, 'maxHeight' => 2000],
-                $testFile, false, 'fileImageSizeNotReadable'
+                $testFile, false, 'fileImageSizeNotReadable',
             ],
         ];
 
@@ -73,7 +73,7 @@ class ImageSizeTest extends TestCase
             //    Options, isValid Param, Expected value, message
             [
                 ['minWidth' => 0, 'minHeight' => 10, 'maxWidth' => 1000, 'maxHeight' => 2000],
-                $testFile, false,  'fileImageSizeNotDetected'
+                $testFile, false,  'fileImageSizeNotDetected',
             ],
         ];
 
@@ -81,8 +81,11 @@ class ImageSizeTest extends TestCase
         $testData = array_merge($pictureTests, $noFileTests, $badPicTests);
         foreach ($testData as $data) {
             $fileUpload = [
-                'tmp_name' => $data[1], 'name' => basename($data[1]),
-                'size' => 200, 'error' => 0, 'type' => 'text'
+                'tmp_name' => $data[1],
+                'name'     => basename($data[1]),
+                'size'     => 200,
+                'error'    => 0,
+                'type'     => 'text',
             ];
             $testData[] = [$data[0], $fileUpload, $data[2], $data[3]];
         }

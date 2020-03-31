@@ -56,7 +56,7 @@ class Code93 extends AbstractAdapter
             --$length;
         }
 
-        $check   = array_search(($count % 47), $this->check);
+        $check   = array_search($count % 47, $this->check);
         $value[] = $check;
         $count   = 0;
         $length  = count($value) % 15;
@@ -68,7 +68,7 @@ class Code93 extends AbstractAdapter
             $count += $this->check[$char] * $length;
             --$length;
         }
-        $check .= array_search(($count % 47), $this->check);
+        $check .= array_search($count % 47, $this->check);
 
         if ($check == $checksum) {
             return true;

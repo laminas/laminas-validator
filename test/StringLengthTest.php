@@ -39,11 +39,7 @@ class StringLengthTest extends TestCase
      */
     public function testBasic()
     {
-        if (PHP_VERSION_ID < 50600) {
-            iconv_set_encoding('internal_encoding', 'UTF-8');
-        } else {
-            ini_set('default_charset', 'UTF-8');
-        }
+        ini_set('default_charset', 'UTF-8');
 
         /**
          * The elements of each array are, in order:
@@ -61,8 +57,9 @@ class StringLengthTest extends TestCase
             [2, 3, true, ['ab', 'abc']],
             [2, 3, false, ['a', 'abcd']],
             [3, 3, true, ['äöü']],
-            [6, 6, true, ['Müller']]
-            ];
+            [6, 6, true, ['Müller']],
+        ];
+
         foreach ($valuesExpected as $element) {
             $validator = new StringLength($element[0], $element[1]);
             foreach ($element[3] as $input) {
@@ -136,11 +133,7 @@ class StringLengthTest extends TestCase
      */
     public function testDifferentEncodingWithValidator()
     {
-        if (PHP_VERSION_ID < 50600) {
-            iconv_set_encoding('internal_encoding', 'UTF-8');
-        } else {
-            ini_set('default_charset', 'UTF-8');
-        }
+        ini_set('default_charset', 'UTF-8');
 
         $validator = new StringLength(2, 2, 'UTF-8');
         $this->assertEquals(true, $validator->isValid('ab'));

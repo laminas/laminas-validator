@@ -81,7 +81,7 @@ class Code128 extends AbstractAdapter
     {
         if (! $utf8StringWrapper->isSupported('UTF-8')) {
             throw new Exception\InvalidArgumentException(
-                "The string wrapper needs to support UTF-8 character encoding"
+                'The string wrapper needs to support UTF-8 character encoding'
             );
         }
         $this->utf8StringWrapper = $utf8StringWrapper;
@@ -228,11 +228,11 @@ class Code128 extends AbstractAdapter
                 case 'Ç':
                 case 'ü':
                 case 'å':
-                    $sum += ($pos * $this->ord128($char, $set));
+                    $sum += $pos * $this->ord128($char, $set);
                     break;
 
                 case 'é':
-                    $sum += ($pos * $this->ord128($char, $set));
+                    $sum += $pos * $this->ord128($char, $set);
                     if ($set == 'A') {
                         $read = 'B';
                     } elseif ($set == 'B') {
@@ -242,21 +242,21 @@ class Code128 extends AbstractAdapter
 
                 // Switch to C
                 case 'â':
-                    $sum += ($pos * $this->ord128($char, $set));
+                    $sum += $pos * $this->ord128($char, $set);
                     $set = 'C';
                     $read = 'C';
                     break;
 
                 // Switch to B
                 case 'ä':
-                    $sum += ($pos * $this->ord128($char, $set));
+                    $sum += $pos * $this->ord128($char, $set);
                     $set  = 'B';
                     $read = 'B';
                     break;
 
                 // Switch to A
                 case 'à':
-                    $sum += ($pos * $this->ord128($char, $set));
+                    $sum += $pos * $this->ord128($char, $set);
                     $set  = 'A';
                     $read = 'A';
                     break;
@@ -273,7 +273,7 @@ class Code128 extends AbstractAdapter
                         return false;
                     }
 
-                    $sum += ($pos * $this->ord128($char, $set));
+                    $sum += $pos * $this->ord128($char, $set);
                     break;
             }
 
@@ -288,7 +288,7 @@ class Code128 extends AbstractAdapter
 
         if (($strWrapper->strpos($value, 'Š') != 1) || ($strWrapper->strlen($value) != 2)) {
             // return false if checksum is not readable and true if no startvalue is detected
-            return (! $usecheck);
+            return ! $usecheck;
         }
 
         $mod = $sum % 103;
@@ -350,19 +350,19 @@ class Code128 extends AbstractAdapter
         $ord = ord($value);
         if ($set == 'A') {
             if ($ord < 32) {
-                return ($ord + 64);
+                return $ord + 64;
             } elseif ($ord < 96) {
-                return ($ord - 32);
+                return $ord - 32;
             } elseif ($ord > 138) {
                 return -1;
             } else {
-                return ($ord - 32);
+                return $ord - 32;
             }
         } elseif ($set == 'B') {
             if ($ord < 32) {
                 return -1;
             } elseif ($ord <= 138) {
-                return ($ord - 32);
+                return $ord - 32;
             } else {
                 return -1;
             }
@@ -371,15 +371,15 @@ class Code128 extends AbstractAdapter
             if (($val >= 0) && ($val <= 99)) {
                 return $val;
             } elseif (($ord >= 132) && ($ord <= 138)) {
-                return ($ord - 32);
+                return $ord - 32;
             } else {
                 return -1;
             }
         } else {
             if ($ord < 32) {
-                return ($ord + 64);
+                return $ord + 64;
             } elseif ($ord <= 138) {
-                return ($ord - 32);
+                return $ord - 32;
             } else {
                 return -1;
             }
@@ -428,7 +428,7 @@ class Code128 extends AbstractAdapter
             }
         } elseif ($set == 'C') {
             if (($value >= 0) && ($value <= 9)) {
-                return "0" . (string) $value;
+                return '0' . (string) $value;
             } elseif ($value <= 99) {
                 return (string) $value;
             } elseif ($value <= 106) {
@@ -438,7 +438,7 @@ class Code128 extends AbstractAdapter
             }
         } else {
             if ($value <= 106) {
-                return ($value + 32);
+                return $value + 32;
             } else {
                 return -1;
             }

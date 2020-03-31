@@ -17,7 +17,7 @@ class ConcreteDbValidator extends AbstractDb
 
     protected $messageTemplates = [
         'fooMessage' => '%value% was passed',
-        'barMessage' => '%value% was wrong'
+        'barMessage' => '%value% was wrong',
     ];
 
     public function isValid($value)
