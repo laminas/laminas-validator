@@ -22,8 +22,8 @@ class Uri extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = [
-        self::INVALID => "Invalid type given. String expected",
-        self::NOT_URI => "The input does not appear to be a valid Uri",
+        self::INVALID => 'Invalid type given. String expected',
+        self::NOT_URI => 'The input does not appear to be a valid Uri',
     ];
 
     /**
@@ -95,7 +95,7 @@ class Uri extends AbstractValidator
     /**
      * @param  UriHandler|string $uriHandler
      * @throws InvalidArgumentException
-     * @return Uri
+     * @return $this
      */
     public function setUriHandler($uriHandler)
     {
@@ -124,7 +124,7 @@ class Uri extends AbstractValidator
      * Sets the allowAbsolute option
      *
      * @param  bool $allowAbsolute
-     * @return Uri
+     * @return $this
      */
     public function setAllowAbsolute($allowAbsolute)
     {
@@ -146,7 +146,7 @@ class Uri extends AbstractValidator
      * Sets the allowRelative option
      *
      * @param  bool $allowRelative
-     * @return Uri
+     * @return $this
      */
     public function setAllowRelative($allowRelative)
     {

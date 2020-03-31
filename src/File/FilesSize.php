@@ -32,7 +32,7 @@ class FilesSize extends Size
     protected $messageTemplates = [
         self::TOO_BIG      => "All files in sum should have a maximum size of '%max%' but '%size%' were detected",
         self::TOO_SMALL    => "All files in sum should have a minimum size of '%min%' but '%size%' were detected",
-        self::NOT_READABLE => "One or more files can not be read",
+        self::NOT_READABLE => 'One or more files can not be read',
     ];
 
     /**

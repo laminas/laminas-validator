@@ -12,7 +12,6 @@ use Laminas\Uri\Exception\InvalidArgumentException;
 use Laminas\Uri\Http;
 use Laminas\Uri\Uri as UriHandler;
 use Laminas\Validator;
-use LaminasTest\Validator\TestAsset;
 use PHPUnit\Framework\TestCase;
 
 /**

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace LaminasTest\Validator\TestAsset;
 
 use Psr\Http\Client\ClientExceptionInterface;

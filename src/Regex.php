@@ -22,7 +22,7 @@ class Regex extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = [
-        self::INVALID   => "Invalid type given. String, integer or float expected",
+        self::INVALID   => 'Invalid type given. String, integer or float expected',
         self::NOT_MATCH => "The input does not match against pattern '%pattern%'",
         self::ERROROUS  => "There was an internal error while using the pattern '%pattern%'",
     ];
@@ -31,7 +31,7 @@ class Regex extends AbstractValidator
      * @var array
      */
     protected $messageVariables = [
-        'pattern' => 'pattern'
+        'pattern' => 'pattern',
     ];
 
     /**
@@ -87,13 +87,13 @@ class Regex extends AbstractValidator
      *
      * @param  string $pattern
      * @throws Exception\InvalidArgumentException if there is a fatal error in pattern matching
-     * @return Regex Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setPattern($pattern)
     {
         ErrorHandler::start();
         $this->pattern = (string) $pattern;
-        $status        = preg_match($this->pattern, "Test");
+        $status        = preg_match($this->pattern, 'Test');
         $error         = ErrorHandler::stop();
 
         if (false === $status) {

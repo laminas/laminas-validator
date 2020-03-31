@@ -26,7 +26,7 @@ class Identical extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = [
-        self::NOT_SAME      => "The two given tokens do not match",
+        self::NOT_SAME      => 'The two given tokens do not match',
         self::MISSING_TOKEN => 'No token was provided to match against',
     ];
 
@@ -34,7 +34,7 @@ class Identical extends AbstractValidator
      * @var array
      */
     protected $messageVariables = [
-        'token' => 'tokenString'
+        'token' => 'tokenString',
     ];
 
     /**
@@ -88,11 +88,11 @@ class Identical extends AbstractValidator
      * Set token against which to compare
      *
      * @param  mixed $token
-     * @return Identical
+     * @return $this
      */
     public function setToken($token)
     {
-        $this->tokenString = (is_array($token) ? var_export($token, true) : (string) $token);
+        $this->tokenString = is_array($token) ? var_export($token, true) : (string) $token;
         $this->token       = $token;
         return $this;
     }
@@ -111,7 +111,7 @@ class Identical extends AbstractValidator
      * Sets the strict parameter
      *
      * @param  bool $strict
-     * @return Identical
+     * @return $this
      */
     public function setStrict($strict)
     {
@@ -133,7 +133,7 @@ class Identical extends AbstractValidator
      * Sets the literal parameter
      *
      * @param  bool $literal
-     * @return Identical
+     * @return $this
      */
     public function setLiteral($literal)
     {
@@ -157,7 +157,7 @@ class Identical extends AbstractValidator
         $token = $this->getToken();
 
         if (! $this->getLiteral() && $context !== null) {
-            if (! is_array($context) && ! ($context instanceof ArrayAccess)) {
+            if (! is_array($context) && ! $context instanceof ArrayAccess) {
                 throw new Exception\InvalidArgumentException(sprintf(
                     'Context passed to %s must be array, ArrayObject or null; received "%s"',
                     __METHOD__,

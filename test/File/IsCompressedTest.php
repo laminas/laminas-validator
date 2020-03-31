@@ -20,21 +20,7 @@ class IsCompressedTest extends TestCase
 {
     protected function getMagicMime()
     {
-        // PHP 7 uses yet another version of libmagic, and thus a new magic
-        // database format.
-        if (version_compare(PHP_VERSION, '7.0', '>=')) {
-            return __DIR__ . '/_files/magic.7.mime';
-        }
-
-        // As of PHP >= 5.3.11 and >= 5.4.1 the magic database format has changed.
-        // http://doc.php.net/downloads/pdf/split/de/File-Information.pdf (page 11)
-        if (version_compare(PHP_VERSION, '5.4', '>=')
-                && version_compare(PHP_VERSION, '5.4.1', '<')
-        ) {
-            return __DIR__ . '/_files/magic.lte.5.3.10.mime';
-        }
-
-        return __DIR__ . '/_files/magic.mime';
+        return __DIR__ . '/_files/magic.7.mime';
     }
 
     /**
@@ -212,7 +198,7 @@ class IsCompressedTest extends TestCase
             'type'     => 'image/jpeg',
             'size'     => 200,
             'tmp_name' => __DIR__ . '/_files/picture.jpg',
-            'error'    => 0
+            'error'    => 0,
         ];
 
         $validator = new File\IsCompressed('test/notype');
@@ -232,8 +218,9 @@ class IsCompressedTest extends TestCase
         $validator = new File\IsCompressed([
             'image/gif',
             'image/jpg',
-            'magicFile'   => $magicFile,
-            'enableHeaderCheck' => true]);
+            'magicFile'         => $magicFile,
+            'enableHeaderCheck' => true,
+        ]);
 
         $this->assertEquals($magicFile, $validator->getMagicFile());
         $this->assertTrue($validator->getHeaderCheck());

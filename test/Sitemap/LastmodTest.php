@@ -44,7 +44,7 @@ class LastmodTest extends TestCase
             '2005-01-01',
             '2006-03-19',
             '2007-08-31',
-            '2007-08-25'
+            '2007-08-25',
         ];
 
         foreach ($values as $value) {
@@ -63,7 +63,7 @@ class LastmodTest extends TestCase
             '1996-05-11T18:50:09+25:00',
             '2002-13-11',
             '2004-00-01',
-            '2006-01-01\n'
+            '2006-01-01\n',
         ];
 
         foreach ($values as $value) {
@@ -80,7 +80,7 @@ class LastmodTest extends TestCase
     public function testNotString()
     {
         $values = [
-            1, 1.4, null, new \stdClass(), true, false
+            1, 1.4, null, new \stdClass(), true, false,
         ];
 
         foreach ($values as $value) {

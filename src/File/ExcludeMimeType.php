@@ -8,9 +8,6 @@
 
 namespace Laminas\Validator\File;
 
-use finfo;
-use Laminas\Validator\File\FileInformationTrait;
-
 /**
  * Validator for the mime type of a file
  */
@@ -27,8 +24,8 @@ class ExcludeMimeType extends MimeType
      */
     protected $messageTemplates = [
         self::FALSE_TYPE   => "File has an incorrect mimetype of '%type%'",
-        self::NOT_DETECTED => "The mimetype could not be detected from the file",
-        self::NOT_READABLE => "File is not readable or does not exist",
+        self::NOT_DETECTED => 'The mimetype could not be detected from the file',
+        self::NOT_READABLE => 'File is not readable or does not exist',
     ];
 
     /**

@@ -18,10 +18,10 @@ class Barcode extends AbstractValidator
     const INVALID_LENGTH = 'barcodeInvalidLength';
 
     protected $messageTemplates = [
-        self::FAILED         => "The input failed checksum validation",
-        self::INVALID_CHARS  => "The input contains invalid characters",
-        self::INVALID_LENGTH => "The input should have a length of %length% characters",
-        self::INVALID        => "Invalid type given. String expected",
+        self::FAILED         => 'The input failed checksum validation',
+        self::INVALID_CHARS  => 'The input contains invalid characters',
+        self::INVALID_LENGTH => 'The input should have a length of %length% characters',
+        self::INVALID        => 'Invalid type given. String expected',
     ];
 
     /**
@@ -73,7 +73,7 @@ class Barcode extends AbstractValidator
      */
     public function getAdapter()
     {
-        if (! ($this->options['adapter'] instanceof Barcode\AdapterInterface)) {
+        if (! $this->options['adapter'] instanceof Barcode\AdapterInterface) {
             $this->setAdapter('Ean13');
         }
 
@@ -85,7 +85,7 @@ class Barcode extends AbstractValidator
      *
      * @param  string|Barcode\AbstractAdapter $adapter Barcode adapter to use
      * @param  array  $options Options for this adapter
-     * @return Barcode
+     * @return $this
      * @throws Exception\InvalidArgumentException
      */
     public function setAdapter($adapter, $options = null)
@@ -104,8 +104,8 @@ class Barcode extends AbstractValidator
         if (! $adapter instanceof Barcode\AdapterInterface) {
             throw new Exception\InvalidArgumentException(
                 sprintf(
-                    "Adapter %s does not implement Laminas\\Validator\\Barcode\\AdapterInterface",
-                    (is_object($adapter) ? get_class($adapter) : gettype($adapter))
+                    'Adapter %s does not implement Laminas\\Validator\\Barcode\\AdapterInterface',
+                    is_object($adapter) ? get_class($adapter) : gettype($adapter)
                 )
             );
         }
@@ -158,9 +158,9 @@ class Barcode extends AbstractValidator
         if (! $result) {
             if (is_array($this->options['length'])) {
                 $temp = $this->options['length'];
-                $this->options['length'] = "";
+                $this->options['length'] = '';
                 foreach ($temp as $length) {
-                    $this->options['length'] .= "/";
+                    $this->options['length'] .= '/';
                     $this->options['length'] .= $length;
                 }
 

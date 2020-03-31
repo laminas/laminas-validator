@@ -26,7 +26,7 @@ class Csrf extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = [
-        self::NOT_SAME => "The form submitted did not originate from the expected site",
+        self::NOT_SAME => 'The form submitted did not originate from the expected site',
     ];
 
     /**
@@ -139,7 +139,7 @@ class Csrf extends AbstractValidator
      * Set CSRF name
      *
      * @param  string $name
-     * @return Csrf
+     * @return $this
      */
     public function setName($name)
     {
@@ -161,7 +161,7 @@ class Csrf extends AbstractValidator
      * Set session container
      *
      * @param  SessionContainer $session
-     * @return Csrf
+     * @return $this
      */
     public function setSession(SessionContainer $session)
     {
@@ -192,7 +192,7 @@ class Csrf extends AbstractValidator
      * Salt for CSRF token
      *
      * @param  string $salt
-     * @return Csrf
+     * @return $this
      */
     public function setSalt($salt)
     {
@@ -245,11 +245,11 @@ class Csrf extends AbstractValidator
      * Set timeout for CSRF session token
      *
      * @param  int|null $ttl
-     * @return Csrf
+     * @return $this
      */
     public function setTimeout($ttl)
     {
-        $this->timeout = ($ttl !== null) ? (int) $ttl : null;
+        $this->timeout = $ttl !== null ? (int) $ttl : null;
         return $this;
     }
 

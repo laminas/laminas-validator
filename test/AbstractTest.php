@@ -165,12 +165,12 @@ class AbstractTest extends TestCase
         $messages = $this->validator->getMessageTemplates();
         $this->assertEquals([
             'fooMessage' => '%value% was passed',
-            'barMessage' => '%value% was wrong'
+            'barMessage' => '%value% was wrong',
         ], $messages);
 
         $this->assertEquals([
             TestAsset\ConcreteValidator::FOO_MESSAGE => '%value% was passed',
-            TestAsset\ConcreteValidator::BAR_MESSAGE => '%value% was wrong'
+            TestAsset\ConcreteValidator::BAR_MESSAGE => '%value% was wrong',
         ], $messages);
     }
 
@@ -233,7 +233,7 @@ class AbstractTest extends TestCase
         $this->assertCount(2, $messages);
         $this->assertEquals([
             TestAsset\ConcreteValidator::FOO_MESSAGE => 'invalid was passed',
-            TestAsset\ConcreteValidator::BAR_MESSAGE => 'invalid was wrong'
+            TestAsset\ConcreteValidator::BAR_MESSAGE => 'invalid was wrong',
         ], $messages);
     }
 
@@ -261,7 +261,7 @@ class AbstractTest extends TestCase
 
         $validator->setMessages([
             EmailAddress::INVALID_HOSTNAME => 'This is the same error message',
-            Hostname::UNKNOWN_TLD => 'This is the same error message'
+            Hostname::UNKNOWN_TLD => 'This is the same error message',
         ]);
 
         $this->assertFalse($validator->isValid('invalid@email.coma'));

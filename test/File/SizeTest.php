@@ -39,8 +39,11 @@ class SizeTest extends TestCase
         // Dupe data in File Upload format
         foreach ($testData as $data) {
             $fileUpload = [
-                'tmp_name' => $data[1], 'name' => basename($data[1]),
-                'size' => 200, 'error' => 0, 'type' => 'text'
+                'tmp_name' => $data[1],
+                'name'     => basename($data[1]),
+                'size'     => 200,
+                'error'    => 0,
+                'type'     => 'text',
             ];
             $testData[] = [$data[0], $fileUpload, $data[2]];
         }
@@ -215,11 +218,11 @@ class SizeTest extends TestCase
         $this->assertArrayHasKey(File\Size::NOT_FOUND, $validator->getMessages());
 
         $filesArray = [
-            'name'      => '',
-            'size'      => 0,
-            'tmp_name'  => '',
-            'error'     => UPLOAD_ERR_NO_FILE,
-            'type'      => '',
+            'name'     => '',
+            'size'     => 0,
+            'tmp_name' => '',
+            'error'    => UPLOAD_ERR_NO_FILE,
+            'type'     => '',
         ];
 
         $this->assertFalse($validator->isValid($filesArray));
@@ -229,11 +232,11 @@ class SizeTest extends TestCase
     public function invalidMinMaxValues()
     {
         return [
-            'null'               => [null],
-            'true'               => [true],
-            'false'              => [false],
-            'array'              => [[100]],
-            'object'             => [(object) []],
+            'null'   => [null],
+            'true'   => [true],
+            'false'  => [false],
+            'array'  => [[100]],
+            'object' => [(object) []],
         ];
     }
 

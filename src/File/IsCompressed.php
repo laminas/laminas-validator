@@ -28,8 +28,8 @@ class IsCompressed extends MimeType
      */
     protected $messageTemplates = [
         self::FALSE_TYPE   => "File is not compressed, '%type%' detected",
-        self::NOT_DETECTED => "The mimetype could not be detected from the file",
-        self::NOT_READABLE => "File is not readable or does not exist",
+        self::NOT_DETECTED => 'The mimetype could not be detected from the file',
+        self::NOT_READABLE => 'File is not readable or does not exist',
     ];
 
     /**

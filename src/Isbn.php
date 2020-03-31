@@ -22,8 +22,8 @@ class Isbn extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = [
-        self::INVALID => "Invalid type given. String or integer expected",
-        self::NO_ISBN => "The input is not a valid ISBN number",
+        self::INVALID => 'Invalid type given. String or integer expected',
+        self::NO_ISBN => 'The input is not a valid ISBN number',
     ];
 
     protected $options = [
@@ -132,7 +132,7 @@ class Isbn extends AbstractValidator
      *
      * @param  string $separator
      * @throws Exception\InvalidArgumentException When $separator is not valid
-     * @return Isbn Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setSeparator($separator)
     {
@@ -160,7 +160,7 @@ class Isbn extends AbstractValidator
      *
      * @param  string $type
      * @throws Exception\InvalidArgumentException When $type is not valid
-     * @return Isbn Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setType($type)
     {

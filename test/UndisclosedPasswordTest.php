@@ -114,7 +114,7 @@ class UndisclosedPasswordTest extends TestCase
     public function testValidationFailsForInvalidInput()
     {
         $this->assertFalse($this->validator->isValid(true));
-        $this->assertFalse($this->validator->isValid((new \stdClass())));
+        $this->assertFalse($this->validator->isValid(new \stdClass()));
         $this->assertFalse($this->validator->isValid(['foo']));
     }
 

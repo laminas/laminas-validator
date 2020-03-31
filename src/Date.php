@@ -38,8 +38,8 @@ class Date extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = [
-        self::INVALID      => "Invalid type given. String, integer, array or DateTime expected",
-        self::INVALID_DATE => "The input does not appear to be a valid date",
+        self::INVALID      => 'Invalid type given. String, integer, array or DateTime expected',
+        self::INVALID_DATE => 'The input does not appear to be a valid date',
         self::FALSEFORMAT  => "The input does not fit the date format '%format%'",
     ];
 
@@ -95,12 +95,12 @@ class Date extends AbstractValidator
      * if null is provided.
      *
      * @param  string $format
-     * @return Date provides a fluent interface
+     * @return $this provides a fluent interface
      * @todo   validate the format
      */
     public function setFormat($format = self::FORMAT_DEFAULT)
     {
-        $this->format = (empty($format)) ? self::FORMAT_DEFAULT : $format;
+        $this->format = empty($format) ? self::FORMAT_DEFAULT : $format;
         return $this;
     }
 

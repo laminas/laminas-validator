@@ -10,8 +10,6 @@ namespace Laminas\Validator\File;
 
 use Laminas\Stdlib\ArrayUtils;
 use Laminas\Validator\AbstractValidator;
-use Laminas\Validator\Exception;
-use Laminas\Validator\File\FileInformationTrait;
 use Traversable;
 
 /**
@@ -31,8 +29,8 @@ class Extension extends AbstractValidator
      * @var array Error message templates
      */
     protected $messageTemplates = [
-        self::FALSE_EXTENSION => "File has an incorrect extension",
-        self::NOT_FOUND       => "File is not readable or does not exist",
+        self::FALSE_EXTENSION => 'File has an incorrect extension',
+        self::NOT_FOUND       => 'File is not readable or does not exist',
     ];
 
     /**
@@ -103,7 +101,7 @@ class Extension extends AbstractValidator
      * Sets the case to use
      *
      * @param  bool $case
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setCase($case)
     {
@@ -127,7 +125,7 @@ class Extension extends AbstractValidator
      * Sets the file extensions
      *
      * @param  string|array $extension The extensions to validate
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setExtension($extension)
     {
@@ -140,7 +138,7 @@ class Extension extends AbstractValidator
      * Adds the file extensions
      *
      * @param  string|array $extension The extensions to add for validation
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function addExtension($extension)
     {
@@ -184,7 +182,7 @@ class Extension extends AbstractValidator
      * Sets the flag indicating whether or not to allow validation of non-existent files.
      *
      * @param  bool $flag Whether or not to allow validation of non-existent files.
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setAllowNonExistentFile($flag)
     {

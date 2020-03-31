@@ -31,55 +31,64 @@ class UploadTest extends TestCase
                 'type'     => 'text',
                 'size'     => 200,
                 'tmp_name' => 'tmp_test1',
-                'error'    => 0],
+                'error'    => 0,
+            ],
             'test2' => [
                 'name'     => 'test2',
                 'type'     => 'text2',
                 'size'     => 202,
                 'tmp_name' => 'tmp_test2',
-                'error'    => 1],
+                'error'    => 1,
+            ],
             'test3' => [
                 'name'     => 'test3',
                 'type'     => 'text3',
                 'size'     => 203,
                 'tmp_name' => 'tmp_test3',
-                'error'    => 2],
+                'error'    => 2,
+            ],
             'test4' => [
                 'name'     => 'test4',
                 'type'     => 'text4',
                 'size'     => 204,
                 'tmp_name' => 'tmp_test4',
-                'error'    => 3],
+                'error'    => 3,
+            ],
             'test5' => [
                 'name'     => 'test5',
                 'type'     => 'text5',
                 'size'     => 205,
                 'tmp_name' => 'tmp_test5',
-                'error'    => 4],
+                'error'    => 4,
+            ],
             'test6' => [
                 'name'     => 'test6',
                 'type'     => 'text6',
                 'size'     => 206,
                 'tmp_name' => 'tmp_test6',
-                'error'    => 5],
+                'error'    => 5,
+            ],
             'test7' => [
                 'name'     => 'test7',
                 'type'     => 'text7',
                 'size'     => 207,
                 'tmp_name' => 'tmp_test7',
-                'error'    => 6],
+                'error'    => 6,
+            ],
             'test8' => [
                 'name'     => 'test8',
                 'type'     => 'text8',
                 'size'     => 208,
                 'tmp_name' => 'tmp_test8',
-                'error'    => 7],
+                'error'    => 7,
+            ],
             'test9' => [
                 'name'     => 'test9',
                 'type'     => 'text9',
                 'size'     => 209,
                 'tmp_name' => 'tmp_test9',
-                'error'    => 8]
+                'error'    => 8,
+            ],
         ];
 
         $validator = new File\Upload();
@@ -238,13 +247,16 @@ class UploadTest extends TestCase
                 'type'     => 'text',
                 'size'     => 200,
                 'tmp_name' => 'tmp_test1',
-                'error'    => 0],
+                'error'    => 0,
+            ],
             'test2' => [
                 'name'     => 'test3',
                 'type'     => 'text2',
                 'size'     => 202,
                 'tmp_name' => 'tmp_test2',
-                'error'    => 1]];
+                'error'    => 1,
+            ],
+        ];
 
         $files = [
             'test'  => [
@@ -252,7 +264,9 @@ class UploadTest extends TestCase
                 'type'     => 'text',
                 'size'     => 200,
                 'tmp_name' => 'tmp_test1',
-                'error'    => 0]];
+                'error'    => 0,
+            ],
+        ];
 
         $files1 = [
             'test2' => [
@@ -260,7 +274,9 @@ class UploadTest extends TestCase
                 'type'     => 'text2',
                 'size'     => 202,
                 'tmp_name' => 'tmp_test2',
-                'error'    => 1]];
+                'error'    => 1,
+            ],
+        ];
 
         $validator = new File\Upload();
         $this->assertEquals($files, $validator->getFiles('test'));
@@ -323,13 +339,16 @@ class UploadTest extends TestCase
                 'type'     => 'text',
                 'size'     => 200,
                 'tmp_name' => 'tmp_test1',
-                'error'    => 0],
+                'error'    => 0,
+            ],
             'test2' => [
                 'name'     => 'test2',
                 'type'     => 'text2',
                 'size'     => 202,
                 'tmp_name' => 'tmp_test2',
-                'error'    => 1]];
+                'error'    => 1,
+            ],
+        ];
 
         $_FILES = [
             'test'  => [
@@ -337,8 +356,9 @@ class UploadTest extends TestCase
                 'type'     => 'text3',
                 'size'     => 203,
                 'tmp_name' => 'tmp_test3',
-                'error'    => 2]];
-
+                'error'    => 2,
+            ],
+        ];
 
         $validator = new File\Upload();
         $validator->setFiles([]);
@@ -408,7 +428,7 @@ class UploadTest extends TestCase
                 'size'     => 100,
                 'tmp_name' => 'tmp_bar',
                 'error'    => 7,
-            ]
+            ],
         ];
 
         $validator = new File\Upload;

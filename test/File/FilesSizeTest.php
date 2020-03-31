@@ -39,7 +39,7 @@ class FilesSizeTest extends TestCase
             [['min' => 0, 'max' => '2  MB'], true, true, true],
             [2000, true, true, false],
             [['min' => 0, 'max' => 500], false, false, false],
-            [500, false, false, false]
+            [500, false, false, false],
         ];
 
         foreach ($valuesExpected as $element) {
@@ -47,17 +47,17 @@ class FilesSizeTest extends TestCase
             $this->assertEquals(
                 $element[1],
                 $validator->isValid(__DIR__ . '/_files/testsize.mo'),
-                "Tested with " . var_export($element, 1)
+                'Tested with ' . var_export($element, 1)
             );
             $this->assertEquals(
                 $element[2],
                 $validator->isValid(__DIR__ . '/_files/testsize2.mo'),
-                "Tested with " . var_export($element, 1)
+                'Tested with ' . var_export($element, 1)
             );
             $this->assertEquals(
                 $element[3],
                 $validator->isValid(__DIR__ . '/_files/testsize3.mo'),
-                "Tested with " . var_export($element, 1)
+                'Tested with ' . var_export($element, 1)
             );
         }
 
@@ -69,7 +69,8 @@ class FilesSizeTest extends TestCase
         $this->assertEquals(true, $validator->isValid([
             __DIR__ . '/_files/testsize.mo',
             __DIR__ . '/_files/testsize.mo',
-            __DIR__ . '/_files/testsize2.mo']));
+            __DIR__ . '/_files/testsize2.mo',
+        ]));
         $this->assertEquals(true, $validator->isValid(__DIR__ . '/_files/testsize.mo'));
     }
 
@@ -235,7 +236,7 @@ class FilesSizeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $validator->isValid([
             [
-                'error' => 0
+                'error' => 0,
             ],
         ]);
     }

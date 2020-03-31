@@ -23,7 +23,7 @@ class LessThan extends AbstractValidator
      */
     protected $messageTemplates = [
         self::NOT_LESS           => "The input is not less than '%max%'",
-        self::NOT_LESS_INCLUSIVE => "The input is not less or equal than '%max%'"
+        self::NOT_LESS_INCLUSIVE => "The input is not less or equal than '%max%'",
     ];
 
     /**
@@ -32,7 +32,7 @@ class LessThan extends AbstractValidator
      * @var array
      */
     protected $messageVariables = [
-        'max' => 'max'
+        'max' => 'max',
     ];
 
     /**
@@ -102,7 +102,7 @@ class LessThan extends AbstractValidator
      * Sets the max option
      *
      * @param  mixed $max
-     * @return LessThan Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setMax($max)
     {
@@ -124,7 +124,7 @@ class LessThan extends AbstractValidator
      * Sets the inclusive option
      *
      * @param  bool $inclusive
-     * @return LessThan Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setInclusive($inclusive)
     {

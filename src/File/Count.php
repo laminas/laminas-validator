@@ -38,7 +38,7 @@ class Count extends AbstractValidator
     protected $messageVariables = [
         'min'   => ['options' => 'min'],
         'max'   => ['options' => 'max'],
-        'count' => 'count'
+        'count' => 'count',
     ];
 
     /**
@@ -108,7 +108,7 @@ class Count extends AbstractValidator
      * Sets the minimum file count
      *
      * @param  int|array $min The minimum file count
-     * @return Count Provides a fluent interface
+     * @return $this Provides a fluent interface
      * @throws Exception\InvalidArgumentException When min is greater than max
      */
     public function setMin($min)
@@ -146,7 +146,7 @@ class Count extends AbstractValidator
      * Sets the maximum file count
      *
      * @param  int|array $max The maximum file count
-     * @return Count Provides a fluent interface
+     * @return $this Provides a fluent interface
      * @throws Exception\InvalidArgumentException When max is smaller than min
      */
     public function setMax($max)
@@ -174,7 +174,7 @@ class Count extends AbstractValidator
      * Adds a file for validation
      *
      * @param string|array $file
-     * @return Count
+     * @return $this
      */
     public function addFile($file)
     {

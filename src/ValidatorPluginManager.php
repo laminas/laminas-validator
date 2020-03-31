@@ -527,7 +527,7 @@ class ValidatorPluginManager extends AbstractPluginManager
                 '%s expects only to create instances of %s; %s is invalid',
                 get_class($this),
                 $this->instanceOf,
-                (is_object($plugin) ? get_class($plugin) : gettype($plugin))
+                is_object($plugin) ? get_class($plugin) : gettype($plugin)
             ));
         }
     }
@@ -547,7 +547,7 @@ class ValidatorPluginManager extends AbstractPluginManager
         } catch (InvalidServiceException $e) {
             throw new Exception\RuntimeException(sprintf(
                 'Plugin of type %s is invalid; must implement %s',
-                (is_object($plugin) ? get_class($plugin) : gettype($plugin)),
+                is_object($plugin) ? get_class($plugin) : gettype($plugin),
                 ValidatorInterface::class
             ), $e->getCode(), $e);
         }

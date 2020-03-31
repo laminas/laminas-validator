@@ -25,8 +25,8 @@ class Crc32Test extends TestCase
         $testFile = __DIR__ . '/_files/picture.jpg';
         $pictureTests = [
             //    Options, isValid Param, Expected value, Expected message
-            ['3f8d07e2',                    $testFile, true, ''],
-            ['9f8d07e2',                    $testFile, false, 'fileCrc32DoesNotMatch'],
+            ['3f8d07e2',               $testFile, true, ''],
+            ['9f8d07e2',               $testFile, false, 'fileCrc32DoesNotMatch'],
             [['9f8d07e2', '3f8d07e2'], $testFile, true, ''],
             [['9f8d07e2', '7f8d07e2'], $testFile, false, 'fileCrc32DoesNotMatch'],
         ];
@@ -48,8 +48,11 @@ class Crc32Test extends TestCase
         $testData = array_merge($pictureTests, $noFileTests, $sizeFileTests);
         foreach ($testData as $data) {
             $fileUpload = [
-                'tmp_name' => $data[1], 'name' => basename($data[1]),
-                'size' => 200, 'error' => 0, 'type' => 'text'
+                'tmp_name' => $data[1],
+                'name'     => basename($data[1]),
+                'size'     => 200,
+                'error'    => 0,
+                'type'     => 'text',
             ];
             $testData[] = [$data[0], $fileUpload, $data[2], $data[3]];
         }

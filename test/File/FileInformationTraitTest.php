@@ -8,7 +8,6 @@
 
 namespace LaminasTest\Validator\File;
 
-use Laminas\Validator\Exception\InvalidArgumentException;
 use LaminasTest\Validator\File\TestAsset\FileInformation;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -35,7 +34,7 @@ class FileInformationTraitTest extends TestCase
         $basename = basename($testFile);
         $file = [
           'name'     => $basename,
-          'tmp_name' => $testFile
+          'tmp_name' => $testFile,
         ];
 
         $fileInformation = new FileInformation();
@@ -103,7 +102,7 @@ class FileInformationTraitTest extends TestCase
         $testFile = __DIR__ . '/_files/testsize.mo';
         $file = [
           'name'     => basename($testFile),
-          'tmp_name' => $testFile
+          'tmp_name' => $testFile,
         ];
 
         $fileInformation = new FileInformation();
@@ -259,7 +258,7 @@ class FileInformationTraitTest extends TestCase
         $this->assertEquals($fileInfo, [
           'filename' => basename($testFile),
           'file'     => $testFile,
-          'filetype' => null
+          'filetype' => null,
         ]);
     }
 
@@ -278,7 +277,7 @@ class FileInformationTraitTest extends TestCase
         $this->assertEquals($fileInfo, [
           'filename' => basename($testFile),
           'file'     => $testFile,
-          'basename' => basename($testFile)
+          'basename' => basename($testFile),
         ]);
     }
 }

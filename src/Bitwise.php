@@ -154,7 +154,7 @@ class Bitwise extends AbstractValidator
      * Sets the control parameter.
      *
      * @param  integer $control
-     * @return Bitwise
+     * @return $this
      */
     public function setControl($control)
     {
@@ -167,7 +167,7 @@ class Bitwise extends AbstractValidator
      * Sets the operator parameter.
      *
      * @param  string  $operator
-     * @return Bitwise
+     * @return $this
      */
     public function setOperator($operator)
     {
@@ -180,7 +180,7 @@ class Bitwise extends AbstractValidator
      * Sets the strict parameter.
      *
      * @param  boolean $strict
-     * @return Bitwise
+     * @return $this
      */
     public function setStrict($strict)
     {

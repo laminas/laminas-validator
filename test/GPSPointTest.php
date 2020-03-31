@@ -27,7 +27,6 @@ class GPSPointTest extends TestCase
         $this->validator = new GpsPoint();
     }
 
-
     /**
      * @dataProvider basicDataProvider
      * @covers \Laminas\Validator\GPSPoint::isValid
@@ -67,7 +66,7 @@ class GPSPointTest extends TestCase
             ['15° 22\' 20.137" S, 35° 35\' 14.686" E'],
             ['65° 4\' 36.434" N,-22.728867530822754'],
             ['38.8897°, -77.0089°'],
-            ['38.8897,-77.0089']
+            ['38.8897,-77.0089'],
         ];
     }
     // @codingStandardsIgnoreStart

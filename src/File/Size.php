@@ -11,7 +11,6 @@ namespace Laminas\Validator\File;
 use Laminas\Stdlib\ErrorHandler;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception;
-use Laminas\Validator\File\FileInformationTrait;
 
 /**
  * Validator for the maximum size of a file up to a max of 2GB
@@ -33,7 +32,7 @@ class Size extends AbstractValidator
     protected $messageTemplates = [
         self::TOO_BIG   => "Maximum allowed size for file is '%max%' but '%size%' detected",
         self::TOO_SMALL => "Minimum expected size for file is '%min%' but '%size%' detected",
-        self::NOT_FOUND => "File is not readable or does not exist",
+        self::NOT_FOUND => 'File is not readable or does not exist',
     ];
 
     /**
@@ -139,7 +138,7 @@ class Size extends AbstractValidator
      *
      * @param  int|string $min The minimum file size
      * @throws Exception\InvalidArgumentException When min is greater than max
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setMin($min)
     {
@@ -184,7 +183,7 @@ class Size extends AbstractValidator
      *
      * @param  int|string $max The maximum file size
      * @throws Exception\InvalidArgumentException When max is smaller than min
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setMax($max)
     {
@@ -218,7 +217,7 @@ class Size extends AbstractValidator
      * Set current size
      *
      * @param  int $size
-     * @return self
+     * @return $this
      */
     protected function setSize($size)
     {
@@ -248,7 +247,7 @@ class Size extends AbstractValidator
 
         // limited to 4GB files
         ErrorHandler::start();
-        $size = sprintf("%u", filesize($fileInfo['file']));
+        $size = sprintf('%u', filesize($fileInfo['file']));
         ErrorHandler::stop();
         $this->size = $size;
 
@@ -324,25 +323,25 @@ class Size extends AbstractValidator
 
         switch (strtoupper($type)) {
             case 'Y':
-                $value *= (1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024);
+                $value *= 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024;
                 break;
             case 'Z':
-                $value *= (1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024);
+                $value *= 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024;
                 break;
             case 'E':
-                $value *= (1024 * 1024 * 1024 * 1024 * 1024 * 1024);
+                $value *= 1024 * 1024 * 1024 * 1024 * 1024 * 1024;
                 break;
             case 'P':
-                $value *= (1024 * 1024 * 1024 * 1024 * 1024);
+                $value *= 1024 * 1024 * 1024 * 1024 * 1024;
                 break;
             case 'T':
-                $value *= (1024 * 1024 * 1024 * 1024);
+                $value *= 1024 * 1024 * 1024 * 1024;
                 break;
             case 'G':
-                $value *= (1024 * 1024 * 1024);
+                $value *= 1024 * 1024 * 1024;
                 break;
             case 'M':
-                $value *= (1024 * 1024);
+                $value *= 1024 * 1024;
                 break;
             case 'K':
                 $value *= 1024;

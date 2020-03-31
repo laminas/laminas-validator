@@ -33,8 +33,9 @@ class RegexTest extends TestCase
          */
         $valuesExpected = [
             ['/[a-z]/', true, ['abc123', 'foo', 'a', 'z']],
-            ['/[a-z]/', false, ['123', 'A']]
-            ];
+            ['/[a-z]/', false, ['123', 'A']],
+        ];
+
         foreach ($valuesExpected as $element) {
             $validator = new Regex($element[0]);
             foreach ($element[2] as $input) {

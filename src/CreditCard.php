@@ -46,13 +46,13 @@ class CreditCard extends AbstractValidator
      * @var array
      */
     protected $messageTemplates = [
-        self::CHECKSUM       => "The input seems to contain an invalid checksum",
-        self::CONTENT        => "The input must contain only digits",
-        self::INVALID        => "Invalid type given. String expected",
-        self::LENGTH         => "The input contains an invalid amount of digits",
-        self::PREFIX         => "The input is not from an allowed institute",
-        self::SERVICE        => "The input seems to be an invalid credit card number",
-        self::SERVICEFAILURE => "An exception has been raised while validating the input",
+        self::CHECKSUM       => 'The input seems to contain an invalid checksum',
+        self::CONTENT        => 'The input must contain only digits',
+        self::INVALID        => 'Invalid type given. String expected',
+        self::LENGTH         => 'The input contains an invalid amount of digits',
+        self::PREFIX         => 'The input is not from an allowed institute',
+        self::SERVICE        => 'The input seems to be an invalid credit card number',
+        self::SERVICEFAILURE => 'An exception has been raised while validating the input',
     ];
 
     /**
@@ -197,7 +197,7 @@ class CreditCard extends AbstractValidator
      * Adds a CCI to be accepted by validation
      *
      * @param  string|array $type Type to allow for validation
-     * @return CreditCard Provides a fluid interface
+     * @return $this Provides a fluid interface
      */
     public function addType($type)
     {
@@ -206,7 +206,7 @@ class CreditCard extends AbstractValidator
         }
 
         foreach ($type as $typ) {
-            if (($typ == self::ALL)) {
+            if ($typ == self::ALL) {
                 $this->options['type'] = array_keys($this->cardLength);
                 continue;
             }
@@ -239,7 +239,7 @@ class CreditCard extends AbstractValidator
      * Sets a new callback for service validation
      *
      * @param  callable $service
-     * @return CreditCard
+     * @return $this
      * @throws Exception\InvalidArgumentException on invalid service callback
      */
     public function setService($service)

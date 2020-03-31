@@ -24,10 +24,10 @@ class DateStep extends Date
      * @var array
      */
     protected $messageTemplates = [
-        self::INVALID      => "Invalid type given. String, integer, array or DateTime expected",
-        self::INVALID_DATE => "The input does not appear to be a valid date",
+        self::INVALID      => 'Invalid type given. String, integer, array or DateTime expected',
+        self::INVALID_DATE => 'The input does not appear to be a valid date',
         self::FALSEFORMAT  => "The input does not fit the date format '%format%'",
-        self::NOT_STEP     => "The input is not a valid step",
+        self::NOT_STEP     => 'The input is not a valid step',
     ];
 
     /**
@@ -92,7 +92,7 @@ class DateStep extends Date
      * Sets the base value from which the step should be computed
      *
      * @param  string|int|\DateTime $baseValue
-     * @return DateStep
+     * @return $this
      */
     public function setBaseValue($baseValue)
     {
@@ -114,7 +114,7 @@ class DateStep extends Date
      * Sets the step date interval
      *
      * @param  DateInterval $step
-     * @return DateStep
+     * @return $this
      */
     public function setStep(DateInterval $step)
     {
@@ -146,7 +146,7 @@ class DateStep extends Date
      * Sets the timezone option
      *
      * @param  DateTimeZone $timezone
-     * @return DateStep
+     * @return $this
      */
     public function setTimezone(DateTimeZone $timezone)
     {
@@ -221,7 +221,7 @@ class DateStep extends Date
         $timeDiff  = $absoluteValueDate->diff($absoluteBaseDate, 1);
         $diffParts = array_combine($unitKeys, explode('|', $timeDiff->format('%y|%m|%d|%h|%i|%s')));
 
-        if (5 === $partCounts["0"]) {
+        if (5 === $partCounts['0']) {
             // Find the unit with the non-zero interval
             $intervalUnit = null;
             $stepValue    = null;
@@ -435,7 +435,7 @@ class DateStep extends Date
     {
         $intervalMaxSeconds = $this->computeIntervalMaxSeconds($intervalParts);
 
-        return (0 == $intervalMaxSeconds)
+        return 0 == $intervalMaxSeconds
             ? 0
             : max(floor($this->computeDiffMinSeconds($diffParts) / $intervalMaxSeconds) - 1, 0);
     }

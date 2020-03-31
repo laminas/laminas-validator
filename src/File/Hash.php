@@ -10,7 +10,6 @@ namespace Laminas\Validator\File;
 
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception;
-use Laminas\Validator\File\FileInformationTrait;
 
 /**
  * Validator for the hash of given files
@@ -30,9 +29,9 @@ class Hash extends AbstractValidator
      * @var array Error message templates
      */
     protected $messageTemplates = [
-        self::DOES_NOT_MATCH => "File does not match the given hashes",
-        self::NOT_DETECTED   => "A hash could not be evaluated for the given file",
-        self::NOT_FOUND      => "File is not readable or does not exist"
+        self::DOES_NOT_MATCH => 'File does not match the given hashes',
+        self::NOT_DETECTED   => 'A hash could not be evaluated for the given file',
+        self::NOT_FOUND      => 'File is not readable or does not exist',
     ];
 
     /**
@@ -78,7 +77,7 @@ class Hash extends AbstractValidator
      * Sets the hash for one or multiple files
      *
      * @param  string|array $options
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setHash($options)
     {
@@ -93,14 +92,14 @@ class Hash extends AbstractValidator
      *
      * @param  string|array $options
      * @throws Exception\InvalidArgumentException
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function addHash($options)
     {
         if (is_string($options)) {
             $options = [$options];
         } elseif (! is_array($options)) {
-            throw new Exception\InvalidArgumentException("False parameter given");
+            throw new Exception\InvalidArgumentException('False parameter given');
         }
 
         $known = hash_algos();

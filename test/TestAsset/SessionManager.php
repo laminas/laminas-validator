@@ -66,7 +66,6 @@ class SessionManager extends AbstractManager
     {
     }
 
-
     public function setValidatorChain(EventManagerInterface $chain)
     {
     }
@@ -78,7 +77,6 @@ class SessionManager extends AbstractManager
     public function isValid()
     {
     }
-
 
     public function sessionExists()
     {

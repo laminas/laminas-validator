@@ -1892,7 +1892,7 @@ class Hostname extends AbstractValidator
      * Sets the allow option
      *
      * @param  int $allow
-     * @return Hostname Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setAllow($allow)
     {
@@ -1916,7 +1916,7 @@ class Hostname extends AbstractValidator
      * This only applies when DNS hostnames are validated
      *
      * @param  bool $useIdnCheck Set to true to validate IDN domains
-     * @return Hostname
+     * @return $this
      */
     public function useIdnCheck($useIdnCheck)
     {
@@ -1940,7 +1940,7 @@ class Hostname extends AbstractValidator
      * This only applies when DNS hostnames are validated
      *
      * @param  bool $useTldCheck Set to true to validate TLD elements
-     * @return Hostname
+     * @return $this
      */
     public function useTldCheck($useTldCheck)
     {

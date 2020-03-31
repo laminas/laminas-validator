@@ -8,9 +8,6 @@
 
 namespace Laminas\Validator\File;
 
-use Laminas\Validator\Exception;
-use Laminas\Validator\File\FileInformationTrait;
-
 /**
  * Validator which checks if the destination file does not exist
  */
@@ -27,7 +24,7 @@ class NotExists extends Exists
      * @var array Error message templates
      */
     protected $messageTemplates = [
-        self::DOES_EXIST => "File exists",
+        self::DOES_EXIST => 'File exists',
     ];
 
     /**
