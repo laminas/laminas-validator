@@ -57,7 +57,7 @@ class Crc32 extends Hash
      * Sets the crc32 hash for one or multiple files
      *
      * @param  string|array $options
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setCrc32($options)
     {
@@ -69,7 +69,7 @@ class Crc32 extends Hash
      * Adds the crc32 hash for one or multiple files
      *
      * @param  string|array $options
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function addCrc32($options)
     {

@@ -85,7 +85,7 @@ class Barcode extends AbstractValidator
      *
      * @param  string|Barcode\AbstractAdapter $adapter Barcode adapter to use
      * @param  array  $options Options for this adapter
-     * @return Barcode
+     * @return $this
      * @throws Exception\InvalidArgumentException
      */
     public function setAdapter($adapter, $options = null)

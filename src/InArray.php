@@ -83,7 +83,7 @@ class InArray extends AbstractValidator
      * Sets the haystack option
      *
      * @param  mixed $haystack
-     * @return InArray Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setHaystack(array $haystack)
     {
@@ -114,7 +114,7 @@ class InArray extends AbstractValidator
      * InArray::COMPARE_NOT_STRICT
      *
      * @param  int $strict
-     * @return InArray Provides a fluent interface
+     * @return $this Provides a fluent interface
      * @throws Exception\InvalidArgumentException
      */
     public function setStrict($strict)
@@ -148,7 +148,7 @@ class InArray extends AbstractValidator
      * Sets the recursive option
      *
      * @param  bool $recursive
-     * @return InArray Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setRecursive($recursive)
     {

@@ -92,7 +92,7 @@ class DateStep extends Date
      * Sets the base value from which the step should be computed
      *
      * @param  string|int|\DateTime $baseValue
-     * @return DateStep
+     * @return $this
      */
     public function setBaseValue($baseValue)
     {
@@ -114,7 +114,7 @@ class DateStep extends Date
      * Sets the step date interval
      *
      * @param  DateInterval $step
-     * @return DateStep
+     * @return $this
      */
     public function setStep(DateInterval $step)
     {
@@ -146,7 +146,7 @@ class DateStep extends Date
      * Sets the timezone option
      *
      * @param  DateTimeZone $timezone
-     * @return DateStep
+     * @return $this
      */
     public function setTimezone(DateTimeZone $timezone)
     {

@@ -179,7 +179,7 @@ abstract class AbstractDb extends AbstractValidator implements AdapterAwareInter
      * Sets a new exclude clause
      *
      * @param string|array $exclude
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setExclude($exclude)
     {
@@ -202,7 +202,7 @@ abstract class AbstractDb extends AbstractValidator implements AdapterAwareInter
      * Sets a new field
      *
      * @param string $field
-     * @return AbstractDb
+     * @return $this
      */
     public function setField($field)
     {
@@ -225,7 +225,7 @@ abstract class AbstractDb extends AbstractValidator implements AdapterAwareInter
      * Sets a new table
      *
      * @param string $table
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setTable($table)
     {
@@ -248,7 +248,7 @@ abstract class AbstractDb extends AbstractValidator implements AdapterAwareInter
      * Sets a new schema
      *
      * @param string $schema
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setSchema($schema)
     {
@@ -261,7 +261,7 @@ abstract class AbstractDb extends AbstractValidator implements AdapterAwareInter
      * Sets the select object to be used by the validator
      *
      * @param  Select $select
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setSelect(Select $select)
     {

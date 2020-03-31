@@ -154,7 +154,7 @@ class NotEmpty extends AbstractValidator
      *
      * @param  int|array $type
      * @throws Exception\InvalidArgumentException
-     * @return NotEmpty
+     * @return $this
      */
     public function setType($type = null)
     {

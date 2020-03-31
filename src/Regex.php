@@ -87,7 +87,7 @@ class Regex extends AbstractValidator
      *
      * @param  string $pattern
      * @throws Exception\InvalidArgumentException if there is a fatal error in pattern matching
-     * @return Regex Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setPattern($pattern)
     {

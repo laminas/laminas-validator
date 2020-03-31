@@ -150,7 +150,7 @@ class EmailAddress extends AbstractValidator
 
     /**
      * @param Hostname $hostnameValidator OPTIONAL
-     * @return EmailAddress Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setHostnameValidator(Hostname $hostnameValidator = null)
     {
@@ -173,7 +173,7 @@ class EmailAddress extends AbstractValidator
      * Sets the allow option of the hostname validator to use
      *
      * @param int $allow
-     * @return EmailAddress Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setAllow($allow)
     {
@@ -211,7 +211,7 @@ class EmailAddress extends AbstractValidator
      * This only applies when DNS hostnames are validated
      *
      * @param  bool $mx Set allowed to true to validate for MX records, and false to not validate them
-     * @return EmailAddress Fluid Interface
+     * @return $this Fluid Interface
      */
     public function useMxCheck($mx)
     {
@@ -233,7 +233,7 @@ class EmailAddress extends AbstractValidator
      * Use deep validation for MX records
      *
      * @param  bool $deep Set deep to true to perform a deep validation process for MX records
-     * @return EmailAddress Fluid Interface
+     * @return $this Fluid Interface
      */
     public function useDeepMxCheck($deep)
     {
@@ -256,7 +256,7 @@ class EmailAddress extends AbstractValidator
      * or only the local part of the email address
      *
      * @param  bool $domain
-     * @return EmailAddress Fluid Interface
+     * @return $this Fluid Interface
      */
     public function useDomainCheck($domain = true)
     {

@@ -102,7 +102,7 @@ class LessThan extends AbstractValidator
      * Sets the max option
      *
      * @param  mixed $max
-     * @return LessThan Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setMax($max)
     {
@@ -124,7 +124,7 @@ class LessThan extends AbstractValidator
      * Sets the inclusive option
      *
      * @param  bool $inclusive
-     * @return LessThan Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setInclusive($inclusive)
     {

@@ -68,7 +68,7 @@ class Callback extends AbstractValidator
      * Sets the callback
      *
      * @param  string|array|callable $callback
-     * @return Callback Provides a fluent interface
+     * @return $this Provides a fluent interface
      * @throws Exception\InvalidArgumentException
      */
     public function setCallback($callback)
@@ -95,7 +95,7 @@ class Callback extends AbstractValidator
      * Sets options for the callback
      *
      * @param  mixed $options
-     * @return Callback Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setCallbackOptions($options)
     {

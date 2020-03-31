@@ -66,7 +66,7 @@ class Step extends AbstractValidator
      * Sets the base value from which the step should be computed
      *
      * @param mixed $baseValue
-     * @return Step
+     * @return $this
      */
     public function setBaseValue($baseValue)
     {
@@ -88,7 +88,7 @@ class Step extends AbstractValidator
      * Sets the step value
      *
      * @param mixed $step
-     * @return Step
+     * @return $this
      */
     public function setStep($step)
     {

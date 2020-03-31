@@ -78,7 +78,7 @@ class Hash extends AbstractValidator
      * Sets the hash for one or multiple files
      *
      * @param  string|array $options
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setHash($options)
     {
@@ -93,7 +93,7 @@ class Hash extends AbstractValidator
      *
      * @param  string|array $options
      * @throws Exception\InvalidArgumentException
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function addHash($options)
     {

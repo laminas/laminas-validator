@@ -100,7 +100,7 @@ class GreaterThan extends AbstractValidator
      * Sets the min option
      *
      * @param  mixed $min
-     * @return GreaterThan Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setMin($min)
     {
@@ -122,7 +122,7 @@ class GreaterThan extends AbstractValidator
      * Sets the inclusive option
      *
      * @param  bool $inclusive
-     * @return GreaterThan Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setInclusive($inclusive)
     {

@@ -83,7 +83,7 @@ class StringLength extends AbstractValidator
      *
      * @param  int $min
      * @throws Exception\InvalidArgumentException
-     * @return StringLength Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setMin($min)
     {
@@ -112,7 +112,7 @@ class StringLength extends AbstractValidator
      *
      * @param  int|null $max
      * @throws Exception\InvalidArgumentException
-     * @return StringLength Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setMax($max)
     {
@@ -168,7 +168,7 @@ class StringLength extends AbstractValidator
      * Sets a new encoding to use
      *
      * @param string $encoding
-     * @return StringLength
+     * @return $this
      * @throws Exception\InvalidArgumentException
      */
     public function setEncoding($encoding)
@@ -192,7 +192,7 @@ class StringLength extends AbstractValidator
      * Sets the length option
      *
      * @param  int $length
-     * @return StringLength Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     private function setLength($length)
     {

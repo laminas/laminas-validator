@@ -88,7 +88,7 @@ class Identical extends AbstractValidator
      * Set token against which to compare
      *
      * @param  mixed $token
-     * @return Identical
+     * @return $this
      */
     public function setToken($token)
     {
@@ -111,7 +111,7 @@ class Identical extends AbstractValidator
      * Sets the strict parameter
      *
      * @param  bool $strict
-     * @return Identical
+     * @return $this
      */
     public function setStrict($strict)
     {
@@ -133,7 +133,7 @@ class Identical extends AbstractValidator
      * Sets the literal parameter
      *
      * @param  bool $literal
-     * @return Identical
+     * @return $this
      */
     public function setLiteral($literal)
     {

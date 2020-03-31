@@ -124,7 +124,7 @@ class Between extends AbstractValidator
      * Sets the min option
      *
      * @param  mixed $min
-     * @return Between Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setMin($min)
     {
@@ -146,7 +146,7 @@ class Between extends AbstractValidator
      * Sets the max option
      *
      * @param  mixed $max
-     * @return Between Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setMax($max)
     {
@@ -168,7 +168,7 @@ class Between extends AbstractValidator
      * Sets the inclusive option
      *
      * @param  bool $inclusive
-     * @return Between Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setInclusive($inclusive)
     {

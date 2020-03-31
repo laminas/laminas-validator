@@ -111,7 +111,7 @@ class Upload extends AbstractValidator
      * Sets the files to be checked
      *
      * @param  array $files The files to check in syntax of \Laminas\File\Transfer\Transfer
-     * @return Upload Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setFiles($files = [])
     {

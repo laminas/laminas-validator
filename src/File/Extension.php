@@ -103,7 +103,7 @@ class Extension extends AbstractValidator
      * Sets the case to use
      *
      * @param  bool $case
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setCase($case)
     {
@@ -127,7 +127,7 @@ class Extension extends AbstractValidator
      * Sets the file extensions
      *
      * @param  string|array $extension The extensions to validate
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setExtension($extension)
     {
@@ -140,7 +140,7 @@ class Extension extends AbstractValidator
      * Adds the file extensions
      *
      * @param  string|array $extension The extensions to add for validation
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function addExtension($extension)
     {
@@ -184,7 +184,7 @@ class Extension extends AbstractValidator
      * Sets the flag indicating whether or not to allow validation of non-existent files.
      *
      * @param  bool $flag Whether or not to allow validation of non-existent files.
-     * @return self Provides a fluent interface
+     * @return $this Provides a fluent interface
      */
     public function setAllowNonExistentFile($flag)
     {

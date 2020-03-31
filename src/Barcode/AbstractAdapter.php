@@ -143,7 +143,7 @@ abstract class AbstractAdapter implements AdapterInterface
      * Sets the checksum validation method
      *
      * @param callable $checksum Checksum method to call
-     * @return AbstractAdapter
+     * @return $this
      */
     protected function setChecksum($checksum)
     {
@@ -171,7 +171,7 @@ abstract class AbstractAdapter implements AdapterInterface
      * Sets the length of this barcode
      *
      * @param int|array $length
-     * @return AbstractAdapter
+     * @return $this
      */
     protected function setLength($length)
     {
@@ -183,7 +183,7 @@ abstract class AbstractAdapter implements AdapterInterface
      * Sets the allowed characters of this barcode
      *
      * @param int $characters
-     * @return AbstractAdapter
+     * @return $this
      */
     protected function setCharacters($characters)
     {

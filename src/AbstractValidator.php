@@ -121,7 +121,7 @@ abstract class AbstractValidator implements
      *
      * @param  array|Traversable $options Options to set
      * @throws Exception\InvalidArgumentException If $options is not an array or Traversable
-     * @return AbstractValidator Provides fluid interface
+     * @return $this Provides fluid interface
      */
     public function setOptions($options = [])
     {
@@ -194,7 +194,7 @@ abstract class AbstractValidator implements
      *
      * @param  string $messageString
      * @param  string $messageKey     OPTIONAL
-     * @return AbstractValidator Provides a fluent interface
+     * @return $this Provides a fluent interface
      * @throws Exception\InvalidArgumentException
      */
     public function setMessage($messageString, $messageKey = null)
@@ -220,7 +220,7 @@ abstract class AbstractValidator implements
      * and the array values are the message template strings.
      *
      * @param  array $messages
-     * @return AbstractValidator
+     * @return $this
      */
     public function setMessages(array $messages)
     {
@@ -365,7 +365,7 @@ abstract class AbstractValidator implements
      * Set flag indicating whether or not value should be obfuscated in messages
      *
      * @param  bool $flag
-     * @return AbstractValidator
+     * @return $this
      */
     public function setValueObscured($flag)
     {
@@ -389,7 +389,7 @@ abstract class AbstractValidator implements
      *
      * @param  Translator\TranslatorInterface|null $translator
      * @param  string          $textDomain (optional)
-     * @return AbstractValidator
+     * @return $this
      * @throws Exception\InvalidArgumentException
      */
     public function setTranslator(Translator\TranslatorInterface $translator = null, $textDomain = null)
@@ -433,7 +433,7 @@ abstract class AbstractValidator implements
      * Set translation text domain
      *
      * @param  string $textDomain
-     * @return AbstractValidator
+     * @return $this
      */
     public function setTranslatorTextDomain($textDomain = 'default')
     {
@@ -516,7 +516,7 @@ abstract class AbstractValidator implements
      * Indicate whether or not translation should be enabled
      *
      * @param  bool $flag
-     * @return AbstractValidator
+     * @return $this
      */
     public function setTranslatorEnabled($flag = true)
     {

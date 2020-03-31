@@ -197,7 +197,7 @@ class CreditCard extends AbstractValidator
      * Adds a CCI to be accepted by validation
      *
      * @param  string|array $type Type to allow for validation
-     * @return CreditCard Provides a fluid interface
+     * @return $this Provides a fluid interface
      */
     public function addType($type)
     {
@@ -239,7 +239,7 @@ class CreditCard extends AbstractValidator
      * Sets a new callback for service validation
      *
      * @param  callable $service
-     * @return CreditCard
+     * @return $this
      * @throws Exception\InvalidArgumentException on invalid service callback
      */
     public function setService($service)

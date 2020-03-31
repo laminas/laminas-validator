@@ -95,7 +95,7 @@ class Date extends AbstractValidator
      * if null is provided.
      *
      * @param  string $format
-     * @return Date provides a fluent interface
+     * @return $this provides a fluent interface
      * @todo   validate the format
      */
     public function setFormat($format = self::FORMAT_DEFAULT)
