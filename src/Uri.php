@@ -93,7 +93,7 @@ class Uri extends AbstractValidator
     }
 
     /**
-     * @param  UriHandler|string  $uriHandler
+     * @param  UriHandler|string $uriHandler
      * @throws InvalidArgumentException
      * @return Uri
      */
