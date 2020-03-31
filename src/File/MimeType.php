@@ -189,7 +189,7 @@ class MimeType extends AbstractValidator
             $this->options['magicFile'] = false;
         } elseif (empty($file)) {
             $this->options['magicFile'] = null;
-        } elseif (! (class_exists('finfo', false))) {
+        } elseif (! class_exists('finfo', false)) {
             $this->options['magicFile'] = null;
             throw new Exception\RuntimeException('Magicfile can not be set; there is no finfo extension installed');
         } elseif (! is_file($file) || ! is_readable($file)) {

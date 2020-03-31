@@ -73,7 +73,7 @@ class Barcode extends AbstractValidator
      */
     public function getAdapter()
     {
-        if (! ($this->options['adapter'] instanceof Barcode\AdapterInterface)) {
+        if (! $this->options['adapter'] instanceof Barcode\AdapterInterface) {
             $this->setAdapter('Ean13');
         }
 
@@ -105,7 +105,7 @@ class Barcode extends AbstractValidator
             throw new Exception\InvalidArgumentException(
                 sprintf(
                     'Adapter %s does not implement Laminas\\Validator\\Barcode\\AdapterInterface',
-                    (is_object($adapter) ? get_class($adapter) : gettype($adapter))
+                    is_object($adapter) ? get_class($adapter) : gettype($adapter)
                 )
             );
         }

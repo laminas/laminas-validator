@@ -52,10 +52,10 @@ abstract class AbstractAdapter implements AdapterInterface
             $found = true;
         } elseif ($length == 'even') {
             $count = $fixum % 2;
-            $found = (0 == $count);
+            $found = 0 == $count;
         } elseif ($length == 'odd') {
             $count = $fixum % 2;
-            $found = (1 == $count);
+            $found = 1 == $count;
         }
 
         return $found;
@@ -213,7 +213,7 @@ abstract class AbstractAdapter implements AdapterInterface
         }
 
         $calc     = $sum % 10;
-        $checksum = ($calc === 0) ? 0 : (10 - $calc);
+        $checksum = $calc === 0 ? 0 : 10 - $calc;
         if ($value[$length + 1] != $checksum) {
             return false;
         }
@@ -243,7 +243,7 @@ abstract class AbstractAdapter implements AdapterInterface
         }
 
         $calc     = $sum % 10;
-        $checksum = ($calc === 0) ? 0 : (10 - $calc);
+        $checksum = $calc === 0 ? 0 : 10 - $calc;
         if ($value[$length + 1] != $checksum) {
             return false;
         }
@@ -273,7 +273,7 @@ abstract class AbstractAdapter implements AdapterInterface
         }
 
         $calc     = $sum % 10;
-        $checksum = ($calc === 0) ? 0 : (10 - $calc);
+        $checksum = $calc === 0 ? 0 : 10 - $calc;
         if ($value[$length + 1] != $checksum) {
             return false;
         }

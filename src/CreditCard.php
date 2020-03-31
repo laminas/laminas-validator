@@ -206,7 +206,7 @@ class CreditCard extends AbstractValidator
         }
 
         foreach ($type as $typ) {
-            if (($typ == self::ALL)) {
+            if ($typ == self::ALL) {
                 $this->options['type'] = array_keys($this->cardLength);
                 continue;
             }

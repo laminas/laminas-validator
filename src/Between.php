@@ -35,7 +35,7 @@ class Between extends AbstractValidator
         self::NOT_BETWEEN_STRICT => "The input is not strictly between '%min%' and '%max%'",
         self::VALUE_NOT_NUMERIC  => "The min ('%min%') and max ('%max%') values are numeric, but the input is not",
         self::VALUE_NOT_STRING   => "The min ('%min%') and max ('%max%') values are non-numeric strings, "
-        .    'but the input is not a string',
+            . 'but the input is not a string',
     ];
 
     /**

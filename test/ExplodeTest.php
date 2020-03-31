@@ -178,7 +178,7 @@ class ExplodeTest extends TestCase
         $contextSame   = false;
         $validator = new Explode([
             'validator'           => new Callback(function ($v, $c) use ($context, &$contextSame) {
-                $contextSame = ($context === $c);
+                $contextSame = $context === $c;
                 return true;
             }),
             'valueDelimiter'      => ',',

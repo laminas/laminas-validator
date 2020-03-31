@@ -92,7 +92,7 @@ class Identical extends AbstractValidator
      */
     public function setToken($token)
     {
-        $this->tokenString = (is_array($token) ? var_export($token, true) : (string) $token);
+        $this->tokenString = is_array($token) ? var_export($token, true) : (string) $token;
         $this->token       = $token;
         return $this;
     }
@@ -157,7 +157,7 @@ class Identical extends AbstractValidator
         $token = $this->getToken();
 
         if (! $this->getLiteral() && $context !== null) {
-            if (! is_array($context) && ! ($context instanceof ArrayAccess)) {
+            if (! is_array($context) && ! $context instanceof ArrayAccess) {
                 throw new Exception\InvalidArgumentException(sprintf(
                     'Context passed to %s must be array, ArrayObject or null; received "%s"',
                     __METHOD__,

@@ -72,12 +72,12 @@ class Issn extends AbstractAdapter
                 $token = 10;
             }
 
-            $check += ($token * $multi);
+            $check += $token * $multi;
             --$multi;
         }
 
         $check %= 11;
-        $check  = ($check === 0 ? 0 : (11 - $check));
+        $check  = $check === 0 ? 0 : 11 - $check;
         if ($check == $checksum) {
             return true;
         } elseif (($check == 10) && ($checksum == 'X')) {

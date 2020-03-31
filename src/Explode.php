@@ -179,7 +179,7 @@ class Explode extends AbstractValidator implements ValidatorPluginManagerAwareIn
             // used when value is expected to be either an
             // array when multiple values and a string for
             // single values (ie. MultiCheckbox form behavior)
-            $values = (null !== $delimiter)
+            $values = null !== $delimiter
                       ? explode($this->valueDelimiter, $value)
                       : [$value];
         } else {

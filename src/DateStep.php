@@ -435,7 +435,7 @@ class DateStep extends Date
     {
         $intervalMaxSeconds = $this->computeIntervalMaxSeconds($intervalParts);
 
-        return (0 == $intervalMaxSeconds)
+        return 0 == $intervalMaxSeconds
             ? 0
             : max(floor($this->computeDiffMinSeconds($diffParts) / $intervalMaxSeconds) - 1, 0);
     }

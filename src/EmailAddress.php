@@ -449,7 +449,7 @@ class EmailAddress extends AbstractValidator
 
         if (! $validAddress) {
             $result = false;
-            $error  = ($reserved) ? self::INVALID_SEGMENT : self::INVALID_MX_RECORD;
+            $error  = $reserved ? self::INVALID_SEGMENT : self::INVALID_MX_RECORD;
             $this->error($error);
         }
 
@@ -555,9 +555,9 @@ class EmailAddress extends AbstractValidator
     {
         if (extension_loaded('intl')) {
             if (defined('INTL_IDNA_VARIANT_UTS46')) {
-                return (idn_to_ascii($email, 0, INTL_IDNA_VARIANT_UTS46) ?: $email);
+                return idn_to_ascii($email, 0, INTL_IDNA_VARIANT_UTS46) ?: $email;
             }
-            return (idn_to_ascii($email) ?: $email);
+            return idn_to_ascii($email) ?: $email;
         }
         return $email;
     }

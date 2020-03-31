@@ -131,7 +131,7 @@ class Exists extends AbstractValidator
             }
         }
 
-        $this->options['directory'] = (! empty($directory))
+        $this->options['directory'] = ! empty($directory)
             ? implode(',', $directories) : null;
 
         return $this;

@@ -192,7 +192,7 @@ class NotEmpty extends AbstractValidator
         if ($type & self::OBJECT_COUNT) {
             $object = true;
 
-            if (is_object($value) && ($value instanceof \Countable) && (count($value) == 0)) {
+            if (is_object($value) && $value instanceof \Countable && (count($value) == 0)) {
                 $this->error(self::IS_EMPTY);
                 return false;
             }
