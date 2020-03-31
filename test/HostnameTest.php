@@ -62,7 +62,7 @@ class HostnameTest extends TestCase
             [Hostname::ALLOW_DNS, false, ['localhost', 'localhost.localdomain', '1.2.3.4', 'domain.invalid']],
             [Hostname::ALLOW_LOCAL, true, ['localhost', 'localhost.localdomain', 'example.com']],
             [Hostname::ALLOW_ALL, true, ['localhost', 'example.com', '1.2.3.4']],
-            [Hostname::ALLOW_LOCAL, false, ['local host', 'example,com', 'exam_ple.com']]
+            [Hostname::ALLOW_LOCAL, false, ['local host', 'example,com', 'exam_ple.com']],
         ];
         foreach ($valuesExpected as $element) {
             $validator = new Hostname($element[0]);
@@ -82,8 +82,9 @@ class HostnameTest extends TestCase
             [Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL, true, ['domain.com', 'localhost', 'local.localhost']],
             [Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL, false, ['1.2.3.4', '255.255.255.255']],
             [Hostname::ALLOW_DNS | Hostname::ALLOW_IP, true, ['1.2.3.4', '255.255.255.255']],
-            [Hostname::ALLOW_DNS | Hostname::ALLOW_IP, false, ['localhost', 'local.localhost']]
-            ];
+            [Hostname::ALLOW_DNS | Hostname::ALLOW_IP, false, ['localhost', 'local.localhost']],
+        ];
+
         foreach ($valuesExpected as $element) {
             $validator = new Hostname($element[0]);
             foreach ($element[2] as $input) {
@@ -210,8 +211,9 @@ class HostnameTest extends TestCase
         $valuesExpected = [
             [true, ['bürger.de', 'hãllo.de', 'hållo.se']],
             [true, ['bÜrger.de', 'hÃllo.de', 'hÅllo.se']],
-            [false, ['hãllo.se', 'bürger.lt', 'hãllo.uk']]
-            ];
+            [false, ['hãllo.se', 'bürger.lt', 'hãllo.uk']],
+        ];
+
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
                 $this->assertEquals(
@@ -225,8 +227,9 @@ class HostnameTest extends TestCase
         // Check no IDN matching
         $validator->useIdnCheck(false);
         $valuesExpected = [
-            [false, ['bürger.de', 'hãllo.de', 'hållo.se']]
-            ];
+            [false, ['bürger.de', 'hãllo.de', 'hållo.se']],
+        ];
+
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
                 $this->assertEquals(
@@ -241,8 +244,9 @@ class HostnameTest extends TestCase
         unset($validator);
         $validator = new Hostname(Hostname::ALLOW_DNS, false);
         $valuesExpected = [
-            [false, ['bürger.de', 'hãllo.de', 'hållo.se']]
-            ];
+            [false, ['bürger.de', 'hãllo.de', 'hållo.se']],
+        ];
+
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
                 $this->assertEquals(
@@ -266,8 +270,9 @@ class HostnameTest extends TestCase
         $valuesExpected = [
             [true, ['bürger.com', 'hãllo.com', 'hållo.com', 'plekitööd.ee']],
             [true, ['bÜrger.com', 'hÃllo.com', 'hÅllo.com', 'plekitÖÖd.ee']],
-            [false, ['hãllo.lt', 'bürger.lt', 'hãllo.lt']]
-            ];
+            [false, ['hãllo.lt', 'bürger.lt', 'hãllo.lt']],
+        ];
+
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
                 $this->assertEquals(
@@ -281,8 +286,9 @@ class HostnameTest extends TestCase
         // Check no IDN matching
         $validator->useIdnCheck(false);
         $valuesExpected = [
-            [false, ['bürger.com', 'hãllo.com', 'hållo.com']]
-            ];
+            [false, ['bürger.com', 'hãllo.com', 'hållo.com']],
+        ];
+
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
                 $this->assertEquals(
@@ -297,8 +303,9 @@ class HostnameTest extends TestCase
         unset($validator);
         $validator = new Hostname(Hostname::ALLOW_DNS, false);
         $valuesExpected = [
-            [false, ['bürger.com', 'hãllo.com', 'hållo.com']]
-            ];
+            [false, ['bürger.com', 'hãllo.com', 'hållo.com']],
+        ];
+
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
                 $this->assertEquals(
@@ -321,8 +328,9 @@ class HostnameTest extends TestCase
         // Check TLD matching
         $valuesExpected = [
             [true, ['domain.co.uk', 'domain.uk.com', 'domain.tl', 'domain.zw']],
-            [false, ['domain.xx', 'domain.zz', 'domain.madeup']]
-            ];
+            [false, ['domain.xx', 'domain.zz', 'domain.madeup']],
+        ];
+
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
                 $this->assertEquals(
@@ -336,8 +344,9 @@ class HostnameTest extends TestCase
         // Check no TLD matching
         $validator->useTldCheck(false);
         $valuesExpected = [
-            [true, ['domain.xx', 'domain.zz', 'domain.madeup']]
-            ];
+            [true, ['domain.xx', 'domain.zz', 'domain.madeup']],
+        ];
+
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
                 $this->assertEquals(
@@ -352,8 +361,9 @@ class HostnameTest extends TestCase
         unset($validator);
         $validator = new Hostname(Hostname::ALLOW_DNS, true, false);
         $valuesExpected = [
-            [true, ['domain.xx', 'domain.zz', 'domain.madeup']]
-            ];
+            [true, ['domain.xx', 'domain.zz', 'domain.madeup']],
+        ];
+
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
                 $this->assertEquals(
@@ -421,8 +431,9 @@ class HostnameTest extends TestCase
         // Check TLD matching
         $valuesExpected = [
             [true, ['www.danger1.com', 'danger.com', 'www.danger.com']],
-            [false, ['www.danger1com', 'dangercom', 'www.dangercom']]
-            ];
+            [false, ['www.danger1com', 'dangercom', 'www.dangercom']],
+        ];
+
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
                 $this->assertEquals(
@@ -444,8 +455,9 @@ class HostnameTest extends TestCase
         // Check TLD matching
         $valuesExpected = [
             [true, ['xn--brger-kva.com', 'xn--eckwd4c7cu47r2wf.jp']],
-            [false, ['xn--brger-x45d2va.com', 'xn--bürger.com', 'xn--']]
-            ];
+            [false, ['xn--brger-x45d2va.com', 'xn--bürger.com', 'xn--']],
+        ];
+
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
                 $this->assertEquals(
@@ -491,8 +503,9 @@ class HostnameTest extends TestCase
         $valuesExpected = [
             [true, ['bürger.com', 'hãllo.com', 'hållo.com']],
             [true, ['bÜrger.com', 'hÃllo.com', 'hÅllo.com']],
-            [false, ['hãllo.lt', 'bürger.lt', 'hãllo.lt']]
-            ];
+            [false, ['hãllo.lt', 'bürger.lt', 'hãllo.lt']],
+        ];
+
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
                 $this->assertEquals(
@@ -613,8 +626,9 @@ class HostnameTest extends TestCase
         // Check .IL TLD matching
         $valuesExpected = [
             [true, ['xn----zhcbgfhe2aacg8fb5i.org.il', 'מבחן.il', 'מבחן123.il']],
-            [false, ['tבדיקה123.il', 'رات.il']] // Can't mix Latin and Hebrew character sets (except digits)
+            [false, ['tבדיקה123.il', 'رات.il']], // Can't mix Latin and Hebrew character sets (except digits)
         ];
+
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
                 $this->assertEquals(

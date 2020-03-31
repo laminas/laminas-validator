@@ -72,8 +72,8 @@ class EmailAddressTest extends TestCase
         $validator = new EmailAddress(Hostname::ALLOW_DNS | Hostname::ALLOW_IP);
         $valuesExpected = [
             [Hostname::ALLOW_DNS, true, ['bob@212.212.20.4']],
-            [Hostname::ALLOW_DNS, false, ['bob@localhost']]
-            ];
+            [Hostname::ALLOW_DNS, false, ['bob@localhost']],
+        ];
         foreach ($valuesExpected as $element) {
             foreach ($element[2] as $input) {
                 $this->assertEquals($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()));
@@ -171,8 +171,9 @@ class EmailAddressTest extends TestCase
             '"bob jones"@domain.com',
             '"bob@jones"@domain.com',
             '"[[ bob ]]"@domain.com',
-            '"jones"@domain.com'
-            ];
+            '"jones"@domain.com',
+        ];
+
         foreach ($emailAddresses as $input) {
             $this->assertTrue($this->validator->isValid($input), "$input failed to pass validation:\n"
                             . implode("\n", $this->validator->getMessages()));
@@ -194,7 +195,8 @@ class EmailAddressTest extends TestCase
             '"""@example.com', // x22 (not escaped)
             '"\"@example.com', // x5C (not escaped)
             "\"\x7F\"@example.com",
-            ];
+        ];
+
         foreach ($emailAddresses as $input) {
             $this->assertFalse($this->validator->isValid($input), "$input failed to pass validation:\n"
                             . implode("\n", $this->validator->getMessages()));
@@ -310,8 +312,9 @@ class EmailAddressTest extends TestCase
             '/Bob.Jones@domain.com',
             '#Bob.Jones@domain.com',
             'Bob.Jones?@domain.com',
-            'Bob~Jones@domain.com'
-            ];
+            'Bob~Jones@domain.com',
+        ];
+
         foreach ($emailAddresses as $input) {
             $this->assertTrue($this->validator->isValid($input));
         }
@@ -335,6 +338,7 @@ class EmailAddressTest extends TestCase
             'line length 321' => str_repeat('x', 310).'@domain.com',
             'line length 911' => str_repeat('x', 900).'@domain.com',
         ];
+
         foreach ($emailAddresses as $input) {
             $this->assertTrue($validator->isValid($input));
         }
@@ -358,8 +362,9 @@ class EmailAddressTest extends TestCase
 
         $valuesExpected = [
             [true,  ['Bob.Jones@zend.com',        'Bob.Jones@php.net']],
-            [false, ['Bob.Jones@bad.example.com', 'Bob.Jones@anotherbad.example.com']]
+            [false, ['Bob.Jones@bad.example.com', 'Bob.Jones@anotherbad.example.com']],
         ];
+
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
                 $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
@@ -421,8 +426,9 @@ class EmailAddressTest extends TestCase
         // Check no IDN matching
         $validator->getHostnameValidator()->useIdnCheck(false);
         $valuesExpected = [
-            [false, ['name@b�rger.de', 'name@h�llo.de', 'name@h�llo.se']]
-            ];
+            [false, ['name@b�rger.de', 'name@h�llo.de', 'name@h�llo.se']],
+        ];
+
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
                 $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
@@ -432,8 +438,9 @@ class EmailAddressTest extends TestCase
         // Check no TLD matching
         $validator->getHostnameValidator()->useTldCheck(false);
         $valuesExpected = [
-            [true, ['name@domain.xx', 'name@domain.zz', 'name@domain.madeup']]
-            ];
+            [true, ['name@domain.xx', 'name@domain.zz', 'name@domain.madeup']],
+        ];
+
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
                 $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
@@ -738,7 +745,7 @@ class EmailAddressTest extends TestCase
 
         $validator = new EmailAddress([
             'useMxCheck'        => true,
-            'useDeepMxCheck'    => true
+            'useDeepMxCheck'    => true,
         ]);
 
         $emailAddresses = [
@@ -751,7 +758,7 @@ class EmailAddressTest extends TestCase
             'bob+jones@nic.us',
             'bob+jones@dailymail.co.uk',
             'bob@teaparty.uk.com',
-            'bob@thelongestdomainnameintheworldandthensomeandthensomemoreandmore.com'
+            'bob@thelongestdomainnameintheworldandthensomeandthensomemoreandmore.com',
         ];
 
         if (extension_loaded('intl')) {
@@ -772,7 +779,7 @@ class EmailAddressTest extends TestCase
     {
         $validator = new EmailAddress([
             'useMxCheck'        => true,
-            'useDeepMxCheck'    => true
+            'useDeepMxCheck'    => true,
         ]);
 
         $emailAddresses = [
@@ -791,8 +798,8 @@ class EmailAddressTest extends TestCase
             'bob @domain.com',
             'bob@ domain.com',
             'bob @ domain.com',
-            'Abc..123@example.com'
-            ];
+            'Abc..123@example.com',
+        ];
 
         if (! extension_loaded('intl')) {
             $emailAddresses[] = 'иван@письмо.рф';

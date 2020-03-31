@@ -25,8 +25,8 @@ class ExtensionTest extends TestCase
         $testFile   = __DIR__ . '/_files/testsize.mo';
         $pictureTests = [
             //    Options, isValid Param, Expected value, Expected message
-            ['mo',                       $testFile, true,  ''],
-            ['gif',                      $testFile, false, 'fileExtensionFalse'],
+            ['mo',                  $testFile, true,  ''],
+            ['gif',                 $testFile, false, 'fileExtensionFalse'],
             [['mo'],                $testFile, true,  ''],
             [['gif'],               $testFile, false, 'fileExtensionFalse'],
             [['gif', 'mo', 'pict'], $testFile, true,  ''],
@@ -44,8 +44,11 @@ class ExtensionTest extends TestCase
         $testData = array_merge($pictureTests, $noFileTests);
         foreach ($testData as $data) {
             $fileUpload = [
-                'tmp_name' => $data[1], 'name' => basename($data[1]),
-                'size' => 200, 'error' => 0, 'type' => 'text'
+                'tmp_name' => $data[1],
+                'name'     => basename($data[1]),
+                'size'     => 200,
+                'error'    => 0,
+                'type'     => 'text',
             ];
             $testData[] = [$data[0], $fileUpload, $data[2], $data[3]];
         }
@@ -96,7 +99,7 @@ class ExtensionTest extends TestCase
             'type'     => 'text',
             'size'     => 200,
             'tmp_name' => __DIR__ . '/_files/testsize.mo',
-            'error'    => 0
+            'error'    => 0,
         ];
         $validator = new File\Extension(['MO', 'case' => true]);
         $this->assertEquals(false, $validator->isValid(__DIR__ . '/_files/testsize.mo', $files));

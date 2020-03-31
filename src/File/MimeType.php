@@ -43,7 +43,7 @@ class MimeType extends AbstractValidator
      * @var array
      */
     protected $messageVariables = [
-        'type' => 'type'
+        'type' => 'type',
     ];
 
     /**

@@ -508,15 +508,13 @@ class NotEmptyTest extends TestCase
      */
     public function testArrayConstantNotation($value, $valid)
     {
-        $this->validator = new NotEmpty(
-            [
-                'type' => [
-                    NotEmpty::ZERO,
-                    NotEmpty::STRING,
-                    NotEmpty::BOOLEAN
-                ]
-            ]
-        );
+        $this->validator = new NotEmpty([
+            'type' => [
+                NotEmpty::ZERO,
+                NotEmpty::STRING,
+                NotEmpty::BOOLEAN,
+            ],
+        ]);
 
         $this->checkValidationValue($value, $valid);
     }
@@ -557,15 +555,14 @@ class NotEmptyTest extends TestCase
      */
     public function testArrayConfigNotation($value, $valid)
     {
-        $this->validator = new NotEmpty(
-            [
-                'type' => [
-                    NotEmpty::ZERO,
-                    NotEmpty::STRING,
-                    NotEmpty::BOOLEAN],
-                'test' => false
-            ]
-        );
+        $this->validator = new NotEmpty([
+            'type' => [
+                NotEmpty::ZERO,
+                NotEmpty::STRING,
+                NotEmpty::BOOLEAN,
+            ],
+            'test' => false,
+        ]);
 
         $this->checkValidationValue($value, $valid);
     }
@@ -667,11 +664,9 @@ class NotEmptyTest extends TestCase
      */
     public function testStringNotation($value, $valid)
     {
-        $this->validator = new NotEmpty(
-            [
-                'type' => ['zero', 'string', 'boolean']
-            ]
-        );
+        $this->validator = new NotEmpty([
+            'type' => ['zero', 'string', 'boolean'],
+        ]);
 
         $this->checkValidationValue($value, $valid);
     }
@@ -699,7 +694,6 @@ class NotEmptyTest extends TestCase
             [null, true],
         ];
     }
-
 
     /**
      * Ensures that the validator follows expected behavior so if a string is specified more than once, it doesn't

@@ -122,7 +122,7 @@ class InArray extends AbstractValidator
         $checkTypes = [
             self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY,    // 0
             self::COMPARE_STRICT,                                             // 1
-            self::COMPARE_NOT_STRICT                                          // -1
+            self::COMPARE_NOT_STRICT,                                         // -1
         ];
 
         // validate strict value

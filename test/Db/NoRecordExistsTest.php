@@ -206,7 +206,7 @@ class NoRecordExistsTest extends TestCase
     {
         $validator = new NoRecordExists([
             'table' => 'users',
-            'schema' => 'my'
+            'schema' => 'my',
         ], 'field1', null, $this->getMockHasResult());
         $this->assertFalse($validator->isValid('value1'));
     }
@@ -220,7 +220,7 @@ class NoRecordExistsTest extends TestCase
     {
         $validator = new NoRecordExists([
             'table' => 'users',
-            'schema' => 'my'
+            'schema' => 'my',
         ], 'field1', null, $this->getMockNoResult());
         $this->assertTrue($validator->isValid('value1'));
     }

@@ -234,7 +234,7 @@ class IpTest extends TestCase
             'a:b:c:d:e:f:0::'                              => true,
             'a:b:c:d:e:f::0'                               => true,
 
-            'total gibberish'                              => false
+            'total gibberish'                              => false,
         ];
 
         foreach ($ips as $ip => $expectedOutcome) {

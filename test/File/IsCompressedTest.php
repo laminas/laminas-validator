@@ -212,7 +212,7 @@ class IsCompressedTest extends TestCase
             'type'     => 'image/jpeg',
             'size'     => 200,
             'tmp_name' => __DIR__ . '/_files/picture.jpg',
-            'error'    => 0
+            'error'    => 0,
         ];
 
         $validator = new File\IsCompressed('test/notype');
@@ -232,8 +232,9 @@ class IsCompressedTest extends TestCase
         $validator = new File\IsCompressed([
             'image/gif',
             'image/jpg',
-            'magicFile'   => $magicFile,
-            'enableHeaderCheck' => true]);
+            'magicFile'         => $magicFile,
+            'enableHeaderCheck' => true,
+        ]);
 
         $this->assertEquals($magicFile, $validator->getMagicFile());
         $this->assertTrue($validator->getHeaderCheck());

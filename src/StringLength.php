@@ -32,14 +32,14 @@ class StringLength extends AbstractValidator
     protected $messageVariables = [
         'min'    => ['options' => 'min'],
         'max'    => ['options' => 'max'],
-        'length' => ['options' => 'length']
+        'length' => ['options' => 'length'],
     ];
 
     protected $options = [
         'min'      => 0,       // Minimum length
         'max'      => null,    // Maximum length, null if there is no length limitation
         'encoding' => 'UTF-8', // Encoding to use
-        'length'   => 0        // Actual length
+        'length'   => 0,       // Actual length
     ];
 
     protected $stringWrapper;

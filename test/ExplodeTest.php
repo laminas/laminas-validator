@@ -113,16 +113,12 @@ class ExplodeTest extends TestCase
     public function testSetValidatorAsArray()
     {
         $validator = new Explode();
-        $validator->setValidator(
-            [
-                'name' => 'inarray',
-                'options' => [
-                    'haystack' => [
-                        'a', 'b', 'c'
-                    ]
-                ]
-            ]
-        );
+        $validator->setValidator([
+            'name' => 'inarray',
+            'options' => [
+                'haystack' => ['a', 'b', 'c'],
+            ],
+        ]);
 
         /** @var $inArrayValidator \Laminas\Validator\InArray */
         $inArrayValidator = $validator->getValidator();
@@ -137,11 +133,9 @@ class ExplodeTest extends TestCase
     {
         $validator = new Explode();
         $this->expectException(RuntimeException::class);
-        $validator->setValidator(
-            [
-                'options' => []
-            ]
-        );
+        $validator->setValidator([
+            'options' => [],
+        ]);
     }
 
     public function testSetValidatorInvalidParam()

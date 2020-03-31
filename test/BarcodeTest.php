@@ -56,7 +56,7 @@ class BarcodeTest extends TestCase
     public function testSetCustomAdapter()
     {
         $barcode = new Barcode([
-            'adapter' => $this->createMock(AdapterInterface::class)
+            'adapter' => $this->createMock(AdapterInterface::class),
         ]);
 
         $this->assertInstanceOf(AdapterInterface::class, $barcode->getAdapter());

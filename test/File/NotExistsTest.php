@@ -28,9 +28,13 @@ class NotExistsTest extends TestCase
         $baseDir  = dirname($testFile);
         $baseName = basename($testFile);
         $fileUpload = [
-            'tmp_name' => $testFile, 'name' => basename($testFile),
-            'size' => 200, 'error' => 0, 'type' => 'text'
+            'tmp_name' => $testFile,
+            'name'     => basename($testFile),
+            'size'     => 200,
+            'error'    => 0,
+            'type'     => 'text',
         ];
+
         return [
             //    Options, isValid Param, Expected value
             [dirname($baseDir), $baseName,   true],

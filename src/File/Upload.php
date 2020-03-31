@@ -47,7 +47,7 @@ class Upload extends AbstractValidator
         self::EXTENSION      => "A PHP extension stopped uploading the file '%value%'",
         self::ATTACK         => "File '%value%' was illegally uploaded. This could be a possible attack",
         self::FILE_NOT_FOUND => "File '%value%' was not found",
-        self::UNKNOWN        => "Unknown error while uploading file '%value%'"
+        self::UNKNOWN        => "Unknown error while uploading file '%value%'",
     ];
 
     protected $options = [

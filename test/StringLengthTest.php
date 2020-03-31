@@ -61,8 +61,9 @@ class StringLengthTest extends TestCase
             [2, 3, true, ['ab', 'abc']],
             [2, 3, false, ['a', 'abcd']],
             [3, 3, true, ['äöü']],
-            [6, 6, true, ['Müller']]
-            ];
+            [6, 6, true, ['Müller']],
+        ];
+
         foreach ($valuesExpected as $element) {
             $validator = new StringLength($element[0], $element[1]);
             foreach ($element[3] as $input) {

@@ -51,7 +51,7 @@ class ImageSize extends AbstractValidator
         'minheight' => ['options' => 'minHeight'],
         'maxheight' => ['options' => 'maxHeight'],
         'width'     => 'width',
-        'height'    => 'height'
+        'height'    => 'height',
     ];
 
     /**

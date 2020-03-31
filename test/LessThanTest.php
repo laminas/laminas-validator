@@ -37,7 +37,7 @@ class LessThanTest extends TestCase
             [['max' => 100, 'inclusive' => true], true, [-1, 0, 0.01, 1, 99.999, 100, 100.0]],
             [['max' => 100, 'inclusive' => true], false, [100.01]],
             [['max' => 100, 'inclusive' => false], true, [-1, 0, 0.01, 1, 99.999]],
-            [['max' => 100, 'inclusive' => false], false, [100, 100.0, 100.01]]
+            [['max' => 100, 'inclusive' => false], false, [100, 100.0, 100.01]],
         ];
 
         foreach ($valuesExpected as $element) {

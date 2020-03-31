@@ -28,7 +28,7 @@ class IsInstanceOf extends AbstractValidator
      * @var array
      */
     protected $messageVariables = [
-        'className' => 'className'
+        'className' => 'className',
     ];
 
     /**

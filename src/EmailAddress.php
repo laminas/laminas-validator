@@ -44,7 +44,7 @@ class EmailAddress extends AbstractValidator
      */
     protected $messageVariables = [
         'hostname'  => 'hostname',
-        'localPart' => 'localPart'
+        'localPart' => 'localPart',
     ];
 
     /**

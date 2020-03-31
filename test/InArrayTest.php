@@ -71,7 +71,7 @@ class InArrayTest extends TestCase
     {
         $validator = new InArray(
             [
-                 'haystack' => [1, 'a', 2.3]
+                 'haystack' => [1, 'a', 2.3],
             ]
         );
         $this->assertTrue($validator->isValid(1));
@@ -175,7 +175,7 @@ class InArrayTest extends TestCase
                  'haystack' => [
                      ['test', 0, 'A', 0.0],
                      ['foo', 1, 'a', 'c'],
-                 ]
+                 ],
             ]
         );
 
@@ -197,7 +197,7 @@ class InArrayTest extends TestCase
                  'haystack' => [
                      ['test', 0, 'A', 0.0],
                      ['foo', 1, 'a', 'c'],
-                 ]
+                 ],
             ]
         );
 
@@ -221,7 +221,7 @@ class InArrayTest extends TestCase
                  'haystack' => [
                      ['test', 0, 'A', 0.0],
                      ['foo', 1, 'a', 'c'],
-                 ]
+                 ],
             ]
         );
 

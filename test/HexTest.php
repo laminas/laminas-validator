@@ -42,8 +42,9 @@ class HexTest extends TestCase
             ['ABC123', true],
             ['1234567890abcdef', true],
             ['g', false],
-            ['1.2', false]
-            ];
+            ['1.2', false],
+        ];
+
         foreach ($valuesExpected as $element) {
             $this->assertEquals($element[1], $this->validator->isValid($element[0]), $element[0]);
         }

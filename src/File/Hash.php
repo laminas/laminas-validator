@@ -32,7 +32,7 @@ class Hash extends AbstractValidator
     protected $messageTemplates = [
         self::DOES_NOT_MATCH => "File does not match the given hashes",
         self::NOT_DETECTED   => "A hash could not be evaluated for the given file",
-        self::NOT_FOUND      => "File is not readable or does not exist"
+        self::NOT_FOUND      => "File is not readable or does not exist",
     ];
 
     /**

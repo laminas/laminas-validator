@@ -177,8 +177,8 @@ class IdenticalTest extends TestCase
             'john@doe.com',
             [
                 'user' => [
-                    'email' => 'john@doe.com'
-                ]
+                    'email' => 'john@doe.com',
+                ],
             ]
         ));
 
@@ -186,8 +186,8 @@ class IdenticalTest extends TestCase
             'john@doe.com',
             [
                 'user' => [
-                    'email' => 'harry@hoe.com'
-                ]
+                    'email' => 'harry@hoe.com',
+                ],
             ]
         ));
 
@@ -195,8 +195,8 @@ class IdenticalTest extends TestCase
             'harry@hoe.com',
             [
                 'user' => [
-                    'email' => 'john@doe.com'
-                ]
+                    'email' => 'john@doe.com',
+                ],
             ]
         ));
 
@@ -204,8 +204,8 @@ class IdenticalTest extends TestCase
             'john@doe.com',
             new Parameters([
                 'user' => [
-                    'email' => 'john@doe.com'
-                ]
+                    'email' => 'john@doe.com',
+                ],
             ])
         ));
 
@@ -213,8 +213,8 @@ class IdenticalTest extends TestCase
             'john@doe.com',
             new Parameters([
                 'user' => [
-                    'email' => 'harry@hoe.com'
-                ]
+                    'email' => 'harry@hoe.com',
+                ],
             ])
         ));
 
@@ -222,8 +222,8 @@ class IdenticalTest extends TestCase
             'harry@hoe.com',
             new Parameters([
                 'user' => [
-                    'email' => 'john@doe.com'
-                ]
+                    'email' => 'john@doe.com',
+                ],
             ])
         ));
     }

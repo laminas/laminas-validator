@@ -28,21 +28,24 @@ class MimeTypeTest extends TestCase
     {
         $testFile = __DIR__ . '/_files/picture.jpg';
         $fileUpload = [
-            'tmp_name' => $testFile, 'name' => basename($testFile),
-            'size' => 200, 'error' => 0, 'type' => 'image/jpg'
+            'tmp_name' => $testFile,
+            'name'     => basename($testFile),
+            'size'     => 200,
+            'error'    => 0,
+            'type'     => 'image/jpg',
         ];
         return [
             //    Options, isValid Param, Expected value
             [['image/jpg', 'image/jpeg'],               $fileUpload, true],
-            ['image',                                        $fileUpload, true],
-            ['test/notype',                                  $fileUpload, false],
-            ['image/gif, image/jpg, image/jpeg',             $fileUpload, true],
+            ['image',                                   $fileUpload, true],
+            ['test/notype',                             $fileUpload, false],
+            ['image/gif, image/jpg, image/jpeg',        $fileUpload, true],
             [['image/vasa', 'image/jpg', 'image/jpeg'], $fileUpload, true],
             [['image/jpg', 'image/jpeg', 'gif'],        $fileUpload, true],
             [['image/gif', 'gif'],                      $fileUpload, false],
-            ['image/jp',                                     $fileUpload, false],
-            ['image/jpg2000',                                $fileUpload, false],
-            ['image/jpeg2000',                               $fileUpload, false],
+            ['image/jp',                                $fileUpload, false],
+            ['image/jpg2000',                           $fileUpload, false],
+            ['image/jpeg2000',                          $fileUpload, false],
         ];
     }
 
@@ -171,7 +174,8 @@ class MimeTypeTest extends TestCase
         $validator = new File\MimeType([
             'image/gif',
             'image/jpg',
-            'enableHeaderCheck' => true]);
+            'enableHeaderCheck' => true,
+        ]);
 
         $this->assertTrue($validator->getHeaderCheck());
         $this->assertEquals('image/gif,image/jpg', $validator->getMimeType());
@@ -185,7 +189,9 @@ class MimeTypeTest extends TestCase
         $validator = new File\MimeType([
             'image/gif',
             'image/jpg',
-            'headerCheck' => true]);
+            'headerCheck' => true,
+        ]);
+
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
         $this->assertArrayHasKey('fileMimeTypeNotReadable', $validator->getMessages());
         $this->assertStringContainsString('does not exist', current($validator->getMessages()));
@@ -237,11 +243,11 @@ class MimeTypeTest extends TestCase
         $this->assertFalse($validator->isValid(''));
 
         $filesArray = [
-            'name'      => '',
-            'size'      => 0,
-            'tmp_name'  => '',
-            'error'     => UPLOAD_ERR_NO_FILE,
-            'type'      => '',
+            'name'     => '',
+            'size'     => 0,
+            'tmp_name' => '',
+            'error'    => UPLOAD_ERR_NO_FILE,
+            'type'     => '',
         ];
 
         $this->assertFalse($validator->isValid($filesArray));

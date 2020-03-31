@@ -31,7 +31,7 @@ class Regex extends AbstractValidator
      * @var array
      */
     protected $messageVariables = [
-        'pattern' => 'pattern'
+        'pattern' => 'pattern',
     ];
 
     /**

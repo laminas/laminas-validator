@@ -44,21 +44,24 @@ class IsImageTest extends TestCase
     {
         $testFile = __DIR__ . '/_files/picture.jpg';
         $fileUpload = [
-            'tmp_name' => $testFile, 'name' => basename($testFile),
-            'size' => 200, 'error' => 0, 'type' => 'image/jpeg'
+            'tmp_name' => $testFile,
+            'name'     => basename($testFile),
+            'size'     => 200,
+            'error'    => 0,
+            'type'     => 'image/jpeg',
         ];
         return [
             //    Options, isValid Param, Expected value
-            [null,                              $fileUpload, true],
-            ['jpeg',                            $fileUpload, true],
-            ['test/notype',                     $fileUpload, false],
-            ['image/gif, image/jpeg',           $fileUpload, true],
+            [null,                         $fileUpload, true],
+            ['jpeg',                       $fileUpload, true],
+            ['test/notype',                $fileUpload, false],
+            ['image/gif, image/jpeg',      $fileUpload, true],
             [['image/vasa', 'image/jpeg'], $fileUpload, true],
             [['image/jpeg', 'gif'],        $fileUpload, true],
             [['image/gif', 'gif'],         $fileUpload, false],
-            ['image/jp',                        $fileUpload, false],
-            ['image/jpg2000',                   $fileUpload, false],
-            ['image/jpeg2000',                  $fileUpload, false],
+            ['image/jp',                   $fileUpload, false],
+            ['image/jpg2000',              $fileUpload, false],
+            ['image/jpeg2000',             $fileUpload, false],
         ];
     }
 
@@ -163,7 +166,7 @@ class IsImageTest extends TestCase
             'type'     => 'image/jpeg',
             'size'     => 200,
             'tmp_name' => __DIR__ . '/_files/picture.jpg',
-            'error'    => 0
+            'error'    => 0,
         ];
 
         $validator = new File\IsImage('test/notype');
@@ -183,8 +186,9 @@ class IsImageTest extends TestCase
         $validator = new File\IsImage([
             'image/gif',
             'image/jpg',
-            'magicFile'   => $magicFile,
-            'enableHeaderCheck' => true]);
+            'magicFile'         => $magicFile,
+            'enableHeaderCheck' => true,
+        ]);
 
         $this->assertEquals($magicFile, $validator->getMagicFile());
         $this->assertTrue($validator->getHeaderCheck());

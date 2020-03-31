@@ -57,7 +57,7 @@ class NotEmpty extends AbstractValidator
         self::NULL,
         self::EMPTY_ARRAY,
         self::STRING,
-        self::BOOLEAN
+        self::BOOLEAN,
     ];
 
     /**

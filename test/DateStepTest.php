@@ -92,9 +92,9 @@ class DateStepTest extends TestCase
     public function testDateStepValidation($interval, $format, $baseValue, $value, $isValid)
     {
         $validator = new Validator\DateStep([
-            'format'       => $format,
-            'baseValue'    => $baseValue,
-            'step' => new DateInterval($interval),
+            'format'    => $format,
+            'baseValue' => $baseValue,
+            'step'      => new DateInterval($interval),
         ]);
 
         $this->assertEquals($isValid, $validator->isValid($value));

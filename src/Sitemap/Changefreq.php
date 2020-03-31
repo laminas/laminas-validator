@@ -41,7 +41,7 @@ class Changefreq extends AbstractValidator
      */
     protected $changeFreqs = [
         'always',  'hourly', 'daily', 'weekly',
-        'monthly', 'yearly', 'never'
+        'monthly', 'yearly', 'never',
     ];
 
     /**

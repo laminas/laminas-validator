@@ -41,7 +41,7 @@ class WordCount extends AbstractValidator
     protected $messageVariables = [
         'min'   => ['options' => 'min'],
         'max'   => ['options' => 'max'],
-        'count' => 'count'
+        'count' => 'count',
     ];
 
     /**
