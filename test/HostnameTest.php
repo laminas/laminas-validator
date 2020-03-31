@@ -30,10 +30,8 @@ class HostnameTest extends TestCase
 
     protected function setUp() : void
     {
-        $this->origEncoding = PHP_VERSION_ID < 50600
-            ? iconv_get_encoding('internal_encoding')
-            : ini_get('default_charset');
-        $this->validator = new Hostname();
+        $this->origEncoding = ini_get('default_charset');
+        $this->validator    = new Hostname();
     }
 
     /**
@@ -41,11 +39,7 @@ class HostnameTest extends TestCase
      */
     protected function tearDown() : void
     {
-        if (PHP_VERSION_ID < 50600) {
-            iconv_set_encoding('internal_encoding', $this->origEncoding);
-        } else {
-            ini_set('default_charset', $this->origEncoding);
-        }
+        ini_set('default_charset', $this->origEncoding);
     }
 
     /**
@@ -492,11 +486,7 @@ class HostnameTest extends TestCase
      */
     public function testDifferentIconvEncoding()
     {
-        if (PHP_VERSION_ID < 50600) {
-            iconv_set_encoding('internal_encoding', 'ISO8859-1');
-        } else {
-            ini_set('default_charset', 'ISO8859-1');
-        }
+        ini_set('default_charset', 'ISO8859-1');
 
         $validator = new Hostname();
 
