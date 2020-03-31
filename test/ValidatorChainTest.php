@@ -12,7 +12,6 @@ use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Between;
 use Laminas\Validator\GreaterThan;
 use Laminas\Validator\NotEmpty;
-use Laminas\Validator\StaticValidator;
 use Laminas\Validator\ValidatorChain;
 use Laminas\Validator\ValidatorInterface;
 use PHPUnit\Framework\TestCase;
@@ -272,7 +271,6 @@ class ValidatorChainTest extends TestCase
         }
         $this->assertTrue($found);
     }
-
 
     public function testCanSerializeValidatorChain()
     {

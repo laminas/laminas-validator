@@ -8,7 +8,6 @@
 
 namespace LaminasTest\Validator\File;
 
-use Laminas\Validator\Exception\InvalidArgumentException;
 use LaminasTest\Validator\File\TestAsset\FileInformation;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;

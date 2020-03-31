@@ -166,7 +166,6 @@ class Upload extends AbstractValidator
                     continue;
                 }
 
-
                 if (isset($content['name']) && ($content['name'] === $value)) {
                     $files = array_merge($files, $this->getFiles($file));
                 }

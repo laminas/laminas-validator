@@ -8,8 +8,6 @@
 
 namespace Laminas\Validator\File;
 
-use Laminas\Validator\File\FileInformationTrait;
-
 /**
  * Validator for the md5 hash of given files
  */

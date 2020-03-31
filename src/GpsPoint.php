@@ -93,7 +93,6 @@ final class GpsPoint extends AbstractValidator
         return preg_match('/([°\'"]+[NESW])/', $value) > 0;
     }
 
-
     /**
      * @param string $value
      * @return bool|string

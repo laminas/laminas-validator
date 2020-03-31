@@ -27,7 +27,6 @@ class GPSPointTest extends TestCase
         $this->validator = new GpsPoint();
     }
 
-
     /**
      * @dataProvider basicDataProvider
      * @covers \Laminas\Validator\GPSPoint::isValid

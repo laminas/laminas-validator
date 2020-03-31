@@ -93,7 +93,6 @@ class IsbnTest extends TestCase
         $validator->setSeparator('X');
     }
 
-
     /**
      * Ensures that __construct() works as expected
      *

@@ -8,9 +8,6 @@
 
 namespace Laminas\Validator\File;
 
-use finfo;
-use Laminas\Validator\File\FileInformationTrait;
-
 /**
  * Validator for the mime type of a file
  */

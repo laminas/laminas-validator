@@ -66,7 +66,6 @@ class IpTest extends TestCase
         $this->assertTrue($this->validator->isValid('0.0.0.0'));
     }
 
-
     public function testOnlyIpv4()
     {
         $this->options['allowipv4'] = true;

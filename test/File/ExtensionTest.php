@@ -53,7 +53,6 @@ class ExtensionTest extends TestCase
             $testData[] = [$data[0], $fileUpload, $data[2], $data[3]];
         }
 
-
         return $testData;
     }
 

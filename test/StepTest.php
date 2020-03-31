@@ -123,7 +123,6 @@ class StepTest extends TestCase
         $this->assertSame($expected, $validator->isValid($value));
     }
 
-
     public function decimalStepSubstractionBugValues()
     {
         return [

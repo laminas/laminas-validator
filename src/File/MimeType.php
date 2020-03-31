@@ -12,7 +12,6 @@ use Laminas\Stdlib\ArrayUtils;
 use Laminas\Stdlib\ErrorHandler;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception;
-use Laminas\Validator\File\FileInformationTrait;
 use Traversable;
 
 /**

@@ -360,7 +360,6 @@ class UploadTest extends TestCase
             ],
         ];
 
-
         $validator = new File\Upload();
         $validator->setFiles([]);
         $this->assertEquals($_FILES, $validator->getFiles());

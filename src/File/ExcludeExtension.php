@@ -8,9 +8,6 @@
 
 namespace Laminas\Validator\File;
 
-use Laminas\Validator\Exception;
-use Laminas\Validator\File\FileInformationTrait;
-
 /**
  * Validator for the excluding file extensions
  */
