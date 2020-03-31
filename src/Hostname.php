@@ -68,7 +68,7 @@ class Hostname extends AbstractValidator
 
     /**
      * Array of valid top-level-domains
-     * IanaVersion 2020011400
+     * IanaVersion 2020033100
      *
      * @see ftp://data.iana.org/TLD/tlds-alpha-by-domain.txt  List of all TLDs by domain
      * @see http://www.iana.org/domains/root/db/ Official list of supported TLDs
@@ -914,7 +914,6 @@ class Hostname extends AbstractValidator
         'mz',
         'na',
         'nab',
-        'nadex',
         'nagoya',
         'name',
         'nationwide',
@@ -1360,7 +1359,6 @@ class Hostname extends AbstractValidator
         'virgin',
         'visa',
         'vision',
-        'vistaprint',
         'viva',
         'vivo',
         'vlaanderen',
@@ -1513,6 +1511,7 @@ class Hostname extends AbstractValidator
         'بھارت',
         'المغرب',
         'ابوظبي',
+        'البحرين',
         'السعودية',
         'ڀارت',
         'كاثوليك',
@@ -1538,6 +1537,7 @@ class Hostname extends AbstractValidator
         '珠宝',
         'تونس',
         '大拿',
+        'ລາວ',
         'みんな',
         'グーグル',
         'ευ',
