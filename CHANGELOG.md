@@ -22,7 +22,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#59](https://github.com/laminas/laminas-validator/pull/59) fixes `Uri` validator to accept any `Laminas\Uri\Uri` instance for the uri handler.
 
 ## 2.13.3 - 2020-03-29
 
