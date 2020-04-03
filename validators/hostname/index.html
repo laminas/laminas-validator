@@ -643,16 +643,17 @@ Local hostnames (i.e. localhost). By default, only DNS hostnames are matched.</p
 <li><code>tld</code>: Defines if TLDs are validated. This option defaults to <code>true</code>.</li>
 </ul>
 <h2 id="basic-usage">Basic usage</h2>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Hostname();
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Hostname();
 
 if ($validator-&gt;isValid($hostname)) {
     // hostname appears to be valid
 } else {
     // hostname is invalid; print the reasons
     foreach ($validator-&gt;getMessages() as $message) {
-        echo &quot;$message\n&quot;;
+        echo "$message\n";
     }
 }</code></pre>
+
 <p>This will match the hostname <code>$hostname</code> and on failure populate <code>getMessages()</code>
 with useful error messages.</p>
 <h2 id="validating-different-types-of-hostnames">Validating different types of hostnames</h2>
@@ -677,7 +678,7 @@ which are used by WINS, NetInfo and also local hostnames like those defined
 within your <code>hosts</code> file.</p>
 </blockquote>
 <p>To check for IP addresses only, you can use the example below:</p>
-<pre class=codehilite><code class=language-php>use Laminas\Validator\Hostname;
+<pre class="highlight"><code class="language-php">use Laminas\Validator\Hostname;
 
 $validator = new Hostname(Hostname::ALLOW_IP);
 
@@ -686,15 +687,17 @@ if ($validator-&gt;isValid($hostname)) {
 } else {
     // hostname is invalid; print the reasons
     foreach ($validator-&gt;getMessages() as $message) {
-        echo &quot;$message\n&quot;;
+        echo "$message\n";
     }
 }</code></pre>
+
 <p>As well as using <code>ALLOW_ALL</code> to accept all common hostnames types, you can
 combine these types to allow for combinations. For example, to accept DNS and
 Local hostnames:</p>
-<pre class=codehilite><code class=language-php>use Laminas\Validator\Hostname;
+<pre class="highlight"><code class="language-php">use Laminas\Validator\Hostname;
 
 $validator = new Hostname(Hostname::ALLOW_DNS | Hostname::ALLOW_IP);</code></pre>
+
 <h2 id="validating-international-domains-names">Validating International Domains Names</h2>
 <p>Some Country Code Top Level Domains (ccTLDs), such as 'de' (Germany), support
 international characters in domain names. These are known as International
@@ -706,10 +709,11 @@ IDN validation, either pass a parameter to the <code>Laminas\Validator\Hostname<
 constructor or call the <code>setValidateIdn()</code> method.</p>
 <p>You can disable IDN validation by passing a second parameter to the
 <code>Laminas\Validator\Hostname</code> constructor in the following way.</p>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Hostname([
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Hostname([
     'allow' =&gt; Laminas\Validator\Hostname::ALLOW_DNS,
     'useIdnCheck'   =&gt; false,
 ]);</code></pre>
+
 <p>Alternatively you can either pass <code>true</code> or <code>false</code> to <code>setValidateIdn()</code> to
 enable or disable IDN validation. If you are trying to match an IDN hostname
 which isn't currently supported, it is likely it will fail validation if it has
@@ -724,13 +728,14 @@ functionality is not required, it can be disabled in much the same way as
 disabling IDN support. You can disable TLD validation by passing a third
 parameter to the <code>Laminas\Validator\Hostname</code> constructor. In the example below we
 are supporting IDN validation via the second parameter.</p>
-<pre class=codehilite><code class=language-php>use Laminas\Validator\Hostname;
+<pre class="highlight"><code class="language-php">use Laminas\Validator\Hostname;
 
 $validator = new Hostname([
     'allow' =&gt; Hostname::ALLOW_DNS,
     'useIdnCheck'   =&gt; true,
     'useTldCheck'   =&gt; false,
 ]);</code></pre>
+
 <p>Alternatively you can either pass <code>true</code> or <code>false</code> to <code>setValidateTld()</code> to
 enable or disable TLD validation.</p>
 <p>Please note, TLDs are only validated if you allow DNS hostnames to be validated.</p>

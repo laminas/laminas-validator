@@ -634,7 +634,7 @@ of supported hash algorithms can be found with the
 <li><code>algorithm</code>: String hashing algorithm to use; defaults to <code>crc32</code></li>
 </ul>
 <h2 id="basic-usage">Basic Usage</h2>
-<pre class=codehilite><code class=language-php>use Laminas\Validator\File\Hash;
+<pre class="highlight"><code class="language-php">use Laminas\Validator\File\Hash;
 
 // Does file have the given hash?
 $validator = new Hash('3b3652f', 'crc32');
@@ -652,15 +652,19 @@ $validator = new Hash([
 if ($validator-&gt;isValid('./myfile.txt')) {
    // file is valid
 }</code></pre>
+
 <h2 id="public-methods">Public Methods</h2>
 <h3>getHash</h3>
-<pre class=codehilite><code class=language-php>getHash() : array</code></pre>
+<pre class="highlight"><code class="language-php">getHash() : array</code></pre>
+
 <p>Returns an array containing the set of hashes against which to validate.</p>
 <h3>addHash</h3>
-<pre class=codehilite><code class=language-php>addHash(string|array $options) : void</code></pre>
+<pre class="highlight"><code class="language-php">addHash(string|array $options) : void</code></pre>
+
 <p>Add one or more hashes against which to validate.</p>
 <h3>setHash</h3>
-<pre class=codehilite><code class=language-php>setHash(string|array $options) : void</code></pre>
+<pre class="highlight"><code class="language-php">setHash(string|array $options) : void</code></pre>
+
 <p>Overwrite the current set of hashes with those provided to the method.</p>
 
 

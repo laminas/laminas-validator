@@ -624,7 +624,7 @@ an instance of a specific class or interface.</p>
   instance of.</li>
 </ul>
 <h2 id="basic-usage">Basic usage</h2>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\IsInstanceOf([
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\IsInstanceOf([
     'className' =&gt; 'Laminas\Validator\Digits'
 ]);
 $object = new Laminas\Validator\Digits();
@@ -634,9 +634,10 @@ if ($validator-&gt;isValid($object)) {
 } else {
     // false. You can use $validator-&gt;getMessages() to retrieve error messages
 }</code></pre>
+
 <p>If a string argument is passed to the constructor of
 <code>Laminas\Validator\IsInstanceOf</code>, then that value will be used as the class name:</p>
-<pre class=codehilite><code class=language-php>use Laminas\Validator\Digits;
+<pre class="highlight"><code class="language-php">use Laminas\Validator\Digits;
 use Laminas\Validator\IsInstanceOf;
 
 $validator = new IsInstanceOf(Digits::class);

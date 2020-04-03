@@ -634,7 +634,7 @@ the <code>md5</code> algorithm.</p>
 <li><code>hash</code>: String hash or array of hashes against which to validate.</li>
 </ul>
 <h2 id="basic-usage">Basic Usage</h2>
-<pre class=codehilite><code class=language-php>use Laminas\Validator\File\Md5;
+<pre class="highlight"><code class="language-php">use Laminas\Validator\File\Md5;
 
 // Does file have the given hash?
 $validator = new Md5('3b3652f336522365223');
@@ -654,15 +654,19 @@ $validator = new Md5(['hash' =&gt; [
 if ($validator-&gt;isValid('./myfile.txt')) {
     // file is valid
 }</code></pre>
+
 <h2 id="public-methods">Public Methods</h2>
 <h3>getMd5</h3>
-<pre class=codehilite><code class=language-php>getMd5() : array</code></pre>
+<pre class="highlight"><code class="language-php">getMd5() : array</code></pre>
+
 <p>Returns an array of MD5 hashes against which to validate.</p>
 <h3>addMd5</h3>
-<pre class=codehilite><code class=language-php>addMd5(string|array $options) : void</code></pre>
+<pre class="highlight"><code class="language-php">addMd5(string|array $options) : void</code></pre>
+
 <p>Add one or more hashes to validate against.</p>
 <h3>setMd5</h3>
-<pre class=codehilite><code class=language-php>setMd5(string|array $options) : void</code></pre>
+<pre class="highlight"><code class="language-php">setMd5(string|array $options) : void</code></pre>
+
 <p>Overwrite any previously set hashes with those specified.</p>
 
 

@@ -624,7 +624,7 @@ directories.</p>
 <li><code>directory</code>: Array of directories, or comma-delimited string  of directories.</li>
 </ul>
 <h2 id="usage-examples">Usage Examples</h2>
-<pre class=codehilite><code class=language-php>use Laminas\Validator\File\Exists;
+<pre class="highlight"><code class="language-php">use Laminas\Validator\File\Exists;
 
 // Only allow files that exist in ~both~ directories
 $validator = new Exists('/tmp,/var/tmp');
@@ -636,6 +636,7 @@ $validator = new Exists(['/tmp', '/var/tmp']);
 if ($validator-&gt;isValid('/tmp/myfile.txt')) {
     // file is valid
 }</code></pre>
+
 <blockquote>
 <h3>Checks against all directories</h3>
 <p>This validator checks whether the specified file exists in <strong>all</strong> of the

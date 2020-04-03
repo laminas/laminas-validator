@@ -635,17 +635,18 @@
 </ul>
 <h2 id="basic-usage">Basic usage</h2>
 <p>A basic example of usage is below:</p>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Isbn();
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Isbn();
 
 if ($validator-&gt;isValid($isbn)) {
     // isbn is valid
 } else {
     // isbn is not valid
 }</code></pre>
+
 <p>This will validate any ISBN-10 and ISBN-13 without separator.</p>
 <h2 id="setting-an-explicit-isbn-validation-type">Setting an explicit ISBN validation type</h2>
 <p>An example of an ISBN type restriction follows:</p>
-<pre class=codehilite><code class=language-php>use Laminas\Validator\Isbn;
+<pre class="highlight"><code class="language-php">use Laminas\Validator\Isbn;
 
 $validator = new Isbn();
 $validator-&gt;setType(Isbn::ISBN13);
@@ -658,6 +659,7 @@ if ($validator-&gt;isValid($isbn)) {
 } else {
     // this is an invalid ISBN-13 value
 }</code></pre>
+
 <p>The above will validate only ISBN-13 values.</p>
 <p>Valid types include:</p>
 <ul>
@@ -667,7 +669,7 @@ if ($validator-&gt;isValid($isbn)) {
 </ul>
 <h2 id="specifying-a-separator-restriction">Specifying a separator restriction</h2>
 <p>An example of separator restriction:</p>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Isbn();
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Isbn();
 $validator-&gt;setSeparator('-');
 
 // OR
@@ -678,6 +680,7 @@ if ($validator-&gt;isValid($isbn)) {
 } else {
     // this is an invalid ISBN with separator
 }</code></pre>
+
 <blockquote>
 <h3>Values without separators</h3>
 <p>This will return <code>false</code> if <code>$isbn</code> doesn't contain a separator <strong>or</strong> if it's

@@ -642,7 +642,7 @@ errors caused by a previous <code>isValid()</code> call, because it's likely tha
 call to <code>isValid()</code> is made for a different input value.</p>
 </blockquote>
 <p>The following example illustrates validation of an e-mail address:</p>
-<pre class=codehilite><code class=language-php>use Laminas\Validator\EmailAddress;
+<pre class="highlight"><code class="language-php">use Laminas\Validator\EmailAddress;
 
 $validator = new EmailAddress();
 
@@ -651,9 +651,10 @@ if ($validator-&gt;isValid($email)) {
 } else {
     // email is invalid; print the reasons
     foreach ($validator-&gt;getMessages() as $messageId =&gt; $message) {
-        printf(&quot;Validation failure '%s': %s\n&quot;, $messageId, $message);
+        printf("Validation failure '%s': %s\n", $messageId, $message);
     }
 }</code></pre>
+
 <h2 id="customizing-messages">Customizing messages</h2>
 <p>Validator classes provide a <code>setMessage()</code> method with which you can specify the
 format of a message returned by <code>getMessages()</code> in case of validation failure.
@@ -671,7 +672,7 @@ assumes the message you specify should be used for the first message template
 declared in the validation class. Many validation classes only have one error
 message template defined, so there is no need to specify which message template
 you are changing.</p>
-<pre class=codehilite><code class=language-php>use Laminas\Validator\StringLength;
+<pre class="highlight"><code class="language-php">use Laminas\Validator\StringLength;
 
 $validator = new StringLength(8);
 
@@ -684,11 +685,12 @@ if (! $validator-&gt;isValid('word')) {
     $messages = $validator-&gt;getMessages();
     echo current($messages);
 
-    // &quot;The string 'word' is too short; it must be at least 8 characters&quot;
+    // "The string 'word' is too short; it must be at least 8 characters"
 }</code></pre>
+
 <p>You can set multiple messages using the <code>setMessages()</code> method. Its argument is
 an array containing key/message pairs.</p>
-<pre class=codehilite><code class=language-php>use Laminas\Validator\StringLength;
+<pre class="highlight"><code class="language-php">use Laminas\Validator\StringLength;
 
 $validator = new StringLength(['min' =&gt; 8, 'max' =&gt; 12]);
 
@@ -696,39 +698,40 @@ $validator-&gt;setMessages([
     StringLength::TOO_SHORT =&gt; 'The string \'%value%\' is too short',
     StringLength::TOO_LONG  =&gt; 'The string \'%value%\' is too long',
 ]);</code></pre>
+
 <p>If your application requires even greater flexibility with which it reports
 validation failures, you can access properties by the same name as the message
 tokens supported by a given validation class. The <code>value</code> property is always
 available in a validator; it is the value you specified as the argument of
 <code>isValid()</code>. Other properties may be supported on a case-by-case basis in each
 validation class.</p>
-<pre class=codehilite><code class=language-php>use Laminas\Validator\StringLength;
+<pre class="highlight"><code class="language-php">use Laminas\Validator\StringLength;
 
 $validator = new StringLength(['min' =&gt; 8, 'max' =&gt; 12]);
 
 if (! $validator-&gt;isValid('word')) {
     printf(
-        &quot;Word failed: %s; its length is not between %d and %d\n&quot;,
+        "Word failed: %s; its length is not between %d and %d\n",
         $validator-&gt;value,
         $validator-&gt;min,
         $validator-&gt;max
     );
 }</code></pre>
+
 <h2 id="translating-messages">Translating messages</h2>
 <blockquote>
 <h3>Installation requirements</h3>
 <p>The translation of validator messages depends on the laminas-i18n component, so
 be sure to have it installed before getting started:</p>
-<pre class="codehilite"><code class="language-bash">
-$ composer require laminas/laminas-i18n
-</code></pre>
+<pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-i18n</code></pre>
+
 </blockquote>
 <p>Validator classes provide a <code>setTranslator()</code> method with which you can specify
 an instance of <code>Laminas\Validator\Translator\TranslatorInterface</code> which will
 translate the messages in case of a validation failure. The <code>getTranslator()</code>
 method returns the translator instance. <code>Laminas\Mvc\I18n\Translator</code> provides an
 implementation compatible with the validator component.</p>
-<pre class=codehilite><code class=language-php>use Laminas\Mvc\I18n\Translator;
+<pre class="highlight"><code class="language-php">use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\StringLength;
 
 $validator = new StringLength(['min' =&gt; 8, 'max' =&gt; 12]);
@@ -736,26 +739,29 @@ $translate = new Translator();
 // configure the translator...
 
 $validator-&gt;setTranslator($translate);</code></pre>
+
 <p>With the static <code>AbstractValidator::setDefaultTranslator()</code> method you can set a
 instance of <code>Laminas\Validator\Translator\TranslatorInterface</code> which will be used
 for all validation classes, and can be retrieved with <code>getDefaultTranslator()</code>.
 This prevents the need for setting a translator manually with each validator.</p>
-<pre class=codehilite><code class=language-php>use Laminas\Mvc\I18n\Translator;
+<pre class="highlight"><code class="language-php">use Laminas\Mvc\I18n\Translator;
 use Laminas\Validator\AbstractValidator;
 
 $translate = new Translator();
 // configure the translator...
 
 AbstractValidator::setDefaultTranslator($translate);</code></pre>
+
 <p>Sometimes it is necessary to disable the translator within a validator. To
 achieve this you can use the <code>setDisableTranslator()</code> method, which accepts a
 boolean parameter, and <code>isTranslatorDisabled()</code> to get the set value.</p>
-<pre class=codehilite><code class=language-php>use Laminas\Validator\StringLength;
+<pre class="highlight"><code class="language-php">use Laminas\Validator\StringLength;
 
 $validator = new StringLength(['min' =&gt; 8, 'max' =&gt; 12]);
 if (! $validator-&gt;isTranslatorDisabled()) {
     $validator-&gt;setDisableTranslator();
 }</code></pre>
+
 <p>It is also possible to use a translator instead of setting own messages with
 <code>setMessage()</code>. But doing so, you should keep in mind, that the translator works
 also on messages you set your own.</p>

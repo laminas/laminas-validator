@@ -631,7 +631,7 @@ array.</p>
 </ul>
 <h2 id="basic-usage">Basic usage</h2>
 <p>To validate if every item in an array is in a specified haystack:</p>
-<pre class=codehilite><code class=language-php>$inArrayValidator = new Laminas\Validator\InArray([
+<pre class="highlight"><code class="language-php">$inArrayValidator = new Laminas\Validator\InArray([
     'haystack' =&gt; [1, 2, 3, 4, 5, 6],
 ]);
 
@@ -641,9 +641,10 @@ $explodeValidator = new Laminas\Validator\Explode([
 
 $explodeValidator-&gt;isValid([1, 4, 6]);    // returns true
 $explodeValidator-&gt;isValid([1, 4, 6, 8]); // returns false</code></pre>
+
 <h2 id="exploding-strings">Exploding strings</h2>
 <p>To validate if every e-mail in a string is contained in a list of names:</p>
-<pre class=codehilite><code class=language-php>$inEmailListValidator = new Laminas\Validator\InArray([
+<pre class="highlight"><code class="language-php">$inEmailListValidator = new Laminas\Validator\InArray([
     'haystack' =&gt; ['joseph@test.com', 'mark@test.com', 'lucia@test.com'],
 ]);
 

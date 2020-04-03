@@ -622,7 +622,7 @@
 <p><code>Laminas\Validator\File\UploadFile</code> checks whether a single file has been uploaded
 via a form <code>POST</code> and will return descriptive messages for any upload errors.</p>
 <h2 id="basic-usage">Basic Usage</h2>
-<pre class=codehilite><code class=language-php>use Laminas\Http\PhpEnvironment\Request;
+<pre class="highlight"><code class="language-php">use Laminas\Http\PhpEnvironment\Request;
 use Laminas\Validator\File\UploadFile;
 
 $request = new Request();
@@ -633,6 +633,7 @@ $validator = new UploadFile();
 if ($validator-&gt;isValid($files['my-upload'])) {
     // file is valid
 }</code></pre>
+
 <h2 id="psr-7-support">PSR-7 Support</h2>
 <ul>
 <li>Since 2.11.0</li>
@@ -640,13 +641,14 @@ if ($validator-&gt;isValid($files['my-upload'])) {
 <p>Starting in 2.11.0, you can also pass <a href="https://www.php-fig.org/psr/psr-7/#uploadedfileinterface">PSR-7 UploadedFileInterface</a>
 instances as values to the validator. When valid, <code>getValue()</code> will return the
 instance validated verbatim:</p>
-<pre class=codehilite><code class=language-php>$validator = new UploadFile();
+<pre class="highlight"><code class="language-php">$validator = new UploadFile();
 
 // @var Psr\Http\Message\UploadedFileInterface $uploadedFile
 if ($validator-&gt;isValid($uploadedFile)) {
     // file is valid
     $validInstance = $validator-&gt;getValue(); // === $uploadedFile
 }</code></pre>
+
 <h2 id="usage-with-laminas-inputfilter">Usage with laminas-inputfilter</h2>
 <p>When using laminas-inputfilter's <a href="https://docs.laminas.dev/laminas-inputfilter/file-input/">FileInput</a>,
 this validator will be automatically prepended to the validator chain.</p>

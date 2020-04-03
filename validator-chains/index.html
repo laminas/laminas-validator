@@ -613,15 +613,14 @@
 <h3>Installation requirements</h3>
 <p>The validator chain depends on the laminas-servicemanager component, so be sure
 to have it installed before getting started:</p>
-<pre class="codehilite"><code class="language-bash">
-$ composer require laminas/laminas-servicemanager
-</code></pre>
+<pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-servicemanager</code></pre>
+
 </blockquote>
 <p>Often, multiple validations should be applied to some value in a particular
 order. The following code demonstrates a way to solve the example from the
 <a href="../intro/">introduction</a>, where a username must be between 6 and 12 alphanumeric
 characters:</p>
-<pre class=codehilite><code class=language-php>use Laminas\I18n\Validator\Alnum;
+<pre class="highlight"><code class="language-php">use Laminas\I18n\Validator\Alnum;
 use Laminas\Validator\StringLength;
 use Laminas\Validator\ValidatorChain;
 
@@ -636,9 +635,10 @@ if ($validatorChain-&gt;isValid($username)) {
 } else {
     // username failed validation; print reasons
     foreach ($validatorChain-&gt;getMessages() as $message) {
-        echo &quot;$message\n&quot;;
+        echo "$message\n";
     }
 }</code></pre>
+
 <p>Validators are run in the order they were added to the <code>ValidatorChain</code>. In the
 above example, the username is first checked to ensure that its length is
 between 6 and 12 characters, and then it is checked to ensure that it contains
@@ -653,8 +653,9 @@ second parameter to the <code>attach()</code> method. By setting <code>$breakCha
 preventing subsequent validators from executing.  If the above example were
 written as follows, then the alphanumeric validation would not occur if the
 string length validation fails:</p>
-<pre class=codehilite><code class=language-php>$chain-&gt;attach(new StringLength(['min' =&gt; 6, 'max' =&gt; 12]), true);
+<pre class="highlight"><code class="language-php">$chain-&gt;attach(new StringLength(['min' =&gt; 6, 'max' =&gt; 12]), true);
 $chain-&gt;attach(new Alnum());</code></pre>
+
 <p>Any object that implements <code>Laminas\Validator\ValidatorInterface</code> may be used in a
 validator chain.</p>
 <h2 id="setting-validator-chain-order">Setting Validator Chain Order</h2>
@@ -665,7 +666,7 @@ execution.</p>
 <p>In the following example, the username is first checked to ensure that its
 length is between 7 and 9 characters, and then it is checked to ensure that its
 length is between 3 and 5 characters.</p>
-<pre class=codehilite><code class=language-php>use Laminas\I18n\Validator\Alnum;
+<pre class="highlight"><code class="language-php">use Laminas\I18n\Validator\Alnum;
 use Laminas\Validator\StringLength;
 use Laminas\Validator\ValidatorChain;
 
@@ -687,11 +688,11 @@ $validatorChain-&gt;attach(
 // Validate the username
 if ($validatorChain-&gt;isValid($username)) {
     // username passed validation
-    echo &quot;Success&quot;;
+    echo "Success";
 } else {
     // username failed validation; print reasons
     foreach ($validatorChain-&gt;getMessages() as $message) {
-        echo &quot;$message\n&quot;;
+        echo "$message\n";
     }
 }
 

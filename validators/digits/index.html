@@ -620,20 +620,20 @@
 <h3>Installation requirements</h3>
 <p><code>Laminas\Validator\Digits</code> depends on the laminas-filter component, so be sure to
 have it installed before getting started:</p>
-<pre class="codehilite"><code class="language-bash">
-$ composer require laminas/laminas-filter
-</code></pre>
+<pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-filter</code></pre>
+
 </blockquote>
 <h2 id="supported-options">Supported options</h2>
 <p>There are no additional options for <code>Laminas\Validator\Digits</code>:</p>
 <h2 id="validating-digits">Validating digits</h2>
 <p>To validate if a given value contains only digits and no other characters,
 call the validator as shown below:</p>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Digits();
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Digits();
 
-$validator-&gt;isValid(&quot;1234567890&quot;); // returns true
+$validator-&gt;isValid("1234567890"); // returns true
 $validator-&gt;isValid(1234);         // returns true
 $validator-&gt;isValid('1a234');      // returns false</code></pre>
+
 <blockquote>
 <h3>Validating numbers</h3>
 <p>When you want to validate numbers or numeric values, be aware that this

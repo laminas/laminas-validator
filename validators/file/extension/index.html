@@ -635,7 +635,7 @@
   (will not validate non-existent files).</li>
 </ul>
 <h2 id="usage-examples">Usage Examples</h2>
-<pre class=codehilite><code class=language-php>use Laminas\Validator\File\Extension;
+<pre class="highlight"><code class="language-php">use Laminas\Validator\File\Extension;
 
 // Allow files with 'php' or 'exe' extensions
 $validator = new Extension('php,exe');
@@ -656,9 +656,11 @@ $validator = new Extension([
 if ($validator-&gt;isValid('./myfile.php')) {
     // file is valid
 }</code></pre>
+
 <h2 id="public-methods">Public Methods</h2>
 <h3>addExtension</h3>
-<pre class=codehilite><code class=language-php>addExtension(string|array $options) : void</code></pre>
+<pre class="highlight"><code class="language-php">addExtension(string|array $options) : void</code></pre>
+
 <p>Add one or more extensions as a comma-separated list, or as an array.</p>
 
 

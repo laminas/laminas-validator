@@ -635,7 +635,7 @@ algorithm.</p>
   pairs.</li>
 </ul>
 <h2 id="usage-examples">Usage Examples</h2>
-<pre class=codehilite><code class=language-php>// Does file have the given hash?
+<pre class="highlight"><code class="language-php">// Does file have the given hash?
 $validator = new \Laminas\Validator\File\Crc32('3b3652f');
 
 // Or, check file against multiple hashes
@@ -645,16 +645,20 @@ $validator = new \Laminas\Validator\File\Crc32(['3b3652f', 'e612b69']);
 if ($validator-&gt;isValid('./myfile.txt')) {
     // file is valid
 }</code></pre>
+
 <h2 id="public-methods">Public Methods</h2>
 <h3>getCrc32</h3>
-<pre class=codehilite><code class=language-php>getCrc32() : array</code></pre>
+<pre class="highlight"><code class="language-php">getCrc32() : array</code></pre>
+
 <p>Returns an array of all currently registered hashes to test against.</p>
 <h3>addCrc32</h3>
-<pre class=codehilite><code class=language-php>addCrc32(string|array $options) : void</code></pre>
+<pre class="highlight"><code class="language-php">addCrc32(string|array $options) : void</code></pre>
+
 <p>Add a single hash to test against, or a set of filename/hash pairs to test
 against.</p>
 <h3>setCrc32</h3>
-<pre class=codehilite><code class=language-php>setCrc32(string|array $options): void</code></pre>
+<pre class="highlight"><code class="language-php">setCrc32(string|array $options): void</code></pre>
+
 <p>Overwrite the current list of registered hashes with the one(s) provided.</p>
 
 

@@ -641,7 +641,7 @@ and can be easily manipulated.</p>
   <code>mime_magic</code> extensions are available; defaults to <code>false</code>.</li>
 </ul>
 <h2 id="basic-usage">Basic Usage</h2>
-<pre class=codehilite><code class=language-php>use Laminas\Validator\File\MimeType;
+<pre class="highlight"><code class="language-php">use Laminas\Validator\File\MimeType;
 
 // Only allow 'gif' or 'jpg' files
 $validator = new MimeType('image/gif,image/jpeg');
@@ -668,6 +668,7 @@ $validator = new MimeType([
 if ($validator-&gt;isValid('./myfile.jpg')) {
     // file is valid
 }</code></pre>
+
 <blockquote>
 <h3>Validating MIME groups is potentially dangerous</h3>
 <p>Allowing "groups" of MIME types will accept <strong>all</strong> members of this group, even

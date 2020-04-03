@@ -633,18 +633,20 @@
 <h2 id="default-date-validation">Default date validation</h2>
 <p>The easiest way to validate a date is by using the default date format,
 <code>Y-m-d</code>.</p>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Date();
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Date();
 
 $validator-&gt;isValid('2000-10-10');   // returns true
 $validator-&gt;isValid('10.10.2000'); // returns false</code></pre>
+
 <h2 id="specifying-a-date-format">Specifying a date format</h2>
 <p><code>Laminas\Validator\Date</code> also supports custom date formats. When you want to
 validate such a date, use the <code>format</code> option. This option accepts any format
 allowed by the PHP <a href="http://php.net/manual/en/datetime.createfromformat.php#refsect1-datetime.createfromformat-parameters">DateTime::createFromFormat()</a> method.</p>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Date(['format' =&gt; 'Y']);
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Date(['format' =&gt; 'Y']);
 
 $validator-&gt;isValid('2010'); // returns true
 $validator-&gt;isValid('May');  // returns false</code></pre>
+
 <h2 id="strict-mode">Strict mode</h2>
 <ul>
 <li><strong>Since 2.13.0</strong></li>
@@ -656,7 +658,7 @@ provide both the <a href="#specifying-a-date-format">date format</a> and the <co
 options. In such a scenario, the value must both be covertable to a <code>DateTime</code>
 value <strong>and</strong> be in the same format as provided to the validator. (Generally,
 this will mean the value must be a string.)</p>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Date(['format' =&gt; 'Y-m-d', 'strict' =&gt; true]);
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Date(['format' =&gt; 'Y-m-d', 'strict' =&gt; true]);
 
 $validator-&gt;isValid('2010-10-10'); // returns true
 $validator-&gt;isValid(new DateTime('2010-10-10')); // returns false; value is not a string

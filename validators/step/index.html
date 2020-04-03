@@ -630,16 +630,17 @@ int or float).</p>
 <li><code>step</code>: This is the step value. This option defaults to <code>1</code></li>
 </ul>
 <h2 id="basic-usage">Basic usage</h2>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Step();
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Step();
 
 if ($validator-&gt;isValid(1)) {
     // value is a valid step value
 } else {
     // false
 }</code></pre>
+
 <h2 id="using-floating-point-values">Using floating-point values</h2>
 <p>The <code>Step</code> validator also supports floating-point base and step values:</p>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Step([
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Step([
     'baseValue' =&gt; 1.1,
     'step'      =&gt; 2.2,
 ]);

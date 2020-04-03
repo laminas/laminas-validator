@@ -635,20 +635,22 @@ or dates can not be validated with this validator.</p>
 </ul>
 <h2 id="basic-usage">Basic usage</h2>
 <p>To validate if a given value is greater than a defined minimum:</p>
-<pre class=codehilite><code class=language-php>$valid  = new Laminas\Validator\GreaterThan(['min' =&gt; 10]);
+<pre class="highlight"><code class="language-php">$valid  = new Laminas\Validator\GreaterThan(['min' =&gt; 10]);
 $value  = 8;
 $return = $valid-&gt;isValid($value);
 // returns false</code></pre>
+
 <p>The above example returns <code>true</code> for all values which are greater than 10.</p>
 <h2 id="inclusive-validation">Inclusive validation</h2>
 <p>Sometimes it is useful to validate a value by including the minimum value.</p>
-<pre class=codehilite><code class=language-php>$valid  = new Laminas\Validator\GreaterThan([
+<pre class="highlight"><code class="language-php">$valid  = new Laminas\Validator\GreaterThan([
     'min' =&gt; 10,
     'inclusive' =&gt; true,
 ]);
 $value  = 10;
 $result = $valid-&gt;isValid($value);
 // returns true</code></pre>
+
 <p>The example is identical to our first example, with the exception that we
 included the minimum value. Now the value '10' is allowed and will return
 <code>true</code>.</p>

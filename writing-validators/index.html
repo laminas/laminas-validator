@@ -641,7 +641,7 @@ failure to be determined.</p>
 <h2 id="creating-a-validation-class">Creating a Validation Class</h2>
 <p>The following example demonstrates how a custom validator might be written. In
 this case, the validator tests that a value is a floating point value.</p>
-<pre class=codehilite><code class=language-php>namespace MyValid;
+<pre class="highlight"><code class="language-php">namespace MyValid;
 
 use Laminas\Validator\AbstractValidator;
 
@@ -650,7 +650,7 @@ class Float extends AbstractValidator
     const FLOAT = 'float';
 
     protected $messageTemplates = [
-        self::FLOAT =&gt; &quot;'%value%' is not a floating point value&quot;,
+        self::FLOAT =&gt; "'%value%' is not a floating point value",
     ];
 
     public function isValid($value)
@@ -665,6 +665,7 @@ class Float extends AbstractValidator
         return true;
     }
 }</code></pre>
+
 <p>The class defines a template for its single validation failure message, which
 includes the built-in magic parameter, <code>%value%</code>. The call to <code>setValue()</code>
 prepares the object to insert the tested value into the failure message
@@ -686,7 +687,7 @@ message template.</p>
 </ul>
 <p>These validation failure reasons are then translated to definitions in the
 class:</p>
-<pre class=codehilite><code class=language-php>namespace MyValid;
+<pre class="highlight"><code class="language-php">namespace MyValid;
 
 use Laminas\Validator\AbstractValidator;
 
@@ -705,9 +706,9 @@ class NumericBetween extends AbstractValidator
     ];
 
     protected $messageTemplates = [
-        self::MSG_NUMERIC =&gt; &quot;'%value%' is not numeric&quot;,
-        self::MSG_MINIMUM =&gt; &quot;'%value%' must be at least '%min%'&quot;,
-        self::MSG_MAXIMUM =&gt; &quot;'%value%' must be no more than '%max%'&quot;,
+        self::MSG_NUMERIC =&gt; "'%value%' is not numeric",
+        self::MSG_MINIMUM =&gt; "'%value%' must be at least '%min%'",
+        self::MSG_MAXIMUM =&gt; "'%value%' must be no more than '%max%'",
     ];
 
     public function isValid($value)
@@ -732,6 +733,7 @@ class NumericBetween extends AbstractValidator
         return true;
     }
 }</code></pre>
+
 <p>The public properties <code>$minimum</code> and <code>$maximum</code> have been established to provide
 the minimum and maximum boundaries, respectively, for a value to successfully
 validate. The class also defines two message variables that correspond to the
@@ -756,7 +758,7 @@ that the password:</p>
 <li>and contains at least one digit character.</li>
 </ul>
 <p>The following class implements these validation criteria:</p>
-<pre class=codehilite><code class=language-php>namespace MyValid;
+<pre class="highlight"><code class="language-php">namespace MyValid;
 
 use Laminas\Validator\AbstractValidator;
 
@@ -768,10 +770,10 @@ class PasswordStrength extends AbstractValidator
     const DIGIT  = 'digit';
 
     protected $messageTemplates = [
-        self::LENGTH =&gt; &quot;'%value%' must be at least 8 characters in length&quot;,
-        self::UPPER  =&gt; &quot;'%value%' must contain at least one uppercase letter&quot;,
-        self::LOWER  =&gt; &quot;'%value%' must contain at least one lowercase letter&quot;,
-        self::DIGIT  =&gt; &quot;'%value%' must contain at least one digit character&quot;,
+        self::LENGTH =&gt; "'%value%' must be at least 8 characters in length",
+        self::UPPER  =&gt; "'%value%' must contain at least one uppercase letter",
+        self::LOWER  =&gt; "'%value%' must contain at least one lowercase letter",
+        self::DIGIT  =&gt; "'%value%' must contain at least one digit character",
     ];
 
     public function isValid($value)
@@ -803,6 +805,7 @@ class PasswordStrength extends AbstractValidator
         return $isValid;
     }
 }</code></pre>
+
 <p>Note that the four criteria tests in <code>isValid()</code> do not immediately return
 <code>false</code>. This allows the validation class to provide <strong>all</strong> of the reasons that
 the input password failed to meet the validation requirements. If, for example,

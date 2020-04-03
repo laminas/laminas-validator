@@ -632,10 +632,11 @@ use it to ensure required elements have values associated with them.</p>
 <p>By default, this validator works differently than you would expect when you've
 worked with PHP's <code>empty()</code> operator. In particular, this validator will
 evaluate both the integer <code>0</code> and string <code>'0'</code> as empty.</p>
-<pre class=codehilite><code class=language-php>$valid = new Laminas\Validator\NotEmpty();
+<pre class="highlight"><code class="language-php">$valid = new Laminas\Validator\NotEmpty();
 $value  = '';
 $result = $valid-&gt;isValid($value);
 // returns false</code></pre>
+
 <h2 id="specifying-empty-behavior">Specifying empty behavior</h2>
 <p>Some projects have differing opinions of what is considered an "empty" value: a
 string with only whitespace might be considered empty, or <code>0</code> may be
@@ -668,7 +669,7 @@ should be validated as empty and which not.</p>
 <p>There are several ways to select which of the above types are validated. You can
 give one or multiple types and add them, you can provide an array, you can use
 constants, or you can provide a textual string. See the following examples:</p>
-<pre class=codehilite><code class=language-php>use Laminas\Validator\NotEmpty;
+<pre class="highlight"><code class="language-php">use Laminas\Validator\NotEmpty;
 
 // Returns false on 0
 $validator = new NotEmpty(NotEmpty::INTEGER);
@@ -681,6 +682,7 @@ $validator = new NotEmpty([ NotEmpty::INTEGER, NotEmpty::ZERO ]);
 
 // Returns false on 0 or '0'
 $validator = new NotEmpty(['integer', 'zero']);</code></pre>
+
 <p>You can also provide an instance of <code>Traversable</code> to set the desired types. To
 set types after instantiation, use the <code>setType()</code> method.</p>
 

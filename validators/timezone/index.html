@@ -625,13 +625,14 @@ abbreviation (e.g. <code>ewt</code>) as well as the location string (e.g.
 <h2 id="basic-usage">Basic Usage</h2>
 <p>The default validation type will check against abbreviations as well as the
 location string.</p>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Timezone();
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Timezone();
 
 $validator-&gt;isValid('America/Los_Angeles'); // returns true
 $validator-&gt;isValid('ewt'); // returns true
 $validator-&gt;isValid('Foobar');  // returns false</code></pre>
+
 <p>To validate against only the location string you can set the type:</p>
-<pre class=codehilite><code class=language-php>use Laminas\Validator\Timezone;
+<pre class="highlight"><code class="language-php">use Laminas\Validator\Timezone;
 
 $validator = new Timezone();
 $validator-&gt;setType(Timezone::LOCATION);

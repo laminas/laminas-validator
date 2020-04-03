@@ -625,7 +625,7 @@ directories.</p>
   against which to validate.</li>
 </ul>
 <h2 id="basic-usage">Basic Usage</h2>
-<pre class=codehilite><code class=language-php>use Laminas\Validator\File\NotExists;
+<pre class="highlight"><code class="language-php">use Laminas\Validator\File\NotExists;
 
 // Only allow files that do not exist in ~either~ directories
 $validator = new NotExists('/tmp,/var/tmp');
@@ -643,6 +643,7 @@ $validator = new NotExists(['directory' =&gt; [
 if ($validator-&gt;isValid('/home/myfile.txt')) {
     // file is valid
 }</code></pre>
+
 <blockquote>
 <h3>Checks against all directories</h3>
 <p>This validator checks whether the specified file does not exist in <strong>any</strong> of

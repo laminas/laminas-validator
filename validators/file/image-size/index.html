@@ -634,7 +634,7 @@ maximum dimensions can be set to validate against.</p>
   indicates no maximum.</li>
 </ul>
 <h2 id="basic-usage">Basic Usage</h2>
-<pre class=codehilite><code class=language-php>use Laminas\Validator\File\ImageSize;
+<pre class="highlight"><code class="language-php">use Laminas\Validator\File\ImageSize;
 
 // Is image size between 320x200 (min) and 640x480 (max)?
 $validator = new ImageSize(320, 200, 640, 480);
@@ -663,13 +663,16 @@ $validator = new ImageSize([
 if ($validator-&gt;isValid('./myfile.jpg')) {
     // file is valid
 }</code></pre>
+
 <h2 id="public-methods">Public Methods</h2>
 <h3>getImageMin</h3>
-<pre class=codehilite><code class=language-php>getImageMin() : array</code></pre>
+<pre class="highlight"><code class="language-php">getImageMin() : array</code></pre>
+
 <p>Returns the minimum valid dimensions as an array with the keys <code>width</code> and
 <code>height</code>.</p>
 <h3>getImageMax</h3>
-<pre class=codehilite><code class=language-php>getImageMax() : array</code></pre>
+<pre class="highlight"><code class="language-php">getImageMax() : array</code></pre>
+
 <p>Returns the maximum valid dimensions as an array with the keys <code>width</code> and
 <code>height</code>.</p>
 

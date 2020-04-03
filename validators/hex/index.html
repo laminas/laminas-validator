@@ -615,12 +615,13 @@
 hexadecimal characters. These are all characters from <strong>0 to 9</strong> and <strong>A to F</strong>,
 case insensitive. There is no length limitation for the input you want to
 validate.</p>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Hex();
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Hex();
 if ($validator-&gt;isValid('123ABC')) {
     // value contains only hex chars
 } else {
     // false
 }</code></pre>
+
 <blockquote>
 <h3>Invalid characters</h3>
 <p>All other characters will return false, including whitespace and decimal

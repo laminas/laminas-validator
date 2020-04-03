@@ -623,10 +623,9 @@
 <h3>Installation requirements</h3>
 <p>This validator needs to make a request over HTTP; therefore it requires an HTTP client. The validator provides support only for HTTP clients implementing <a href="https://www.php-fig.org/psr/psr-18/">PSR-18</a> and <a href="https://www.php-fig.org/psr/psr-17/">PSR-17</a> request and response factories.</p>
 <p>To ensure you have these installed before using this validator, run the following:</p>
-<pre class="codehilite"><code class="language-bash">
-$ composer require psr/http-client
-$ composer require psr/http-factory
-</code></pre>
+<pre class="highlight"><code class="language-bash">$ composer require psr/http-client
+$ composer require psr/http-factory</code></pre>
+
 </blockquote>
 <h2 id="basic-usage">Basic usage</h2>
 <p>The validator has two required constructor arguments:</p>
@@ -636,27 +635,29 @@ $ composer require psr/http-factory
 </ul>
 <p>Once you have an instance, you can then pass a password to its <code>isValid()</code> method to determine if it has been disclosed in a known data breach.</p>
 <p>If the password was found via the service, <code>isValid()</code> will return <code>false</code>. If the password was not found, <code>isValid()</code> will return <code>true</code>.</p>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\UndisclosedPassword(
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\UndisclosedPassword(
     $httpClient, // a PSR-18 HttpClientInterface
     $requestFactory // a PSR-17 RequestFactoryInterface
 );
 
 $result = $validator-&gt;isValid('password');
-// $result is FALSE because &quot;password&quot; was found in a data breach
+// $result is FALSE because "password" was found in a data breach
 
 $result = $validator-&gt;isValid('8aDk=XiW2E.77tLfuAcB'); 
-// $result is TRUE because &quot;8aDk=XiW2E.77tLfuAcB&quot; was not found in a data breach</code></pre>
+// $result is TRUE because "8aDk=XiW2E.77tLfuAcB" was not found in a data breach</code></pre>
+
 <h2 id="a-simple-command-line-example">A simple command line example</h2>
 <p>In this example, I'm using <code>laminas/laminas-diactoros</code> to provide HTTP messages, and <code>php-http/curl-client</code> as the HTTP client. Let's begin with installation of all required packages:</p>
-<pre class=codehilite><code class=language-bash>$ composer require \
+<pre class="highlight"><code class="language-bash">$ composer require \
     php-http/message \
     php-http/message-factory \
     php-http/discovery \
     php-http/curl-client \
     laminas/laminas-diactoros \
     laminas/laminas-validator</code></pre>
+
 <p>Next, I create a file, <code>undisclosed.php</code>, where I put my code:</p>
-<pre class=codehilite><code class=language-php>require_once __DIR__ . '/vendor/autoload.php';
+<pre class="highlight"><code class="language-php">require_once __DIR__ . '/vendor/autoload.php';
 
 use Http\Client\Curl\Client;
 use Laminas\Diactoros\RequestFactory;
@@ -668,13 +669,15 @@ $responseFactory = new ResponseFactory();
 $client = new Client($responseFactory, null);
 
 $undisclosedPassword = new UndisclosedPassword($client, $requestFactory);
-echo 'Password &quot;password&quot; is ' . ($undisclosedPassword-&gt;isValid('password') ? 'not disclosed' : 'disclosed') . PHP_EOL;
-echo 'Password &quot;NVt3MpvQ&quot; is ' . ($undisclosedPassword-&gt;isValid('NVt3MpvQ') ? 'not disclosed' : 'disclosed') . PHP_EOL;</code></pre>
+echo 'Password "password" is ' . ($undisclosedPassword-&gt;isValid('password') ? 'not disclosed' : 'disclosed') . PHP_EOL;
+echo 'Password "NVt3MpvQ" is ' . ($undisclosedPassword-&gt;isValid('NVt3MpvQ') ? 'not disclosed' : 'disclosed') . PHP_EOL;</code></pre>
+
 <p>To run it, I use the PHP command line interpreter:</p>
-<pre class=codehilite><code class=language-bash>$ php undisclosed.php</code></pre>
+<pre class="highlight"><code class="language-bash">$ php undisclosed.php</code></pre>
+
 <p>And it gives me the following output:</p>
-<pre class=codehilite><code class=language-bash>Password &quot;password&quot; is disclosed
-Password &quot;NVt3MpvQ&quot; is not disclosed</code></pre>
+<pre class="highlight"><code class="language-bash">Password "password" is disclosed
+Password "NVt3MpvQ" is not disclosed</code></pre>
 
 
 

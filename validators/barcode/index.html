@@ -800,19 +800,20 @@ small products where a UPCA barcode would not fit.</p>
 <h2 id="basic-usage">Basic usage</h2>
 <p>To validate if a given string is a barcode you must know its type. See the
 following example for an EAN13 barcode:</p>
-<pre class=codehilite><code class=language-php>$valid = new Laminas\Validator\Barcode('EAN13');
+<pre class="highlight"><code class="language-php">$valid = new Laminas\Validator\Barcode('EAN13');
 if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
 }</code></pre>
+
 <h2 id="optional-checksum">Optional checksum</h2>
 <p>Some barcodes can be provided with an optional checksum. These barcodes would be
 valid even without checksum. Still, when you provide a checksum, then you should
 also validate it. By default, these barcode types perform no checksum
 validation. By using the <code>checksum</code> option you can define if the checksum will
 be validated or ignored.</p>
-<pre class=codehilite><code class=language-php>$valid = new Laminas\Validator\Barcode([
+<pre class="highlight"><code class="language-php">$valid = new Laminas\Validator\Barcode([
     'adapter'  =&gt; 'EAN13',
     'checksum' =&gt; false,
 ]);
@@ -821,6 +822,7 @@ if ($valid-&gt;isValid($input)) {
 } else {
     // input is invalid
 }</code></pre>
+
 <blockquote>
 <h3>Reduced security by disabling checksum validation</h3>
 <p>By switching off checksum validation you will also reduce the security of the
@@ -856,7 +858,7 @@ or implement <code>Laminas\Validator\Barcode\AdapterInterface</code>.</p>
 <p>As an example, let's create a validator that expects an even number of
 characters that include all digits and the letters 'ABCDE', and which requires a
 checksum.</p>
-<pre class=codehilite><code class=language-php>namespace My\Barcode;
+<pre class="highlight"><code class="language-php">namespace My\Barcode;
 
 use Laminas\Validator\Barcode;
 use Laminas\Validator\Barcode\AbstractAdapter;

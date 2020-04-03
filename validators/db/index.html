@@ -635,9 +635,8 @@ given value.</p>
 <p><code>Laminas\Validator\Db\NoRecordExists</code> and <code>Laminas\Validator\Db\RecordExists</code>
 depends on the laminas-db component, so be sure to have it installed before
 getting started:</p>
-<pre class="codehilite"><code class="language-bash">
-$ composer require laminas/laminas-db
-</code></pre>
+<pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-db</code></pre>
+
 </blockquote>
 <h2 id="supported-options">Supported options</h2>
 <p>The following options are supported for <code>Laminas\Validator\Db\NoRecordExists</code> and
@@ -651,7 +650,7 @@ $ composer require laminas/laminas-db
 </ul>
 <h2 id="basic-usage">Basic usage</h2>
 <p>An example of basic usage of the validators:</p>
-<pre class=codehilite><code class=language-php>// Check that the email address exists in the database
+<pre class="highlight"><code class="language-php">// Check that the email address exists in the database
 $validator = new Laminas\Validator\Db\RecordExists([
     'table'   =&gt; 'users',
     'field'   =&gt; 'emailaddress',
@@ -663,13 +662,14 @@ if ($validator-&gt;isValid($emailaddress)) {
 } else {
     // email address is invalid; print the reasons
     foreach ($validator-&gt;getMessages() as $message) {
-        echo &quot;$message\n&quot;;
+        echo "$message\n";
     }
 }</code></pre>
+
 <p>The above will test that a given email address is in the database table. If no
 record is found containing the value of <code>$emailaddress</code> in the specified column,
 then an error message is displayed.</p>
-<pre class=codehilite><code class=language-php>// Check that the username is not present in the database
+<pre class="highlight"><code class="language-php">// Check that the username is not present in the database
 $validator = new Laminas\Validator\Db\NoRecordExists([
     'table'   =&gt; 'users',
     'field'   =&gt; 'username',
@@ -682,9 +682,10 @@ if ($validator-&gt;isValid($username)) {
     // username is invalid; print the reason
     $messages = $validator-&gt;getMessages();
     foreach ($messages as $message) {
-        echo &quot;$message\n&quot;;
+        echo "$message\n";
     }
 }</code></pre>
+
 <p>The above will test that a given username is <em>not</em> in the database table. If a
 record is found containing the value of <code>$username</code> in the specified column,
 then an error message is displayed.</p>
@@ -696,7 +697,7 @@ providing a <code>WHERE</code> clause as a string, or an array with the keys <co
 <p>When providing an array for the exclude clause, the <code>!=</code> operator is used, so
 you can check the rest of a table for a value before altering a record (for
 example on a user profile form)</p>
-<pre class=codehilite><code class=language-php>// Check no other users have the username
+<pre class="highlight"><code class="language-php">// Check no other users have the username
 $user_id   = $user-&gt;getId();
 $validator = new Laminas\Validator\Db\NoRecordExists([
     'table' =&gt; 'users',
@@ -713,14 +714,15 @@ if ($validator-&gt;isValid($username)) {
     // username is invalid; print the reason
     $messages = $validator-&gt;getMessages();
     foreach ($messages as $message) {
-        echo &quot;$message\n&quot;;
+        echo "$message\n";
     }
 }</code></pre>
+
 <p>The above example will check the table to ensure no records other than the one
 where <code>id = $user_id</code> contains the value <code>$username</code>.</p>
 <p>You can also provide a string to the exclude clause so you can use an operator
 other than <code>!=</code>. This can be useful for testing against composite keys.</p>
-<pre class=codehilite><code class=language-php>$email     = 'user@example.com';
+<pre class="highlight"><code class="language-php">$email     = 'user@example.com';
 $clause    = $dbAdapter-&gt;quoteIdentifier('email') . ' = ' . $dbAdapter-&gt;quoteValue($email);
 $validator = new Laminas\Validator\Db\RecordExists([
     'table'   =&gt; 'users',
@@ -735,26 +737,28 @@ if ($validator-&gt;isValid($username)) {
     // username is invalid; print the reason
     $messages = $validator-&gt;getMessages();
     foreach ($messages as $message) {
-        echo &quot;$message\n&quot;;
+        echo "$message\n";
     }
 }</code></pre>
+
 <p>The above example will check the <code>users</code> table to ensure that only a record with
 both the username <code>$username</code> and with the email <code>$email</code> is valid.</p>
 <h2 id="database-schemas">Database Schemas</h2>
 <p>You can specify a schema within your database for adapters such as PostgreSQL
 and DB/2 by supplying an array with <code>table</code> and <code>schema</code> keys, as demonstrated
 below:</p>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Db\RecordExists([
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Db\RecordExists([
     'table'  =&gt; 'users',
     'schema' =&gt; 'my',
     'field'  =&gt; 'id',
 ]);</code></pre>
+
 <h2 id="using-a-select-object">Using a Select object</h2>
 <p>It is also possible to supply the validators with a <code>Laminas\Db\Sql\Select</code> object
 in place of options. The validator then uses this object instead of building its
 own. This allows for greater flexibility with selection of records used for
 validation.</p>
-<pre class=codehilite><code class=language-php>use Laminas\Db\Sql\Select;
+<pre class="highlight"><code class="language-php">use Laminas\Db\Sql\Select;
 use Laminas\Validator\Db\RecordExists;
 
 $select = new Select();
@@ -776,9 +780,10 @@ if ($validator-&gt;isValid($username)) {
     // username is invalid; print the reason
     $messages = $validator-&gt;getMessages();
     foreach ($messages as $message) {
-        echo &quot;$message\n&quot;;
+        echo "$message\n";
     }
 }</code></pre>
+
 <p>The above example will check the <code>users</code> table to ensure that only a record with
 both the username <code>$username</code> and with the email <code>$email</code> is valid.</p>
 

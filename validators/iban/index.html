@@ -632,7 +632,7 @@ to use <code>Laminas\Validator\Iban</code>.</p>
 <p>Sometime it is useful just to validate if the given value is a IBAN number or
 not. This means that you don't want to validate it against a defined country.
 This can be done by using <code>false</code> as locale.</p>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Iban(['country_code' =&gt; false]);
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Iban(['country_code' =&gt; false]);
 // Note: you can also provide FALSE as the sole parameter
 
 if ($validator-&gt;isValid('AT611904300234573201')) {
@@ -640,6 +640,7 @@ if ($validator-&gt;isValid('AT611904300234573201')) {
 } else {
     // IBAN is not valid
 }</code></pre>
+
 <p>In this situation, any IBAN number from any country will considered valid. Note
 that this should not be done when you accept only accounts from a single
 country!</p>
@@ -647,7 +648,7 @@ country!</p>
 <p>To validate against a defined country, you just provide a country code. You can
 do this during instaniation via the option <code>country_code</code>, or afterwards by
 using <code>setCountryCode()</code>.</p>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Iban(['country_code' =&gt; 'AT']);
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Iban(['country_code' =&gt; 'AT']);
 
 if ($validator-&gt;isValid('AT611904300234573201')) {
     // IBAN appears to be valid

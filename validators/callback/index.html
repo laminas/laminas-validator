@@ -639,22 +639,24 @@ validate a given value.</p>
 <h2 id="basic-usage">Basic usage</h2>
 <p>The simplest use case is to pass a function as a callback. Consider the
 following function:</p>
-<pre class=codehilite><code class=language-php>function myMethod($value)
+<pre class="highlight"><code class="language-php">function myMethod($value)
 {
     // some validation
     return true;
 }</code></pre>
+
 <p>To use it within <code>Laminas\Validator\Callback</code>, pass it to the constructor</p>
-<pre class=codehilite><code class=language-php>$valid = new Laminas\Validator\Callback('myMethod');
+<pre class="highlight"><code class="language-php">$valid = new Laminas\Validator\Callback('myMethod');
 if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
 }</code></pre>
+
 <h2 id="usage-with-closures">Usage with closures</h2>
 <p>The <code>Callback</code> validator supports any PHP callable, including PHP
 <a href="http://php.net/functions.anonymous">closures</a>.</p>
-<pre class=codehilite><code class=language-php>$valid = new Laminas\Validator\Callback(function($value) {
+<pre class="highlight"><code class="language-php">$valid = new Laminas\Validator\Callback(function($value) {
     // some validation
     return true;
 });
@@ -664,10 +666,11 @@ if ($valid-&gt;isValid($input)) {
 } else {
     // input is invalid
 }</code></pre>
+
 <h2 id="usage-with-class-based-callbacks">Usage with class-based callbacks</h2>
 <p>Of course it's also possible to use a class method as callback. Consider the
 following class definition:</p>
-<pre class=codehilite><code class=language-php>class MyClass
+<pre class="highlight"><code class="language-php">class MyClass
 {
     public function myMethod($value)
     {
@@ -675,17 +678,19 @@ following class definition:</p>
         return true;
     }
 }</code></pre>
+
 <p>To use it with the <code>Callback</code> validator, pass a callable using an instance of
 the class:</p>
-<pre class=codehilite><code class=language-php>$valid = new Laminas\Validator\Callback([new MyClass, 'myMethod']);
+<pre class="highlight"><code class="language-php">$valid = new Laminas\Validator\Callback([new MyClass, 'myMethod']);
 if ($valid-&gt;isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
 }</code></pre>
+
 <p>You may also define a static method as a callback. Consider the following class
 definition and validator usage:</p>
-<pre class=codehilite><code class=language-php>class MyClass
+<pre class="highlight"><code class="language-php">class MyClass
 {
     public static function test($value)
     {
@@ -700,9 +705,10 @@ if ($valid-&gt;isValid($input)) {
 } else {
     // input is invalid
 }</code></pre>
+
 <p>Finally, you may define the magic method <code>__invoke()</code> in your class. If you do
 so, you can provide a class instance itself as the callback:</p>
-<pre class=codehilite><code class=language-php>class MyClass
+<pre class="highlight"><code class="language-php">class MyClass
 {
     public function __invoke($value)
     {
@@ -717,11 +723,12 @@ if ($valid-&gt;isValid($input)) {
 } else {
     // input is invalid
 }</code></pre>
+
 <h2 id="adding-options">Adding options</h2>
 <p><code>Laminas\Validator\Callback</code> also allows the usage of options which are provided as
 additional arguments to the callback.</p>
 <p>Consider the following class and method definition:</p>
-<pre class=codehilite><code class=language-php>class MyClass
+<pre class="highlight"><code class="language-php">class MyClass
 {
     public static function myMethod($value, $option)
     {
@@ -739,11 +746,12 @@ additional arguments to the callback.</p>
     }
 
 }</code></pre>
+
 <p>There are two ways to inform the validator of additional options: pass them in
 the constructor, or pass them to the <code>setOptions()</code> method.</p>
 <p>To pass them to the constructor, you would need to pass an array containing two
 keys, <code>callback</code> and <code>callbackOptions</code>:</p>
-<pre class=codehilite><code class=language-php>$valid = new Laminas\Validator\Callback([
+<pre class="highlight"><code class="language-php">$valid = new Laminas\Validator\Callback([
     'callback'        =&gt; [MyClass::class, 'myMethod'],
     'callbackOptions' =&gt; $options,
 ]);
@@ -753,8 +761,9 @@ if ($valid-&gt;isValid($input)) {
 } else {
     // input is invalid
 }</code></pre>
+
 <p>Otherwise, you may pass them to the validator after instantiation:</p>
-<pre class=codehilite><code class=language-php>$valid = new Laminas\Validator\Callback([MyClass::class, 'myMethod']);
+<pre class="highlight"><code class="language-php">$valid = new Laminas\Validator\Callback([MyClass::class, 'myMethod']);
 $valid-&gt;setOptions($options);
 
 if ($valid-&gt;isValid($input)) {
@@ -762,9 +771,10 @@ if ($valid-&gt;isValid($input)) {
 } else {
     // input is invalid
 }</code></pre>
+
 <p>When there are additional values given to <code>isValid()</code>, then these values will be
 passed as an additional argument:</p>
-<pre class=codehilite><code class=language-php>$valid = new Laminas\Validator\Callback([MyClass::class, 'myMethod']);
+<pre class="highlight"><code class="language-php">$valid = new Laminas\Validator\Callback([MyClass::class, 'myMethod']);
 $valid-&gt;setOptions($options);
 
 if ($valid-&gt;isValid($input, $context)) {
@@ -772,6 +782,7 @@ if ($valid-&gt;isValid($input, $context)) {
 } else {
     // input is invalid
 }</code></pre>
+
 <p>When making the call to the callback, the value to be validated will always be
 passed as the first argument to the callback followed by all other values given
 to <code>isValid()</code>; all other options will follow it. The amount and type of options

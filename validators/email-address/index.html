@@ -648,16 +648,17 @@ validator first splits the email address on <code>local-part @ hostname</code> a
 to match these against known specifications for email addresses and hostnames.</p>
 <h2 id="basic-usage">Basic usage</h2>
 <p>A basic example of usage is below:</p>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\EmailAddress();
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\EmailAddress();
 
 if ($validator-&gt;isValid($email)) {
     // email appears to be valid
 } else {
     // email is invalid; print the reasons
     foreach ($validator-&gt;getMessages() as $message) {
-        echo &quot;$message\n&quot;;
+        echo "$message\n";
     }
 }</code></pre>
+
 <p>This will match the email address <code>$email</code> and on failure populate
 <code>getMessages()</code> with useful error messages.</p>
 <h2 id="supported-options">Supported Options</h2>
@@ -705,8 +706,9 @@ or a <code>\\</code> character in an email address).</p>
 email address, and want to disable validation of the hostname, you can set the
 <code>domain</code> option to <code>false</code>. This forces <code>Laminas\Validator\EmailAddress</code> not to
 validate the hostname part of the email address.</p>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\EmailAddress();
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\EmailAddress();
 $validator-&gt;setOptions(['domain' =&gt; FALSE]);</code></pre>
+
 <h2 id="validating-different-types-of-hostnames">Validating different types of hostnames</h2>
 <p>The hostname part of an email address is validated against the <a href="../hostname/">Hostname validator</a>.
 By default only DNS hostnames of the form <code>domain.com</code> are accepted, though if
@@ -715,7 +717,7 @@ you wish you can accept IP addresses and Local hostnames too.</p>
 parameter to indicate the type of hostnames you want to accept. More details are
 included in <code>Laminas\Validator\Hostname</code>, though an example of how to accept both
 DNS and Local hostnames appears below:</p>
-<pre class=codehilite><code class=language-php>use Laminas\Validator\EmailAddress;
+<pre class="highlight"><code class="language-php">use Laminas\Validator\EmailAddress;
 use Laminas\Validator\Hostname;
 
 $validator = new EmailAddress( Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL);
@@ -725,9 +727,10 @@ if ($validator-&gt;isValid($email)) {
 } else {
     // email is invalid; print the reasons
     foreach ($validator-&gt;getMessages() as $message) {
-        echo &quot;$message\n&quot;;
+        echo "$message\n";
     }
 }</code></pre>
+
 <h2 id="checking-if-the-hostname-actually-accepts-email">Checking if the hostname actually accepts email</h2>
 <p>Just because an email address is in the correct format, it doesn't necessarily
 mean that email address actually exists. To help solve this problem, you can use
@@ -736,10 +739,11 @@ the email's hostname. This tells you that the hostname accepts email, but
 doesn't tell you the exact email address itself is valid.</p>
 <p>MX checking is not enabled by default. To enable MX checking you can pass a
 second parameter to the <code>Laminas\Validator\EmailAddress</code> constructor.</p>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\EmailAddress([
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\EmailAddress([
     'allow' =&gt; Laminas\Validator\Hostname::ALLOW_DNS,
     'useMxCheck'    =&gt; true,
 ]);</code></pre>
+
 <p>Alternatively you can either pass <code>true</code> or <code>false</code> to <code>setValidateMx()</code> to
 enable or disable MX validation.</p>
 <p>By enabling this setting, network functions will be used to check for the
@@ -751,11 +755,12 @@ even if they do not provide a MX record. In this case they can provide <code>A</
 <code>A6</code>, or <code>AAAA</code> records. To allow <code>Laminas\Validator\EmailAddress</code> to check also
 for these other records, you need to set deep MX validation. This can be done at
 initiation by setting the <code>deep</code> option or by using <code>setOptions()</code>.</p>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\EmailAddress([
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\EmailAddress([
     'allow' =&gt; Laminas\Validator\Hostname::ALLOW_DNS,
     'useMxCheck'    =&gt; true,
     'useDeepMxCheck'  =&gt; true,
 ]);</code></pre>
+
 <p>Sometimes it can be useful to get the server's MX information which have been
 used to do further processing. Simply use <code>getMXRecord()</code> after validation. This
 method returns the received MX record including weight and sorted by it.</p>
@@ -775,7 +780,8 @@ exist in some domains. This is known as International Domain Name (IDN) support.
 This is enabled by default, though you can disable this by changing the setting
 via the internal <code>Laminas\Validator\Hostname</code> object that exists within
 <code>Laminas\Validator\EmailAddress</code>.</p>
-<pre class=codehilite><code class=language-php>$validator-&gt;getHostnameValidator()-&gt;setValidateIdn(false);</code></pre>
+<pre class="highlight"><code class="language-php">$validator-&gt;getHostnameValidator()-&gt;setValidateIdn(false);</code></pre>
+
 <p>More information on the usage of <code>setValidateIdn()</code> appears in the
 <a href="../hostname/">Hostname documentation</a>.</p>
 <p>Please note IDNs are only validated if you allow DNS hostnames to be validated.</p>
@@ -784,7 +790,8 @@ via the internal <code>Laminas\Validator\Hostname</code> object that exists with
 enabled by default, though you can disable this by changing the setting via the
 internal <code>Laminas\Validator\Hostname</code> object that exists within
 <code>Laminas\Validator\EmailAddress</code>.</p>
-<pre class=codehilite><code class=language-php>$validator-&gt;getHostnameValidator()-&gt;setValidateTld(false);</code></pre>
+<pre class="highlight"><code class="language-php">$validator-&gt;getHostnameValidator()-&gt;setValidateTld(false);</code></pre>
+
 <p>More information on the usage of <code>setValidateTld()</code> appears in the
 <a href="../hostname/">Hostname documentation</a>.</p>
 <p>Please note TLDs are only validated if you allow DNS hostnames to be validated.</p>
@@ -792,7 +799,7 @@ internal <code>Laminas\Validator\Hostname</code> object that exists within
 <p><code>Laminas\Validator\EmailAddress</code> makes also use of <code>Laminas\Validator\Hostname</code> to
 check the hostname part of a given email address. You can specify messages for
 <code>Laminas\Validator\Hostname</code> from within <code>Laminas\Validator\EmailAddress</code>.</p>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\EmailAddress();
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\EmailAddress();
 $validator-&gt;setMessages([
     Laminas\Validator\Hostname::UNKNOWN_TLD =&gt; 'I don\'t know the TLD you gave'
 ]);</code></pre>

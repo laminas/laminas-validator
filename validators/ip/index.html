@@ -634,13 +634,14 @@ supports the IPv4, IPv6, and IPvFuture definitions.</p>
   literal style (the IP surrounded by brackets). This option defaults to <code>true</code>.</li>
 </ul>
 <h2 id="basic-usage">Basic usage</h2>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Ip();
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Ip();
 
 if ($validator-&gt;isValid($ip)) {
     // ip appears to be valid
 } else {
     // ip is invalid; print the reasons
 }</code></pre>
+
 <blockquote>
 <h3>Invalid IP addresses</h3>
 <p>Keep in mind that <code>Laminas\Validator\Ip</code> only validates IP addresses. Addresses
@@ -658,13 +659,14 @@ within this validator.</p>
 <p>To limit <code>Laminas\Validator\Ip</code> to one protocol, you can set the options <code>allowipv4</code>
 or <code>allowipv6</code> to <code>false</code>. You can do this either by giving the option to the
 constructor or by using <code>setOptions()</code> afterwards.</p>
-<pre class=codehilite><code class=language-php>$validator = new Laminas\Validator\Ip(['allowipv6' =&gt; false]);
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Ip(['allowipv6' =&gt; false]);
 
 if ($validator-&gt;isValid($ip)) {
     // ip appears to be valid ipv4 address
 } else {
     // ip is not an ipv4 address
 }</code></pre>
+
 <blockquote>
 <h3>Default behaviour</h3>
 <p>The default behaviour which <code>Laminas\Validator\Ip</code> follows is to allow both
