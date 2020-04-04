@@ -49,6 +49,30 @@ class GreaterThanTest extends TestCase
     }
 
     /**
+     * @covers \Laminas\Validator\GreaterThan::__construct()
+     * @dataProvider constructGreaterThanValidatorInvalidDataProvider
+     *
+     * @param array $args
+     */
+    public function testMissingMin(array $args)
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage("Missing option 'min'");
+
+        new GreaterThan(...$args);
+    }
+
+    public function constructGreaterThanValidatorInvalidDataProvider()
+    {
+        return [
+            'array-only-inclusive' => [[['inclusive' => true]]],
+            'array-inclusive' => [[['foo' => 5, 'inclusive' => true]]],
+            'array-only-fake' => [[['bar' => 'foo',]]],
+            'array-only-fake-2' => [[['bar' => 'foo', 'foo' => 'bar']]],
+        ];
+    }
+
+    /**
      * Ensures that getMessages() returns expected default value
      *
      * @return void

@@ -258,19 +258,22 @@ class BetweenTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Missing option: 'min' and 'max' have to be given");
 
-        new Between($args);
+        new Between(...$args);
     }
 
     public function constructBetweenValidatorInvalidDataProvider()
     {
         return [
-            'only-min'      => [['min' => 1]],
-            'only-max'      => [['max' => 5]],
-            'min-inclusive' => [['min' => 0, 'inclusive' => true]],
-            'max-inclusive' => [['max' => 5, 'inclusive' => true]],
-            'min-undefined' => [['min' => 0, 'foo' => 'bar']],
-            'max-undefined' => [['max' => 5, 'foo' => 'bar']],
-            'no-min-or-max' => [['bar' => 'foo', 'foo' => 'bar']],
+            'array-only-min'      => [[['min' => 1]]],
+            'array-only-max'      => [[['max' => 5]]],
+            'array-min-inclusive' => [[['min' => 0, 'inclusive' => true]]],
+            'array-max-inclusive' => [[['max' => 5, 'inclusive' => true]]],
+            'array-min-undefined' => [[['min' => 0, 'foo' => 'bar']]],
+            'array-max-undefined' => [[['max' => 5, 'foo' => 'bar']]],
+            'array-no-min-or-max' => [[['bar' => 'foo', 'foo' => 'bar']]],
+
+            'arguments-only-min'      => [[1]],
+            'arguments-no-min-or-max' => [[]],
         ];
     }
 

@@ -13,6 +13,8 @@ use Laminas\Stdlib\StringWrapper\StringWrapperInterface as StringWrapper;
 
 class StringLength extends AbstractValidator
 {
+    use ValidatorOptionsTrait;
+
     const INVALID   = 'stringLengthInvalid';
     const TOO_SHORT = 'stringLengthTooShort';
     const TOO_LONG  = 'stringLengthTooLong';
@@ -52,17 +54,7 @@ class StringLength extends AbstractValidator
     public function __construct($options = [])
     {
         if (! is_array($options)) {
-            $options     = func_get_args();
-            $temp['min'] = array_shift($options);
-            if (! empty($options)) {
-                $temp['max'] = array_shift($options);
-            }
-
-            if (! empty($options)) {
-                $temp['encoding'] = array_shift($options);
-            }
-
-            $options = $temp;
+            $options = $this->argumentsAsArray(['min', 'max', 'encoding'], func_get_args());
         }
 
         parent::__construct($options);
