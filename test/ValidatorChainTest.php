@@ -292,7 +292,7 @@ class ValidatorChainTest extends TestCase
     }
 
     /**
-     * @group laminascampus_api-tools-admin_89
+     * @see https://github.com/zfcampus/zf-apigility-admin/issues/89
      * @dataProvider breakChainFlags
      */
     public function testAttachByNameAllowsSpecifyingBreakChainOnFailureFlagViaOptions($option)
