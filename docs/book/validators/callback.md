@@ -8,7 +8,7 @@ validate a given value.
 The following options are supported for `Laminas\Validator\Callback`:
 
 - `callback`: Sets the callback which will be called for the validation.
-- `options`: Sets the additional options which will be given to the validator
+- `callbackOptions`: Sets the additional options which will be given to the validator
   and/or callback.
 
 ## Basic usage
