@@ -45,112 +45,96 @@ class HostnameTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
+     * @dataProvider basicDataProvider
+     * @param int $option
+     * @param bool $expected
+     * @param string $hostname
      * @return void
      */
-    public function testBasic()
+    public function testBasic(int $option, bool $expected, string $hostname)
     {
-        $valuesExpected = [
-            [Hostname::ALLOW_IP, true, ['1.2.3.4', '10.0.0.1', '255.255.255.255']],
-            [Hostname::ALLOW_IP, false, ['1.2.3.4.5', '0.0.0.256']],
-            [Hostname::ALLOW_DNS, true, ['example.com', 'example.museum', 'd.hatena.ne.jp', 'example.photography']],
-            [Hostname::ALLOW_DNS, false, ['localhost', 'localhost.localdomain', '1.2.3.4', 'domain.invalid']],
-            [Hostname::ALLOW_LOCAL, true, ['localhost', 'localhost.localdomain', 'example.com']],
-            [Hostname::ALLOW_ALL, true, ['localhost', 'example.com', '1.2.3.4']],
-            [Hostname::ALLOW_LOCAL, false, ['local host', 'example,com', 'exam_ple.com']],
-        ];
-        foreach ($valuesExpected as $element) {
-            $validator = new Hostname($element[0]);
-            foreach ($element[2] as $input) {
-                $this->assertEquals(
-                    $element[1],
-                    $validator->isValid($input),
-                    implode("\n", $validator->getMessages()) . $input
-                );
-            }
-        }
+        $validator = new Hostname($option);
+        self::assertSame($expected, $validator->isValid($hostname));
     }
 
-    public function testCombination()
+    public function basicDataProvider() : array
     {
-        $valuesExpected = [
-            [Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL, true, ['domain.com', 'localhost', 'local.localhost']],
-            [Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL, false, ['1.2.3.4', '255.255.255.255']],
-            [Hostname::ALLOW_DNS | Hostname::ALLOW_IP, true, ['1.2.3.4', '255.255.255.255']],
-            [Hostname::ALLOW_DNS | Hostname::ALLOW_IP, false, ['localhost', 'local.localhost']],
+        return [
+            'allow-ip succeeds for 1.2.3.4' => [Hostname::ALLOW_IP, true, '1.2.3.4'],
+            'allow-ip succeeds for 10.0.0.1' => [Hostname::ALLOW_IP, true, '10.0.0.1'],
+            'allow-ip succeeds for 255.255.255.255' => [Hostname::ALLOW_IP, true, '255.255.255.255'],
+            'allow-ip fails for 1.2.3.4.5' => [Hostname::ALLOW_IP, false, '1.2.3.4.5'],
+            'allow-ip fails for 0.0.0.256' => [Hostname::ALLOW_IP, false, '0.0.0.256'],
+            'allow-dns succeeds for example.com' => [Hostname::ALLOW_DNS, true, 'example.com'],
+            'allow-dns succeeds for example.museum' => [Hostname::ALLOW_DNS, true, 'example.museum'],
+            'allow-dns succeeds for d.hatena.ne.jp' => [Hostname::ALLOW_DNS, true, 'd.hatena.ne.jp'],
+            'allow-dns succeeds for example.photography' => [Hostname::ALLOW_DNS, true, 'example.photography'],
+            'allow-dns fails for localhost' => [Hostname::ALLOW_DNS, false, 'localhost'],
+            'allow-dns fails for localhost.localdomain' => [Hostname::ALLOW_DNS, false, 'localhost.localdomain'],
+            'allow-dns fails for 1.2.3.4' => [Hostname::ALLOW_DNS, false, '1.2.3.4'],
+            'allow-dns fails for domain.invalid' => [Hostname::ALLOW_DNS, false, 'domain.invalid'],
+            'allow-local succeeds for localhost' => [Hostname::ALLOW_LOCAL, true, 'localhost'],
+            'allow-local succeeds for localhost.localdomain' => [Hostname::ALLOW_LOCAL, true, 'localhost.localdomain'],
+            'allow-local succeeds for example.com' => [Hostname::ALLOW_LOCAL, true, 'example.com'],
+            'allow-all succeeds for localhost' => [Hostname::ALLOW_ALL, true, 'localhost'],
+            'allow-all succeeds for example.com' => [Hostname::ALLOW_ALL, true, 'example.com'],
+            'allow-all succeeds for 1.2.3.4' => [Hostname::ALLOW_ALL, true, '1.2.3.4'],
+            'allow-local fails for local host' => [Hostname::ALLOW_LOCAL, false, 'local host'],
+            'allow-local fails for example.com' => [Hostname::ALLOW_LOCAL, false, 'example,com'],
+            'allow-local fails for exam_ple.com' => [Hostname::ALLOW_LOCAL, false, 'exam_ple.com'],
         ];
+    }
 
-        foreach ($valuesExpected as $element) {
-            $validator = new Hostname($element[0]);
-            foreach ($element[2] as $input) {
-                $this->assertEquals(
-                    $element[1],
-                    $validator->isValid($input),
-                    implode("\n", $validator->getMessages()) . $input
-                );
-            }
-        }
+    /**
+     * @dataProvider combinationDataProvider
+     * @param int $option
+     * @param bool $expected
+     * @param string $hostname
+     * @return void
+     */
+    public function testCombination(int $option, bool $expected, string $hostname)
+    {
+        $validator = new Hostname($option);
+        self::assertSame($expected, $validator->isValid($hostname));
+    }
+
+    public function combinationDataProvider() : array
+    {
+        return [
+            'dns or local succeeds for domain.com' => [Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL, true, 'domain.com'],
+            'dns or local succeeds for localhost' => [Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL, true, 'localhost'],
+            'dns or local succeeds for local.localhost' => [Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL, true, 'local.localhost'],
+            'dns or local fails for 1.2.3.4' => [Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL, false, '1.2.3.4'],
+            'dns or local fails for 255.255.255.255' => [Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL, false, '255.255.255.255'],
+            'dns or ip succeeds for 1.2.3.4' => [Hostname::ALLOW_DNS | Hostname::ALLOW_IP, true, '1.2.3.4'],
+            'dns or ip succeeds for 255.255.255.255' => [Hostname::ALLOW_DNS | Hostname::ALLOW_IP, true, '255.255.255.255'],
+            'dns or ip fails for localhost' => [Hostname::ALLOW_DNS | Hostname::ALLOW_IP, false, 'localhost'],
+            'dns or ip fails for local.localhost' => [Hostname::ALLOW_DNS | Hostname::ALLOW_IP, false, 'local.localhost'],
+        ];
     }
 
     /**
      * Ensure the dash character tests work as expected
+     * @dataProvider dashesDataProvider
+     * @param int $option
+     * @param bool $expected
+     * @param string $hostname
      */
-    public function testDashes()
+    public function testDashes(int $option, bool $expected, string $hostname)
     {
-        $valuesExpected = [
-            [Hostname::ALLOW_DNS, true, ['domain.com', 'doma-in.com']],
-            [Hostname::ALLOW_DNS, false, ['-domain.com', 'domain-.com', 'do--main.com', 'do-main-.com']],
-        ];
-
-        foreach ($valuesExpected as $element) {
-            $validator = new Hostname($element[0]);
-            foreach ($element[2] as $input) {
-                $this->assertSame(
-                    $element[1],
-                    $validator->isValid($input),
-                    implode("\n", $validator->getMessages()) . $input
-                );
-            }
-        }
+        $validator = new Hostname($option);
+        self::assertSame($expected, $validator->isValid($hostname));
     }
 
-    /**
-     * @return iterable
-     */
-    public function domainsWithUnderscores()
+    public function dashesDataProvider() : array
     {
-        yield 'subdomain with leading underscore' => [
-            '_subdomain.domain.com',
-            'assertTrue',
-        ];
-
-        yield 'subdomain with trailing underscore' => [
-            'subdomain_.domain.com',
-            'assertTrue',
-        ];
-
-        yield 'subdomain with single underscore' => [
-            'sub_domain.domain.com',
-            'assertTrue',
-        ];
-
-        yield 'subdomain with double underscore' => [
-            'sub__domain.domain.com',
-            'assertTrue',
-        ];
-
-        yield 'root domain with leading underscore' => [
-            '_domain.com',
-            'assertFalse',
-        ];
-
-        yield 'root domain with trailing underscore' => [
-            'domain_.com',
-            'assertFalse',
-        ];
-
-        yield 'root domain with underscore' => [
-            'do_main.com',
-            'assertFalse',
+        return [
+            'allow-dns succeeds for domain.com' => [Hostname::ALLOW_DNS, true, 'domain.com'],
+            'allow-dns succeeds for doma-in.com' => [Hostname::ALLOW_DNS, true, 'doma-in.com'],
+            'allow-dns fails for -domain.com' => [Hostname::ALLOW_DNS, false, '-domain.com'],
+            'allow-dns fails for domain-.com' => [Hostname::ALLOW_DNS, false, 'domain-.com'],
+            'allow-dns fails for do--main.com' => [Hostname::ALLOW_DNS, false, 'do--main.com'],
+            'allow-dns fails for do-main-.com' => [Hostname::ALLOW_DNS, false, 'do-main-.com'],
         ];
     }
 
@@ -159,12 +143,25 @@ class HostnameTest extends TestCase
      *
      * @dataProvider domainsWithUnderscores
      * @param string $input
-     * @param string $assertion
+     * @param bool $expected
      */
-    public function testValidatorHandlesUnderscoresInDomainsCorrectly($input, $assertion)
+    public function testValidatorHandlesUnderscoresInDomainsCorrectly(string $input, bool $expected)
     {
         $validator = new Hostname(Hostname::ALLOW_DNS);
-        $this->$assertion($validator->isValid($input), implode("\n", $validator->getMessages()));
+        self::assertSame($expected, $validator->isValid($input), implode("\n", $validator->getMessages()));
+    }
+
+    public function domainsWithUnderscores() : array
+    {
+        return [
+            'subdomain with leading underscore' => ['_subdomain.domain.com', true,],
+            'subdomain with trailing underscore' => ['subdomain_.domain.com', true,],
+            'subdomain with single underscore' => ['sub_domain.domain.com', true,],
+            'subdomain with double underscore' => ['sub__domain.domain.com', true,],
+            'root domain with leading underscore' => ['_domain.com', false,],
+            'root domain with trailing underscore' => ['domain_.com', false,],
+            'root domain with underscore' => ['do_main.com', false,],
+        ];
     }
 
     /**
@@ -172,15 +169,15 @@ class HostnameTest extends TestCase
      *
      * @dataProvider domainsWithUnderscores
      * @param string $input
-     * @param string $assertion
+     * @param bool $expected
      */
-    public function testValidatorHandlesUnderscoresInDomainsWithoutTldCheckCorrectly($input, $assertion)
+    public function testValidatorHandlesUnderscoresInDomainsWithoutTldCheckCorrectly(string $input, bool $expected)
     {
         $validator = new Hostname([
             'useTldCheck' => false,
             'allow' => Hostname::ALLOW_DNS,
         ]);
-        $this->$assertion($validator->isValid($input), implode("\n", $validator->getMessages()));
+        self::assertSame($expected, $validator->isValid($input), implode("\n", $validator->getMessages()));
     }
 
     /**
@@ -190,183 +187,138 @@ class HostnameTest extends TestCase
      */
     public function testGetMessages()
     {
-        $this->assertEquals([], $this->validator->getMessages());
+        self::assertSame([], $this->validator->getMessages());
     }
 
     /**
-     * Ensure the IDN check works as expected
-     *
+     * @dataProvider idnMatchingDataProvider
+     * @param string $input
+     * @param bool $expected
      */
-    public function testIDN()
+    public function testIdnMatching(string $input, bool $expected)
     {
         $validator = new Hostname();
+        self::assertSame($expected, $validator->isValid($input));
+    }
 
-        // Check IDN matching
-        $valuesExpected = [
-            [true, ['bürger.de', 'hãllo.de', 'hållo.se']],
-            [true, ['bÜrger.de', 'hÃllo.de', 'hÅllo.se']],
-            [false, ['hãllo.se', 'bürger.lt', 'hãllo.uk']],
+    public function idnMatchingDataProvider() : array
+    {
+        return [
+            ['bürger.de', true],
+            ['bÜrger.de', true],
+            ['hãllo.de', true],
+            ['hãllo.de', true],
+            ['hållo.se', true],
+            ['hÅllo.se', true],
+
+            ['bürger.com', true],
+            ['bÜrger.com', true],
+            ['hãllo.com', true],
+            ['hÃllo.com', true],
+            ['hållo.com', true],
+            ['hÅllo.com', true],
+            ['plekitööd.ee', true],
+            ['plekitÖÖd.ee', true],
+
+            ['hãllo.lt', false],
+            ['bürger.lt', false],
+            ['hãllo.lt', false],
+
+            ['hãllo.se', false],
+            ['bürger.lt', false],
+            ['hãllo.uk', false],
         ];
+    }
 
-        foreach ($valuesExpected as $element) {
-            foreach ($element[1] as $input) {
-                $this->assertEquals(
-                    $element[0],
-                    $validator->isValid($input),
-                    implode("\n", $validator->getMessages()) . $input
-                );
-            }
-        }
-
-        // Check no IDN matching
+    /**
+     * @dataProvider idnNoMatchingDataProvider
+     * @param string $input
+     */
+    public function testIdnNoMatching(string $input)
+    {
+        $validator = new Hostname();
         $validator->useIdnCheck(false);
-        $valuesExpected = [
-            [false, ['bürger.de', 'hãllo.de', 'hållo.se']],
-        ];
-
-        foreach ($valuesExpected as $element) {
-            foreach ($element[1] as $input) {
-                $this->assertEquals(
-                    $element[0],
-                    $validator->isValid($input),
-                    implode("\n", $validator->getMessages()) . $input
-                );
-            }
-        }
-
-        // Check setting no IDN matching via constructor
-        unset($validator);
-        $validator = new Hostname(Hostname::ALLOW_DNS, false);
-        $valuesExpected = [
-            [false, ['bürger.de', 'hãllo.de', 'hållo.se']],
-        ];
-
-        foreach ($valuesExpected as $element) {
-            foreach ($element[1] as $input) {
-                $this->assertEquals(
-                    $element[0],
-                    $validator->isValid($input),
-                    implode("\n", $validator->getMessages()) . $input
-                );
-            }
-        }
+        self::assertFalse($validator->isValid($input));
     }
 
     /**
-     * Ensure the IDN check works on resource files as expected
+     * Check setting no IDN matching via constructor
      *
+     * @dataProvider idnNoMatchingDataProvider
      */
-    public function testResourceIDN()
+    public function testIdnNoMatchingOptionConstructor($input)
     {
-        $validator = new Hostname();
-
-        // Check IDN matching
-        $valuesExpected = [
-            [true, ['bürger.com', 'hãllo.com', 'hållo.com', 'plekitööd.ee']],
-            [true, ['bÜrger.com', 'hÃllo.com', 'hÅllo.com', 'plekitÖÖd.ee']],
-            [false, ['hãllo.lt', 'bürger.lt', 'hãllo.lt']],
-        ];
-
-        foreach ($valuesExpected as $element) {
-            foreach ($element[1] as $input) {
-                $this->assertEquals(
-                    $element[0],
-                    $validator->isValid($input),
-                    implode("\n", $validator->getMessages()) . $input
-                );
-            }
-        }
-
-        // Check no IDN matching
-        $validator->useIdnCheck(false);
-        $valuesExpected = [
-            [false, ['bürger.com', 'hãllo.com', 'hållo.com']],
-        ];
-
-        foreach ($valuesExpected as $element) {
-            foreach ($element[1] as $input) {
-                $this->assertEquals(
-                    $element[0],
-                    $validator->isValid($input),
-                    implode("\n", $validator->getMessages()) . $input
-                );
-            }
-        }
-
-        // Check setting no IDN matching via constructor
-        unset($validator);
         $validator = new Hostname(Hostname::ALLOW_DNS, false);
-        $valuesExpected = [
-            [false, ['bürger.com', 'hãllo.com', 'hållo.com']],
-        ];
+        self::assertFalse($validator->isValid($input));
+    }
 
-        foreach ($valuesExpected as $element) {
-            foreach ($element[1] as $input) {
-                $this->assertEquals(
-                    $element[0],
-                    $validator->isValid($input),
-                    implode("\n", $validator->getMessages()) . $input
-                );
-            }
-        }
+    public function idnNoMatchingDataProvider() : array
+    {
+        return [
+            ['bürger.de'],
+            ['hãllo.de'],
+            ['hållo.se'],
+            ['bürger.com'],
+            ['hãllo.com'],
+            ['hållo.com'],
+        ];
     }
 
     /**
-     * Ensure the TLD check works as expected
-     *
+     * @dataProvider tldMatchingDataProvider
+     * @param string $input
+     * @param bool $expected
      */
-    public function testTLD()
+    public function testTldMatching(string $input, bool $expected)
     {
         $validator = new Hostname();
+        self::assertSame($expected, $validator->isValid($input));
+    }
 
-        // Check TLD matching
-        $valuesExpected = [
-            [true, ['domain.co.uk', 'domain.uk.com', 'domain.tl', 'domain.zw']],
-            [false, ['domain.xx', 'domain.zz', 'domain.madeup']],
+    public function tldMatchingDataProvider() : array
+    {
+        return [
+            ['domain.co.uk', true],
+            ['domain.uk.com', true],
+            ['domain.tl', true],
+            ['domain.zw', true],
+
+            ['domain.xx', false],
+            ['domain.zz', false],
+            ['domain.madeup', false],
         ];
+    }
 
-        foreach ($valuesExpected as $element) {
-            foreach ($element[1] as $input) {
-                $this->assertEquals(
-                    $element[0],
-                    $validator->isValid($input),
-                    implode("\n", $validator->getMessages()) . $input
-                );
-            }
-        }
-
-        // Check no TLD matching
+    /**
+     * @dataProvider tldNoMatchingDataProvider
+     * @param string $input
+     */
+    public function testTldNoMatching(string $input)
+    {
+        $validator = new Hostname();
         $validator->useTldCheck(false);
-        $valuesExpected = [
-            [true, ['domain.xx', 'domain.zz', 'domain.madeup']],
-        ];
+        self::assertTrue($validator->isValid($input));
+    }
 
-        foreach ($valuesExpected as $element) {
-            foreach ($element[1] as $input) {
-                $this->assertEquals(
-                    $element[0],
-                    $validator->isValid($input),
-                    implode("\n", $validator->getMessages()) . $input
-                );
-            }
-        }
-
-        // Check setting no TLD matching via constructor
-        unset($validator);
+    /**
+     * Check setting no TLD matching via constructor
+     *
+     * @dataProvider tldNoMatchingDataProvider
+     * @param string $input
+     */
+    public function testTldNoMatchingOptionConstructor(string $input)
+    {
         $validator = new Hostname(Hostname::ALLOW_DNS, true, false);
-        $valuesExpected = [
-            [true, ['domain.xx', 'domain.zz', 'domain.madeup']],
-        ];
+        self::assertTrue($validator->isValid($input));
+    }
 
-        foreach ($valuesExpected as $element) {
-            foreach ($element[1] as $input) {
-                $this->assertEquals(
-                    $element[0],
-                    $validator->isValid($input),
-                    implode("\n", $validator->getMessages()) . $input
-                );
-            }
-        }
+    public function tldNoMatchingDataProvider() : array
+    {
+        return [
+            ['domain.xx'],
+            ['domain.zz'],
+            ['domain.madeup'],
+        ];
     }
 
     /**
@@ -376,7 +328,7 @@ class HostnameTest extends TestCase
      */
     public function testGetAllow()
     {
-        $this->assertEquals(Hostname::ALLOW_DNS, $this->validator->getAllow());
+        self::assertSame(Hostname::ALLOW_DNS, $this->validator->getAllow());
     }
 
     /**
@@ -411,56 +363,53 @@ class HostnameTest extends TestCase
             }
         }
 
-        $this->assertTrue($found);
-        $this->assertEquals($translations[$code], $message);
+        self::assertTrue($found);
+        self::assertSame($translations[$code], $message);
     }
 
     /**
      * @group Laminas-6033
+     * @dataProvider numberNamesDataProvider
      */
-    public function testNumberNames()
+    public function testNumberNames($input, $expected)
     {
         $validator = new Hostname();
+        self::assertSame($expected, $validator->isValid($input));
+    }
 
-        // Check TLD matching
-        $valuesExpected = [
-            [true, ['www.danger1.com', 'danger.com', 'www.danger.com']],
-            [false, ['www.danger1com', 'dangercom', 'www.dangercom']],
+    public function numberNamesDataProvider()
+    {
+        return [
+            ['www.danger1.com', true],
+            ['danger.com', true],
+            ['www.danger.com', true],
+
+            ['www.danger1com', false],
+            ['dangercom', false],
+            ['www.dangercom', false],
         ];
-
-        foreach ($valuesExpected as $element) {
-            foreach ($element[1] as $input) {
-                $this->assertEquals(
-                    $element[0],
-                    $validator->isValid($input),
-                    implode("\n", $validator->getMessages()) . $input
-                );
-            }
-        }
     }
 
     /**
      * @group Laminas-6133
+     * @dataProvider punyCodeDecodingDataProvider
      */
-    public function testPunycodeDecoding()
+    public function testPunycodeDecoding($input, $expected)
     {
         $validator = new Hostname();
+        self::assertSame($expected, $validator->isValid($input));
+    }
 
-        // Check TLD matching
-        $valuesExpected = [
-            [true, ['xn--brger-kva.com', 'xn--eckwd4c7cu47r2wf.jp']],
-            [false, ['xn--brger-x45d2va.com', 'xn--bürger.com', 'xn--']],
+    public function punyCodeDecodingDataProvider()
+    {
+        return [
+            ['xn--brger-kva.com', true],
+            ['xn--eckwd4c7cu47r2wf.jp', true],
+
+            ['xn--brger-x45d2va.com', false],
+            ['xn--bürger.com', false],
+            ['xn--', false],
         ];
-
-        foreach ($valuesExpected as $element) {
-            foreach ($element[1] as $input) {
-                $this->assertEquals(
-                    $element[0],
-                    $validator->isValid($input),
-                    implode("\n", $validator->getMessages()) . $input
-                );
-            }
-        }
     }
 
     /**
@@ -468,7 +417,7 @@ class HostnameTest extends TestCase
      */
     public function testNonStringValidation()
     {
-        $this->assertFalse($this->validator->isValid([1 => 1]));
+        self::assertFalse($this->validator->isValid([1 => 1]));
     }
 
     /**
@@ -476,35 +425,37 @@ class HostnameTest extends TestCase
      */
     public function testLatinSpecialChars()
     {
-        $this->assertFalse($this->validator->isValid('place@yah&oo.com'));
-        $this->assertFalse($this->validator->isValid('place@y*ahoo.com'));
-        $this->assertFalse($this->validator->isValid('ya#hoo'));
+        self::assertFalse($this->validator->isValid('place@yah&oo.com'));
+        self::assertFalse($this->validator->isValid('place@y*ahoo.com'));
+        self::assertFalse($this->validator->isValid('ya#hoo'));
     }
 
     /**
      * @group Laminas-7277
+     * @dataProvider differentIconvEncodingDataProvider
      */
-    public function testDifferentIconvEncoding()
+    public function testDifferentIconvEncoding($input, $expected)
     {
         ini_set('default_charset', 'ISO8859-1');
-
         $validator = new Hostname();
 
-        $valuesExpected = [
-            [true, ['bürger.com', 'hãllo.com', 'hållo.com']],
-            [true, ['bÜrger.com', 'hÃllo.com', 'hÅllo.com']],
-            [false, ['hãllo.lt', 'bürger.lt', 'hãllo.lt']],
-        ];
+        self::assertSame($expected, $validator->isValid($input));
+    }
 
-        foreach ($valuesExpected as $element) {
-            foreach ($element[1] as $input) {
-                $this->assertEquals(
-                    $element[0],
-                    $validator->isValid($input),
-                    implode("\n", $validator->getMessages()) . $input
-                );
-            }
-        }
+    public function differentIconvEncodingDataProvider()
+    {
+        return [
+            ['bürger.com', true],
+            ['bÜrger.com', true],
+            ['hãllo.com', true],
+            ['hÃllo.com', true],
+            ['hållo.com', true],
+            ['hÅllo.com', true],
+
+            ['hãllo.lt', false],
+            ['bürger.lt', false],
+            ['hãllo.lt', false],
+        ];
     }
 
     /**
@@ -512,57 +463,63 @@ class HostnameTest extends TestCase
      */
     public function testInvalidDoubledIdn()
     {
-        $this->assertFalse($this->validator->isValid('test.com / http://www.test.com'));
+        self::assertFalse($this->validator->isValid('test.com / http://www.test.com'));
     }
 
     /**
      * @group Laminas-10267
+     * @dataProvider uriDataProvider
      */
-    public function testURI()
+    public function testURI($input, $expected)
     {
-        $valuesExpected = [
-            [Hostname::ALLOW_URI, true, ['localhost', 'example.com', '~ex%20ample']],
+        $validator = new Hostname(Hostname::ALLOW_URI);
+        self::assertSame($expected, $validator->isValid($input));
+    }
+
+    public function uriDataProvider()
+    {
+        return [
+            ['localhost', true],
+            ['example.com', true],
+            ['~ex%20ample', true],
+
+            ['§bad', false],
+            ['don?t.know', false],
+
             // @codingStandardsIgnoreStart
-            [Hostname::ALLOW_URI, false, ['§bad', 'don?t.know', 'thisisaverylonghostnamewhichextendstwohundredfiftysixcharactersandthereforshouldnotbeallowedbythisvalidatorbecauserfc3986limitstheallowedcharacterstoalimitoftwohunderedfiftysixcharactersinsumbutifthistestwouldfailthenitshouldreturntruewhichthrowsanexceptionbytheunittest']],
+            ['thisisaverylonghostnamewhichextendstwohundredfiftysixcharactersandthereforshouldnotbeallowedbythisvalidatorbecauserfc3986limitstheallowedcharacterstoalimitoftwohunderedfiftysixcharactersinsumbutifthistestwouldfailthenitshouldreturntruewhichthrowsanexceptionbytheunittest', false],
             // @codingStandardsIgnoreEnd
         ];
-        foreach ($valuesExpected as $element) {
-            $validator = new Hostname($element[0]);
-            foreach ($element[2] as $input) {
-                $this->assertEquals(
-                    $element[1],
-                    $validator->isValid($input),
-                    implode("\n", $validator->getMessages()) . $input
-                );
-            }
-        }
     }
 
     /**
      * Ensure that a trailing "." in a local hostname is permitted
      *
      * @group Laminas-6363
+     * @dataProvider trailingDotDataProvider
+     * @param int $option
+     * @param bool $expected
+     * @param string $hostname
      */
-    public function testTrailingDot()
+    public function testTrailingDot(int $option, bool $expected, string $hostname)
     {
-        $valuesExpected = [
-            [Hostname::ALLOW_ALL, true, ['example.', 'example.com.', '~ex%20ample.']],
-            [Hostname::ALLOW_ALL, false, ['example..']],
-            [Hostname::ALLOW_ALL, true, ['1.2.3.4.']],
-            [Hostname::ALLOW_DNS, false, ['example..', '~ex%20ample..']],
-            [Hostname::ALLOW_LOCAL, true, ['example.', 'example.com.']],
-        ];
+        $validator = new Hostname($option);
+        self::assertSame($expected, $validator->isValid($hostname));
+    }
 
-        foreach ($valuesExpected as $element) {
-            $validator = new Hostname($element[0]);
-            foreach ($element[2] as $input) {
-                $this->assertEquals(
-                    $element[1],
-                    $validator->isValid($input),
-                    implode("\n", $validator->getMessages()) . $input
-                );
-            }
-        }
+    public function trailingDotDataProvider() : array
+    {
+        return [
+            'allow-all succeeds for example.' => [Hostname::ALLOW_ALL, true, 'example.'],
+            'allow-all succeeds for example.com.' => [Hostname::ALLOW_ALL, true, 'example.com.'],
+            'allow-all succeeds for ~ex%20ample.' => [Hostname::ALLOW_ALL, true, '~ex%20ample.'],
+            'allow-all fails for example..' => [Hostname::ALLOW_ALL, false, 'example..'],
+            'allow-all succeeds for 1.2.3.4.' => [Hostname::ALLOW_ALL, true, '1.2.3.4.'],
+            'allow-dns fails for example..' => [Hostname::ALLOW_DNS, false, 'example..'],
+            'allow-dns fails for ~ex%20ample..' => [Hostname::ALLOW_DNS, false, '~ex%20ample..'],
+            'allow-local succeeds for example.' => [Hostname::ALLOW_LOCAL, true, 'example.'],
+            'allow-local succeeds for example.com.' => [Hostname::ALLOW_LOCAL, true, 'example.com.'],
+        ];
     }
 
     /**
@@ -572,13 +529,13 @@ class HostnameTest extends TestCase
     {
         $validator = new Hostname(Hostname::ALLOW_ALL);
 
-        $this->assertTrue($validator->isValid('FEDC:BA98:7654:3210:FEDC:BA98:7654:3210'));
-        $this->assertTrue($validator->isValid('1080:0:0:0:8:800:200C:417A'));
-        $this->assertTrue($validator->isValid('3ffe:2a00:100:7031::1'));
-        $this->assertTrue($validator->isValid('1080::8:800:200C:417A'));
-        $this->assertTrue($validator->isValid('::192.9.5.5'));
-        $this->assertTrue($validator->isValid('::FFFF:129.144.52.38'));
-        $this->assertTrue($validator->isValid('2010:836B:4179::836B:4179'));
+        self::assertTrue($validator->isValid('FEDC:BA98:7654:3210:FEDC:BA98:7654:3210'));
+        self::assertTrue($validator->isValid('1080:0:0:0:8:800:200C:417A'));
+        self::assertTrue($validator->isValid('3ffe:2a00:100:7031::1'));
+        self::assertTrue($validator->isValid('1080::8:800:200C:417A'));
+        self::assertTrue($validator->isValid('::192.9.5.5'));
+        self::assertTrue($validator->isValid('::FFFF:129.144.52.38'));
+        self::assertTrue($validator->isValid('2010:836B:4179::836B:4179'));
     }
 
     /**
@@ -589,7 +546,7 @@ class HostnameTest extends TestCase
     public function testExtendedGreek()
     {
         $validator = new Hostname(Hostname::ALLOW_ALL);
-        $this->assertEquals(true, $validator->isValid('ῆὧὰῧῲ.com'));
+        self::assertSame(true, $validator->isValid('ῆὧὰῧῲ.com'));
     }
 
     /**
@@ -599,35 +556,33 @@ class HostnameTest extends TestCase
     {
         $validator = new Hostname(Hostname::ALLOW_ALL);
 
-        $this->assertTrue($validator->isValid('Test123.si'));
-        $this->assertTrue($validator->isValid('țest123.si'));
-        $this->assertTrue($validator->isValid('tĕst123.si'));
-        $this->assertTrue($validator->isValid('tàrø.si'));
-        $this->assertFalse($validator->isValid('رات.si'));
+        self::assertTrue($validator->isValid('Test123.si'));
+        self::assertTrue($validator->isValid('țest123.si'));
+        self::assertTrue($validator->isValid('tĕst123.si'));
+        self::assertTrue($validator->isValid('tàrø.si'));
+        self::assertFalse($validator->isValid('رات.si'));
     }
 
     /**
      * @group Issue #5894 - Add .il IDN domain checking; add new TLDs
+     * @dataProvider idnilDataProvider
      */
-    public function testIDNIL()
+    public function testIDNIL($input, $expected)
     {
         $validator = new Hostname(Hostname::ALLOW_ALL);
+        self::assertSame($expected, $validator->isValid($input));
+    }
 
-        // Check .IL TLD matching
-        $valuesExpected = [
-            [true, ['xn----zhcbgfhe2aacg8fb5i.org.il', 'מבחן.il', 'מבחן123.il']],
-            [false, ['tבדיקה123.il', 'رات.il']], // Can't mix Latin and Hebrew character sets (except digits)
+    public function idnilDataProvider()
+    {
+        return [
+            ['xn----zhcbgfhe2aacg8fb5i.org.il', true],
+            ['מבחן.il', true],
+            ['מבחן123.il', true],
+
+            ['tבדיקה123.il', false],
+            ['رات.il', false],
         ];
-
-        foreach ($valuesExpected as $element) {
-            foreach ($element[1] as $input) {
-                $this->assertEquals(
-                    $element[0],
-                    $validator->isValid($input),
-                    implode("\n", $validator->getMessages()) .' - '. $input
-                );
-            }
-        }
     }
 
     /**
@@ -637,7 +592,7 @@ class HostnameTest extends TestCase
      */
     public function testValidTLDHostnames($value)
     {
-        $this->assertTrue(
+        self::assertTrue(
             $this->validator->isValid($value),
             sprintf(
                 '%s failed validation: %s',
@@ -666,7 +621,7 @@ class HostnameTest extends TestCase
      */
     public function testInalidTLDHostnames($value)
     {
-        $this->assertFalse($this->validator->isValid($value));
+        self::assertFalse($this->validator->isValid($value));
     }
 
     public function invalidTLDHostnames()
@@ -685,10 +640,10 @@ class HostnameTest extends TestCase
     {
         $validator = new Hostname(Hostname::ALLOW_ALL);
 
-        $this->assertTrue($validator->isValid('plainascii.it'));
-        $this->assertTrue($validator->isValid('città-caffè.it'));
-        $this->assertTrue($validator->isValid('edgetest-àâäèéêëìîïòôöùûüæœçÿß.it'));
-        $this->assertFalse($validator->isValid('رات.it'));
+        self::assertTrue($validator->isValid('plainascii.it'));
+        self::assertTrue($validator->isValid('città-caffè.it'));
+        self::assertTrue($validator->isValid('edgetest-àâäèéêëìîïòôöùûüæœçÿß.it'));
+        self::assertFalse($validator->isValid('رات.it'));
     }
 
     public function testEqualsMessageTemplates()
@@ -708,19 +663,19 @@ class HostnameTest extends TestCase
     public function testHostnameWithOnlyIpChars()
     {
         $validator = new Hostname();
-        $this->assertTrue($validator->isValid('cafecafe.de'));
+        self::assertTrue($validator->isValid('cafecafe.de'));
     }
 
     public function testValidCnHostname()
     {
         $validator = new Hostname();
-        $this->assertTrue($validator->isValid('google.cn'));
+        self::assertTrue($validator->isValid('google.cn'));
     }
 
     public function testValidBizHostname()
     {
         $validator = new Hostname();
-        $this->assertTrue($validator->isValid('google.biz'));
+        self::assertTrue($validator->isValid('google.biz'));
     }
 
     public function testInValidHostnameWithAt()
@@ -732,6 +687,6 @@ class HostnameTest extends TestCase
     public function testHostnameWithEmptyDomainPart()
     {
         $validator = new Hostname();
-        $this->assertFalse($validator->isValid('.com'));
+        self::assertFalse($validator->isValid('.com'));
     }
 }
