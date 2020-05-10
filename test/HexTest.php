@@ -29,25 +29,31 @@ class HexTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
+     * @dataProvider basicDataProvider
+     * @param int|string $input
      * @return void
      */
-    public function testBasic()
+    public function testBasic($input, bool $expected)
     {
-        $valuesExpected = [
-            [1, true],
-            [0x1, true],
-            [0x123, true],
-            ['1', true],
-            ['abc123', true],
-            ['ABC123', true],
-            ['1234567890abcdef', true],
-            ['g', false],
-            ['1.2', false],
-        ];
+        $this->assertSame($expected, $this->validator->isValid($input));
+    }
 
-        foreach ($valuesExpected as $element) {
-            $this->assertEquals($element[1], $this->validator->isValid($element[0]), $element[0]);
-        }
+    public function basicDataProvider()
+    {
+        return [
+            // phpcs:disable
+            'valid; int; 1' => [1, true],
+            'valid; hex; 0x1' => [0x1, true],
+            'valid; hex; 0x123' => [0x123, true],
+            'valid; string; 1' => ['1', true],
+            'valid; string; abc123' => ['abc123', true],
+            'valid; string; ABC123' => ['ABC123', true],
+            'valid; string; 1234567890abcdef' => ['1234567890abcdef', true],
+
+            'invalid; string; g' => ['g', false],
+            'invalid; string; 1.2' => ['1.2', false],
+            // phpcs:enable
+        ];
     }
 
     /**

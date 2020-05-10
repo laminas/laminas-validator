@@ -19,33 +19,75 @@ class LessThanTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
+     * @dataProvider basicDataProvider
+     * @param int|string $input
      * @return void
      */
-    public function testBasic()
+    public function testBasic(array $options, $input, bool $expected)
     {
-        /**
-         * The elements of each array are, in order:
-         *      - maximum
-         *      - expected validation result
-         *      - array of test input values
-         */
-        $valuesExpected = [
-            [100, true, [-1, 0, 0.01, 1, 99.999]],
-            [100, false, [100, 100.0, 100.01]],
-            ['a', false, ['a', 'b', 'c', 'd']],
-            ['z', true, ['x', 'y']],
-            [['max' => 100, 'inclusive' => true], true, [-1, 0, 0.01, 1, 99.999, 100, 100.0]],
-            [['max' => 100, 'inclusive' => true], false, [100.01]],
-            [['max' => 100, 'inclusive' => false], true, [-1, 0, 0.01, 1, 99.999]],
-            [['max' => 100, 'inclusive' => false], false, [100, 100.0, 100.01]],
-        ];
+        $validator = new LessThan(...$options);
+        $this->assertSame($expected, $validator->isValid($input));
+    }
 
-        foreach ($valuesExpected as $element) {
-            $validator = new LessThan($element[0]);
-            foreach ($element[2] as $input) {
-                $this->assertEquals($element[1], $validator->isValid($input));
-            }
-        }
+    public function basicDataProvider()
+    {
+        return [
+            // phpcs:disable
+            'valid; non inclusive; 100 > -1'     => [[100], -1,     true],
+            'valid; non inclusive; 100 > 0'      => [[100], 0,      true],
+            'valid; non inclusive; 100 > 0.01'   => [[100], 0.01,   true],
+            'valid; non inclusive; 100 > 1'      => [[100], 1,      true],
+            'valid; non inclusive; 100 > 99.999' => [[100], 99.999, true],
+
+            'invalid; non inclusive; 100 <= 100'    => [[100], 100,    false],
+            'invalid; non inclusive; 100 <= 100.0'  => [[100], 100.0,  false],
+            'invalid; non inclusive; 100 <= 100.01' => [[100], 100.01, false],
+
+            'valid; inclusive; 100 >= -1'     => [[100, true], -1,     true],
+            'valid; inclusive; 100 >= 0'      => [[100, true], 0,      true],
+            'valid; inclusive; 100 >= 0.01'   => [[100, true], 0.01,   true],
+            'valid; inclusive; 100 >= 1'      => [[100, true], 1,      true],
+            'valid; inclusive; 100 >= 99.999' => [[100, true], 99.999, true],
+            'valid; inclusive; 100 >= 100'    => [[100, true], 100,    true],
+            'valid; inclusive; 100 >= 100.0'  => [[100, true], 100.0,  true],
+
+            'invalid; inclusive; 100 < 100.01' => [[100, true], 100.01, false],
+
+            'invalid; non inclusive; a >= a' => [['a'], 'a', false],
+            'invalid; non inclusive; a >= b' => [['a'], 'b', false],
+            'invalid; non inclusive; a >= c' => [['a'], 'c', false],
+            'invalid; non inclusive; a >= d' => [['a'], 'd', false],
+
+            'valid; inclusive; a <= a' => [['a', true], 'a', true],
+
+            'valid; non inclusive; z > x' => [['z'], 'x', true],
+            'valid; non inclusive; z > y' => [['z'], 'y', true],
+
+            'valid; inclusive; z >= x' => [['z', true], 'x', true],
+            'valid; inclusive; z >= y' => [['z', true], 'y', true],
+            'valid; inclusive; z >= z' => [['z', true], 'z', true],
+
+            'valid; inclusive; 100 >= -1; array'     => [[['max' => 100, 'inclusive' => true]], -1,     true],
+            'valid; inclusive; 100 >= 0; array'      => [[['max' => 100, 'inclusive' => true]], 0,      true],
+            'valid; inclusive; 100 >= 0.01; array'   => [[['max' => 100, 'inclusive' => true]], 0.01,   true],
+            'valid; inclusive; 100 >= 1; array'      => [[['max' => 100, 'inclusive' => true]], 1,      true],
+            'valid; inclusive; 100 >= 99.999; array' => [[['max' => 100, 'inclusive' => true]], 99.999, true],
+            'valid; inclusive; 100 >= 100; array'    => [[['max' => 100, 'inclusive' => true]], 100,    true],
+            'valid; inclusive; 100 >= 100.0; array'  => [[['max' => 100, 'inclusive' => true]], 100.0,  true],
+
+            'invalid; inclusive; 100 < 100.01; array' => [[['max' => 100, 'inclusive' => true]],  100.01, false],
+
+            'valid; non inclusive; 100 > -1; array'     => [[['max' => 100, 'inclusive' => false]], -1,     true],
+            'valid; non inclusive; 100 > 0; array'      => [[['max' => 100, 'inclusive' => false]], 0,      true],
+            'valid; non inclusive; 100 > 0.01; array'   => [[['max' => 100, 'inclusive' => false]], 0.01,   true],
+            'valid; non inclusive; 100 > 1; array'      => [[['max' => 100, 'inclusive' => false]], 1,      true],
+            'valid; non inclusive; 100 > 99.999; array' => [[['max' => 100, 'inclusive' => false]], 99.999, true],
+
+            'invalid; non inclusive; 100 <= 100; array'    => [[['max' => 100, 'inclusive' => false]], 100,    false],
+            'invalid; non inclusive; 100 <= 100.0; array'  => [[['max' => 100, 'inclusive' => false]], 100.0,  false],
+            'invalid; non inclusive; 100 <= 100.01; array' => [[['max' => 100, 'inclusive' => false]], 100.01, false],
+            // phpcs:enable
+        ];
     }
 
     /**

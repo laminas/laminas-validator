@@ -19,33 +19,79 @@ class GreaterThanTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
+     * @dataProvider basicDataProvider
+     * @param int|string $input
      * @return void
      */
-    public function testBasic()
+    public function testBasic(array $options, $input, bool $expected)
     {
-        /**
-         * The elements of each array are, in order:
-         *      - minimum
-         *      - expected validation result
-         *      - array of test input values
-         */
-        $valuesExpected = [
-            [0, true, [0.01, 1, 100]],
-            [0, false, [0, 0.00, -0.01, -1, -100]],
-            ['a', true, ['b', 'c', 'd']],
-            ['z', false, ['x', 'y', 'z']],
-            [['min' => 0, 'inclusive' => true], true, [0, 0.00, 0.01, 1, 100]],
-            [['min' => 0, 'inclusive' => true], false, [-0.01, -1, -100]],
-            [['min' => 0, 'inclusive' => false], true, [0.01, 1, 100]],
-            [['min' => 0, 'inclusive' => false], false, [0, 0.00, -0.01, -1, -100]],
-        ];
+        $validator = new GreaterThan(...$options);
+        $this->assertSame($expected, $validator->isValid($input));
+    }
 
-        foreach ($valuesExpected as $element) {
-            $validator = new GreaterThan($element[0]);
-            foreach ($element[2] as $input) {
-                $this->assertEquals($element[1], $validator->isValid($input));
-            }
-        }
+    public function basicDataProvider()
+    {
+        return [
+            // phpcs:disable
+            'valid; non inclusive; 0 < 0.01' => [[0], 0.01, true],
+            'valid; non inclusive; 0 < 1'    => [[0], 1,    true],
+            'valid; non inclusive; 0 < 100'  => [[0], 100,  true],
+
+            'invalid; non inclusive; 0 >= 0'     => [[0], 0,     false],
+            'invalid; non inclusive; 0 >= 0.00'  => [[0], 0.00,  false],
+            'invalid; non inclusive; 0 >= -0.01' => [[0], -0.01, false],
+            'invalid; non inclusive; 0 >= -1'    => [[0], -1,    false],
+            'invalid; non inclusive; 0 >= -100'  => [[0], -100,  false],
+
+            'valid; inclusive; 0 <= 0'    => [[0, true], 0,    true],
+            'valid; inclusive; 0 <= 0.00' => [[0, true], 0.00, true],
+            'valid; inclusive; 0 <= 0.01' => [[0, true], 0.01, true],
+            'valid; inclusive; 0 <= 1'    => [[0, true], 1,    true],
+            'valid; inclusive; 0 <= 100'  => [[0, true], 100,  true],
+
+            'invalid; inclusive; 0 >= -0.01' => [[0, true], -0.01, false],
+            'invalid; inclusive; 0 >= -1'    => [[0, true], -1,    false],
+            'invalid; inclusive; 0 >= -100'  => [[0, true], -100,  false],
+
+            'valid; non inclusive; a < b'    => [['a'], 'b',    true],
+            'valid; non inclusive; a < c'    => [['a'], 'c',    true],
+            'valid; non inclusive; a < d'    => [['a'], 'd',    true],
+
+            'valid; inclusive; a <= a' => [['a', true], 'a', true],
+            'valid; inclusive; a <= b' => [['a', true], 'b', true],
+            'valid; inclusive; a <= c' => [['a', true], 'c', true],
+            'valid; inclusive; a <= d' => [['a', true], 'd', true],
+
+            'invalid; non-inclusive; a >= a' => [['a', false], 'a', false],
+
+            'invalid; non inclusive; z >= x'    => [['z'], 'x',    false],
+            'invalid; non inclusive; z >= y'    => [['z'], 'y',    false],
+            'invalid; non inclusive; z >= z'    => [['z'], 'z',    false],
+
+            'invalid; inclusive; z > x' => [['z', true], 'x', false],
+            'invalid; inclusive; z > y' => [['z', true], 'y', false],
+
+            'valid; inclusive; 0 <= 0; array'    => [[['min' => 0, 'inclusive' => true]], 0,    true],
+            'valid; inclusive; 0 <= 0.00; array' => [[['min' => 0, 'inclusive' => true]], 0.00, true],
+            'valid; inclusive; 0 <= 0.01; array' => [[['min' => 0, 'inclusive' => true]], 0.01, true],
+            'valid; inclusive; 0 <= 1; array'    => [[['min' => 0, 'inclusive' => true]], 1,    true],
+            'valid; inclusive; 0 <= 100; array'  => [[['min' => 0, 'inclusive' => true]], 100,  true],
+
+            'invalid; inclusive; 0 >= -0.01; array' => [[['min' => 0, 'inclusive' => true]], -0.01, false],
+            'invalid; inclusive; 0 >= -1; array'    => [[['min' => 0, 'inclusive' => true]], -1,    false],
+            'invalid; inclusive; 0 >= -100; array'  => [[['min' => 0, 'inclusive' => true]], -100,  false],
+
+            'valid; non inclusive; 0 < 0.01; array' => [[['min' => 0, 'inclusive' => false]], 0.01, true],
+            'valid; non inclusive; 0 < 1; array'    => [[['min' => 0, 'inclusive' => false]], 1,    true],
+            'valid; non inclusive; 0 < 100; array'  => [[['min' => 0, 'inclusive' => false]], 100,  true],
+
+            'invalid; non inclusive; 0 >= 0; array'     => [[['min' => 0, 'inclusive' => false]], 0,     false],
+            'invalid; non inclusive; 0 >= 0.00; array'  => [[['min' => 0, 'inclusive' => false]], 0.00,  false],
+            'invalid; non inclusive; 0 >= -0.01; array' => [[['min' => 0, 'inclusive' => false]], -0.01, false],
+            'invalid; non inclusive; 0 >= -1; array'    => [[['min' => 0, 'inclusive' => false]], -1,    false],
+            'invalid; non inclusive; 0 >= -100; array'  => [[['min' => 0, 'inclusive' => false]], -100,  false],
+            // phpcs:enable
+        ];
     }
 
     /**
@@ -101,32 +147,50 @@ class GreaterThanTest extends TestCase
         );
     }
 
-    public function testCorrectInclusiveMessageReturn()
+    /**
+     * @dataProvider correctInclusiveMessageDataProvider
+     */
+    public function testCorrectInclusiveMessageReturn(float $input)
     {
-        $valuesToValidate = [0, 0.5, 5, 10];
+        $validator = new GreaterThan(10);
+        $validator->isValid($input);
+        $message = $validator->getMessages();
 
-        foreach ($valuesToValidate as $value) {
-            $validator = new GreaterThan(10);
-            $validator->isValid($value);
-            $message = $validator->getMessages();
-
-            $this->assertArrayHaskey('notGreaterThan', $message);
-            $this->assertEquals($message['notGreaterThan'], "The input is not greater than '10'");
-        }
+        $this->assertArrayHaskey('notGreaterThan', $message);
+        $this->assertEquals($message['notGreaterThan'], "The input is not greater than '10'");
     }
 
-    public function testCorrectNotInclusiveMessageReturn()
+    public function correctInclusiveMessageDataProvider()
     {
-        $valuesToValidate = [0, 0.5, 5, 9];
+        return [
+            '0'   => [0],
+            '0.5' => [0.5],
+            '5'   => [5],
+            '10'  => [10],
+        ];
+    }
 
-        foreach ($valuesToValidate as $value) {
-            $validator = new GreaterThan(['min' => 10, 'inclusive' => true]);
-            $validator->isValid($value);
-            $message = $validator->getMessages();
+    /**
+     * @dataProvider correctNotInclusiveMessageDataProvider
+     */
+    public function testCorrectNotInclusiveMessageReturn(float $input)
+    {
+        $validator = new GreaterThan(['min' => 10, 'inclusive' => true]);
+        $validator->isValid($input);
+        $message = $validator->getMessages();
 
-            $this->assertArrayHaskey('notGreaterThanInclusive', $message);
-            $this->assertEquals($message['notGreaterThanInclusive'], "The input is not greater than or equal to '10'");
-        }
+        $this->assertArrayHaskey('notGreaterThanInclusive', $message);
+        $this->assertEquals($message['notGreaterThanInclusive'], "The input is not greater than or equal to '10'");
+    }
+
+    public function correctNotInclusiveMessageDataProvider()
+    {
+        return [
+            '0'   => [0],
+            '0.5' => [0.5],
+            '5'   => [5],
+            '9'  => [9],
+        ];
     }
 
     public function testConstructorCanAcceptInclusiveFlagAsAnArgument()

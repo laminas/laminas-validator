@@ -28,50 +28,58 @@ class FilesSizeTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
+     * @dataProvider basicDataProvider
+     * @param array|int $options
      * @return void
      */
-    public function testBasic()
+    public function testBasic($options, bool $expected1, bool $expected2, bool $expected3)
     {
-        $valuesExpected = [
-            [['min' => 0, 'max' => 2000], true, true, false],
-            [['min' => 0, 'max' => '2 MB'], true, true, true],
-            [['min' => 0, 'max' => '2MB'], true, true, true],
-            [['min' => 0, 'max' => '2  MB'], true, true, true],
-            [2000, true, true, false],
-            [['min' => 0, 'max' => 500], false, false, false],
-            [500, false, false, false],
+        $validator = new File\FilesSize(...$options);
+        $this->assertSame(
+            $expected1,
+            $validator->isValid(__DIR__ . '/_files/testsize.mo')
+        );
+        $this->assertSame(
+            $expected2,
+            $validator->isValid(__DIR__ . '/_files/testsize2.mo')
+        );
+        $this->assertSame(
+            $expected3,
+            $validator->isValid(__DIR__ . '/_files/testsize3.mo')
+        );
+    }
+
+    public function basicDataProvider()
+    {
+        return [
+            // phpcs:disable
+            'minimum: 0 byte; maximum: 500 bytes; integer'  => [[500],                            false, false, false],
+            'minimum: 0 byte; maximum: 500 bytes; array'    => [[['min' => 0, 'max' => 500]],     false, false, false],
+            'minimum: 0 byte; maximum: 2000 bytes; integer' => [[2000],                           true,  true,  false],
+            'minimum: 0 byte; maximum: 2000 bytes; array'   => [[['min' => 0, 'max' => 2000]],    true,  true,  false],
+            'minimum: 0 byte; maximum: 500 kilobytes'       => [[['min' => 0, 'max' => 500000]],  true,  true,  true],
+            'minimum: 0 byte; maximum: 2 megabytes; 2 MB'   => [[['min' => 0, 'max' => '2 MB']],  true,  true,  true],
+            'minimum: 0 byte; maximum: 2 megabytes; 2MB'    => [[['min' => 0, 'max' => '2MB']],   true,  true,  true],
+            'minimum: 0 byte; maximum: 2 megabytes; 2  MB'  => [[['min' => 0, 'max' => '2  MB']], true,  true,  true],
+            // phpcs:enable
         ];
+    }
 
-        foreach ($valuesExpected as $element) {
-            $validator = new File\FilesSize($element[0]);
-            $this->assertEquals(
-                $element[1],
-                $validator->isValid(__DIR__ . '/_files/testsize.mo'),
-                'Tested with ' . var_export($element, 1)
-            );
-            $this->assertEquals(
-                $element[2],
-                $validator->isValid(__DIR__ . '/_files/testsize2.mo'),
-                'Tested with ' . var_export($element, 1)
-            );
-            $this->assertEquals(
-                $element[3],
-                $validator->isValid(__DIR__ . '/_files/testsize3.mo'),
-                'Tested with ' . var_export($element, 1)
-            );
-        }
-
-        $validator = new File\FilesSize(['min' => 0, 'max' => 200]);
-        $this->assertEquals(false, $validator->isValid(__DIR__ . '/_files/nofile.mo'));
-        $this->assertArrayHasKey('fileFilesSizeNotReadable', $validator->getMessages());
-
+    public function testMultipleFiles()
+    {
         $validator = new File\FilesSize(['min' => 0, 'max' => 500000]);
         $this->assertEquals(true, $validator->isValid([
             __DIR__ . '/_files/testsize.mo',
             __DIR__ . '/_files/testsize.mo',
             __DIR__ . '/_files/testsize2.mo',
         ]));
-        $this->assertEquals(true, $validator->isValid(__DIR__ . '/_files/testsize.mo'));
+    }
+
+    public function testFileDoNotExist()
+    {
+        $validator = new File\FilesSize(['min' => 0, 'max' => 200]);
+        $this->assertEquals(false, $validator->isValid(__DIR__ . '/_files/nofile.mo'));
+        $this->assertArrayHasKey('fileFilesSizeNotReadable', $validator->getMessages());
     }
 
     /**

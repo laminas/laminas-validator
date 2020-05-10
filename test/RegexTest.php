@@ -21,27 +21,36 @@ class RegexTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
+     * @dataProvider basicDataProvider
      * @return void
      */
-    public function testBasic()
+    public function testBasic(array $options, string $input, bool $expected)
     {
-        /**
-         * The elements of each array are, in order:
-         *      - pattern
-         *      - expected validation result
-         *      - array of test input values
-         */
-        $valuesExpected = [
-            ['/[a-z]/', true, ['abc123', 'foo', 'a', 'z']],
-            ['/[a-z]/', false, ['123', 'A']],
-        ];
+        $validator = new Regex(...$options);
+        $this->assertSame($expected, $validator->isValid($input));
+    }
 
-        foreach ($valuesExpected as $element) {
-            $validator = new Regex($element[0]);
-            foreach ($element[2] as $input) {
-                $this->assertEquals($element[1], $validator->isValid($input));
-            }
-        }
+    public function basicDataProvider()
+    {
+        return [
+            // phpcs:disable
+            'valid; abc123' => [['/[a-z]/'], 'abc123', true],
+            'valid; foo'    => [['/[a-z]/'], 'foo',    true],
+            'valid; a'      => [['/[a-z]/'], 'a',      true],
+            'valid; z'      => [['/[a-z]/'], 'z',      true],
+
+            'valid; 123' => [['/[a-z]/'], '123', false],
+            'valid; A'   => [['/[a-z]/'], 'A',   false],
+
+            'valid; abc123; array' => [[['pattern' => '/[a-z]/']], 'abc123', true],
+            'valid; foo; array'    => [[['pattern' => '/[a-z]/']], 'foo', true],
+            'valid; a; array'      => [[['pattern' => '/[a-z]/']], 'a', true],
+            'valid; z; array'      => [[['pattern' => '/[a-z]/']], 'z', true],
+
+            'valid; 123; array' => [[['pattern' => '/[a-z]/']], '123', false],
+            'valid; A; array'   => [[['pattern' => '/[a-z]/']], 'A', false],
+            // phpcs:enable
+        ];
     }
 
     /**
