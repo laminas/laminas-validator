@@ -619,8 +619,10 @@ class HostnameTest extends TestCase
         // @codingStandardsIgnoreStart
         return [
             'ASCII label + UTF-8 TLD'                    => ['test123.онлайн'],
+            'ASCII label + UTF-8 TLD (Uppercase chars)'  => ['test123.оНлАйН'],
             'ASCII label + Punycoded TLD'                => ['test123.xn--80asehdb'],
             'UTF-8 label + UTF-8 TLD (cyrillic)'         => ['тест.рф'],
+            'UTF-8 label + UTF-8 TLD (cyrillic) + CAPS'  => ['ТЕСТ.РФ'],
             'Punycoded label + Punycoded TLD (cyrillic)' => ['xn--e1aybc.xn--p1ai'],
         ];
         // @codingStandardsIgnoreEnd
