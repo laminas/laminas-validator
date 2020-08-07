@@ -638,7 +638,7 @@ units.</p>
 
 $validator = new FilesSize([
     'min' =&gt; '1kB',  // minimum of 1kB
-    'max' =&gt; `10MB', // maximum of 10MB
+    'max' =&gt; '10MB', // maximum of 10MB
 ]);
 
 if ($validator-&gt;isValid($_FILES)) {
