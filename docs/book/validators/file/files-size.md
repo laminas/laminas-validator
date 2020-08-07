@@ -29,7 +29,7 @@ use Laminas\Validator\File\FilesSize;
 
 $validator = new FilesSize([
     'min' => '1kB',  // minimum of 1kB
-    'max' => `10MB', // maximum of 10MB
+    'max' => '10MB', // maximum of 10MB
 ]);
 
 if ($validator->isValid($_FILES)) {
