@@ -1977,6 +1977,11 @@ class Hostname extends AbstractValidator
             return true;
         }
 
+        if (mb_strpos($value, '@') !== false) {
+            $this->error(self::INVALID_HOSTNAME);
+            return false;
+        }
+
         // Local hostnames are allowed to be partial (ending '.')
         if ($this->getAllow() & self::ALLOW_LOCAL) {
             if (substr($value, -1) === '.') {
