@@ -1977,7 +1977,7 @@ class Hostname extends AbstractValidator
             return true;
         }
 
-        if (mb_strpos($value, '@') !== false) {
+        if (strpos($value, '@') !== false) {
             $this->error(self::INVALID_HOSTNAME);
             return false;
         }
