@@ -33,7 +33,7 @@ if ($validator->isValid('foo')) {
 
 - Since 2.11.0
 
-Starting in 2.11.0, you can also pass an array of [PSR-7 UploadedFileInterface](https://www.php-fig.org/psr/psr-7/#uploadedfileinterface)
+Starting in 2.11.0, you can also pass an array of [PSR-7 UploadedFileInterface](https://www.php-fig.org/psr/psr-7/#16-uploaded-files)
 instances to the constructor, the `setFiles()` method, or the `isValid()`
 method (in the latter case, you are validating that _all_ uploaded files were
 valid).
