@@ -321,8 +321,8 @@ abstract class AbstractValidator implements
     }
 
     /**
-     * @param  string              $messageKey
-     * @param  string|array|object $value      OPTIONAL
+     * @param  string                   $messageKey
+     * @param  null|string|array|object $value      OPTIONAL
      * @return void
      */
     protected function error($messageKey, $value = null)
