@@ -11,6 +11,7 @@ namespace LaminasTest\Validator\File;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\UploadedFileInterface;
 
 /**
@@ -18,6 +19,8 @@ use Psr\Http\Message\UploadedFileInterface;
  */
 class UploadTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * Ensures that the validator follows expected behavior
      *

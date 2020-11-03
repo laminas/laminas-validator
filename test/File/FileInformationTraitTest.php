@@ -10,12 +10,15 @@ namespace LaminasTest\Validator\File;
 
 use LaminasTest\Validator\File\TestAsset\FileInformation;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 
 class FileInformationTraitTest extends TestCase
 {
+    use ProphecyTrait;
+
     /** @var ObjectProphecy|StreamInterface */
     public $stream;
 

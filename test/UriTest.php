@@ -163,7 +163,7 @@ class UriTest extends TestCase
     {
         $validator = $this->validator;
         self::assertObjectHasAttribute('messageTemplates', $validator);
-        self::assertAttributeEquals($validator->getOption('messageTemplates'), 'messageTemplates', $validator);
+        self::assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testUriHandlerCanBeSpecifiedAsString()

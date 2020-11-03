@@ -82,7 +82,7 @@ class InArray extends AbstractValidator
     /**
      * Sets the haystack option
      *
-     * @param  mixed $haystack
+     * @param mixed $haystack
      * @return $this Provides a fluent interface
      */
     public function setHaystack(array $haystack)
@@ -102,7 +102,7 @@ class InArray extends AbstractValidator
         if ($this->strict == self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY
             || $this->strict == self::COMPARE_STRICT
         ) {
-            return (bool) $this->strict;
+            return (bool)$this->strict;
         }
         return $this->strict;
     }
@@ -113,7 +113,7 @@ class InArray extends AbstractValidator
      * InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY
      * InArray::COMPARE_NOT_STRICT
      *
-     * @param  int $strict
+     * @param int $strict
      * @return $this Provides a fluent interface
      * @throws Exception\InvalidArgumentException
      */
@@ -147,12 +147,12 @@ class InArray extends AbstractValidator
     /**
      * Sets the recursive option
      *
-     * @param  bool $recursive
+     * @param bool $recursive
      * @return $this Provides a fluent interface
      */
     public function setRecursive($recursive)
     {
-        $this->recursive = (bool) $recursive;
+        $this->recursive = (bool)$recursive;
         return $this;
     }
 
@@ -173,7 +173,7 @@ class InArray extends AbstractValidator
         // we type cast the input to a string
         if (self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY == $this->strict
             && (is_int($value) || is_float($value))) {
-            $value = (string) $value;
+            $value = (string)$value;
         }
 
         $this->setValue($value);
@@ -191,10 +191,14 @@ class InArray extends AbstractValidator
                     if (self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY == $this->strict
                         && is_string($value) && (is_int($el) || is_float($el))
                     ) {
-                        $el = (string) $el;
+                        $el = (string)$el;
                     }
 
-                    if ($el == $value) {
+                    if ($el == $value && self::COMPARE_STRICT != $this->strict) {
+                        return true;
+                    }
+
+                    if (self::COMPARE_NOT_STRICT == $this->strict) {
                         return true;
                     }
                 }
@@ -213,17 +217,35 @@ class InArray extends AbstractValidator
             ) {
                 foreach ($haystack as &$h) {
                     if (is_int($h) || is_float($h)) {
-                        $h = (string) $h;
+                        $h = (string)$h;
                     }
+                }
+
+                if (! $this->isMultiArray($haystack) && array_key_exists($value, array_flip($haystack))) {
+                    return true;
                 }
             }
 
-            if (in_array($value, $haystack, self::COMPARE_STRICT == $this->strict)) {
+            if (array_search($value, $haystack, self::COMPARE_STRICT == $this->strict)) {
+                return true;
+            }
+
+            if (self::COMPARE_NOT_STRICT == $this->strict) {
                 return true;
             }
         }
 
         $this->error(self::NOT_IN_ARRAY);
+        return false;
+    }
+
+    private function isMultiArray(array $array): bool
+    {
+        foreach ($array as $value) {
+            if (is_array($value)) {
+                return true;
+            }
+        }
         return false;
     }
 }

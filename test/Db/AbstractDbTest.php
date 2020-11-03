@@ -14,12 +14,14 @@ use Laminas\Db\Sql\Select;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use LaminasTest\Validator\Db\TestAsset\ConcreteDbValidator;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 /**
  * @group      Laminas_Validator
  */
 class AbstractDbTest extends TestCase
 {
+    use ProphecyTrait;
 
     protected $validator;
 
@@ -104,13 +106,15 @@ class AbstractDbTest extends TestCase
      */
     public function testSetAdapterIsEquivalentToSetDbAdapter()
     {
-        $adapterFirst = $this->prophesize(Adapter::class)->reveal();
-        $adapterSecond = $this->prophesize(Adapter::class)->reveal();
+        $adapterFirst = $this->createStub(Adapter::class);
+        $adapterSecond = $this->createStub(Adapter::class);
 
         $this->validator->setAdapter($adapterFirst);
-        $this->assertAttributeSame($adapterFirst, 'adapter', $this->validator);
+        $this->assertObjectHasAttribute('adapter', $this->validator);
+        $this->assertEquals($adapterFirst, $this->validator->getAdapter());
 
         $this->validator->setDbAdapter($adapterSecond);
-        $this->assertAttributeSame($adapterSecond, 'adapter', $this->validator);
+        $this->assertObjectHasAttribute('adapter', $this->validator);
+        $this->assertEquals($adapterSecond, $this->validator->getAdapter());
     }
 }

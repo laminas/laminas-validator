@@ -200,6 +200,10 @@ class NoRecordExistsTest extends TestCase
     /**
      * Test that schemas are supported and run without error
      *
+     * @requires PHP < 8.0
+     * For PHP 8.0 Library laminas/laminas-stdlib/src/ArrayUtils.php needs to be upgraded
+     * TypeError: method_exists(): Argument #1 ($object_or_class) must be of type object|string, array given
+     *
      * @return void
      */
     public function testWithSchema()
@@ -213,6 +217,10 @@ class NoRecordExistsTest extends TestCase
 
     /**
      * Test that schemas are supported and run without error
+     *
+     * @requires PHP < 8.0
+     * For PHP 8.0 Library laminas/laminas-stdlib/src/ArrayUtils.php needs to be upgraded
+     * TypeError: method_exists(): Argument #1 ($object_or_class) must be of type object|string, array given
      *
      * @return void
      */
@@ -228,10 +236,7 @@ class NoRecordExistsTest extends TestCase
     public function testEqualsMessageTemplates()
     {
         $validator  = new NoRecordExists('users', 'field1');
-        $this->assertAttributeEquals(
-            $validator->getOption('messageTemplates'),
-            'messageTemplates',
-            $validator
-        );
+        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 }

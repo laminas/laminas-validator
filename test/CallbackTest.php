@@ -77,11 +77,8 @@ class CallbackTest extends TestCase
     public function testEqualsMessageTemplates()
     {
         $validator = new Callback([$this, 'objectCallback']);
-        $this->assertAttributeEquals(
-            $validator->getOption('messageTemplates'),
-            'messageTemplates',
-            $validator
-        );
+        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testCanAcceptContextWithoutOptions()

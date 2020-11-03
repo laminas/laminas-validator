@@ -232,6 +232,9 @@ class RecordExistsTest extends TestCase
     /**
      * Test that schemas are supported and run without error
      *
+     * @requires PHP < 8.0
+     * For PHP 8.0 Library laminas/laminas-stdlib/src/ArrayUtils.php needs to be upgraded
+     * TypeError: method_exists(): Argument #1 ($object_or_class) must be of type object|string, array given
      * @return void
      */
     public function testWithSchema()
@@ -246,7 +249,9 @@ class RecordExistsTest extends TestCase
     /**
      * Test that schemas are supported and run without error
      *
-     * @return void
+     * @requires PHP < 8.0
+     * For PHP 8.0 Library laminas/laminas-stdlib/src/ArrayUtils.php needs to be upgraded
+     * TypeError: method_exists(): Argument #1 ($object_or_class) must be of type object|string, array given
      */
     public function testWithSchemaNoResult()
     {
@@ -260,6 +265,10 @@ class RecordExistsTest extends TestCase
     /**
      * Test that the supplied table and schema are successfully passed to the select
      * statement
+     *
+     * @requires PHP < 8.0
+     * For PHP 8.0 Library laminas/laminas-stdlib/src/ArrayUtils.php needs to be upgraded
+     * TypeError: method_exists(): Argument #1 ($object_or_class) must be of type object|string, array given
      */
     public function testSelectAcknowledgesTableAndSchema()
     {
@@ -275,15 +284,16 @@ class RecordExistsTest extends TestCase
     public function testEqualsMessageTemplates()
     {
         $validator  = new RecordExists('users', 'field1');
-        $this->assertAttributeEquals(
-            $validator->getOption('messageTemplates'),
-            'messageTemplates',
-            $validator
-        );
+        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     /**
      * @testdox Laminas\Validator\Db\RecordExists::getSelect
+     *
+     * @requires PHP < 8.0
+     * For PHP 8.0 Library laminas/laminas-stdlib/src/ArrayUtils.php needs to be upgraded
+     * TypeError: method_exists(): Argument #1 ($object_or_class) must be of type object|string, array given
      */
     public function testGetSelect()
     {
@@ -316,6 +326,10 @@ class RecordExistsTest extends TestCase
     /**
      * @cover Laminas\Validator\Db\RecordExists::getSelect
      * @group Laminas-4521
+     *
+     * @requires PHP < 8.0
+     * For PHP 8.0 Library laminas/laminas-stdlib/src/ArrayUtils.php needs to be upgraded
+     * TypeError: method_exists(): Argument #1 ($object_or_class) must be of type object|string, array given
      */
     public function testGetSelectWithSameValidatorTwice()
     {
