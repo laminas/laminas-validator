@@ -2,6 +2,7 @@
     "name": "laminas/laminas-validator",
     "description": "Validation classes for a wide range of domains, and the ability to chain validators to create complex validation criteria",
     "license": "BSD-3-Clause",
+    "version": "2.14.0",
     "keywords": [
         "laminas",
         "validator"
