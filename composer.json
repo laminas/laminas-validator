@@ -36,7 +36,7 @@
         "laminas/laminas-config": "^2.6",
         "laminas/laminas-db": "^2.7",
         "laminas/laminas-filter": "^2.6",
-        "laminas/laminas-http": "^2.5.4",
+        "laminas/laminas-http": "^2.14",
         "laminas/laminas-i18n": "^2.6",
         "laminas/laminas-math": "^2.6",
         "laminas/laminas-servicemanager": "^2.7.5 || ^3.0.3",
