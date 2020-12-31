@@ -199,7 +199,7 @@ class UploadTest extends TestCase
         $upload = $this->prophesize(UploadedFileInterface::class);
         $upload->getClientFilename()->willReturn('test9');
         $upload->getError()->willReturn(8);
-        yield 'cannot write' => [['test9' => $upload->reveal()], 'test9', 'fileUploadErrorExtension'];
+        yield 'extension' => [['test9' => $upload->reveal()], 'test9', 'fileUploadErrorExtension'];
 
         $uploads['test9'] = $upload->reveal();
 
