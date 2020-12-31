@@ -221,7 +221,7 @@ class InArray extends AbstractValidator
                     }
                 }
 
-                if (! $this->isMultiArray($haystack) && array_key_exists($value, array_flip($haystack))) {
+                if (! $this->isMultidimensionalArray($haystack) && array_key_exists($value, array_flip($haystack))) {
                     return true;
                 }
             }
@@ -239,7 +239,7 @@ class InArray extends AbstractValidator
         return false;
     }
 
-    private function isMultiArray(array $array): bool
+    private function isMultidimensionalArray(array $array): bool
     {
         foreach ($array as $value) {
             if (is_array($value)) {

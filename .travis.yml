@@ -28,7 +28,7 @@ matrix:
         - EXECUTE_HOSTNAME_CHECK=true
         - CS_CHECK=true
         - TEST_COVERAGE=true
-    - php: nightly
+    - php: 8.0
       env:
         - DEPS=lowest
         - COMPOSER_ARGS="--ignore-platform-reqs"
