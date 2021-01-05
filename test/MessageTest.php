@@ -266,20 +266,14 @@ class MessageTest extends TestCase
     public function testEqualsMessageTemplates()
     {
         $validator = $this->validator;
-        $this->assertAttributeEquals(
-            $validator->getOption('messageTemplates'),
-            'messageTemplates',
-            $validator
-        );
+        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables()
     {
         $validator = $this->validator;
-        $this->assertAttributeEquals(
-            $validator->getOption('messageVariables'),
-            'messageVariables',
-            $validator
-        );
+        $this->assertObjectHasAttribute('messageVariables', $validator);
+        $this->assertEquals(array_keys($validator->getOption('messageVariables')), $validator->getMessageVariables());
     }
 }

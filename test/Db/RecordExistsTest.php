@@ -245,8 +245,6 @@ class RecordExistsTest extends TestCase
 
     /**
      * Test that schemas are supported and run without error
-     *
-     * @return void
      */
     public function testWithSchemaNoResult()
     {
@@ -275,11 +273,8 @@ class RecordExistsTest extends TestCase
     public function testEqualsMessageTemplates()
     {
         $validator  = new RecordExists('users', 'field1');
-        $this->assertAttributeEquals(
-            $validator->getOption('messageTemplates'),
-            'messageTemplates',
-            $validator
-        );
+        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     /**

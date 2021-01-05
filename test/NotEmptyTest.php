@@ -995,11 +995,7 @@ class NotEmptyTest extends TestCase
     public function testEqualsMessageTemplates()
     {
         $validator = $this->validator;
-        $this->assertAttributeEquals(
-            $validator->getOption('messageTemplates'),
-            'messageTemplates',
-            $validator
-        );
+        $this->assertObjectHasAttribute('messageTemplates', $validator);
     }
 
     public function testTypeAutoDetectionHasNoSideEffect()

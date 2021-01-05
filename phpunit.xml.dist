@@ -17,14 +17,15 @@
         </exclude>
     </groups>
 
-    <filter>
-        <whitelist addUncoveredFilesFromWhitelist="true">
+    <coverage processUncoveredFiles="true">
+        <include>
             <directory suffix=".php">./src</directory>
-        </whitelist>
-    </filter>
+        </include>
+    </coverage>
 
     <php>
         <ini name="date.timezone" value="UTC"/>
+        <ini name="xdebug.max_nesting_level" value="3000"/>
 
         <!-- OB_ENABLED should be enabled for some tests to check if all
              functionality works as expected. Such tests include those for

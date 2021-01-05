@@ -140,12 +140,13 @@ class InArrayTest extends TestCase
         $validator->setStrict(InArray::COMPARE_STRICT);
 
         $this->assertTrue($validator->getStrict());
+
+        $this->assertTrue($validator->isValid('A'));
+        $this->assertTrue($validator->isValid(0));
         $this->assertFalse($validator->isValid('b'));
         $this->assertFalse($validator->isValid('a'));
-        $this->assertTrue($validator->isValid('A'));
         $this->assertFalse($validator->isValid('0'));
         $this->assertFalse($validator->isValid('1a'));
-        $this->assertTrue($validator->isValid(0));
     }
 
     public function testNonStrictComparisons()
@@ -360,10 +361,8 @@ class InArrayTest extends TestCase
 
     public function testEqualsMessageTemplates()
     {
-        $this->assertAttributeEquals(
-            $this->validator->getOption('messageTemplates'),
-            'messageTemplates',
-            $this->validator
-        );
+        $validator = $this->validator;
+        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 }

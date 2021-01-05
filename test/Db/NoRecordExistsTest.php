@@ -228,10 +228,7 @@ class NoRecordExistsTest extends TestCase
     public function testEqualsMessageTemplates()
     {
         $validator  = new NoRecordExists('users', 'field1');
-        $this->assertAttributeEquals(
-            $validator->getOption('messageTemplates'),
-            'messageTemplates',
-            $validator
-        );
+        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 }

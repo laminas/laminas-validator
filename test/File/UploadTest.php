@@ -11,6 +11,7 @@ namespace LaminasTest\Validator\File;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\UploadedFileInterface;
 
 /**
@@ -18,6 +19,8 @@ use Psr\Http\Message\UploadedFileInterface;
  */
 class UploadTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * Ensures that the validator follows expected behavior
      *
@@ -196,7 +199,7 @@ class UploadTest extends TestCase
         $upload = $this->prophesize(UploadedFileInterface::class);
         $upload->getClientFilename()->willReturn('test9');
         $upload->getError()->willReturn(8);
-        yield 'cannot write' => [['test9' => $upload->reveal()], 'test9', 'fileUploadErrorExtension'];
+        yield 'extension' => [['test9' => $upload->reveal()], 'test9', 'fileUploadErrorExtension'];
 
         $uploads['test9'] = $upload->reveal();
 
