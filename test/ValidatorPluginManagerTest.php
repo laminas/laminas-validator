@@ -15,12 +15,15 @@ use Laminas\Validator\Exception\RuntimeException;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 /**
  * @group      Laminas_Validator
  */
 class ValidatorPluginManagerTest extends TestCase
 {
+    use ProphecyTrait;
+
     protected function setUp() : void
     {
         $this->validators = new ValidatorPluginManager(new ServiceManager);

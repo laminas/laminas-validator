@@ -226,10 +226,7 @@ class IsbnTest extends TestCase
     public function testEqualsMessageTemplates()
     {
         $validator = new Isbn();
-        $this->assertAttributeEquals(
-            $validator->getOption('messageTemplates'),
-            'messageTemplates',
-            $validator
-        );
+        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 }

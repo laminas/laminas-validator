@@ -15,9 +15,11 @@ use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
 use Laminas\Validator\ValidatorPluginManagerFactory;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class ValidatorPluginManagerFactoryTest extends TestCase
 {
+    use ProphecyTrait;
     public function testFactoryReturnsPluginManager()
     {
         $container = $this->prophesize(ContainerInterface::class)->reveal();
@@ -25,14 +27,6 @@ class ValidatorPluginManagerFactoryTest extends TestCase
 
         $validators = $factory($container, ValidatorPluginManagerFactory::class);
         $this->assertInstanceOf(ValidatorPluginManager::class, $validators);
-
-        if (method_exists($validators, 'configure')) {
-            // laminas-servicemanager v3
-            $this->assertAttributeSame($container, 'creationContext', $validators);
-        } else {
-            // laminas-servicemanager v2
-            $this->assertSame($container, $validators->getServiceLocator());
-        }
     }
 
     /**

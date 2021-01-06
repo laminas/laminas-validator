@@ -213,25 +213,24 @@ class StepTest extends TestCase
     public function testEqualsMessageTemplates()
     {
         $validator = new Validator\Step();
-        $this->assertAttributeEquals(
-            $validator->getOption('messageTemplates'),
-            'messageTemplates',
-            $validator
-        );
+        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testSetStepFloat()
     {
         $step = 0.01;
         $this->validator->setStep($step);
-        $this->assertAttributeSame($step, 'step', $this->validator);
+        $this->assertObjectHasAttribute('step', $this->validator);
+        $this->assertEquals($step, $this->validator->getStep());
     }
 
     public function testSetStepString()
     {
         $step = '0.01';
         $this->validator->setStep($step);
-        $this->assertAttributeSame((float) $step, 'step', $this->validator);
+        $this->assertObjectHasAttribute('step', $this->validator);
+        $this->assertEquals((float) $step, $this->validator->getStep());
     }
 
     public function testConstructorCanAcceptAllOptionsAsDiscreteArguments()

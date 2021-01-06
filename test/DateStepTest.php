@@ -110,7 +110,7 @@ class DateStepTest extends TestCase
     {
         $validator  = new Validator\DateStep([]);
         $this->assertObjectHasAttribute('messageTemplates', $validator);
-        $this->assertAttributeEquals($validator->getOption('messageTemplates'), 'messageTemplates', $validator);
+        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testStepError()
