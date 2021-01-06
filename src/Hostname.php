@@ -1977,6 +1977,14 @@ class Hostname extends AbstractValidator
             return true;
         }
 
+        // Handle Regex compilation failure that may happen on .biz domain with has @ character, eg: tapi4457@hsoqvf.biz
+        // Technically, hostname with '@' character is invalid, so mark as invalid immediately
+        // @see https://github.com/laminas/laminas-validator/issues/8
+        if (strpos($value, '@') !== false) {
+            $this->error(self::INVALID_HOSTNAME);
+            return false;
+        }
+
         // Local hostnames are allowed to be partial (ending '.')
         if ($this->getAllow() & self::ALLOW_LOCAL) {
             if (substr($value, -1) === '.') {
