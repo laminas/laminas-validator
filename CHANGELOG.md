@@ -2,27 +2,27 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.13.5 - TBD
+## 2.13.5 - 2021-01-06
 
-### Added
 
-- Nothing.
+-----
 
-### Changed
+### Release Notes for [2.13.5](https://github.com/laminas/laminas-validator/milestone/4)
 
-- Nothing.
+next bug fix release (mini)
 
-### Deprecated
+### 2.13.5
 
-- Nothing.
+- Total issues resolved: **0**
+- Total pull requests resolved: **3**
+- Total contributors: **2**
 
-### Removed
+#### Bug
 
-- Nothing.
+ - [68: Remove duplicate keys in ValidatorPluginManager::factories](https://github.com/laminas/laminas-validator/pull/68) thanks to @samsonasik
 
-### Fixed
-
-- Nothing.
+ - [67: Possible fixes #8 compilation failed regex too large](https://github.com/laminas/laminas-validator/pull/67) thanks to @samsonasik
+ - [62: qa: Replace array by data providers in unit tests](https://github.com/laminas/laminas-validator/pull/62) thanks to @codisart
 
 ## 2.13.4 - 2020-03-31
 
