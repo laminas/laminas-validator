@@ -5,4 +5,8 @@
     <!-- Paths to check -->
     <file>src</file>
     <file>test</file>
+
+    <rule ref="Generic.Files.LineLength.TooLong">
+        <exclude-pattern>test/HostnameTest.php</exclude-pattern>
+    </rule>
 </ruleset>
