@@ -59,6 +59,8 @@ class IsImage extends MimeType
             'image/cgm',
             'image/fif',
             'image/gif',
+            'image/heic',
+            'image/heif',
             'image/jpeg',
             'image/jpm',
             'image/jpx',
