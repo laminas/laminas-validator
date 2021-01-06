@@ -7,6 +7,7 @@
     <file>test</file>
 
     <rule ref="Generic.Files.LineLength.TooLong">
+        <exclude-pattern>src/BusinessIdentifierCode.php</exclude-pattern>
         <exclude-pattern>test/HostnameTest.php</exclude-pattern>
     </rule>
 </ruleset>
