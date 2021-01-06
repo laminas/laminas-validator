@@ -23,12 +23,10 @@ class BusinessIdentifierCode extends AbstractValidator
         self::NOT_VALID_COUNTRY => 'Invalid country code',
     ];
 
-    // phpcs:disable
     /**
      * @see https://www.bundesbank.de/resource/blob/749660/d2c6e00664251b4d83483c229e084e44/mL/technische-spezifikationen-scc-anhang-112018-data.pdf (page 39)
      */
     private const REGEX_BIC = '/^[a-z]{4}(?<country>[a-z]{2})[a-z2-9][a-np-z0-9]([0-9a-z]{3})?$/i';
-    // phpcs:enable
 
     /**
      * List of all country codes defined by ISO 3166-1 alpha-2

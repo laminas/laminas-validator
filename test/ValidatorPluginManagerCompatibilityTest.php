@@ -38,6 +38,8 @@ class ValidatorPluginManagerCompatibilityTest extends TestCase
     public function aliasProvider()
     {
         $pluginManager = $this->getPluginManager();
+        $isV2PluginManager = method_exists($pluginManager, 'validatePlugin');
+
         $r = new ReflectionProperty($pluginManager, 'aliases');
         $r->setAccessible(true);
         $aliases = $r->getValue($pluginManager);
@@ -50,6 +52,11 @@ class ValidatorPluginManagerCompatibilityTest extends TestCase
 
             // Skipping due to required options
             if (strpos($target, '\\Between')) {
+                continue;
+            }
+
+            // Skipping on v2 releases of service manager
+            if ($isV2PluginManager && strpos($target, '\\BusinessIdentifierCode')) {
                 continue;
             }
 
