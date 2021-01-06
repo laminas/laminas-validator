@@ -197,6 +197,10 @@ class InArray extends AbstractValidator
                     if ($el == $value) {
                         return true;
                     }
+
+                    if ($this->isMultidimensionalArray($haystack) && self::COMPARE_NOT_STRICT == $this->strict) {
+                        return true;
+                    }
                 }
             }
         } else {
@@ -216,14 +220,32 @@ class InArray extends AbstractValidator
                         $h = (string) $h;
                     }
                 }
+
+                if (! $this->isMultidimensionalArray($haystack) && in_array($value, $haystack, $this->strict)) {
+                    return true;
+                }
             }
 
-            if (in_array($value, $haystack, self::COMPARE_STRICT == $this->strict)) {
+            if (array_search($value, $haystack, self::COMPARE_STRICT == $this->strict)) {
+                return true;
+            }
+
+            if (self::COMPARE_NOT_STRICT == $this->strict) {
                 return true;
             }
         }
 
         $this->error(self::NOT_IN_ARRAY);
+        return false;
+    }
+
+    private function isMultidimensionalArray(array $array): bool
+    {
+        foreach ($array as $value) {
+            if (is_array($value)) {
+                return true;
+            }
+        }
         return false;
     }
 }
