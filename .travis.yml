@@ -19,6 +19,7 @@ matrix:
     - php: 7.3
       env:
         - DEPS=latest
+        - CS_CHECK=true
     - php: 7.4
       env:
         - DEPS=lowest
@@ -26,7 +27,6 @@ matrix:
       env:
         - DEPS=latest
         - EXECUTE_HOSTNAME_CHECK=true
-        - CS_CHECK=true
         - TEST_COVERAGE=true
     - php: 8.0
       env:
