@@ -230,12 +230,14 @@ class InArrayTest extends TestCase
         $validator->setStrict(InArray::COMPARE_NOT_STRICT);
         $validator->setRecursive(true);
 
+        $stringToNumericComparisonAssertion = PHP_MAJOR_VERSION < 8 ? 'assertTrue' : 'assertFalse';
+
         $this->assertEquals(InArray::COMPARE_NOT_STRICT, $validator->getStrict());
-        $this->assertTrue($validator->isValid('b'));
+        $this->$stringToNumericComparisonAssertion($validator->isValid('b'));
         $this->assertTrue($validator->isValid('a'));
         $this->assertTrue($validator->isValid('A'));
         $this->assertTrue($validator->isValid('0'));
-        $this->assertTrue($validator->isValid('1a'));
+        $this->$stringToNumericComparisonAssertion($validator->isValid('1a'));
         $this->assertTrue($validator->isValid(0));
     }
 
