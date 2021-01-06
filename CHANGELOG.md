@@ -6,11 +6,11 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Nothing.
+- [#75](https://github.com/laminas/laminas-validator/pull/75) adds support for PHP 8.0.
 
 ### Changed
 
-- Nothing.
+- [#75](https://github.com/laminas/laminas-validator/pull/75) With the update to support PHP 8, please be aware that the `InArray` validator may work differently than under PHP 7 when doing non-strict comparisons involving numbers and strings. Under PHP versions prior to v8, strings would be cast to numbers before comparing to a numeric value; now, the opposite occurs, which means that while `"b" == 0` was true in PHP 7, it no longer is in PHP 8. We recommend only using the `InArray` validator with strict comparisons enabled to prevent issues moving from PHP 7 to PHP 8.
 
 ### Deprecated
 
@@ -18,7 +18,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- Nothing.
+- [#75](https://github.com/laminas/laminas-validator/pull/75) removes support for PHP versions 7.1 and 7.2.
 
 ### Fixed
 
