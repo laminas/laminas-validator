@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
+- [#58](https://github.com/laminas/laminas-validator/pull/58) adds a `Laminas\Validator\BusinessIdentifierCode` validator, which can be used for validating SWIFT business identifier codes.
+
 - [#75](https://github.com/laminas/laminas-validator/pull/75) adds support for PHP 8.0.
 
 ### Changed
