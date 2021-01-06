@@ -30,11 +30,11 @@ matrix:
         - TEST_COVERAGE=true
     - php: 8.0
       env:
-        - DEPS=latest
+        - DEPS=lowest
         - COMPOSER_ARGS="--ignore-platform-reqs"
     - php: 8.0
       env:
-        - DEPS=lowest
+        - DEPS=latest
         - COMPOSER_ARGS="--ignore-platform-reqs"
 
 before_install:
