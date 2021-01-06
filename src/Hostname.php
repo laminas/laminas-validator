@@ -1995,8 +1995,8 @@ class Hostname extends AbstractValidator
         $this->setValue($value);
         // Check input against IP address schema
         if (
-            ((preg_match('/^[0-9.]*$/', $value) && strpos($value, '.') !== false)
-                || (preg_match('/^[0-9a-f:.]*$/i', $value) && strpos($value, ':') !== false))
+            ((preg_match('/^[0-9.]*$/', $value) && mb_strpos($value, '.') !== false)
+                || (preg_match('/^[0-9a-f:.]*$/i', $value) && mb_strpos($value, ':') !== false))
             && $this->getIpValidator()->setTranslator($this->getTranslator())->isValid($value)
         ) {
             if (! ($this->getAllow() & self::ALLOW_IP)) {
@@ -2010,16 +2010,16 @@ class Hostname extends AbstractValidator
         // Handle Regex compilation failure that may happen on .biz domain with has @ character, eg: tapi4457@hsoqvf.biz
         // Technically, hostname with '@' character is invalid, so mark as invalid immediately
         // @see https://github.com/laminas/laminas-validator/issues/8
-        if (strpos($value, '@') !== false) {
+        if (mb_strpos($value, '@') !== false) {
             $this->error(self::INVALID_HOSTNAME);
             return false;
         }
 
         // Local hostnames are allowed to be partial (ending '.')
         if ($this->getAllow() & self::ALLOW_LOCAL) {
-            if (substr($value, -1) === '.') {
-                $value = substr($value, 0, -1);
-                if (substr($value, -1) === '.') {
+            if (mb_substr($value, -1) === '.') {
+                $value = mb_substr($value, 0, -1);
+                if (mb_substr($value, -1) === '.') {
                     // Empty hostnames (ending '..') are not allowed
                     $this->error(self::INVALID_LOCAL_NAME);
                     return false;
@@ -2063,20 +2063,20 @@ class Hostname extends AbstractValidator
 
                     $this->tld = $matches[1];
                     // Decode Punycode TLD to IDN
-                    if (strpos($this->tld, 'xn--') === 0) {
-                        $this->tld = $this->decodePunycode(substr($this->tld, 4));
+                    if (mb_strpos($this->tld, 'xn--') === 0) {
+                        $this->tld = $this->decodePunycode(mb_substr($this->tld, 4));
                         if ($this->tld === false) {
                             return false;
                         }
                     } else {
-                        $this->tld = strtoupper($this->tld);
+                        $this->tld = mb_strtoupper($this->tld);
                     }
 
                     // Match TLD against known list
                     $removedTld = false;
                     if ($this->getTldCheck()) {
                         if (
-                            ! in_array(strtolower($this->tld), $this->validTlds)
+                            ! in_array(mb_strtolower($this->tld), $this->validTlds)
                             && ! in_array($this->tld, $this->validTlds)
                         ) {
                             $this->error(self::UNKNOWN_TLD);
@@ -2112,8 +2112,8 @@ class Hostname extends AbstractValidator
                     }
                     foreach ($domainParts as $domainPart) {
                         // Decode Punycode domain names to IDN
-                        if (strpos($domainPart, 'xn--') === 0) {
-                            $domainPart = $this->decodePunycode(substr($domainPart, 4));
+                        if (mb_strpos($domainPart, 'xn--') === 0) {
+                            $domainPart = $this->decodePunycode(mb_substr($domainPart, 4));
                             if ($domainPart === false) {
                                 return false;
                             }
@@ -2240,7 +2240,7 @@ class Hostname extends AbstractValidator
         }
 
         $decoded   = [];
-        $separator = strrpos($encoded, '-');
+        $separator = mb_strrpos($encoded, '-');
         if ($separator > 0) {
             for ($x = 0; $x < $separator; ++$x) {
                 // prepare decoding matrix
@@ -2249,7 +2249,7 @@ class Hostname extends AbstractValidator
         }
 
         $lengthd = count($decoded);
-        $lengthe = strlen($encoded);
+        $lengthe = mb_strlen($encoded);
 
         // decoding
         $init  = true;

@@ -28,7 +28,8 @@
         "php": "^7.3 || ~8.0.0",
         "container-interop/container-interop": "^1.1",
         "laminas/laminas-stdlib": "^3.3",
-        "laminas/laminas-zendframework-bridge": "^1.0"
+        "laminas/laminas-zendframework-bridge": "^1.0",
+        "symfony/polyfill-mbstring": "^1.20"
     },
     "require-dev": {
         "laminas/laminas-cache": "^2.6.1",
