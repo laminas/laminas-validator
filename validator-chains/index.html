@@ -527,7 +527,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -614,7 +614,6 @@
 <p>The validator chain depends on the laminas-servicemanager component, so be sure
 to have it installed before getting started:</p>
 <pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-servicemanager</code></pre>
-
 </blockquote>
 <p>Often, multiple validations should be applied to some value in a particular
 order. The following code demonstrates a way to solve the example from the
@@ -638,7 +637,6 @@ if ($validatorChain-&gt;isValid($username)) {
         echo "$message\n";
     }
 }</code></pre>
-
 <p>Validators are run in the order they were added to the <code>ValidatorChain</code>. In the
 above example, the username is first checked to ensure that its length is
 between 6 and 12 characters, and then it is checked to ensure that it contains
@@ -655,7 +653,6 @@ written as follows, then the alphanumeric validation would not occur if the
 string length validation fails:</p>
 <pre class="highlight"><code class="language-php">$chain-&gt;attach(new StringLength(['min' =&gt; 6, 'max' =&gt; 12]), true);
 $chain-&gt;attach(new Alnum());</code></pre>
-
 <p>Any object that implements <code>Laminas\Validator\ValidatorInterface</code> may be used in a
 validator chain.</p>
 <h2 id="setting-validator-chain-order">Setting Validator Chain Order</h2>
@@ -1208,7 +1205,7 @@ if ($validatorChain-&gt;isValid($username)) {
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

@@ -527,7 +527,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -663,7 +663,6 @@ if ($validator-&gt;isValid('value')) {
 } else {
     // no value found
 }</code></pre>
-
 <p>This will behave exactly like PHP's <code>in_array()</code> method when passed only a
 needle and haystack.</p>
 <blockquote>
@@ -682,7 +681,6 @@ if ($validator-&gt;isValid('value')) {
 } else {
     // no value found
 }</code></pre>
-
 <h2 id="array-validation-modes">Array validation modes</h2>
 <p>As previously mentioned, there are possible security issues when using the
 default non-strict comparison mode, so rather than restricting the developer,
@@ -714,7 +712,6 @@ $validator = new Laminas\Validator\InArray([
 $validator-&gt;setStrict(InArray::COMPARE_STRICT);
 $validator-&gt;setStrict(InArray::COMPARE_NOT_STRICT);
 $validator-&gt;setStrict(InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY);</code></pre>
-
 <blockquote>
 <h3>Non-strict safe-mode by default</h3>
 <p>Note that the <code>strict</code> setting is per default <code>false</code>.</p>
@@ -736,7 +733,6 @@ if ($validator-&gt;isValid('value')) {
 } else {
     // no value found
 }</code></pre>
-
 <p>Your array will then be validated recursively to see if the given value is
 contained. Additionally you could use <code>setRecursive()</code> to set this option
 afterwards and <code>getRecursive()</code> to retrieve it.</p>
@@ -752,7 +748,6 @@ if ($validator-&gt;isValid('value')) {
 } else {
     // no value found
 }</code></pre>
-
 <blockquote>
 <h3>Default setting for recursion</h3>
 <p>By default, the recursive validation is turned off.</p>
@@ -1271,7 +1266,7 @@ your haystack, then you must wrap the <code>haystack</code> key.</p>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

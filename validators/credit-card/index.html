@@ -527,7 +527,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -680,7 +680,6 @@ if ($valid-&gt;isValid($input)) {
 } else {
     // input is invalid
 }</code></pre>
-
 <p>The above example would validate against all known credit card institutes.</p>
 <h2 id="accepting-only-specific-credit-cards">Accepting only specific credit cards</h2>
 <p>Sometimes it is necessary to accept only specific credit card institutes instead
@@ -693,7 +692,6 @@ afterwards by using <code>setType()</code>. Each can take several arguments.</p>
 <pre class="highlight"><code class="language-php">use Laminas\Validator\CreditCard;
 
 $valid = new CreditCard(CreditCard::AMERICAN_EXPRESS);</code></pre>
-
 <p>When you want to allow multiple institutes, then you can provide them as array:</p>
 <pre class="highlight"><code class="language-php">use Laminas\Validator\CreditCard;
 
@@ -701,7 +699,6 @@ $valid = new CreditCard([
     CreditCard::AMERICAN_EXPRESS,
     CreditCard::VISA
 ]);</code></pre>
-
 <p>And, as with all validators, you can also pass an associative array of options
 or an instance of <code>Traversable</code>. In this case you have to provide the institutes
 with the <code>type</code> array key as demostrated here:</p>
@@ -710,7 +707,6 @@ with the <code>type</code> array key as demostrated here:</p>
 $valid = new CreditCard([
     'type' =&gt; [CreditCard::AMERICAN_EXPRESS]
 ]);</code></pre>
-
 <p>You can also manipulate institutes after instantiation by using the methods
 <code>setType()</code>, <code>addType()</code>, and <code>getType()</code>.</p>
 <pre class="highlight"><code class="language-php">use Laminas\Validator\CreditCard;
@@ -720,7 +716,6 @@ $valid-&gt;setType([
     CreditCard::AMERICAN_EXPRESS,
     CreditCard::VISA
 ]);</code></pre>
-
 <blockquote>
 <h3>Default institute</h3>
 <p>When no institute is given at initiation then <code>ALL</code> will be used, which sets
@@ -758,7 +753,6 @@ class CcService
 $service = new CcService();
 $valid   = new CreditCard(CreditCard::VISA);
 $valid-&gt;setService([$service, 'checkOnline']);</code></pre>
-
 <p>The callback method will be called with the credit card number as the first
 parameter, and the accepted types as the second parameter.</p>
 
@@ -1272,7 +1266,7 @@ parameter, and the accepted types as the second parameter.</p>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

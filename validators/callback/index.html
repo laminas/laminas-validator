@@ -527,7 +527,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -644,7 +644,6 @@ following function:</p>
     // some validation
     return true;
 }</code></pre>
-
 <p>To use it within <code>Laminas\Validator\Callback</code>, pass it to the constructor</p>
 <pre class="highlight"><code class="language-php">$valid = new Laminas\Validator\Callback('myMethod');
 if ($valid-&gt;isValid($input)) {
@@ -652,7 +651,6 @@ if ($valid-&gt;isValid($input)) {
 } else {
     // input is invalid
 }</code></pre>
-
 <h2 id="usage-with-closures">Usage with closures</h2>
 <p>The <code>Callback</code> validator supports any PHP callable, including PHP
 <a href="http://php.net/functions.anonymous">closures</a>.</p>
@@ -666,7 +664,6 @@ if ($valid-&gt;isValid($input)) {
 } else {
     // input is invalid
 }</code></pre>
-
 <h2 id="usage-with-class-based-callbacks">Usage with class-based callbacks</h2>
 <p>Of course it's also possible to use a class method as callback. Consider the
 following class definition:</p>
@@ -678,7 +675,6 @@ following class definition:</p>
         return true;
     }
 }</code></pre>
-
 <p>To use it with the <code>Callback</code> validator, pass a callable using an instance of
 the class:</p>
 <pre class="highlight"><code class="language-php">$valid = new Laminas\Validator\Callback([new MyClass, 'myMethod']);
@@ -687,7 +683,6 @@ if ($valid-&gt;isValid($input)) {
 } else {
     // input is invalid
 }</code></pre>
-
 <p>You may also define a static method as a callback. Consider the following class
 definition and validator usage:</p>
 <pre class="highlight"><code class="language-php">class MyClass
@@ -705,7 +700,6 @@ if ($valid-&gt;isValid($input)) {
 } else {
     // input is invalid
 }</code></pre>
-
 <p>Finally, you may define the magic method <code>__invoke()</code> in your class. If you do
 so, you can provide a class instance itself as the callback:</p>
 <pre class="highlight"><code class="language-php">class MyClass
@@ -723,7 +717,6 @@ if ($valid-&gt;isValid($input)) {
 } else {
     // input is invalid
 }</code></pre>
-
 <h2 id="adding-options">Adding options</h2>
 <p><code>Laminas\Validator\Callback</code> also allows the usage of options which are provided as
 additional arguments to the callback.</p>
@@ -746,7 +739,6 @@ additional arguments to the callback.</p>
     }
 
 }</code></pre>
-
 <p>There are two ways to inform the validator of additional options: pass them in
 the constructor, or pass them to the <code>setOptions()</code> method.</p>
 <p>To pass them to the constructor, you would need to pass an array containing two
@@ -761,7 +753,6 @@ if ($valid-&gt;isValid($input)) {
 } else {
     // input is invalid
 }</code></pre>
-
 <p>Otherwise, you may pass them to the validator after instantiation:</p>
 <pre class="highlight"><code class="language-php">$valid = new Laminas\Validator\Callback([MyClass::class, 'myMethod']);
 $valid-&gt;setOptions($options);
@@ -771,7 +762,6 @@ if ($valid-&gt;isValid($input)) {
 } else {
     // input is invalid
 }</code></pre>
-
 <p>When there are additional values given to <code>isValid()</code>, then these values will be
 passed as an additional argument:</p>
 <pre class="highlight"><code class="language-php">$valid = new Laminas\Validator\Callback([MyClass::class, 'myMethod']);
@@ -782,7 +772,6 @@ if ($valid-&gt;isValid($input, $context)) {
 } else {
     // input is invalid
 }</code></pre>
-
 <p>When making the call to the callback, the value to be validated will always be
 passed as the first argument to the callback followed by all other values given
 to <code>isValid()</code>; all other options will follow it. The amount and type of options
@@ -1298,7 +1287,7 @@ which can be used is not limited.</p>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

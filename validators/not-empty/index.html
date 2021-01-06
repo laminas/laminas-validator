@@ -527,7 +527,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -636,7 +636,6 @@ evaluate both the integer <code>0</code> and string <code>'0'</code> as empty.</
 $value  = '';
 $result = $valid-&gt;isValid($value);
 // returns false</code></pre>
-
 <h2 id="specifying-empty-behavior">Specifying empty behavior</h2>
 <p>Some projects have differing opinions of what is considered an "empty" value: a
 string with only whitespace might be considered empty, or <code>0</code> may be
@@ -682,7 +681,6 @@ $validator = new NotEmpty([ NotEmpty::INTEGER, NotEmpty::ZERO ]);
 
 // Returns false on 0 or '0'
 $validator = new NotEmpty(['integer', 'zero']);</code></pre>
-
 <p>You can also provide an instance of <code>Traversable</code> to set the desired types. To
 set types after instantiation, use the <code>setType()</code> method.</p>
 
@@ -1196,7 +1194,7 @@ set types after instantiation, use the <code>setType()</code> method.</p>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

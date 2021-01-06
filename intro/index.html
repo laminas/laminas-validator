@@ -527,7 +527,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -654,7 +654,6 @@ if ($validator-&gt;isValid($email)) {
         printf("Validation failure '%s': %s\n", $messageId, $message);
     }
 }</code></pre>
-
 <h2 id="customizing-messages">Customizing messages</h2>
 <p>Validator classes provide a <code>setMessage()</code> method with which you can specify the
 format of a message returned by <code>getMessages()</code> in case of validation failure.
@@ -687,7 +686,6 @@ if (! $validator-&gt;isValid('word')) {
 
     // "The string 'word' is too short; it must be at least 8 characters"
 }</code></pre>
-
 <p>You can set multiple messages using the <code>setMessages()</code> method. Its argument is
 an array containing key/message pairs.</p>
 <pre class="highlight"><code class="language-php">use Laminas\Validator\StringLength;
@@ -698,7 +696,6 @@ $validator-&gt;setMessages([
     StringLength::TOO_SHORT =&gt; 'The string \'%value%\' is too short',
     StringLength::TOO_LONG  =&gt; 'The string \'%value%\' is too long',
 ]);</code></pre>
-
 <p>If your application requires even greater flexibility with which it reports
 validation failures, you can access properties by the same name as the message
 tokens supported by a given validation class. The <code>value</code> property is always
@@ -717,14 +714,12 @@ if (! $validator-&gt;isValid('word')) {
         $validator-&gt;max
     );
 }</code></pre>
-
 <h2 id="translating-messages">Translating messages</h2>
 <blockquote>
 <h3>Installation requirements</h3>
 <p>The translation of validator messages depends on the laminas-i18n component, so
 be sure to have it installed before getting started:</p>
 <pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-i18n</code></pre>
-
 </blockquote>
 <p>Validator classes provide a <code>setTranslator()</code> method with which you can specify
 an instance of <code>Laminas\Validator\Translator\TranslatorInterface</code> which will
@@ -739,7 +734,6 @@ $translate = new Translator();
 // configure the translator...
 
 $validator-&gt;setTranslator($translate);</code></pre>
-
 <p>With the static <code>AbstractValidator::setDefaultTranslator()</code> method you can set a
 instance of <code>Laminas\Validator\Translator\TranslatorInterface</code> which will be used
 for all validation classes, and can be retrieved with <code>getDefaultTranslator()</code>.
@@ -751,7 +745,6 @@ $translate = new Translator();
 // configure the translator...
 
 AbstractValidator::setDefaultTranslator($translate);</code></pre>
-
 <p>Sometimes it is necessary to disable the translator within a validator. To
 achieve this you can use the <code>setDisableTranslator()</code> method, which accepts a
 boolean parameter, and <code>isTranslatorDisabled()</code> to get the set value.</p>
@@ -761,7 +754,6 @@ $validator = new StringLength(['min' =&gt; 8, 'max' =&gt; 12]);
 if (! $validator-&gt;isTranslatorDisabled()) {
     $validator-&gt;setDisableTranslator();
 }</code></pre>
-
 <p>It is also possible to use a translator instead of setting own messages with
 <code>setMessage()</code>. But doing so, you should keep in mind, that the translator works
 also on messages you set your own.</p>
@@ -1301,7 +1293,7 @@ the instance previously.</p>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

@@ -527,7 +527,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -664,7 +664,6 @@ $validator-&gt;isValid(10);                    // false; not an array or Countab
 $validator-&gt;isValid([10]);                  // true; value is an array
 $validator-&gt;isValid(new ArrayObject([10])); // true; value is Countable
 $validator-&gt;isValid(new stdClass);          // false; value is not Countable</code></pre>
-
 <h2 id="specifying-an-exact-count">Specifying an exact count</h2>
 <p>You can also specify an exact count; if the value is countable, and its count
 matches, the the value is valid.</p>
@@ -674,7 +673,6 @@ $validator-&gt;isValid([1, 2, 3]);                  // true; countable, and coun
 $validator-&gt;isValid(new ArrayObject([1, 2, 3])); // true; countable, and count is 3
 $validator-&gt;isValid([1]);                        // false; countable, but count is 1
 $validator-&gt;isValid(new ArrayObject([1]));       // false; countable, but count is 1</code></pre>
-
 <h2 id="specifying-a-minimum-count">Specifying a minimum count</h2>
 <p>You may specify a minimum count. When you do, the value must be countable, and
 greater than or equal to the minimum count you specify in order to be valid.</p>
@@ -686,7 +684,6 @@ $validator-&gt;isValid([1, 2]);                     // true; countable, and coun
 $validator-&gt;isValid(new ArrayObject([1, 2]));    // true; countable, and count is 2
 $validator-&gt;isValid([1]);                        // false; countable, but count is 1
 $validator-&gt;isValid(new ArrayObject([1]));       // false; countable, but count is 1</code></pre>
-
 <h2 id="specifying-a-maximum-count">Specifying a maximum count</h2>
 <p>You may specify a maximum count. When you do, the value must be countable, and
 less than or equal to the maximum count you specify in order to be valid.</p>
@@ -698,7 +695,6 @@ $validator-&gt;isValid([1, 2]);                     // true; countable, and coun
 $validator-&gt;isValid(new ArrayObject([1, 2]));    // true; countable, and count is 2
 $validator-&gt;isValid([1]);                        // true; countable, and count is 1
 $validator-&gt;isValid(new ArrayObject([1]));       // true; countable, and count is 1</code></pre>
-
 <h2 id="specifying-both-minimum-and-maximum">Specifying both minimum and maximum</h2>
 <p>If you specify both a minimum and maximum, the count must be <em>between</em> the two,
 inclusively (i.e., it may be the minimum or maximum, and any value between).</p>
@@ -1226,7 +1222,7 @@ $validator-&gt;isValid(new ArrayObject(range(1, 6))); // false; countable, and c
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

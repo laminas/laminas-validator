@@ -527,7 +527,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -653,7 +653,6 @@ if ($validator-&gt;isValid($hostname)) {
         echo "$message\n";
     }
 }</code></pre>
-
 <p>This will match the hostname <code>$hostname</code> and on failure populate <code>getMessages()</code>
 with useful error messages.</p>
 <h2 id="validating-different-types-of-hostnames">Validating different types of hostnames</h2>
@@ -690,14 +689,12 @@ if ($validator-&gt;isValid($hostname)) {
         echo "$message\n";
     }
 }</code></pre>
-
 <p>As well as using <code>ALLOW_ALL</code> to accept all common hostnames types, you can
 combine these types to allow for combinations. For example, to accept DNS and
 Local hostnames:</p>
 <pre class="highlight"><code class="language-php">use Laminas\Validator\Hostname;
 
 $validator = new Hostname(Hostname::ALLOW_DNS | Hostname::ALLOW_IP);</code></pre>
-
 <h2 id="validating-international-domains-names">Validating International Domains Names</h2>
 <p>Some Country Code Top Level Domains (ccTLDs), such as 'de' (Germany), support
 international characters in domain names. These are known as International
@@ -713,7 +710,6 @@ constructor or call the <code>setValidateIdn()</code> method.</p>
     'allow' =&gt; Laminas\Validator\Hostname::ALLOW_DNS,
     'useIdnCheck'   =&gt; false,
 ]);</code></pre>
-
 <p>Alternatively you can either pass <code>true</code> or <code>false</code> to <code>setValidateIdn()</code> to
 enable or disable IDN validation. If you are trying to match an IDN hostname
 which isn't currently supported, it is likely it will fail validation if it has
@@ -735,7 +731,6 @@ $validator = new Hostname([
     'useIdnCheck'   =&gt; true,
     'useTldCheck'   =&gt; false,
 ]);</code></pre>
-
 <p>Alternatively you can either pass <code>true</code> or <code>false</code> to <code>setValidateTld()</code> to
 enable or disable TLD validation.</p>
 <p>Please note, TLDs are only validated if you allow DNS hostnames to be validated.</p>
@@ -1250,7 +1245,7 @@ enable or disable TLD validation.</p>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

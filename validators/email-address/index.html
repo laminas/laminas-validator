@@ -527,7 +527,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -658,7 +658,6 @@ if ($validator-&gt;isValid($email)) {
         echo "$message\n";
     }
 }</code></pre>
-
 <p>This will match the email address <code>$email</code> and on failure populate
 <code>getMessages()</code> with useful error messages.</p>
 <h2 id="supported-options">Supported Options</h2>
@@ -708,7 +707,6 @@ email address, and want to disable validation of the hostname, you can set the
 validate the hostname part of the email address.</p>
 <pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\EmailAddress();
 $validator-&gt;setOptions(['domain' =&gt; FALSE]);</code></pre>
-
 <h2 id="validating-different-types-of-hostnames">Validating different types of hostnames</h2>
 <p>The hostname part of an email address is validated against the <a href="../hostname/">Hostname validator</a>.
 By default only DNS hostnames of the form <code>domain.com</code> are accepted, though if
@@ -730,7 +728,6 @@ if ($validator-&gt;isValid($email)) {
         echo "$message\n";
     }
 }</code></pre>
-
 <h2 id="checking-if-the-hostname-actually-accepts-email">Checking if the hostname actually accepts email</h2>
 <p>Just because an email address is in the correct format, it doesn't necessarily
 mean that email address actually exists. To help solve this problem, you can use
@@ -743,7 +740,6 @@ second parameter to the <code>Laminas\Validator\EmailAddress</code> constructor.
     'allow' =&gt; Laminas\Validator\Hostname::ALLOW_DNS,
     'useMxCheck'    =&gt; true,
 ]);</code></pre>
-
 <p>Alternatively you can either pass <code>true</code> or <code>false</code> to <code>setValidateMx()</code> to
 enable or disable MX validation.</p>
 <p>By enabling this setting, network functions will be used to check for the
@@ -760,7 +756,6 @@ initiation by setting the <code>deep</code> option or by using <code>setOptions(
     'useMxCheck'    =&gt; true,
     'useDeepMxCheck'  =&gt; true,
 ]);</code></pre>
-
 <p>Sometimes it can be useful to get the server's MX information which have been
 used to do further processing. Simply use <code>getMXRecord()</code> after validation. This
 method returns the received MX record including weight and sorted by it.</p>
@@ -781,7 +776,6 @@ This is enabled by default, though you can disable this by changing the setting
 via the internal <code>Laminas\Validator\Hostname</code> object that exists within
 <code>Laminas\Validator\EmailAddress</code>.</p>
 <pre class="highlight"><code class="language-php">$validator-&gt;getHostnameValidator()-&gt;setValidateIdn(false);</code></pre>
-
 <p>More information on the usage of <code>setValidateIdn()</code> appears in the
 <a href="../hostname/">Hostname documentation</a>.</p>
 <p>Please note IDNs are only validated if you allow DNS hostnames to be validated.</p>
@@ -791,7 +785,6 @@ enabled by default, though you can disable this by changing the setting via the
 internal <code>Laminas\Validator\Hostname</code> object that exists within
 <code>Laminas\Validator\EmailAddress</code>.</p>
 <pre class="highlight"><code class="language-php">$validator-&gt;getHostnameValidator()-&gt;setValidateTld(false);</code></pre>
-
 <p>More information on the usage of <code>setValidateTld()</code> appears in the
 <a href="../hostname/">Hostname documentation</a>.</p>
 <p>Please note TLDs are only validated if you allow DNS hostnames to be validated.</p>
@@ -1314,7 +1307,7 @@ $validator-&gt;setMessages([
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

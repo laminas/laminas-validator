@@ -527,7 +527,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -665,7 +665,6 @@ class Float extends AbstractValidator
         return true;
     }
 }</code></pre>
-
 <p>The class defines a template for its single validation failure message, which
 includes the built-in magic parameter, <code>%value%</code>. The call to <code>setValue()</code>
 prepares the object to insert the tested value into the failure message
@@ -733,7 +732,6 @@ class NumericBetween extends AbstractValidator
         return true;
     }
 }</code></pre>
-
 <p>The public properties <code>$minimum</code> and <code>$maximum</code> have been established to provide
 the minimum and maximum boundaries, respectively, for a value to successfully
 validate. The class also defines two message variables that correspond to the
@@ -805,7 +803,6 @@ class PasswordStrength extends AbstractValidator
         return $isValid;
     }
 }</code></pre>
-
 <p>Note that the four criteria tests in <code>isValid()</code> do not immediately return
 <code>false</code>. This allows the validation class to provide <strong>all</strong> of the reasons that
 the input password failed to meet the validation requirements. If, for example,
@@ -1323,7 +1320,7 @@ all four validation failure messages to be returned by a subsequent call to
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

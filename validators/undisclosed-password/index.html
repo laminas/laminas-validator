@@ -527,7 +527,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -625,7 +625,6 @@
 <p>To ensure you have these installed before using this validator, run the following:</p>
 <pre class="highlight"><code class="language-bash">$ composer require psr/http-client
 $ composer require psr/http-factory</code></pre>
-
 </blockquote>
 <h2 id="basic-usage">Basic usage</h2>
 <p>The validator has two required constructor arguments:</p>
@@ -645,7 +644,6 @@ $result = $validator-&gt;isValid('password');
 
 $result = $validator-&gt;isValid('8aDk=XiW2E.77tLfuAcB'); 
 // $result is TRUE because "8aDk=XiW2E.77tLfuAcB" was not found in a data breach</code></pre>
-
 <h2 id="a-simple-command-line-example">A simple command line example</h2>
 <p>In this example, I'm using <code>laminas/laminas-diactoros</code> to provide HTTP messages, and <code>php-http/curl-client</code> as the HTTP client. Let's begin with installation of all required packages:</p>
 <pre class="highlight"><code class="language-bash">$ composer require \
@@ -655,7 +653,6 @@ $result = $validator-&gt;isValid('8aDk=XiW2E.77tLfuAcB');
     php-http/curl-client \
     laminas/laminas-diactoros \
     laminas/laminas-validator</code></pre>
-
 <p>Next, I create a file, <code>undisclosed.php</code>, where I put my code:</p>
 <pre class="highlight"><code class="language-php">require_once __DIR__ . '/vendor/autoload.php';
 
@@ -671,10 +668,8 @@ $client = new Client($responseFactory, null);
 $undisclosedPassword = new UndisclosedPassword($client, $requestFactory);
 echo 'Password "password" is ' . ($undisclosedPassword-&gt;isValid('password') ? 'not disclosed' : 'disclosed') . PHP_EOL;
 echo 'Password "NVt3MpvQ" is ' . ($undisclosedPassword-&gt;isValid('NVt3MpvQ') ? 'not disclosed' : 'disclosed') . PHP_EOL;</code></pre>
-
 <p>To run it, I use the PHP command line interpreter:</p>
 <pre class="highlight"><code class="language-bash">$ php undisclosed.php</code></pre>
-
 <p>And it gives me the following output:</p>
 <pre class="highlight"><code class="language-bash">Password "password" is disclosed
 Password "NVt3MpvQ" is not disclosed</code></pre>
@@ -1189,7 +1184,7 @@ Password "NVt3MpvQ" is not disclosed</code></pre>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

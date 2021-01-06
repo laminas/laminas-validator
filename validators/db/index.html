@@ -527,7 +527,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -636,7 +636,6 @@ given value.</p>
 depends on the laminas-db component, so be sure to have it installed before
 getting started:</p>
 <pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-db</code></pre>
-
 </blockquote>
 <h2 id="supported-options">Supported options</h2>
 <p>The following options are supported for <code>Laminas\Validator\Db\NoRecordExists</code> and
@@ -665,7 +664,6 @@ if ($validator-&gt;isValid($emailaddress)) {
         echo "$message\n";
     }
 }</code></pre>
-
 <p>The above will test that a given email address is in the database table. If no
 record is found containing the value of <code>$emailaddress</code> in the specified column,
 then an error message is displayed.</p>
@@ -685,7 +683,6 @@ if ($validator-&gt;isValid($username)) {
         echo "$message\n";
     }
 }</code></pre>
-
 <p>The above will test that a given username is <em>not</em> in the database table. If a
 record is found containing the value of <code>$username</code> in the specified column,
 then an error message is displayed.</p>
@@ -717,7 +714,6 @@ if ($validator-&gt;isValid($username)) {
         echo "$message\n";
     }
 }</code></pre>
-
 <p>The above example will check the table to ensure no records other than the one
 where <code>id = $user_id</code> contains the value <code>$username</code>.</p>
 <p>You can also provide a string to the exclude clause so you can use an operator
@@ -740,7 +736,6 @@ if ($validator-&gt;isValid($username)) {
         echo "$message\n";
     }
 }</code></pre>
-
 <p>The above example will check the <code>users</code> table to ensure that only a record with
 both the username <code>$username</code> and with the email <code>$email</code> is valid.</p>
 <h2 id="database-schemas">Database Schemas</h2>
@@ -752,7 +747,6 @@ below:</p>
     'schema' =&gt; 'my',
     'field'  =&gt; 'id',
 ]);</code></pre>
-
 <h2 id="using-a-select-object">Using a Select object</h2>
 <p>It is also possible to supply the validators with a <code>Laminas\Db\Sql\Select</code> object
 in place of options. The validator then uses this object instead of building its
@@ -783,7 +777,6 @@ if ($validator-&gt;isValid($username)) {
         echo "$message\n";
     }
 }</code></pre>
-
 <p>The above example will check the <code>users</code> table to ensure that only a record with
 both the username <code>$username</code> and with the email <code>$email</code> is valid.</p>
 
@@ -1297,7 +1290,7 @@ both the username <code>$username</code> and with the email <code>$email</code> 
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

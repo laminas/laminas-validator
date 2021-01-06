@@ -527,7 +527,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -652,7 +652,6 @@ token.</p>
 if ($valid-&gt;isValid($value)) {
     return true;
 }</code></pre>
-
 <p>The validation will only then return <code>true</code> when both values are 100% identical.
 In our example, when <code>$value</code> is <code>'origin'</code>.</p>
 <p>You can set the token after instantiation by using the method <code>setToken()</code>.</p>
@@ -667,7 +666,6 @@ if ($valid-&gt;isValid($input)) {
 } else {
     // input is invalid
 }</code></pre>
-
 <blockquote>
 <h3>Type comparison</h3>
 <p>You should be aware of the variable type used for validation. This means that
@@ -693,7 +691,6 @@ $form-&gt;add([
         ],
     ],
 ]);</code></pre>
-
 <p>By using the element's name from the first element as the <code>token</code> for the second
 element, the validator validates if the second element is equal with the first
 element. In the case your user does not enter two identical values, you will get
@@ -780,7 +777,6 @@ $inputFilter-&gt;add([
 ]);
 
 $signUpForm-&gt;setInputFilter($inputFilter);</code></pre>
-
 <blockquote>
 <h4>Use one token per leaf</h4>
 <p>Aways make sure that your token array have just one key per level all the way
@@ -797,7 +793,6 @@ if ($valid-&gt;isValid($input)) {
 } else {
     // input is invalid
 }</code></pre>
-
 <p>The difference to the previous example is that the validation returns in this
 case <code>true</code>, even if you compare a integer with string value as long as the
 content is identical but not the type.</p>
@@ -817,7 +812,6 @@ if ($valid-&gt;isValid($input)) {
 } else {
     // input is invalid
 }</code></pre>
-
 <p>The reason for this special case is that you can configure the token which has
 to be used by giving the <code>token</code> key.</p>
 <p>So, when you are using an array as the token, and it contains one element with a
@@ -829,7 +823,6 @@ if ($valid-&gt;isValid($input)) {
 } else {
     // input is invalid
 }</code></pre>
-
 <p>If the array you are willing to validate does not have a <code>token</code> key, you do not
 need to wrap it.</p>
 
@@ -1343,7 +1336,7 @@ need to wrap it.</p>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2021 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>
