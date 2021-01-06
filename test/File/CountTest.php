@@ -21,41 +21,42 @@ class CountTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
+     * @dataProvider basicDataProvider
+     * @param array|int $options
      * @return void
      */
-    public function testBasic()
+    public function testBasic($options, bool $expected1, bool $expected2, bool $expected3, bool $expected4)
     {
-        $valuesExpected = [
-            [5, true, true, true, true],
-            [['min' => 0, 'max' => 3], true, true, true, false],
-            [['min' => 2, 'max' => 3], false, true, true, false],
-            [['min' => 2], false, true, true, true],
-            [['max' => 5], true, true, true, true],
-            ];
+        $validator = new File\Count($options);
+        $this->assertSame(
+            $expected1,
+            $validator->isValid(__DIR__ . '/_files/testsize.mo')
+        );
+        $this->assertSame(
+            $expected2,
+            $validator->isValid(__DIR__ . '/_files/testsize2.mo')
+        );
+        $this->assertSame(
+            $expected3,
+            $validator->isValid(__DIR__ . '/_files/testsize3.mo')
+        );
+        $this->assertSame(
+            $expected4,
+            $validator->isValid(__DIR__ . '/_files/testsize4.mo')
+        );
+    }
 
-        foreach ($valuesExpected as $element) {
-            $validator = new File\Count($element[0]);
-            $this->assertEquals(
-                $element[1],
-                $validator->isValid(__DIR__ . '/_files/testsize.mo'),
-                'Tested with ' . var_export($element, 1)
-            );
-            $this->assertEquals(
-                $element[2],
-                $validator->isValid(__DIR__ . '/_files/testsize2.mo'),
-                'Tested with ' . var_export($element, 1)
-            );
-            $this->assertEquals(
-                $element[3],
-                $validator->isValid(__DIR__ . '/_files/testsize3.mo'),
-                'Tested with ' . var_export($element, 1)
-            );
-            $this->assertEquals(
-                $element[4],
-                $validator->isValid(__DIR__ . '/_files/testsize4.mo'),
-                'Tested with ' . var_export($element, 1)
-            );
-        }
+    public function basicDataProvider()
+    {
+        return [
+            // phpcs:disable
+            'no minimum; maximum: 5; integer' => [5,                        true,  true, true, true],
+            'no minimum; maximum: 5; array'   => [['max' => 5],             true,  true, true, true],
+            'minimum: 0; maximum: 3'        => [['min' => 0, 'max' => 3], true,  true, true, false],
+            'minimum: 2; maximum: 3'        => [['min' => 2, 'max' => 3], false, true, true, false],
+            'minimum: 2; no maximum'          => [['min' => 2],             false, true, true, true],
+            // phpcs:enable
+        ];
     }
 
     /**

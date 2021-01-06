@@ -16,9 +16,7 @@ use PHPUnit\Framework\TestCase;
  */
 class DigitsTest extends TestCase
 {
-    /**
-     * @var Digits
-     */
+    /** @var Digits */
     protected $validator;
 
     protected function setUp() : void
@@ -29,24 +27,30 @@ class DigitsTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior for basic input values
      *
+     * @dataProvider basicDataProvider
      * @return void
      */
-    public function testExpectedResultsWithBasicInputValues()
+    public function testExpectedResultsWithBasicInputValues(string $input, bool $expected)
     {
-        $valuesExpected = [
-            'abc123'  => false,
-            'abc 123' => false,
-            'abcxyz'  => false,
-            'AZ@#4.3' => false,
-            '1.23'    => false,
-            '0x9f'    => false,
-            '123'     => true,
-            '09'      => true,
-            ''        => false,
-            ];
-        foreach ($valuesExpected as $input => $result) {
-            $this->assertEquals($result, $this->validator->isValid($input));
-        }
+        $this->assertSame($expected, $this->validator->isValid($input));
+    }
+
+    public function basicDataProvider()
+    {
+        return [
+            // phpcs:disable
+            'invalid; starts with alphabetic chars'                 => ['abc123',  false],
+            'invalid; contains alphabetic chars and one whitespace' => ['abc 123', false],
+            'invalid; contains only alphabetic chars'               => ['abcxyz',  false],
+            'invalid; contains alphabetic and special chars'        => ['AZ@#4.3', false],
+            'invalid; is a float'                                   => ['1.23',    false],
+            'invalid; is a hexa notation'                           => ['0x9f',    false],
+            'invalid; is empty'                                     => ['',        false],
+
+            'valid; is a normal integer'                            => ['123',     true],
+            'valid; starts with a zero'                             => ['09',      true],
+            // phpcs:enable
+        ];
     }
 
     /**
