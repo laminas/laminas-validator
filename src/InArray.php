@@ -197,10 +197,6 @@ class InArray extends AbstractValidator
                     if ($el == $value) {
                         return true;
                     }
-
-                    if (self::COMPARE_NOT_STRICT == $this->strict) {
-                        return true;
-                    }
                 }
             }
         } else {
