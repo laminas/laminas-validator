@@ -550,9 +550,8 @@
     <PossiblyUndefinedVariable occurrences="1">
       <code>$temp</code>
     </PossiblyUndefinedVariable>
-    <PropertyNotSetInConstructor occurrences="2">
+    <PropertyNotSetInConstructor occurrences="1">
       <code>$control</code>
-      <code>$operator</code>
     </PropertyNotSetInConstructor>
     <RedundantCast occurrences="2">
       <code>(bool) (($this-&gt;control &amp; $value) == $value)</code>
@@ -640,9 +639,6 @@
       <code>is_string($value)</code>
       <code>null === $this-&gt;session</code>
     </DocblockTypeContradiction>
-    <InvalidDocblock occurrences="1">
-      <code>protected function getTokenFromHash(?string $hash): ?string</code>
-    </InvalidDocblock>
     <MixedArgument occurrences="5">
       <code>$session-&gt;tokenList[$tokenId]</code>
       <code>$value</code>
@@ -1432,12 +1428,6 @@
       <code>$this-&gt;options['magicFile']</code>
     </FalsableReturnStatement>
     <InvalidCatch occurrences="1"/>
-    <InvalidDocblock occurrences="1">
-      <code>public function disableMagicFile(bool $disable)</code>
-    </InvalidDocblock>
-    <MissingReturnType occurrences="1">
-      <code>disableMagicFile</code>
-    </MissingReturnType>
     <MixedArgument occurrences="13">
       <code>$file</code>
       <code>$fileInfo['file']</code>
@@ -1488,11 +1478,9 @@
       <code>$finfo</code>
       <code>$type</code>
     </PropertyNotSetInConstructor>
-    <RedundantCast occurrences="1">
-      <code>(bool) $disable</code>
-    </RedundantCast>
-    <RedundantCastGivenDocblockType occurrences="2">
+    <RedundantCastGivenDocblockType occurrences="3">
       <code>(bool) $asArray</code>
+      <code>(bool) $disable</code>
       <code>(bool) $headerCheck</code>
     </RedundantCastGivenDocblockType>
     <RedundantCondition occurrences="2">
