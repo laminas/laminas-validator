@@ -35,7 +35,10 @@ class DigitsTest extends TestCase
         $this->assertSame($expected, $this->validator->isValid($input));
     }
 
-    public function basicDataProvider()
+    /**
+     * @psalm-return array<string, array{0: string, 1: bool}>
+     */
+    public function basicDataProvider(): array
     {
         return [
             // phpcs:disable
@@ -91,13 +94,15 @@ class DigitsTest extends TestCase
 
     /**
      * @Laminas-4352
+     *
+     * @return void
      */
-    public function testNonStringValidation()
+    public function testNonStringValidation(): void
     {
         $this->assertFalse($this->validator->isValid([1 => 1]));
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $validator = $this->validator;
         $this->assertObjectHasAttribute('messageTemplates', $validator);

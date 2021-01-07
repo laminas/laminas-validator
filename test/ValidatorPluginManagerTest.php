@@ -29,7 +29,7 @@ class ValidatorPluginManagerTest extends TestCase
         $this->validators = new ValidatorPluginManager(new ServiceManager);
     }
 
-    public function testAllowsInjectingTranslator()
+    public function testAllowsInjectingTranslator(): void
     {
         $translator = $this->prophesize(TestAsset\Translator::class)->reveal();
 
@@ -43,7 +43,7 @@ class ValidatorPluginManagerTest extends TestCase
         $this->assertEquals($translator, $validator->getTranslator());
     }
 
-    public function testNoTranslatorInjectedWhenTranslatorIsNotPresent()
+    public function testNoTranslatorInjectedWhenTranslatorIsNotPresent(): void
     {
         $container = $this->prophesize(ContainerInterface::class);
         $container->has('MvcTranslator')->willReturn(false);
@@ -54,7 +54,7 @@ class ValidatorPluginManagerTest extends TestCase
         $this->assertNull($validator->getTranslator());
     }
 
-    public function testRegisteringInvalidValidatorRaisesException()
+    public function testRegisteringInvalidValidatorRaisesException(): void
     {
         try {
             $this->validators->setService('test', $this);
@@ -70,7 +70,7 @@ class ValidatorPluginManagerTest extends TestCase
         }
     }
 
-    public function testLoadingInvalidValidatorRaisesException()
+    public function testLoadingInvalidValidatorRaisesException(): void
     {
         $this->validators->setInvokableClass('test', get_class($this));
         try {
@@ -87,7 +87,7 @@ class ValidatorPluginManagerTest extends TestCase
         }
     }
 
-    public function testInjectedValidatorPluginManager()
+    public function testInjectedValidatorPluginManager(): void
     {
         $validator = $this->validators->get('explode');
         $this->assertSame($this->validators, $validator->getValidatorPluginManager());

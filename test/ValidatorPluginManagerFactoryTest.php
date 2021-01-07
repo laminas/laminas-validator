@@ -20,7 +20,7 @@ use Prophecy\PhpUnit\ProphecyTrait;
 class ValidatorPluginManagerFactoryTest extends TestCase
 {
     use ProphecyTrait;
-    public function testFactoryReturnsPluginManager()
+    public function testFactoryReturnsPluginManager(): void
     {
         $container = $this->prophesize(ContainerInterface::class)->reveal();
         $factory = new ValidatorPluginManagerFactory();
@@ -31,8 +31,10 @@ class ValidatorPluginManagerFactoryTest extends TestCase
 
     /**
      * @depends testFactoryReturnsPluginManager
+     *
+     * @return void
      */
-    public function testFactoryConfiguresPluginManagerUnderContainerInterop()
+    public function testFactoryConfiguresPluginManagerUnderContainerInterop(): void
     {
         $container = $this->prophesize(ContainerInterface::class)->reveal();
         $validator = $this->prophesize(ValidatorInterface::class)->reveal();
@@ -48,8 +50,10 @@ class ValidatorPluginManagerFactoryTest extends TestCase
 
     /**
      * @depends testFactoryReturnsPluginManager
+     *
+     * @return void
      */
-    public function testFactoryConfiguresPluginManagerUnderServiceManagerV2()
+    public function testFactoryConfiguresPluginManagerUnderServiceManagerV2(): void
     {
         $container = $this->prophesize(ServiceLocatorInterface::class);
         $container->willImplement(ContainerInterface::class);
@@ -67,7 +71,7 @@ class ValidatorPluginManagerFactoryTest extends TestCase
         $this->assertSame($validator, $validators->get('test'));
     }
 
-    public function testConfiguresValidatorServicesWhenFound()
+    public function testConfiguresValidatorServicesWhenFound(): void
     {
         $validator = $this->prophesize(ValidatorInterface::class)->reveal();
         $config = [
@@ -76,7 +80,7 @@ class ValidatorPluginManagerFactoryTest extends TestCase
                     'test' => Digits::class,
                 ],
                 'factories' => [
-                    'test-too' => function ($container) use ($validator) {
+                    'test-too' => function ($container) use ($validator): \Laminas\Validator\ValidatorInterface {
                         return $validator;
                     },
                 ],
@@ -101,7 +105,7 @@ class ValidatorPluginManagerFactoryTest extends TestCase
         $this->assertSame($validator, $validators->get('test-too'));
     }
 
-    public function testDoesNotConfigureValidatorServicesWhenServiceListenerPresent()
+    public function testDoesNotConfigureValidatorServicesWhenServiceListenerPresent(): void
     {
         $validator = $this->prophesize(ValidatorInterface::class)->reveal();
         $config = [
@@ -110,7 +114,7 @@ class ValidatorPluginManagerFactoryTest extends TestCase
                     'test' => Digits::class,
                 ],
                 'factories' => [
-                    'test-too' => function ($container) use ($validator) {
+                    'test-too' => function ($container) use ($validator): \Laminas\Validator\ValidatorInterface {
                         return $validator;
                     },
                 ],
@@ -133,7 +137,7 @@ class ValidatorPluginManagerFactoryTest extends TestCase
         $this->assertFalse($validators->has('test-too'));
     }
 
-    public function testDoesNotConfigureValidatorServicesWhenConfigServiceNotPresent()
+    public function testDoesNotConfigureValidatorServicesWhenConfigServiceNotPresent(): void
     {
         $container = $this->prophesize(ServiceLocatorInterface::class);
         $container->willImplement(ContainerInterface::class);
@@ -149,7 +153,7 @@ class ValidatorPluginManagerFactoryTest extends TestCase
         $this->assertInstanceOf(ValidatorPluginManager::class, $validators);
     }
 
-    public function testDoesNotConfigureValidatorServicesWhenConfigServiceDoesNotContainValidatorsConfig()
+    public function testDoesNotConfigureValidatorServicesWhenConfigServiceDoesNotContainValidatorsConfig(): void
     {
         $container = $this->prophesize(ServiceLocatorInterface::class);
         $container->willImplement(ContainerInterface::class);

@@ -29,7 +29,7 @@ class CallbackTest extends TestCase
         $this->assertTrue($valid->isValid('test'));
     }
 
-    public function testStaticCallback()
+    public function testStaticCallback(): void
     {
         $valid = new Callback(
             [CallbackTest::class, 'staticCallback']
@@ -37,7 +37,7 @@ class CallbackTest extends TestCase
         $this->assertTrue($valid->isValid('test'));
     }
 
-    public function testSettingDefaultOptionsAfterwards()
+    public function testSettingDefaultOptionsAfterwards(): void
     {
         $valid = new Callback([$this, 'objectCallback']);
         $valid->setCallbackOptions('options');
@@ -45,20 +45,20 @@ class CallbackTest extends TestCase
         $this->assertTrue($valid->isValid('test'));
     }
 
-    public function testSettingDefaultOptions()
+    public function testSettingDefaultOptions(): void
     {
         $valid = new Callback(['callback' => [$this, 'objectCallback'], 'callbackOptions' => 'options']);
         $this->assertEquals(['options'], $valid->getCallbackOptions());
         $this->assertTrue($valid->isValid('test'));
     }
 
-    public function testGettingCallback()
+    public function testGettingCallback(): void
     {
         $valid = new Callback([$this, 'objectCallback']);
         $this->assertEquals([$this, 'objectCallback'], $valid->getCallback());
     }
 
-    public function testInvalidCallback()
+    public function testInvalidCallback(): void
     {
         $valid = new Callback([$this, 'objectCallback']);
 
@@ -67,21 +67,21 @@ class CallbackTest extends TestCase
         $valid->setCallback('invalidcallback');
     }
 
-    public function testAddingValueOptions()
+    public function testAddingValueOptions(): void
     {
         $valid = new Callback(['callback' => [$this, 'optionsCallback'], 'callbackOptions' => 'options']);
         $this->assertEquals(['options'], $valid->getCallbackOptions());
         $this->assertTrue($valid->isValid('test', 'something'));
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $validator = new Callback([$this, 'objectCallback']);
         $this->assertObjectHasAttribute('messageTemplates', $validator);
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
-    public function testCanAcceptContextWithoutOptions()
+    public function testCanAcceptContextWithoutOptions(): void
     {
         $value     = 'bar';
         $context   = ['foo' => 'bar', 'bar' => 'baz'];
@@ -91,7 +91,7 @@ class CallbackTest extends TestCase
         $this->assertTrue($validator->isValid($value, $context));
     }
 
-    public function testCanAcceptContextWithOptions()
+    public function testCanAcceptContextWithOptions(): void
     {
         $value     = 'bar';
         $context   = ['foo' => 'bar', 'bar' => 'baz'];
@@ -103,24 +103,33 @@ class CallbackTest extends TestCase
         $this->assertTrue($validator->isValid($value, $context));
     }
 
-    public function objectCallback($value)
+    /**
+     * @return true
+     */
+    public function objectCallback($value): bool
     {
         return true;
     }
 
-    public static function staticCallback($value)
+    /**
+     * @return true
+     */
+    public static function staticCallback($value): bool
     {
         return true;
     }
 
-    public function optionsCallback($value)
+    /**
+     * @psalm-return list<mixed>
+     */
+    public function optionsCallback($value): array
     {
         $args = func_get_args();
         $this->assertContains('something', $args);
         return $args;
     }
 
-    public function testIsValidRaisesExceptionWhenNoCallbackPresent()
+    public function testIsValidRaisesExceptionWhenNoCallbackPresent(): void
     {
         $validator = new Callback();
 

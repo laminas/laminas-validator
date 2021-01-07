@@ -208,8 +208,10 @@ class RecordExistsTest extends TestCase
 
     /**
      * @group Laminas-8863
+     *
+     * @return void
      */
-    public function testExcludeConstructor()
+    public function testExcludeConstructor(): void
     {
         $validator = new RecordExists('users', 'field1', 'id != 1', $this->getMockHasResult());
         $this->assertTrue($validator->isValid('value3'));
@@ -245,8 +247,10 @@ class RecordExistsTest extends TestCase
 
     /**
      * Test that schemas are supported and run without error
+     *
+     * @return void
      */
-    public function testWithSchemaNoResult()
+    public function testWithSchemaNoResult(): void
     {
         $validator = new RecordExists([
             'table' => 'users',
@@ -258,8 +262,10 @@ class RecordExistsTest extends TestCase
     /**
      * Test that the supplied table and schema are successfully passed to the select
      * statement
+     *
+     * @return void
      */
-    public function testSelectAcknowledgesTableAndSchema()
+    public function testSelectAcknowledgesTableAndSchema(): void
     {
         $validator = new RecordExists([
             'table' => 'users',
@@ -270,7 +276,7 @@ class RecordExistsTest extends TestCase
         $this->assertEquals(['users', 'my'], $table->getTableAndSchema());
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $validator  = new RecordExists('users', 'field1');
         $this->assertObjectHasAttribute('messageTemplates', $validator);
@@ -279,8 +285,10 @@ class RecordExistsTest extends TestCase
 
     /**
      * @testdox Laminas\Validator\Db\RecordExists::getSelect
+     *
+     * @return void
      */
-    public function testGetSelect()
+    public function testGetSelect(): void
     {
         $validator = new RecordExists(
             [
@@ -310,9 +318,12 @@ class RecordExistsTest extends TestCase
 
     /**
      * @cover Laminas\Validator\Db\RecordExists::getSelect
+     *
      * @group Laminas-4521
+     *
+     * @return void
      */
-    public function testGetSelectWithSameValidatorTwice()
+    public function testGetSelectWithSameValidatorTwice(): void
     {
         $validator = new RecordExists(
             [

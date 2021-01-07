@@ -140,7 +140,7 @@ class MimeTypeTest extends TestCase
         $this->assertEquals(['image/gif', 'text', 'jpg', 'to', 'zip', 'ti'], $validator->getMimeType(true));
     }
 
-    public function testSetAndGetMagicFile()
+    public function testSetAndGetMagicFile(): void
     {
         if (! extension_loaded('fileinfo')) {
             $this->markTestSkipped('This PHP Version has no finfo installed');
@@ -158,7 +158,7 @@ class MimeTypeTest extends TestCase
         $validator->setMagicFile('/unknown/magic/file');
     }
 
-    public function testSetMagicFileWithinConstructor()
+    public function testSetMagicFileWithinConstructor(): void
     {
         if (! extension_loaded('fileinfo')) {
             $this->markTestSkipped('This PHP Version has no finfo installed');
@@ -169,7 +169,7 @@ class MimeTypeTest extends TestCase
         $validator = new File\MimeType(['image/gif', 'magicFile' => __FILE__]);
     }
 
-    public function testOptionsAtConstructor()
+    public function testOptionsAtConstructor(): void
     {
         $validator = new File\MimeType([
             'image/gif',
@@ -183,8 +183,10 @@ class MimeTypeTest extends TestCase
 
     /**
      * @group Laminas-11258
+     *
+     * @return void
      */
-    public function testLaminas11258()
+    public function testLaminas11258(): void
     {
         $validator = new File\MimeType([
             'image/gif',
@@ -197,7 +199,7 @@ class MimeTypeTest extends TestCase
         $this->assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
-    public function testDisableMagicFile()
+    public function testDisableMagicFile(): void
     {
         $validator = new File\MimeType('image/gif');
         $magic     = getenv('magic');
@@ -217,8 +219,10 @@ class MimeTypeTest extends TestCase
 
     /**
      * @group Laminas-10461
+     *
+     * @return void
      */
-    public function testDisablingMagicFileByConstructor()
+    public function testDisablingMagicFileByConstructor(): void
     {
         $files = [
             'name'     => 'picture.jpg',
@@ -232,7 +236,7 @@ class MimeTypeTest extends TestCase
         $this->assertFalse($validator->getMagicFile());
     }
 
-    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage()
+    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
         if (! extension_loaded('fileinfo')) {
             $this->markTestSkipped('This PHP Version has no finfo installed');
@@ -253,7 +257,7 @@ class MimeTypeTest extends TestCase
         $this->assertFalse($validator->isValid($filesArray));
     }
 
-    public function testConstructorCanAcceptOptionsArray()
+    public function testConstructorCanAcceptOptionsArray(): void
     {
         $mimeType  = 'image/gif';
         $options   = ['mimeType' => $mimeType];
@@ -261,7 +265,7 @@ class MimeTypeTest extends TestCase
         $this->assertSame($mimeType, $validator->getMimeType());
     }
 
-    public function testSettingMagicFileWithEmptyArrayNullifiesValue()
+    public function testSettingMagicFileWithEmptyArrayNullifiesValue(): void
     {
         $validator = new File\MimeType();
         $validator->setMagicFile([]);
@@ -273,7 +277,10 @@ class MimeTypeTest extends TestCase
         $this->assertNull($options['magicFile']);
     }
 
-    public function invalidMimeTypeTypes()
+    /**
+     * @psalm-return array<string, array{0: mixed}>
+     */
+    public function invalidMimeTypeTypes(): array
     {
         return [
             'null'       => [null],
@@ -289,8 +296,10 @@ class MimeTypeTest extends TestCase
 
     /**
      * @dataProvider invalidMimeTypeTypes
+     *
+     * @return void
      */
-    public function testAddingMimeTypeWithInvalidTypeRaisesException($type)
+    public function testAddingMimeTypeWithInvalidTypeRaisesException($type): void
     {
         $validator = new File\MimeType();
         $this->expectException(InvalidArgumentException::class);
@@ -298,7 +307,7 @@ class MimeTypeTest extends TestCase
         $validator->addMimeType($type);
     }
 
-    public function testAddingMimeTypeUsingMagicFileArrayKeyIgnoresKey()
+    public function testAddingMimeTypeUsingMagicFileArrayKeyIgnoresKey(): void
     {
         $validator = new File\MimeType('image/gif');
 
@@ -313,7 +322,7 @@ class MimeTypeTest extends TestCase
         $this->assertSame(['image/gif', 'text'], $validator->getMimeType(true));
     }
 
-    public function testIsValidRaisesExceptionWithArrayNotInFilesFormat()
+    public function testIsValidRaisesExceptionWithArrayNotInFilesFormat(): void
     {
         $validator = new File\MimeType('image\gif');
         $value     = ['foo' => 'bar'];

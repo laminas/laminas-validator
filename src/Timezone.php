@@ -78,11 +78,13 @@ class Timezone extends AbstractValidator
     /**
      * Set the types
      *
-     * @param  int|array $type
+     * @param int|array $type
      *
      * @throws Exception\InvalidArgumentException
+     *
+     * @return void
      */
-    public function setType($type = null)
+    public function setType($type = null): void
     {
         $type = $this->calculateTypeValue($type);
 

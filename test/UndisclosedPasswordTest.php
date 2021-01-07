@@ -109,9 +109,12 @@ class UndisclosedPasswordTest extends TestCase
      *
      * @covers \Laminas\Validator\UndisclosedPassword
      * @covers \Laminas\Validator\AbstractValidator
+     *
      * @todo Can be replaced by a \TypeError being thrown in PHP 7.0 or up
+     *
+     * @return void
      */
-    public function testValidationFailsForInvalidInput()
+    public function testValidationFailsForInvalidInput(): void
     {
         $this->assertFalse($this->validator->isValid(true));
         $this->assertFalse($this->validator->isValid(new \stdClass()));
@@ -125,9 +128,12 @@ class UndisclosedPasswordTest extends TestCase
      * @param string $password
      *
      * @covers \Laminas\Validator\UndisclosedPassword
+     *
      * @dataProvider goodPasswordProvider
+     *
+     * @return void
      */
-    public function testStrongUnseenPasswordsPassValidation($password)
+    public function testStrongUnseenPasswordsPassValidation($password): void
     {
         $this->httpResponse->method('getBody')
             ->willReturnCallback(function () use ($password) {
@@ -152,11 +158,15 @@ class UndisclosedPasswordTest extends TestCase
      * AP service.
      *
      * @param string $password
+     *
      * @dataProvider seenPasswordProvider
+     *
      * @covers \Laminas\Validator\UndisclosedPassword
      * @covers \Laminas\Validator\AbstractValidator
+     *
+     * @return void
      */
-    public function testBreachedPasswordsDoNotPassValidation($password)
+    public function testBreachedPasswordsDoNotPassValidation($password): void
     {
         $this->httpResponse->method('getBody')
             ->willReturnCallback(function () use ($password) {
@@ -181,11 +191,16 @@ class UndisclosedPasswordTest extends TestCase
      * in the breach database.
      *
      * @param string $password
+     *
      * @depends testBreachedPasswordsDoNotPassValidation
+     *
      * @dataProvider seenPasswordProvider
+     *
      * @covers \Laminas\Validator\UndisclosedPassword
+     *
+     * @return void
      */
-    public function testBreachedPasswordReturnErrorMessages($password)
+    public function testBreachedPasswordReturnErrorMessages($password): void
     {
         $this->httpClient->method('sendRequest')
             ->will($this->throwException(new \Exception('foo')));
@@ -209,11 +224,16 @@ class UndisclosedPasswordTest extends TestCase
      * the HIBP web service.
      *
      * @param string $password
+     *
      * @depends testBreachedPasswordsDoNotPassValidation
+     *
      * @dataProvider seenPasswordProvider
+     *
      * @covers \Laminas\Validator\UndisclosedPassword
+     *
+     * @return void
      */
-    public function testValidationDegradesGracefullyWhenNoConnectionCanBeMade($password)
+    public function testValidationDegradesGracefullyWhenNoConnectionCanBeMade($password): void
     {
         $clientException = $this->getMockBuilder(HttpClientException::class)
             ->getMock();

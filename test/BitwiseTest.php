@@ -25,12 +25,10 @@ class BitwiseTest extends TestCase
 
     /**
      * @covers \Laminas\Validator\Bitwise::__construct()
-     * @dataProvider constructDataProvider
      *
-     * @param array $args
-     * @param array $options
+     * @dataProvider constructDataProvider
      */
-    public function testConstruct(array $args, array $options)
+    public function testConstruct(array $args, array $options): void
     {
         $validator = new Bitwise($args);
 
@@ -40,12 +38,10 @@ class BitwiseTest extends TestCase
     }
     /**
      * @covers \Laminas\Validator\Bitwise::__construct()
-     * @dataProvider constructDataProvider
      *
-     * @param array $args
-     * @param array $options
+     * @dataProvider constructDataProvider
      */
-    public function testConstructWithTravesableOptions(array $args, array $options)
+    public function testConstructWithTravesableOptions(array $args, array $options): void
     {
         $validator = new Bitwise(
             new \ArrayObject($args)
@@ -56,7 +52,13 @@ class BitwiseTest extends TestCase
         $this->assertSame($options['strict'], $validator->getStrict());
     }
 
-    public function constructDataProvider()
+    /**
+     * @psalm-return array<array-key, array{
+     *     0: array,
+     *     1: array<string, mixed>
+     * }>
+     */
+    public function constructDataProvider(): array
     {
         return [
             [
@@ -81,7 +83,7 @@ class BitwiseTest extends TestCase
     /**
      * @covers \Laminas\Validator\Bitwise::isvalid()
      */
-    public function testBitwiseAndNotStrict()
+    public function testBitwiseAndNotStrict(): void
     {
         $controlSum = 0x7; // (0x1 | 0x2 | 0x4) === 0x7
 
@@ -107,7 +109,7 @@ class BitwiseTest extends TestCase
     /**
      * @covers \Laminas\Validator\Bitwise::isvalid()
      */
-    public function testBitwiseAndStrict()
+    public function testBitwiseAndStrict(): void
     {
         $controlSum = 0x7; // (0x1 | 0x2 | 0x4) === 0x7
 
@@ -137,7 +139,7 @@ class BitwiseTest extends TestCase
     /**
      * @covers \Laminas\Validator\Bitwise::isvalid()
      */
-    public function testBitwiseXor()
+    public function testBitwiseXor(): void
     {
         $controlSum = 0x5; // (0x1 | 0x4) === 0x5
 
@@ -165,7 +167,7 @@ class BitwiseTest extends TestCase
     /**
      * @covers \Laminas\Validator\Bitwise::setOperator()
      */
-    public function testSetOperator()
+    public function testSetOperator(): void
     {
         $validator = new Bitwise();
 
@@ -179,7 +181,7 @@ class BitwiseTest extends TestCase
     /**
      * @covers \Laminas\Validator\Bitwise::setStrict()
      */
-    public function testSetStrict()
+    public function testSetStrict(): void
     {
         $validator = new Bitwise();
 
@@ -198,7 +200,7 @@ class BitwiseTest extends TestCase
         $this->assertTrue($validator->getStrict());
     }
 
-    public function testConstructorCanAcceptAllOptionsAsDiscreteArguments()
+    public function testConstructorCanAcceptAllOptionsAsDiscreteArguments(): void
     {
         $control  = 0x1;
         $operator = Bitwise::OP_AND;
@@ -211,35 +213,35 @@ class BitwiseTest extends TestCase
         $this->assertSame($strict, $validator->getStrict());
     }
 
-    public function testCanRetrieveControlValue()
+    public function testCanRetrieveControlValue(): void
     {
         $control   = 0x1;
         $validator = new Bitwise($control, Bitwise::OP_AND, false);
         $this->assertSame($control, $validator->getControl());
     }
 
-    public function testCanRetrieveOperatorValue()
+    public function testCanRetrieveOperatorValue(): void
     {
         $operator  = Bitwise::OP_AND;
         $validator = new Bitwise(0x1, $operator, false);
         $this->assertSame($operator, $validator->getOperator());
     }
 
-    public function testCanRetrieveStrictValue()
+    public function testCanRetrieveStrictValue(): void
     {
         $strict    = true;
         $validator = new Bitwise(0x1, Bitwise::OP_AND, $strict);
         $this->assertSame($strict, $validator->getStrict());
     }
 
-    public function testIsValidReturnsFalseWithInvalidOperator()
+    public function testIsValidReturnsFalseWithInvalidOperator(): void
     {
         $validator      = new Bitwise(0x1, 'or', false);
         $expectedResult = false;
         $this->assertEquals($expectedResult, $validator->isValid(0x2));
     }
 
-    public function testCanSetControlValue()
+    public function testCanSetControlValue(): void
     {
         $validator = new Bitwise();
         $control   = 0x2;

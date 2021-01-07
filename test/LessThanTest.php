@@ -29,7 +29,14 @@ class LessThanTest extends TestCase
         $this->assertSame($expected, $validator->isValid($input));
     }
 
-    public function basicDataProvider()
+    /**
+     * @psalm-return array<string, array{
+     *     0: array,
+     *     1: mixed,
+     *     2: bool
+     * }>
+     */
+    public function basicDataProvider(): array
     {
         return [
             // phpcs:disable
@@ -123,21 +130,21 @@ class LessThanTest extends TestCase
         $this->assertEquals(false, $validator->getInclusive());
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $validator = new LessThan(10);
         $this->assertObjectHasAttribute('messageTemplates', $validator);
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
-    public function testEqualsMessageVariables()
+    public function testEqualsMessageVariables(): void
     {
         $validator = new LessThan(10);
         $this->assertObjectHasAttribute('messageVariables', $validator);
         $this->assertEquals(array_keys($validator->getOption('messageVariables')), $validator->getMessageVariables());
     }
 
-    public function testConstructorAllowsSettingAllOptionsAsDiscreteArguments()
+    public function testConstructorAllowsSettingAllOptionsAsDiscreteArguments(): void
     {
         $validator = new LessThan(10, true);
         $this->assertSame(10, $validator->getMax());

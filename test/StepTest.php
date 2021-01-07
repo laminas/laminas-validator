@@ -31,7 +31,10 @@ class StepTest extends TestCase
         $this->validator = new Validator\Step();
     }
 
-    public function valuesToValidate()
+    /**
+     * @psalm-return array<string, array{0: float|int|string, 1: bool}>
+     */
+    public function valuesToValidate(): array
     {
         return [
             'float'              => [1.00, true],
@@ -51,8 +54,10 @@ class StepTest extends TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider valuesToValidate
+     *
+     * @return void
      */
-    public function testBasic($value, $expected)
+    public function testBasic($value, $expected): void
     {
         // By default, baseValue == 0 and step == 1
         $this->assertSame(
@@ -61,7 +66,10 @@ class StepTest extends TestCase
         );
     }
 
-    public function decimalValues()
+    /**
+     * @psalm-return array<string, array{0: float|string, 1: bool}>
+     */
+    public function decimalValues(): array
     {
         return [
             'between-step'        => [1.1, false],
@@ -77,8 +85,10 @@ class StepTest extends TestCase
 
     /**
      * @dataProvider decimalValues
+     *
+     * @return void
      */
-    public function testDecimalBaseValue($value, $expected)
+    public function testDecimalBaseValue($value, $expected): void
     {
         $validator = new Validator\Step([
             'baseValue' => 0.1,
@@ -88,7 +98,10 @@ class StepTest extends TestCase
         $this->assertSame($expected, $validator->isValid($value));
     }
 
-    public function decimalStepValues()
+    /**
+     * @psalm-return array<string, array{0: float|string, 1: bool}>
+     */
+    public function decimalStepValues(): array
     {
         return [
             'between-0.1'        => [0.1, false],
@@ -113,8 +126,10 @@ class StepTest extends TestCase
 
     /**
      * @dataProvider decimalStepValues
+     *
+     * @return void
      */
-    public function testDecimalStep($value, $expected)
+    public function testDecimalStep($value, $expected): void
     {
         $validator = new Validator\Step([
             'baseValue' => 0,
@@ -123,7 +138,10 @@ class StepTest extends TestCase
         $this->assertSame($expected, $validator->isValid($value));
     }
 
-    public function decimalStepSubstractionBugValues()
+    /**
+     * @psalm-return array<string, array{0: int, 1: float, 2: bool}>
+     */
+    public function decimalStepSubstractionBugValues(): array
     {
         return [
             'base-value-20' => [20, 20.06, true],
@@ -134,8 +152,10 @@ class StepTest extends TestCase
 
     /**
      * @dataProvider decimalStepSubstractionBugValues
+     *
+     * @return void
      */
-    public function testDecimalStepSubstractionBug($baseValue, $value, $expected)
+    public function testDecimalStepSubstractionBug($baseValue, $value, $expected): void
     {
         $validator = new Validator\Step([
             'baseValue' => $baseValue,
@@ -145,7 +165,10 @@ class StepTest extends TestCase
         $this->assertSame($expected, $validator->isValid($value));
     }
 
-    public function decimalHundredthStepValues()
+    /**
+     * @psalm-return array<string, array{0: float, 1: bool}>
+     */
+    public function decimalHundredthStepValues(): array
     {
         return [
             'first-step'       => [0.01, true],
@@ -171,8 +194,10 @@ class StepTest extends TestCase
 
     /**
      * @dataProvider decimalHundredthStepValues
+     *
+     * @return void
      */
-    public function testdecimalHundredthStep($value, $expected)
+    public function testdecimalHundredthStep($value, $expected): void
     {
         $validator = new Validator\Step([
             'baseValue' => 0,
@@ -194,8 +219,10 @@ class StepTest extends TestCase
 
     /**
      * Ensures that set/getBaseValue() works
+     *
+     * @return void
      */
-    public function testCanSetBaseValue()
+    public function testCanSetBaseValue(): void
     {
         $this->validator->setBaseValue(2);
         $this->assertEquals('2', $this->validator->getBaseValue());
@@ -203,21 +230,23 @@ class StepTest extends TestCase
 
     /**
      * Ensures that set/getStep() works
+     *
+     * @return void
      */
-    public function testCanSetStepValue()
+    public function testCanSetStepValue(): void
     {
         $this->validator->setStep(2);
         $this->assertEquals('2', $this->validator->getStep());
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $validator = new Validator\Step();
         $this->assertObjectHasAttribute('messageTemplates', $validator);
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
-    public function testSetStepFloat()
+    public function testSetStepFloat(): void
     {
         $step = 0.01;
         $this->validator->setStep($step);
@@ -225,7 +254,7 @@ class StepTest extends TestCase
         $this->assertEquals($step, $this->validator->getStep());
     }
 
-    public function testSetStepString()
+    public function testSetStepString(): void
     {
         $step = '0.01';
         $this->validator->setStep($step);
@@ -233,7 +262,7 @@ class StepTest extends TestCase
         $this->assertEquals((float) $step, $this->validator->getStep());
     }
 
-    public function testConstructorCanAcceptAllOptionsAsDiscreteArguments()
+    public function testConstructorCanAcceptAllOptionsAsDiscreteArguments(): void
     {
         $baseValue = 1.00;
         $step      = 0.01;
@@ -243,7 +272,7 @@ class StepTest extends TestCase
         $this->assertSame($baseValue, $validator->getBaseValue());
     }
 
-    public function testFModNormalizesZeroToFloatOne()
+    public function testFModNormalizesZeroToFloatOne(): void
     {
         $validator = new Validator\Step();
 

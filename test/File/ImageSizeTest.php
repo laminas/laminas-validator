@@ -295,8 +295,10 @@ class ImageSizeTest extends TestCase
 
     /**
      * @group Laminas-11258
+     *
+     * @return void
      */
-    public function testLaminas11258()
+    public function testLaminas11258(): void
     {
         $validator = new File\ImageSize([
             'minWidth'  => 100,
@@ -309,7 +311,7 @@ class ImageSizeTest extends TestCase
         $this->assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
-    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage()
+    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
         $validator = new File\ImageSize();
 
@@ -328,7 +330,7 @@ class ImageSizeTest extends TestCase
         $this->assertArrayHasKey(File\ImageSize::NOT_READABLE, $validator->getMessages());
     }
 
-    public function testConstructorCanAcceptAllOptionsAsDiscreteArguments()
+    public function testConstructorCanAcceptAllOptionsAsDiscreteArguments(): void
     {
         $minWidth  = 20;
         $minHeight = 10;
@@ -342,7 +344,7 @@ class ImageSizeTest extends TestCase
         $this->assertSame($maxHeight, $validator->getMaxHeight());
     }
 
-    public function testIsValidRaisesExceptionForArrayNotInFilesFormat()
+    public function testIsValidRaisesExceptionForArrayNotInFilesFormat(): void
     {
         $validator = new File\ImageSize([
             'minWidth'  => 100,

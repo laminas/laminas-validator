@@ -31,9 +31,12 @@ final class UuidTest extends TestCase
 
     /**
      * @param $uuid
+     *
      * @dataProvider validUuidProvider
+     *
+     * @return void
      */
-    public function testValidUuid($uuid)
+    public function testValidUuid($uuid): void
     {
         $this->assertTrue($this->validator->isValid($uuid));
         $messages = $this->validator->getMessages();
@@ -42,9 +45,12 @@ final class UuidTest extends TestCase
 
     /**
      * @param $uuid
+     *
      * @dataProvider invalidUuidProvider
+     *
+     * @return void
      */
-    public function testInvalidUuid($uuid, $expectedMessageKey)
+    public function testInvalidUuid($uuid, $expectedMessageKey): void
     {
         $this->assertFalse($this->validator->isValid($uuid));
         $messages = $this->validator->getMessages();

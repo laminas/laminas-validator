@@ -29,17 +29,22 @@ class GPSPointTest extends TestCase
 
     /**
      * @dataProvider basicDataProvider
+     *
      * @covers \Laminas\Validator\GPSPoint::isValid
+     *
+     * @return void
      */
-    public function testBasic($gpsPoint)
+    public function testBasic($gpsPoint): void
     {
         $this->assertTrue($this->validator->isValid($gpsPoint));
     }
 
     /**
      * @covers \Laminas\Validator\GPSPoint::isValid
+     *
+     * @return void
      */
-    public function testBoundariesAreRespected()
+    public function testBoundariesAreRespected(): void
     {
         $this->assertFalse($this->validator->isValid('181.8897,-77.0089'));
         $this->assertFalse($this->validator->isValid('38.8897,-181.0089'));
@@ -49,9 +54,12 @@ class GPSPointTest extends TestCase
 
     /**
      * @covers \Laminas\Validator\GPSPoint::isValid
+     *
      * @dataProvider ErrorMessageTestValues
+     *
+     * @return void
      */
-    public function testErrorsSetOnOccur($value, $messageKey, $messageValue)
+    public function testErrorsSetOnOccur($value, $messageKey, $messageValue): void
     {
         $this->assertFalse($this->validator->isValid($value));
         $messages = $this->validator->getMessages();
@@ -59,7 +67,10 @@ class GPSPointTest extends TestCase
         $this->assertStringContainsString($messageValue, $messages[$messageKey]);
     }
 
-    public function basicDataProvider()
+    /**
+     * @psalm-return array<array-key, array{0: string}>
+     */
+    public function basicDataProvider(): array
     {
         return [
             ['38° 53\' 23" N, 77° 00\' 32" W'],
@@ -69,10 +80,12 @@ class GPSPointTest extends TestCase
             ['38.8897,-77.0089'],
         ];
     }
-    // @codingStandardsIgnoreStart
-    public function ErrorMessageTestValues()
+
+    /**
+     * @psalm-return array<array-key, array{0: string, 1: string, 2: string}>
+     */
+    public function ErrorMessageTestValues(): array
     {
-        // @codingStandardsIgnoreEnd
         return [
             ['63 47 24.691 N, 18 2 54.363 W', GpsPoint::OUT_OF_BOUNDS, '63 47 24.691 N'],
             ['° \' " N,° \' " E', GpsPoint::CONVERT_ERROR, '° \' " N'],

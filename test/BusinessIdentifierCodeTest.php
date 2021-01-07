@@ -42,8 +42,10 @@ class BusinessIdentifierCodeTest extends TestCase
 
     /**
      * @dataProvider successProvider
+     *
+     * @return void
      */
-    public function testValidateSuccess(string $code)
+    public function testValidateSuccess(string $code): void
     {
         $validator = new BusinessIdentifierCode();
         self::assertTrue($validator->isValid($code));
@@ -60,8 +62,10 @@ class BusinessIdentifierCodeTest extends TestCase
 
     /**
      * @dataProvider notAStringProvider
+     *
+     * @return void
      */
-    public function testNotAStringFailure($code)
+    public function testNotAStringFailure($code): void
     {
         $validator = new BusinessIdentifierCode();
         self::assertFalse($validator->isValid($code));
@@ -83,8 +87,10 @@ class BusinessIdentifierCodeTest extends TestCase
 
     /**
      * @dataProvider notBicFormatProvider
+     *
+     * @return void
      */
-    public function testNotBicFormatFailure(string $code)
+    public function testNotBicFormatFailure(string $code): void
     {
         $validator = new BusinessIdentifierCode();
         self::assertFalse($validator->isValid($code));
@@ -102,8 +108,10 @@ class BusinessIdentifierCodeTest extends TestCase
 
     /**
      * @dataProvider notSwiftCountryCodeProvider
+     *
+     * @return void
      */
-    public function testNotSwiftCountryCodeFailure(string $code)
+    public function testNotSwiftCountryCodeFailure(string $code): void
     {
         $validator = new BusinessIdentifierCode();
         self::assertFalse($validator->isValid($code));

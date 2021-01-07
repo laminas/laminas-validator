@@ -29,8 +29,9 @@ class LocTest extends TestCase
     /**
      * Tests valid locations
      *
+     * @return void
      */
-    public function testValidLocs()
+    public function testValidLocs(): void
     {
         $values = [
             'http://www.example.com',
@@ -47,7 +48,10 @@ class LocTest extends TestCase
         }
     }
 
-    public static function invalidLocs()
+    /**
+     * @psalm-return array<array-key, array{0: string}>
+     */
+    public static function invalidLocs(): array
     {
         return [
             ['www.example.com'],
@@ -60,10 +64,14 @@ class LocTest extends TestCase
 
     /**
      * Tests invalid locations
+     *
      * @todo A change in the URI API has led to most of these now validating
+     *
      * @dataProvider invalidLocs
+     *
+     * @return void
      */
-    public function testInvalidLocs($url)
+    public function testInvalidLocs($url): void
     {
         $this->markTestIncomplete('Test must be reworked');
         $this->assertFalse($this->validator->isValid($url), $url);
@@ -74,8 +82,9 @@ class LocTest extends TestCase
     /**
      * Tests values that are not strings
      *
+     * @return void
      */
-    public function testNotStrings()
+    public function testNotStrings(): void
     {
         $values = [
             1, 1.4, null, new \stdClass(), true, false,

@@ -43,7 +43,13 @@ class NotEmptyTest extends TestCase
         $this->assertEquals($expected, $validator->getType());
     }
 
-    public function constructorWithTypeArrayProvider()
+    /**
+     * @psalm-return array<array-key, array{
+     *     0: array<array-key, string|int>,
+     *     1: int
+     * }>
+     */
+    public function constructorWithTypeArrayProvider(): array
     {
         return [
             [['php', 'boolean'], NotEmpty::PHP],
@@ -867,8 +873,10 @@ class NotEmptyTest extends TestCase
 
     /**
      * @group Laminas-3236
+     *
+     * @return void
      */
-    public function testStringWithZeroShouldNotBeTreatedAsEmpty()
+    public function testStringWithZeroShouldNotBeTreatedAsEmpty(): void
     {
         $this->assertTrue($this->validator->isValid('0'));
     }
@@ -885,8 +893,10 @@ class NotEmptyTest extends TestCase
 
     /**
      * @Laminas-4352
+     *
+     * @return void
      */
-    public function testNonStringValidation()
+    public function testNonStringValidation(): void
     {
         $v2 = new NotEmpty();
         $this->assertTrue($this->validator->isValid($v2));
@@ -958,8 +968,10 @@ class NotEmptyTest extends TestCase
      * @param boolean $valid Expected validity of value
      *
      * @dataProvider arrayConfigNotationWithoutKeyProvider
+     *
+     * @return void
      */
-    public function testArrayConfigNotationWithoutKey($value, $valid)
+    public function testArrayConfigNotationWithoutKey($value, $valid): void
     {
         $this->validator = new NotEmpty(
             ['zero', 'string', 'boolean']
@@ -992,19 +1004,19 @@ class NotEmptyTest extends TestCase
         ];
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $validator = $this->validator;
         $this->assertObjectHasAttribute('messageTemplates', $validator);
     }
 
-    public function testTypeAutoDetectionHasNoSideEffect()
+    public function testTypeAutoDetectionHasNoSideEffect(): void
     {
         $validator = new NotEmpty(['translatorEnabled' => true]);
         $this->assertEquals($validator->getDefaultType(), $validator->getType());
     }
 
-    public function testDefaultType()
+    public function testDefaultType(): void
     {
         $this->assertSame(
             NotEmpty::BOOLEAN

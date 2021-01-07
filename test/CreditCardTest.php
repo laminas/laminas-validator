@@ -18,7 +18,10 @@ use PHPUnit\Framework\TestCase;
  */
 class CreditCardTest extends TestCase
 {
-    public static function basicValues()
+    /**
+     * @psalm-return array<array-key, array{0: string, 1: bool}>
+     */
+    public static function basicValues(): array
     {
         return [
             ['4111111111111111', true],
@@ -34,7 +37,7 @@ class CreditCardTest extends TestCase
      *
      * @dataProvider basicValues
      */
-    public function testBasic($input, $expected)
+    public function testBasic($input, $expected): void
     {
         $validator      = new CreditCard();
         $this->assertEquals($expected, $validator->isValid($input));
@@ -91,7 +94,10 @@ class CreditCardTest extends TestCase
         );
     }
 
-    public static function visaValues()
+    /**
+     * @psalm-return array<array-key, array{0: string, 1: bool}>
+     */
+    public static function visaValues(): array
     {
         return [
             ['4111111111111111', true],
@@ -106,8 +112,10 @@ class CreditCardTest extends TestCase
      * Test specific provider
      *
      * @dataProvider visaValues
+     *
+     * @return void
      */
-    public function testProvider($input, $expected)
+    public function testProvider($input, $expected): void
     {
         $validator      = new CreditCard(CreditCard::VISA);
         $this->assertEquals($expected, $validator->isValid($input));
@@ -124,7 +132,10 @@ class CreditCardTest extends TestCase
         $this->assertFalse($validator->isValid(['something']));
     }
 
-    public static function serviceValues()
+    /**
+     * @psalm-return array<array-key, array{0: string, 1: bool}>
+     */
+    public static function serviceValues(): array
     {
         return [
             ['4111111111111111', false],
@@ -139,8 +150,10 @@ class CreditCardTest extends TestCase
      * Test service class with invalid validation
      *
      * @dataProvider serviceValues
+     *
+     * @return void
      */
-    public function testServiceClass($input, $expected)
+    public function testServiceClass($input, $expected): void
     {
         $validator = new CreditCard();
         $this->assertEquals(null, $validator->getService());
@@ -148,7 +161,10 @@ class CreditCardTest extends TestCase
         $this->assertEquals($expected, $validator->isValid($input));
     }
 
-    public static function optionsValues()
+    /**
+     * @psalm-return array<array-key, array{0: string, 1: bool}>
+     */
+    public static function optionsValues(): array
     {
         return [
             ['4111111111111111', false],
@@ -163,8 +179,10 @@ class CreditCardTest extends TestCase
      * Test non string input
      *
      * @dataProvider optionsValues
+     *
+     * @return void
      */
-    public function testConstructionWithOptions($input, $expected)
+    public function testConstructionWithOptions($input, $expected): void
     {
         $validator = new CreditCard(
             [
@@ -206,8 +224,10 @@ class CreditCardTest extends TestCase
      *
      * @group 6278
      * @group 6927
+     *
+     * @return void
      */
-    public function testJcbCard($input, $expected)
+    public function testJcbCard($input, $expected): void
     {
         $validator = new CreditCard(['type' => CreditCard::JCB]);
 
@@ -244,8 +264,10 @@ class CreditCardTest extends TestCase
      *
      * @param string $input
      * @param bool   $expected
+     *
+     * @return void
      */
-    public function testMastercardCard($input, $expected)
+    public function testMastercardCard($input, $expected): void
     {
         $validator = new CreditCard(['type' => CreditCard::MASTERCARD]);
 
@@ -283,8 +305,10 @@ class CreditCardTest extends TestCase
      *
      * @param string $input
      * @param bool   $expected
+     *
+     * @return void
      */
-    public function testMirCard($input, $expected)
+    public function testMirCard($input, $expected): void
     {
         $validator = new CreditCard(['type' => CreditCard::MIR]);
 
@@ -350,8 +374,10 @@ class CreditCardTest extends TestCase
 
     /**
      * @group Laminas-9477
+     *
+     * @return void
      */
-    public function testMultiInstitute()
+    public function testMultiInstitute(): void
     {
         $validator      = new CreditCard(['type' => CreditCard::MASTERCARD]);
         $this->assertFalse($validator->isValid('4111111111111111'));
@@ -359,7 +385,7 @@ class CreditCardTest extends TestCase
         $this->assertStringContainsString('not from an allowed institute', current($message));
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $validator = new CreditCard();
         $this->assertObjectHasAttribute('messageTemplates', $validator);
@@ -368,15 +394,20 @@ class CreditCardTest extends TestCase
 
     /**
      * @see https://github.com/zendframework/zend-validator/pull/202
+     *
+     * @return void
      */
-    public function testValidatorAllowsExtensionsToDefineAdditionalTypesViaConstants()
+    public function testValidatorAllowsExtensionsToDefineAdditionalTypesViaConstants(): void
     {
         $validator = new TestAsset\CreditCardValidatorExtension();
         $this->assertSame($validator, $validator->addType('test_type'));
         $this->assertContains(TestAsset\CreditCardValidatorExtension::TEST_TYPE, $validator->getType());
     }
 
-    public static function staticCallback($value)
+    /**
+     * @return false
+     */
+    public static function staticCallback($value): bool
     {
         return false;
     }

@@ -187,8 +187,10 @@ class Crc32Test extends TestCase
 
     /**
      * @group Laminas-11258
+     *
+     * @return void
      */
-    public function testLaminas11258()
+    public function testLaminas11258(): void
     {
         $validator = new File\Crc32('3f8d07e2');
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
@@ -196,7 +198,7 @@ class Crc32Test extends TestCase
         $this->assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
-    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage()
+    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
         $validator = new File\Crc32();
 
@@ -215,7 +217,7 @@ class Crc32Test extends TestCase
         $this->assertArrayHasKey(File\Crc32::NOT_FOUND, $validator->getMessages());
     }
 
-    public function testShouldThrowInvalidArgumentExceptionForArrayValueNotInFilesFormat()
+    public function testShouldThrowInvalidArgumentExceptionForArrayValueNotInFilesFormat(): void
     {
         $validator    = new File\Crc32();
         $invalidArray = ['foo' => 'bar'];

@@ -56,7 +56,7 @@ final class GpsPoint extends AbstractValidator
      * @param $maxBoundary
      * @return bool
      */
-    private function isValidCoordinate($value, $maxBoundary)
+    private function isValidCoordinate($value, float $maxBoundary)
     {
         $this->value = $value;
 
@@ -88,14 +88,15 @@ final class GpsPoint extends AbstractValidator
      * @param $value
      * @return bool
      */
-    private function isDMSValue($value)
+    private function isDMSValue(string $value)
     {
         return preg_match('/([°\'"]+[NESW])/', $value) > 0;
     }
 
     /**
      * @param string $value
-     * @return bool|string
+     *
+     * @return false|float
      */
     private function convertValue($value)
     {

@@ -101,9 +101,9 @@ class Bitwise extends AbstractValidator
     /**
      * Returns the operator parameter.
      *
-     * @return string
+     * @return int
      */
-    public function getOperator()
+    public function getOperator(): int
     {
         return $this->operator;
     }

@@ -21,9 +21,14 @@ use ReflectionProperty;
 class HashTest extends TestCase
 {
     /**
-     * @return array
+     * @psalm-return array<array-key, array{
+     *     0: string|string[],
+     *     1: string,
+     *     2: bool,
+     *     3: string
+     * }>
      */
-    public function basicBehaviorDataProvider()
+    public function basicBehaviorDataProvider(): array
     {
         $testFile = __DIR__ . '/_files/picture.jpg';
         $pictureTests = [
@@ -159,8 +164,10 @@ class HashTest extends TestCase
 
     /**
      * @group Laminas-11258
+     *
+     * @return void
      */
-    public function testLaminas11258()
+    public function testLaminas11258(): void
     {
         $validator = new File\Hash('3f8d07e2');
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
@@ -168,7 +175,7 @@ class HashTest extends TestCase
         $this->assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
-    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage()
+    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
         $validator = new File\Hash();
 
@@ -187,7 +194,10 @@ class HashTest extends TestCase
         $this->assertArrayHasKey(File\Hash::NOT_FOUND, $validator->getMessages());
     }
 
-    public function invalidHashTypes()
+    /**
+     * @psalm-return array<string, array{0: mixed}>
+     */
+    public function invalidHashTypes(): array
     {
         return [
             'null'       => [null],
@@ -203,8 +213,10 @@ class HashTest extends TestCase
 
     /**
      * @dataProvider invalidHashTypes
+     *
+     * @return void
      */
-    public function testAddHashRaisesExceptionForInvalidType($value)
+    public function testAddHashRaisesExceptionForInvalidType($value): void
     {
         $validator = new File\Hash('12345');
         $this->expectException(InvalidArgumentException::class);
@@ -212,7 +224,7 @@ class HashTest extends TestCase
         $validator->addHash($value);
     }
 
-    public function testAddHashRaisesExceptionWithInvalidAlgorithm()
+    public function testAddHashRaisesExceptionWithInvalidAlgorithm(): void
     {
         $validator = new File\Hash('12345');
         $algorithm = 'foobar123';
@@ -222,7 +234,7 @@ class HashTest extends TestCase
         $validator->addHash($options);
     }
 
-    public function testIsValidRaisesExceptionForArrayValueNotInFilesFormat()
+    public function testIsValidRaisesExceptionForArrayValueNotInFilesFormat(): void
     {
         $validator = new File\Hash('12345');
         $value     = ['foo' => 'bar'];
@@ -231,7 +243,7 @@ class HashTest extends TestCase
         $validator->isValid($value);
     }
 
-    public function testConstructorCanAcceptAllOptionsAsDiscreteArguments()
+    public function testConstructorCanAcceptAllOptionsAsDiscreteArguments(): void
     {
         $algorithm = 'md5';
         $validator = new File\Hash('12345', $algorithm);
@@ -246,8 +258,10 @@ class HashTest extends TestCase
      * @dataProvider invalidHashTypes
      *
      * @param mixed $hash
+     *
+     * @return void
      */
-    public function testInvalidHashProvidedInArrayFormat($hash)
+    public function testInvalidHashProvidedInArrayFormat($hash): void
     {
         $validator = new File\Hash('12345');
 
@@ -256,14 +270,14 @@ class HashTest extends TestCase
         $validator->addHash([$hash]);
     }
 
-    public function testIntHash()
+    public function testIntHash(): void
     {
         $validator = new File\Hash('10713230');
 
         self::assertTrue($validator->isValid(__DIR__ . '/_files/crc32-int.pdf'));
     }
 
-    public function testHashMustMatchWithTheAlgorithm()
+    public function testHashMustMatchWithTheAlgorithm(): void
     {
         $validator = new File\Hash();
         // swapped hashes for given algorithms

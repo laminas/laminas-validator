@@ -71,6 +71,8 @@ class Explode extends AbstractValidator implements ValidatorPluginManagerAwareIn
      * Set validator plugin manager
      *
      * @param ValidatorPluginManager $pluginManager
+     *
+     * @return void
      */
     public function setValidatorPluginManager(ValidatorPluginManager $pluginManager)
     {

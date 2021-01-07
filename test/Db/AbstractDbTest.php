@@ -34,7 +34,7 @@ class AbstractDbTest extends TestCase
         ]);
     }
 
-    public function testConstructorWithNoTableAndSchemaKey()
+    public function testConstructorWithNoTableAndSchemaKey(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Table or Schema option missing!');
@@ -43,7 +43,7 @@ class AbstractDbTest extends TestCase
         ]);
     }
 
-    public function testConstructorWithNoFieldKey()
+    public function testConstructorWithNoFieldKey(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Field option missing!');
@@ -53,7 +53,7 @@ class AbstractDbTest extends TestCase
         ]);
     }
 
-    public function testSetSelect()
+    public function testSetSelect(): void
     {
         $select = new Select();
         $this->validator->setSelect($select);
@@ -61,7 +61,7 @@ class AbstractDbTest extends TestCase
         $this->assertSame($select, $this->validator->getSelect());
     }
 
-    public function testGetSchema()
+    public function testGetSchema(): void
     {
         $schema = 'test_db';
         $this->validator->setSchema($schema);
@@ -69,7 +69,7 @@ class AbstractDbTest extends TestCase
         $this->assertEquals($schema, $this->validator->getSchema());
     }
 
-    public function testGetTable()
+    public function testGetTable(): void
     {
         $table = 'test_table';
         $this->validator->setTable($table);
@@ -77,7 +77,7 @@ class AbstractDbTest extends TestCase
         $this->assertEquals($table, $this->validator->getTable());
     }
 
-    public function testGetField()
+    public function testGetField(): void
     {
         $field = 'test_field';
         $this->validator->setField($field);
@@ -85,7 +85,7 @@ class AbstractDbTest extends TestCase
         $this->assertEquals($field, $this->validator->getField());
     }
 
-    public function testGetExclude()
+    public function testGetExclude(): void
     {
         $field = 'test_field';
         $this->validator->setField($field);
@@ -95,16 +95,20 @@ class AbstractDbTest extends TestCase
 
     /**
      * @group #46
+     *
+     * @return void
      */
-    public function testImplementationsAreDbAdapterAware()
+    public function testImplementationsAreDbAdapterAware(): void
     {
         $this->assertInstanceOf(AdapterAwareInterface::class, $this->validator);
     }
 
     /**
      * @group #46
+     *
+     * @return void
      */
-    public function testSetAdapterIsEquivalentToSetDbAdapter()
+    public function testSetAdapterIsEquivalentToSetDbAdapter(): void
     {
         $adapterFirst = $this->createStub(Adapter::class);
         $adapterSecond = $this->createStub(Adapter::class);

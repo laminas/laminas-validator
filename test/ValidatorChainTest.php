@@ -38,13 +38,13 @@ class ValidatorChainTest extends TestCase
         AbstractValidator::setMessageLength(-1);
     }
 
-    public function populateValidatorChain()
+    public function populateValidatorChain(): void
     {
         $this->validator->attach(new NotEmpty());
         $this->validator->attach(new Between(1, 5));
     }
 
-    public function testValidatorChainIsEmptyByDefault()
+    public function testValidatorChainIsEmptyByDefault(): void
     {
         $this->assertCount(0, $this->validator->getValidators());
     }
@@ -97,7 +97,7 @@ class ValidatorChainTest extends TestCase
         $this->assertEquals(['error' => 'validation failed'], $this->validator->getMessages());
     }
 
-    public function testAllowsPrependingValidators()
+    public function testAllowsPrependingValidators(): void
     {
         $this->validator->attach($this->getValidatorTrue())
             ->prependValidator($this->getValidatorFalse(), true);
@@ -106,7 +106,7 @@ class ValidatorChainTest extends TestCase
         $this->assertArrayHasKey('error', $messages);
     }
 
-    public function testAllowsPrependingValidatorsByName()
+    public function testAllowsPrependingValidatorsByName(): void
     {
         $this->validator->attach($this->getValidatorTrue())
             ->prependByName('NotEmpty', [], true);
@@ -118,8 +118,10 @@ class ValidatorChainTest extends TestCase
     /**
      * @group 6386
      * @group 6496
+     *
+     * @return void
      */
-    public function testValidatorsAreExecutedAccordingToPriority()
+    public function testValidatorsAreExecutedAccordingToPriority(): void
     {
         $this->validator->attach($this->getValidatorTrue(), false, 1000)
                         ->attach($this->getValidatorFalse(), true, 2000);
@@ -131,8 +133,10 @@ class ValidatorChainTest extends TestCase
     /**
      * @group 6386
      * @group 6496
+     *
+     * @return void
      */
-    public function testPrependValidatorsAreExecutedAccordingToPriority()
+    public function testPrependValidatorsAreExecutedAccordingToPriority(): void
     {
         $this->validator->attach($this->getValidatorTrue(), false, 1000)
             ->prependValidator($this->getValidatorFalse(), true);
@@ -144,8 +148,10 @@ class ValidatorChainTest extends TestCase
     /**
      * @group 6386
      * @group 6496
+     *
+     * @return void
      */
-    public function testMergeValidatorChains()
+    public function testMergeValidatorChains(): void
     {
         $mergedValidatorChain = new ValidatorChain();
 
@@ -160,8 +166,10 @@ class ValidatorChainTest extends TestCase
     /**
      * @group 6386
      * @group 6496
+     *
+     * @return void
      */
-    public function testValidatorChainIsCloneable()
+    public function testValidatorChainIsCloneable(): void
     {
         $this->validator->attach(new NotEmpty());
 
@@ -177,7 +185,7 @@ class ValidatorChainTest extends TestCase
         $this->assertCount(2, $clonedValidatorChain->getValidators());
     }
 
-    public function testCountGivesCountOfAttachedValidators()
+    public function testCountGivesCountOfAttachedValidators(): void
     {
         $this->populateValidatorChain();
         $this->assertCount(2, $this->validator->getValidators());
@@ -227,8 +235,10 @@ class ValidatorChainTest extends TestCase
 
     /**
      * @group Laminas-412
+     *
+     * @return void
      */
-    public function testCanAttachMultipleValidatorsOfTheSameTypeAsDiscreteInstances()
+    public function testCanAttachMultipleValidatorsOfTheSameTypeAsDiscreteInstances(): void
     {
         $this->validator->attachByName('Callback', [
             'callback' => function ($value) {
@@ -272,7 +282,7 @@ class ValidatorChainTest extends TestCase
         $this->assertTrue($found);
     }
 
-    public function testCanSerializeValidatorChain()
+    public function testCanSerializeValidatorChain(): void
     {
         $this->populateValidatorChain();
         $serialized = serialize($this->validator);
@@ -283,7 +293,10 @@ class ValidatorChainTest extends TestCase
         $this->assertFalse($unserialized->isValid(''));
     }
 
-    public function breakChainFlags()
+    /**
+     * @psalm-return array<string, array{0: string}>
+     */
+    public function breakChainFlags(): array
     {
         return [
             'underscores' => ['break_chain_on_failure'],
@@ -293,9 +306,10 @@ class ValidatorChainTest extends TestCase
 
     /**
      * @see https://github.com/zfcampus/zf-apigility-admin/issues/89
+     *
      * @dataProvider breakChainFlags
      */
-    public function testAttachByNameAllowsSpecifyingBreakChainOnFailureFlagViaOptions($option)
+    public function testAttachByNameAllowsSpecifyingBreakChainOnFailureFlagViaOptions($option): void
     {
         $this->validator->attachByName('GreaterThan', [
             $option => true,

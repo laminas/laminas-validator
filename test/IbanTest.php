@@ -17,7 +17,10 @@ use PHPUnit\Framework\TestCase;
  */
 class IbanTest extends TestCase
 {
-    public function ibanDataProvider()
+    /**
+     * @psalm-return array<array-key, array{0: string, 1: bool}>
+     */
+    public function ibanDataProvider(): array
     {
         return [
             ['AD1200012030200359100100', true],
@@ -109,7 +112,7 @@ class IbanTest extends TestCase
         );
     }
 
-    public function testSettingAndGettingCountryCode()
+    public function testSettingAndGettingCountryCode(): void
     {
         $validator = new IbanValidator();
 
@@ -121,7 +124,7 @@ class IbanTest extends TestCase
         $validator->setCountryCode('foo');
     }
 
-    public function testInstanceWithCountryCode()
+    public function testInstanceWithCountryCode(): void
     {
         $validator = new IbanValidator(['country_code' => 'AT']);
         $this->assertEquals('AT', $validator->getCountryCode());
@@ -131,7 +134,7 @@ class IbanTest extends TestCase
         $validator = new IbanValidator(['country_code' => 'BAR']);
     }
 
-    public function testSepaNotSupportedCountryCode()
+    public function testSepaNotSupportedCountryCode(): void
     {
         $validator = new IbanValidator();
         $this->assertTrue($validator->isValid('DO17552081023122561803924090'));
@@ -141,7 +144,7 @@ class IbanTest extends TestCase
         $this->assertTrue($validator->isValid('DO17552081023122561803924090'));
     }
 
-    public function testIbanNotSupportedCountryCode()
+    public function testIbanNotSupportedCountryCode(): void
     {
         $validator = new IbanValidator();
         $this->assertFalse($validator->isValid('US611904300234573201'));
@@ -149,28 +152,33 @@ class IbanTest extends TestCase
 
     /**
      * @group Laminas-10556
+     *
+     * @return void
      */
-    public function testIbanDetectionWithoutCountryCode()
+    public function testIbanDetectionWithoutCountryCode(): void
     {
         $validator = new IbanValidator();
         $this->assertTrue($validator->isValid('AT611904300234573201'));
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $validator = new IbanValidator();
         $this->assertObjectHasAttribute('messageTemplates', $validator);
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
-    public function testConstructorAllowsSettingOptionsViaOptionsArray()
+    public function testConstructorAllowsSettingOptionsViaOptionsArray(): void
     {
         $validator = new IbanValidator(['country_code' => 'AT', 'allow_non_sepa' => false]);
         $this->assertSame('AT', $validator->getCountryCode());
         $this->assertFalse($validator->allowNonSepa());
     }
 
-    public function invalidValues()
+    /**
+     * @psalm-return array<string, array{0: mixed}>
+     */
+    public function invalidValues(): array
     {
         return [
             'null'       => [null],
@@ -187,8 +195,10 @@ class IbanTest extends TestCase
 
     /**
      * @dataProvider invalidValues
+     *
+     * @return void
      */
-    public function testIsValidReturnsFalseForNonStringValue($value)
+    public function testIsValidReturnsFalseForNonStringValue($value): void
     {
         $validator = new IbanValidator();
         $this->assertFalse($validator->isValid([]));

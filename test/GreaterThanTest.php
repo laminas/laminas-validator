@@ -29,7 +29,14 @@ class GreaterThanTest extends TestCase
         $this->assertSame($expected, $validator->isValid($input));
     }
 
-    public function basicDataProvider()
+    /**
+     * @psalm-return array<string, array{
+     *     0: array<array-key, mixed>,
+     *     1: int|float|string,
+     *     2: bool
+     * }>
+     */
+    public function basicDataProvider(): array
     {
         return [
             // phpcs:disable
@@ -127,14 +134,14 @@ class GreaterThanTest extends TestCase
         $this->assertEquals(false, $validator->getInclusive());
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $validator = new GreaterThan(1);
         $this->assertObjectHasAttribute('messageTemplates', $validator);
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
-    public function testEqualsMessageVariables()
+    public function testEqualsMessageVariables(): void
     {
         $validator = new GreaterThan(1);
         $this->assertObjectHasAttribute('messageVariables', $validator);
@@ -143,8 +150,10 @@ class GreaterThanTest extends TestCase
 
     /**
      * @dataProvider correctInclusiveMessageDataProvider
+     *
+     * @return void
      */
-    public function testCorrectInclusiveMessageReturn(float $input)
+    public function testCorrectInclusiveMessageReturn(float $input): void
     {
         $validator = new GreaterThan(10);
         $validator->isValid($input);
@@ -154,7 +163,10 @@ class GreaterThanTest extends TestCase
         $this->assertEquals($message['notGreaterThan'], "The input is not greater than '10'");
     }
 
-    public function correctInclusiveMessageDataProvider()
+    /**
+     * @psalm-return array<string, array{0: int|float}>
+     */
+    public function correctInclusiveMessageDataProvider(): array
     {
         return [
             '0'   => [0],
@@ -166,8 +178,10 @@ class GreaterThanTest extends TestCase
 
     /**
      * @dataProvider correctNotInclusiveMessageDataProvider
+     *
+     * @return void
      */
-    public function testCorrectNotInclusiveMessageReturn(float $input)
+    public function testCorrectNotInclusiveMessageReturn(float $input): void
     {
         $validator = new GreaterThan(['min' => 10, 'inclusive' => true]);
         $validator->isValid($input);
@@ -177,7 +191,10 @@ class GreaterThanTest extends TestCase
         $this->assertEquals($message['notGreaterThanInclusive'], "The input is not greater than or equal to '10'");
     }
 
-    public function correctNotInclusiveMessageDataProvider()
+    /**
+     * @psalm-return array<string, array{0: int|float}>
+     */
+    public function correctNotInclusiveMessageDataProvider(): array
     {
         return [
             '0'   => [0],
@@ -187,7 +204,7 @@ class GreaterThanTest extends TestCase
         ];
     }
 
-    public function testConstructorCanAcceptInclusiveFlagAsAnArgument()
+    public function testConstructorCanAcceptInclusiveFlagAsAnArgument(): void
     {
         $validator = new GreaterThan(10, true);
         $this->assertTrue($validator->getInclusive());

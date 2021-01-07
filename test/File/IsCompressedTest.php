@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class IsCompressedTest extends TestCase
 {
-    protected function getMagicMime()
+    protected function getMagicMime(): string
     {
         return __DIR__ . '/_files/magic.7.mime';
     }
@@ -57,8 +57,10 @@ class IsCompressedTest extends TestCase
 
     /**
      * Skip a test if the file info extension is missing
+     *
+     * @return void
      */
-    protected function skipIfNoFileInfoExtension()
+    protected function skipIfNoFileInfoExtension(): void
     {
         if (! extension_loaded('fileinfo')) {
             $this->markTestSkipped(
@@ -69,6 +71,8 @@ class IsCompressedTest extends TestCase
 
     /**
      * Skip a test if finfo returns buggy information
+     *
+     * @return void
      */
     protected function skipIfBuggyMimeContentType($options)
     {
@@ -109,6 +113,8 @@ class IsCompressedTest extends TestCase
      * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
      * @dataProvider basicBehaviorDataProvider
+     *
+     * @return void
      */
     public function testLegacy($options, $isValidParam, $expected)
     {
@@ -190,8 +196,10 @@ class IsCompressedTest extends TestCase
 
     /**
      * @Laminas-8111
+     *
+     * @return void
      */
-    public function testErrorMessages()
+    public function testErrorMessages(): void
     {
         $files = [
             'name'     => 'picture.jpg',
@@ -208,7 +216,7 @@ class IsCompressedTest extends TestCase
         $this->assertArrayHasKey('fileIsCompressedFalseType', $error);
     }
 
-    public function testOptionsAtConstructor()
+    public function testOptionsAtConstructor(): void
     {
         if (! extension_loaded('fileinfo')) {
             $this->markTestSkipped('This PHP Version has no finfo installed');
@@ -227,7 +235,7 @@ class IsCompressedTest extends TestCase
         $this->assertEquals('image/gif,image/jpg', $validator->getMimeType());
     }
 
-    public function testNonMimeOptionsAtConstructorStillSetsDefaults()
+    public function testNonMimeOptionsAtConstructorStillSetsDefaults(): void
     {
         $validator = new File\IsCompressed([
             'enableHeaderCheck' => true,
@@ -238,8 +246,10 @@ class IsCompressedTest extends TestCase
 
     /**
      * @group Laminas-11258
+     *
+     * @return void
      */
-    public function testLaminas11258()
+    public function testLaminas11258(): void
     {
         $validator = new File\IsCompressed();
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));

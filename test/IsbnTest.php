@@ -213,8 +213,10 @@ class IsbnTest extends TestCase
 
     /**
      * @group Laminas-9605
+     *
+     * @return void
      */
-    public function testInvalidTypeGiven()
+    public function testInvalidTypeGiven(): void
     {
         $validator = new Isbn();
         $validator->setType(Isbn::ISBN13);
@@ -223,7 +225,7 @@ class IsbnTest extends TestCase
         $this->assertFalse($validator->isValid((object) 'Test'));
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $validator = new Isbn();
         $this->assertObjectHasAttribute('messageTemplates', $validator);

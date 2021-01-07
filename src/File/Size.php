@@ -94,10 +94,11 @@ class Size extends AbstractValidator
     /**
      * Should messages return bytes as integer or as string in SI notation
      *
-     * @param  bool $byteString Use bytestring ?
-     * @return int
+     * @param bool $byteString Use bytestring ?
+     *
+     * @return self
      */
-    public function useByteString($byteString = true)
+    public function useByteString($byteString = true): self
     {
         $this->options['useByteString'] = (bool) $byteString;
         return $this;
@@ -305,8 +306,9 @@ class Size extends AbstractValidator
     /**
      * Returns the unformatted size
      *
-     * @param  string $size
-     * @return int
+     * @param string $size
+     *
+     * @return int|string
      */
     protected function fromByteString($size)
     {

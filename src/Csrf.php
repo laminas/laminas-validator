@@ -256,9 +256,9 @@ class Csrf extends AbstractValidator
     /**
      * Get CSRF session token timeout
      *
-     * @return int
+     * @return int|null
      */
-    public function getTimeout()
+    public function getTimeout(): ?int
     {
         return $this->timeout;
     }
@@ -345,16 +345,18 @@ class Csrf extends AbstractValidator
      * @param $tokenId
      * @return string
      */
-    protected function formatHash($token, $tokenId)
+    protected function formatHash(string $token, string $tokenId)
     {
         return sprintf('%s-%s', $token, $tokenId);
     }
 
     /**
      * @param $hash
-     * @return string
+     * @param null|string $hash
+     *
+     * @return null|string
      */
-    protected function getTokenFromHash($hash)
+    protected function getTokenFromHash(?string $hash): ?string
     {
         $data = explode('-', $hash);
         return $data[0] ?: null;
@@ -362,9 +364,10 @@ class Csrf extends AbstractValidator
 
     /**
      * @param $hash
-     * @return string
+     *
+     * @return null|string
      */
-    protected function getTokenIdFromHash($hash)
+    protected function getTokenIdFromHash(string $hash)
     {
         $data = explode('-', $hash);
 

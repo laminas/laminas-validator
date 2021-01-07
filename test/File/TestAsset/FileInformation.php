@@ -30,7 +30,7 @@ class FileInformation
         $value,
         array $file = null,
         $hasType = false,
-        $hasBasename = false
+        bool $hasBasename = false
     ) {
         return $this->getFileInfo($value, $file, $hasType, $hasBasename);
     }

@@ -146,9 +146,10 @@ class StringLength extends AbstractValidator
      * Set the string wrapper to detect the string length
      *
      * @param StringWrapper $stringWrapper
-     * @return StringLength
+     *
+     * @return void
      */
-    public function setStringWrapper(StringWrapper $stringWrapper)
+    public function setStringWrapper(StringWrapper $stringWrapper): void
     {
         $stringWrapper->setEncoding($this->getEncoding());
         $this->stringWrapper = $stringWrapper;

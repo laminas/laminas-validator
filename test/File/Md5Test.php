@@ -201,8 +201,10 @@ class Md5Test extends TestCase
 
     /**
      * @group Laminas-11258
+     *
+     * @return void
      */
-    public function testLaminas11258()
+    public function testLaminas11258(): void
     {
         $validator = new File\Md5('12345');
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
@@ -210,7 +212,7 @@ class Md5Test extends TestCase
         $this->assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
-    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage()
+    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
         $validator = new File\Md5();
 
@@ -229,7 +231,7 @@ class Md5Test extends TestCase
         $this->assertArrayHasKey(File\Md5::NOT_FOUND, $validator->getMessages());
     }
 
-    public function testIsValidShouldThrowInvalidArgumentExceptionForArrayNotInFilesFormat()
+    public function testIsValidShouldThrowInvalidArgumentExceptionForArrayNotInFilesFormat(): void
     {
         $validator = new File\Md5();
         $value     = ['foo' => 'bar'];

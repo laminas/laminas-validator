@@ -87,7 +87,7 @@ class ExcludeExtensionTest extends TestCase
         }
     }
 
-    public function testCaseTesting()
+    public function testCaseTesting(): void
     {
         $files = [
             'name'     => 'testsize.mo',
@@ -158,8 +158,10 @@ class ExcludeExtensionTest extends TestCase
 
     /**
      * @group Laminas-11258
+     *
+     * @return void
      */
-    public function testLaminas11258()
+    public function testLaminas11258(): void
     {
         $validator = new File\ExcludeExtension('mo');
         $this->assertEquals(false, $validator->isValid(__DIR__ . '/_files/nofile.mo'));
@@ -167,7 +169,7 @@ class ExcludeExtensionTest extends TestCase
         $this->assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
-    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage()
+    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
         $validator = new File\ExcludeExtension('12345');
 
@@ -186,7 +188,7 @@ class ExcludeExtensionTest extends TestCase
         $this->assertArrayHasKey(File\ExcludeExtension::NOT_FOUND, $validator->getMessages());
     }
 
-    public function testIsValidRaisesExceptionWithArrayNotInFilesFormat()
+    public function testIsValidRaisesExceptionWithArrayNotInFilesFormat(): void
     {
         $validator = new File\ExcludeExtension('12345');
         $value     = ['foo' => 'bar'];

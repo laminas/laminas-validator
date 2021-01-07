@@ -17,7 +17,16 @@ use PHPUnit\Framework\TestCase;
  */
 class BetweenTest extends TestCase
 {
-    public function providerBasic()
+    /**
+     * @psalm-return array<string, array{
+     *     min: int,
+     *     max: int,
+     *     inclusive: bool,
+     *     expected: bool,
+     *     value: int|float|string
+     * }>
+     */
+    public function providerBasic(): array
     {
         return [
             'inclusive-int-valid-floor' => [
@@ -235,14 +244,14 @@ class BetweenTest extends TestCase
         $this->assertEquals(true, $validator->getInclusive());
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $validator = new Between(['min' => 1, 'max' => 10]);
         $this->assertObjectHasAttribute('messageTemplates', $validator);
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
-    public function testEqualsMessageVariables()
+    public function testEqualsMessageVariables(): void
     {
         $validator = new Between(['min' => 1, 'max' => 10]);
         $this->assertObjectHasAttribute('messageVariables', $validator);
@@ -251,11 +260,14 @@ class BetweenTest extends TestCase
 
     /**
      * @covers \Laminas\Validator\Between::__construct()
+     *
      * @dataProvider constructBetweenValidatorInvalidDataProvider
      *
      * @param array $args
+     *
+     * @return void
      */
-    public function testMissingMinOrMax(array $args)
+    public function testMissingMinOrMax(array $args): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("Missing option: 'min' and 'max' have to be given");
@@ -263,7 +275,12 @@ class BetweenTest extends TestCase
         new Between($args);
     }
 
-    public function constructBetweenValidatorInvalidDataProvider()
+    /**
+     * @psalm-return array<string, array{
+     *     0: array<string, mixed>
+     * }>
+     */
+    public function constructBetweenValidatorInvalidDataProvider(): array
     {
         return [
             'only-min'      => [['min' => 1]],
@@ -276,13 +293,13 @@ class BetweenTest extends TestCase
         ];
     }
 
-    public function testConstructorCanAcceptInclusiveParameter()
+    public function testConstructorCanAcceptInclusiveParameter(): void
     {
         $validator = new Between(1, 10, false);
         $this->assertFalse($validator->getInclusive());
     }
 
-    public function testConstructWithTraversableOptions()
+    public function testConstructWithTraversableOptions(): void
     {
         $options = new \ArrayObject(['min' => 1, 'max' => 10, 'inclusive' => false]);
         $validator = new Between($options);
@@ -291,7 +308,7 @@ class BetweenTest extends TestCase
         $this->assertFalse($validator->isValid(10));
     }
 
-    public function testStringValidatedAgainstNumericMinAndMaxIsInvalidAndReturnsAFailureMessage()
+    public function testStringValidatedAgainstNumericMinAndMaxIsInvalidAndReturnsAFailureMessage(): void
     {
         $validator = new Between(['min' => 1, 'max' => 10]);
         $this->assertFalse($validator->isValid('a'));
@@ -302,7 +319,7 @@ class BetweenTest extends TestCase
         );
     }
 
-    public function testNumericValidatedAgainstStringMinAndMaxIsInvalidAndReturnsAFailureMessage()
+    public function testNumericValidatedAgainstStringMinAndMaxIsInvalidAndReturnsAFailureMessage(): void
     {
         $validator = new Between(['min' => 'a', 'max' => 'z']);
         $this->assertFalse($validator->isValid(10));

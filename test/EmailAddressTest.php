@@ -219,7 +219,10 @@ class EmailAddressTest extends TestCase
         $this->assertStringContainsString('does not appear to be a valid local network name', next($messages));
     }
 
-    public function validEmailAddresses()
+    /**
+     * @psalm-return array<string, array{0: string}>
+     */
+    public function validEmailAddresses(): array
     {
         // @codingStandardsIgnoreStart
         $return = [
@@ -251,8 +254,10 @@ class EmailAddressTest extends TestCase
      * Ensures that the validator follows expected behavior for valid email addresses
      *
      * @dataProvider validEmailAddresses
+     *
+     * @return void
      */
-    public function testBasicValid($value)
+    public function testBasicValid($value): void
     {
         $this->assertTrue(
             $this->validator->isValid($value),
@@ -264,7 +269,10 @@ class EmailAddressTest extends TestCase
         );
     }
 
-    public function invalidEmailAddresses()
+    /**
+     * @psalm-return array<string, array{0: string}>
+     */
+    public function invalidEmailAddresses(): array
     {
         // @codingStandardsIgnoreStart
         return [
@@ -292,8 +300,10 @@ class EmailAddressTest extends TestCase
      * Ensures that the validator follows expected behavior for invalid email addresses
      *
      * @dataProvider invalidEmailAddresses
+     *
+     * @return void
      */
-    public function testBasicInvalid($value)
+    public function testBasicInvalid($value): void
     {
         $this->assertFalse($this->validator->isValid($value));
     }
@@ -460,8 +470,10 @@ class EmailAddressTest extends TestCase
 
     /**
      * @group Laminas-2861
+     *
+     * @return void
      */
-    public function testHostnameValidatorMessagesShouldBeTranslated()
+    public function testHostnameValidatorMessagesShouldBeTranslated(): void
     {
         if (! extension_loaded('intl')) {
             $this->markTestSkipped('ext/intl not enabled');
@@ -502,8 +514,10 @@ class EmailAddressTest extends TestCase
 
     /**
      * @group Laminas-4888
+     *
+     * @return void
      */
-    public function testEmailsExceedingLength()
+    public function testEmailsExceedingLength(): void
     {
         // @codingStandardsIgnoreStart
         $emailAddresses = [
@@ -518,16 +532,20 @@ class EmailAddressTest extends TestCase
 
     /**
      * @group Laminas-4352
+     *
+     * @return void
      */
-    public function testNonStringValidation()
+    public function testNonStringValidation(): void
     {
         $this->assertFalse($this->validator->isValid([1 => 1]));
     }
 
     /**
      * @group Laminas-7490
+     *
+     * @return void
      */
-    public function testSettingHostnameMessagesThroughEmailValidator()
+    public function testSettingHostnameMessagesThroughEmailValidator(): void
     {
         $translations = [
             'hostnameIpAddressNotAllowed' => 'hostnameIpAddressNotAllowed translation',
@@ -557,8 +575,10 @@ class EmailAddressTest extends TestCase
 
     /**
      * Testing initializing with several options
+     *
+     * @return void
      */
-    public function testInstanceWithOldOptions()
+    public function testInstanceWithOldOptions(): void
     {
         $handler = set_error_handler([$this, 'errorHandler'], E_USER_NOTICE);
         $validator = new EmailAddress();
@@ -581,8 +601,10 @@ class EmailAddressTest extends TestCase
 
     /**
      * Testing setOptions
+     *
+     * @return void
      */
-    public function testSetOptions()
+    public function testSetOptions(): void
     {
         $this->validator->setOptions(['messages' => [EmailAddress::INVALID => 'TestMessage']]);
         $messages = $this->validator->getMessageTemplates();
@@ -596,8 +618,10 @@ class EmailAddressTest extends TestCase
 
     /**
      * Testing setMessage
+     *
+     * @return void
      */
-    public function testSetSingleMessage()
+    public function testSetSingleMessage(): void
     {
         $messages = $this->validator->getMessageTemplates();
         $this->assertNotEquals('TestMessage', $messages[EmailAddress::INVALID]);
@@ -606,7 +630,7 @@ class EmailAddressTest extends TestCase
         $this->assertEquals('TestMessage', $messages[EmailAddress::INVALID]);
     }
 
-    public function testSetSingleMessageViaOptions()
+    public function testSetSingleMessageViaOptions(): void
     {
         $validator = new EmailAddress(['message' => 'TestMessage']);
         foreach ($validator->getMessageTemplates() as $message) {
@@ -617,7 +641,7 @@ class EmailAddressTest extends TestCase
         }
     }
 
-    public function testSetMultipleMessageViaOptions()
+    public function testSetMultipleMessageViaOptions(): void
     {
         $validator = new EmailAddress(['messages' => [EmailAddress::INVALID => 'TestMessage']]);
         $messages = $validator->getMessageTemplates();
@@ -626,16 +650,20 @@ class EmailAddressTest extends TestCase
 
     /**
      * Testing getValidateMx
+     *
+     * @return void
      */
-    public function testGetValidateMx()
+    public function testGetValidateMx(): void
     {
         $this->assertFalse($this->validator->getMxCheck());
     }
 
     /**
      * Testing getDeepMxCheck
+     *
+     * @return void
      */
-    public function testGetDeepMxCheck()
+    public function testGetDeepMxCheck(): void
     {
         $this->assertFalse($this->validator->getDeepMxCheck());
     }
@@ -644,8 +672,10 @@ class EmailAddressTest extends TestCase
      * Testing setMessage for all messages
      *
      * @group Laminas-10690
+     *
+     * @return void
      */
-    public function testSetMultipleMessages()
+    public function testSetMultipleMessages(): void
     {
         $messages = $this->validator->getMessageTemplates();
         $this->assertNotEquals('TestMessage', $messages[EmailAddress::INVALID]);
@@ -660,13 +690,15 @@ class EmailAddressTest extends TestCase
 
     /**
      * Testing getDomainCheck
+     *
+     * @return void
      */
-    public function testGetDomainCheck()
+    public function testGetDomainCheck(): void
     {
         $this->assertTrue($this->validator->getDomainCheck());
     }
 
-    public function errorHandler($errno, $errstr)
+    public function errorHandler($errno, $errstr): void
     {
         if (strstr($errstr, 'deprecated')) {
             $this->multipleOptionsDetected = true;
@@ -676,8 +708,10 @@ class EmailAddressTest extends TestCase
     /**
      * @group Laminas-11222
      * @group Laminas-11451
+     *
+     * @return void
      */
-    public function testEmailAddressesWithTrailingDotInHostPartAreRejected()
+    public function testEmailAddressesWithTrailingDotInHostPartAreRejected(): void
     {
         $this->assertFalse($this->validator->isValid('example@gmail.com.'));
         $this->assertFalse($this->validator->isValid('test@test.co.'));
@@ -686,22 +720,26 @@ class EmailAddressTest extends TestCase
 
     /**
      * @group Laminas-11239
+     *
+     * @return void
      */
-    public function testNotSetHostnameValidator()
+    public function testNotSetHostnameValidator(): void
     {
         $hostname = $this->validator->getHostnameValidator();
         $this->assertInstanceOf(Hostname::class, $hostname);
     }
 
-    public function testIsMxSupported()
+    public function testIsMxSupported(): void
     {
         $validator = new EmailAddress(['useMxCheck' => true, 'allow' => Hostname::ALLOW_ALL]);
         $this->assertIsBool($validator->isMxSupported());
     }
     /**
      * Test getMXRecord
+     *
+     * @return void
      */
-    public function testGetMXRecord()
+    public function testGetMXRecord(): void
     {
         $this->skipIfOnlineTestsDisabled();
 
@@ -716,14 +754,14 @@ class EmailAddressTest extends TestCase
         $this->assertNotEmpty($result);
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $validator = $this->validator;
         $this->assertObjectHasAttribute('messageTemplates', $validator);
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
-    public function testEqualsMessageVariables()
+    public function testEqualsMessageVariables(): void
     {
         $validator = $this->validator;
         $this->assertObjectHasAttribute('messageVariables', $validator);
@@ -732,8 +770,10 @@ class EmailAddressTest extends TestCase
 
     /**
      * @group Laminas-130
+     *
+     * @return void
      */
-    public function testUseMxCheckBasicValid()
+    public function testUseMxCheckBasicValid(): void
     {
         $this->skipIfOnlineTestsDisabled();
 
@@ -768,8 +808,10 @@ class EmailAddressTest extends TestCase
 
     /**
      * @group Laminas-130
+     *
+     * @return void
      */
-    public function testUseMxRecordsBasicInvalid()
+    public function testUseMxRecordsBasicInvalid(): void
     {
         $validator = new EmailAddress([
             'useMxCheck'        => true,
@@ -807,8 +849,10 @@ class EmailAddressTest extends TestCase
 
     /**
      * @group Laminas-12349
+     *
+     * @return void
      */
-    public function testReservedIpRangeValidation()
+    public function testReservedIpRangeValidation(): void
     {
         $validator = new TestAsset\EmailValidatorWithExposedIsReserved();
         // 0.0.0.0/8
@@ -859,8 +903,10 @@ class EmailAddressTest extends TestCase
 
     /**
      * @group Laminas-12349
+     *
+     * @return void
      */
-    public function testIpRangeValidationOnRangesNoLongerMarkedAsReserved()
+    public function testIpRangeValidationOnRangesNoLongerMarkedAsReserved(): void
     {
         $validator = new TestAsset\EmailValidatorWithExposedIsReserved();
         // 128.0.0.0/16
@@ -886,7 +932,7 @@ class EmailAddressTest extends TestCase
         }
     }
 
-    public function testCanSetDomainCheckFlag()
+    public function testCanSetDomainCheckFlag(): void
     {
         $validator = new EmailAddress();
         $validator->useDomainCheck(false);

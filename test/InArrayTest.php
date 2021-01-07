@@ -49,7 +49,7 @@ class InArrayTest extends TestCase
         $this->assertEquals([1, 2, 3], $this->validator->getHaystack());
     }
 
-    public function testUnsetHaystackRaisesException()
+    public function testUnsetHaystackRaisesException(): void
     {
         $validator = new InArray();
         $this->expectException(RuntimeException::class);
@@ -67,7 +67,7 @@ class InArrayTest extends TestCase
         $this->assertFalse($this->validator->getStrict());
     }
 
-    public function testGivingOptionsAsArrayAtInitiation()
+    public function testGivingOptionsAsArrayAtInitiation(): void
     {
         $validator = new InArray(
             [
@@ -83,7 +83,7 @@ class InArrayTest extends TestCase
         $this->assertTrue($validator->isValid(2.3e0));
     }
 
-    public function testSettingANewHaystack()
+    public function testSettingANewHaystack(): void
     {
         $this->validator->setHaystack([1, 'a', 2.3]);
         $this->assertEquals([1, 'a', 2.3], $this->validator->getHaystack());
@@ -91,8 +91,10 @@ class InArrayTest extends TestCase
 
     /**
      * @group Laminas-337
+     *
+     * @return void
      */
-    public function testSettingNewStrictMode()
+    public function testSettingNewStrictMode(): void
     {
         $validator = new InArray(
             [
@@ -111,7 +113,7 @@ class InArrayTest extends TestCase
         $this->assertEquals(InArray::COMPARE_NOT_STRICT, $validator->getStrict());
     }
 
-    public function testNonStrictSafeComparisons()
+    public function testNonStrictSafeComparisons(): void
     {
         $validator = new InArray(
             [
@@ -128,7 +130,7 @@ class InArrayTest extends TestCase
         $this->assertTrue($validator->isValid(0));
     }
 
-    public function testStrictComparisons()
+    public function testStrictComparisons(): void
     {
         $validator = new InArray(
             [
@@ -149,7 +151,7 @@ class InArrayTest extends TestCase
         $this->assertFalse($validator->isValid('1a'));
     }
 
-    public function testNonStrictComparisons()
+    public function testNonStrictComparisons(): void
     {
         $validator = new InArray(
             [
@@ -169,7 +171,7 @@ class InArrayTest extends TestCase
         $this->assertTrue($validator->isValid(0));
     }
 
-    public function testNonStrictSafeComparisonsRecurisve()
+    public function testNonStrictSafeComparisonsRecurisve(): void
     {
         $validator = new InArray(
             [
@@ -191,7 +193,7 @@ class InArrayTest extends TestCase
         $this->assertTrue($validator->isValid(0));
     }
 
-    public function testStrictComparisonsRecursive()
+    public function testStrictComparisonsRecursive(): void
     {
         $validator = new InArray(
             [
@@ -215,7 +217,7 @@ class InArrayTest extends TestCase
         $this->assertTrue($validator->isValid(0));
     }
 
-    public function testNonStrictComparisonsRecursive()
+    public function testNonStrictComparisonsRecursive(): void
     {
         $validator = new InArray(
             [
@@ -241,7 +243,7 @@ class InArrayTest extends TestCase
         $this->assertTrue($validator->isValid(0));
     }
 
-    public function testIntegerInputAndStringInHaystack()
+    public function testIntegerInputAndStringInHaystack(): void
     {
         $validator = new InArray(
             [
@@ -259,7 +261,7 @@ class InArrayTest extends TestCase
         $this->assertFalse($validator->isValid(0));
     }
 
-    public function testFloatInputAndStringInHaystack()
+    public function testFloatInputAndStringInHaystack(): void
     {
         $validator = new InArray(
             [
@@ -277,7 +279,7 @@ class InArrayTest extends TestCase
         $this->assertFalse($validator->isValid(0.0));
     }
 
-    public function testNumberStringInputAgainstNumberInHaystack()
+    public function testNumberStringInputAgainstNumberInHaystack(): void
     {
         $validator = new InArray(
             [
@@ -295,7 +297,7 @@ class InArrayTest extends TestCase
         $this->assertFalse($validator->isValid('1asdf'));
     }
 
-    public function testFloatStringInputAgainstNumberInHaystack()
+    public function testFloatStringInputAgainstNumberInHaystack(): void
     {
         $validator = new InArray(
             [
@@ -313,7 +315,7 @@ class InArrayTest extends TestCase
         $this->assertFalse($validator->isValid('1.5asdf'));
     }
 
-    public function testSettingStrictViaInitiation()
+    public function testSettingStrictViaInitiation(): void
     {
         $validator = new InArray(
             [
@@ -324,7 +326,7 @@ class InArrayTest extends TestCase
         $this->assertTrue($validator->getStrict());
     }
 
-    public function testGettingRecursiveOption()
+    public function testGettingRecursiveOption(): void
     {
         $this->assertFalse($this->validator->getRecursive());
 
@@ -332,7 +334,7 @@ class InArrayTest extends TestCase
         $this->assertTrue($this->validator->getRecursive());
     }
 
-    public function testSettingRecursiveViaInitiation()
+    public function testSettingRecursiveViaInitiation(): void
     {
         $validator = new InArray(
             [
@@ -343,7 +345,7 @@ class InArrayTest extends TestCase
         $this->assertTrue($validator->getRecursive());
     }
 
-    public function testRecursiveDetection()
+    public function testRecursiveDetection(): void
     {
         $validator = new InArray(
             [
@@ -361,7 +363,7 @@ class InArrayTest extends TestCase
         $this->assertTrue($validator->isValid('A'));
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $validator = $this->validator;
         $this->assertObjectHasAttribute('messageTemplates', $validator);

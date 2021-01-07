@@ -34,7 +34,7 @@ class Isbn extends AbstractValidator
     /**
      * Detect input format.
      *
-     * @return string
+     * @return null|string
      */
     protected function detectFormat()
     {

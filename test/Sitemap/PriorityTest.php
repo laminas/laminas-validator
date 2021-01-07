@@ -29,8 +29,9 @@ class PriorityTest extends TestCase
     /**
      * Tests valid priorities
      *
+     * @return void
      */
-    public function testValidPriorities()
+    public function testValidPriorities(): void
     {
         $values = [
             '0.0', '0.1', '0.2', '0.3', '0.4', '0.5',
@@ -46,8 +47,9 @@ class PriorityTest extends TestCase
     /**
      * Tests invalid priorities
      *
+     * @return void
      */
-    public function testInvalidPriorities()
+    public function testInvalidPriorities(): void
     {
         $values = [
             -1, -0.1, 1.1, 100, 10, 2, '3', '-4',
@@ -63,8 +65,9 @@ class PriorityTest extends TestCase
     /**
      * Tests values that are no numbers
      *
+     * @return void
      */
-    public function testNotNumbers()
+    public function testNotNumbers(): void
     {
         $values = [
             null, new \stdClass(), true, false, 'abcd',
