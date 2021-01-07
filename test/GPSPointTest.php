@@ -55,7 +55,7 @@ class GPSPointTest extends TestCase
     /**
      * @covers \Laminas\Validator\GPSPoint::isValid
      *
-     * @dataProvider ErrorMessageTestValues
+     * @dataProvider errorMessageTestValues
      *
      * @return void
      */
@@ -84,7 +84,7 @@ class GPSPointTest extends TestCase
     /**
      * @psalm-return array<array-key, array{0: string, 1: string, 2: string}>
      */
-    public function ErrorMessageTestValues(): array
+    public function errorMessageTestValues(): array
     {
         return [
             ['63 47 24.691 N, 18 2 54.363 W', GpsPoint::OUT_OF_BOUNDS, '63 47 24.691 N'],
