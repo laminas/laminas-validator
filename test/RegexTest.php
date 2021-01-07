@@ -30,7 +30,14 @@ class RegexTest extends TestCase
         $this->assertSame($expected, $validator->isValid($input));
     }
 
-    public function basicDataProvider()
+    /**
+     * @psalm-return array<string, array{
+     *     0: string[]|array<array-key, array<string, string>>,
+     *     1: string,
+     *     2: bool
+     * }>
+     */
+    public function basicDataProvider(): array
     {
         return [
             // phpcs:disable
@@ -89,8 +96,10 @@ class RegexTest extends TestCase
 
     /**
      * @Laminas-4352
+     *
+     * @return void
      */
-    public function testNonStringValidation()
+    public function testNonStringValidation(): void
     {
         $validator = new Regex('/./');
         $this->assertFalse($validator->isValid([1 => 1]));
@@ -98,9 +107,12 @@ class RegexTest extends TestCase
 
     /**
      * @Laminas-11863
+     *
      * @dataProvider specialCharValidationProvider
+     *
+     * @return void
      */
-    public function testSpecialCharValidation($expected, $input)
+    public function testSpecialCharValidation($expected, $input): void
     {
         $validator = new Regex('/^[[:alpha:]\']+$/iu');
         $this->assertEquals(
@@ -114,8 +126,10 @@ class RegexTest extends TestCase
      * The elements of each array are, in order:
      *      - expected validation result
      *      - test input value
+     *
+     * @psalm-return array<array-key, array{0: bool, 1: string}>
      */
-    public function specialCharValidationProvider()
+    public function specialCharValidationProvider(): array
     {
         return [
             [true, 'test'],
@@ -128,21 +142,24 @@ class RegexTest extends TestCase
         ];
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $validator = new Regex('//');
         $this->assertObjectHasAttribute('messageTemplates', $validator);
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
-    public function testEqualsMessageVariables()
+    public function testEqualsMessageVariables(): void
     {
         $validator = new Regex('//');
         $this->assertObjectHasAttribute('messageVariables', $validator);
         $this->assertEquals(array_keys($validator->getOption('messageVariables')), $validator->getMessageVariables());
     }
 
-    public function invalidConstructorArgumentsProvider()
+    /**
+     * @psalm-return array<string, array{0: mixed}>
+     */
+    public function invalidConstructorArgumentsProvider(): array
     {
         return [
             'true'       => [true],
@@ -157,21 +174,23 @@ class RegexTest extends TestCase
 
     /**
      * @dataProvider invalidConstructorArgumentsProvider
+     *
+     * @return void
      */
-    public function testConstructorRaisesExceptionWhenProvidedInvalidArguments($options)
+    public function testConstructorRaisesExceptionWhenProvidedInvalidArguments($options): void
     {
         $this->expectException(InvalidArgumentException::class);
         $validator = new Regex($options);
     }
 
-    public function testConstructorRaisesExceptionWhenProvidedWithInvalidOptionsArray()
+    public function testConstructorRaisesExceptionWhenProvidedWithInvalidOptionsArray(): void
     {
         $options = ['foo' => 'bar'];
         $this->expectException(InvalidArgumentException::class);
         $validator = new Regex($options);
     }
 
-    public function testIsValidShouldReturnFalseWhenRegexPatternIsInvalid()
+    public function testIsValidShouldReturnFalseWhenRegexPatternIsInvalid(): void
     {
         $validator = new Regex('//');
         $pattern   = '/';

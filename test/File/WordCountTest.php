@@ -134,8 +134,10 @@ class WordCountTest extends TestCase
 
     /**
      * @group Laminas-11258
+     *
+     * @return void
      */
-    public function testLaminas11258()
+    public function testLaminas11258(): void
     {
         $validator = new File\WordCount(['min' => 1, 'max' => 10000]);
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
@@ -143,7 +145,7 @@ class WordCountTest extends TestCase
         $this->assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
-    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage()
+    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
         $validator = new File\WordCount();
 
@@ -162,7 +164,7 @@ class WordCountTest extends TestCase
         $this->assertArrayHasKey(File\WordCount::NOT_FOUND, $validator->getMessages());
     }
 
-    public function testCanSetMinValueUsingOptionsArray()
+    public function testCanSetMinValueUsingOptionsArray(): void
     {
         $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
         $minValue  = 33;
@@ -172,7 +174,10 @@ class WordCountTest extends TestCase
         $this->assertSame($minValue, $validator->getMin());
     }
 
-    public function invalidMinMaxValues()
+    /**
+     * @psalm-return array<string, array{0: mixed}>
+     */
+    public function invalidMinMaxValues(): array
     {
         return [
             'null'               => [null],
@@ -186,8 +191,10 @@ class WordCountTest extends TestCase
 
     /**
      * @dataProvider invalidMinMaxValues
+     *
+     * @return void
      */
-    public function testSettingMinValueRaisesExceptionForInvalidType($value)
+    public function testSettingMinValueRaisesExceptionForInvalidType($value): void
     {
         $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
         $this->expectException(InvalidArgumentException::class);
@@ -195,7 +202,7 @@ class WordCountTest extends TestCase
         $validator->setMin($value);
     }
 
-    public function testCanSetMaxValueUsingOptionsArray()
+    public function testCanSetMaxValueUsingOptionsArray(): void
     {
         $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
         $maxValue  = 33333333;
@@ -207,8 +214,10 @@ class WordCountTest extends TestCase
 
     /**
      * @dataProvider invalidMinMaxValues
+     *
+     * @return void
      */
-    public function testSettingMaxValueRaisesExceptionForInvalidType($value)
+    public function testSettingMaxValueRaisesExceptionForInvalidType($value): void
     {
         $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
         $this->expectException(InvalidArgumentException::class);
@@ -216,7 +225,7 @@ class WordCountTest extends TestCase
         $validator->setMax($value);
     }
 
-    public function testIsValidShouldThrowInvalidArgumentExceptionForArrayNotInFilesFormat()
+    public function testIsValidShouldThrowInvalidArgumentExceptionForArrayNotInFilesFormat(): void
     {
         $validator = new File\WordCount(['min' => 1, 'max' => 10000]);
         $value     = ['foo' => 'bar'];
@@ -225,7 +234,7 @@ class WordCountTest extends TestCase
         $validator->isValid($value);
     }
 
-    public function testConstructCanAcceptAllOptionsAsDiscreteArguments()
+    public function testConstructCanAcceptAllOptionsAsDiscreteArguments(): void
     {
         $min       = 1;
         $max       = 10000;

@@ -188,8 +188,10 @@ class Sha1Test extends TestCase
 
     /**
      * @group Laminas-11258
+     *
+     * @return void
      */
-    public function testLaminas11258()
+    public function testLaminas11258(): void
     {
         $validator = new File\Sha1('12345');
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
@@ -197,7 +199,7 @@ class Sha1Test extends TestCase
         $this->assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
-    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage()
+    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
         $validator = new File\Sha1();
 
@@ -216,7 +218,7 @@ class Sha1Test extends TestCase
         $this->assertArrayHasKey(File\Sha1::NOT_FOUND, $validator->getMessages());
     }
 
-    public function testIsValidShouldThrowInvalidArgumentExceptionForArrayNotInFilesFormat()
+    public function testIsValidShouldThrowInvalidArgumentExceptionForArrayNotInFilesFormat(): void
     {
         $validator = new File\Sha1();
         $value     = ['foo' => 'bar'];

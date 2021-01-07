@@ -245,8 +245,10 @@ class MessageTest extends TestCase
      * Ensures that getMessageVariables() returns an array of
      * strings and that these strings that can be used as variables
      * in a message.
+     *
+     * @return void
      */
-    public function testGetMessageVariables()
+    public function testGetMessageVariables(): void
     {
         $vars = $this->validator->getMessageVariables();
 
@@ -263,14 +265,14 @@ class MessageTest extends TestCase
         $this->assertEquals('variables: %notvar% 4 8 3 ', current($messages));
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $validator = $this->validator;
         $this->assertObjectHasAttribute('messageTemplates', $validator);
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
-    public function testEqualsMessageVariables()
+    public function testEqualsMessageVariables(): void
     {
         $validator = $this->validator;
         $this->assertObjectHasAttribute('messageVariables', $validator);

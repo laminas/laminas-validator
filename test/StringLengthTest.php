@@ -24,8 +24,6 @@ class StringLengthTest extends TestCase
 
     /**
      * Creates a new StringLength object for each test method
-     *
-     * @return void
      */
     protected function setUp() : void
     {
@@ -46,7 +44,10 @@ class StringLengthTest extends TestCase
         $this->assertSame($expected, $validator->isValid($input));
     }
 
-    public function basicDataProvider()
+    /**
+     * @psalm-return array<string, array{0: array, 1: bool, 2: string}>
+     */
+    public function basicDataProvider(): array
     {
         return [
             // phpcs:disable
@@ -158,20 +159,22 @@ class StringLengthTest extends TestCase
 
     /**
      * @Laminas-4352
+     *
+     * @return void
      */
-    public function testNonStringValidation()
+    public function testNonStringValidation(): void
     {
         $this->assertFalse($this->validator->isValid([1 => 1]));
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $validator = $this->validator;
         $this->assertObjectHasAttribute('messageTemplates', $validator);
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
-    public function testEqualsMessageVariables()
+    public function testEqualsMessageVariables(): void
     {
         $validator = $this->validator;
         $this->assertObjectHasAttribute('messageVariables', $validator);

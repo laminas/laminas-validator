@@ -29,8 +29,9 @@ class LastmodTest extends TestCase
     /**
      * Tests valid change frequencies
      *
+     * @return void
      */
-    public function testValidChangefreqs()
+    public function testValidChangefreqs(): void
     {
         $values = [
             '1994-05-11T18:00:09-08:45',
@@ -55,8 +56,9 @@ class LastmodTest extends TestCase
     /**
      * Tests strings that should be invalid
      *
+     * @return void
      */
-    public function testInvalidStrings()
+    public function testInvalidStrings(): void
     {
         $values = [
             '1995-05-11T18:60:09-08:45',
@@ -76,8 +78,9 @@ class LastmodTest extends TestCase
     /**
      * Tests values that are not strings
      *
+     * @return void
      */
-    public function testNotString()
+    public function testNotString(): void
     {
         $values = [
             1, 1.4, null, new \stdClass(), true, false,

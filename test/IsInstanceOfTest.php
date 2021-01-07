@@ -64,7 +64,7 @@ class IsInstanceOfTest extends TestCase
         $this->assertEquals(DateTime::class, $validator->getClassName());
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $validator  = new Validator\IsInstanceOf(DateTime::class);
         $reflection = new ReflectionClass($validator);
@@ -78,7 +78,7 @@ class IsInstanceOfTest extends TestCase
         );
     }
 
-    public function testEqualsMessageVariables()
+    public function testEqualsMessageVariables(): void
     {
         $validator  = new Validator\IsInstanceOf(DateTime::class);
         $reflection = new ReflectionClass($validator);
@@ -92,7 +92,7 @@ class IsInstanceOfTest extends TestCase
         );
     }
 
-    public function testPassTraversableToConstructor()
+    public function testPassTraversableToConstructor(): void
     {
         $validator = new Validator\IsInstanceOf(new \ArrayIterator(['className' => DateTime::class]));
         $this->assertEquals(DateTime::class, $validator->getClassName());
@@ -101,7 +101,7 @@ class IsInstanceOfTest extends TestCase
         $this->assertFalse($validator->isValid($this));
     }
 
-    public function testPassOptionsWithoutClassNameKey()
+    public function testPassOptionsWithoutClassNameKey(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Missing option "className"');

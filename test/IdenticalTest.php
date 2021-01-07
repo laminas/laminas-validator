@@ -26,50 +26,50 @@ class IdenticalTest extends TestCase
         $this->validator = new Identical;
     }
 
-    public function testTokenInitiallyNull()
+    public function testTokenInitiallyNull(): void
     {
         $this->assertNull($this->validator->getToken());
     }
 
-    public function testCanSetToken()
+    public function testCanSetToken(): void
     {
         $this->testTokenInitiallyNull();
         $this->validator->setToken('foo');
         $this->assertEquals('foo', $this->validator->getToken());
     }
 
-    public function testCanSetTokenViaConstructor()
+    public function testCanSetTokenViaConstructor(): void
     {
         $validator = new Identical('foo');
         $this->assertEquals('foo', $validator->getToken());
     }
 
-    public function testValidatingWhenTokenNullReturnsFalse()
+    public function testValidatingWhenTokenNullReturnsFalse(): void
     {
         $this->assertFalse($this->validator->isValid('foo'));
     }
 
-    public function testValidatingWhenTokenNullSetsMissingTokenMessage()
+    public function testValidatingWhenTokenNullSetsMissingTokenMessage(): void
     {
         $this->testValidatingWhenTokenNullReturnsFalse();
         $messages = $this->validator->getMessages();
         $this->assertArrayHasKey('missingToken', $messages);
     }
 
-    public function testValidatingAgainstTokenWithNonMatchingValueReturnsFalse()
+    public function testValidatingAgainstTokenWithNonMatchingValueReturnsFalse(): void
     {
         $this->validator->setToken('foo');
         $this->assertFalse($this->validator->isValid('bar'));
     }
 
-    public function testValidatingAgainstTokenWithNonMatchingValueSetsNotSameMessage()
+    public function testValidatingAgainstTokenWithNonMatchingValueSetsNotSameMessage(): void
     {
         $this->testValidatingAgainstTokenWithNonMatchingValueReturnsFalse();
         $messages = $this->validator->getMessages();
         $this->assertArrayHasKey('notSame', $messages);
     }
 
-    public function testValidatingAgainstTokenWithMatchingValueReturnsTrue()
+    public function testValidatingAgainstTokenWithMatchingValueReturnsTrue(): void
     {
         $this->validator->setToken('foo');
         $this->assertTrue($this->validator->isValid('foo'));
@@ -77,8 +77,10 @@ class IdenticalTest extends TestCase
 
     /**
      * @group Laminas-6953
+     *
+     * @return void
      */
-    public function testValidatingAgainstEmptyToken()
+    public function testValidatingAgainstEmptyToken(): void
     {
         $this->validator->setToken('');
         $this->assertTrue($this->validator->isValid(''));
@@ -86,8 +88,10 @@ class IdenticalTest extends TestCase
 
     /**
      * @group Laminas-7128
+     *
+     * @return void
      */
-    public function testValidatingAgainstNonStrings()
+    public function testValidatingAgainstNonStrings(): void
     {
         $this->validator->setToken(true);
         $this->assertTrue($this->validator->isValid(true));
@@ -98,14 +102,14 @@ class IdenticalTest extends TestCase
         $this->assertFalse($this->validator->isValid([]));
     }
 
-    public function testValidatingTokenArray()
+    public function testValidatingTokenArray(): void
     {
         $validator = new Identical(['token' => 123]);
         $this->assertTrue($validator->isValid(123));
         $this->assertFalse($validator->isValid(['token' => 123]));
     }
 
-    public function testValidatingNonStrictToken()
+    public function testValidatingNonStrictToken(): void
     {
         $validator = new Identical(['token' => 123, 'strict' => false]);
         $this->assertTrue($validator->isValid('123'));
@@ -114,21 +118,21 @@ class IdenticalTest extends TestCase
         $this->assertFalse($validator->isValid(['token' => '123']));
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $validator = $this->validator;
         $this->assertObjectHasAttribute('messageTemplates', $validator);
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
-    public function testEqualsMessageVariables()
+    public function testEqualsMessageVariables(): void
     {
         $validator = $this->validator;
         $this->assertObjectHasAttribute('messageVariables', $validator);
         $this->assertEquals(array_keys($validator->getOption('messageVariables')), $validator->getMessageVariables());
     }
 
-    public function testValidatingStringTokenInContext()
+    public function testValidatingStringTokenInContext(): void
     {
         $this->validator->setToken('email');
 
@@ -163,7 +167,7 @@ class IdenticalTest extends TestCase
         ));
     }
 
-    public function testValidatingArrayTokenInContext()
+    public function testValidatingArrayTokenInContext(): void
     {
         $this->validator->setToken(['user' => 'email']);
 
@@ -222,7 +226,7 @@ class IdenticalTest extends TestCase
         ));
     }
 
-    public function testCanSetLiteralParameterThroughConstructor()
+    public function testCanSetLiteralParameterThroughConstructor(): void
     {
         $validator = new Identical(['token' => 'foo', 'literal' => true]);
         // Default is false
@@ -230,7 +234,7 @@ class IdenticalTest extends TestCase
         $this->assertTrue($validator->getLiteral());
     }
 
-    public function testLiteralParameterDoesNotAffectValidationWhenNoContextIsProvided()
+    public function testLiteralParameterDoesNotAffectValidationWhenNoContextIsProvided(): void
     {
         $this->validator->setToken(['foo' => 'bar']);
 
@@ -241,7 +245,7 @@ class IdenticalTest extends TestCase
         $this->assertTrue($this->validator->isValid(['foo' => 'bar']));
     }
 
-    public function testLiteralParameterWorksWhenContextIsProvided()
+    public function testLiteralParameterWorksWhenContextIsProvided(): void
     {
         $this->validator->setToken(['foo' => 'bar']);
         $this->validator->setLiteral(true);
@@ -256,8 +260,10 @@ class IdenticalTest extends TestCase
      * @dataProvider invalidContextProvider
      *
      * @param mixed $context
+     *
+     * @return void
      */
-    public function testIsValidThrowsExceptionOnInvalidContext($context)
+    public function testIsValidThrowsExceptionOnInvalidContext($context): void
     {
         $this->expectException(InvalidArgumentException::class);
 

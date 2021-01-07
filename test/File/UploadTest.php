@@ -143,7 +143,14 @@ class UploadTest extends TestCase
         $this->assertArrayHasKey('fileUploadErrorFileNotFound', $validator->getMessages());
     }
 
-    public function invalidPsr7UploadedFiles()
+    /**
+     * @psalm-return iterable<string, array{
+     *     0: array<string, UploadedFileInterface>,
+     *     1: string,
+     *     2: string
+     * }>
+     */
+    public function invalidPsr7UploadedFiles(): iterable
     {
         $uploads = [];
 
@@ -225,7 +232,7 @@ class UploadTest extends TestCase
         $this->assertArrayHasKey($expectedErrorKey, $validator->getMessages());
     }
 
-    public function testCanValidateCorrectlyFormedPsr7UploadedFiles()
+    public function testCanValidateCorrectlyFormedPsr7UploadedFiles(): void
     {
         $upload = $this->prophesize(UploadedFileInterface::class);
         $upload->getClientFilename()->willReturn('test');
@@ -291,7 +298,7 @@ class UploadTest extends TestCase
         $this->assertEquals([], $validator->getFiles('test5'));
     }
 
-    public function testGetFilesReturnsArtifactsFromPsr7UploadedFiles()
+    public function testGetFilesReturnsArtifactsFromPsr7UploadedFiles(): File\Upload
     {
         $upload1 = $this->prophesize(UploadedFileInterface::class);
         $upload1->getClientFilename()->willReturn('test1');
@@ -320,10 +327,12 @@ class UploadTest extends TestCase
 
     /**
      * @depends testGetFilesReturnsArtifactsFromPsr7UploadedFiles
+     *
+     * @return void
      */
     public function testGetFilesRaisesExceptionWhenPsr7UploadedFilesArrayDoesNotContainGivenFilename(
         File\Upload $validator
-    ) {
+    ): void {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('was not found');
         $validator->getFiles('test5');
@@ -372,7 +381,7 @@ class UploadTest extends TestCase
         $this->assertEquals($files, $validator->getFiles());
     }
 
-    public function testCanPopulateFilesFromArrayOfPsr7UploadedFiles()
+    public function testCanPopulateFilesFromArrayOfPsr7UploadedFiles(): void
     {
         $upload1 = $this->prophesize(UploadedFileInterface::class);
         $upload2 = $this->prophesize(UploadedFileInterface::class);
@@ -389,8 +398,10 @@ class UploadTest extends TestCase
 
     /**
      * @group Laminas-10738
+     *
+     * @return void
      */
-    public function testGetFilesReturnsEmptyArrayWhenFilesSuperglobalIsNull()
+    public function testGetFilesReturnsEmptyArrayWhenFilesSuperglobalIsNull(): void
     {
         $_FILES = null;
         $validator = new File\Upload();
@@ -400,8 +411,10 @@ class UploadTest extends TestCase
 
     /**
      * @group Laminas-10738
+     *
+     * @return void
      */
-    public function testGetFilesReturnsEmptyArrayAfterSetFilesIsCalledWithNull()
+    public function testGetFilesReturnsEmptyArrayAfterSetFilesIsCalledWithNull(): void
     {
         $validator = new File\Upload();
         $validator->setFiles(null);
@@ -410,8 +423,10 @@ class UploadTest extends TestCase
 
     /**
      * @group Laminas-11258
+     *
+     * @return void
      */
-    public function testLaminas11258()
+    public function testLaminas11258(): void
     {
         $validator = new File\Upload();
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
@@ -421,8 +436,10 @@ class UploadTest extends TestCase
 
     /**
      * @group Laminas-12128
+     *
+     * @return void
      */
-    public function testErrorMessage()
+    public function testErrorMessage(): void
     {
         $_FILES = [
             'foo' => [

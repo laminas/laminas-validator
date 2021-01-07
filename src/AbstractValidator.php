@@ -271,9 +271,9 @@ abstract class AbstractValidator implements
      * If a translator is available and a translation exists for $messageKey,
      * the translation will be used.
      *
-     * @param  string              $messageKey
-     * @param  string|array|object $value
-     * @return string
+     * @param string              $messageKey
+     * @param string|array|object $value
+     * @return null|string
      */
     protected function createMessage($messageKey, $value)
     {
@@ -548,6 +548,7 @@ abstract class AbstractValidator implements
      * Sets the maximum allowed message length
      *
      * @param int $length
+     * @return void
      */
     public static function setMessageLength($length = -1)
     {

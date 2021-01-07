@@ -31,7 +31,7 @@ class FileInformationTraitTest extends TestCase
         $this->upload = $this->prophesize(UploadedFileInterface::class);
     }
 
-    public function testLegacyFileInfoBasic()
+    public function testLegacyFileInfoBasic(): void
     {
         $testFile = __DIR__ . '/_files/testsize.mo';
         $basename = basename($testFile);
@@ -52,7 +52,7 @@ class FileInformationTraitTest extends TestCase
         ]);
     }
 
-    public function testLegacyFileInfoWithFiletype()
+    public function testLegacyFileInfoWithFiletype(): void
     {
         $testFile = __DIR__ . '/_files/testsize.mo';
         $basename = basename($testFile);
@@ -76,7 +76,7 @@ class FileInformationTraitTest extends TestCase
         ]);
     }
 
-    public function testLegacyFileInfoWithBasename()
+    public function testLegacyFileInfoWithBasename(): void
     {
         $testFile = __DIR__ . '/_files/testsize.mo';
         $basename = basename($testFile);
@@ -100,7 +100,7 @@ class FileInformationTraitTest extends TestCase
         ]);
     }
 
-    public function testSapiFileInfoBasic()
+    public function testSapiFileInfoBasic(): void
     {
         $testFile = __DIR__ . '/_files/testsize.mo';
         $file = [
@@ -119,7 +119,7 @@ class FileInformationTraitTest extends TestCase
         ]);
     }
 
-    public function testSapiFileInfoWithFiletype()
+    public function testSapiFileInfoWithFiletype(): void
     {
         $testFile = __DIR__ . '/_files/testsize.mo';
         $file = [
@@ -142,7 +142,7 @@ class FileInformationTraitTest extends TestCase
         ]);
     }
 
-    public function testSapiFileInfoWithBasename()
+    public function testSapiFileInfoWithBasename(): void
     {
         $testFile = __DIR__ . '/_files/testsize.mo';
         $file = [
@@ -165,7 +165,7 @@ class FileInformationTraitTest extends TestCase
         ]);
     }
 
-    public function testPsr7FileInfoBasic()
+    public function testPsr7FileInfoBasic(): void
     {
         $testFile = __DIR__ . '/_files/testsize.mo';
 
@@ -185,7 +185,7 @@ class FileInformationTraitTest extends TestCase
         ]);
     }
 
-    public function testPsr7FileInfoBasicWithFiletype()
+    public function testPsr7FileInfoBasicWithFiletype(): void
     {
         $testFile = __DIR__ . '/_files/testsize.mo';
 
@@ -208,7 +208,7 @@ class FileInformationTraitTest extends TestCase
         ]);
     }
 
-    public function testPsr7FileInfoBasicWithBasename()
+    public function testPsr7FileInfoBasicWithBasename(): void
     {
         $testFile = __DIR__ . '/_files/testsize.mo';
 
@@ -232,7 +232,7 @@ class FileInformationTraitTest extends TestCase
         ]);
     }
 
-    public function testFileBasedFileInfoBasic()
+    public function testFileBasedFileInfoBasic(): void
     {
         $testFile = __DIR__ . '/_files/testsize.mo';
 
@@ -247,7 +247,7 @@ class FileInformationTraitTest extends TestCase
         ]);
     }
 
-    public function testFileBasedFileInfoBasicWithFiletype()
+    public function testFileBasedFileInfoBasicWithFiletype(): void
     {
         $testFile = __DIR__ . '/_files/testsize.mo';
 
@@ -265,7 +265,7 @@ class FileInformationTraitTest extends TestCase
         ]);
     }
 
-    public function testFileBasedFileInfoBasicWithBasename()
+    public function testFileBasedFileInfoBasicWithBasename(): void
     {
         $testFile = __DIR__ . '/_files/testsize.mo';
 

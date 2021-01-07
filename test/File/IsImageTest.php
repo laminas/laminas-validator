@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class IsImageTest extends TestCase
 {
-    protected function getMagicMime()
+    protected function getMagicMime(): string
     {
         return __DIR__ . '/_files/magic.7.mime';
     }
@@ -144,8 +144,10 @@ class IsImageTest extends TestCase
 
     /**
      * @Laminas-8111
+     *
+     * @return void
      */
-    public function testErrorMessages()
+    public function testErrorMessages(): void
     {
         $files = [
             'name'     => 'picture.jpg',
@@ -162,7 +164,7 @@ class IsImageTest extends TestCase
         $this->assertArrayHasKey('fileIsImageFalseType', $error);
     }
 
-    public function testOptionsAtConstructor()
+    public function testOptionsAtConstructor(): void
     {
         if (! extension_loaded('fileinfo')) {
             $this->markTestSkipped('This PHP Version has no finfo installed');
@@ -181,7 +183,7 @@ class IsImageTest extends TestCase
         $this->assertEquals('image/gif,image/jpg', $validator->getMimeType());
     }
 
-    public function testNonMimeOptionsAtConstructorStillSetsDefaults()
+    public function testNonMimeOptionsAtConstructorStillSetsDefaults(): void
     {
         $validator = new File\IsImage([
             'enableHeaderCheck' => true,
@@ -192,8 +194,10 @@ class IsImageTest extends TestCase
 
     /**
      * @group Laminas-11258
+     *
+     * @return void
      */
-    public function testLaminas11258()
+    public function testLaminas11258(): void
     {
         $validator = new File\IsImage();
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));

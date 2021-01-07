@@ -267,8 +267,10 @@ class TimezoneTest extends TestCase
      * @param mixed $invalidType
      *
      * @dataProvider getInvalidTypes
+     *
+     * @return void
      */
-    public function testRejectsInvalidIntType($invalidType)
+    public function testRejectsInvalidIntType($invalidType): void
     {
         $this->expectException(InvalidArgumentException::class);
 

@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ExplodeTest extends TestCase
 {
-    public function testRaisesExceptionWhenValidatorIsMissing()
+    public function testRaisesExceptionWhenValidatorIsMissing(): void
     {
         $validator = new Explode();
         $this->expectException(RuntimeException::class);
@@ -29,7 +29,18 @@ class ExplodeTest extends TestCase
         $validator->isValid('foo,bar');
     }
 
-    public function getExpectedData()
+    /**
+     * @psalm-return array<array-key, array{
+     *     0: mixed,
+     *     1: null|string,
+     *     2: bool,
+     *     3: int,
+     *     4: bool,
+     *     5: string[],
+     *     6: bool
+     * }>
+     */
+    public function getExpectedData(): array
     {
         return [
             //    value              delim break  N  valid  messages                   expects
@@ -55,6 +66,8 @@ class ExplodeTest extends TestCase
 
     /**
      * @dataProvider getExpectedData
+     *
+     * @return void
      */
     public function testExpectedBehavior(
         $value,
@@ -64,7 +77,7 @@ class ExplodeTest extends TestCase
         $isValidReturn,
         $messages,
         $expects
-    ) {
+    ): void {
         $mockValidator = $this->createMock(ValidatorInterface::class);
         $mockValidator
             ->expects($this->exactly($numIsValidCalls))
@@ -84,27 +97,27 @@ class ExplodeTest extends TestCase
         $this->assertEquals($messages, $validator->getMessages());
     }
 
-    public function testGetMessagesReturnsDefaultValue()
+    public function testGetMessagesReturnsDefaultValue(): void
     {
         $validator = new Explode();
         $this->assertEquals([], $validator->getMessages());
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $validator = new Explode([]);
         $this->assertObjectHasAttribute('messageTemplates', $validator);
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
-    public function testEqualsMessageVariables()
+    public function testEqualsMessageVariables(): void
     {
         $validator = new Explode([]);
         $this->assertObjectHasAttribute('messageVariables', $validator);
         $this->assertEquals(array_keys($validator->getOption('messageVariables')), $validator->getMessageVariables());
     }
 
-    public function testSetValidatorAsArray()
+    public function testSetValidatorAsArray(): void
     {
         $validator = new Explode();
         $validator->setValidator([
@@ -123,7 +136,7 @@ class ExplodeTest extends TestCase
         );
     }
 
-    public function testSetValidatorMissingName()
+    public function testSetValidatorMissingName(): void
     {
         $validator = new Explode();
         $this->expectException(RuntimeException::class);
@@ -132,7 +145,7 @@ class ExplodeTest extends TestCase
         ]);
     }
 
-    public function testSetValidatorInvalidParam()
+    public function testSetValidatorInvalidParam(): void
     {
         $validator = new Explode();
         $this->expectException(RuntimeException::class);
@@ -141,8 +154,10 @@ class ExplodeTest extends TestCase
 
     /**
      * @group Laminas-5796
+     *
+     * @return void
      */
-    public function testGetMessagesMultipleInvalid()
+    public function testGetMessagesMultipleInvalid(): void
     {
         $validator = new Explode([
             'validator'           => new Regex(
@@ -165,8 +180,10 @@ class ExplodeTest extends TestCase
 
     /**
      * Assert context is passed to composed validator
+     *
+     * @return void
      */
-    public function testIsValidPassContext()
+    public function testIsValidPassContext(): void
     {
         $context       = 'context';
         $contextSame   = false;

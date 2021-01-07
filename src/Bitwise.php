@@ -45,12 +45,12 @@ class Bitwise extends AbstractValidator
     ];
 
     /**
-     * @var integer
+     * @var null|int
      */
     protected $operator;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $strict = false;
 
@@ -101,7 +101,7 @@ class Bitwise extends AbstractValidator
     /**
      * Returns the operator parameter.
      *
-     * @return string
+     * @return null|int
      */
     public function getOperator()
     {

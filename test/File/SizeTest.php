@@ -18,9 +18,13 @@ use PHPUnit\Framework\TestCase;
 class SizeTest extends TestCase
 {
     /**
-     * @return array
+     * @psalm-return array<array-key, array{
+     *     0: int|array<string, int|string>,
+     *     1: string,
+     *     2: bool
+     * }>
      */
-    public function basicBehaviorDataProvider()
+    public function basicBehaviorDataProvider(): array
     {
         $testFile = __DIR__ . '/_files/testsize.mo';
         $testData = [
@@ -201,8 +205,10 @@ class SizeTest extends TestCase
 
     /**
      * @group Laminas-11258
+     *
+     * @return void
      */
-    public function testLaminas11258()
+    public function testLaminas11258(): void
     {
         $validator = new File\Size(['min' => 1, 'max' => 10000]);
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
@@ -210,7 +216,7 @@ class SizeTest extends TestCase
         $this->assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
-    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage()
+    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
         $validator = new File\Size();
 
@@ -229,7 +235,10 @@ class SizeTest extends TestCase
         $this->assertArrayHasKey(File\Size::NOT_FOUND, $validator->getMessages());
     }
 
-    public function invalidMinMaxValues()
+    /**
+     * @psalm-return array<string, array{0: mixed}>
+     */
+    public function invalidMinMaxValues(): array
     {
         return [
             'null'   => [null],
@@ -242,8 +251,10 @@ class SizeTest extends TestCase
 
     /**
      * @dataProvider invalidMinMaxValues
+     *
+     * @return void
      */
-    public function testSetMinWithInvalidArgument($value)
+    public function testSetMinWithInvalidArgument($value): void
     {
         $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
         $this->expectException(InvalidArgumentException::class);
@@ -253,8 +264,10 @@ class SizeTest extends TestCase
 
     /**
      * @dataProvider invalidMinMaxValues
+     *
+     * @return void
      */
-    public function testSetMaxWithInvalidArgument($value)
+    public function testSetMaxWithInvalidArgument($value): void
     {
         $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
         $this->expectException(InvalidArgumentException::class);

@@ -162,8 +162,10 @@ class ExtensionTest extends TestCase
 
     /**
      * @group Laminas-11258
+     *
+     * @return void
      */
-    public function testLaminas11258()
+    public function testLaminas11258(): void
     {
         $validator = new File\Extension('gif');
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
@@ -171,7 +173,7 @@ class ExtensionTest extends TestCase
         $this->assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
-    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage()
+    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
         $validator = new File\Extension('foo');
 
@@ -190,7 +192,7 @@ class ExtensionTest extends TestCase
         $this->assertArrayHasKey(File\Extension::NOT_FOUND, $validator->getMessages());
     }
 
-    public function testIsValidRaisesExceptionForArrayNotInFilesFormat()
+    public function testIsValidRaisesExceptionForArrayNotInFilesFormat(): void
     {
         $validator = new File\Extension('foo');
         $value     = ['foo' => 'bar'];

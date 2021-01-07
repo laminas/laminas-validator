@@ -43,20 +43,20 @@ class StaticValidatorTest extends TestCase
         AbstractValidator::setMessageLength(-1);
     }
 
-    public function testCanSetGlobalDefaultTranslator()
+    public function testCanSetGlobalDefaultTranslator(): void
     {
         $translator = new TestAsset\Translator();
         AbstractValidator::setDefaultTranslator($translator);
         $this->assertSame($translator, AbstractValidator::getDefaultTranslator());
     }
 
-    public function testGlobalDefaultTranslatorUsedWhenNoLocalTranslatorSet()
+    public function testGlobalDefaultTranslatorUsedWhenNoLocalTranslatorSet(): void
     {
         $this->testCanSetGlobalDefaultTranslator();
         $this->assertSame(AbstractValidator::getDefaultTranslator(), $this->validator->getTranslator());
     }
 
-    public function testLocalTranslatorPreferredOverGlobalTranslator()
+    public function testLocalTranslatorPreferredOverGlobalTranslator(): void
     {
         $this->testCanSetGlobalDefaultTranslator();
         $translator = new TestAsset\Translator();
@@ -64,7 +64,7 @@ class StaticValidatorTest extends TestCase
         $this->assertNotSame(AbstractValidator::getDefaultTranslator(), $this->validator->getTranslator());
     }
 
-    public function testMaximumErrorMessageLength()
+    public function testMaximumErrorMessageLength(): void
     {
         if (! extension_loaded('intl')) {
             $this->markTestSkipped('ext/intl not enabled');
@@ -90,7 +90,7 @@ class StaticValidatorTest extends TestCase
         $this->assertEquals('This is...', $messages[Alpha::INVALID]);
     }
 
-    public function testSetGetMessageLengthLimitation()
+    public function testSetGetMessageLengthLimitation(): void
     {
         AbstractValidator::setMessageLength(5);
         $this->assertEquals(5, AbstractValidator::getMessageLength());
@@ -101,7 +101,7 @@ class StaticValidatorTest extends TestCase
         $this->assertLessThanOrEqual(5, strlen($message));
     }
 
-    public function testSetGetDefaultTranslator()
+    public function testSetGetDefaultTranslator(): void
     {
         $translator = new TestAsset\Translator();
         AbstractValidator::setDefaultTranslator($translator);
@@ -110,20 +110,20 @@ class StaticValidatorTest extends TestCase
 
     /* plugin loading */
 
-    public function testLazyLoadsValidatorPluginManagerByDefault()
+    public function testLazyLoadsValidatorPluginManagerByDefault(): void
     {
         $plugins = StaticValidator::getPluginManager();
         $this->assertInstanceOf(ValidatorPluginManager::class, $plugins);
     }
 
-    public function testCanSetCustomPluginManager()
+    public function testCanSetCustomPluginManager(): void
     {
         $plugins = new ValidatorPluginManager($this->getMockBuilder(ServiceManager::class)->getMock());
         StaticValidator::setPluginManager($plugins);
         $this->assertSame($plugins, StaticValidator::getPluginManager());
     }
 
-    public function testPassingNullWhenSettingPluginManagerResetsPluginManager()
+    public function testPassingNullWhenSettingPluginManagerResetsPluginManager(): void
     {
         $plugins = new ValidatorPluginManager($this->getMockBuilder(ServiceManager::class)->getMock());
         StaticValidator::setPluginManager($plugins);
@@ -132,7 +132,15 @@ class StaticValidatorTest extends TestCase
         $this->assertNotSame($plugins, StaticValidator::getPluginManager());
     }
 
-    public function parameterizedData()
+    /**
+     * @psalm-return array<string, array{
+     *     0: int,
+     *     1: string,
+     *     2: array<string, int>,
+     *     3: bool
+     * }>
+     */
+    public function parameterizedData(): array
     {
         return [
             'valid-positive-range'   => [5, 'between', ['min' => 1, 'max' => 10], true],
@@ -144,13 +152,18 @@ class StaticValidatorTest extends TestCase
 
     /**
      * @dataProvider parameterizedData
+     *
+     * @return void
      */
-    public function testExecuteValidWithParameters($value, $validator, $options, $expected)
+    public function testExecuteValidWithParameters($value, $validator, $options, $expected): void
     {
         $this->assertSame($expected, StaticValidator::execute($value, $validator, $options));
     }
 
-    public function invalidParameterizedData()
+    /**
+     * @psalm-return array<string, array{0: int, 1: string, 2: int[]}>
+     */
+    public function invalidParameterizedData(): array
     {
         return [
             'positive-range' => [5, 'between', [1, 10]],
@@ -160,8 +173,10 @@ class StaticValidatorTest extends TestCase
 
     /**
      * @dataProvider invalidParameterizedData
+     *
+     * @return void
      */
-    public function testExecuteRaisesExceptionForIndexedOptionsArray($value, $validator, $options)
+    public function testExecuteRaisesExceptionForIndexedOptionsArray($value, $validator, $options): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('options');

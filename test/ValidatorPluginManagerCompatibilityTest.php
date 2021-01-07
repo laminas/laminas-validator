@@ -35,7 +35,10 @@ class ValidatorPluginManagerCompatibilityTest extends TestCase
         return ValidatorInterface::class;
     }
 
-    public function aliasProvider()
+    /**
+     * @psalm-return iterable<string, array{0: string, 1: string}>
+     */
+    public function aliasProvider(): iterable
     {
         $pluginManager = $this->getPluginManager();
         $isV2PluginManager = method_exists($pluginManager, 'validatePlugin');

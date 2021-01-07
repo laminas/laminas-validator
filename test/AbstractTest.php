@@ -40,12 +40,12 @@ class AbstractTest extends TestCase
         AbstractValidator::setDefaultTranslator(null, 'default');
     }
 
-    public function testTranslatorNullByDefault()
+    public function testTranslatorNullByDefault(): void
     {
         $this->assertNull($this->validator->getTranslator());
     }
 
-    public function testCanSetTranslator()
+    public function testCanSetTranslator(): void
     {
         $this->testTranslatorNullByDefault();
         set_error_handler([$this, 'errorHandlerIgnore']);
@@ -55,7 +55,7 @@ class AbstractTest extends TestCase
         $this->assertSame($translator, $this->validator->getTranslator());
     }
 
-    public function testCanSetTranslatorToNull()
+    public function testCanSetTranslatorToNull(): void
     {
         $this->testCanSetTranslator();
         set_error_handler([$this, 'errorHandlerIgnore']);
@@ -64,7 +64,7 @@ class AbstractTest extends TestCase
         $this->assertNull($this->validator->getTranslator());
     }
 
-    public function testErrorMessagesAreTranslatedWhenTranslatorPresent()
+    public function testErrorMessagesAreTranslatedWhenTranslatorPresent(): void
     {
         if (! extension_loaded('intl')) {
             $this->markTestSkipped('ext/intl not enabled');
@@ -86,12 +86,12 @@ class AbstractTest extends TestCase
         $this->assertStringContainsString('This is the translated message for ', $messages['fooMessage']);
     }
 
-    public function testObscureValueFlagFalseByDefault()
+    public function testObscureValueFlagFalseByDefault(): void
     {
         $this->assertFalse($this->validator->isValueObscured());
     }
 
-    public function testCanSetValueObscuredFlag()
+    public function testCanSetValueObscuredFlag(): void
     {
         $this->testObscureValueFlagFalseByDefault();
         $this->validator->setValueObscured(true);
@@ -100,7 +100,7 @@ class AbstractTest extends TestCase
         $this->assertFalse($this->validator->isValueObscured());
     }
 
-    public function testValueIsObfuscatedWheObscureValueFlagIsTrue()
+    public function testValueIsObfuscatedWheObscureValueFlagIsTrue(): void
     {
         $this->validator->setValueObscured(true);
         $this->assertFalse($this->validator->isValid('foobar'));
@@ -113,15 +113,17 @@ class AbstractTest extends TestCase
 
     /**
      * @group Laminas-4463
+     *
+     * @return void
      */
-    public function testDoesNotFailOnObjectInput()
+    public function testDoesNotFailOnObjectInput(): void
     {
         $this->assertFalse($this->validator->isValid(new \stdClass()));
         $messages = $this->validator->getMessages();
         $this->assertArrayHasKey('fooMessage', $messages);
     }
 
-    public function testTranslatorEnabledPerDefault()
+    public function testTranslatorEnabledPerDefault(): void
     {
         set_error_handler([$this, 'errorHandlerIgnore']);
         $translator = new TestAsset\Translator();
@@ -129,7 +131,7 @@ class AbstractTest extends TestCase
         $this->assertTrue($this->validator->isTranslatorEnabled());
     }
 
-    public function testCanDisableTranslator()
+    public function testCanDisableTranslator(): void
     {
         if (! extension_loaded('intl')) {
             $this->markTestSkipped('ext/intl not enabled');
@@ -160,7 +162,7 @@ class AbstractTest extends TestCase
         $this->assertStringContainsString('bar was passed', $messages['fooMessage']);
     }
 
-    public function testGetMessageTemplates()
+    public function testGetMessageTemplates(): void
     {
         $messages = $this->validator->getMessageTemplates();
         $this->assertEquals([
@@ -174,14 +176,14 @@ class AbstractTest extends TestCase
         ], $messages);
     }
 
-    public function testInvokeProxiesToIsValid()
+    public function testInvokeProxiesToIsValid(): void
     {
         $validator = new TestAsset\ConcreteValidator;
         $this->assertFalse($validator('foo'));
         $this->assertContains('foo was passed', $validator->getMessages());
     }
 
-    public function testTranslatorMethods()
+    public function testTranslatorMethods(): void
     {
         $translatorMock = $this->createMock(TestAsset\Translator::class);
         $this->validator->setTranslator($translatorMock, 'foo');
@@ -195,7 +197,7 @@ class AbstractTest extends TestCase
         $this->assertFalse($this->validator->isTranslatorEnabled());
     }
 
-    public function testDefaultTranslatorMethods()
+    public function testDefaultTranslatorMethods(): void
     {
         $this->assertFalse(AbstractValidator::hasDefaultTranslator());
         $this->assertNull(AbstractValidator::getDefaultTranslator());
@@ -213,7 +215,7 @@ class AbstractTest extends TestCase
         $this->assertTrue(AbstractValidator::hasDefaultTranslator());
     }
 
-    public function testMessageCreationWithNestedArrayValueDoesNotRaiseNotice()
+    public function testMessageCreationWithNestedArrayValueDoesNotRaiseNotice(): void
     {
         $r = new ReflectionMethod($this->validator, 'createMessage');
         $r->setAccessible(true);
@@ -224,7 +226,7 @@ class AbstractTest extends TestCase
         $this->assertStringContainsString('baz', $message);
     }
 
-    public function testNonIdenticalMessagesAllReturned()
+    public function testNonIdenticalMessagesAllReturned(): void
     {
         $this->assertFalse($this->validator->isValid('invalid'));
 
@@ -237,7 +239,7 @@ class AbstractTest extends TestCase
         ], $messages);
     }
 
-    public function testIdenticalMessagesNotReturned()
+    public function testIdenticalMessagesNotReturned(): void
     {
         $this->validator->setMessage('Default error message');
 
@@ -249,7 +251,7 @@ class AbstractTest extends TestCase
         $this->assertEquals('Default error message', reset($messages));
     }
 
-    public function testIdenticalAndNonIdenticalMessagesReturned()
+    public function testIdenticalAndNonIdenticalMessagesReturned(): void
     {
         $validator = new EmailAddress();
 
@@ -285,7 +287,7 @@ class AbstractTest extends TestCase
         $this->errorOccurred = true;
     }
 
-    public function testRetrievingUnknownOptionRaisesException()
+    public function testRetrievingUnknownOptionRaisesException(): void
     {
         $option = 'foo';
         $this->expectException(InvalidArgumentException::class);
@@ -294,7 +296,10 @@ class AbstractTest extends TestCase
         $this->validator->getOption($option);
     }
 
-    public function invalidOptionsArguments()
+    /**
+     * @psalm-return array<string, array{0: mixed}>
+     */
+    public function invalidOptionsArguments(): array
     {
         return [
             'null' => [null],
@@ -312,7 +317,7 @@ class AbstractTest extends TestCase
     /**
      * @dataProvider invalidOptionsArguments
      */
-    public function testSettingOptionsWithNonTraversableRaisesException($options)
+    public function testSettingOptionsWithNonTraversableRaisesException($options): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('setOptions expects an array or Traversable');

@@ -49,7 +49,15 @@ class FilesSizeTest extends TestCase
         );
     }
 
-    public function basicDataProvider()
+    /**
+     * @psalm-return array<string, array{
+     *     0: int[]|array<string, int|string>,
+     *     1: bool,
+     *     2: bool,
+     *     3: bool
+     * }>
+     */
+    public function basicDataProvider(): array
     {
         return [
             // phpcs:disable
@@ -65,7 +73,7 @@ class FilesSizeTest extends TestCase
         ];
     }
 
-    public function testMultipleFiles()
+    public function testMultipleFiles(): void
     {
         $validator = new File\FilesSize(['min' => 0, 'max' => 500000]);
         $this->assertEquals(true, $validator->isValid([
@@ -75,7 +83,7 @@ class FilesSizeTest extends TestCase
         ]));
     }
 
-    public function testFileDoNotExist()
+    public function testFileDoNotExist(): void
     {
         $validator = new File\FilesSize(['min' => 0, 'max' => 200]);
         $this->assertEquals(false, $validator->isValid(__DIR__ . '/_files/nofile.mo'));
@@ -154,7 +162,7 @@ class FilesSizeTest extends TestCase
         $this->assertEquals('976.56kB', $validator->getMax());
     }
 
-    public function testConstructorShouldRaiseErrorWhenPassedMultipleOptions()
+    public function testConstructorShouldRaiseErrorWhenPassedMultipleOptions(): void
     {
         $handler = set_error_handler([$this, 'errorHandler'], E_USER_NOTICE);
         $validator = new File\FilesSize(1000, 10000);
@@ -189,14 +197,14 @@ class FilesSizeTest extends TestCase
         $this->assertStringContainsString('1588', current($messages));
     }
 
-    public function errorHandler($errno, $errstr)
+    public function errorHandler($errno, $errstr): void
     {
         if (strstr($errstr, 'deprecated')) {
             $this->multipleOptionsDetected = true;
         }
     }
 
-    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage()
+    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
         $validator = new File\FilesSize(0);
 
@@ -215,7 +223,7 @@ class FilesSizeTest extends TestCase
         $this->assertArrayHasKey(File\FilesSize::NOT_READABLE, $validator->getMessages());
     }
 
-    public function testFilesFormat()
+    public function testFilesFormat(): void
     {
         $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
 
@@ -238,7 +246,7 @@ class FilesSizeTest extends TestCase
         ]));
     }
 
-    public function testIllegalFilesFormat()
+    public function testIllegalFilesFormat(): void
     {
         $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
         $this->expectException(InvalidArgumentException::class);
@@ -249,7 +257,10 @@ class FilesSizeTest extends TestCase
         ]);
     }
 
-    private function createFileInfo($file)
+    /**
+     * @psalm-return array<string, mixed>
+     */
+    private function createFileInfo(string $file): array
     {
         return [
             'tmp_name' => $file,
@@ -260,7 +271,7 @@ class FilesSizeTest extends TestCase
         ];
     }
 
-    public function testConstructorCanAcceptAllOptionsAsDiscreteArguments()
+    public function testConstructorCanAcceptAllOptionsAsDiscreteArguments(): void
     {
         $min              = 0;
         $max              = 10;
@@ -273,7 +284,7 @@ class FilesSizeTest extends TestCase
         $this->assertSame($useBytesAsString, $validator->getByteString());
     }
 
-    public function testIsValidRaisesExceptionForArrayValueNotInFilesFormat()
+    public function testIsValidRaisesExceptionForArrayValueNotInFilesFormat(): void
     {
         $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
         $value     = [['foo' => 'bar']];

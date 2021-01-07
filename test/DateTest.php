@@ -34,13 +34,21 @@ class DateTest extends TestCase
         $this->validator = new Validator\Date();
     }
 
-    public function testSetFormatIgnoresNull()
+    public function testSetFormatIgnoresNull(): void
     {
         $this->validator->setFormat(null);
         $this->assertEquals(Validator\Date::FORMAT_DEFAULT, $this->validator->getFormat());
     }
 
-    public function datesDataProvider()
+    /**
+     * @psalm-return array<array-key, array{
+     *     0: string,
+     *     1: null|string,
+     *     2: bool,
+     *     3: bool
+     * }>
+     */
+    public function datesDataProvider(): array
     {
         return [
             // date                     format             isValid   isValid Strict
@@ -99,8 +107,10 @@ class DateTest extends TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider datesDataProvider
+     *
+     * @return void
      */
-    public function testBasic($input, $format, $result)
+    public function testBasic($input, $format, $result): void
     {
         $this->validator->setFormat($format);
         $this->assertEquals($result, $this->validator->isValid($input));
@@ -118,7 +128,7 @@ class DateTest extends TestCase
         $this->assertSame($resultStrict, $this->validator->isValid($input));
     }
 
-    public function testDateTimeImmutable()
+    public function testDateTimeImmutable(): void
     {
         $this->assertTrue($this->validator->isValid(new DateTimeImmutable()));
     }
@@ -157,21 +167,21 @@ class DateTest extends TestCase
         // $this->assertFalse($this->validator->setFormat('s')->isValid(0));
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $validator = $this->validator;
         $this->assertObjectHasAttribute('messageTemplates', $validator);
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
-    public function testEqualsMessageVariables()
+    public function testEqualsMessageVariables(): void
     {
         $validator = $this->validator;
         $this->assertObjectHasAttribute('messageVariables', $validator);
         $this->assertEquals(array_keys($validator->getOption('messageVariables')), $validator->getMessageVariables());
     }
 
-    public function testConstructorWithFormatParameter()
+    public function testConstructorWithFormatParameter(): void
     {
         $format = 'd/m/Y';
         $validator = new Validator\Date($format);

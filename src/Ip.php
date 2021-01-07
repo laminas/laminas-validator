@@ -122,9 +122,9 @@ class Ip extends AbstractValidator
     /**
      * Validates an IPv6 address
      *
-     * @param  string $value Value to check against
-     * @return bool True when $value is a valid ipv6 address
-     *                 False otherwise
+     * @param string $value Value to check against
+     *
+     * @return bool|int True when $value is a valid ipv6 address False otherwise
      */
     protected function validateIPv6($value)
     {

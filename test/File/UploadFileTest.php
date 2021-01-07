@@ -18,7 +18,13 @@ use Psr\Http\Message\UploadedFileInterface;
  */
 class UploadFileTest extends TestCase
 {
-    public function uploadErrorsTestDataProvider()
+    /**
+     * @psalm-return array<string, array{
+     *     0: UploadedFileInterface|array<string, mixed>,
+     *     1: string
+     * }>
+     */
+    public function uploadErrorsTestDataProvider(): array
     {
         $data = [];
         $errorTypes = [
@@ -96,8 +102,10 @@ class UploadFileTest extends TestCase
 
     /**
      * @group Laminas-11258
+     *
+     * @return void
      */
-    public function testLaminas11258()
+    public function testLaminas11258(): void
     {
         $validator = new File\UploadFile();
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
@@ -105,7 +113,7 @@ class UploadFileTest extends TestCase
         $this->assertStringContainsString('not found', current($validator->getMessages()));
     }
 
-    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage()
+    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
         $validator = new File\UploadFile();
 
@@ -113,7 +121,7 @@ class UploadFileTest extends TestCase
         $this->assertArrayHasKey(File\UploadFile::FILE_NOT_FOUND, $validator->getMessages());
     }
 
-    public function testUploadErrorCodeShouldPrecedeEmptyFileCheck()
+    public function testUploadErrorCodeShouldPrecedeEmptyFileCheck(): void
     {
         $validator = new File\UploadFile();
 

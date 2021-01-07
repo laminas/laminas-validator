@@ -216,8 +216,8 @@ class MimeType extends AbstractValidator
     /**
      * Disables usage of MagicFile
      *
-     * @param $disable boolean False disables usage of magic file
-     * @return $this Provides fluid interface
+     * @param bool $disable False disables usage of magic file; true enables it.
+     * @return self Provides fluid interface
      */
     public function disableMagicFile($disable)
     {

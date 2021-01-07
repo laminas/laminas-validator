@@ -21,7 +21,10 @@ use PHPUnit\Framework\TestCase;
  */
 class BarcodeTest extends TestCase
 {
-    public function provideBarcodeConstructor()
+    /**
+     * @psalm-return array<string, array{0: null|array, 1: string}>
+     */
+    public function provideBarcodeConstructor(): array
     {
         return [
             'null' => [null, Barcode\Ean13::class],
@@ -30,21 +33,23 @@ class BarcodeTest extends TestCase
     }
     /**
      * @dataProvider provideBarcodeConstructor
+     *
+     * @return void
      */
-    public function testBarcodeConstructor($options, $expectedInstance)
+    public function testBarcodeConstructor($options, $expectedInstance): void
     {
         $barcode = new Barcode($options);
         $this->assertInstanceOf($expectedInstance, $barcode->getAdapter());
     }
 
-    public function testNoneExisting()
+    public function testNoneExisting(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('not found');
         $barcode = new Barcode('\Laminas\Validate\BarcodeTest\NonExistentClassName');
     }
 
-    public function testSetAdapter()
+    public function testSetAdapter(): void
     {
         $barcode = new Barcode('upca');
         $this->assertTrue($barcode->isValid('065100004327'));
@@ -53,7 +58,7 @@ class BarcodeTest extends TestCase
         $this->assertTrue($barcode->isValid('0075678164125'));
     }
 
-    public function testSetCustomAdapter()
+    public function testSetCustomAdapter(): void
     {
         $barcode = new Barcode([
             'adapter' => $this->createMock(AdapterInterface::class),
@@ -64,8 +69,10 @@ class BarcodeTest extends TestCase
 
     /**
      * @Laminas-4352
+     *
+     * @return void
      */
-    public function testNonStringValidation()
+    public function testNonStringValidation(): void
     {
         $barcode = new Barcode('upca');
         $this->assertFalse($barcode->isValid(106510000.4327));
@@ -76,7 +83,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid(['065100004327']));
     }
 
-    public function testInvalidChecksumAdapter()
+    public function testInvalidChecksumAdapter(): void
     {
         require_once __DIR__ . '/_files/MyBarcode1.php';
         $barcode = new Barcode('MyBarcode1');
@@ -85,28 +92,28 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->getAdapter()->hasValidChecksum('0000000'));
     }
 
-    public function testInvalidCharAdapter()
+    public function testInvalidCharAdapter(): void
     {
         require_once __DIR__ . '/_files/MyBarcode1.php';
         $barcode = new Barcode('MyBarcode1');
         $this->assertFalse($barcode->getAdapter()->hasValidCharacters(123));
     }
 
-    public function testAscii128CharacterAdapter()
+    public function testAscii128CharacterAdapter(): void
     {
         require_once __DIR__ . '/_files/MyBarcode2.php';
         $barcode = new Barcode('MyBarcode2');
         $this->assertTrue($barcode->getAdapter()->hasValidCharacters('1234QW!"'));
     }
 
-    public function testInvalidLengthAdapter()
+    public function testInvalidLengthAdapter(): void
     {
         require_once __DIR__ . '/_files/MyBarcode2.php';
         $barcode = new Barcode('MyBarcode2');
         $this->assertFalse($barcode->getAdapter()->hasValidLength(123));
     }
 
-    public function testArrayLengthAdapter()
+    public function testArrayLengthAdapter(): void
     {
         require_once __DIR__ . '/_files/MyBarcode2.php';
         $barcode = new Barcode('MyBarcode2');
@@ -116,7 +123,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->getAdapter()->hasValidLength('1234'));
     }
 
-    public function testArrayLengthAdapter2()
+    public function testArrayLengthAdapter2(): void
     {
         require_once __DIR__ . '/_files/MyBarcode3.php';
         $barcode = new Barcode('MyBarcode3');
@@ -126,7 +133,7 @@ class BarcodeTest extends TestCase
         $this->assertTrue($barcode->getAdapter()->hasValidLength('1234'));
     }
 
-    public function testOddLengthAdapter()
+    public function testOddLengthAdapter(): void
     {
         require_once __DIR__ . '/_files/MyBarcode4.php';
         $barcode = new Barcode('MyBarcode4');
@@ -136,7 +143,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->getAdapter()->hasValidLength('1234'));
     }
 
-    public function testInvalidAdapter()
+    public function testInvalidAdapter(): void
     {
         $barcode = new Barcode('Ean13');
 
@@ -146,20 +153,20 @@ class BarcodeTest extends TestCase
         $barcode->setAdapter('MyBarcode5');
     }
 
-    public function testArrayConstructAdapter()
+    public function testArrayConstructAdapter(): void
     {
         $barcode = new Barcode(['adapter' => 'Ean13', 'options' => 'unknown', 'useChecksum' => false]);
         $this->assertInstanceOf(Ean13::class, $barcode->getAdapter());
         $this->assertFalse($barcode->useChecksum());
     }
 
-    public function testDefaultArrayConstructWithMissingAdapter()
+    public function testDefaultArrayConstructWithMissingAdapter(): void
     {
         $barcode = new Barcode(['options' => 'unknown', 'checksum' => false]);
         $this->assertTrue($barcode->isValid('0075678164125'));
     }
 
-    public function testConfigConstructAdapter()
+    public function testConfigConstructAdapter(): void
     {
         $array = ['adapter' => 'Ean13', 'options' => 'unknown', 'useChecksum' => false];
         $config = new \Laminas\Config\Config($array);
@@ -168,7 +175,7 @@ class BarcodeTest extends TestCase
         $this->assertTrue($barcode->isValid('0075678164125'));
     }
 
-    public function testCODE25()
+    public function testCODE25(): void
     {
         $barcode = new Barcode('code25');
         $this->assertTrue($barcode->isValid('0123456789101213'));
@@ -180,7 +187,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('0123456789101213'));
     }
 
-    public function testCODE25INTERLEAVED()
+    public function testCODE25INTERLEAVED(): void
     {
         $barcode = new Barcode('code25interleaved');
         $this->assertTrue($barcode->isValid('0123456789101213'));
@@ -191,7 +198,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('0123456789101213'));
     }
 
-    public function testCODE39()
+    public function testCODE39(): void
     {
         $barcode = new Barcode('code39');
         $this->assertTrue($barcode->isValid('TEST93TEST93TEST93TEST93Y+'));
@@ -203,7 +210,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('159AZG'));
     }
 
-    public function testCODE39EXT()
+    public function testCODE39EXT(): void
     {
         $barcode = new Barcode('code39ext');
         $this->assertTrue($barcode->isValid('TEST93TEST93TEST93TEST93Y+'));
@@ -216,7 +223,7 @@ class BarcodeTest extends TestCase
 //        $this->assertFalse($barcode->isValid('159AZG'));
     }
 
-    public function testCODE93()
+    public function testCODE93(): void
     {
         $barcode = new Barcode('code93');
         $this->assertTrue($barcode->isValid('TEST93+'));
@@ -227,7 +234,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('CODE 93E1'));
     }
 
-    public function testCODE93EXT()
+    public function testCODE93EXT(): void
     {
         $barcode = new Barcode('code93ext');
         $this->assertTrue($barcode->isValid('TEST93+'));
@@ -239,7 +246,7 @@ class BarcodeTest extends TestCase
 //        $this->assertFalse($barcode->isValid('CODE 93E1'));
     }
 
-    public function testEAN2()
+    public function testEAN2(): void
     {
         $barcode = new Barcode('ean2');
         $this->assertTrue($barcode->isValid('12'));
@@ -247,7 +254,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('123'));
     }
 
-    public function testEAN5()
+    public function testEAN5(): void
     {
         $barcode = new Barcode('ean5');
         $this->assertTrue($barcode->isValid('12345'));
@@ -255,7 +262,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('123456'));
     }
 
-    public function testEAN8()
+    public function testEAN8(): void
     {
         $barcode = new Barcode('ean8');
         $this->assertTrue($barcode->isValid('12345670'));
@@ -264,7 +271,7 @@ class BarcodeTest extends TestCase
         $this->assertTrue($barcode->isValid('1234567'));
     }
 
-    public function testEAN12()
+    public function testEAN12(): void
     {
         $barcode = new Barcode('ean12');
         $this->assertTrue($barcode->isValid('123456789012'));
@@ -272,7 +279,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('123456789013'));
     }
 
-    public function testEAN13()
+    public function testEAN13(): void
     {
         $barcode = new Barcode('ean13');
         $this->assertTrue($barcode->isValid('1234567890128'));
@@ -280,7 +287,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('1234567890127'));
     }
 
-    public function testEAN14()
+    public function testEAN14(): void
     {
         $barcode = new Barcode('ean14');
         $this->assertTrue($barcode->isValid('12345678901231'));
@@ -288,7 +295,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('12345678901232'));
     }
 
-    public function testEAN18()
+    public function testEAN18(): void
     {
         $barcode = new Barcode('ean18');
         $this->assertTrue($barcode->isValid('123456789012345675'));
@@ -296,7 +303,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('123456789012345676'));
     }
 
-    public function testGTIN12()
+    public function testGTIN12(): void
     {
         $barcode = new Barcode('gtin12');
         $this->assertTrue($barcode->isValid('123456789012'));
@@ -304,7 +311,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('123456789013'));
     }
 
-    public function testGTIN13()
+    public function testGTIN13(): void
     {
         $barcode = new Barcode('gtin13');
         $this->assertTrue($barcode->isValid('1234567890128'));
@@ -312,7 +319,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('1234567890127'));
     }
 
-    public function testGTIN14()
+    public function testGTIN14(): void
     {
         $barcode = new Barcode('gtin14');
         $this->assertTrue($barcode->isValid('12345678901231'));
@@ -320,7 +327,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('12345678901232'));
     }
 
-    public function testIDENTCODE()
+    public function testIDENTCODE(): void
     {
         $barcode = new Barcode('identcode');
         $this->assertTrue($barcode->isValid('564000000050'));
@@ -329,7 +336,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('564000000051'));
     }
 
-    public function testINTELLIGENTMAIL()
+    public function testINTELLIGENTMAIL(): void
     {
         $barcode = new Barcode('intelligentmail');
         $this->assertTrue($barcode->isValid('01234567094987654321'));
@@ -337,7 +344,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('5555512371'));
     }
 
-    public function testISSN()
+    public function testISSN(): void
     {
         $barcode = new Barcode('issn');
         $this->assertTrue($barcode->isValid('1144875X'));
@@ -348,7 +355,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('97711448750X7'));
     }
 
-    public function testITF14()
+    public function testITF14(): void
     {
         $barcode = new Barcode('itf14');
         $this->assertTrue($barcode->isValid('00075678164125'));
@@ -356,7 +363,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('00075678164124'));
     }
 
-    public function testLEITCODE()
+    public function testLEITCODE(): void
     {
         $barcode = new Barcode('leitcode');
         $this->assertTrue($barcode->isValid('21348075016401'));
@@ -365,7 +372,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('21348075016402'));
     }
 
-    public function testPLANET()
+    public function testPLANET(): void
     {
         $barcode = new Barcode('planet');
         $this->assertTrue($barcode->isValid('401234567891'));
@@ -373,7 +380,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('401234567892'));
     }
 
-    public function testPOSTNET()
+    public function testPOSTNET(): void
     {
         $barcode = new Barcode('postnet');
         $this->assertTrue($barcode->isValid('5555512372'));
@@ -381,7 +388,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('5555512371'));
     }
 
-    public function testROYALMAIL()
+    public function testROYALMAIL(): void
     {
         $barcode = new Barcode('royalmail');
         $this->assertTrue($barcode->isValid('SN34RD1AK'));
@@ -392,7 +399,7 @@ class BarcodeTest extends TestCase
         $this->assertTrue($barcode->isValid('06CIOUH'));
     }
 
-    public function testSSCC()
+    public function testSSCC(): void
     {
         $barcode = new Barcode('sscc');
         $this->assertTrue($barcode->isValid('123456789012345675'));
@@ -400,7 +407,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('123456789012345676'));
     }
 
-    public function testUPCA()
+    public function testUPCA(): void
     {
         $barcode = new Barcode('upca');
         $this->assertTrue($barcode->isValid('123456789012'));
@@ -408,7 +415,7 @@ class BarcodeTest extends TestCase
         $this->assertFalse($barcode->isValid('123456789013'));
     }
 
-    public function testUPCE()
+    public function testUPCE(): void
     {
         $barcode = new Barcode('upce');
         $this->assertTrue($barcode->isValid('02345673'));
@@ -420,8 +427,10 @@ class BarcodeTest extends TestCase
 
     /**
      * @group Laminas-10116
+     *
+     * @return void
      */
-    public function testArrayLengthMessage()
+    public function testArrayLengthMessage(): void
     {
         $barcode = new Barcode('ean8');
         $this->assertFalse($barcode->isValid('123'));
@@ -432,8 +441,10 @@ class BarcodeTest extends TestCase
 
     /**
      * @group Laminas-8673
+     *
+     * @return void
      */
-    public function testCODABAR()
+    public function testCODABAR(): void
     {
         $barcode = new Barcode('codabar');
         $this->assertTrue($barcode->isValid('123456789'));
@@ -447,8 +458,10 @@ class BarcodeTest extends TestCase
 
     /**
      * @group Laminas-11532
+     *
+     * @return void
      */
-    public function testIssnWithMod0()
+    public function testIssnWithMod0(): void
     {
         $barcode = new Barcode('issn');
         $this->assertTrue($barcode->isValid('18710360'));
@@ -456,8 +469,10 @@ class BarcodeTest extends TestCase
 
     /**
      * @group Laminas-8674
+     *
+     * @return void
      */
-    public function testCODE128()
+    public function testCODE128(): void
     {
         if (! extension_loaded('iconv')) {
             $this->markTestSkipped('Missing ext/iconv');
@@ -477,21 +492,23 @@ class BarcodeTest extends TestCase
      * Test if EAN-13 contains only numeric characters
      *
      * @group Laminas-3297
+     *
+     * @return void
      */
-    public function testEan13ContainsOnlyNumeric()
+    public function testEan13ContainsOnlyNumeric(): void
     {
         $barcode = new Barcode('ean13');
         $this->assertFalse($barcode->isValid('3RH1131-1BB40'));
     }
 
-    public function testEqualsMessageTemplates()
+    public function testEqualsMessageTemplates(): void
     {
         $validator = new Barcode('code25');
         $this->assertObjectHasAttribute('messageTemplates', $validator);
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
-    public function testEqualsMessageVariables()
+    public function testEqualsMessageVariables(): void
     {
         $validator = new Barcode('code25');
         $this->assertObjectHasAttribute('messageVariables', $validator);

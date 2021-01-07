@@ -56,8 +56,10 @@ class ExcludeMimeTypeTest extends TestCase
      * @param array $isValidParam
      * @param bool $expected
      * @param array $messages
+     *
+     * @return void
      */
-    public function testBasic($options, array $isValidParam, $expected, array $messages)
+    public function testBasic($options, array $isValidParam, $expected, array $messages): void
     {
         $validator = new ExcludeMimeType($options);
         $validator->enableHeaderCheck();
@@ -143,7 +145,7 @@ class ExcludeMimeTypeTest extends TestCase
         $this->assertEquals(['image/gif', 'text', 'jpg', 'to', 'zip', 'ti'], $validator->getMimeType(true));
     }
 
-    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage()
+    public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
         $validator = new ExcludeMimeType();
 
@@ -152,7 +154,7 @@ class ExcludeMimeTypeTest extends TestCase
         $this->assertNotEmpty($validator->getMessages()[ExcludeMimeType::NOT_READABLE]);
     }
 
-    public function testEmptyArrayFileShouldReturnFalseAdnDisplayNotFoundMessage()
+    public function testEmptyArrayFileShouldReturnFalseAdnDisplayNotFoundMessage(): void
     {
         $validator = new ExcludeMimeType();
 
@@ -169,7 +171,7 @@ class ExcludeMimeTypeTest extends TestCase
         $this->assertNotEmpty($validator->getMessages()[ExcludeMimeType::NOT_READABLE]);
     }
 
-    public function testIsValidRaisesExceptionWithArrayNotInFilesFormat()
+    public function testIsValidRaisesExceptionWithArrayNotInFilesFormat(): void
     {
         $validator = new ExcludeMimeType('image\gif');
         $value     = ['foo' => 'bar'];

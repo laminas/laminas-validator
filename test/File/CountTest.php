@@ -46,7 +46,16 @@ class CountTest extends TestCase
         );
     }
 
-    public function basicDataProvider()
+    /**
+     * @psalm-return array<string, array{
+     *     0: int|array<string, int>,
+     *     1: bool,
+     *     2: bool,
+     *     3: bool,
+     *     4: bool
+     * }>
+     */
+    public function basicDataProvider(): array
     {
         return [
             // phpcs:disable
@@ -70,7 +79,7 @@ class CountTest extends TestCase
         $this->assertEquals(1, $validator->getMin());
     }
 
-    public function testGetMinGreaterThanOrEqualThrowsException()
+    public function testGetMinGreaterThanOrEqualThrowsException(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
@@ -123,7 +132,7 @@ class CountTest extends TestCase
         $this->assertEquals(1000000, $validator->getMax());
     }
 
-    public function testCanSetMaxValueUsingAnArrayWithMaxKey()
+    public function testCanSetMaxValueUsingAnArrayWithMaxKey(): void
     {
         $validator   = new File\Count(['min' => 1000, 'max' => 10000]);
         $maxValue    = 33333333;
@@ -133,7 +142,10 @@ class CountTest extends TestCase
         $this->assertSame($maxValue, $validator->getMax());
     }
 
-    public function invalidMinMaxValues()
+    /**
+     * @psalm-return array<string, array{0: mixed}>
+     */
+    public function invalidMinMaxValues(): array
     {
         return [
             'null'           => [null],
@@ -147,8 +159,10 @@ class CountTest extends TestCase
 
     /**
      * @dataProvider invalidMinMaxValues
+     *
+     * @return void
      */
-    public function testSettingMaxWithInvalidArgumentRaisesException($max)
+    public function testSettingMaxWithInvalidArgumentRaisesException($max): void
     {
         $validator = new File\Count(['min' => 1000, 'max' => 10000]);
         $this->expectException(InvalidArgumentException::class);
@@ -157,7 +171,7 @@ class CountTest extends TestCase
         $validator->setMax($max);
     }
 
-    public function testCanSetMinUsingAnArrayWithAMinKey()
+    public function testCanSetMinUsingAnArrayWithAMinKey(): void
     {
         $validator   = new File\Count(['min' => 1000, 'max' => 10000]);
         $minValue    = 33;
@@ -169,8 +183,10 @@ class CountTest extends TestCase
 
     /**
      * @dataProvider invalidMinMaxValues
+     *
+     * @return void
      */
-    public function testSettingMinWithInvalidArgumentRaisesException($min)
+    public function testSettingMinWithInvalidArgumentRaisesException($min): void
     {
         $validator = new File\Count(['min' => 1000, 'max' => 10000]);
         $this->expectException(InvalidArgumentException::class);
@@ -178,7 +194,7 @@ class CountTest extends TestCase
         $validator->setMin($min);
     }
 
-    public function testThrowErrorReturnsFalseAndSetsMessageWhenProvidedWithArrayRepresentingTooFewFiles()
+    public function testThrowErrorReturnsFalseAndSetsMessageWhenProvidedWithArrayRepresentingTooFewFiles(): void
     {
         $validator = new File\Count(['min' => 1000, 'max' => 10000]);
         $filename  = 'test.txt';
@@ -198,7 +214,7 @@ class CountTest extends TestCase
         $this->assertEquals($filename, $property->getValue($validator));
     }
 
-    public function testThrowErrorReturnsFalseAndSetsMessageWhenProvidedWithASingleFilename()
+    public function testThrowErrorReturnsFalseAndSetsMessageWhenProvidedWithASingleFilename(): void
     {
         $validator  = new File\Count(['min' => 1000, 'max' => 10000]);
         $filename   = 'test.txt';
@@ -216,7 +232,7 @@ class CountTest extends TestCase
         $this->assertEquals($filename, $property->getValue($validator));
     }
 
-    public function testCanProvideMinAndMaxAsDiscreteConstructorArguments()
+    public function testCanProvideMinAndMaxAsDiscreteConstructorArguments(): void
     {
         $min       = 1000;
         $max       = 10000;

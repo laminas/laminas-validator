@@ -136,8 +136,10 @@ class NotExistsTest extends TestCase
 
     /**
      * @group Laminas-11258
+     *
+     * @return void
      */
-    public function testLaminas11258()
+    public function testLaminas11258(): void
     {
         $validator = new File\NotExists();
         $this->assertFalse($validator->isValid(__DIR__ . '/_files/testsize.mo'));
@@ -145,7 +147,7 @@ class NotExistsTest extends TestCase
         $this->assertStringContainsString('File exists', current($validator->getMessages()));
     }
 
-    public function testIsValidShouldThrowInvalidArgumentExceptionForArrayNotInFilesFormat()
+    public function testIsValidShouldThrowInvalidArgumentExceptionForArrayNotInFilesFormat(): void
     {
         $validator = new File\NotExists();
         $value     = ['foo' => 'bar'];
@@ -154,7 +156,10 @@ class NotExistsTest extends TestCase
         $validator->isValid($value);
     }
 
-    public function invalidDirectoryArguments()
+    /**
+     * @psalm-return array<string, array{0: mixed}>
+     */
+    public function invalidDirectoryArguments(): array
     {
         return [
             'null'       => [null],
@@ -170,8 +175,10 @@ class NotExistsTest extends TestCase
 
     /**
      * @dataProvider invalidDirectoryArguments
+     *
+     * @return void
      */
-    public function testAddingDirectoryUsingInvalidTypeRaisesException($value)
+    public function testAddingDirectoryUsingInvalidTypeRaisesException($value): void
     {
         $validator = new File\NotExists();
         $this->expectException(InvalidArgumentException::class);

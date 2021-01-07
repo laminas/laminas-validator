@@ -541,6 +541,7 @@ class ValidatorPluginManager extends AbstractPluginManager
      * Proxies to `validate()`.
      *
      * @param mixed $plugin
+     * @return void
      * @throws Exception\RuntimeException
      */
     public function validatePlugin($plugin)

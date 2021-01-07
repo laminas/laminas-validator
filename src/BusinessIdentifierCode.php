@@ -32,7 +32,7 @@ class BusinessIdentifierCode extends AbstractValidator
      * List of all country codes defined by ISO 3166-1 alpha-2
      * @see https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Current_codes
      *
-     * @var array<ISO 3166-1 alpha-2>
+     * @var string[]
      */
     private const ISO_COUNTRIES = [
         'AD', 'AE', 'AF', 'AG', 'AI', 'AL', 'AM', 'AO', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AW', 'AX', 'AZ', 'BA', 'BB',
