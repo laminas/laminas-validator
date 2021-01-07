@@ -14,10 +14,9 @@ class Module
      * Return default laminas-validator configuration for laminas-mvc applications.
      *
      * @return array[]
-     *
      * @psalm-return array{service_manager: array}
      */
-    public function getConfig(): array
+    public function getConfig()
     {
         $provider = new ConfigProvider();
 

@@ -77,7 +77,10 @@ class Code128 extends AbstractAdapter
         $this->setChecksum('code128');
     }
 
-    public function setUtf8StringWrapper(StringWrapperInterface $utf8StringWrapper): void
+    /**
+     * @return void
+     */
+    public function setUtf8StringWrapper(StringWrapperInterface $utf8StringWrapper)
     {
         if (! $utf8StringWrapper->isSupported('UTF-8')) {
             throw new Exception\InvalidArgumentException(
@@ -406,7 +409,6 @@ class Code128 extends AbstractAdapter
      *
      * @param int $value
      * @param string $set
-     *
      * @return int|string
      */
     protected function chr128($value, $set)

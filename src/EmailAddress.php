@@ -398,7 +398,6 @@ class EmailAddress extends AbstractValidator
      * Internal method to validate the servers MX records
      *
      * @return bool|string[]
-     *
      * @psalm-return bool|list<string>
      */
     protected function validateMXRecords()

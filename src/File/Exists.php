@@ -85,10 +85,9 @@ class Exists extends AbstractValidator
      * Sets the file directory which will be checked
      *
      * @param string|array $directory The directories to validate
-     *
      * @return self Provides a fluent interface
      */
-    public function setDirectory($directory): self
+    public function setDirectory($directory)
     {
         $this->options['directory'] = null;
         $this->addDirectory($directory);
@@ -99,12 +98,10 @@ class Exists extends AbstractValidator
      * Adds the file directory which will be checked
      *
      * @param string|array $directory The directory to add for validation
-     *
      * @return self Provides a fluent interface
-     *
      * @throws Exception\InvalidArgumentException
      */
-    public function addDirectory($directory): self
+    public function addDirectory($directory)
     {
         $directories = $this->getDirectory(true);
         if (! isset($directories)) {

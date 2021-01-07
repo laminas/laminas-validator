@@ -81,7 +81,6 @@ class Sha1 extends Hash
      * @param string $value|array Filename to check for hash
      * @param array        $file  File data from \Laminas\File\Transfer\Transfer (optional)
      * @param (int|string)[]|string $value
-     *
      * @return bool
      */
     public function isValid($value, $file = null)

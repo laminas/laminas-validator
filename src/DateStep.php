@@ -401,9 +401,7 @@ class DateStep extends Date
     /**
      * @param int[] $intervalParts
      * @param int[] $diffParts
-     *
      * @return (float|int)[] (ordered tuple containing minimum steps and required step iterations
-     *
      * @psalm-return array{0: float|int, 1: float|int}
      */
     private function computeMinStepAndRequiredIterations(array $intervalParts, array $diffParts): array
@@ -430,7 +428,6 @@ class DateStep extends Date
      *
      * @param int[] $intervalParts
      * @param int[] $diffParts
-     *
      * @return float|int
      */
     private function computeMinSteps(array $intervalParts, array $diffParts)

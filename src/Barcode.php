@@ -120,7 +120,7 @@ class Barcode extends AbstractValidator
      *
      * @return bool
      */
-    public function getChecksum(): bool
+    public function getChecksum()
     {
         return $this->getAdapter()->getChecksum();
     }
@@ -128,8 +128,7 @@ class Barcode extends AbstractValidator
     /**
      * Sets if checksum should be validated, if no value is given the actual setting is returned
      *
-     * @param bool $checksum
-     *
+     * @param null|bool $checksum
      * @return Barcode\AbstractAdapter|bool
      */
     public function useChecksum($checksum = null)
