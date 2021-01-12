@@ -27,6 +27,9 @@
         <ini name="date.timezone" value="UTC"/>
         <ini name="xdebug.max_nesting_level" value="3000"/>
 
+        <!-- Disable E_USER_DEPRECATED -->
+        <ini name="error_reporting" value="16383"/>
+
         <!-- OB_ENABLED should be enabled for some tests to check if all
              functionality works as expected. Such tests include those for
              Laminas\Soap and Laminas\Session, which require that headers not be sent
