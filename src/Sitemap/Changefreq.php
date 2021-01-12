@@ -60,9 +60,6 @@ class Changefreq extends AbstractValidator
         }
 
         $this->setValue($value);
-        if (! is_string($value)) {
-            return false;
-        }
 
         if (! in_array($value, $this->changeFreqs, true)) {
             $this->error(self::NOT_VALID);
