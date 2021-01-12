@@ -20,6 +20,64 @@ class InArrayTest extends TestCase
     /** @var InArray */
     protected $validator;
 
+    /**
+     * @return array<string,array{0:list<mixed>,1:mixed,2:mixed}>
+     */
+    public function nonStrictValidationSet(): array
+    {
+        return [
+            'strings' => [
+                ['Y', 'N'],
+                'Y',
+                'X',
+            ],
+            'integers' => [
+                [1, 2],
+                1,
+                3,
+            ],
+            'integerish haystack' => [
+                ['1', '2'],
+                1,
+                3,
+            ],
+            'integerish values' => [
+                [1, 2],
+                '1',
+                '3',
+            ],
+        ];
+    }
+
+    /**
+     * @return array<string,array{0:list<mixed>,1:mixed,2:mixed}>
+     */
+    public function strictValidationSet(): array
+    {
+        return [
+            'strings' => [
+                ['Y', 'N'],
+                'Y',
+                'X',
+            ],
+            'integers' => [
+                [1, 2],
+                1,
+                3,
+            ],
+            'integerish haystack' => [
+                ['1', '2'],
+                '1',
+                1,
+            ],
+            'integerish values' => [
+                [1, 2],
+                1,
+                '1',
+            ],
+        ];
+    }
+
     protected function setUp() : void
     {
         $this->validator = new InArray(
@@ -368,5 +426,41 @@ class InArrayTest extends TestCase
         $validator = $this->validator;
         $this->assertObjectHasAttribute('messageTemplates', $validator);
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+    }
+
+    /**
+     * @param list<mixed> $haystack
+     * @param mixed $valid
+     * @param mixed $invalid
+     * @dataProvider strictValidationSet
+     * @link https://github.com/laminas/laminas-validator/issues/81
+     */
+    public function testBooleanStrictEnforcesStrictMode(array $haystack, $valid, $invalid): void
+    {
+        $validator = new InArray([
+            'haystack' => $haystack,
+            'strict'   => true,
+        ]);
+
+        self::assertTrue($validator->isValid($valid));
+        self::assertFalse($validator->isValid($invalid));
+    }
+
+    /**
+     * @param list<mixed> $haystack
+     * @param mixed $valid
+     * @param mixed $invalid
+     * @dataProvider nonStrictValidationSet
+     * @link https://github.com/laminas/laminas-validator/issues/81
+     */
+    public function testBooleanNotStrictEnforcesNonStrictMode(array $haystack, $valid, $invalid): void
+    {
+        $validator = new InArray([
+            'haystack' => $haystack,
+            'strict'   => false,
+        ]);
+
+        self::assertTrue($validator->isValid($valid));
+        self::assertFalse($validator->isValid($invalid));
     }
 }
