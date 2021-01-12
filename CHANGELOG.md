@@ -14,7 +14,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Deprecated
 
-- [#83](https://github.com/laminas/laminas-validator/pull/83) Deprecates the ability to pass a boolean `strict` option to the `InArray` validator
+- Nothing.
 
 ### Removed
 
