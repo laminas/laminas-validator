@@ -2,27 +2,28 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.14.1 - TBD
-
-### Added
-
-- Nothing.
-
-### Changed
-
-- Nothing.
-
-### Deprecated
-
-- Nothing.
-
-### Removed
-
-- Nothing.
+## 2.14.1 - 2021-01-13
 
 ### Fixed
 
 - [#83](https://github.com/laminas/laminas-validator/pull/83) Fixes regression regarding boolean `strict` option in `InArray` validator
+
+
+-----
+
+### Release Notes for [2.14.1](https://github.com/laminas/laminas-validator/milestone/7)
+
+2.14.x bugfix release (patch)
+
+### 2.14.1
+
+- Total issues resolved: **1**
+- Total pull requests resolved: **1**
+- Total contributors: **2**
+
+#### BC Break,Bug
+
+ - [83: Fix regression regarding InArray validator with boolean strict options](https://github.com/laminas/laminas-validator/pull/83) thanks to @boesing and @cvigorsICBF
 
 ## 2.14.0 - 2021-01-07
 
