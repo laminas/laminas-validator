@@ -2,27 +2,24 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.14.2 - TBD
+## 2.14.2 - 2021-01-22
 
-### Added
 
-- Nothing.
+-----
 
-### Changed
+### Release Notes for [2.14.2](https://github.com/laminas/laminas-validator/milestone/9)
 
-- Nothing.
+2.14.x bugfix release (patch)
 
-### Deprecated
+### 2.14.2
 
-- Nothing.
+- Total issues resolved: **1**
+- Total pull requests resolved: **1**
+- Total contributors: **1**
 
-### Removed
+#### Bug
 
-- Nothing.
-
-### Fixed
-
-- Nothing.
+ - [87: Removed hardcoded `version` field from `composer.json`](https://github.com/laminas/laminas-validator/pull/87) thanks to @Ocramius
 
 ## 2.14.1 - 2021-01-13
 
