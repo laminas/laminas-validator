@@ -10,6 +10,8 @@ namespace Laminas\Validator;
 
 use DateInterval;
 use DateTime;
+use DateTimeImmutable;
+use DateTimeInterface;
 use DateTimeZone;
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
@@ -187,7 +189,7 @@ class DateStep extends Date
     /**
      * Returns true if a date is within a valid step
      *
-     * @param  string|int|\DateTime $value
+     * @param  string|int|DateTime|DateTimeImmutable $value
      * @return bool
      * @throws Exception\InvalidArgumentException
      */
@@ -199,7 +201,12 @@ class DateStep extends Date
 
         $valueDate = $this->convertToDateTime($value, false); // avoid duplicate errors
         $baseDate  = $this->convertToDateTime($this->baseValue, false);
-        $step      = $this->getStep();
+
+        if (false === $valueDate || false === $baseDate) {
+            return false;
+        }
+
+        $step = $this->getStep();
 
         // Same date?
         if ($valueDate == $baseDate) {
@@ -338,17 +345,17 @@ class DateStep extends Date
      * iterations by starting at the lower bound of steps needed to reach
      * the target
      *
-     * @param DateTime     $baseDate
-     * @param DateTime     $valueDate
-     * @param int[]        $intervalParts
-     * @param int[]        $diffParts
-     * @param DateInterval $step
+     * @param DateTimeInterface     $baseDate
+     * @param DateTimeInterface     $valueDate
+     * @param int[]                 $intervalParts
+     * @param int[]                 $diffParts
+     * @param DateInterval          $step
      *
      * @return bool
      */
     private function fallbackIncrementalIterationLogic(
-        DateTime $baseDate,
-        DateTime $valueDate,
+        DateTimeInterface $baseDate,
+        DateTimeInterface $valueDate,
         array $intervalParts,
         array $diffParts,
         DateInterval $step
