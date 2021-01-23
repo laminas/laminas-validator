@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.3.2@57b53ff26237074fdf5cbcb034f7da5172be4524">
+<files psalm-version="4.4.1@9fd7a7d885b3a216cff8dec9d8c21a132f275224">
   <file src="bin/update_hostname_validator.php">
     <MissingClosureParamType occurrences="2">
       <code>$domain</code>
@@ -682,38 +682,12 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Date.php">
-    <DocblockTypeContradiction occurrences="3">
-      <code>$param instanceof DateTime || $param instanceof DateTimeImmutable</code>
-      <code>$param instanceof DateTime || $param instanceof DateTimeImmutable</code>
-      <code>$param instanceof DateTimeImmutable</code>
-    </DocblockTypeContradiction>
-    <InvalidReturnStatement occurrences="1">
-      <code>$param</code>
-    </InvalidReturnStatement>
-    <InvalidScalarArgument occurrences="1">
-      <code>$value</code>
-    </InvalidScalarArgument>
     <MixedAssignment occurrences="1">
       <code>$temp['format']</code>
     </MixedAssignment>
-    <MixedInferredReturnType occurrences="1">
-      <code>bool|DateTime</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$this-&gt;{$convertMethod}($param, $addErrors)</code>
-    </MixedReturnStatement>
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$value</code>
     </MoreSpecificImplementedParamType>
-    <PossiblyInvalidArgument occurrences="1">
-      <code>$value</code>
-    </PossiblyInvalidArgument>
-    <PossiblyInvalidMethodCall occurrences="1">
-      <code>format</code>
-    </PossiblyInvalidMethodCall>
-    <PossiblyNullArgument occurrences="1">
-      <code>$this-&gt;getFormat()</code>
-    </PossiblyNullArgument>
     <PossiblyUndefinedVariable occurrences="1">
       <code>$temp</code>
     </PossiblyUndefinedVariable>
@@ -722,36 +696,10 @@
     <ArgumentTypeCoercion occurrences="1">
       <code>$intervalParts</code>
     </ArgumentTypeCoercion>
-    <DocblockTypeContradiction occurrences="2">
-      <code>$options instanceof Traversable</code>
-      <code>is_array($options)</code>
-    </DocblockTypeContradiction>
-    <InvalidArrayOffset occurrences="1">
-      <code>$partCounts['0']</code>
-    </InvalidArrayOffset>
-    <InvalidOperand occurrences="10">
-      <code>$days</code>
-      <code>$diffParts['hours']</code>
-      <code>$diffParts['hours']</code>
-      <code>$diffParts['hours']</code>
-      <code>$diffParts['minutes']</code>
-      <code>$diffParts['minutes']</code>
-      <code>$diffParts['months']</code>
-      <code>$diffParts['seconds']</code>
-      <code>$diffParts['years']</code>
-      <code>$diffParts['years']</code>
-    </InvalidOperand>
-    <InvalidScalarArgument occurrences="6">
-      <code>$diffParts</code>
-      <code>$intervalParts</code>
+    <InvalidScalarArgument occurrences="2">
       <code>$matches[1]</code>
       <code>$matches[2]</code>
-      <code>$minSteps</code>
-      <code>1</code>
     </InvalidScalarArgument>
-    <MixedArgument occurrences="1">
-      <code>$options</code>
-    </MixedArgument>
     <MixedAssignment occurrences="4">
       <code>$temp['baseValue']</code>
       <code>$temp['format']</code>
@@ -761,30 +709,6 @@
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$value</code>
     </MoreSpecificImplementedParamType>
-    <PossiblyInvalidArgument occurrences="4">
-      <code>$baseDate</code>
-      <code>$this-&gt;baseValue</code>
-      <code>$value</code>
-      <code>$valueDate</code>
-    </PossiblyInvalidArgument>
-    <PossiblyInvalidMethodCall occurrences="5">
-      <code>format</code>
-      <code>format</code>
-      <code>format</code>
-      <code>format</code>
-      <code>format</code>
-    </PossiblyInvalidMethodCall>
-    <PossiblyNullOperand occurrences="6">
-      <code>$stepValue</code>
-      <code>$stepValue</code>
-      <code>$stepValue</code>
-      <code>$stepValue</code>
-      <code>$stepValue</code>
-      <code>$stepValue</code>
-    </PossiblyNullOperand>
-    <PossiblyUndefinedVariable occurrences="1">
-      <code>$temp</code>
-    </PossiblyUndefinedVariable>
     <PropertyNotSetInConstructor occurrences="2">
       <code>$step</code>
       <code>$timezone</code>
@@ -2125,9 +2049,6 @@
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$value</code>
     </MoreSpecificImplementedParamType>
-    <TypeDoesNotContainType occurrences="1">
-      <code>is_string($value)</code>
-    </TypeDoesNotContainType>
   </file>
   <file src="src/Sitemap/Lastmod.php">
     <DocblockTypeContradiction occurrences="1">
@@ -2638,49 +2559,14 @@
     </MixedOperand>
     <TooManyArguments occurrences="1"/>
   </file>
-  <file src="test/DateStepTest.php">
-    <InvalidArgument occurrences="1">
-      <code>$baseValue</code>
-    </InvalidArgument>
-    <MissingParamType occurrences="6">
-      <code>$baseValue</code>
-      <code>$dateToValidate</code>
-      <code>$format</code>
-      <code>$interval</code>
-      <code>$isValid</code>
-      <code>$value</code>
-    </MissingParamType>
-    <MixedArgument occurrences="3">
-      <code>$dateToValidate</code>
-      <code>$interval</code>
-      <code>$value</code>
-    </MixedArgument>
-  </file>
   <file src="test/DateTest.php">
-    <InvalidArgument occurrences="1">
-      <code>new DateTimeImmutable()</code>
-    </InvalidArgument>
     <InvalidScalarArgument occurrences="1">
       <code>1</code>
     </InvalidScalarArgument>
-    <LessSpecificReturnStatement occurrences="1"/>
-    <MissingParamType occurrences="3">
-      <code>$format</code>
-      <code>$input</code>
-      <code>$result</code>
-    </MissingParamType>
-    <MixedArgument occurrences="4">
-      <code>$format</code>
-      <code>$input</code>
-      <code>$input</code>
+    <MixedArgument occurrences="1">
       <code>$validator-&gt;getOption('messageVariables')</code>
     </MixedArgument>
-    <MoreSpecificReturnType occurrences="1"/>
-    <NullArgument occurrences="1">
-      <code>null</code>
-    </NullArgument>
-    <PossiblyNullArgument occurrences="2">
-      <code>$format</code>
+    <PossiblyNullArgument occurrences="1">
       <code>var_export(date_get_last_errors(), 1)</code>
     </PossiblyNullArgument>
   </file>

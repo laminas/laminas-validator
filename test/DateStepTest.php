@@ -15,6 +15,7 @@ use DateTimeZone;
 use Laminas\Validator;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
+use function date;
 
 /**
  * @group      Laminas_Validator
@@ -22,7 +23,7 @@ use ReflectionMethod;
 class DateStepTest extends TestCase
 {
     /**
-     * @psalm-return array<array-key, array{
+     * @psalm-return array<array{
      *     0: string,
      *     1: string,
      *     2: string,
@@ -30,7 +31,7 @@ class DateStepTest extends TestCase
      *     4: bool
      * }>
      */
-    public function stepTestsDataProvider(): array
+    public function stepTestsDataProvider() : array
     {
         $data = [
             //    interval format            baseValue               value                  isValid
@@ -98,9 +99,20 @@ class DateStepTest extends TestCase
 
     /**
      * @dataProvider stepTestsDataProvider
+     *
+     * @param string $interval
+     * @param string $format
+     * @param string $baseValue
+     * @param string $value
+     * @param bool $isValid
      */
-    public function testDateStepValidation($interval, $format, $baseValue, $value, $isValid): void
-    {
+    public function testDateStepValidation(
+        string $interval,
+        string $format,
+        string $baseValue,
+        string $value,
+        bool $isValid
+    ) : void {
         $validator = new Validator\DateStep([
             'format'    => $format,
             'baseValue' => $baseValue,
@@ -140,20 +152,20 @@ class DateStepTest extends TestCase
         $this->assertTrue($validator->isValid(new DateTimeImmutable('1970-01-03T00:00:02Z')));
     }
 
-    public function testGetMessagesReturnsDefaultValue(): void
+    public function testGetMessagesReturnsDefaultValue() : void
     {
         $validator = new Validator\DateStep();
         $this->assertEquals([], $validator->getMessages());
     }
 
-    public function testEqualsMessageTemplates(): void
+    public function testEqualsMessageTemplates() : void
     {
         $validator  = new Validator\DateStep([]);
         $this->assertObjectHasAttribute('messageTemplates', $validator);
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
-    public function testStepError(): void
+    public function testStepError() : void
     {
         $validator = new Validator\DateStep([
             'format'       => 'Y-m-d',
@@ -165,9 +177,9 @@ class DateStepTest extends TestCase
     }
 
     /**
-     * @psalm-return array<array-key, array{0: string}>
+     * @psalm-return array<array{0: string}>
      */
-    public function moscowWinterTimeDataProvider(): array
+    public function moscowWinterTimeDataProvider() : array
     {
         // dates before during and after Moscow's wintertime
         return [
@@ -181,9 +193,9 @@ class DateStepTest extends TestCase
     /**
      * @dataProvider moscowWinterTimeDataProvider
      *
-     * @return void
+     * @param string $dateToValidate
      */
-    public function testMoscowWinterTime($dateToValidate): void
+    public function testMoscowWinterTime(string $dateToValidate) : void
     {
         $validator = new Validator\DateStep([
             'format' => 'd-m-Y',
@@ -195,7 +207,7 @@ class DateStepTest extends TestCase
         $this->assertTrue($validator->isValid($dateToValidate));
     }
 
-    public function testCanSetBaseValue(): void
+    public function testCanSetBaseValue() : void
     {
         $validator = new Validator\DateStep();
 
@@ -207,7 +219,7 @@ class DateStepTest extends TestCase
         $this->assertSame($newBaseValue, $retrievedBaseValue);
     }
 
-    public function testCanRetrieveTimezone(): void
+    public function testCanRetrieveTimezone() : void
     {
         $validator = new Validator\DateStep();
 
@@ -219,7 +231,7 @@ class DateStepTest extends TestCase
         $this->assertSame($newTimezone, $retrievedTimezone);
     }
 
-    public function testCanProvideOptionsToConstructorAsDiscreteArguments(): void
+    public function testCanProvideOptionsToConstructorAsDiscreteArguments() : void
     {
         $baseValue = '2012-01-23';
         $step      = new DateInterval('P1D');
@@ -239,7 +251,7 @@ class DateStepTest extends TestCase
         $this->assertSame($timezone, $retrievedTimezone);
     }
 
-    public function testConvertStringDoesNotRaiseErrorOnInvalidValue(): void
+    public function testConvertStringDoesNotRaiseErrorOnInvalidValue() : void
     {
         $validator = new Validator\DateStep([
             'format'    => 'Y-m-d',
