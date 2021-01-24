@@ -366,13 +366,13 @@ class DateStep extends Date
         $dateModificationOperation           = $isIncrementalStepping ? 'add' : 'sub';
 
         for ($offsetIterations = 0; $offsetIterations < $requiredIterations; $offsetIterations += 1) {
-            $baseDate->{$dateModificationOperation}($minimumInterval);
+            $baseDate = $baseDate->{$dateModificationOperation}($minimumInterval);
         }
 
         while (($isIncrementalStepping && $baseDate < $valueDate)
             || (! $isIncrementalStepping && $baseDate > $valueDate)
         ) {
-            $baseDate->{$dateModificationOperation}($step);
+            $baseDate = $baseDate->{$dateModificationOperation}($step);
 
             if ($baseDate == $valueDate) {
                 return true;

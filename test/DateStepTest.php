@@ -110,26 +110,34 @@ class DateStepTest extends TestCase
         $this->assertEquals($isValid, $validator->isValid($value));
     }
 
+    /**
+     * The exact base and test value matter here.
+     * By having a different date and a step of seconds the fallbackIncrementalIterationLogic will run.
+     */
     public function testWithDateTimeType() : void
     {
         $validator = new Validator\DateStep([
             'format'    => DateTime::ISO8601,
             'baseValue' => new DateTime('1970-01-01T00:00:00Z'),
-            'step'      => new DateInterval('PT1S'),
+            'step'      => new DateInterval('PT2S'),
         ]);
 
-        $this->assertTrue($validator->isValid(new DateTime('1970-01-01T00:00:02Z')));
+        $this->assertTrue($validator->isValid(new DateTime('1970-01-03T00:00:02Z')));
     }
 
+    /**
+     * The exact base and test value matter here.
+     * By having a different date and a step of seconds the fallbackIncrementalIterationLogic will run.
+     */
     public function testWithDateTimeImmutableType() : void
     {
         $validator = new Validator\DateStep([
             'format'    => DateTime::ISO8601,
             'baseValue' => new DateTimeImmutable('1970-01-01T00:00:00Z'),
-            'step'      => new DateInterval('PT1S'),
+            'step'      => new DateInterval('PT2S'),
         ]);
 
-        $this->assertTrue($validator->isValid(new DateTimeImmutable('1970-01-01T00:00:02Z')));
+        $this->assertTrue($validator->isValid(new DateTimeImmutable('1970-01-03T00:00:02Z')));
     }
 
     public function testGetMessagesReturnsDefaultValue(): void
