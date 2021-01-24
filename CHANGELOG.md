@@ -2,27 +2,24 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 2.14.3 - TBD
+## 2.14.3 - 2021-01-24
 
-### Added
 
-- Nothing.
+-----
 
-### Changed
+### Release Notes for [2.14.3](https://github.com/laminas/laminas-validator/milestone/10)
 
-- Nothing.
+2.14.x bugfix release (patch)
 
-### Deprecated
+### 2.14.3
 
-- Nothing.
+- Total issues resolved: **0**
+- Total pull requests resolved: **1**
+- Total contributors: **1**
 
-### Removed
+#### Bug
 
-- Nothing.
-
-### Fixed
-
-- Nothing.
+ - [89: Fix Type Error when validating a `DateTimeImmutable` instance to the `DateStep` validator](https://github.com/laminas/laminas-validator/pull/89) thanks to @netiul
 
 ## 2.14.2 - 2021-01-22
 
