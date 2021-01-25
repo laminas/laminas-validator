@@ -696,10 +696,6 @@
     <ArgumentTypeCoercion occurrences="1">
       <code>$intervalParts</code>
     </ArgumentTypeCoercion>
-    <InvalidScalarArgument occurrences="2">
-      <code>$matches[1]</code>
-      <code>$matches[2]</code>
-    </InvalidScalarArgument>
     <MixedAssignment occurrences="4">
       <code>$temp['baseValue']</code>
       <code>$temp['format']</code>
@@ -2560,15 +2556,9 @@
     <TooManyArguments occurrences="1"/>
   </file>
   <file src="test/DateTest.php">
-    <InvalidScalarArgument occurrences="1">
-      <code>1</code>
-    </InvalidScalarArgument>
     <MixedArgument occurrences="1">
       <code>$validator-&gt;getOption('messageVariables')</code>
     </MixedArgument>
-    <PossiblyNullArgument occurrences="1">
-      <code>var_export(date_get_last_errors(), 1)</code>
-    </PossiblyNullArgument>
   </file>
   <file src="test/Db/AbstractDbTest.php">
     <MissingPropertyType occurrences="1">

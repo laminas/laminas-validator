@@ -6,6 +6,8 @@
  * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use DateInterval;
@@ -15,6 +17,7 @@ use DateTimeInterface;
 use DateTimeZone;
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
+
 use function array_combine;
 use function array_count_values;
 use function array_shift;
@@ -26,7 +29,6 @@ use function func_get_args;
 use function in_array;
 use function is_array;
 use function max;
-use function method_exists;
 use function min;
 use function pow;
 use function preg_match;
@@ -35,12 +37,20 @@ use function strpos;
 
 class DateStep extends Date
 {
-    const NOT_STEP       = 'dateStepNotStep';
-
-    const FORMAT_DEFAULT = DateTime::ISO8601;
+    /**
+     * Validity constants
+     */
+    public const NOT_STEP       = 'dateStepNotStep';
 
     /**
-     * @var array
+     * Default format constant
+     */
+    public const FORMAT_DEFAULT = DateTime::ISO8601;
+
+    /**
+     * Validation failure message template definitions
+     *
+     * @var string[]
      */
     protected $messageTemplates = [
         self::INVALID      => 'Invalid type given. String, integer, array or DateTime expected',
@@ -111,7 +121,7 @@ class DateStep extends Date
     /**
      * Sets the base value from which the step should be computed
      *
-     * @param  string|int|DateTimeInterface $baseValue
+     * @param string|int|DateTimeInterface $baseValue
      * @return $this
      */
     public function setBaseValue($baseValue)
@@ -133,7 +143,6 @@ class DateStep extends Date
     /**
      * Sets the step date interval
      *
-     * @param  DateInterval $step
      * @return $this
      */
     public function setStep(DateInterval $step)
@@ -165,7 +174,6 @@ class DateStep extends Date
     /**
      * Sets the timezone option
      *
-     * @param  DateTimeZone $timezone
      * @return $this
      */
     public function setTimezone(DateTimeZone $timezone)
@@ -190,7 +198,7 @@ class DateStep extends Date
             && preg_match('/^([0-9]{4})\-W([0-9]{2})/', $value, $matches)
         ) {
             $date = new DateTime();
-            $date->setISODate($matches[1], $matches[2]);
+            $date->setISODate((int) $matches[1], (int) $matches[2]);
         } else {
             $date = DateTime::createFromFormat($this->format, $value, new DateTimeZone('UTC'));
         }
@@ -214,7 +222,6 @@ class DateStep extends Date
      * @param string|int|DateTimeInterface $value
      * @return bool
      * @throws Exception\InvalidArgumentException
-     * @throws \Exception
      */
     public function isValid($value)
     {
@@ -232,7 +239,7 @@ class DateStep extends Date
         $step = $this->getStep();
 
         // Same date?
-        if ($valueDate === $baseDate) {
+        if ($valueDate == $baseDate) {
             return true;
         }
 
@@ -370,13 +377,9 @@ class DateStep extends Date
      * iterations by starting at the lower bound of steps needed to reach
      * the target
      *
-     * @param DateTimeInterface $baseDate
-     * @param DateTimeInterface $valueDate
      * @param int[] $intervalParts
      * @param int[] $diffParts
-     * @param DateInterval $step
      *
-     * @return bool
      * @throws Exception\InvalidArgumentException
      */
     private function fallbackIncrementalIterationLogic(
@@ -385,7 +388,7 @@ class DateStep extends Date
         array $intervalParts,
         array $diffParts,
         DateInterval $step
-    ) : bool {
+    ): bool {
         list($minSteps, $requiredIterations) = $this->computeMinStepAndRequiredIterations($intervalParts, $diffParts);
         $minimumInterval                     = $this->computeMinimumInterval($intervalParts, $minSteps);
         $isIncrementalStepping               = $baseDate < $valueDate;
@@ -428,11 +431,9 @@ class DateStep extends Date
      * Computes minimum interval to use for iterations while checking steps
      *
      * @param int[] $intervalParts
-     * @param int|float   $minSteps
-     *
-     * @return DateInterval
+     * @param int|float $minSteps
      */
-    private function computeMinimumInterval(array $intervalParts, $minSteps) : DateInterval
+    private function computeMinimumInterval(array $intervalParts, $minSteps): DateInterval
     {
         return new DateInterval(sprintf(
             'P%dY%dM%dDT%dH%dM%dS',
@@ -491,10 +492,8 @@ class DateStep extends Date
      * Converts a given `$intervalParts` array into seconds
      *
      * @param int[] $intervalParts
-     *
-     * @return int
      */
-    private function computeIntervalMaxSeconds(array $intervalParts) : int
+    private function computeIntervalMaxSeconds(array $intervalParts): int
     {
         return ($intervalParts['years'] * 60 * 60 * 24 * 366)
             + ($intervalParts['months'] * 60 * 60 * 24 * 31)
@@ -509,10 +508,8 @@ class DateStep extends Date
      * Converts a given `$diffParts` array into seconds
      *
      * @param int[] $diffParts
-     *
-     * @return int
      */
-    private function computeDiffMinSeconds(array $diffParts) : int
+    private function computeDiffMinSeconds(array $diffParts): int
     {
         return ($diffParts['years'] * 60 * 60 * 24 * 365)
             + ($diffParts['months'] * 60 * 60 * 24 * 28)

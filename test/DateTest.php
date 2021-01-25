@@ -6,6 +6,8 @@
  * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
+declare(strict_types=1);
+
 namespace LaminasTest\Validator;
 
 use DateTime;
@@ -14,33 +16,34 @@ use Laminas\Validator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
+use function array_keys;
+use function date_get_last_errors;
+use function var_export;
+
 /**
  * @group      Laminas_Validator
  */
 class DateTest extends TestCase
 {
-    /**
-     * @var Validator\Date
-     */
+    /** @var Validator\Date */
     protected $validator;
 
     /**
      * Creates a new Laminas\Validator\Date object for each test method
-     *
-     * @return void
      */
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->validator = new Validator\Date();
     }
 
-    public function testSetFormatIgnoresNull() : void
+    public function testSetFormatIgnoresNull(): void
     {
         $this->validator->setFormat(null);
         $this->assertEquals(Validator\Date::FORMAT_DEFAULT, $this->validator->getFormat());
     }
 
     /**
+     * @return array[]
      * @psalm-return array<array{
      *     0: string|numeric|DateTime|object|array,
      *     1: null|string,
@@ -109,11 +112,8 @@ class DateTest extends TestCase
      * @dataProvider datesDataProvider
      *
      * @param string|numeric|DateTime|object|array $input
-     * @param string|null $format
-     * @param bool $result
-     * @param bool $resultStrict
      */
-    public function testBasic($input, ?string $format, bool $result, bool $resultStrict) : void
+    public function testBasic($input, ?string $format, bool $result, bool $resultStrict): void
     {
         $this->validator->setFormat($format);
         /** @psalm-suppress ArgumentTypeCoercion */
@@ -124,11 +124,8 @@ class DateTest extends TestCase
      * @dataProvider datesDataProvider
      *
      * @param string|numeric|DateTime|object|array $input
-     * @param string|null $format
-     * @param bool $result
-     * @param bool $resultStrict
      */
-    public function testBasicStrictMode($input, ?string $format, bool $result, bool $resultStrict) : void
+    public function testBasicStrictMode($input, ?string $format, bool $result, bool $resultStrict): void
     {
         $this->validator->setStrict(true);
         $this->validator->setFormat($format);
@@ -136,7 +133,7 @@ class DateTest extends TestCase
         $this->assertSame($resultStrict, $this->validator->isValid($input));
     }
 
-    public function testDateTimeImmutable() : void
+    public function testDateTimeImmutable(): void
     {
         $this->assertTrue($this->validator->isValid(new DateTimeImmutable()));
     }
@@ -144,7 +141,7 @@ class DateTest extends TestCase
     /**
      * Ensures that getMessages() returns expected default value
      */
-    public function testGetMessages() : void
+    public function testGetMessages(): void
     {
         $this->assertEquals([], $this->validator->getMessages());
     }
@@ -152,13 +149,13 @@ class DateTest extends TestCase
     /**
      * Ensures that the validator can handle different manual dateformats
      *
-     * @group  Laminas-2003
+     * @group Laminas-2003
      */
-    public function testUseManualFormat() : void
+    public function testUseManualFormat(): void
     {
         $this->assertTrue(
             $this->validator->setFormat('d.m.Y')->isValid('10.01.2008'),
-            var_export(date_get_last_errors(), 1)
+            var_export(date_get_last_errors(), true)
         );
         $this->assertEquals('d.m.Y', $this->validator->getFormat());
 
@@ -166,27 +163,25 @@ class DateTest extends TestCase
         $this->assertFalse($this->validator->setFormat('d/m/Y')->isValid('2008/10/22'));
         $this->assertTrue($this->validator->setFormat('d/m/Y')->isValid('22/10/08'));
         $this->assertFalse($this->validator->setFormat('d/m/Y')->isValid('22/10'));
-        // Omitting the following assertion, as it varies from 5.3.3 to 5.3.11,
-        // and there is no indication in the PHP changelog as to when or why it
-        // may have changed. Leaving for posterity, to indicate original expectation.
-        // $this->assertFalse($this->validator->setFormat('s')->isValid(0));
+        $this->assertTrue($this->validator->setFormat('s')->isValid('00'));
+        $this->assertFalse($this->validator->setFormat('s')->isValid('0'));
     }
 
-    public function testEqualsMessageTemplates() : void
+    public function testEqualsMessageTemplates(): void
     {
         $validator = $this->validator;
         $this->assertObjectHasAttribute('messageTemplates', $validator);
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
-    public function testEqualsMessageVariables() : void
+    public function testEqualsMessageVariables(): void
     {
         $validator = $this->validator;
         $this->assertObjectHasAttribute('messageVariables', $validator);
         $this->assertEquals(array_keys($validator->getOption('messageVariables')), $validator->getMessageVariables());
     }
 
-    public function testConstructorWithFormatParameter() : void
+    public function testConstructorWithFormatParameter(): void
     {
         $format = 'd/m/Y';
         $validator = new Validator\Date($format);

@@ -6,12 +6,15 @@
  * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Traversable;
+
 use function array_shift;
 use function func_get_args;
 use function gettype;
@@ -26,23 +29,21 @@ class Date extends AbstractValidator
 {
     /**#@+
      * Validity constants
-     * @var string
      */
-    const INVALID        = 'dateInvalid';
-    const INVALID_DATE   = 'dateInvalidDate';
-    const FALSEFORMAT    = 'dateFalseFormat';
+    public const INVALID        = 'dateInvalid';
+    public const INVALID_DATE   = 'dateInvalidDate';
+    public const FALSEFORMAT    = 'dateFalseFormat';
     /**#@-*/
 
     /**
      * Default format constant
-     * @var string
      */
     const FORMAT_DEFAULT = 'Y-m-d';
 
     /**
      * Validation failure message template definitions
      *
-     * @var array
+     * @var string[]
      */
     protected $messageTemplates = [
         self::INVALID      => 'Invalid type given. String, integer, array or DateTime expected',
@@ -50,27 +51,21 @@ class Date extends AbstractValidator
         self::FALSEFORMAT  => "The input does not fit the date format '%format%'",
     ];
 
-    /**
-     * @var array
-     */
+    /** @var string[] */
     protected $messageVariables = [
         'format' => 'format',
     ];
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $format = self::FORMAT_DEFAULT;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $strict = false;
 
     /**
      * Sets validator options
      *
-     * @param  string|array|Traversable $options OPTIONAL
+     * @param string|array|Traversable $options OPTIONAL
      */
     public function __construct($options = [])
     {
@@ -111,20 +106,13 @@ class Date extends AbstractValidator
         return $this;
     }
 
-    /**
-     * @param bool $strict
-     * @return $this
-     */
-    public function setStrict(bool $strict) : self
+    public function setStrict(bool $strict): self
     {
         $this->strict = $strict;
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function isStrict() : bool
+    public function isStrict(): bool
     {
         return $this->strict;
     }
@@ -156,8 +144,8 @@ class Date extends AbstractValidator
     /**
      * Attempts to convert an int, string, or array to a DateTime object
      *
-     * @param  string|numeric|array|DateTimeInterface   $param
-     * @param  bool                                     $addErrors
+     * @param string|numeric|array|DateTimeInterface $param
+     * @param bool $addErrors
      * @return false|DateTime
      */
     protected function convertToDateTime($param, $addErrors = true)
@@ -192,7 +180,7 @@ class Date extends AbstractValidator
     /**
      * Attempts to convert an integer into a DateTime object
      *
-     * @param  integer $value
+     * @param integer $value
      * @return false|DateTime
      */
     protected function convertInteger($value)
@@ -203,7 +191,7 @@ class Date extends AbstractValidator
     /**
      * Attempts to convert an double into a DateTime object
      *
-     * @param  double $value
+     * @param double $value
      * @return false|DateTime
      */
     protected function convertDouble($value)
@@ -214,8 +202,8 @@ class Date extends AbstractValidator
     /**
      * Attempts to convert a string into a DateTime object
      *
-     * @param  string $value
-     * @param  bool   $addErrors
+     * @param string $value
+     * @param bool $addErrors
      * @return false|DateTime
      */
     protected function convertString($value, $addErrors = true)
@@ -238,8 +226,8 @@ class Date extends AbstractValidator
     /**
      * Implodes the array into a string and proxies to {@link convertString()}.
      *
-     * @param  array $value
-     * @param  bool  $addErrors
+     * @param array $value
+     * @param bool $addErrors
      * @return false|DateTime
      * @todo   enhance the implosion
      */
