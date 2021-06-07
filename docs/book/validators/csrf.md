@@ -32,15 +32,11 @@ Before you can use this validator, you have to install the following, additional
 Here is a basic, working, example.
 
 ```php
-<?php
-
-use Laminas\Session\Container;
-
-require_once('vendor/autoload.php');
-
 // Initialise a new session container
 // or use the existing one in your application
-$session = new Container();
+$session = new Laminas\Session\Container();
+
+// Create the validator
 $validator = new Laminas\Validator\Csrf([
     'session' => $session,
 ]);
@@ -53,4 +49,3 @@ echo ($validator->isValid($hash))
     ? "Token is valid"
     : "Token is NOT valid";
 ```
-
