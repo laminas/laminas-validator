@@ -9,7 +9,7 @@ The typical mitigation is to create a one-time token that is transmitted as part
 This token expires after first submission or after a short amount of time, preventing replays or further submissions.
 If the token provided does not match what was originally sent, an error should be returned.
 
-## Supported options
+## Supported Options
 
 The following options are supported for `Laminas\Validator\Csrf`.
 
@@ -53,4 +53,3 @@ echo ($validator->isValid($hash))
     ? "Token is valid"
     : "Token is NOT valid";
 ```
-
