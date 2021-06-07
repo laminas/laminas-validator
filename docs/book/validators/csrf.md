@@ -27,7 +27,7 @@ Before you can use this validator, you have to install the following, additional
 - [laminas-math](https://docs.laminas.dev/laminas-math/)
 - [laminas-session](https://docs.laminas.dev/laminas-session/)
 
-## Basic usages
+## Basic Usage
 
 Here is a basic, working, example.
 
