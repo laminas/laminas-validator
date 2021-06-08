@@ -9,15 +9,15 @@ The typical mitigation is to create a one-time token that is transmitted as part
 This token expires after first submission or after a short amount of time, preventing replays or further submissions.
 If the token provided does not match what was originally sent, an error should be returned.
 
-## Installation Requirements
-
-The CSRF validator depends on [laminas-math](https://docs.laminas.dev/laminas-math/) to generate the hash and on [laminas-session](https://docs.laminas.dev/laminas-session/) to persist the generated token between requests.
-Consequently, both components must be installed before the validator can be used.
-To install both components, run the following command.
-
-```bash
-composer require laminas/laminas-math laminas/laminas-session
-```
+> ### Installation Requirements
+>
+> The CSRF validator depends on [laminas-math](https://docs.laminas.dev/laminas-math/) to generate the hash and on [laminas-session](https://docs.laminas.dev/laminas-session/) to persist the generated token between requests.
+> Consequently, both components must be installed before the validator can be used.
+> To install both components, run the following command.
+>
+> ```bash
+> composer require laminas/laminas-math laminas/laminas-session
+> ```
 
 ## Supported Options
 
