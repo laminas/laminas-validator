@@ -17,6 +17,7 @@ class Bitwise extends AbstractValidator
     public const NOT_AND        = 'notAnd';
     public const NOT_AND_STRICT = 'notAndStrict';
     public const NOT_XOR        = 'notXor';
+    public const NO_OP          = 'noOp';
 
     /** @var int */
     protected $control;
@@ -30,6 +31,7 @@ class Bitwise extends AbstractValidator
         self::NOT_AND        => "The input has no common bit set with '%control%'",
         self::NOT_AND_STRICT => "The input doesn't have the same bits set as '%control%'",
         self::NOT_XOR        => "The input has common bit set with '%control%'",
+        self::NO_OP          => "No operator was present to compare '%control%' against",
     ];
 
     /**
@@ -125,23 +127,36 @@ class Bitwise extends AbstractValidator
         if (self::OP_AND === $this->operator) {
             if ($this->strict) {
                 // All the bits set in value must be set in control
-                $this->error(self::NOT_AND_STRICT);
+                $result = ($this->control & $value) === $value;
 
-                return ($this->control & $value) === $value;
+                if (! $result) {
+                    $this->error(self::NOT_AND_STRICT);
+                }
+
+                return $result;
             }
 
             // At least one of the bits must be common between value and control
-            $this->error(self::NOT_AND);
+            $result = (bool) ($this->control & $value);
 
-            return (bool) ($this->control & $value);
+            if (! $result) {
+                $this->error(self::NOT_AND);
+            }
+
+            return $result;
         }
 
         if (self::OP_XOR === $this->operator) {
-            $this->error(self::NOT_XOR);
+            $result = ($this->control ^ $value) === ($this->control | $value);
 
-            return ($this->control ^ $value) === $this->control | $value;
+            if (! $result) {
+                $this->error(self::NOT_XOR);
+            }
+
+            return $result;
         }
 
+        $this->error(self::NO_OP);
         return false;
     }
 

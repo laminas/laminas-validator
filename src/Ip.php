@@ -188,6 +188,6 @@ class Ip extends AbstractValidator
          * "As such, implementations must not provide the version flag for the
          *  existing IPv4 and IPv6 literal address forms described below."
          */
-        return $result && $matches[1] !== 4 && $matches[1] !== 6;
+        return $result && $matches[1] !== '4' && $matches[1] !== '6';
     }
 }

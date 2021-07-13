@@ -406,7 +406,7 @@ class Code128 extends AbstractAdapter
         }
 
         // process barcode
-        while ($value !== '') {
+        while ($value !== '' && $value !== false) {
             $char = $strWrapper->substr($value, 0, 1);
 
             switch ($char) {
@@ -471,7 +471,7 @@ class Code128 extends AbstractAdapter
             $read  = $set;
         }
 
-        if (($value !== '') && ($strWrapper->strlen($value) !== 1)) {
+        if ($value !== '' && is_string($value) && $strWrapper->strlen($value) !== 1) {
             return false;
         }
 

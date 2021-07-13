@@ -122,7 +122,7 @@ class Isbn extends AbstractValidator
         $checksum = $isbn->getChecksum($value);
 
         // validate
-        if (substr($this->getValue(), -1) !== $checksum) {
+        if (substr($this->getValue(), -1) !== (string) $checksum) {
             $this->error(self::NO_ISBN);
             return false;
         }

@@ -24,8 +24,7 @@ class Barcode extends AbstractValidator
     public const INVALID_CHARS  = 'barcodeInvalidChars';
     public const INVALID_LENGTH = 'barcodeInvalidLength';
 
-    /**
-     * @var array<string, string>
+    /** @var array<string, string> */
     protected $messageTemplates = [
         self::FAILED         => 'The input failed checksum validation',
         self::INVALID_CHARS  => 'The input contains invalid characters',
@@ -127,7 +126,7 @@ class Barcode extends AbstractValidator
     /**
      * Returns the checksum option
      *
-     * @return bool
+     * @return string
      */
     public function getChecksum()
     {

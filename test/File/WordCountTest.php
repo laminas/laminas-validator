@@ -95,7 +95,7 @@ class WordCountTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        $validator = new File\WordCount(['min' => 5, 'max' => 1]);
+        new File\WordCount(['min' => 5, 'max' => 1]);
     }
 
     /**
@@ -126,7 +126,7 @@ class WordCountTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        $validator = new File\WordCount(['min' => 5, 'max' => 1]);
+        new File\WordCount(['min' => 5, 'max' => 1]);
     }
 
     /**

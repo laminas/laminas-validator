@@ -126,7 +126,7 @@ class IbanTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('ISO 3166-1');
-        $validator = new IbanValidator(['country_code' => 'BAR']);
+        new IbanValidator(['country_code' => 'BAR']);
     }
 
     public function testSepaNotSupportedCountryCode(): void

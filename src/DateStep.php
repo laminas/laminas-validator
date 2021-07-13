@@ -237,7 +237,8 @@ class DateStep extends Date
         $step = $this->getStep();
 
         // Same date?
-        if ($valueDate === $baseDate) {
+        // phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedEqualOperator
+        if ($valueDate == $baseDate) {
             return true;
         }
 
@@ -420,7 +421,8 @@ class DateStep extends Date
                 $baseDate = $baseDate->sub($step);
             }
 
-            if ($baseDate === $valueDate) {
+            // phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedEqualOperator
+            if ($baseDate == $valueDate) {
                 return true;
             }
         }

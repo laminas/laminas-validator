@@ -627,10 +627,8 @@ class ValidatorPluginManager extends AbstractPluginManager
     public function injectValidatorPluginManager($first, $second)
     {
         if ($first instanceof ContainerInterface) {
-            $container = $first;
             $validator = $second;
         } else {
-            $container = $second;
             $validator = $first;
         }
         if ($validator instanceof ValidatorPluginManagerAwareInterface) {

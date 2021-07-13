@@ -40,6 +40,7 @@ class GPSPointTest extends TestCase
 
     /**
      * @covers \Laminas\Validator\GPSPoint::isValid
+     * @dataProvider boundariesProvider
      */
     public function testBoundariesAreRespected(string $value, bool $expected): void
     {

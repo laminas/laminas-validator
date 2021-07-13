@@ -421,6 +421,7 @@ class HostnameTest extends TestCase
 
     /**
      * @Laminas-7323
+     * @dataProvider invalidLatinSpecialCharsProvider
      */
     public function testLatinSpecialChars(string $input): void
     {
@@ -561,6 +562,7 @@ class HostnameTest extends TestCase
 
     /**
      * @group Laminas-11796
+     * @dataProvider idnsiProvider
      */
     public function testIDNSI(string $value, bool $expected): void
     {

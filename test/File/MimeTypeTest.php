@@ -181,7 +181,7 @@ class MimeTypeTest extends TestCase
 
         $this->expectException(InvalidMagicMimeFileException::class);
         $this->expectExceptionMessage('could not be used by ext/finfo');
-        $validator = new File\MimeType(['image/gif', 'magicFile' => __FILE__]);
+        new File\MimeType(['image/gif', 'magicFile' => __FILE__]);
     }
 
     public function testOptionsAtConstructor(): void

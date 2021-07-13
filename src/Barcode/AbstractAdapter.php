@@ -38,31 +38,41 @@ abstract class AbstractAdapter implements AdapterInterface
         }
 
         $fixum  = strlen($value);
-        $found  = false;
         $length = $this->getLength();
+
         if (is_array($length)) {
             foreach ($length as $value) {
                 if ($fixum === $value) {
-                    $found = true;
+                    return true;
                 }
 
                 if ($value === -1) {
-                    $found = true;
+                    return true;
                 }
             }
-        } elseif ($fixum === $length) {
-            $found = true;
-        } elseif ($length === -1) {
-            $found = true;
-        } elseif ($length === 'even') {
-            $count = $fixum % 2;
-            $found = 0 === $count;
-        } elseif ($length === 'odd') {
-            $count = $fixum % 2;
-            $found = 1 === $count;
+
+            return false;
         }
 
-        return $found;
+        if ($fixum === $length) {
+            return true;
+        }
+
+        if ($length === -1) {
+            return true;
+        }
+
+        if ($length === 'even') {
+            $count = $fixum % 2;
+            return 0 === $count;
+        }
+
+        if ($length === 'odd') {
+            $count = $fixum % 2;
+            return 1 === $count;
+        }
+
+        return false;
     }
 
     /**
@@ -220,7 +230,7 @@ abstract class AbstractAdapter implements AdapterInterface
         $calc     = $sum % 10;
         $checksum = $calc === 0 ? 0 : 10 - $calc;
 
-        return $value[$length + 1] === $checksum;
+        return $value[$length + 1] === (string) $checksum;
     }
 
     /**
@@ -247,7 +257,7 @@ abstract class AbstractAdapter implements AdapterInterface
         $calc     = $sum % 10;
         $checksum = $calc === 0 ? 0 : 10 - $calc;
 
-        return $value[$length + 1] === $checksum;
+        return $value[$length + 1] === (string) $checksum;
     }
 
     /**
@@ -274,7 +284,7 @@ abstract class AbstractAdapter implements AdapterInterface
         $calc     = $sum % 10;
         $checksum = $calc === 0 ? 0 : 10 - $calc;
 
-        return $value[$length + 1] === $checksum;
+        return $value[$length + 1] === (string) $checksum;
     }
 
     /**
@@ -297,6 +307,6 @@ abstract class AbstractAdapter implements AdapterInterface
         $check %= 10;
         $check  = 10 - $check;
 
-        return $check === $checksum;
+        return (string) $check === $checksum;
     }
 }

@@ -54,12 +54,8 @@ class FilesSizeTest extends TestCase
     }
 
     /**
-     * @psalm-return array<string, array{
-     *     0: int[]|array<string, int|string>,
-     *     1: bool,
-     *     2: bool,
-     *     3: bool
-     * }>
+     * @psalm-return array{'minimum: 0 byte; maximum: 500 bytes; integer': array{0: array{0: 500}, 1: false, 2: false, 3: false}, 'minimum: 0 byte; maximum: 500 bytes; array': array{0: array{0: array{min: 0, max: 500}}, 1: false, 2: false, 3: false}, 'minimum: 0 byte; maximum: 2000 bytes; integer': array{0: array{0: 2000}, 1: true, 2: true, 3: false}, 'minimum: 0 byte; maximum: 2000 bytes; array': array{0: array{0: array{min: 0, max: 2000}}, 1: true, 2: true, 3: false}, 'minimum: 0 byte; maximum: 500 kilobytes': array{0: array{0: array{min: 0, max: 500000}}, 1: true, 2: true, 3: true}, 'minimum: 0 byte; maximum: 2 megabytes; 2 MB': array{0: array{0: array{min: 0, max: '2 MB'}}, 1: true, 2: true, 3: true}, 'minimum: 0 byte; maximum: 2 megabytes; 2MB': array{0: array{0: array{min: 0, max: '2MB'}}, 1: true, 2: true, 3: true}, 'minimum: 0 byte; maximum: 2 megabytes; 2  MB': array{0: array{0: array{min: 0, max: '2  MB'}}, 1: true, 2: true, 3: true}}
+     * @return (((int|string)[]|int)[]|bool)[][]
      */
     public function basicDataProvider(): array
     {
@@ -109,7 +105,7 @@ class FilesSizeTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        $validator = new File\FilesSize(['min' => 100, 'max' => 1]);
+        new File\FilesSize(['min' => 100, 'max' => 1]);
     }
 
     /**
@@ -148,7 +144,7 @@ class FilesSizeTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        $validator = new File\FilesSize(['min' => 100, 'max' => 1]);
+        new File\FilesSize(['min' => 100, 'max' => 1]);
     }
 
     /**
@@ -168,8 +164,8 @@ class FilesSizeTest extends TestCase
 
     public function testConstructorShouldRaiseErrorWhenPassedMultipleOptions(): void
     {
-        $handler   = set_error_handler([$this, 'errorHandler'], E_USER_NOTICE);
-        $validator = new File\FilesSize(1000, 10000);
+        set_error_handler([$this, 'errorHandler'], E_USER_NOTICE);
+        new File\FilesSize(1000, 10000);
         restore_error_handler();
     }
 

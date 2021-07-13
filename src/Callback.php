@@ -3,6 +3,7 @@
 namespace Laminas\Validator;
 
 use Exception;
+use Laminas\Validator\Exception\InvalidArgumentException;
 
 use function array_merge;
 use function call_user_func_array;
@@ -74,7 +75,7 @@ class Callback extends AbstractValidator
     public function setCallback($callback)
     {
         if (! is_callable($callback)) {
-            throw new Exception\InvalidArgumentException('Invalid callback given');
+            throw new InvalidArgumentException('Invalid callback given');
         }
 
         $this->options['callback'] = $callback;
@@ -119,7 +120,7 @@ class Callback extends AbstractValidator
         $options  = $this->getCallbackOptions();
         $callback = $this->getCallback();
         if (empty($callback)) {
-            throw new Exception\InvalidArgumentException('No callback given');
+            throw new InvalidArgumentException('No callback given');
         }
 
         $args = [$value];

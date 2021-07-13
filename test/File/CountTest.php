@@ -77,7 +77,7 @@ class CountTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        $validator = new File\Count(['min' => 5, 'max' => 1]);
+        new File\Count(['min' => 5, 'max' => 1]);
     }
 
     /**
@@ -108,7 +108,7 @@ class CountTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        $validator = new File\Count(['min' => 5, 'max' => 1]);
+        new File\Count(['min' => 5, 'max' => 1]);
     }
 
     /**

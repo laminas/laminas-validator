@@ -80,9 +80,9 @@ class UploadFileTest extends TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider uploadErrorsTestDataProvider
-     * @return void
+     * @param array|UploadedFileInterface $fileInfo
      */
-    public function testBasic(array $fileInfo, string $messageKey)
+    public function testBasic($fileInfo, string $messageKey): void
     {
         $validator = new File\UploadFile();
         $this->assertFalse($validator->isValid($fileInfo));

@@ -33,10 +33,10 @@ class CreditCardTest extends TestCase
      *
      * @dataProvider basicValues
      */
-    public function testBasic(string $input, int $expected): void
+    public function testBasic(string $input, bool $expected): void
     {
         $validator = new CreditCard();
-        $this->assertEquals($expected, $validator->isValid($input));
+        $this->assertSame($expected, $validator->isValid($input));
     }
 
     /**

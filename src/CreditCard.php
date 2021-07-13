@@ -4,6 +4,7 @@ namespace Laminas\Validator;
 
 use Exception;
 use Laminas\Stdlib\ArrayUtils;
+use Laminas\Validator\Exception\InvalidArgumentException;
 use Traversable;
 
 use function array_key_exists;
@@ -347,7 +348,7 @@ class CreditCard extends AbstractValidator
     public function setService($service)
     {
         if (! is_callable($service)) {
-            throw new Exception\InvalidArgumentException('Invalid callback given');
+            throw new InvalidArgumentException('Invalid callback given');
         }
 
         $this->options['service'] = $service;
@@ -409,7 +410,8 @@ class CreditCard extends AbstractValidator
             $weight = $weight % 2 + 1;
         }
 
-        if ((10 - $sum % 10) % 10 !== $value[$length - 1]) {
+        $checksum = (10 - $sum % 10) % 10;
+        if ((string) $checksum !== $value[$length - 1]) {
             $this->error(self::CHECKSUM, $value);
             return false;
         }

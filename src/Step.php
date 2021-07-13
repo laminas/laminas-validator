@@ -141,7 +141,7 @@ class Step extends AbstractValidator
      */
     protected function fmod($x, $y)
     {
-        if ($y === 0.0) {
+        if ($y === 0.0 || $y === 0) {
             return 1.0;
         }
 

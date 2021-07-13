@@ -475,7 +475,9 @@ class EmailAddress extends AbstractValidator
     /**
      * Internal method to validate the hostname part of the email address
      *
-     * @return bool
+     * @return bool|string[]
+     *
+     * @psalm-return bool|list<string>
      */
     protected function validateHostnamePart()
     {

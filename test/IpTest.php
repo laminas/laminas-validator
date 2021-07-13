@@ -104,20 +104,34 @@ class IpTest extends TestCase
     }
 
     /**
+     * @psalm-return array<string, array{
+     *     0: string,
+     *     1: bool
+     * }>
+     */
+    public function ipvFutureProvider(): array
+    {
+        return [
+            'IPvFuture: Version 1 disallowed'  => ['v1.A', true],
+            'IPvFuture: Version D disallowed'  => ['vD.A', true],
+            'IPvFuture: Version 46 disallowed' => ['v46.A', true],
+
+            'IPvFuture: Version 4 allowed'     => ['v4.A', false],
+            'IPvFuture: Version 6 allowed'     => ['v6.A', false],
+        ];
+    }
+
+    /**
      * Versions 4 and 6 are not allowed in IPvFuture
      *
      * @depends testOnlyIpvfuture
+     * @dataProvider ipvFutureProvider
      */
-    public function testVersionsAllowedIpvfuture(): void
+    public function testVersionsAllowedIpvfuture(string $ip, bool $expected): void
     {
         $this->options['allowipvfuture'] = true;
         $this->validator->setOptions($this->options);
-        $this->assertTrue($this->validator->isValid('v1.A', 'IPvFuture: Version 1 disallowed'));
-        $this->assertTrue($this->validator->isValid('vD.A', 'IPvFuture: Version D disallowed'));
-        $this->assertTrue($this->validator->isValid('v46.A', 'IPvFuture: Version 46 disallowed'));
-
-        $this->assertFalse($this->validator->isValid('v4.A', 'IPvFuture: Version 4 allowed'));
-        $this->assertFalse($this->validator->isValid('v6.A', 'IPvFuture: Version 6 allowed'));
+        $this->assertSame($expected, $this->validator->isValid($ip));
     }
 
     public function testNoValidation(): void

@@ -31,8 +31,9 @@ final class UuidTest extends TestCase
 
     /**
      * @dataProvider invalidUuidProvider
+     * @param mixed $uuid
      */
-    public function testInvalidUuid(string $uuid, string $expectedMessageKey): void
+    public function testInvalidUuid($uuid, string $expectedMessageKey): void
     {
         $this->assertFalse($this->validator->isValid($uuid));
         $messages = $this->validator->getMessages();

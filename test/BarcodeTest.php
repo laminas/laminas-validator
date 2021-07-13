@@ -43,7 +43,7 @@ class BarcodeTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('not found');
-        $barcode = new Barcode('\Laminas\Validate\BarcodeTest\NonExistentClassName');
+        new Barcode('\Laminas\Validate\BarcodeTest\NonExistentClassName');
     }
 
     public function testSetAdapter(): void

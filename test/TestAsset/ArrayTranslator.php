@@ -12,9 +12,10 @@ class ArrayTranslator implements I18nTranslator\Loader\FileLoaderInterface
     /**
      * @param string $filename
      * @param string $locale
-     * @return I18n\TextDomain
+     *
+     * @return I18nTranslator\TextDomain
      */
-    public function load($filename, $locale)
+    public function load($filename, $locale): I18nTranslator\TextDomain
     {
         return new I18nTranslator\TextDomain($this->translations);
     }

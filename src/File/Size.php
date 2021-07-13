@@ -310,7 +310,8 @@ class Size extends AbstractValidator
      * Returns the unformatted size
      *
      * @param string $size
-     * @return int|string
+     *
+     * @return float|int|string
      */
     protected function fromByteString($size)
     {

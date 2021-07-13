@@ -78,7 +78,7 @@ class Issn extends AbstractAdapter
         $check %= 11;
         $check  = $check === 0 ? 0 : 11 - $check;
 
-        if ($check === $checksum) {
+        if ((string) $check === $checksum) {
             return true;
         }
 

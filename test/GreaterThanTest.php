@@ -158,7 +158,8 @@ class GreaterThanTest extends TestCase
     }
 
     /**
-     * @psalm-return array<string, array{0: int|float}>
+     * @psalm-return array{0: array{0: 0}, '0.5': array{0: float}, 5: array{0: 5}, 10: array{0: 10}}
+     * @return (float|int)[][]
      */
     public function correctInclusiveMessageDataProvider(): array
     {
@@ -184,7 +185,8 @@ class GreaterThanTest extends TestCase
     }
 
     /**
-     * @psalm-return array<string, array{0: int|float}>
+     * @psalm-return array{0: array{0: 0}, '0.5': array{0: float}, 5: array{0: 5}, 9: array{0: 9}}
+     * @return (float|int)[][]
      */
     public function correctNotInclusiveMessageDataProvider(): array
     {

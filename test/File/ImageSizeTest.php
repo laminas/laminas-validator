@@ -29,7 +29,7 @@ class ImageSizeTest extends TestCase
      *         type: string
      *     },
      *     2: bool,
-     *     3: string
+     *     3: string|string[]
      * }>
      */
     public function basicBehaviorDataProvider(): array
@@ -129,8 +129,9 @@ class ImageSizeTest extends TestCase
      *
      * @dataProvider basicBehaviorDataProvider
      * @param string|array $isValidParam
+     * @param string|string[] $messageKey
      */
-    public function testBasic(array $options, $isValidParam, bool $expected, string $messageKeys): void
+    public function testBasic(array $options, $isValidParam, bool $expected, $messageKeys): void
     {
         $validator = new File\ImageSize($options);
         $this->assertEquals($expected, $validator->isValid($isValidParam));
@@ -149,8 +150,9 @@ class ImageSizeTest extends TestCase
      *
      * @dataProvider basicBehaviorDataProvider
      * @param string|array $isValidParam
+     * @param string|string[] $messageKey
      */
-    public function testLegacy(array $options, $isValidParam, bool $expected, string $messageKeys): void
+    public function testLegacy(array $options, $isValidParam, bool $expected, $messageKeys): void
     {
         // Test legacy Laminas\Transfer API
         if (is_array($isValidParam)) {
@@ -179,7 +181,7 @@ class ImageSizeTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        $validator = new File\ImageSize(['minWidth' => 1000, 'minHeight' => 100, 'maxWidth' => 10, 'maxHeight' => 1]);
+        new File\ImageSize(['minWidth' => 1000, 'minHeight' => 100, 'maxWidth' => 10, 'maxHeight' => 1]);
     }
 
     /**
@@ -223,7 +225,7 @@ class ImageSizeTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        $validator = new File\ImageSize([
+        new File\ImageSize([
             'minWidth'  => 10000,
             'minHeight' => 1000,
             'maxWidth'  => 100,

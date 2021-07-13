@@ -43,7 +43,7 @@ class AbstractDbTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Field option missing!');
-        $validator = new ConcreteDbValidator([
+        new ConcreteDbValidator([
             'schema' => 'schema',
             'table'  => 'table',
         ]);

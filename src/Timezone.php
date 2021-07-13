@@ -153,7 +153,8 @@ class Timezone extends AbstractValidator
 
     /**
      * @param array|int|string $type
-     * @return int
+     *
+     * @return float|int
      */
     protected function calculateTypeValue($type)
     {

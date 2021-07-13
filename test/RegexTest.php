@@ -88,7 +88,7 @@ class RegexTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Internal error parsing');
-        $validator = new Regex('/');
+        new Regex('/');
     }
 
     /**
@@ -171,14 +171,14 @@ class RegexTest extends TestCase
     public function testConstructorRaisesExceptionWhenProvidedInvalidArguments($options): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $validator = new Regex($options);
+        new Regex($options);
     }
 
     public function testConstructorRaisesExceptionWhenProvidedWithInvalidOptionsArray(): void
     {
         $options = ['foo' => 'bar'];
         $this->expectException(InvalidArgumentException::class);
-        $validator = new Regex($options);
+        new Regex($options);
     }
 
     public function testIsValidShouldReturnFalseWhenRegexPatternIsInvalid(): void

@@ -103,7 +103,7 @@ class SizeTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        $validator = new File\Size(['min' => 100, 'max' => 1]);
+        new File\Size(['min' => 100, 'max' => 1]);
     }
 
     /**
@@ -144,7 +144,7 @@ class SizeTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        $validator = new File\Size(['min' => 100, 'max' => 1]);
+        new File\Size(['min' => 100, 'max' => 1]);
     }
 
     /**

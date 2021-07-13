@@ -106,7 +106,7 @@ class DateStepTest extends TestCase
             'step'      => new DateInterval($interval),
         ]);
 
-        $this->assertEquals($isValid, $validator->isValid($value));
+        $this->assertSame($isValid, $validator->isValid($value));
     }
 
     /**
