@@ -24,6 +24,36 @@ All notable changes to this project will be documented in this file, in reverse 
 
 - Nothing.
 
+## 2.14.4 - 2021-01-24
+
+- Total issues resolved: **0**
+- Total pull requests resolved: **1**
+- Total contributors: **1**
+
+#### Bug
+
+ - [91: Fix immutability issue when validating a `DateTimeImmutable` instance with the `DateStep` validator](https://github.com/laminas/laminas-validator/pull/91) thanks to @netiul
+
+## 2.14.3 - 2021-01-24
+
+- Total issues resolved: **0**
+- Total pull requests resolved: **1**
+- Total contributors: **1**
+
+#### Bug
+
+ - [89: Fix Type Error when validating a `DateTimeImmutable` instance to the `DateStep` validator](https://github.com/laminas/laminas-validator/pull/89) thanks to @netiul
+
+## 2.14.2 - 2021-01-22
+
+- Total issues resolved: **1**
+- Total pull requests resolved: **1**
+- Total contributors: **1**
+
+#### Bug
+
+ - [87: Removed hardcoded `version` field from `composer.json`](https://github.com/laminas/laminas-validator/pull/87) thanks to @Ocramius
+
 ## 2.14.1 - 2021-01-13
 
 ### Fixed
@@ -172,7 +202,7 @@ next feature release (minor)
 
 - [#57](https://github.com/laminas/laminas-validator/pull/57) removes redundant third argument in `UndisclosedPassword` validator constructor.
 
-- [#53](https://github.com/laminas/laminas-validator/pull/53) fixes `UndisclosedPassword` validator to call parent constructor on instantiation. 
+- [#53](https://github.com/laminas/laminas-validator/pull/53) fixes `UndisclosedPassword` validator to call parent constructor on instantiation.
 
 ## 2.13.1 - 2020-01-15
 
@@ -251,7 +281,7 @@ next feature release (minor)
 - [zendframework/zend-validator#277](https://github.com/zendframework/zend-validator/pull/277) fixes `File\Hash` validator in case
   when the file hash contains only digits.
 
-- [zendframework/zend-validator#277](https://github.com/zendframework/zend-validator/pull/277) fixes `File\Hash` validator to match 
+- [zendframework/zend-validator#277](https://github.com/zendframework/zend-validator/pull/277) fixes `File\Hash` validator to match
   hash with the given hashing algorithm.
 
 ## 2.12.1 - 2019-10-12
@@ -583,7 +613,7 @@ next feature release (minor)
   `"suggest"` clauses in `composer.json`, since some dependencies are not always
   required, and may lead to runtime failures.
 - [zendframework/zend-validator#66](https://github.com/zendframework/zend-validator/pull/66) fixed
-  EmailAddress validator applying IDNA conversion to local part 
+  EmailAddress validator applying IDNA conversion to local part
 - [zendframework/zend-validator#88](https://github.com/zendframework/zend-validator/pull/88) fixed NotEmpty
   validator incorrectly applying types bitmaps
 - [zendframework/zend-validator#150](https://github.com/zendframework/zend-validator/pull/150) fixed Hostname

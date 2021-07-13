@@ -118,7 +118,7 @@ class Date extends AbstractValidator
     /**
      * Returns true if $value is a DateTime instance or can be converted into one.
      *
-     * @param  string|array|int|DateTime $value
+     * @param  string|array|int|DateTime|DateTimeImmutable $value
      * @return bool
      */
     public function isValid($value)
