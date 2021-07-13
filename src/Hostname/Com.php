@@ -1,10 +1,11 @@
-<?php
+<?php // phpcs:disable PSR12.Files.FileHeader.IncorrectOrder,WebimpressCodingStandard.Arrays.DoubleArrow.SpacesBefore
 
 namespace Laminas\Validator\Hostname;
 
 /**
  * Resource file for com and net idn validation
  */
+
 return [
     1 => '/^[\x{002d}0-9\x{0400}-\x{052f}]{1,63}$/iu',
     2 => '/^[\x{002d}0-9\x{0370}-\x{03ff}]{1,63}$/iu',

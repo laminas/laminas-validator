@@ -129,7 +129,7 @@ class ImageSizeTest extends TestCase
      *
      * @dataProvider basicBehaviorDataProvider
      * @param string|array $isValidParam
-     * @param string|string[] $messageKey
+     * @param string|string[] $messageKeys
      */
     public function testBasic(array $options, $isValidParam, bool $expected, $messageKeys): void
     {
@@ -150,7 +150,7 @@ class ImageSizeTest extends TestCase
      *
      * @dataProvider basicBehaviorDataProvider
      * @param string|array $isValidParam
-     * @param string|string[] $messageKey
+     * @param string|string[] $messageKeys
      */
     public function testLegacy(array $options, $isValidParam, bool $expected, $messageKeys): void
     {

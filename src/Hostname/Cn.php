@@ -1,10 +1,11 @@
-<?php
+<?php // phpcs:disable PSR12.Files.FileHeader.IncorrectOrder
 
 namespace Laminas\Validator\Hostname;
 
 /**
  * Resource file for chinese idn validation
  */
+
 return [
     1 => '/^[\x{002d}0-9a-z\x{3447}\x{3473}\x{359E}\x{360E}\x{361A}\x{3918}\x{396E}\x{39CF}\x{39D0}'
           . '\x{39DF}\x{3A73}\x{3B4E}\x{3C6E}\x{3CE0}\x{4056}\x{415F}\x{4337}\x{43AC}'

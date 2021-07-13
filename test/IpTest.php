@@ -115,7 +115,6 @@ class IpTest extends TestCase
             'IPvFuture: Version 1 disallowed'  => ['v1.A', true],
             'IPvFuture: Version D disallowed'  => ['vD.A', true],
             'IPvFuture: Version 46 disallowed' => ['v46.A', true],
-
             'IPvFuture: Version 4 allowed'     => ['v4.A', false],
             'IPvFuture: Version 6 allowed'     => ['v6.A', false],
         ];

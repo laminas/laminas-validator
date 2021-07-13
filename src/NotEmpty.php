@@ -135,7 +135,6 @@ class NotEmpty extends AbstractValidator
 
     /**
      * @param array|int|string $type
-     *
      * @return false|int|string
      */
     protected function calculateTypeValue($type)

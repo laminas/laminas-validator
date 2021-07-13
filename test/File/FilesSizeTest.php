@@ -54,8 +54,12 @@ class FilesSizeTest extends TestCase
     }
 
     /**
-     * @psalm-return array{'minimum: 0 byte; maximum: 500 bytes; integer': array{0: array{0: 500}, 1: false, 2: false, 3: false}, 'minimum: 0 byte; maximum: 500 bytes; array': array{0: array{0: array{min: 0, max: 500}}, 1: false, 2: false, 3: false}, 'minimum: 0 byte; maximum: 2000 bytes; integer': array{0: array{0: 2000}, 1: true, 2: true, 3: false}, 'minimum: 0 byte; maximum: 2000 bytes; array': array{0: array{0: array{min: 0, max: 2000}}, 1: true, 2: true, 3: false}, 'minimum: 0 byte; maximum: 500 kilobytes': array{0: array{0: array{min: 0, max: 500000}}, 1: true, 2: true, 3: true}, 'minimum: 0 byte; maximum: 2 megabytes; 2 MB': array{0: array{0: array{min: 0, max: '2 MB'}}, 1: true, 2: true, 3: true}, 'minimum: 0 byte; maximum: 2 megabytes; 2MB': array{0: array{0: array{min: 0, max: '2MB'}}, 1: true, 2: true, 3: true}, 'minimum: 0 byte; maximum: 2 megabytes; 2  MB': array{0: array{0: array{min: 0, max: '2  MB'}}, 1: true, 2: true, 3: true}}
-     * @return (((int|string)[]|int)[]|bool)[][]
+     * @psalm-return array<string, array{
+     *     0: array,
+     *     1: bool
+     *     2: bool
+     *     3: bool
+     * }>
      */
     public function basicDataProvider(): array
     {

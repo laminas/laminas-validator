@@ -7,6 +7,7 @@ use UConverter;
 
 use function array_combine;
 use function array_flip;
+use function array_keys;
 use function array_shift;
 use function arsort;
 use function checkdnsrr;
@@ -476,7 +477,6 @@ class EmailAddress extends AbstractValidator
      * Internal method to validate the hostname part of the email address
      *
      * @return bool|string[]
-     *
      * @psalm-return bool|list<string>
      */
     protected function validateHostnamePart()

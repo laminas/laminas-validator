@@ -147,7 +147,7 @@ class Bitwise extends AbstractValidator
         }
 
         if (self::OP_XOR === $this->operator) {
-            $result = ($this->control ^ $value) === ($this->control | $value);
+            $result = ($this->control ^ $value) === $this->control | $value;
 
             if (! $result) {
                 $this->error(self::NOT_XOR);

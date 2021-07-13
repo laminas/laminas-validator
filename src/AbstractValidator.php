@@ -532,7 +532,7 @@ abstract class AbstractValidator implements
     /**
      * Indicate whether or not translation should be enabled
      *
-     * @param  bool $flag
+     * @param  bool $enabled
      * @return $this
      */
     public function setTranslatorEnabled($enabled = true)

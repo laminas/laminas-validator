@@ -34,6 +34,7 @@ class Barcode extends AbstractValidator
 
     /**
      * Additional variables available for validation failure messages
+     *
      * @var array<string, array<string, string>>
      */
     protected $messageVariables = [

@@ -101,7 +101,7 @@ class IsInstanceOfTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Missing option "className"');
 
-        $options   = ['NotClassNameKey' => DateTime::class];
+        $options = ['NotClassNameKey' => DateTime::class];
         new Validator\IsInstanceOf($options);
     }
 }
