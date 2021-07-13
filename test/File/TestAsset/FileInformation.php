@@ -1,18 +1,12 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator\File\TestAsset;
 
 use Laminas\Validator\File\FileInformationTrait;
 
 /**
-* Validator which checks if the file already exists in the directory
-*/
+ * Validator which checks if the file already exists in the directory
+ */
 class FileInformation
 {
     use FileInformationTrait;
@@ -28,7 +22,7 @@ class FileInformation
      */
     public function checkFileInformation(
         $value,
-        array $file = null,
+        ?array $file = null,
         $hasType = false,
         bool $hasBasename = false
     ) {

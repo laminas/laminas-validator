@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Validator\Isbn;
 
 class Isbn10
@@ -47,11 +41,11 @@ class Isbn10
     {
         $checksum = 11 - ($sum % 11);
 
-        if ($checksum == 11) {
+        if ($checksum === 11) {
             return '0';
         }
 
-        if ($checksum == 10) {
+        if ($checksum === 10) {
             return 'X';
         }
 

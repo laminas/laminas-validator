@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Interop\Container\ContainerInterface;
@@ -20,10 +14,11 @@ use Prophecy\PhpUnit\ProphecyTrait;
 class ValidatorPluginManagerFactoryTest extends TestCase
 {
     use ProphecyTrait;
+
     public function testFactoryReturnsPluginManager(): void
     {
         $container = $this->prophesize(ContainerInterface::class)->reveal();
-        $factory = new ValidatorPluginManagerFactory();
+        $factory   = new ValidatorPluginManagerFactory();
 
         $validators = $factory($container, ValidatorPluginManagerFactory::class);
         $this->assertInstanceOf(ValidatorPluginManager::class, $validators);
@@ -31,15 +26,13 @@ class ValidatorPluginManagerFactoryTest extends TestCase
 
     /**
      * @depends testFactoryReturnsPluginManager
-     *
-     * @return void
      */
     public function testFactoryConfiguresPluginManagerUnderContainerInterop(): void
     {
         $container = $this->prophesize(ContainerInterface::class)->reveal();
         $validator = $this->prophesize(ValidatorInterface::class)->reveal();
 
-        $factory = new ValidatorPluginManagerFactory();
+        $factory    = new ValidatorPluginManagerFactory();
         $validators = $factory($container, ValidatorPluginManagerFactory::class, [
             'services' => [
                 'test' => $validator,
@@ -50,8 +43,6 @@ class ValidatorPluginManagerFactoryTest extends TestCase
 
     /**
      * @depends testFactoryReturnsPluginManager
-     *
-     * @return void
      */
     public function testFactoryConfiguresPluginManagerUnderServiceManagerV2(): void
     {
@@ -74,13 +65,13 @@ class ValidatorPluginManagerFactoryTest extends TestCase
     public function testConfiguresValidatorServicesWhenFound(): void
     {
         $validator = $this->prophesize(ValidatorInterface::class)->reveal();
-        $config = [
+        $config    = [
             'validators' => [
-                'aliases' => [
+                'aliases'   => [
                     'test' => Digits::class,
                 ],
                 'factories' => [
-                    'test-too' => function ($container) use ($validator): \Laminas\Validator\ValidatorInterface {
+                    'test-too' => function ($container) use ($validator): ValidatorInterface {
                         return $validator;
                     },
                 ],
@@ -95,7 +86,7 @@ class ValidatorPluginManagerFactoryTest extends TestCase
         $container->get('config')->willReturn($config);
         $container->has('MvcTranslator')->willReturn(false); // necessary due to default initializers
 
-        $factory = new ValidatorPluginManagerFactory();
+        $factory    = new ValidatorPluginManagerFactory();
         $validators = $factory($container->reveal(), 'ValidatorManager');
 
         $this->assertInstanceOf(ValidatorPluginManager::class, $validators);
@@ -108,13 +99,13 @@ class ValidatorPluginManagerFactoryTest extends TestCase
     public function testDoesNotConfigureValidatorServicesWhenServiceListenerPresent(): void
     {
         $validator = $this->prophesize(ValidatorInterface::class)->reveal();
-        $config = [
+        $config    = [
             'validators' => [
-                'aliases' => [
+                'aliases'   => [
                     'test' => Digits::class,
                 ],
                 'factories' => [
-                    'test-too' => function ($container) use ($validator): \Laminas\Validator\ValidatorInterface {
+                    'test-too' => function ($container) use ($validator): ValidatorInterface {
                         return $validator;
                     },
                 ],
@@ -129,7 +120,7 @@ class ValidatorPluginManagerFactoryTest extends TestCase
         $container->get('config')->shouldNotBeCalled();
         $container->has('MvcTranslator')->willReturn(false); // necessary due to default initializers
 
-        $factory = new ValidatorPluginManagerFactory();
+        $factory    = new ValidatorPluginManagerFactory();
         $validators = $factory($container->reveal(), 'ValidatorManager');
 
         $this->assertInstanceOf(ValidatorPluginManager::class, $validators);
@@ -147,7 +138,7 @@ class ValidatorPluginManagerFactoryTest extends TestCase
         $container->get('config')->shouldNotBeCalled();
         $container->has('MvcTranslator')->willReturn(false); // necessary due to default initializers
 
-        $factory = new ValidatorPluginManagerFactory();
+        $factory    = new ValidatorPluginManagerFactory();
         $validators = $factory($container->reveal(), 'ValidatorManager');
 
         $this->assertInstanceOf(ValidatorPluginManager::class, $validators);
@@ -163,7 +154,7 @@ class ValidatorPluginManagerFactoryTest extends TestCase
         $container->get('config')->willReturn(['foo' => 'bar']);
         $container->has('MvcTranslator')->willReturn(false); // necessary due to default initializers
 
-        $factory = new ValidatorPluginManagerFactory();
+        $factory    = new ValidatorPluginManagerFactory();
         $validators = $factory($container->reveal(), 'ValidatorManager');
 
         $this->assertInstanceOf(ValidatorPluginManager::class, $validators);

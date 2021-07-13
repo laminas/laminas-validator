@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
@@ -13,6 +7,8 @@ use Laminas\Validator\File;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\UploadedFileInterface;
+
+use function current;
 
 /**
  * @group      Laminas_Validator
@@ -269,7 +265,7 @@ class UploadTest extends TestCase
         ];
 
         $files = [
-            'test'  => [
+            'test' => [
                 'name'     => 'test1',
                 'type'     => 'text',
                 'size'     => 200,
@@ -327,8 +323,6 @@ class UploadTest extends TestCase
 
     /**
      * @depends testGetFilesReturnsArtifactsFromPsr7UploadedFiles
-     *
-     * @return void
      */
     public function testGetFilesRaisesExceptionWhenPsr7UploadedFilesArrayDoesNotContainGivenFilename(
         File\Upload $validator
@@ -363,7 +357,7 @@ class UploadTest extends TestCase
         ];
 
         $_FILES = [
-            'test'  => [
+            'test' => [
                 'name'     => 'test3',
                 'type'     => 'text3',
                 'size'     => 203,
@@ -398,12 +392,10 @@ class UploadTest extends TestCase
 
     /**
      * @group Laminas-10738
-     *
-     * @return void
      */
     public function testGetFilesReturnsEmptyArrayWhenFilesSuperglobalIsNull(): void
     {
-        $_FILES = null;
+        $_FILES    = null;
         $validator = new File\Upload();
         $validator->setFiles();
         $this->assertEquals([], $validator->getFiles());
@@ -411,8 +403,6 @@ class UploadTest extends TestCase
 
     /**
      * @group Laminas-10738
-     *
-     * @return void
      */
     public function testGetFilesReturnsEmptyArrayAfterSetFilesIsCalledWithNull(): void
     {
@@ -423,8 +413,6 @@ class UploadTest extends TestCase
 
     /**
      * @group Laminas-11258
-     *
-     * @return void
      */
     public function testLaminas11258(): void
     {
@@ -436,8 +424,6 @@ class UploadTest extends TestCase
 
     /**
      * @group Laminas-12128
-     *
-     * @return void
      */
     public function testErrorMessage(): void
     {
@@ -451,7 +437,7 @@ class UploadTest extends TestCase
             ],
         ];
 
-        $validator = new File\Upload;
+        $validator = new File\Upload();
         $validator->isValid('foo');
 
         $this->assertEquals(

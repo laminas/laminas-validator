@@ -1,13 +1,10 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
 namespace LaminasTest\Validator;
 
+use ArrayIterator;
 use DateTime;
+use Exception;
 use Laminas\Validator;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -15,8 +12,6 @@ use ReflectionClass;
 
 /**
  * @covers \Laminas\Validator\IsInstanceOf
- * @copyright  Copyright (c) 2005-2015 Laminas (https://www.zend.com)
- * @license    https://getlaminas.org/license/new-bsd     New BSD License
  * @group      Laminas_Validator
  */
 class IsInstanceOfTest extends TestCase
@@ -33,8 +28,8 @@ class IsInstanceOfTest extends TestCase
         $this->assertFalse($validator->isValid(null)); // False
         $this->assertFalse($validator->isValid($this)); // False
 
-        $validator = new Validator\IsInstanceOf(\Exception::class);
-        $this->assertTrue($validator->isValid(new \Exception())); // True
+        $validator = new Validator\IsInstanceOf(Exception::class);
+        $this->assertTrue($validator->isValid(new Exception())); // True
         $this->assertFalse($validator->isValid(null)); // False
         $this->assertFalse($validator->isValid($this)); // False
 
@@ -94,7 +89,7 @@ class IsInstanceOfTest extends TestCase
 
     public function testPassTraversableToConstructor(): void
     {
-        $validator = new Validator\IsInstanceOf(new \ArrayIterator(['className' => DateTime::class]));
+        $validator = new Validator\IsInstanceOf(new ArrayIterator(['className' => DateTime::class]));
         $this->assertEquals(DateTime::class, $validator->getClassName());
         $this->assertTrue($validator->isValid(new DateTime()));
         $this->assertFalse($validator->isValid(null));

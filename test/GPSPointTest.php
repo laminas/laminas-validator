@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\GpsPoint;
@@ -16,50 +10,47 @@ use PHPUnit\Framework\TestCase;
  */
 class GPSPointTest extends TestCase
 {
-
-    /**
-     * @var GpsPoint
-     */
+    /** @var GpsPoint */
     protected $validator;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->validator = new GpsPoint();
     }
 
     /**
      * @dataProvider basicDataProvider
-     *
      * @covers \Laminas\Validator\GPSPoint::isValid
-     *
-     * @return void
      */
-    public function testBasic($gpsPoint): void
+    public function testBasic(string $gpsPoint): void
     {
         $this->assertTrue($this->validator->isValid($gpsPoint));
     }
 
-    /**
-     * @covers \Laminas\Validator\GPSPoint::isValid
-     *
-     * @return void
-     */
-    public function testBoundariesAreRespected(): void
+    /** @psalm-return array<array-key, array{0: string, 1: bool}> */
+    public function boundariesProvider(): array
     {
-        $this->assertFalse($this->validator->isValid('181.8897,-77.0089'));
-        $this->assertFalse($this->validator->isValid('38.8897,-181.0089'));
-        $this->assertFalse($this->validator->isValid('-181.8897,-77.0089'));
-        $this->assertFalse($this->validator->isValid('38.8897,181.0089'));
+        return [
+            ['181.8897,-77.0089', false],
+            ['38.8897,-181.0089', false],
+            ['-181.8897,-77.0089', false],
+            ['38.8897,181.0089', false],
+        ];
     }
 
     /**
      * @covers \Laminas\Validator\GPSPoint::isValid
-     *
-     * @dataProvider errorMessageTestValues
-     *
-     * @return void
      */
-    public function testErrorsSetOnOccur($value, $messageKey, $messageValue): void
+    public function testBoundariesAreRespected(string $value, bool $expected): void
+    {
+        $this->assertSame($expected, $this->validator->isValid($value));
+    }
+
+    /**
+     * @covers \Laminas\Validator\GPSPoint::isValid
+     * @dataProvider errorMessageTestValues
+     */
+    public function testErrorsSetOnOccur(string $value, string $messageKey, string $messageValue): void
     {
         $this->assertFalse($this->validator->isValid($value));
         $messages = $this->validator->getMessages();

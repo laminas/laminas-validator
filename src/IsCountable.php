@@ -1,14 +1,14 @@
-<?php
-
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
+<?php // phpcs:disable SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedMethod
 
 namespace Laminas\Validator;
 
 use Countable;
+
+use function count;
+use function is_array;
+use function is_numeric;
+use function sprintf;
+use function ucfirst;
 
 /**
  * Validate that a value is countable and the count meets expectations.
@@ -27,10 +27,10 @@ use Countable;
  */
 class IsCountable extends AbstractValidator
 {
-    const NOT_COUNTABLE = 'notCountable';
-    const NOT_EQUALS    = 'notEquals';
-    const GREATER_THAN  = 'greaterThan';
-    const LESS_THAN     = 'lessThan';
+    public const NOT_COUNTABLE = 'notCountable';
+    public const NOT_EQUALS    = 'notEquals';
+    public const GREATER_THAN  = 'greaterThan';
+    public const LESS_THAN     = 'lessThan';
 
     /**
      * Validation failure message template definitions
@@ -66,6 +66,10 @@ class IsCountable extends AbstractValidator
         'max'   => null,
     ];
 
+    /**
+     * @param array $options
+     * @return $this Provides fluid interface
+     */
     public function setOptions($options = [])
     {
         foreach (['count', 'min', 'max'] as $option) {
@@ -97,7 +101,7 @@ class IsCountable extends AbstractValidator
         $count = count($value);
 
         if (is_numeric($this->getCount())) {
-            if ($count != $this->getCount()) {
+            if ($count !== $this->getCount()) {
                 $this->error(self::NOT_EQUALS);
                 return false;
             }
@@ -151,7 +155,7 @@ class IsCountable extends AbstractValidator
     /**
      * @param mixed $value
      * @return void
-     * @throws Exception\InvalidArgumentException if either a min or max option
+     * @throws Exception\InvalidArgumentException If either a min or max option
      *     was previously set.
      */
     private function setCount($value)
@@ -167,7 +171,7 @@ class IsCountable extends AbstractValidator
     /**
      * @param mixed $value
      * @return void
-     * @throws Exception\InvalidArgumentException if either a count or max option
+     * @throws Exception\InvalidArgumentException If either a count or max option
      *     was previously set.
      */
     private function setMin($value)
@@ -183,7 +187,7 @@ class IsCountable extends AbstractValidator
     /**
      * @param mixed $value
      * @return void
-     * @throws Exception\InvalidArgumentException if either a count or min option
+     * @throws Exception\InvalidArgumentException If either a count or min option
      *     was previously set.
      */
     private function setMax($value)

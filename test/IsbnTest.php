@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
@@ -100,7 +94,7 @@ class IsbnTest extends TestCase
      */
     public function testInitialization()
     {
-        $options = [
+        $options   = [
             'type'      => Isbn::AUTO,
             'separator' => ' ',
         ];
@@ -108,7 +102,7 @@ class IsbnTest extends TestCase
         $this->assertEquals(Isbn::AUTO, $validator->getType());
         $this->assertEquals(' ', $validator->getSeparator());
 
-        $options = [
+        $options   = [
             'type'      => Isbn::ISBN10,
             'separator' => '-',
         ];
@@ -116,7 +110,7 @@ class IsbnTest extends TestCase
         $this->assertEquals(Isbn::ISBN10, $validator->getType());
         $this->assertEquals('-', $validator->getSeparator());
 
-        $options = [
+        $options   = [
             'type'      => Isbn::ISBN13,
             'separator' => '',
         ];
@@ -213,8 +207,6 @@ class IsbnTest extends TestCase
 
     /**
      * @group Laminas-9605
-     *
-     * @return void
      */
     public function testInvalidTypeGiven(): void
     {

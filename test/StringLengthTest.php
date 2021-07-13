@@ -1,31 +1,26 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\StringLength;
 use PHPUnit\Framework\TestCase;
 
+use function array_keys;
+use function ini_set;
+
 /**
  * @group      Laminas_Validator
  */
 class StringLengthTest extends TestCase
 {
-    /**
-     * @var StringLength
-     */
+    /** @var StringLength */
     protected $validator;
 
     /**
      * Creates a new StringLength object for each test method
      */
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->validator = new StringLength();
     }
@@ -159,8 +154,6 @@ class StringLengthTest extends TestCase
 
     /**
      * @Laminas-4352
-     *
-     * @return void
      */
     public function testNonStringValidation(): void
     {

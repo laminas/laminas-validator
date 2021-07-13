@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
@@ -13,6 +7,15 @@ use Laminas\Validator\Exception\InvalidMagicMimeFileException;
 use Laminas\Validator\File;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
+
+use function basename;
+use function current;
+use function dirname;
+use function extension_loaded;
+use function getenv;
+use function is_array;
+
+use const UPLOAD_ERR_NO_FILE;
 
 /**
  * MimeType testbed
@@ -22,11 +25,21 @@ use ReflectionProperty;
 class MimeTypeTest extends TestCase
 {
     /**
-     * @return array
+     * @psalm-return array<array-key, array{
+     *     0: string|string[],
+     *     1: array{
+     *         tmp_name: string,
+     *         name: string,
+     *         size: int,
+     *         error: int,
+     *         type: string
+     *     },
+     *     2: bool
+     * }>
      */
-    public function basicBehaviorDataProvider()
+    public function basicBehaviorDataProvider(): array
     {
-        $testFile = __DIR__ . '/_files/picture.jpg';
+        $testFile   = __DIR__ . '/_files/picture.jpg';
         $fileUpload = [
             'tmp_name' => $testFile,
             'name'     => basename($testFile),
@@ -36,13 +49,13 @@ class MimeTypeTest extends TestCase
         ];
         return [
             //    Options, isValid Param, Expected value
-            [['image/jpg', 'image/jpeg'],               $fileUpload, true],
+            [['image/jpg', 'image/jpeg'], $fileUpload, true],
             ['image',                                   $fileUpload, true],
             ['test/notype',                             $fileUpload, false],
             ['image/gif, image/jpg, image/jpeg',        $fileUpload, true],
             [['image/vasa', 'image/jpg', 'image/jpeg'], $fileUpload, true],
-            [['image/jpg', 'image/jpeg', 'gif'],        $fileUpload, true],
-            [['image/gif', 'gif'],                      $fileUpload, false],
+            [['image/jpg', 'image/jpeg', 'gif'], $fileUpload, true],
+            [['image/gif', 'gif'], $fileUpload, false],
             ['image/jp',                                $fileUpload, false],
             ['image/jpg2000',                           $fileUpload, false],
             ['image/jpeg2000',                          $fileUpload, false],
@@ -53,9 +66,10 @@ class MimeTypeTest extends TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider basicBehaviorDataProvider
-     * @return void
+     * @param string|string[] $options
+     * @param array $isValidParam
      */
-    public function testBasic($options, $isValidParam, $expected)
+    public function testBasic($options, $isValidParam, bool $expected): void
     {
         $validator = new File\MimeType($options);
         $validator->enableHeaderCheck();
@@ -66,9 +80,10 @@ class MimeTypeTest extends TestCase
      * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
      * @dataProvider basicBehaviorDataProvider
-     * @return void
+     * @param string|string[] $options
+     * @param array $isValidParam
      */
-    public function testLegacy($options, $isValidParam, $expected)
+    public function testLegacy($options, $isValidParam, bool $expected): void
     {
         if (is_array($isValidParam)) {
             $validator = new File\MimeType($options);
@@ -149,7 +164,7 @@ class MimeTypeTest extends TestCase
         $validator = new File\MimeType('image/gif');
         $magic     = getenv('magic');
         if (! empty($magic)) {
-            $mimetype  = $validator->getMagicFile();
+            $mimetype = $validator->getMagicFile();
             $this->assertEquals($magic, $mimetype);
         }
 
@@ -183,8 +198,6 @@ class MimeTypeTest extends TestCase
 
     /**
      * @group Laminas-11258
-     *
-     * @return void
      */
     public function testLaminas11258(): void
     {
@@ -204,7 +217,7 @@ class MimeTypeTest extends TestCase
         $validator = new File\MimeType('image/gif');
         $magic     = getenv('magic');
         if (! empty($magic)) {
-            $mimetype  = $validator->getMagicFile();
+            $mimetype = $validator->getMagicFile();
             $this->assertEquals($magic, $mimetype);
         }
 
@@ -212,23 +225,21 @@ class MimeTypeTest extends TestCase
         $this->assertTrue($validator->isMagicFileDisabled());
 
         if (! empty($magic)) {
-            $mimetype  = $validator->getMagicFile();
+            $mimetype = $validator->getMagicFile();
             $this->assertEquals($magic, $mimetype);
         }
     }
 
     /**
      * @group Laminas-10461
-     *
-     * @return void
      */
     public function testDisablingMagicFileByConstructor(): void
     {
         $files = [
-            'name'     => 'picture.jpg',
-            'size'     => 200,
-            'tmp_name' => dirname(__FILE__) . '/_files/picture.jpg',
-            'error'    => 0,
+            'name'      => 'picture.jpg',
+            'size'      => 200,
+            'tmp_name'  => dirname(__FILE__) . '/_files/picture.jpg',
+            'error'     => 0,
             'magicFile' => false,
         ];
 
@@ -296,8 +307,7 @@ class MimeTypeTest extends TestCase
 
     /**
      * @dataProvider invalidMimeTypeTypes
-     *
-     * @return void
+     * @param mixed $type
      */
     public function testAddingMimeTypeWithInvalidTypeRaisesException($type): void
     {

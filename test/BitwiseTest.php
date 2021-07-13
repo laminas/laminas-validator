@@ -1,31 +1,23 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
+use ArrayObject;
 use Laminas\Validator\Bitwise;
 use PHPUnit\Framework\TestCase;
 
 class BitwiseTest extends TestCase
 {
-    /**
-     * @var \Laminas\Validator\Bitwise
-     */
+    /** @var Bitwise */
     public $validator;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->validator = new Bitwise();
     }
 
     /**
      * @covers \Laminas\Validator\Bitwise::__construct()
-     *
      * @dataProvider constructDataProvider
      */
     public function testConstruct(array $args, array $options): void
@@ -36,15 +28,15 @@ class BitwiseTest extends TestCase
         $this->assertSame($options['operator'], $validator->getOperator());
         $this->assertSame($options['strict'], $validator->getStrict());
     }
+
     /**
      * @covers \Laminas\Validator\Bitwise::__construct()
-     *
      * @dataProvider constructDataProvider
      */
     public function testConstructWithTravesableOptions(array $args, array $options): void
     {
         $validator = new Bitwise(
-            new \ArrayObject($args)
+            new ArrayObject($args)
         );
 
         $this->assertSame($options['control'], $validator->getControl());

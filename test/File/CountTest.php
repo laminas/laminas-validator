@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
@@ -159,8 +153,7 @@ class CountTest extends TestCase
 
     /**
      * @dataProvider invalidMinMaxValues
-     *
-     * @return void
+     * @param mixed $max
      */
     public function testSettingMaxWithInvalidArgumentRaisesException($max): void
     {
@@ -183,8 +176,7 @@ class CountTest extends TestCase
 
     /**
      * @dataProvider invalidMinMaxValues
-     *
-     * @return void
+     * @param mixed $min
      */
     public function testSettingMinWithInvalidArgumentRaisesException($min): void
     {

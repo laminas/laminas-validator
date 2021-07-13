@@ -1,24 +1,24 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Validator;
+
+use Exception;
+
+use function array_merge;
+use function call_user_func_array;
+use function is_callable;
 
 class Callback extends AbstractValidator
 {
     /**
      * Invalid callback
      */
-    const INVALID_CALLBACK = 'callbackInvalid';
+    public const INVALID_CALLBACK = 'callbackInvalid';
 
     /**
      * Invalid value
      */
-    const INVALID_VALUE = 'callbackValue';
+    public const INVALID_VALUE = 'callbackValue';
 
     /**
      * Validation failure message template definitions
@@ -36,8 +36,8 @@ class Callback extends AbstractValidator
      * @var mixed
      */
     protected $options = [
-        'callback'         => null,     // Callback in a call_user_func format, string || array
-        'callbackOptions'  => [],  // Options for the callback
+        'callback'        => null, // Callback in a call_user_func format, string || array
+        'callbackOptions' => [], // Options for the callback
     ];
 
     /**
@@ -139,7 +139,7 @@ class Callback extends AbstractValidator
                 $this->error(self::INVALID_VALUE);
                 return false;
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->error(self::INVALID_CALLBACK);
             return false;
         }

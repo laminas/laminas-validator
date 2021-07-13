@@ -1,16 +1,16 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File;
 use PHPUnit\Framework\TestCase;
+
+use function basename;
+use function current;
+use function is_array;
+
+use const UPLOAD_ERR_NO_FILE;
 
 /**
  * @group      Laminas_Validator
@@ -20,7 +20,13 @@ class SizeTest extends TestCase
     /**
      * @psalm-return array<array-key, array{
      *     0: int|array<string, int|string>,
-     *     1: string,
+     *     1: string|array{
+     *         tmp_name: string,
+     *         name: string,
+     *         size: int,
+     *         error: int,
+     *         type: string
+     *     },
      *     2: bool
      * }>
      */
@@ -31,13 +37,13 @@ class SizeTest extends TestCase
             //    Options, isValid Param, Expected value
             [794,     $testFile,     true],
             [500,     $testFile,     false],
-            [['min' => 0, 'max' => 10000],      $testFile,   true],
-            [['min' => 0, 'max' => '10 MB'],    $testFile,   true],
-            [['min' => '4B', 'max' => '10 MB'], $testFile,   true],
-            [['min' => 0, 'max' => '10MB'],     $testFile,   true],
-            [['min' => 0, 'max' => '10  MB'],   $testFile,   true],
-            [['min' => 794],                    $testFile,   true],
-            [['min' => 0, 'max' => 500],        $testFile,   false],
+            [['min' => 0, 'max' => 10000], $testFile, true],
+            [['min' => 0, 'max' => '10 MB'], $testFile, true],
+            [['min' => '4B', 'max' => '10 MB'], $testFile, true],
+            [['min' => 0, 'max' => '10MB'], $testFile, true],
+            [['min' => 0, 'max' => '10  MB'], $testFile, true],
+            [['min' => 794], $testFile, true],
+            [['min' => 0, 'max' => 500], $testFile, false],
         ];
 
         // Dupe data in File Upload format
@@ -58,9 +64,10 @@ class SizeTest extends TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider basicBehaviorDataProvider
-     * @return void
+     * @param int|array $options
+     * @param string|array $isValidParam
      */
-    public function testBasic($options, $isValidParam, $expected)
+    public function testBasic($options, $isValidParam, bool $expected): void
     {
         $validator = new File\Size($options);
         $this->assertEquals($expected, $validator->isValid($isValidParam));
@@ -70,9 +77,10 @@ class SizeTest extends TestCase
      * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
      * @dataProvider basicBehaviorDataProvider
-     * @return void
+     * @param int|array $options
+     * @param string|array $isValidParam
      */
-    public function testLegacy($options, $isValidParam, $expected)
+    public function testLegacy($options, $isValidParam, bool $expected): void
     {
         if (is_array($isValidParam)) {
             $validator = new File\Size($options);
@@ -205,8 +213,6 @@ class SizeTest extends TestCase
 
     /**
      * @group Laminas-11258
-     *
-     * @return void
      */
     public function testLaminas11258(): void
     {
@@ -251,8 +257,7 @@ class SizeTest extends TestCase
 
     /**
      * @dataProvider invalidMinMaxValues
-     *
-     * @return void
+     * @param mixed $value
      */
     public function testSetMinWithInvalidArgument($value): void
     {
@@ -264,8 +269,7 @@ class SizeTest extends TestCase
 
     /**
      * @dataProvider invalidMinMaxValues
-     *
-     * @return void
+     * @param mixed $value
      */
     public function testSetMaxWithInvalidArgument($value): void
     {

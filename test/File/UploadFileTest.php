@@ -1,17 +1,17 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\UploadedFileInterface;
+
+use function current;
+use function sprintf;
+
+use const UPLOAD_ERR_NO_FILE;
+use const UPLOAD_ERR_OK;
 
 /**
  * @group      Laminas_Validator
@@ -26,8 +26,8 @@ class UploadFileTest extends TestCase
      */
     public function uploadErrorsTestDataProvider(): array
     {
-        $data = [];
-        $errorTypes = [
+        $data         = [];
+        $errorTypes   = [
             0 => 'fileUploadFileErrorAttack',
             1 => 'fileUploadFileErrorIniSize',
             2 => 'fileUploadFileErrorFormSize',
@@ -42,7 +42,7 @@ class UploadFileTest extends TestCase
         $testSizeFile = __DIR__ . '/_files/testsize.mo';
 
         foreach ($errorTypes as $errorCode => $errorType) {
-            $name = sprintf('SAPI - %s', $errorType);
+            $name        = sprintf('SAPI - %s', $errorType);
             $data[$name] = [
                 // fileInfo
                 [
@@ -65,7 +65,7 @@ class UploadFileTest extends TestCase
                 continue;
             }
 
-            $name = sprintf('PSR-7 - %s', $errorType);
+            $name   = sprintf('PSR-7 - %s', $errorType);
             $upload = $this->prophesize(UploadedFileInterface::class);
             $upload->getClientFilename()->willReturn('test' . $errorCode);
             $upload->getError()->willReturn($errorCode);
@@ -82,7 +82,7 @@ class UploadFileTest extends TestCase
      * @dataProvider uploadErrorsTestDataProvider
      * @return void
      */
-    public function testBasic($fileInfo, $messageKey)
+    public function testBasic(array $fileInfo, string $messageKey)
     {
         $validator = new File\UploadFile();
         $this->assertFalse($validator->isValid($fileInfo));
@@ -102,8 +102,6 @@ class UploadFileTest extends TestCase
 
     /**
      * @group Laminas-11258
-     *
-     * @return void
      */
     public function testLaminas11258(): void
     {
@@ -126,11 +124,11 @@ class UploadFileTest extends TestCase
         $validator = new File\UploadFile();
 
         $filesArray = [
-            'name'      => '',
-            'size'      => 0,
-            'tmp_name'  => '',
-            'error'     => UPLOAD_ERR_NO_FILE,
-            'type'      => '',
+            'name'     => '',
+            'size'     => 0,
+            'tmp_name' => '',
+            'error'    => UPLOAD_ERR_NO_FILE,
+            'type'     => '',
         ];
 
         $this->assertFalse($validator->isValid($filesArray));

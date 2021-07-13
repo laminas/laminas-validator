@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace LaminasTest\Validator;
@@ -94,11 +88,11 @@ class DateTest extends TestCase
             // double
             [12.12,                     null,              false,    false],
             // array
-            [['2012', '06', '25'],      null,              true,     false],
+            [['2012', '06', '25'], null, true, false],
             // 0012-06-25 is a valid date, if you want 2012, use 'y' instead of 'Y'
-            [['12', '06', '25'],        null,              true,     false],
-            [['2012', '06', '33'],      null,              false,    false],
-            [[1 => 1],                  null,              false,    false],
+            [['12', '06', '25'], null, true, false],
+            [['2012', '06', '33'], null, false, false],
+            [[1 => 1], null, false, false],
             // DateTime
             [new DateTime(),            null,              true,     false],
             // invalid obj
@@ -110,7 +104,6 @@ class DateTest extends TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider datesDataProvider
-     *
      * @param string|numeric|DateTime|object|array $input
      */
     public function testBasic($input, ?string $format, bool $result, bool $resultStrict): void
@@ -122,7 +115,6 @@ class DateTest extends TestCase
 
     /**
      * @dataProvider datesDataProvider
-     *
      * @param string|numeric|DateTime|object|array $input
      */
     public function testBasicStrictMode($input, ?string $format, bool $result, bool $resultStrict): void
@@ -183,7 +175,7 @@ class DateTest extends TestCase
 
     public function testConstructorWithFormatParameter(): void
     {
-        $format = 'd/m/Y';
+        $format    = 'd/m/Y';
         $validator = new Validator\Date($format);
 
         $this->assertEquals($format, $validator->getFormat());

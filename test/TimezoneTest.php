@@ -1,16 +1,11 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Timezone;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 /**
  * Tests for {@see \Laminas\Validator\Timezone}
@@ -19,12 +14,10 @@ use PHPUnit\Framework\TestCase;
  */
 class TimezoneTest extends TestCase
 {
-    /**
-     * @var Timezone
-     */
+    /** @var Timezone */
     protected $validator;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->validator = new Timezone();
     }
@@ -32,11 +25,9 @@ class TimezoneTest extends TestCase
     /**
      * Test locations
      *
-     * @return void
-     *
      * @dataProvider locationProvider
      */
-    public function testLocations($value, $valid)
+    public function testLocations(?string $value, bool $valid): void
     {
         $this->validator->setType(Timezone::LOCATION);
         $this->checkValidationValue($value, $valid);
@@ -45,11 +36,9 @@ class TimezoneTest extends TestCase
     /**
      * Test locations by type is string
      *
-     * @return void
-     *
      * @dataProvider locationProvider
      */
-    public function testLocationsByTypeAsString($value, $valid)
+    public function testLocationsByTypeAsString(?string $value, bool $valid): void
     {
         $this->validator->setType('location');
         $this->checkValidationValue($value, $valid);
@@ -58,9 +47,9 @@ class TimezoneTest extends TestCase
     /**
      * Provides location values
      *
-     * @return array
+     * @psalm-return array<array-key, array{0: string|null, 1: bool}>
      */
-    public function locationProvider()
+    public function locationProvider(): array
     {
         return [
             ['America/Anguilla', true],
@@ -73,23 +62,19 @@ class TimezoneTest extends TestCase
             ['Pacific/Easter', true],
             ['Europe/Copenhagen', true],
             ['Indian/Maldives', true],
-
-            ['cest', false],              // abbreviation of Anadyr Summer Time
-
-            ['Asia/London', false],        // wrong location
-            ['', false],                   // empty string
-            [null, false],                 // null value
+            ['cest', false], // abbreviation of Anadyr Summer Time
+            ['Asia/London', false], // wrong location
+            ['', false], // empty string
+            [null, false], // null value
         ];
     }
 
     /**
      * Test abbreviations
      *
-     * @return void
-     *
      * @dataProvider abbreviationProvider
      */
-    public function testAbbreviations($value, $valid)
+    public function testAbbreviations(?string $value, bool $valid): void
     {
         $this->validator->setType(Timezone::ABBREVIATION);
         $this->checkValidationValue($value, $valid);
@@ -98,11 +83,9 @@ class TimezoneTest extends TestCase
     /**
      * Test abbreviations byTypeAsString
      *
-     * @return void
-     *
      * @dataProvider abbreviationProvider
      */
-    public function testAbbreviationsByTypeAsString($value, $valid)
+    public function testAbbreviationsByTypeAsString(?string $value, bool $valid): void
     {
         $this->validator->setType('abbreviation');
         $this->checkValidationValue($value, $valid);
@@ -111,32 +94,28 @@ class TimezoneTest extends TestCase
     /**
      * Provides abbreviation values
      *
-     * @return array
+     * @return array<array-key, array{0: null|string, 1: bool}>
      */
-    public function abbreviationProvider()
+    public function abbreviationProvider(): array
     {
         return [
-            ['cest', true],                // Central European Summer Time
-            ['hkt', true],                 // Hong Kong Time
-            ['nzdt', true],                // New Zealand Daylight Time
-            ['sast', true],                // South Africa Standard Time
-
-            ['America/Toronto', false],    // location
-
-            ['xyz', false],                // wrong abbreviation
-            ['', false],                   // empty string
-            [null, false],                 // null value
+            ['cest', true], // Central European Summer Time
+            ['hkt', true], // Hong Kong Time
+            ['nzdt', true], // New Zealand Daylight Time
+            ['sast', true], // South Africa Standard Time
+            ['America/Toronto', false], // location
+            ['xyz', false], // wrong abbreviation
+            ['', false], // empty string
+            [null, false], // null value
         ];
     }
 
     /**
      * Test locations and abbreviations
      *
-     * @return void
-     *
      * @dataProvider locationAndAbbreviationProvider
      */
-    public function testlocationsAndAbbreviationsWithAllTypeAsString($value, $valid)
+    public function testlocationsAndAbbreviationsWithAllTypeAsString(?string $value, bool $valid): void
     {
         $this->validator->setType(Timezone::ALL);
         $this->checkValidationValue($value, $valid);
@@ -145,11 +124,9 @@ class TimezoneTest extends TestCase
     /**
      * Test locations and abbreviations
      *
-     * @return void
-     *
      * @dataProvider locationAndAbbreviationProvider
      */
-    public function testlocationsAndAbbreviationsWithAllTypeAsArray($value, $valid)
+    public function testlocationsAndAbbreviationsWithAllTypeAsArray(?string $value, bool $valid): void
     {
         $this->validator->setType([Timezone::LOCATION, Timezone::ABBREVIATION]);
         $this->checkValidationValue($value, $valid);
@@ -158,11 +135,9 @@ class TimezoneTest extends TestCase
     /**
      * Test locations and abbreviations
      *
-     * @return void
-     *
      * @dataProvider locationAndAbbreviationProvider
      */
-    public function testlocationsAndAbbreviationsWithAllTypeAsArrayWithStrings($value, $valid)
+    public function testLocationsAndAbbreviationsWithAllTypeAsArrayWithStrings(?string $value, bool $valid): void
     {
         $this->validator->setType(['location', 'abbreviation']);
         $this->checkValidationValue($value, $valid);
@@ -171,9 +146,9 @@ class TimezoneTest extends TestCase
     /**
      * Provides location and abbreviation values
      *
-     * @return array
+     * @psalm-return array<array-key, array{0: string|null, 1: bool}>
      */
-    public function locationAndAbbreviationProvider()
+    public function locationAndAbbreviationProvider(): array
     {
         return [
             ['America/Anguilla', true],
@@ -181,27 +156,23 @@ class TimezoneTest extends TestCase
             ['Asia/Dubai', true],
             ['Atlantic/Cape_Verde', true],
             ['Australia/Broken_Hill', true],
-
-            ['hkt', true],                 // Hong Kong Time
-            ['nzdt', true],                // New Zealand Daylight Time
-            ['sast', true],                // South Africa Standard Time
-
-            ['xyz', false],                // wrong abbreviation
-            ['Asia/London', false],        // wrong location
-
-            ['', false],                   // empty string
-            [null, false],                 // null value
+            ['hkt', true], // Hong Kong Time
+            ['nzdt', true], // New Zealand Daylight Time
+            ['sast', true], // South Africa Standard Time
+            ['xyz', false], // wrong abbreviation
+            ['Asia/London', false], // wrong location
+            ['', false], // empty string
+            [null, false], // null value
         ];
     }
 
     /**
      * Test wrong type
      *
-     * @return void
-     *
      * @dataProvider wrongTypesProvider
+     * @param mixed $value
      */
-    public function testWrongType($value)
+    public function testWrongType($value): void
     {
         $this->checkExpectedException($value);
     }
@@ -209,9 +180,9 @@ class TimezoneTest extends TestCase
     /**
      * Provides wrong types
      *
-     * @return array
+     * @psalm-return array<array-key, array{0: mixed}>
      */
-    public function wrongTypesProvider()
+    public function wrongTypesProvider(): array
     {
         return [
             [null],
@@ -265,10 +236,7 @@ class TimezoneTest extends TestCase
 
     /**
      * @param mixed $invalidType
-     *
      * @dataProvider getInvalidTypes
-     *
-     * @return void
      */
     public function testRejectsInvalidIntType($invalidType): void
     {
@@ -282,7 +250,6 @@ class TimezoneTest extends TestCase
      *
      * @param mixed $value Value to validate
      * @param bool  $valid Expected validity
-     *
      * @return void
      */
     protected function checkValidationValue($value, $valid)
@@ -300,7 +267,6 @@ class TimezoneTest extends TestCase
      * Checks expected exception on wrong type
      *
      * @param mixed $value Value to validate
-     *
      * @return void
      */
     protected function checkExpectedException($value)
@@ -317,7 +283,7 @@ class TimezoneTest extends TestCase
     public function getInvalidTypes()
     {
         return [
-            [new \stdClass()],
+            [new stdClass()],
             [[]],
             [0],
             [10],

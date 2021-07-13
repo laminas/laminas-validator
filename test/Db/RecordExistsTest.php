@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator\Db;
 
 use ArrayObject;
@@ -31,7 +25,7 @@ class RecordExistsTest extends TestCase
     /**
      * Return a Mock object for a Db result with rows
      *
-     * @return \Laminas\Db\Adapter\Adapter
+     * @return Adapter
      */
     protected function getMockHasResult()
     {
@@ -73,7 +67,7 @@ class RecordExistsTest extends TestCase
     /**
      * Return a Mock object for a Db result without rows
      *
-     * @return \Laminas\Db\Adapter\Adapter
+     * @return Adapter
      */
     protected function getMockNoResult()
     {
@@ -170,7 +164,7 @@ class RecordExistsTest extends TestCase
             'field'   => 'field1',
             'exclude' => [
                 'field' => 'id',
-               'value' => 1,
+                'value' => 1,
             ],
             'adapter' => $this->getMockNoResult(),
         ]);
@@ -208,8 +202,6 @@ class RecordExistsTest extends TestCase
 
     /**
      * @group Laminas-8863
-     *
-     * @return void
      */
     public function testExcludeConstructor(): void
     {
@@ -239,7 +231,7 @@ class RecordExistsTest extends TestCase
     public function testWithSchema()
     {
         $validator = new RecordExists([
-            'table' => 'users',
+            'table'  => 'users',
             'schema' => 'my',
         ], 'field1', null, $this->getMockHasResult());
         $this->assertTrue($validator->isValid('value1'));
@@ -247,13 +239,11 @@ class RecordExistsTest extends TestCase
 
     /**
      * Test that schemas are supported and run without error
-     *
-     * @return void
      */
     public function testWithSchemaNoResult(): void
     {
         $validator = new RecordExists([
-            'table' => 'users',
+            'table'  => 'users',
             'schema' => 'my',
         ], 'field1', null, $this->getMockNoResult());
         $this->assertFalse($validator->isValid('value1'));
@@ -262,37 +252,33 @@ class RecordExistsTest extends TestCase
     /**
      * Test that the supplied table and schema are successfully passed to the select
      * statement
-     *
-     * @return void
      */
     public function testSelectAcknowledgesTableAndSchema(): void
     {
         $validator = new RecordExists([
-            'table' => 'users',
+            'table'  => 'users',
             'schema' => 'my',
         ], 'field1', null, $this->getMockHasResult());
-        $table = $validator->getSelect()->getRawState('table');
+        $table     = $validator->getSelect()->getRawState('table');
         $this->assertInstanceOf(TableIdentifier::class, $table);
         $this->assertEquals(['users', 'my'], $table->getTableAndSchema());
     }
 
     public function testEqualsMessageTemplates(): void
     {
-        $validator  = new RecordExists('users', 'field1');
+        $validator = new RecordExists('users', 'field1');
         $this->assertObjectHasAttribute('messageTemplates', $validator);
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     /**
      * @testdox Laminas\Validator\Db\RecordExists::getSelect
-     *
-     * @return void
      */
     public function testGetSelect(): void
     {
         $validator = new RecordExists(
             [
-                'table' => 'users',
+                'table'  => 'users',
                 'schema' => 'my',
             ],
             'field1',
@@ -302,15 +288,15 @@ class RecordExistsTest extends TestCase
             ],
             $this->getMockHasResult()
         );
-        $select = $validator->getSelect();
+        $select    = $validator->getSelect();
         $this->assertInstanceOf(Select::class, $select);
         $this->assertEquals(
             'SELECT "my"."users"."field1" AS "field1" FROM "my"."users" WHERE "field1" = \'\' AND "foo" != \'bar\'',
             $select->getSqlString(new TrustingSql92Platform())
         );
 
-        $sql = new Sql($this->getMockHasResult());
-        $statement = $sql->prepareStatementForSqlObject($select);
+        $sql        = new Sql($this->getMockHasResult());
+        $statement  = $sql->prepareStatementForSqlObject($select);
         $parameters = $statement->getParameterContainer();
         $this->assertNull($parameters['where1']);
         $this->assertEquals($parameters['where2'], 'bar');
@@ -318,16 +304,13 @@ class RecordExistsTest extends TestCase
 
     /**
      * @cover Laminas\Validator\Db\RecordExists::getSelect
-     *
      * @group Laminas-4521
-     *
-     * @return void
      */
     public function testGetSelectWithSameValidatorTwice(): void
     {
         $validator = new RecordExists(
             [
-                'table' => 'users',
+                'table'  => 'users',
                 'schema' => 'my',
             ],
             'field1',
@@ -337,7 +320,7 @@ class RecordExistsTest extends TestCase
             ],
             $this->getMockHasResult()
         );
-        $select = $validator->getSelect();
+        $select    = $validator->getSelect();
         $this->assertInstanceOf(Select::class, $select);
         $this->assertEquals(
             'SELECT "my"."users"."field1" AS "field1" FROM "my"."users" WHERE "field1" = \'\' AND "foo" != \'bar\'',

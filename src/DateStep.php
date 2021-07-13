@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace Laminas\Validator;
@@ -20,6 +14,7 @@ use Traversable;
 
 use function array_combine;
 use function array_count_values;
+use function array_map;
 use function array_shift;
 use function ceil;
 use function date_default_timezone_get;
@@ -35,12 +30,14 @@ use function preg_match;
 use function sprintf;
 use function strpos;
 
+use const PHP_INT_MAX;
+
 class DateStep extends Date
 {
     /**
      * Validity constants
      */
-    public const NOT_STEP       = 'dateStepNotStep';
+    public const NOT_STEP = 'dateStepNotStep';
 
     /**
      * Default format constant
@@ -92,8 +89,8 @@ class DateStep extends Date
         if ($options instanceof Traversable) {
             $options = ArrayUtils::iteratorToArray($options);
         } elseif (! is_array($options)) {
-            $options = func_get_args();
-            $temp = [];
+            $options           = func_get_args();
+            $temp              = [];
             $temp['baseValue'] = array_shift($options);
             if (! empty($options)) {
                 $temp['step'] = array_shift($options);
@@ -194,7 +191,8 @@ class DateStep extends Date
     protected function convertString($value, $addErrors = true)
     {
         // Custom week format support
-        if (strpos($this->format, 'Y-\WW') === 0
+        if (
+            strpos($this->format, 'Y-\WW') === 0
             && preg_match('/^([0-9]{4})\-W([0-9]{2})/', $value, $matches)
         ) {
             $date = new DateTime();
@@ -239,7 +237,7 @@ class DateStep extends Date
         $step = $this->getStep();
 
         // Same date?
-        if ($valueDate == $baseDate) {
+        if ($valueDate === $baseDate) {
             return true;
         }
 
@@ -249,12 +247,12 @@ class DateStep extends Date
         $intervalParts = array_map('intval', $intervalParts);
         $partCounts    = array_count_values($intervalParts);
 
-        $unitKeys = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];
+        $unitKeys      = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];
         $intervalParts = array_combine($unitKeys, $intervalParts);
 
         // Get absolute time difference to avoid special cases of missing/added time
         $absoluteValueDate = new DateTime($valueDate->format('Y-m-d H:i:s'), new DateTimeZone('UTC'));
-        $absoluteBaseDate = new DateTime($baseDate->format('Y-m-d H:i:s'), new DateTimeZone('UTC'));
+        $absoluteBaseDate  = new DateTime($baseDate->format('Y-m-d H:i:s'), new DateTimeZone('UTC'));
 
         $timeDiff  = $absoluteValueDate->diff($absoluteBaseDate, true);
         $diffParts = array_map('intval', explode('|', $timeDiff->format('%y|%m|%d|%h|%i|%s')));
@@ -276,7 +274,8 @@ class DateStep extends Date
             if (in_array($intervalUnit, ['years', 'months', 'days'])) {
                 switch ($intervalUnit) {
                     case 'years':
-                        if (0 === $diffParts['months'] && 0 === $diffParts['days']
+                        if (
+                            0 === $diffParts['months'] && 0 === $diffParts['days']
                             && 0 === $diffParts['hours'] && 0 === $diffParts['minutes']
                             && 0 === $diffParts['seconds']
                         ) {
@@ -286,7 +285,8 @@ class DateStep extends Date
                         }
                         break;
                     case 'months':
-                        if (0 === $diffParts['days'] && 0 === $diffParts['hours']
+                        if (
+                            0 === $diffParts['days'] && 0 === $diffParts['hours']
                             && 0 === $diffParts['minutes'] && 0 === $diffParts['seconds']
                         ) {
                             $months = ($diffParts['years'] * 12) + $diffParts['months'];
@@ -296,7 +296,8 @@ class DateStep extends Date
                         }
                         break;
                     case 'days':
-                        if (0 === $diffParts['hours'] && 0 === $diffParts['minutes']
+                        if (
+                            0 === $diffParts['hours'] && 0 === $diffParts['minutes']
                             && 0 === $diffParts['seconds']
                         ) {
                             $days = (int) $timeDiff->format('%a'); // Total days
@@ -314,7 +315,8 @@ class DateStep extends Date
             if (in_array($intervalUnit, ['hours', 'minutes', 'seconds'])) {
                 // Simple test if $stepValue is 1.
                 if (1 === $stepValue) {
-                    if ('hours' === $intervalUnit
+                    if (
+                        'hours' === $intervalUnit
                         && 0 === $diffParts['minutes'] && 0 === $diffParts['seconds']
                     ) {
                         return true;
@@ -330,7 +332,8 @@ class DateStep extends Date
                 }
 
                 // Simple test for same day, when using default baseDate
-                if ($baseDate->format('Y-m-d') === $valueDate->format('Y-m-d')
+                if (
+                    $baseDate->format('Y-m-d') === $valueDate->format('Y-m-d')
                     && $baseDate->format('Y-m-d') === '1970-01-01'
                 ) {
                     switch ($intervalUnit) {
@@ -379,7 +382,6 @@ class DateStep extends Date
      *
      * @param int[] $intervalParts
      * @param int[] $diffParts
-     *
      * @throws Exception\InvalidArgumentException
      */
     private function fallbackIncrementalIterationLogic(
@@ -389,9 +391,9 @@ class DateStep extends Date
         array $diffParts,
         DateInterval $step
     ): bool {
-        list($minSteps, $requiredIterations) = $this->computeMinStepAndRequiredIterations($intervalParts, $diffParts);
-        $minimumInterval                     = $this->computeMinimumInterval($intervalParts, $minSteps);
-        $isIncrementalStepping               = $baseDate < $valueDate;
+        [$minSteps, $requiredIterations] = $this->computeMinStepAndRequiredIterations($intervalParts, $diffParts);
+        $minimumInterval                 = $this->computeMinimumInterval($intervalParts, $minSteps);
+        $isIncrementalStepping           = $baseDate < $valueDate;
 
         if (! ($baseDate instanceof DateTime || $baseDate instanceof DateTimeImmutable)) {
             throw new Exception\InvalidArgumentException(sprintf(
@@ -408,7 +410,8 @@ class DateStep extends Date
             }
         }
 
-        while (($isIncrementalStepping && $baseDate < $valueDate)
+        while (
+            ($isIncrementalStepping && $baseDate < $valueDate)
             || (! $isIncrementalStepping && $baseDate > $valueDate)
         ) {
             if ($isIncrementalStepping) {
@@ -417,7 +420,7 @@ class DateStep extends Date
                 $baseDate = $baseDate->sub($step);
             }
 
-            if ($baseDate == $valueDate) {
+            if ($baseDate === $valueDate) {
                 return true;
             }
         }
@@ -458,7 +461,7 @@ class DateStep extends Date
 
         // If we use PHP_INT_MAX DateInterval::__construct falls over with a bad format error
         // before we reach the max on 64 bit machines
-        $maxInteger             = min(pow(2, 31), PHP_INT_MAX);
+        $maxInteger = min(pow(2, 31), PHP_INT_MAX);
         // check for integer overflow and split $minimum interval if needed
         $maximumInterval        = max($intervalParts);
         $requiredStepIterations = 1;
@@ -484,7 +487,7 @@ class DateStep extends Date
 
         return 0 === $intervalMaxSeconds
             ? 0
-            : max((floor($this->computeDiffMinSeconds($diffParts) / $intervalMaxSeconds) - 1), 0);
+            : max(floor($this->computeDiffMinSeconds($diffParts) / $intervalMaxSeconds) - 1, 0);
     }
 
     /**

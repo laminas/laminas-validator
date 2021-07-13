@@ -1,16 +1,15 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File;
 use PHPUnit\Framework\TestCase;
+
+use function basename;
+use function current;
+use function dirname;
+use function is_array;
 
 /**
  * NotExists testbed
@@ -20,13 +19,23 @@ use PHPUnit\Framework\TestCase;
 class NotExistsTest extends TestCase
 {
     /**
-     * @return array
+     * @psalm-return array<array-key, array{
+     *     0: string,
+     *     1: string|array{
+     *         tmp_name: string,
+     *         name: string,
+     *         size: int,
+     *         error: int,
+     *         type: string
+     *     },
+     *     2: bool
+     * }>
      */
-    public function basicBehaviorDataProvider()
+    public function basicBehaviorDataProvider(): array
     {
-        $testFile = __DIR__ . '/_files/testsize.mo';
-        $baseDir  = dirname($testFile);
-        $baseName = basename($testFile);
+        $testFile   = __DIR__ . '/_files/testsize.mo';
+        $baseDir    = dirname($testFile);
+        $baseName   = basename($testFile);
         $fileUpload = [
             'tmp_name' => $testFile,
             'name'     => basename($testFile),
@@ -49,9 +58,9 @@ class NotExistsTest extends TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider basicBehaviorDataProvider
-     * @return void
+     * @param string|array<string, mixed> $isValidParam
      */
-    public function testBasic($options, $isValidParam, $expected)
+    public function testBasic(string $options, $isValidParam, bool $expected): void
     {
         $validator = new File\NotExists($options);
         $this->assertEquals($expected, $validator->isValid($isValidParam));
@@ -61,9 +70,9 @@ class NotExistsTest extends TestCase
      * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
      * @dataProvider basicBehaviorDataProvider
-     * @return void
+     * @param string|array<string, mixed> $isValidParam
      */
-    public function testLegacy($options, $isValidParam, $expected)
+    public function testLegacy(string $options, $isValidParam, bool $expected): void
     {
         if (is_array($isValidParam)) {
             $validator = new File\NotExists($options);
@@ -136,8 +145,6 @@ class NotExistsTest extends TestCase
 
     /**
      * @group Laminas-11258
-     *
-     * @return void
      */
     public function testLaminas11258(): void
     {
@@ -175,8 +182,7 @@ class NotExistsTest extends TestCase
 
     /**
      * @dataProvider invalidDirectoryArguments
-     *
-     * @return void
+     * @param mixed $value
      */
     public function testAddingDirectoryUsingInvalidTypeRaisesException($value): void
     {

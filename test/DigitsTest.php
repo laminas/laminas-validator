@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Digits;
@@ -19,7 +13,7 @@ class DigitsTest extends TestCase
     /** @var Digits */
     protected $validator;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->validator = new Digits();
     }
@@ -72,7 +66,7 @@ class DigitsTest extends TestCase
     public function testEmptyStringValueResultsInProperValidationFailureMessages()
     {
         $this->assertFalse($this->validator->isValid(''));
-        $messages = $this->validator->getMessages();
+        $messages      = $this->validator->getMessages();
         $arrayExpected = [
             Digits::STRING_EMPTY => 'The input is an empty string',
         ];
@@ -85,7 +79,7 @@ class DigitsTest extends TestCase
     public function testInvalidValueResultsInProperValidationFailureMessages()
     {
         $this->assertFalse($this->validator->isValid('#'));
-        $messages = $this->validator->getMessages();
+        $messages      = $this->validator->getMessages();
         $arrayExpected = [
             Digits::NOT_DIGITS => 'The input must contain only digits',
         ];
@@ -94,8 +88,6 @@ class DigitsTest extends TestCase
 
     /**
      * @Laminas-4352
-     *
-     * @return void
      */
     public function testNonStringValidation(): void
     {

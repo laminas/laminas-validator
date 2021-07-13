@@ -1,13 +1,8 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
+use ArrayObject;
 use Laminas\Validator\Callback;
 use Laminas\Validator\Exception\RuntimeException;
 use Laminas\Validator\Explode;
@@ -15,6 +10,9 @@ use Laminas\Validator\InArray;
 use Laminas\Validator\Regex;
 use Laminas\Validator\ValidatorInterface;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function array_keys;
 
 /**
  * @group      Laminas_Validator
@@ -44,39 +42,38 @@ class ExplodeTest extends TestCase
     {
         return [
             //    value              delim break  N  valid  messages                   expects
-            ['foo,bar,dev,null', ',', false, 4, true,  [],                   true],
-            ['foo,bar,dev,null', ',', true,  1, false, ['X'],                false],
-            ['foo,bar,dev,null', ',', false, 4, false, ['X'],                false],
-            ['foo,bar,dev,null', ';', false, 1, true,  [],                   true],
-            ['foo;bar,dev;null', ',', false, 2, true,  [],                   true],
-            ['foo;bar,dev;null', ',', false, 2, false, ['X'],                false],
-            ['foo;bar;dev;null', ';', false, 4, true,  [],                   true],
-            ['foo',              ',', false, 1, true,  [],                   true],
-            ['foo',              ',', false, 1, false, ['X'],                false],
-            ['foo',              ',', true,  1, false, ['X'],                false],
-            [['a', 'b'],   null, false, 2, true,  [],                   true],
-            [['a', 'b'],   null, false, 2, false, ['X'],                false],
-            ['foo',             null, false, 1, true,  [],                   true],
-            [1,                  ',', false, 1, true,  [],                   true],
-            [null,               ',', false, 1, true,  [],                   true],
-            [new \stdClass(),    ',', false, 1, true,  [],                   true],
-            [new \ArrayObject(['a', 'b']), null, false, 2, true,  [],   true],
+            ['foo,bar,dev,null', ',', false, 4, true, [], true],
+            ['foo,bar,dev,null', ',', true, 1, false, ['X'], false],
+            ['foo,bar,dev,null', ',', false, 4, false, ['X'], false],
+            ['foo,bar,dev,null', ';', false, 1, true, [], true],
+            ['foo;bar,dev;null', ',', false, 2, true, [], true],
+            ['foo;bar,dev;null', ',', false, 2, false, ['X'], false],
+            ['foo;bar;dev;null', ';', false, 4, true, [], true],
+            ['foo', ',', false, 1, true, [], true],
+            ['foo', ',', false, 1, false, ['X'], false],
+            ['foo', ',', true, 1, false, ['X'], false],
+            [['a', 'b'], null, false, 2, true, [], true],
+            [['a', 'b'], null, false, 2, false, ['X'], false],
+            ['foo', null, false, 1, true, [], true],
+            [1, ',', false, 1, true, [], true],
+            [null, ',', false, 1, true, [], true],
+            [new stdClass(), ',', false, 1, true, [], true],
+            [new ArrayObject(['a', 'b']), null, false, 2, true, [], true],
         ];
     }
 
     /**
      * @dataProvider getExpectedData
-     *
-     * @return void
+     * @param mixed $value
      */
     public function testExpectedBehavior(
         $value,
-        $delimiter,
-        $breakOnFirst,
-        $numIsValidCalls,
-        $isValidReturn,
-        $messages,
-        $expects
+        ?string $delimiter,
+        bool $breakOnFirst,
+        int $numIsValidCalls,
+        bool $isValidReturn,
+        array $messages,
+        bool $expects
     ): void {
         $mockValidator = $this->createMock(ValidatorInterface::class);
         $mockValidator
@@ -121,13 +118,13 @@ class ExplodeTest extends TestCase
     {
         $validator = new Explode();
         $validator->setValidator([
-            'name' => 'inarray',
+            'name'    => 'inarray',
             'options' => [
                 'haystack' => ['a', 'b', 'c'],
             ],
         ]);
 
-        /** @var $inArrayValidator \Laminas\Validator\InArray */
+        /** @var InArray $inArrayValidator */
         $inArrayValidator = $validator->getValidator();
         $this->assertInstanceOf(InArray::class, $inArrayValidator);
         $this->assertSame(
@@ -154,8 +151,6 @@ class ExplodeTest extends TestCase
 
     /**
      * @group Laminas-5796
-     *
-     * @return void
      */
     public function testGetMessagesMultipleInvalid(): void
     {
@@ -180,14 +175,12 @@ class ExplodeTest extends TestCase
 
     /**
      * Assert context is passed to composed validator
-     *
-     * @return void
      */
     public function testIsValidPassContext(): void
     {
-        $context       = 'context';
-        $contextSame   = false;
-        $validator = new Explode([
+        $context     = 'context';
+        $contextSame = false;
+        $validator   = new Explode([
             'validator'           => new Callback(function ($v, $c) use ($context, &$contextSame) {
                 $contextSame = $context === $c;
                 return true;

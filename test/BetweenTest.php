@@ -1,16 +1,14 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
+use ArrayObject;
 use Laminas\Validator\Between;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+
+use function array_keys;
+use function implode;
 
 /**
  * @group      Laminas_Validator
@@ -29,155 +27,156 @@ class BetweenTest extends TestCase
     public function providerBasic(): array
     {
         return [
-            'inclusive-int-valid-floor' => [
-                'min' => 1,
-                'max' => 100,
+            'inclusive-int-valid-floor'              => [
+                'min'       => 1,
+                'max'       => 100,
                 'inclusive' => true,
-                'expected' => true,
-                'value' => 1,
+                'expected'  => true,
+                'value'     => 1,
             ],
-            'inclusive-int-valid-between' => [
-                'min' => 1,
-                'max' => 100,
+            'inclusive-int-valid-between'            => [
+                'min'       => 1,
+                'max'       => 100,
                 'inclusive' => true,
-                'expected' => true,
-                'value' => 10,
+                'expected'  => true,
+                'value'     => 10,
             ],
-            'inclusive-int-valid-ceiling' => [
-                'min' => 1,
-                'max' => 100,
+            'inclusive-int-valid-ceiling'            => [
+                'min'       => 1,
+                'max'       => 100,
                 'inclusive' => true,
-                'expected' => true,
-                'value' => 100,
+                'expected'  => true,
+                'value'     => 100,
             ],
-            'inclusive-int-invaild-below' => [
-                'min' => 1,
-                'max' => 100,
+            'inclusive-int-invaild-below'            => [
+                'min'       => 1,
+                'max'       => 100,
                 'inclusive' => true,
-                'expected' => false,
-                'value' => 0,
+                'expected'  => false,
+                'value'     => 0,
             ],
             'inclusive-int-invalid-below-fractional' => [
-                'min' => 1,
-                'max' => 100,
+                'min'       => 1,
+                'max'       => 100,
                 'inclusive' => true,
-                'expected' => false,
-                'value' => 0.99,
+                'expected'  => false,
+                'value'     => 0.99,
             ],
             'inclusive-int-invalid-above-fractional' => [
-                'min' => 1,
-                'max' => 100,
+                'min'       => 1,
+                'max'       => 100,
                 'inclusive' => true,
-                'expected' => false,
-                'value' => 100.01,
+                'expected'  => false,
+                'value'     => 100.01,
             ],
-            'inclusive-int-invalid-above' => [
-                'min' => 1,
-                'max' => 100,
+            'inclusive-int-invalid-above'            => [
+                'min'       => 1,
+                'max'       => 100,
                 'inclusive' => true,
-                'expected' => false,
-                'value' => 101,
+                'expected'  => false,
+                'value'     => 101,
             ],
-            'exclusive-int-invalid-below' => [
-                'min' => 1,
-                'max' => 100,
+            'exclusive-int-invalid-below'            => [
+                'min'       => 1,
+                'max'       => 100,
                 'inclusive' => false,
-                'expected' => false,
-                'value' => 0,
+                'expected'  => false,
+                'value'     => 0,
             ],
-            'exclusive-int-invalid-floor' => [
-                'min' => 1,
-                'max' => 100,
+            'exclusive-int-invalid-floor'            => [
+                'min'       => 1,
+                'max'       => 100,
                 'inclusive' => false,
-                'expected' => false,
-                'value' => 1,
+                'expected'  => false,
+                'value'     => 1,
             ],
-            'exclusive-int-invalid-ceiling' => [
-                'min' => 1,
-                'max' => 100,
+            'exclusive-int-invalid-ceiling'          => [
+                'min'       => 1,
+                'max'       => 100,
                 'inclusive' => false,
-                'expected' => false,
-                'value' => 100,
+                'expected'  => false,
+                'value'     => 100,
             ],
-            'exclusive-int-invalid-above' => [
-                'min' => 1,
-                'max' => 100,
+            'exclusive-int-invalid-above'            => [
+                'min'       => 1,
+                'max'       => 100,
                 'inclusive' => false,
-                'expected' => false,
-                'value' => 101,
+                'expected'  => false,
+                'value'     => 101,
             ],
-            'inclusive-string-valid-floor' => [
-                'min' => 'a',
-                'max' => 'z',
+            'inclusive-string-valid-floor'           => [
+                'min'       => 'a',
+                'max'       => 'z',
                 'inclusive' => true,
-                'expected' => true,
-                'value' => 'a',
+                'expected'  => true,
+                'value'     => 'a',
             ],
-            'inclusive-string-valid-between' => [
-                'min' => 'a',
-                'max' => 'z',
+            'inclusive-string-valid-between'         => [
+                'min'       => 'a',
+                'max'       => 'z',
                 'inclusive' => true,
-                'expected' => true,
-                'value' => 'm',
+                'expected'  => true,
+                'value'     => 'm',
             ],
-            'inclusive-string-valid-ceiling' => [
-                'min' => 'a',
-                'max' => 'z',
+            'inclusive-string-valid-ceiling'         => [
+                'min'       => 'a',
+                'max'       => 'z',
                 'inclusive' => true,
-                'expected' => true,
-                'value' => 'z',
+                'expected'  => true,
+                'value'     => 'z',
             ],
-            'exclusive-string-invalid-out-of-range' => [
-                'min' => 'a',
-                'max' => 'z',
+            'exclusive-string-invalid-out-of-range'  => [
+                'min'       => 'a',
+                'max'       => 'z',
                 'inclusive' => false,
-                'expected' => false,
-                'value' => '!',
+                'expected'  => false,
+                'value'     => '!',
             ],
-            'exclusive-string-invalid-floor' => [
-                'min' => 'a',
-                'max' => 'z',
+            'exclusive-string-invalid-floor'         => [
+                'min'       => 'a',
+                'max'       => 'z',
                 'inclusive' => false,
-                'expected' => false,
-                'value' => 'a',
+                'expected'  => false,
+                'value'     => 'a',
             ],
-            'exclusive-string-invalid-ceiling' => [
-                'min' => 'a',
-                'max' => 'z',
+            'exclusive-string-invalid-ceiling'       => [
+                'min'       => 'a',
+                'max'       => 'z',
                 'inclusive' => false,
-                'expected' => false,
-                'value' => 'z',
+                'expected'  => false,
+                'value'     => 'z',
             ],
-            'inclusive-int-invalid-string' => [
-                'min' => 0,
-                'max' => 99999999,
+            'inclusive-int-invalid-string'           => [
+                'min'       => 0,
+                'max'       => 99999999,
                 'inclusive' => true,
-                'expected' => false,
-                'value' => 'asdasd',
+                'expected'  => false,
+                'value'     => 'asdasd',
             ],
-            'inclusive-int-invalid-char' => [
-                'min' => 0,
-                'max' => 99999999,
+            'inclusive-int-invalid-char'             => [
+                'min'       => 0,
+                'max'       => 99999999,
                 'inclusive' => true,
-                'expected' => false,
-                'value' => 'q',
+                'expected'  => false,
+                'value'     => 'q',
             ],
-            'inclusive-string-invalid-zero' => [
-                'min' => 'a',
-                'max' => 'zzzzz',
+            'inclusive-string-invalid-zero'          => [
+                'min'       => 'a',
+                'max'       => 'zzzzz',
                 'inclusive' => true,
-                'expected' => false,
-                'value' => 0,
+                'expected'  => false,
+                'value'     => 0,
             ],
-            'inclusive-string-invalid-non-zero' => [
-                'min' => 'a',
-                'max' => 'zzzzz',
+            'inclusive-string-invalid-non-zero'      => [
+                'min'       => 'a',
+                'max'       => 'zzzzz',
                 'inclusive' => true,
-                'expected' => false,
-                'value' => 10,
+                'expected'  => false,
+                'value'     => 10,
             ],
         ];
     }
+
     /**
      * Ensures that the validator follows expected behavior
      *
@@ -260,12 +259,8 @@ class BetweenTest extends TestCase
 
     /**
      * @covers \Laminas\Validator\Between::__construct()
-     *
      * @dataProvider constructBetweenValidatorInvalidDataProvider
-     *
      * @param array $args
-     *
-     * @return void
      */
     public function testMissingMinOrMax(array $args): void
     {
@@ -301,7 +296,7 @@ class BetweenTest extends TestCase
 
     public function testConstructWithTraversableOptions(): void
     {
-        $options = new \ArrayObject(['min' => 1, 'max' => 10, 'inclusive' => false]);
+        $options   = new ArrayObject(['min' => 1, 'max' => 10, 'inclusive' => false]);
         $validator = new Between($options);
 
         $this->assertTrue($validator->isValid(5));
