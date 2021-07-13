@@ -60,7 +60,7 @@ class ExcludeExtension extends Extension
             return true;
         } elseif (! $this->getCase()) {
             foreach ($extensions as $ext) {
-                if (strtolower($ext) == strtolower($extension)) {
+                if (strtolower($ext) === strtolower($extension)) {
                     if (preg_match('/nofile\.mo$/', $fileInfo['file'])) {
                     }
                     $this->error(self::FALSE_EXTENSION);
