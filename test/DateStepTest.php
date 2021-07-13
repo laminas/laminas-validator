@@ -6,6 +6,8 @@
  * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
  */
 
+declare(strict_types=1);
+
 namespace LaminasTest\Validator;
 
 use DateInterval;
@@ -16,13 +18,16 @@ use Laminas\Validator;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 
+use function date;
+
 /**
  * @group      Laminas_Validator
  */
 class DateStepTest extends TestCase
 {
     /**
-     * @psalm-return array<array-key, array{
+     * @return array[]
+     * @psalm-return array<array{
      *     0: string,
      *     1: string,
      *     2: string,
@@ -99,8 +104,13 @@ class DateStepTest extends TestCase
     /**
      * @dataProvider stepTestsDataProvider
      */
-    public function testDateStepValidation($interval, $format, $baseValue, $value, $isValid): void
-    {
+    public function testDateStepValidation(
+        string $interval,
+        string $format,
+        string $baseValue,
+        string $value,
+        bool $isValid
+    ): void {
         $validator = new Validator\DateStep([
             'format'    => $format,
             'baseValue' => $baseValue,
@@ -114,7 +124,7 @@ class DateStepTest extends TestCase
      * The exact base and test value matter here.
      * By having a different date and a step of seconds the fallbackIncrementalIterationLogic will run.
      */
-    public function testWithDateTimeType() : void
+    public function testWithDateTimeType(): void
     {
         $validator = new Validator\DateStep([
             'format'    => DateTime::ISO8601,
@@ -129,7 +139,7 @@ class DateStepTest extends TestCase
      * The exact base and test value matter here.
      * By having a different date and a step of seconds the fallbackIncrementalIterationLogic will run.
      */
-    public function testWithDateTimeImmutableType() : void
+    public function testWithDateTimeImmutableType(): void
     {
         $validator = new Validator\DateStep([
             'format'    => DateTime::ISO8601,
@@ -165,7 +175,8 @@ class DateStepTest extends TestCase
     }
 
     /**
-     * @psalm-return array<array-key, array{0: string}>
+     * @return array[]
+     * @psalm-return array<array{0: string}>
      */
     public function moscowWinterTimeDataProvider(): array
     {
@@ -180,10 +191,8 @@ class DateStepTest extends TestCase
 
     /**
      * @dataProvider moscowWinterTimeDataProvider
-     *
-     * @return void
      */
-    public function testMoscowWinterTime($dateToValidate): void
+    public function testMoscowWinterTime(string $dateToValidate): void
     {
         $validator = new Validator\DateStep([
             'format' => 'd-m-Y',
