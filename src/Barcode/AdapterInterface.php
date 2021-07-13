@@ -45,7 +45,7 @@ interface AdapterInterface
     /**
      * Returns if barcode uses a checksum
      *
-     * @return bool
+     * @return bool|int|string
      */
     public function getChecksum();
 

@@ -446,7 +446,7 @@ class EmailAddress extends AbstractValidator
 
         $validAddress = false;
         $reserved     = true;
-        foreach ($this->mxRecord as $hostname => $weight) {
+        foreach (array_keys($this->mxRecord) as $hostname) {
             $res = $this->isReserved($hostname);
             if (! $res) {
                 $reserved = false;

@@ -1827,7 +1827,7 @@ class Hostname extends AbstractValidator
         '台灣'       => [1 => 20],
     ];
 
-    /** @var string */
+    /** @var null|false|string */
     protected $tld;
 
     /**

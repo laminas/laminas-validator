@@ -15,7 +15,7 @@ class Explode extends AbstractValidator implements ValidatorPluginManagerAwareIn
 {
     public const INVALID = 'explodeInvalid';
 
-    /** @var ValidatorPluginManager */
+    /** @var null|ValidatorPluginManager */
     protected $pluginManager;
 
     /** @var array */

@@ -3,6 +3,7 @@
 namespace Laminas\Validator;
 
 use Countable;
+use Traversable;
 
 use function count;
 use function is_array;
@@ -67,7 +68,7 @@ class IsCountable extends AbstractValidator
     ];
 
     /**
-     * @param array $options
+     * @param array|Traversable $options
      * @return $this Provides fluid interface
      */
     public function setOptions($options = [])

@@ -86,7 +86,7 @@ class ImageSize extends AbstractValidator
      * - maxheight
      * - maxwidth
      *
-     * @param array|Traversable $options
+     * @param null|array|Traversable $options
      */
     public function __construct($options = null)
     {

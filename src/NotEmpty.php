@@ -126,7 +126,7 @@ class NotEmpty extends AbstractValidator
     }
 
     /**
-     * @return int
+     * @return false|int|string
      */
     public function getDefaultType()
     {
@@ -146,7 +146,7 @@ class NotEmpty extends AbstractValidator
                 if (is_int($value)) {
                     $detected |= $value;
                 } elseif (in_array($value, $this->constants, true)) {
-                    $detected |= array_search($value, $this->constants, true);
+                    $detected |= (int) array_search($value, $this->constants, true);
                 }
             }
 
@@ -181,7 +181,7 @@ class NotEmpty extends AbstractValidator
     /**
      * Returns true if and only if $value is not an empty value.
      *
-     * @param  string $value
+     * @param  mixed $value
      * @return bool
      */
     public function isValid($value)

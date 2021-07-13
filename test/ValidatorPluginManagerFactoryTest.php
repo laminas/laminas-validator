@@ -98,8 +98,6 @@ class ValidatorPluginManagerFactoryTest extends TestCase
 
     public function testDoesNotConfigureValidatorServicesWhenServiceListenerPresent(): void
     {
-        $validator = $this->prophesize(ValidatorInterface::class)->reveal();
-
         $container = $this->prophesize(ServiceLocatorInterface::class);
         $container->willImplement(ContainerInterface::class);
 

@@ -135,8 +135,8 @@ class Step extends AbstractValidator
     /**
      * replaces the internal fmod function which give wrong results on many cases
      *
-     * @param float $x
-     * @param float $y
+     * @param int|float $x
+     * @param int|float $y
      * @return float
      */
     protected function fmod($x, $y)

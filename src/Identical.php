@@ -43,11 +43,11 @@ class Identical extends AbstractValidator
     /**
      * Original token against which to validate
      *
-     * @var string
+     * @var null|string
      */
     protected $tokenString;
 
-    /** @var string */
+    /** @var null|string */
     protected $token;
 
     /** @var bool */
@@ -156,7 +156,7 @@ class Identical extends AbstractValidator
      * matches that token.
      *
      * @param  mixed $value
-     * @param  array|ArrayAccess $context
+     * @param  null|array|ArrayAccess $context
      * @throws Exception\InvalidArgumentException If context is not array or ArrayObject.
      * @return bool
      */
@@ -188,7 +188,11 @@ class Identical extends AbstractValidator
 
             // if $token is an array it means the above loop didn't went all the way down to the leaf,
             // so the $token structure doesn't match the $context structure
-            if (is_array($token) || ! isset($context[$token])) {
+            if (
+                is_array($token)
+                || (! is_int($token) && ! is_string($token))
+                || ! isset($context[$token])
+            ) {
                 $token = $this->getToken();
             } else {
                 $token = $context[$token];

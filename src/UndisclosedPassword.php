@@ -129,7 +129,7 @@ final class UndisclosedPassword extends AbstractValidator
     {
         $data   = explode("\r\n", $resultStream);
         $hashes = array_filter($data, static function ($value) use ($sha1Hash) {
-            [$hash, $count] = explode(':', $value);
+            [$hash] = explode(':', $value);
 
             return strcmp($hash, substr($sha1Hash, self::HIBP_K_ANONYMITY_HASH_RANGE_LENGTH)) === 0;
         });

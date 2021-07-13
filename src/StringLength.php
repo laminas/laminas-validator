@@ -26,7 +26,7 @@ class StringLength extends AbstractValidator
         self::TOO_LONG  => 'The input is more than %max% characters long',
     ];
 
-    /** @var array<string, arrray<string, string>> */
+    /** @var array<string, array<string, string>> */
     protected $messageVariables = [
         'min'    => ['options' => 'min'],
         'max'    => ['options' => 'max'],

@@ -535,9 +535,9 @@ abstract class AbstractValidator implements
      * @param  bool $flag
      * @return $this
      */
-    public function setTranslatorEnabled($flag = true)
+    public function setTranslatorEnabled($enabled = true)
     {
-        $this->abstractOptions['translatorEnabled'] = (bool) $flag;
+        $this->abstractOptions['translatorEnabled'] = (bool) $enabled;
         return $this;
     }
 

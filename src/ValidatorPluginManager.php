@@ -51,7 +51,7 @@ class ValidatorPluginManager extends AbstractPluginManager
     /**
      * Default set of aliases
      *
-     * @var array
+     * @var array<array-key, string>
      */
     protected $aliases = [
         'alnum'                  => I18nValidator\Alnum::class,
@@ -283,7 +283,7 @@ class ValidatorPluginManager extends AbstractPluginManager
         Loc::class                          => Sitemap\Loc::class,
         Priority::class                     => Sitemap\Priority::class,
         \Zend\Validator\StringLength::class => StringLength::class,
-        \zend\validator\step::class         => Step::class,
+        \Zend\Validator\Step::class         => Step::class,
         \Zend\Validator\Timezone::class     => Timezone::class,
         \Zend\Validator\Uri::class          => Uri::class,
         \Zend\Validator\Uuid::class         => Uuid::class,
@@ -355,7 +355,7 @@ class ValidatorPluginManager extends AbstractPluginManager
     /**
      * Default set of factories
      *
-     * @var array
+     * @var array<array-key, callable|string>
      */
     protected $factories = [
         I18nValidator\Alnum::class       => InvokableFactory::class,
@@ -529,7 +529,7 @@ class ValidatorPluginManager extends AbstractPluginManager
     /**
      * Default instance type
      *
-     * @var string
+     * @var null|string
      */
     protected $instanceOf = ValidatorInterface::class;
 
@@ -554,14 +554,14 @@ class ValidatorPluginManager extends AbstractPluginManager
      *
      * {@inheritDoc}
      */
-    public function validate($plugin)
+    public function validate($instance)
     {
-        if (! $plugin instanceof $this->instanceOf) {
+        if (! $instance instanceof $this->instanceOf) {
             throw new InvalidServiceException(sprintf(
                 '%s expects only to create instances of %s; %s is invalid',
                 static::class,
                 $this->instanceOf,
-                is_object($plugin) ? get_class($plugin) : gettype($plugin)
+                is_object($instance) ? get_class($instance) : gettype($instance)
             ));
         }
     }

@@ -14,7 +14,7 @@ class ValidatorPluginManagerFactory implements FactoryInterface
     /**
      * laminas-servicemanager v2 support for invocation options.
      *
-     * @var array
+     * @var null|array
      */
     protected $creationOptions;
 
