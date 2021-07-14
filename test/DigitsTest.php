@@ -5,6 +5,8 @@ namespace LaminasTest\Validator;
 use Laminas\Validator\Digits;
 use PHPUnit\Framework\TestCase;
 
+use function array_keys;
+
 /**
  * @group      Laminas_Validator
  */
@@ -96,8 +98,14 @@ class DigitsTest extends TestCase
 
     public function testEqualsMessageTemplates(): void
     {
-        $validator = $this->validator;
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        $this->assertSame(
+            [
+                Digits::NOT_DIGITS,
+                Digits::STRING_EMPTY,
+                Digits::INVALID,
+            ],
+            array_keys($this->validator->getMessageTemplates())
+        );
+        $this->assertEquals($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 }

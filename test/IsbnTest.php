@@ -6,6 +6,8 @@ use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Isbn;
 use PHPUnit\Framework\TestCase;
 
+use function array_keys;
+
 /**
  * @group      Laminas_Validator
  */
@@ -223,7 +225,13 @@ class IsbnTest extends TestCase
     public function testEqualsMessageTemplates(): void
     {
         $validator = new Isbn();
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertSame(
+            [
+                Isbn::INVALID,
+                Isbn::NO_ISBN,
+            ],
+            array_keys($validator->getMessageTemplates())
+        );
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 }

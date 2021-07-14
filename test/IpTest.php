@@ -6,6 +6,8 @@ use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Ip;
 use PHPUnit\Framework\TestCase;
 
+use function array_keys;
+
 /**
  * @group      Laminas_Validator
  */
@@ -362,9 +364,14 @@ class IpTest extends TestCase
 
     public function testEqualsMessageTemplates(): void
     {
-        $validator = $this->validator;
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        $this->assertSame(
+            [
+                Ip::INVALID,
+                Ip::NOT_IP_ADDRESS,
+            ],
+            array_keys($this->validator->getMessageTemplates())
+        );
+        $this->assertEquals($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 
     /**

@@ -161,16 +161,24 @@ class DateTest extends TestCase
 
     public function testEqualsMessageTemplates(): void
     {
-        $validator = $this->validator;
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        $this->assertSame(
+            [
+                Validator\Date::INVALID,
+                Validator\Date::INVALID_DATE,
+                Validator\Date::FALSEFORMAT,
+            ],
+            array_keys($this->validator->getMessageTemplates())
+        );
+        $this->assertEquals($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
     {
-        $validator = $this->validator;
-        $this->assertObjectHasAttribute('messageVariables', $validator);
-        $this->assertEquals(array_keys($validator->getOption('messageVariables')), $validator->getMessageVariables());
+        $messageVariables = [
+            'format' => 'format',
+        ];
+        $this->assertSame($messageVariables, $this->validator->getOption('messageVariables'));
+        $this->assertEquals(array_keys($messageVariables), $this->validator->getMessageVariables());
     }
 
     public function testConstructorWithFormatParameter(): void

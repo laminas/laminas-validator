@@ -7,6 +7,7 @@ use Laminas\Validator\CreditCard;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
+use function array_keys;
 use function current;
 
 /**
@@ -187,9 +188,9 @@ class CreditCardTest extends TestCase
     /**
      * Data provider
      *
-     * @return string[][]|bool[][]
+     * @psalm-return array<array-key, array{0: string, 1: bool}>
      */
-    public function jcbValues()
+    public function jcbValues(): array
     {
         return [
             ['3566003566003566', true],
@@ -223,9 +224,9 @@ class CreditCardTest extends TestCase
     /**
      * Data provider
      *
-     * @return string[][]|bool[][]
+     * @psalm-return array<array-key, array{0: string, 1: bool}>
      */
-    public function mastercardValues()
+    public function mastercardValues(): array
     {
         return [
             ['4111111111111111', false],
@@ -260,9 +261,9 @@ class CreditCardTest extends TestCase
     /**
      * Data provider
      *
-     * @return string[][]|bool[][]
+     * @psalm-return array<array-key, array{0: string, 1: bool}>
      */
-    public function mirValues()
+    public function mirValues(): array
     {
         return [
             ['3011111111111000', false],
@@ -366,7 +367,18 @@ class CreditCardTest extends TestCase
     public function testEqualsMessageTemplates(): void
     {
         $validator = new CreditCard();
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertSame(
+            [
+                CreditCard::CHECKSUM,
+                CreditCard::CONTENT,
+                CreditCard::INVALID,
+                CreditCard::LENGTH,
+                CreditCard::PREFIX,
+                CreditCard::SERVICE,
+                CreditCard::SERVICEFAILURE,
+            ],
+            array_keys($validator->getMessageTemplates())
+        );
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 

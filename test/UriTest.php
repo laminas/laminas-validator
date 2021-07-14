@@ -10,6 +10,8 @@ use Laminas\Validator\Uri;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
+use function array_keys;
+
 /**
  * @group      Laminas_Validator
  */
@@ -163,9 +165,14 @@ class UriTest extends TestCase
 
     public function testEqualsMessageTemplates(): void
     {
-        $validator = $this->validator;
-        self::assertObjectHasAttribute('messageTemplates', $validator);
-        self::assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        $this->assertSame(
+            [
+                Validator\Uri::INVALID,
+                Validator\Uri::NOT_URI,
+            ],
+            array_keys($this->validator->getMessageTemplates())
+        );
+        $this->assertEquals($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 
     public function testUriHandlerCanBeSpecifiedAsString(): void

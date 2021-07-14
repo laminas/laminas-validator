@@ -663,16 +663,32 @@ class HostnameTest extends TestCase
 
     public function testEqualsMessageTemplates(): void
     {
-        $validator = $this->validator;
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        $this->assertSame(
+            [
+                Hostname::CANNOT_DECODE_PUNYCODE,
+                Hostname::INVALID,
+                Hostname::INVALID_DASH,
+                Hostname::INVALID_HOSTNAME,
+                Hostname::INVALID_HOSTNAME_SCHEMA,
+                Hostname::INVALID_LOCAL_NAME,
+                Hostname::INVALID_URI,
+                Hostname::IP_ADDRESS_NOT_ALLOWED,
+                Hostname::LOCAL_NAME_NOT_ALLOWED,
+                Hostname::UNDECIPHERABLE_TLD,
+                Hostname::UNKNOWN_TLD,
+            ],
+            array_keys($this->validator->getMessageTemplates())
+        );
+        $this->assertEquals($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
     {
-        $validator = $this->validator;
-        $this->assertObjectHasAttribute('messageVariables', $validator);
-        $this->assertEquals(array_keys($validator->getOption('messageVariables')), $validator->getMessageVariables());
+        $messageVariables = [
+            'tld' => 'tld',
+        ];
+        $this->assertSame($messageVariables, $this->validator->getOption('messageVariables'));
+        $this->assertEquals(array_keys($messageVariables), $this->validator->getMessageVariables());
     }
 
     public function testHostnameWithOnlyIpChars(): void

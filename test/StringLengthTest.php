@@ -162,15 +162,25 @@ class StringLengthTest extends TestCase
 
     public function testEqualsMessageTemplates(): void
     {
-        $validator = $this->validator;
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        $this->assertSame(
+            [
+                StringLength::INVALID,
+                StringLength::TOO_SHORT,
+                StringLength::TOO_LONG,
+            ],
+            array_keys($this->validator->getMessageTemplates())
+        );
+        $this->assertEquals($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
     {
-        $validator = $this->validator;
-        $this->assertObjectHasAttribute('messageVariables', $validator);
-        $this->assertEquals(array_keys($validator->getOption('messageVariables')), $validator->getMessageVariables());
+        $messageVariables = [
+            'min'    => ['options' => 'min'],
+            'max'    => ['options' => 'max'],
+            'length' => ['options' => 'length'],
+        ];
+        $this->assertSame($messageVariables, $this->validator->getOption('messageVariables'));
+        $this->assertEquals(array_keys($messageVariables), $this->validator->getMessageVariables());
     }
 }

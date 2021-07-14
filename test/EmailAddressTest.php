@@ -361,11 +361,11 @@ class EmailAddressTest extends TestCase
         }
     }
 
-   /**
-    * Ensures that the validator follows expected behavior for checking MX records
-    *
-    * @return void
-    */
+    /**
+     * Ensures that the validator follows expected behavior for checking MX records
+     *
+     * @return void
+     */
     public function testMXRecords()
     {
         $this->skipIfOnlineTestsDisabled();
@@ -431,11 +431,11 @@ class EmailAddressTest extends TestCase
         $this->assertTrue($validator->isValid($email), implode("\n", $validator->getMessages()));
     }
 
-   /**
-    * Test changing hostname settings via EmailAddress object
-    *
-    * @return void
-    */
+    /**
+     * Test changing hostname settings via EmailAddress object
+     *
+     * @return void
+     */
     public function testHostnameSettings()
     {
         $validator = new EmailAddress();
@@ -736,16 +736,31 @@ class EmailAddressTest extends TestCase
 
     public function testEqualsMessageTemplates(): void
     {
-        $validator = $this->validator;
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        $this->assertSame(
+            [
+                EmailAddress::INVALID,
+                EmailAddress::INVALID_FORMAT,
+                EmailAddress::INVALID_HOSTNAME,
+                EmailAddress::INVALID_MX_RECORD,
+                EmailAddress::INVALID_SEGMENT,
+                EmailAddress::DOT_ATOM,
+                EmailAddress::QUOTED_STRING,
+                EmailAddress::INVALID_LOCAL_PART,
+                EmailAddress::LENGTH_EXCEEDED,
+            ],
+            array_keys($this->validator->getMessageTemplates())
+        );
+        $this->assertEquals($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
     {
-        $validator = $this->validator;
-        $this->assertObjectHasAttribute('messageVariables', $validator);
-        $this->assertEquals(array_keys($validator->getOption('messageVariables')), $validator->getMessageVariables());
+        $messageVariables = [
+            'hostname'  => 'hostname',
+            'localPart' => 'localPart',
+        ];
+        $this->assertSame($messageVariables, $this->validator->getOption('messageVariables'));
+        $this->assertEquals(array_keys($messageVariables), $this->validator->getMessageVariables());
     }
 
     /**

@@ -12,6 +12,7 @@ use Laminas\Validator;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 
+use function array_keys;
 use function date;
 
 /**
@@ -148,7 +149,15 @@ class DateStepTest extends TestCase
     public function testEqualsMessageTemplates(): void
     {
         $validator = new Validator\DateStep([]);
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertSame(
+            [
+                Validator\DateStep::INVALID,
+                Validator\DateStep::INVALID_DATE,
+                Validator\DateStep::FALSEFORMAT,
+                Validator\DateStep::NOT_STEP,
+            ],
+            array_keys($validator->getMessageTemplates())
+        );
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 

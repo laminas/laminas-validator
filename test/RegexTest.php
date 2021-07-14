@@ -137,15 +137,24 @@ class RegexTest extends TestCase
     public function testEqualsMessageTemplates(): void
     {
         $validator = new Regex('//');
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertSame(
+            [
+                Regex::INVALID,
+                Regex::NOT_MATCH,
+                Regex::ERROROUS,
+            ],
+            array_keys($validator->getMessageTemplates())
+        );
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
     {
-        $validator = new Regex('//');
-        $this->assertObjectHasAttribute('messageVariables', $validator);
-        $this->assertEquals(array_keys($validator->getOption('messageVariables')), $validator->getMessageVariables());
+        $validator        = new Regex('//');
+        $messageVariables = [
+            'pattern' => 'pattern',
+        ];
+        $this->assertSame($messageVariables, $validator->getOption('messageVariables'));
     }
 
     /**

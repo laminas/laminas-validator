@@ -246,15 +246,27 @@ class BetweenTest extends TestCase
     public function testEqualsMessageTemplates(): void
     {
         $validator = new Between(['min' => 1, 'max' => 10]);
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertSame(
+            [
+                Between::NOT_BETWEEN,
+                Between::NOT_BETWEEN_STRICT,
+                Between::VALUE_NOT_NUMERIC,
+                Between::VALUE_NOT_STRING,
+            ],
+            array_keys($validator->getMessageTemplates())
+        );
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
     {
-        $validator = new Between(['min' => 1, 'max' => 10]);
-        $this->assertObjectHasAttribute('messageVariables', $validator);
-        $this->assertEquals(array_keys($validator->getOption('messageVariables')), $validator->getMessageVariables());
+        $validator        = new Between(['min' => 1, 'max' => 10]);
+        $messageVariables = [
+            'min' => ['options' => 'min'],
+            'max' => ['options' => 'max'],
+        ];
+        $this->assertSame($messageVariables, $validator->getOption('messageVariables'));
+        $this->assertEquals(array_keys($messageVariables), $validator->getMessageVariables());
     }
 
     /**
