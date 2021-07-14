@@ -1,14 +1,9 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Validator;
+use Laminas\Validator\Step;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 
@@ -17,16 +12,14 @@ class StepTest extends TestCase
     /**
      * Step object
      *
-     * @var \Laminas\Validator\Step
+     * @var Step
      */
     protected $validator;
 
     /**
      * Creates a new Laminas\Validator\Step object for each test method
-     *
-     * @return void
      */
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->validator = new Validator\Step();
     }
@@ -54,10 +47,9 @@ class StepTest extends TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider valuesToValidate
-     *
-     * @return void
+     * @param mixed $value
      */
-    public function testBasic($value, $expected): void
+    public function testBasic($value, bool $expected): void
     {
         // By default, baseValue == 0 and step == 1
         $this->assertSame(
@@ -85,10 +77,9 @@ class StepTest extends TestCase
 
     /**
      * @dataProvider decimalValues
-     *
-     * @return void
+     * @param mixed $value
      */
-    public function testDecimalBaseValue($value, $expected): void
+    public function testDecimalBaseValue($value, bool $expected): void
     {
         $validator = new Validator\Step([
             'baseValue' => 0.1,
@@ -126,10 +117,9 @@ class StepTest extends TestCase
 
     /**
      * @dataProvider decimalStepValues
-     *
-     * @return void
+     * @param mixed $value
      */
-    public function testDecimalStep($value, $expected): void
+    public function testDecimalStep($value, bool $expected): void
     {
         $validator = new Validator\Step([
             'baseValue' => 0,
@@ -152,10 +142,8 @@ class StepTest extends TestCase
 
     /**
      * @dataProvider decimalStepSubstractionBugValues
-     *
-     * @return void
      */
-    public function testDecimalStepSubstractionBug($baseValue, $value, $expected): void
+    public function testDecimalStepSubstractionBug(int $baseValue, float $value, bool $expected): void
     {
         $validator = new Validator\Step([
             'baseValue' => $baseValue,
@@ -194,10 +182,8 @@ class StepTest extends TestCase
 
     /**
      * @dataProvider decimalHundredthStepValues
-     *
-     * @return void
      */
-    public function testdecimalHundredthStep($value, $expected): void
+    public function testdecimalHundredthStep(float $value, bool $expected): void
     {
         $validator = new Validator\Step([
             'baseValue' => 0,
@@ -219,8 +205,6 @@ class StepTest extends TestCase
 
     /**
      * Ensures that set/getBaseValue() works
-     *
-     * @return void
      */
     public function testCanSetBaseValue(): void
     {
@@ -230,8 +214,6 @@ class StepTest extends TestCase
 
     /**
      * Ensures that set/getStep() works
-     *
-     * @return void
      */
     public function testCanSetStepValue(): void
     {

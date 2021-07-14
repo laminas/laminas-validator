@@ -1,27 +1,21 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Hex;
 use PHPUnit\Framework\TestCase;
+
+use function array_keys;
 
 /**
  * @group      Laminas_Validator
  */
 class HexTest extends TestCase
 {
-    /**
-     * @var Hex
-     */
+    /** @var Hex */
     protected $validator;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->validator = new Hex();
     }
@@ -40,7 +34,7 @@ class HexTest extends TestCase
 
     /**
      * @psalm-return array<string, array{
-     *     0: mixed,
+     *     0: int|string,
      *     1: bool
      * }>
      */
@@ -74,8 +68,6 @@ class HexTest extends TestCase
 
     /**
      * @Laminas-4352
-     *
-     * @return void
      */
     public function testNonStringValidation(): void
     {
@@ -84,8 +76,13 @@ class HexTest extends TestCase
 
     public function testEqualsMessageTemplates(): void
     {
-        $validator = $this->validator;
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        $this->assertSame(
+            [
+                Hex::INVALID,
+                Hex::NOT_HEX,
+            ],
+            array_keys($this->validator->getMessageTemplates())
+        );
+        $this->assertEquals($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 }

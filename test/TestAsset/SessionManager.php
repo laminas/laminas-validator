@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator\TestAsset;
 
 use Laminas\EventManager\EventManagerInterface;
@@ -14,9 +8,13 @@ use Laminas\Session\Storage\ArrayStorage;
 
 class SessionManager extends AbstractManager
 {
+    /** @var bool */
     public $started = false;
 
-    protected $configDefaultClass  = 'Laminas\Session\Configuration\StandardConfiguration';
+    /** @var string */
+    protected $configDefaultClass = 'Laminas\Session\Configuration\StandardConfiguration';
+
+    /** @var string */
     protected $storageDefaultClass = ArrayStorage::class;
 
     /**
@@ -55,6 +53,7 @@ class SessionManager extends AbstractManager
     }
 
     /**
+     * @param string $name
      * @return void
      */
     public function setName($name)
@@ -69,6 +68,7 @@ class SessionManager extends AbstractManager
     }
 
     /**
+     * @param string $id
      * @return void
      */
     public function setId($id)
@@ -83,6 +83,7 @@ class SessionManager extends AbstractManager
     }
 
     /**
+     * @param null|int $ttl
      * @return void
      */
     public function rememberMe($ttl = null)

@@ -1,15 +1,11 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Digits;
 use PHPUnit\Framework\TestCase;
+
+use function array_keys;
 
 /**
  * @group      Laminas_Validator
@@ -19,7 +15,7 @@ class DigitsTest extends TestCase
     /** @var Digits */
     protected $validator;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->validator = new Digits();
     }
@@ -72,7 +68,7 @@ class DigitsTest extends TestCase
     public function testEmptyStringValueResultsInProperValidationFailureMessages()
     {
         $this->assertFalse($this->validator->isValid(''));
-        $messages = $this->validator->getMessages();
+        $messages      = $this->validator->getMessages();
         $arrayExpected = [
             Digits::STRING_EMPTY => 'The input is an empty string',
         ];
@@ -85,7 +81,7 @@ class DigitsTest extends TestCase
     public function testInvalidValueResultsInProperValidationFailureMessages()
     {
         $this->assertFalse($this->validator->isValid('#'));
-        $messages = $this->validator->getMessages();
+        $messages      = $this->validator->getMessages();
         $arrayExpected = [
             Digits::NOT_DIGITS => 'The input must contain only digits',
         ];
@@ -94,8 +90,6 @@ class DigitsTest extends TestCase
 
     /**
      * @Laminas-4352
-     *
-     * @return void
      */
     public function testNonStringValidation(): void
     {
@@ -104,8 +98,14 @@ class DigitsTest extends TestCase
 
     public function testEqualsMessageTemplates(): void
     {
-        $validator = $this->validator;
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        $this->assertSame(
+            [
+                Digits::NOT_DIGITS,
+                Digits::STRING_EMPTY,
+                Digits::INVALID,
+            ],
+            array_keys($this->validator->getMessageTemplates())
+        );
+        $this->assertEquals($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 }

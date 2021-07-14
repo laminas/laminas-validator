@@ -1,17 +1,14 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Callback;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
+
+use function array_keys;
+use function func_get_args;
 
 /**
  * @group      Laminas_Validator
@@ -32,7 +29,7 @@ class CallbackTest extends TestCase
     public function testStaticCallback(): void
     {
         $valid = new Callback(
-            [CallbackTest::class, 'staticCallback']
+            [self::class, 'staticCallback']
         );
         $this->assertTrue($valid->isValid('test'));
     }
@@ -77,7 +74,13 @@ class CallbackTest extends TestCase
     public function testEqualsMessageTemplates(): void
     {
         $validator = new Callback([$this, 'objectCallback']);
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertSame(
+            [
+                Callback::INVALID_VALUE,
+                Callback::INVALID_CALLBACK,
+            ],
+            array_keys($validator->getMessageTemplates())
+        );
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
@@ -86,7 +89,7 @@ class CallbackTest extends TestCase
         $value     = 'bar';
         $context   = ['foo' => 'bar', 'bar' => 'baz'];
         $validator = new Callback(function ($v, $c) use ($value, $context) {
-            return ($value == $v) && ($context == $c);
+            return ($value === $v) && ($context === $c);
         });
         $this->assertTrue($validator->isValid($value, $context));
     }
@@ -97,7 +100,7 @@ class CallbackTest extends TestCase
         $context   = ['foo' => 'bar', 'bar' => 'baz'];
         $options   = ['baz' => 'bat'];
         $validator = new Callback(function ($v, $c, $baz) use ($value, $context, $options) {
-            return ($value == $v) && ($context == $c) && ($options['baz'] == $baz);
+            return ($value === $v) && ($context === $c) && ($options['baz'] === $baz);
         });
         $validator->setCallbackOptions($options);
         $this->assertTrue($validator->isValid($value, $context));
@@ -106,7 +109,7 @@ class CallbackTest extends TestCase
     /**
      * @return true
      */
-    public function objectCallback($value): bool
+    public function objectCallback(): bool
     {
         return true;
     }
@@ -114,7 +117,7 @@ class CallbackTest extends TestCase
     /**
      * @return true
      */
-    public static function staticCallback($value): bool
+    public static function staticCallback(): bool
     {
         return true;
     }
@@ -122,7 +125,7 @@ class CallbackTest extends TestCase
     /**
      * @psalm-return list<mixed>
      */
-    public function optionsCallback($value): array
+    public function optionsCallback(): array
     {
         $args = func_get_args();
         $this->assertContains('something', $args);
@@ -136,7 +139,7 @@ class CallbackTest extends TestCase
         $r = new ReflectionProperty($validator, 'options');
         $r->setAccessible(true);
 
-        $options = $r->getValue($validator);
+        $options             = $r->getValue($validator);
         $options['callback'] = [];
 
         $r->setValue($validator, $options);

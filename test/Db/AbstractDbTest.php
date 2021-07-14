@@ -1,16 +1,11 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator\Db;
 
 use Laminas\Db\Adapter\Adapter;
 use Laminas\Db\Adapter\AdapterAwareInterface;
 use Laminas\Db\Sql\Select;
+use Laminas\Validator\Db\AbstractDb;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use LaminasTest\Validator\Db\TestAsset\ConcreteDbValidator;
 use PHPUnit\Framework\TestCase;
@@ -23,13 +18,14 @@ class AbstractDbTest extends TestCase
 {
     use ProphecyTrait;
 
+    /** @var AbstractDb */
     protected $validator;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->validator = new ConcreteDbValidator([
-            'table' => 'table',
-            'field' => 'field',
+            'table'  => 'table',
+            'field'  => 'field',
             'schema' => 'schema',
         ]);
     }
@@ -47,9 +43,9 @@ class AbstractDbTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Field option missing!');
-        $validator = new ConcreteDbValidator([
+        new ConcreteDbValidator([
             'schema' => 'schema',
-            'table' => 'table',
+            'table'  => 'table',
         ]);
     }
 
@@ -95,8 +91,6 @@ class AbstractDbTest extends TestCase
 
     /**
      * @group #46
-     *
-     * @return void
      */
     public function testImplementationsAreDbAdapterAware(): void
     {
@@ -105,12 +99,10 @@ class AbstractDbTest extends TestCase
 
     /**
      * @group #46
-     *
-     * @return void
      */
     public function testSetAdapterIsEquivalentToSetDbAdapter(): void
     {
-        $adapterFirst = $this->createStub(Adapter::class);
+        $adapterFirst  = $this->createStub(Adapter::class);
         $adapterSecond = $this->createStub(Adapter::class);
 
         $this->validator->setAdapter($adapterFirst);

@@ -6,6 +6,7 @@ The following validators come with the laminas-validator distribution.
 - [Between](validators/between.md)
 - [Callback](validators/callback.md)
 - [CreditCard](validators/credit-card.md)
+- [CSRF (Cross-site request forgery](validators/csrf.md)
 - [Date](validators/date.md)
 - [RecordExists and NoRecordExists (database)](validators/db.md)
 - [Digits](validators/digits.md)

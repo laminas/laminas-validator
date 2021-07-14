@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Session\Config\StandardConfig;
@@ -13,6 +7,15 @@ use Laminas\Session\Container;
 use Laminas\Session\Storage\ArrayStorage;
 use Laminas\Validator\Csrf;
 use PHPUnit\Framework\TestCase;
+use ReflectionMethod;
+
+use function class_exists;
+use function get_class;
+use function md5;
+use function sprintf;
+use function str_replace;
+use function strtr;
+use function uniqid;
 
 /**
  * Laminas\Csrf
@@ -27,21 +30,21 @@ class CsrfTest extends TestCase
     /** @var TestAsset\SessionManager */
     public $sessionManager;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         // Setup session handling
-        $_SESSION = [];
-        $sessionConfig = new StandardConfig([
+        $_SESSION             = [];
+        $sessionConfig        = new StandardConfig([
             'storage' => ArrayStorage::class,
         ]);
         $sessionManager       = new TestAsset\SessionManager($sessionConfig);
         $this->sessionManager = $sessionManager;
         Container::setDefaultManager($sessionManager);
 
-        $this->validator = new Csrf;
+        $this->validator = new Csrf();
     }
 
-    protected function tearDown() : void
+    protected function tearDown(): void
     {
         if (! class_exists(Container::class)) {
             return;
@@ -93,7 +96,6 @@ class CsrfTest extends TestCase
 
     /**
      * @return (int|null|string)[][]
-     *
      * @psalm-return array<array-key, array{0: null|int|string, 1: null|int}>
      */
     public function timeoutValuesDataProvider(): array
@@ -109,10 +111,9 @@ class CsrfTest extends TestCase
 
     /**
      * @dataProvider timeoutValuesDataProvider
-     *
-     * @return void
+     * @param null|int|numeric $timeout
      */
-    public function testTimeoutIsMutable($timeout, $expected): void
+    public function testTimeoutIsMutable($timeout, ?int $expected): void
     {
         $this->validator->setTimeout($timeout);
         $this->assertEquals($expected, $this->validator->getTimeout());
@@ -129,7 +130,7 @@ class CsrfTest extends TestCase
         ];
         $validator = new Csrf($options);
         foreach ($options as $key => $value) {
-            if ($key == 'session') {
+            if ($key === 'session') {
                 $this->assertSame($container, $value);
                 continue;
             }
@@ -148,8 +149,8 @@ class CsrfTest extends TestCase
 
     public function testSessionNameIsDerivedFromClassSaltAndName(): void
     {
-        $class = get_class($this->validator);
-        $class = str_replace('\\', '_', $class);
+        $class    = get_class($this->validator);
+        $class    = str_replace('\\', '_', $class);
         $expected = sprintf('%s_%s_%s', $class, $this->validator->getSalt(), $this->validator->getName());
         $this->assertEquals($expected, $this->validator->getSessionName());
     }
@@ -157,9 +158,9 @@ class CsrfTest extends TestCase
     public function testSessionNameRemainsValidForElementBelongingToFieldset(): void
     {
         $this->validator->setName('fieldset[csrf]');
-        $class = get_class($this->validator);
-        $class = str_replace('\\', '_', $class);
-        $name = strtr($this->validator->getName(), ['[' => '_', ']' => '']);
+        $class    = get_class($this->validator);
+        $class    = str_replace('\\', '_', $class);
+        $name     = strtr($this->validator->getName(), ['[' => '_', ']' => '']);
         $expected = sprintf('%s_%s_%s', $class, $this->validator->getSalt(), $name);
         $this->assertEquals($expected, $this->validator->getSessionName());
     }
@@ -185,18 +186,18 @@ class CsrfTest extends TestCase
 
     public function testSessionContainerContainsHashAfterHashHasBeenGenerated(): void
     {
-        $hash        = $this->validator->getHash();
-        $container   = $this->validator->getSession();
-        $test        = $container->hash; // Doing this, as expiration hops are 1; have to grab on first access
+        $hash      = $this->validator->getHash();
+        $container = $this->validator->getSession();
+        $test      = $container->hash; // Doing this, as expiration hops are 1; have to grab on first access
         $this->assertEquals($hash, $test);
     }
 
     public function testSettingNewSessionContainerSetsHashInNewContainer(): void
     {
-        $hash        = $this->validator->getHash();
-        $container   = new Container('foo', $this->sessionManager);
+        $hash      = $this->validator->getHash();
+        $container = new Container('foo', $this->sessionManager);
         $this->validator->setSession($container);
-        $test        = $container->hash; // Doing this, as expiration hops are 1; have to grab on first access
+        $test = $container->hash; // Doing this, as expiration hops are 1; have to grab on first access
         $this->assertEquals($hash, $test);
     }
 
@@ -264,10 +265,10 @@ class CsrfTest extends TestCase
 
     public function testCanValidateHasheWithoutId(): void
     {
-        $method = new \ReflectionMethod(get_class($this->validator), 'getTokenFromHash');
+        $method = new ReflectionMethod(get_class($this->validator), 'getTokenFromHash');
         $method->setAccessible(true);
 
-        $hash = $this->validator->getHash();
+        $hash      = $this->validator->getHash();
         $bareToken = $method->invoke($this->validator, $hash);
 
         $this->assertTrue($this->validator->isValid($bareToken));
@@ -280,7 +281,6 @@ class CsrfTest extends TestCase
 
     /**
      * @return string[][]
-     *
      * @psalm-return array<array-key, array{0: string}>
      */
     public function fakeValuesDataProvider(): array
@@ -299,10 +299,8 @@ class CsrfTest extends TestCase
 
     /**
      * @dataProvider fakeValuesDataProvider
-     *
-     * @return void
      */
-    public function testWithFakeValues($value): void
+    public function testWithFakeValues(string $value): void
     {
         $validator = new Csrf();
         $this->assertFalse($validator->isValid($value));

@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\AbstractValidator;
@@ -16,23 +10,29 @@ use Laminas\Validator\ValidatorChain;
 use Laminas\Validator\ValidatorInterface;
 use PHPUnit\Framework\TestCase;
 
+use function array_shift;
+use function in_array;
+use function is_array;
+use function is_string;
+use function serialize;
+use function strstr;
+use function unserialize;
+
 /**
  * @group      Laminas_Validator
  */
 class ValidatorChainTest extends TestCase
 {
-    /**
-     * @var ValidatorChain
-     */
+    /** @var ValidatorChain */
     protected $validator;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         AbstractValidator::setMessageLength(-1);
         $this->validator = new ValidatorChain();
     }
 
-    protected function tearDown() : void
+    protected function tearDown(): void
     {
         AbstractValidator::setDefaultTranslator(null);
         AbstractValidator::setMessageLength(-1);
@@ -118,8 +118,6 @@ class ValidatorChainTest extends TestCase
     /**
      * @group 6386
      * @group 6496
-     *
-     * @return void
      */
     public function testValidatorsAreExecutedAccordingToPriority(): void
     {
@@ -133,8 +131,6 @@ class ValidatorChainTest extends TestCase
     /**
      * @group 6386
      * @group 6496
-     *
-     * @return void
      */
     public function testPrependValidatorsAreExecutedAccordingToPriority(): void
     {
@@ -148,8 +144,6 @@ class ValidatorChainTest extends TestCase
     /**
      * @group 6386
      * @group 6496
-     *
-     * @return void
      */
     public function testMergeValidatorChains(): void
     {
@@ -166,8 +160,6 @@ class ValidatorChainTest extends TestCase
     /**
      * @group 6386
      * @group 6496
-     *
-     * @return void
      */
     public function testValidatorChainIsCloneable(): void
     {
@@ -207,7 +199,7 @@ class ValidatorChainTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Laminas\Validator\ValidatorInterface
+     * @return PHPUnit_Framework_MockObject_MockObject|ValidatorInterface
      */
     public function getValidatorTrue()
     {
@@ -219,7 +211,7 @@ class ValidatorChainTest extends TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|\Laminas\Validator\ValidatorInterface
+     * @return PHPUnit_Framework_MockObject_MockObject|ValidatorInterface
      */
     public function getValidatorFalse()
     {
@@ -235,8 +227,6 @@ class ValidatorChainTest extends TestCase
 
     /**
      * @group Laminas-412
-     *
-     * @return void
      */
     public function testCanAttachMultipleValidatorsOfTheSameTypeAsDiscreteInstances(): void
     {
@@ -259,7 +249,7 @@ class ValidatorChainTest extends TestCase
 
         $this->assertCount(2, $this->validator);
         $validators = $this->validator->getValidators();
-        $compare = null;
+        $compare    = null;
         foreach ($validators as $validator) {
             $this->assertNotSame($compare, $validator);
             $compare = $validator;
@@ -299,7 +289,7 @@ class ValidatorChainTest extends TestCase
     public function breakChainFlags(): array
     {
         return [
-            'underscores' => ['break_chain_on_failure'],
+            'underscores'    => ['break_chain_on_failure'],
             'no_underscores' => ['breakchainonfailure'],
         ];
     }
@@ -309,11 +299,11 @@ class ValidatorChainTest extends TestCase
      *
      * @dataProvider breakChainFlags
      */
-    public function testAttachByNameAllowsSpecifyingBreakChainOnFailureFlagViaOptions($option): void
+    public function testAttachByNameAllowsSpecifyingBreakChainOnFailureFlagViaOptions(string $option): void
     {
         $this->validator->attachByName('GreaterThan', [
             $option => true,
-            'min' => 1,
+            'min'   => 1,
         ]);
         $this->assertCount(1, $this->validator);
         $validators = $this->validator->getValidators();

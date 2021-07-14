@@ -1,13 +1,8 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
+use InvalidArgumentException;
 use Laminas\I18n\Validator\Alpha;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 use Laminas\ServiceManager\ServiceManager;
@@ -16,6 +11,10 @@ use Laminas\Validator\Between;
 use Laminas\Validator\StaticValidator;
 use Laminas\Validator\ValidatorPluginManager;
 use PHPUnit\Framework\TestCase;
+
+use function current;
+use function extension_loaded;
+use function strlen;
 
 /**
  * @group      Laminas_Validator
@@ -27,17 +26,15 @@ class StaticValidatorTest extends TestCase
 
     /**
      * Creates a new validation object for each test method
-     *
-     * @return void
      */
-    protected function setUp() : void
+    protected function setUp(): void
     {
         AbstractValidator::setDefaultTranslator(null);
         StaticValidator::setPluginManager(null);
         $this->validator = new Alpha();
     }
 
-    protected function tearDown() : void
+    protected function tearDown(): void
     {
         AbstractValidator::setDefaultTranslator(null);
         AbstractValidator::setMessageLength(-1);
@@ -74,11 +71,11 @@ class StaticValidatorTest extends TestCase
         AbstractValidator::setMessageLength(10);
         $this->assertEquals(10, AbstractValidator::getMessageLength());
 
-        $loader = new TestAsset\ArrayTranslator();
+        $loader               = new TestAsset\ArrayTranslator();
         $loader->translations = [
             'Invalid type given. String expected' => 'This is the translated message for %value%',
         ];
-        $translator = new TestAsset\Translator();
+        $translator           = new TestAsset\Translator();
         $translator->getPluginManager()->setService('default', $loader);
         $translator->addTranslationFile('default', null);
 
@@ -107,8 +104,6 @@ class StaticValidatorTest extends TestCase
         AbstractValidator::setDefaultTranslator($translator);
         $this->assertSame($translator, AbstractValidator::getDefaultTranslator());
     }
-
-    /* plugin loading */
 
     public function testLazyLoadsValidatorPluginManagerByDefault(): void
     {
@@ -152,11 +147,13 @@ class StaticValidatorTest extends TestCase
 
     /**
      * @dataProvider parameterizedData
-     *
-     * @return void
      */
-    public function testExecuteValidWithParameters($value, $validator, $options, $expected): void
-    {
+    public function testExecuteValidWithParameters(
+        int $value,
+        string $validator,
+        array $options,
+        bool $expected
+    ): void {
         $this->assertSame($expected, StaticValidator::execute($value, $validator, $options));
     }
 
@@ -173,12 +170,13 @@ class StaticValidatorTest extends TestCase
 
     /**
      * @dataProvider invalidParameterizedData
-     *
-     * @return void
      */
-    public function testExecuteRaisesExceptionForIndexedOptionsArray($value, $validator, $options): void
-    {
-        $this->expectException(\InvalidArgumentException::class);
+    public function testExecuteRaisesExceptionForIndexedOptionsArray(
+        int $value,
+        string $validator,
+        array $options
+    ): void {
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('options');
         StaticValidator::execute($value, $validator, $options);
     }

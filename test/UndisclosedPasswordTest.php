@@ -1,13 +1,8 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
+use Exception;
 use Laminas\Validator\UndisclosedPassword;
 use LaminasTest\Validator\TestAsset\HttpClientException;
 use PHPUnit\Framework\TestCase;
@@ -17,37 +12,36 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionClass;
+use stdClass;
+
+use function rand;
+use function sha1;
+use function sprintf;
+use function strtoupper;
+use function substr;
 
 class UndisclosedPasswordTest extends TestCase
 {
-    /**
-     * @var ClientInterface
-     */
+    /** @var ClientInterface */
     private $httpClient;
 
-    /**
-     * @var RequestInterface
-     */
+    /** @var RequestInterface */
     private $httpRequest;
 
-    /**
-     * @var ResponseInterface
-     */
+    /** @var ResponseInterface */
     private $httpResponse;
 
-    /**
-     * @var UndisclosedPassword
-     */
+    /** @var UndisclosedPassword */
     private $validator;
 
     /**
      * @inheritDoc
      */
-    protected function setUp() : void
+    protected function setUp(): void
     {
-        $this->httpClient = $this->getMockBuilder(ClientInterface::class)
+        $this->httpClient   = $this->getMockBuilder(ClientInterface::class)
             ->getMockForAbstractClass();
-        $this->httpRequest = $this->getMockBuilder(RequestFactoryInterface::class)
+        $this->httpRequest  = $this->getMockBuilder(RequestFactoryInterface::class)
             ->getMockForAbstractClass();
         $this->httpResponse = $this->getMockBuilder(ResponseInterface::class)
             ->getMockForAbstractClass();
@@ -58,7 +52,7 @@ class UndisclosedPasswordTest extends TestCase
     /**
      * @inheritDoc
      */
-    protected function tearDown() : void
+    protected function tearDown(): void
     {
         $this->httpClient = null;
     }
@@ -90,8 +84,9 @@ class UndisclosedPasswordTest extends TestCase
     /**
      * Data provider for most common used passwords
      *
-     * @return array
      * @see https://en.wikipedia.org/wiki/List_of_the_most_common_passwords
+     *
+     * @return array
      */
     public function seenPasswordProvider()
     {
@@ -109,15 +104,12 @@ class UndisclosedPasswordTest extends TestCase
      *
      * @covers \Laminas\Validator\UndisclosedPassword
      * @covers \Laminas\Validator\AbstractValidator
-     *
      * @todo Can be replaced by a \TypeError being thrown in PHP 7.0 or up
-     *
-     * @return void
      */
     public function testValidationFailsForInvalidInput(): void
     {
         $this->assertFalse($this->validator->isValid(true));
-        $this->assertFalse($this->validator->isValid(new \stdClass()));
+        $this->assertFalse($this->validator->isValid(new stdClass()));
         $this->assertFalse($this->validator->isValid(['foo']));
     }
 
@@ -126,18 +118,14 @@ class UndisclosedPasswordTest extends TestCase
      * API service.
      *
      * @param string $password
-     *
      * @covers \Laminas\Validator\UndisclosedPassword
-     *
      * @dataProvider goodPasswordProvider
-     *
-     * @return void
      */
     public function testStrongUnseenPasswordsPassValidation($password): void
     {
         $this->httpResponse->method('getBody')
-            ->willReturnCallback(function () use ($password) {
-                $hash = \sha1('laminas-validator');
+            ->willReturnCallback(function () {
+                $hash = sha1('laminas-validator');
                 return sprintf(
                     '%s:%d',
                     strtoupper(substr($hash, $this->getConstant(
@@ -158,19 +146,15 @@ class UndisclosedPasswordTest extends TestCase
      * AP service.
      *
      * @param string $password
-     *
      * @dataProvider seenPasswordProvider
-     *
      * @covers \Laminas\Validator\UndisclosedPassword
      * @covers \Laminas\Validator\AbstractValidator
-     *
-     * @return void
      */
     public function testBreachedPasswordsDoNotPassValidation($password): void
     {
         $this->httpResponse->method('getBody')
             ->willReturnCallback(function () use ($password) {
-                $hash = \sha1($password);
+                $hash = sha1($password);
                 return sprintf(
                     '%s:%d',
                     strtoupper(substr($hash, $this->getConstant(
@@ -191,21 +175,16 @@ class UndisclosedPasswordTest extends TestCase
      * in the breach database.
      *
      * @param string $password
-     *
      * @depends testBreachedPasswordsDoNotPassValidation
-     *
      * @dataProvider seenPasswordProvider
-     *
      * @covers \Laminas\Validator\UndisclosedPassword
-     *
-     * @return void
      */
     public function testBreachedPasswordReturnErrorMessages($password): void
     {
         $this->httpClient->method('sendRequest')
-            ->will($this->throwException(new \Exception('foo')));
+            ->will($this->throwException(new Exception('foo')));
 
-        $this->expectException(\Exception::class);
+        $this->expectException(Exception::class);
         $this->validator->isValid($password);
         $this->fail('Expected exception was not thrown');
     }
@@ -214,7 +193,7 @@ class UndisclosedPasswordTest extends TestCase
      * Test that the message templates are getting initialized via
      * the parent::_construct call
      */
-    public function testMessageTemplatesAreInitialized() : void
+    public function testMessageTemplatesAreInitialized(): void
     {
         $this->assertNotEmpty($this->validator->getMessageTemplates());
     }
@@ -224,14 +203,9 @@ class UndisclosedPasswordTest extends TestCase
      * the HIBP web service.
      *
      * @param string $password
-     *
      * @depends testBreachedPasswordsDoNotPassValidation
-     *
      * @dataProvider seenPasswordProvider
-     *
      * @covers \Laminas\Validator\UndisclosedPassword
-     *
-     * @return void
      */
     public function testValidationDegradesGracefullyWhenNoConnectionCanBeMade($password): void
     {

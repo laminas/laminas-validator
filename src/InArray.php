@@ -1,43 +1,40 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Validator;
 
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
+
+use function in_array;
 use function is_bool;
+use function is_float;
+use function is_int;
+use function is_string;
 
 class InArray extends AbstractValidator
 {
-    const NOT_IN_ARRAY = 'notInArray';
+    public const NOT_IN_ARRAY = 'notInArray';
 
     // Type of Strict check
     /**
      * standard in_array strict checking value and type
      */
-    const COMPARE_STRICT = 1;
+    public const COMPARE_STRICT = 1;
 
     /**
      * Non strict check but prevents "asdf" == 0 returning TRUE causing false/positive.
      * This is the most secure option for non-strict checks and replaces strict = false
      * This will only be effective when the input is a string
      */
-    const COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY = 0;
+    public const COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY = 0;
 
     /**
      * Standard non-strict check where "asdf" == 0 returns TRUE
      * This will be wanted when comparing "0" against int 0
      */
-    const COMPARE_NOT_STRICT = -1;
+    public const COMPARE_NOT_STRICT = -1;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $messageTemplates = [
         self::NOT_IN_ARRAY => 'The input was not found in the haystack',
     ];
@@ -70,7 +67,7 @@ class InArray extends AbstractValidator
      * Returns the haystack option
      *
      * @return mixed
-     * @throws Exception\RuntimeException if haystack option is not set
+     * @throws Exception\RuntimeException If haystack option is not set.
      */
     public function getHaystack()
     {
@@ -100,8 +97,9 @@ class InArray extends AbstractValidator
     public function getStrict()
     {
         // To keep BC with new strict modes
-        if ($this->strict == self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY
-            || $this->strict == self::COMPARE_STRICT
+        if (
+            $this->strict === self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY
+            || $this->strict === self::COMPARE_STRICT
         ) {
             return (bool) $this->strict;
         }
@@ -125,9 +123,9 @@ class InArray extends AbstractValidator
         }
 
         $checkTypes = [
-            self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY,    // 0
-            self::COMPARE_STRICT,                                             // 1
-            self::COMPARE_NOT_STRICT,                                         // -1
+            self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY, // 0
+            self::COMPARE_STRICT, // 1
+            self::COMPARE_NOT_STRICT, // -1
         ];
 
         // validate strict value
@@ -176,8 +174,10 @@ class InArray extends AbstractValidator
 
         // if the input is a string or float, and vulnerability protection is on
         // we type cast the input to a string
-        if (self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY == $this->strict
-            && (is_int($value) || is_float($value))) {
+        if (
+            self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY === $this->strict
+            && (is_int($value) || is_float($value))
+        ) {
             $value = (string) $value;
         }
 
@@ -186,7 +186,7 @@ class InArray extends AbstractValidator
         if ($this->getRecursive()) {
             $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($haystack));
             foreach ($iterator as $element) {
-                if (self::COMPARE_STRICT == $this->strict) {
+                if (self::COMPARE_STRICT === $this->strict) {
                     if ($element === $value) {
                         return true;
                     }
@@ -196,12 +196,14 @@ class InArray extends AbstractValidator
 
                 // add protection to prevent string to int vuln's
                 $el = $element;
-                if (self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY == $this->strict
+                if (
+                    self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY === $this->strict
                     && is_string($value) && (is_int($el) || is_float($el))
                 ) {
                     $el = (string) $el;
                 }
 
+                // phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedEqualOperator
                 if ($el == $value) {
                     return true;
                 }
@@ -219,7 +221,8 @@ class InArray extends AbstractValidator
          *
          * This occurs only if the input is a string and a haystack member is an int
          */
-        if (self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY == $this->strict
+        if (
+            self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY === $this->strict
             && is_string($value)
         ) {
             foreach ($haystack as &$h) {
@@ -236,11 +239,11 @@ class InArray extends AbstractValidator
             return false;
         }
 
-        if (in_array($value, $haystack, self::COMPARE_STRICT == $this->strict)) {
+        if (in_array($value, $haystack, self::COMPARE_STRICT === $this->strict)) {
             return true;
         }
 
-        if (self::COMPARE_NOT_STRICT == $this->strict) {
+        if (self::COMPARE_NOT_STRICT === $this->strict) {
             return true;
         }
 
