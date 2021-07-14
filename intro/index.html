@@ -143,6 +143,20 @@
                     
                     
                         
+                            <li class="subnavigation__list-item ">
+                                <a href="../installation/" class="subnavigation__link">Installation</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
                             <li class="subnavigation__list-item">
                                 <span class="subnavigation__headline">Reference</span>
                                 <ul class="subnavigation__list">
@@ -197,6 +211,12 @@
                 
     <li class="subnavigation__list-item ">
         <a href="../validators/credit-card/" class="subnavigation__link">CreditCard</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/csrf/" class="subnavigation__link">Csrf</a>
     </li>
 
             
@@ -635,7 +655,7 @@ are class-dependent; each validation class defines its own set of validation
 failure messages and the unique keys that identify them. Each class also has a
 <code>const</code> definition that matches each identifier for a validation failure cause.</p>
 <blockquote>
-<h3>Stateful validators</h3>
+<h3 id="stateful-validators">Stateful validators</h3>
 <p>The <code>getMessages()</code> methods return validation failure information only for the
 most recent <code>isValid()</code> call. Each call to <code>isValid()</code> clears any messages and
 errors caused by a previous <code>isValid()</code> call, because it's likely that each
@@ -716,7 +736,7 @@ if (! $validator-&gt;isValid('word')) {
 }</code></pre>
 <h2 id="translating-messages">Translating messages</h2>
 <blockquote>
-<h3>Installation requirements</h3>
+<h3 id="installation-requirements">Installation requirements</h3>
 <p>The translation of validator messages depends on the laminas-i18n component, so
 be sure to have it installed before getting started:</p>
 <pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-i18n</code></pre>
@@ -758,7 +778,7 @@ if (! $validator-&gt;isTranslatorDisabled()) {
 <code>setMessage()</code>. But doing so, you should keep in mind, that the translator works
 also on messages you set your own.</p>
 <blockquote>
-<h3>Translation compatibility</h3>
+<h3 id="translation-compatibility">Translation compatibility</h3>
 <p>In versions 2.0 - 2.1, <code>Laminas\Validator\AbstractValidator</code> implemented
 <code>Laminas\I18n\Translator\TranslatorAwareInterface</code> and accepted instances of
 <code>Laminas\I18n\Translator\Translator</code>. Starting in version 2.2.0, laminas-validator
@@ -801,7 +821,7 @@ the instance previously.</p>
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../validator-chains/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../installation/">
                     Next <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -810,16 +830,6 @@ the instance previously.</p>
 </nav>
 
 
-
-
-    <div class="help-wanted">
-        <p>
-            Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/laminas/laminas-validator/edit/master/docs/book/intro.md" target="_blank" class="help-wanted__link">
-                Edit this page on GitHub!
-            </a>
-        </p>
-    </div>
 
                 
             </div>
@@ -860,6 +870,20 @@ the instance previously.</p>
                         
                             <li class="subnavigation__list-item subnavigation__list-item--active">
                                 <a href="./" class="subnavigation__link">Introduction</a>
+                            </li>
+                        
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                        
+                            <li class="subnavigation__list-item ">
+                                <a href="../installation/" class="subnavigation__link">Installation</a>
                             </li>
                         
                     
@@ -926,6 +950,12 @@ the instance previously.</p>
                 
     <li class="subnavigation__list-item ">
         <a href="../validators/credit-card/" class="subnavigation__link">CreditCard</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/csrf/" class="subnavigation__link">Csrf</a>
     </li>
 
             
