@@ -3,6 +3,7 @@
 This validator allows you to validate if a given string is between a defined
 length.
 
+<!-- markdownlint-disable-next-line MD001 -->
 > ### Supports only string validation
 >
 > `Laminas\Validator\StringLength` supports only the validation of strings.
@@ -131,6 +132,7 @@ When your installation and your application are using different encodings, then
 you should always set an encoding manually.
 
 ## Validation Messages
+
 Using the setMessage() method you can set another message to be returned in case of the specified failure.
 
 ```php

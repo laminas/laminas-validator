@@ -83,4 +83,5 @@ Valid separators include:
 
 - `` (empty) (default)
 - `-` (hyphen)
+<!-- markdownlint-disable-next-line MD038 -->
 - ` ` (space)

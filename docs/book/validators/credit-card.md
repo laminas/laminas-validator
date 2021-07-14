@@ -35,6 +35,7 @@ The following issuing institutes are accepted:
 - Visa Electron
 - Russia Mir
 
+<!-- markdownlint-disable-next-line MD001 -->
 > ### Invalid institutes
 >
 > The institutes **Bankcard** and **Diners Club enRoute** no longer exist, and

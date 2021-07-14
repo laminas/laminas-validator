@@ -14,6 +14,7 @@ if ($validator->isValid('123ABC')) {
 }
 ```
 
+<!-- markdownlint-disable-next-line MD001 -->
 > ### Invalid characters
 >
 > All other characters will return false, including whitespace and decimal

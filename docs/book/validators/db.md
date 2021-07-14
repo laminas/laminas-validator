@@ -4,6 +4,7 @@
 a means to test whether a record exists in a given table of a database, with a
 given value.
 
+<!-- markdownlint-disable-next-line MD001 -->
 > ### Installation requirements
 >
 > `Laminas\Validator\Db\NoRecordExists` and `Laminas\Validator\Db\RecordExists`

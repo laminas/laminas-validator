@@ -3,6 +3,7 @@
 `Laminas\Validator\Between` allows you to validate if a given value is between two
 other values.
 
+<!-- markdownlint-disable-next-line MD001 -->
 > ### Only supports number validation
 >
 > `Laminas\Validator\Between` supports only the validation of numbers. Strings or

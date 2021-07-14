@@ -3,6 +3,7 @@
 `Laminas\Validator\GreaterThan` allows you to validate if a given value is greater
 than a minimum border value.
 
+<!-- markdownlint-disable-next-line MD001 -->
 > ### Only supports numbers
 >
 > `Laminas\Validator\GreaterThan` supports only the validation of numbers. Strings

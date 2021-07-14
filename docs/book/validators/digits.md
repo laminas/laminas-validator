@@ -2,6 +2,7 @@
 
 `Laminas\Validator\Digits` validates if a given value contains only digits.
 
+<!-- markdownlint-disable-next-line MD001 -->
 > ### Installation requirements
 >
 > `Laminas\Validator\Digits` depends on the laminas-filter component, so be sure to
