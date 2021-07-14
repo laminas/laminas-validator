@@ -1,41 +1,39 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator\Sitemap;
 
 use Laminas\Validator\Sitemap\Changefreq;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function current;
 
 /**
  * @group      Laminas_Validator
  */
 class ChangefreqTest extends TestCase
 {
-    /**
-     * @var Changefreq
-     */
+    /** @var Changefreq */
     protected $validator;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->validator = new Changefreq();
     }
 
     /**
      * Tests valid change frequencies
-     *
-     * @return void
      */
     public function testValidChangefreqs(): void
     {
         $values = [
-            'always',  'hourly', 'daily', 'weekly',
-            'monthly', 'yearly', 'never',
+            'always',
+            'hourly',
+            'daily',
+            'weekly',
+            'monthly',
+            'yearly',
+            'never',
         ];
 
         foreach ($values as $value) {
@@ -45,14 +43,18 @@ class ChangefreqTest extends TestCase
 
     /**
      * Tests strings that should be invalid
-     *
-     * @return void
      */
     public function testInvalidStrings(): void
     {
         $values = [
-            'alwayz',  '_hourly', 'Daily', 'wEekly',
-            'mönthly ', ' yearly ', 'never ', 'rofl',
+            'alwayz',
+            '_hourly',
+            'Daily',
+            'wEekly',
+            'mönthly ',
+            ' yearly ',
+            'never ',
+            'rofl',
             'yesterday',
         ];
 
@@ -65,13 +67,16 @@ class ChangefreqTest extends TestCase
 
     /**
      * Tests values that are not strings
-     *
-     * @return void
      */
     public function testNotString(): void
     {
         $values = [
-            1, 1.4, null, new \stdClass(), true, false,
+            1,
+            1.4,
+            null,
+            new stdClass(),
+            true,
+            false,
         ];
 
         foreach ($values as $value) {

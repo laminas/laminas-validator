@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator\File;
 
 use LaminasTest\Validator\File\TestAsset\FileInformation;
@@ -14,6 +8,9 @@ use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
+
+use function basename;
+use function mime_content_type;
 
 class FileInformationTraitTest extends TestCase
 {
@@ -25,7 +22,7 @@ class FileInformationTraitTest extends TestCase
     /** @var ObjectProphecy */
     public $upload;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->stream = $this->prophesize(StreamInterface::class);
         $this->upload = $this->prophesize(UploadedFileInterface::class);
@@ -35,20 +32,20 @@ class FileInformationTraitTest extends TestCase
     {
         $testFile = __DIR__ . '/_files/testsize.mo';
         $basename = basename($testFile);
-        $file = [
-          'name'     => $basename,
-          'tmp_name' => $testFile,
+        $file     = [
+            'name'     => $basename,
+            'tmp_name' => $testFile,
         ];
 
         $fileInformation = new FileInformation();
-        $fileInfo = $fileInformation->checkFileInformation(
+        $fileInfo        = $fileInformation->checkFileInformation(
             $basename,
             $file
         );
 
         $this->assertEquals($fileInfo, [
-          'filename' => $file['name'],
-          'file'     => $file['tmp_name'],
+            'filename' => $file['name'],
+            'file'     => $file['tmp_name'],
         ]);
     }
 
@@ -56,23 +53,23 @@ class FileInformationTraitTest extends TestCase
     {
         $testFile = __DIR__ . '/_files/testsize.mo';
         $basename = basename($testFile);
-        $file = [
-          'name'     => $basename,
-          'tmp_name' => $testFile,
-          'type' => 'mo',
+        $file     = [
+            'name'     => $basename,
+            'tmp_name' => $testFile,
+            'type'     => 'mo',
         ];
 
         $fileInformation = new FileInformation();
-        $fileInfo = $fileInformation->checkFileInformation(
+        $fileInfo        = $fileInformation->checkFileInformation(
             $basename,
             $file,
             true
         );
 
         $this->assertEquals($fileInfo, [
-          'filename' => $file['name'],
-          'file'     => $file['tmp_name'],
-          'filetype' => $file['type'],
+            'filename' => $file['name'],
+            'file'     => $file['tmp_name'],
+            'filetype' => $file['type'],
         ]);
     }
 
@@ -80,13 +77,13 @@ class FileInformationTraitTest extends TestCase
     {
         $testFile = __DIR__ . '/_files/testsize.mo';
         $basename = basename($testFile);
-        $file = [
-          'name'     => $basename,
-          'tmp_name' => $testFile,
+        $file     = [
+            'name'     => $basename,
+            'tmp_name' => $testFile,
         ];
 
         $fileInformation = new FileInformation();
-        $fileInfo = $fileInformation->checkFileInformation(
+        $fileInfo        = $fileInformation->checkFileInformation(
             $basename,
             $file,
             false,
@@ -94,64 +91,64 @@ class FileInformationTraitTest extends TestCase
         );
 
         $this->assertEquals($fileInfo, [
-          'filename' => $file['name'],
-          'file'     => $file['tmp_name'],
-          'basename' => basename($file['tmp_name']),
+            'filename' => $file['name'],
+            'file'     => $file['tmp_name'],
+            'basename' => basename($file['tmp_name']),
         ]);
     }
 
     public function testSapiFileInfoBasic(): void
     {
         $testFile = __DIR__ . '/_files/testsize.mo';
-        $file = [
-          'name'     => basename($testFile),
-          'tmp_name' => $testFile,
+        $file     = [
+            'name'     => basename($testFile),
+            'tmp_name' => $testFile,
         ];
 
         $fileInformation = new FileInformation();
-        $fileInfo = $fileInformation->checkFileInformation(
+        $fileInfo        = $fileInformation->checkFileInformation(
             $file
         );
 
         $this->assertEquals($fileInfo, [
-          'filename' => $file['name'],
-          'file'     => $file['tmp_name'],
+            'filename' => $file['name'],
+            'file'     => $file['tmp_name'],
         ]);
     }
 
     public function testSapiFileInfoWithFiletype(): void
     {
         $testFile = __DIR__ . '/_files/testsize.mo';
-        $file = [
-          'name'     => basename($testFile),
-          'tmp_name' => $testFile,
-          'type'     => 'mo',
+        $file     = [
+            'name'     => basename($testFile),
+            'tmp_name' => $testFile,
+            'type'     => 'mo',
         ];
 
         $fileInformation = new FileInformation();
-        $fileInfo = $fileInformation->checkFileInformation(
+        $fileInfo        = $fileInformation->checkFileInformation(
             $file,
             null,
             true
         );
 
         $this->assertEquals($fileInfo, [
-          'filename' => $file['name'],
-          'file'     => $file['tmp_name'],
-          'filetype' => $file['type'],
+            'filename' => $file['name'],
+            'file'     => $file['tmp_name'],
+            'filetype' => $file['type'],
         ]);
     }
 
     public function testSapiFileInfoWithBasename(): void
     {
         $testFile = __DIR__ . '/_files/testsize.mo';
-        $file = [
-          'name'     => basename($testFile),
-          'tmp_name' => $testFile,
+        $file     = [
+            'name'     => basename($testFile),
+            'tmp_name' => $testFile,
         ];
 
         $fileInformation = new FileInformation();
-        $fileInfo = $fileInformation->checkFileInformation(
+        $fileInfo        = $fileInformation->checkFileInformation(
             $file,
             null,
             false,
@@ -159,9 +156,9 @@ class FileInformationTraitTest extends TestCase
         );
 
         $this->assertEquals($fileInfo, [
-          'filename' => $file['name'],
-          'file'     => $file['tmp_name'],
-          'basename' => basename($file['tmp_name']),
+            'filename' => $file['name'],
+            'file'     => $file['tmp_name'],
+            'basename' => basename($file['tmp_name']),
         ]);
     }
 
@@ -175,13 +172,13 @@ class FileInformationTraitTest extends TestCase
         $this->upload->getStream()->willReturn($this->stream->reveal());
 
         $fileInformation = new FileInformation();
-        $fileInfo = $fileInformation->checkFileInformation(
+        $fileInfo        = $fileInformation->checkFileInformation(
             $this->upload->reveal()
         );
 
         $this->assertEquals($fileInfo, [
-          'filename' => basename($testFile),
-          'file'     => $testFile,
+            'filename' => basename($testFile),
+            'file'     => $testFile,
         ]);
     }
 
@@ -195,16 +192,16 @@ class FileInformationTraitTest extends TestCase
         $this->upload->getStream()->willReturn($this->stream->reveal());
 
         $fileInformation = new FileInformation();
-        $fileInfo = $fileInformation->checkFileInformation(
+        $fileInfo        = $fileInformation->checkFileInformation(
             $this->upload->reveal(),
             null,
             true
         );
 
         $this->assertEquals($fileInfo, [
-          'filename' => basename($testFile),
-          'file'     => $testFile,
-          'filetype' => mime_content_type($testFile),
+            'filename' => basename($testFile),
+            'file'     => $testFile,
+            'filetype' => mime_content_type($testFile),
         ]);
     }
 
@@ -218,7 +215,7 @@ class FileInformationTraitTest extends TestCase
         $this->upload->getStream()->willReturn($this->stream->reveal());
 
         $fileInformation = new FileInformation();
-        $fileInfo = $fileInformation->checkFileInformation(
+        $fileInfo        = $fileInformation->checkFileInformation(
             $this->upload->reveal(),
             null,
             false,
@@ -226,9 +223,9 @@ class FileInformationTraitTest extends TestCase
         );
 
         $this->assertEquals($fileInfo, [
-          'filename' => basename($testFile),
-          'file'     => $testFile,
-          'basename' => basename($testFile),
+            'filename' => basename($testFile),
+            'file'     => $testFile,
+            'basename' => basename($testFile),
         ]);
     }
 
@@ -237,13 +234,13 @@ class FileInformationTraitTest extends TestCase
         $testFile = __DIR__ . '/_files/testsize.mo';
 
         $fileInformation = new FileInformation();
-        $fileInfo = $fileInformation->checkFileInformation(
+        $fileInfo        = $fileInformation->checkFileInformation(
             $testFile
         );
 
         $this->assertEquals($fileInfo, [
-          'filename' => basename($testFile),
-          'file'     => $testFile,
+            'filename' => basename($testFile),
+            'file'     => $testFile,
         ]);
     }
 
@@ -252,16 +249,16 @@ class FileInformationTraitTest extends TestCase
         $testFile = __DIR__ . '/_files/testsize.mo';
 
         $fileInformation = new FileInformation();
-        $fileInfo = $fileInformation->checkFileInformation(
+        $fileInfo        = $fileInformation->checkFileInformation(
             $testFile,
             null,
             true
         );
 
         $this->assertEquals($fileInfo, [
-          'filename' => basename($testFile),
-          'file'     => $testFile,
-          'filetype' => null,
+            'filename' => basename($testFile),
+            'file'     => $testFile,
+            'filetype' => null,
         ]);
     }
 
@@ -270,7 +267,7 @@ class FileInformationTraitTest extends TestCase
         $testFile = __DIR__ . '/_files/testsize.mo';
 
         $fileInformation = new FileInformation();
-        $fileInfo = $fileInformation->checkFileInformation(
+        $fileInfo        = $fileInformation->checkFileInformation(
             $testFile,
             null,
             false,
@@ -278,9 +275,9 @@ class FileInformationTraitTest extends TestCase
         );
 
         $this->assertEquals($fileInfo, [
-          'filename' => basename($testFile),
-          'file'     => $testFile,
-          'basename' => basename($testFile),
+            'filename' => basename($testFile),
+            'file'     => $testFile,
+            'basename' => basename($testFile),
         ]);
     }
 }

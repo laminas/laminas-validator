@@ -1,15 +1,14 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\File;
 use PHPUnit\Framework\TestCase;
+
+use function basename;
+use function current;
+use function extension_loaded;
+use function is_array;
 
 /**
  * IsImage testbed
@@ -28,7 +27,7 @@ class IsImageTest extends TestCase
      */
     public function basicBehaviorDataProvider()
     {
-        $testFile = __DIR__ . '/_files/picture.jpg';
+        $testFile   = __DIR__ . '/_files/picture.jpg';
         $fileUpload = [
             'tmp_name' => $testFile,
             'name'     => basename($testFile),
@@ -43,8 +42,8 @@ class IsImageTest extends TestCase
             ['test/notype',                $fileUpload, false],
             ['image/gif, image/jpeg',      $fileUpload, true],
             [['image/vasa', 'image/jpeg'], $fileUpload, true],
-            [['image/jpeg', 'gif'],        $fileUpload, true],
-            [['image/gif', 'gif'],         $fileUpload, false],
+            [['image/jpeg', 'gif'], $fileUpload, true],
+            [['image/gif', 'gif'], $fileUpload, false],
             ['image/jp',                   $fileUpload, false],
             ['image/jpg2000',              $fileUpload, false],
             ['image/jpeg2000',             $fileUpload, false],
@@ -55,9 +54,9 @@ class IsImageTest extends TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider basicBehaviorDataProvider
-     * @return void
+     * @param mixed $options
      */
-    public function testBasic($options, $isValidParam, $expected)
+    public function testBasic($options, array $isValidParam, bool $expected): void
     {
         $validator = new File\IsImage($options);
         $validator->enableHeaderCheck();
@@ -68,9 +67,9 @@ class IsImageTest extends TestCase
      * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
      * @dataProvider basicBehaviorDataProvider
-     * @return void
+     * @param mixed $options
      */
-    public function testLegacy($options, $isValidParam, $expected)
+    public function testLegacy($options, array $isValidParam, bool $expected): void
     {
         if (is_array($isValidParam)) {
             $validator = new File\IsImage($options);
@@ -144,8 +143,6 @@ class IsImageTest extends TestCase
 
     /**
      * @Laminas-8111
-     *
-     * @return void
      */
     public function testErrorMessages(): void
     {
@@ -194,8 +191,6 @@ class IsImageTest extends TestCase
 
     /**
      * @group Laminas-11258
-     *
-     * @return void
      */
     public function testLaminas11258(): void
     {

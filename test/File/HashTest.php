@@ -1,17 +1,19 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
+
+use function array_merge;
+use function basename;
+use function current;
+use function is_array;
+use function sprintf;
+
+use const UPLOAD_ERR_NO_FILE;
 
 /**
  * Hash testbed
@@ -23,14 +25,20 @@ class HashTest extends TestCase
     /**
      * @psalm-return array<array-key, array{
      *     0: string|string[],
-     *     1: string,
+     *     1: string|array{
+     *         tmp_name: string,
+     *         name: string,
+     *         size: int,
+     *         error: int,
+     *         type: string
+     *     },
      *     2: bool,
      *     3: string
      * }>
      */
     public function basicBehaviorDataProvider(): array
     {
-        $testFile = __DIR__ . '/_files/picture.jpg';
+        $testFile     = __DIR__ . '/_files/picture.jpg';
         $pictureTests = [
             //    Options, isValid Param, Expected value, Expected message
             ['3f8d07e2',               $testFile, true, ''],
@@ -39,29 +47,37 @@ class HashTest extends TestCase
             [['9f8d07e2', '7f8d07e2'], $testFile, false, 'fileHashDoesNotMatch'],
             [
                 ['ed74c22109fe9f110579f77b053b8bc3', 'algorithm' => 'md5'],
-                $testFile, true, '',
+                $testFile,
+                true,
+                '',
             ],
             [
                 ['4d74c22109fe9f110579f77b053b8bc3', 'algorithm' => 'md5'],
-                $testFile, false, 'fileHashDoesNotMatch',
+                $testFile,
+                false,
+                'fileHashDoesNotMatch',
             ],
             [
                 ['4d74c22109fe9f110579f77b053b8bc3', 'ed74c22109fe9f110579f77b053b8bc3', 'algorithm' => 'md5'],
-                $testFile, true, '',
+                $testFile,
+                true,
+                '',
             ],
             [
                 ['4d74c22109fe9f110579f77b053b8bc3', '7d74c22109fe9f110579f77b053b8bc3', 'algorithm' => 'md5'],
-                $testFile, false, 'fileHashDoesNotMatch',
+                $testFile,
+                false,
+                'fileHashDoesNotMatch',
             ],
         ];
 
-        $testFile = __DIR__ . '/_files/nofile.mo';
+        $testFile    = __DIR__ . '/_files/nofile.mo';
         $noFileTests = [
             //    Options, isValid Param, Expected value, message
             ['3f8d07e2', $testFile, false, 'fileHashNotFound'],
         ];
 
-        $testFile = __DIR__ . '/_files/testsize.mo';
+        $testFile      = __DIR__ . '/_files/testsize.mo';
         $sizeFileTests = [
             //    Options, isValid Param, Expected value, message
             ['ffeb8d5d', $testFile, true,  ''],
@@ -87,9 +103,10 @@ class HashTest extends TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider basicBehaviorDataProvider
-     * @return void
+     * @param string|array $options
+     * @param string|array $isValidParam
      */
-    public function testBasic($options, $isValidParam, $expected, $messageKey)
+    public function testBasic($options, $isValidParam, bool $expected, string $messageKey): void
     {
         $validator = new File\Hash($options);
         $this->assertEquals($expected, $validator->isValid($isValidParam));
@@ -102,9 +119,10 @@ class HashTest extends TestCase
      * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
      * @dataProvider basicBehaviorDataProvider
-     * @return void
+     * @param string|array $options
+     * @param string|array $isValidParam
      */
-    public function testLegacy($options, $isValidParam, $expected, $messageKey)
+    public function testLegacy($options, $isValidParam, bool $expected, string $messageKey): void
     {
         if (is_array($isValidParam)) {
             $validator = new File\Hash($options);
@@ -164,8 +182,6 @@ class HashTest extends TestCase
 
     /**
      * @group Laminas-11258
-     *
-     * @return void
      */
     public function testLaminas11258(): void
     {
@@ -183,11 +199,11 @@ class HashTest extends TestCase
         $this->assertArrayHasKey(File\Hash::NOT_FOUND, $validator->getMessages());
 
         $filesArray = [
-            'name'      => '',
-            'size'      => 0,
-            'tmp_name'  => '',
-            'error'     => UPLOAD_ERR_NO_FILE,
-            'type'      => '',
+            'name'     => '',
+            'size'     => 0,
+            'tmp_name' => '',
+            'error'    => UPLOAD_ERR_NO_FILE,
+            'type'     => '',
         ];
 
         $this->assertFalse($validator->isValid($filesArray));
@@ -213,8 +229,7 @@ class HashTest extends TestCase
 
     /**
      * @dataProvider invalidHashTypes
-     *
-     * @return void
+     * @param mixed $value
      */
     public function testAddHashRaisesExceptionForInvalidType($value): void
     {
@@ -256,10 +271,7 @@ class HashTest extends TestCase
 
     /**
      * @dataProvider invalidHashTypes
-     *
      * @param mixed $hash
-     *
-     * @return void
      */
     public function testInvalidHashProvidedInArrayFormat($hash): void
     {

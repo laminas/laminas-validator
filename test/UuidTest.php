@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Uuid;
@@ -13,30 +7,22 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 
 /**
- * Class UuidTest.
- *
  * Uuid test cases based on https://github.com/beberlei/assert/blob/master/tests/Assert/Tests/AssertTest.php
  */
 final class UuidTest extends TestCase
 {
-    /**
-     * @var Uuid
-     */
+    /** @var Uuid */
     protected $validator;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->validator = new Uuid();
     }
 
     /**
-     * @param $uuid
-     *
      * @dataProvider validUuidProvider
-     *
-     * @return void
      */
-    public function testValidUuid($uuid): void
+    public function testValidUuid(string $uuid): void
     {
         $this->assertTrue($this->validator->isValid($uuid));
         $messages = $this->validator->getMessages();
@@ -44,13 +30,10 @@ final class UuidTest extends TestCase
     }
 
     /**
-     * @param $uuid
-     *
      * @dataProvider invalidUuidProvider
-     *
-     * @return void
+     * @param mixed $uuid
      */
-    public function testInvalidUuid($uuid, $expectedMessageKey): void
+    public function testInvalidUuid($uuid, string $expectedMessageKey): void
     {
         $this->assertFalse($this->validator->isValid($uuid));
         $messages = $this->validator->getMessages();

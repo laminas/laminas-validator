@@ -1,16 +1,14 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\RuntimeException;
 use Laminas\Validator\InArray;
 use PHPUnit\Framework\TestCase;
+
+use function array_keys;
+
+use const PHP_MAJOR_VERSION;
 
 /**
  * @group      Laminas_Validator
@@ -26,12 +24,12 @@ class InArrayTest extends TestCase
     public function nonStrictValidationSet(): array
     {
         return [
-            'strings' => [
+            'strings'             => [
                 ['Y', 'N'],
                 'Y',
                 'X',
             ],
-            'integers' => [
+            'integers'            => [
                 [1, 2],
                 1,
                 3,
@@ -41,7 +39,7 @@ class InArrayTest extends TestCase
                 1,
                 3,
             ],
-            'integerish values' => [
+            'integerish values'   => [
                 [1, 2],
                 '1',
                 '3',
@@ -55,12 +53,12 @@ class InArrayTest extends TestCase
     public function strictValidationSet(): array
     {
         return [
-            'strings' => [
+            'strings'             => [
                 ['Y', 'N'],
                 'Y',
                 'X',
             ],
-            'integers' => [
+            'integers'            => [
                 [1, 2],
                 1,
                 3,
@@ -70,7 +68,7 @@ class InArrayTest extends TestCase
                 '1',
                 1,
             ],
-            'integerish values' => [
+            'integerish values'   => [
                 [1, 2],
                 1,
                 '1',
@@ -78,11 +76,11 @@ class InArrayTest extends TestCase
         ];
     }
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->validator = new InArray(
             [
-                 'haystack' => [1, 2, 3],
+                'haystack' => [1, 2, 3],
             ]
         );
     }
@@ -129,7 +127,7 @@ class InArrayTest extends TestCase
     {
         $validator = new InArray(
             [
-                 'haystack' => [1, 'a', 2.3],
+                'haystack' => [1, 'a', 2.3],
             ]
         );
         $this->assertTrue($validator->isValid(1));
@@ -149,14 +147,12 @@ class InArrayTest extends TestCase
 
     /**
      * @group Laminas-337
-     *
-     * @return void
      */
     public function testSettingNewStrictMode(): void
     {
         $validator = new InArray(
             [
-                 'haystack' => ['test', 0, 'A', 0.0],
+                'haystack' => ['test', 0, 'A', 0.0],
             ]
         );
 
@@ -175,7 +171,7 @@ class InArrayTest extends TestCase
     {
         $validator = new InArray(
             [
-                 'haystack' => ['test', 0, 'A', 1, 0.0],
+                'haystack' => ['test', 0, 'A', 1, 0.0],
             ]
         );
 
@@ -192,7 +188,7 @@ class InArrayTest extends TestCase
     {
         $validator = new InArray(
             [
-                 'haystack' => ['test', 0, 'A', 1, 0.0],
+                'haystack' => ['test', 0, 'A', 1, 0.0],
             ]
         );
 
@@ -213,7 +209,7 @@ class InArrayTest extends TestCase
     {
         $validator = new InArray(
             [
-                 'haystack' => ['test', 0, 'A', 1, 0.0],
+                'haystack' => ['test', 0, 'A', 1, 0.0],
             ]
         );
 
@@ -233,10 +229,10 @@ class InArrayTest extends TestCase
     {
         $validator = new InArray(
             [
-                 'haystack' => [
-                     ['test', 0, 'A', 0.0],
-                     ['foo', 1, 'a', 'c'],
-                 ],
+                'haystack' => [
+                    ['test', 0, 'A', 0.0],
+                    ['foo', 1, 'a', 'c'],
+                ],
             ]
         );
 
@@ -255,10 +251,10 @@ class InArrayTest extends TestCase
     {
         $validator = new InArray(
             [
-                 'haystack' => [
-                     ['test', 0, 'A', 0.0],
-                     ['foo', 1, 'a', 'c'],
-                 ],
+                'haystack' => [
+                    ['test', 0, 'A', 0.0],
+                    ['foo', 1, 'a', 'c'],
+                ],
             ]
         );
 
@@ -279,10 +275,10 @@ class InArrayTest extends TestCase
     {
         $validator = new InArray(
             [
-                 'haystack' => [
-                     ['test', 0, 'A', 0.0],
-                     ['foo', 1, 'a', 'c'],
-                 ],
+                'haystack' => [
+                    ['test', 0, 'A', 0.0],
+                    ['foo', 1, 'a', 'c'],
+                ],
             ]
         );
 
@@ -305,7 +301,7 @@ class InArrayTest extends TestCase
     {
         $validator = new InArray(
             [
-                 'haystack' => ['test', 1, 2],
+                'haystack' => ['test', 1, 2],
             ]
         );
 
@@ -323,7 +319,7 @@ class InArrayTest extends TestCase
     {
         $validator = new InArray(
             [
-                 'haystack' => ['test', 1, 2],
+                'haystack' => ['test', 1, 2],
             ]
         );
 
@@ -341,7 +337,7 @@ class InArrayTest extends TestCase
     {
         $validator = new InArray(
             [
-                 'haystack' => [1, 2],
+                'haystack' => [1, 2],
             ]
         );
 
@@ -359,7 +355,7 @@ class InArrayTest extends TestCase
     {
         $validator = new InArray(
             [
-                 'haystack' => [1.5, 2.4],
+                'haystack' => [1.5, 2.4],
             ]
         );
 
@@ -377,8 +373,8 @@ class InArrayTest extends TestCase
     {
         $validator = new InArray(
             [
-                 'haystack' => ['test', 0, 'A'],
-                 'strict'   => true,
+                'haystack' => ['test', 0, 'A'],
+                'strict'   => true,
             ]
         );
         $this->assertTrue($validator->getStrict());
@@ -396,8 +392,8 @@ class InArrayTest extends TestCase
     {
         $validator = new InArray(
             [
-                 'haystack'  => ['test', 0, 'A'],
-                 'recursive' => true,
+                'haystack'  => ['test', 0, 'A'],
+                'recursive' => true,
             ]
         );
         $this->assertTrue($validator->getRecursive());
@@ -407,12 +403,12 @@ class InArrayTest extends TestCase
     {
         $validator = new InArray(
             [
-                 'haystack'  =>
-                 [
+                'haystack'
+                 => [
                      'firstDimension'  => ['test', 0, 'A'],
                      'secondDimension' => ['value', 2, 'a'],
                  ],
-                 'recursive' => false,
+                'recursive' => false,
             ]
         );
         $this->assertFalse($validator->isValid('A'));
@@ -423,17 +419,22 @@ class InArrayTest extends TestCase
 
     public function testEqualsMessageTemplates(): void
     {
-        $validator = $this->validator;
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        $this->assertSame(
+            [
+                InArray::NOT_IN_ARRAY,
+            ],
+            array_keys($this->validator->getMessageTemplates())
+        );
+        $this->assertEquals($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 
     /**
+     * @link https://github.com/laminas/laminas-validator/issues/81
+     *
      * @param list<mixed> $haystack
      * @param mixed $valid
      * @param mixed $invalid
      * @dataProvider strictValidationSet
-     * @link https://github.com/laminas/laminas-validator/issues/81
      */
     public function testBooleanStrictEnforcesStrictMode(array $haystack, $valid, $invalid): void
     {
@@ -447,11 +448,12 @@ class InArrayTest extends TestCase
     }
 
     /**
+     * @link https://github.com/laminas/laminas-validator/issues/81
+     *
      * @param list<mixed> $haystack
      * @param mixed $valid
      * @param mixed $invalid
      * @dataProvider nonStrictValidationSet
-     * @link https://github.com/laminas/laminas-validator/issues/81
      */
     public function testBooleanNotStrictEnforcesNonStrictMode(array $haystack, $valid, $invalid): void
     {

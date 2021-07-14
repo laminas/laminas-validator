@@ -1,14 +1,13 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator\TestAsset;
 
 use Iterator;
+
+use function current;
+use function key;
+use function next;
+use function reset;
 
 class CustomTraversable implements Iterator
 {
@@ -20,28 +19,33 @@ class CustomTraversable implements Iterator
         $this->data = $data;
     }
 
+    /** @return mixed */
     public function current()
     {
         return current($this->data);
     }
 
+    /** @return void */
     public function next()
     {
-        return next($this->data);
+        next($this->data);
     }
 
+    /** @return int|string */
     public function key()
     {
         return key($this->data);
     }
 
+    /** @return bool */
     public function valid()
     {
         return $this->key() !== null;
     }
 
+    /** @return void */
     public function rewind()
     {
-        return reset($this->data);
+        reset($this->data);
     }
 }

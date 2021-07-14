@@ -1,16 +1,20 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File;
 use PHPUnit\Framework\TestCase;
+
+use function basename;
+use function current;
+use function filesize;
+use function restore_error_handler;
+use function set_error_handler;
+use function strstr;
+
+use const E_USER_NOTICE;
+use const UPLOAD_ERR_NO_FILE;
 
 /**
  * @group      Laminas_Validator
@@ -20,7 +24,7 @@ class FilesSizeTest extends TestCase
     /** @var bool */
     public $multipleOptionsDetected;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->multipleOptionsDetected = false;
     }
@@ -51,9 +55,9 @@ class FilesSizeTest extends TestCase
 
     /**
      * @psalm-return array<string, array{
-     *     0: int[]|array<string, int|string>,
-     *     1: bool,
-     *     2: bool,
+     *     0: array,
+     *     1: bool
+     *     2: bool
      *     3: bool
      * }>
      */
@@ -105,7 +109,7 @@ class FilesSizeTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        $validator = new File\FilesSize(['min' => 100, 'max' => 1]);
+        new File\FilesSize(['min' => 100, 'max' => 1]);
     }
 
     /**
@@ -144,7 +148,7 @@ class FilesSizeTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        $validator = new File\FilesSize(['min' => 100, 'max' => 1]);
+        new File\FilesSize(['min' => 100, 'max' => 1]);
     }
 
     /**
@@ -164,8 +168,8 @@ class FilesSizeTest extends TestCase
 
     public function testConstructorShouldRaiseErrorWhenPassedMultipleOptions(): void
     {
-        $handler = set_error_handler([$this, 'errorHandler'], E_USER_NOTICE);
-        $validator = new File\FilesSize(1000, 10000);
+        set_error_handler([$this, 'errorHandler'], E_USER_NOTICE);
+        new File\FilesSize(1000, 10000);
         restore_error_handler();
     }
 
@@ -197,7 +201,7 @@ class FilesSizeTest extends TestCase
         $this->assertStringContainsString('1588', current($messages));
     }
 
-    public function errorHandler($errno, $errstr): void
+    public function errorHandler(int $errno, string $errstr): void
     {
         if (strstr($errstr, 'deprecated')) {
             $this->multipleOptionsDetected = true;
@@ -212,11 +216,11 @@ class FilesSizeTest extends TestCase
         $this->assertArrayHasKey(File\FilesSize::NOT_READABLE, $validator->getMessages());
 
         $filesArray = [
-            'name'      => '',
-            'size'      => 0,
-            'tmp_name'  => '',
-            'error'     => UPLOAD_ERR_NO_FILE,
-            'type'      => '',
+            'name'     => '',
+            'size'     => 0,
+            'tmp_name' => '',
+            'error'    => UPLOAD_ERR_NO_FILE,
+            'type'     => '',
         ];
 
         $this->assertFalse($validator->isValid($filesArray));

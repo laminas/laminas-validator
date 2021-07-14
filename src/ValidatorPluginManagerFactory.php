@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Validator;
 
 use Interop\Container\ContainerInterface;
@@ -13,12 +7,14 @@ use Laminas\ServiceManager\Config;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
+use function is_array;
+
 class ValidatorPluginManagerFactory implements FactoryInterface
 {
     /**
      * laminas-servicemanager v2 support for invocation options.
      *
-     * @param array
+     * @var null|array
      */
     protected $creationOptions;
 
@@ -27,7 +23,7 @@ class ValidatorPluginManagerFactory implements FactoryInterface
      *
      * @return ValidatorPluginManager
      */
-    public function __invoke(ContainerInterface $container, $name, array $options = null)
+    public function __invoke(ContainerInterface $container, $name, ?array $options = null)
     {
         $pluginManager = new ValidatorPluginManager($container, $options ?: []);
 

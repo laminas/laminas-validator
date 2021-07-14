@@ -1,16 +1,14 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Iban as IbanValidator;
 use PHPUnit\Framework\TestCase;
+
+use function array_keys;
+use function array_merge;
+use function implode;
 
 /**
  * @group      Laminas_Validator
@@ -27,7 +25,6 @@ class IbanTest extends TestCase
             ['AT611904300234573201',     true],
             ['AT61 1904 3002 3457 3201', true],
             ['AD1200012030200354100100', false],
-
             ['AL47212110090000000235698741', true],
             ['AD1200012030200359100100', true],
             ['AT611904300234573201', true],
@@ -100,9 +97,8 @@ class IbanTest extends TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider ibanDataProvider
-     * @return void
      */
-    public function testBasic($iban, $expected)
+    public function testBasic(string $iban, bool $expected): void
     {
         $validator = new IbanValidator();
         $this->assertEquals(
@@ -131,7 +127,7 @@ class IbanTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('ISO 3166-1');
-        $validator = new IbanValidator(['country_code' => 'BAR']);
+        new IbanValidator(['country_code' => 'BAR']);
     }
 
     public function testSepaNotSupportedCountryCode(): void
@@ -152,8 +148,6 @@ class IbanTest extends TestCase
 
     /**
      * @group Laminas-10556
-     *
-     * @return void
      */
     public function testIbanDetectionWithoutCountryCode(): void
     {
@@ -164,7 +158,15 @@ class IbanTest extends TestCase
     public function testEqualsMessageTemplates(): void
     {
         $validator = new IbanValidator();
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertSame(
+            [
+                IbanValidator::NOTSUPPORTED,
+                IbanValidator::SEPANOTSUPPORTED,
+                IbanValidator::FALSEFORMAT,
+                IbanValidator::CHECKFAILED,
+            ],
+            array_keys($validator->getMessageTemplates())
+        );
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
@@ -195,8 +197,7 @@ class IbanTest extends TestCase
 
     /**
      * @dataProvider invalidValues
-     *
-     * @return void
+     * @param mixed $value
      */
     public function testIsValidReturnsFalseForNonStringValue($value): void
     {

@@ -1,31 +1,26 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\StringLength;
 use PHPUnit\Framework\TestCase;
 
+use function array_keys;
+use function ini_set;
+
 /**
  * @group      Laminas_Validator
  */
 class StringLengthTest extends TestCase
 {
-    /**
-     * @var StringLength
-     */
+    /** @var StringLength */
     protected $validator;
 
     /**
      * Creates a new StringLength object for each test method
      */
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->validator = new StringLength();
     }
@@ -159,8 +154,6 @@ class StringLengthTest extends TestCase
 
     /**
      * @Laminas-4352
-     *
-     * @return void
      */
     public function testNonStringValidation(): void
     {
@@ -169,15 +162,25 @@ class StringLengthTest extends TestCase
 
     public function testEqualsMessageTemplates(): void
     {
-        $validator = $this->validator;
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        $this->assertSame(
+            [
+                StringLength::INVALID,
+                StringLength::TOO_SHORT,
+                StringLength::TOO_LONG,
+            ],
+            array_keys($this->validator->getMessageTemplates())
+        );
+        $this->assertEquals($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
     {
-        $validator = $this->validator;
-        $this->assertObjectHasAttribute('messageVariables', $validator);
-        $this->assertEquals(array_keys($validator->getOption('messageVariables')), $validator->getMessageVariables());
+        $messageVariables = [
+            'min'    => ['options' => 'min'],
+            'max'    => ['options' => 'max'],
+            'length' => ['options' => 'length'],
+        ];
+        $this->assertSame($messageVariables, $this->validator->getOption('messageVariables'));
+        $this->assertEquals(array_keys($messageVariables), $this->validator->getMessageVariables());
     }
 }

@@ -1,15 +1,11 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\LessThan;
 use PHPUnit\Framework\TestCase;
+
+use function array_keys;
 
 /**
  * @group      Laminas_Validator
@@ -133,15 +129,24 @@ class LessThanTest extends TestCase
     public function testEqualsMessageTemplates(): void
     {
         $validator = new LessThan(10);
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertSame(
+            [
+                LessThan::NOT_LESS,
+                LessThan::NOT_LESS_INCLUSIVE,
+            ],
+            array_keys($validator->getMessageTemplates())
+        );
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
     {
-        $validator = new LessThan(10);
-        $this->assertObjectHasAttribute('messageVariables', $validator);
-        $this->assertEquals(array_keys($validator->getOption('messageVariables')), $validator->getMessageVariables());
+        $validator        = new LessThan(10);
+        $messageVariables = [
+            'max' => 'max',
+        ];
+        $this->assertSame($messageVariables, $validator->getOption('messageVariables'));
+        $this->assertEquals(array_keys($messageVariables), $validator->getMessageVariables());
     }
 
     public function testConstructorAllowsSettingAllOptionsAsDiscreteArguments(): void

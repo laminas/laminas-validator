@@ -1,35 +1,28 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator\Sitemap;
 
 use Laminas\Validator\Sitemap\Lastmod;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function current;
 
 /**
  * @group      Laminas_Validator
  */
 class LastmodTest extends TestCase
 {
-    /**
-     * @var Lastmod
-     */
+    /** @var Lastmod */
     protected $validator;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->validator = new Lastmod();
     }
 
     /**
      * Tests valid change frequencies
-     *
-     * @return void
      */
     public function testValidChangefreqs(): void
     {
@@ -55,8 +48,6 @@ class LastmodTest extends TestCase
 
     /**
      * Tests strings that should be invalid
-     *
-     * @return void
      */
     public function testInvalidStrings(): void
     {
@@ -77,13 +68,16 @@ class LastmodTest extends TestCase
 
     /**
      * Tests values that are not strings
-     *
-     * @return void
      */
     public function testNotString(): void
     {
         $values = [
-            1, 1.4, null, new \stdClass(), true, false,
+            1,
+            1.4,
+            null,
+            new stdClass(),
+            true,
+            false,
         ];
 
         foreach ($values as $value) {

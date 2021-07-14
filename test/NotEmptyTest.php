@@ -1,13 +1,8 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
+use Laminas\Config\Config;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\NotEmpty;
 use PHPUnit\Framework\TestCase;
@@ -18,12 +13,10 @@ use stdClass;
  */
 class NotEmptyTest extends TestCase
 {
-    /**
-     * @var NotEmpty
-     */
+    /** @var NotEmpty */
     protected $validator;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->validator = new NotEmpty();
     }
@@ -33,7 +26,6 @@ class NotEmptyTest extends TestCase
      *
      * @param array $types Array of type strings or constants
      * @param integer $expected Expected value of calculated type
-     *
      * @return void
      * @dataProvider constructorWithTypeArrayProvider
      */
@@ -67,7 +59,6 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     *
      * @group Laminas-6708
      * @return void
      * @dataProvider basicProvider
@@ -108,9 +99,7 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     *
      * @return void
-     *
      * @dataProvider booleanProvider
      */
     public function testOnlyBoolean($value, $valid)
@@ -148,9 +137,7 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     *
      * @return void
-     *
      * @dataProvider integerOnlyProvider
      */
     public function testOnlyInteger($value, $valid)
@@ -188,9 +175,7 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     *
      * @return void
-     *
      * @dataProvider floatOnlyProvider
      */
     public function testOnlyFloat($value, $valid)
@@ -228,9 +213,7 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     *
      * @return void
-     *
      * @dataProvider stringOnlyProvider
      */
     public function testOnlyString($value, $valid)
@@ -262,14 +245,13 @@ class NotEmptyTest extends TestCase
             [null, true],
         ];
     }
+
     /**
      * Ensures that the validator follows expected behavior
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     *
      * @return void
-     *
      * @dataProvider zeroOnlyProvider
      */
     public function testOnlyZero($value, $valid)
@@ -307,9 +289,7 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     *
      * @return void
-     *
      * @dataProvider arrayOnlyProvider
      */
     public function testOnlyArray($value, $valid)
@@ -347,9 +327,7 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     *
      * @return void
-     *
      * @dataProvider nullOnlyProvider
      */
     public function testOnlyNull($value, $valid)
@@ -387,9 +365,7 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     *
      * @return void
-     *
      * @dataProvider phpOnlyProvider
      */
     public function testOnlyPHP($value, $valid)
@@ -427,9 +403,7 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     *
      * @return void
-     *
      * @dataProvider spaceOnlyProvider
      */
     public function testOnlySpace($value, $valid)
@@ -467,9 +441,7 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     *
      * @return void
-     *
      * @dataProvider onlyAllProvider
      */
     public function testOnlyAll($value, $valid)
@@ -507,9 +479,7 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     *
      * @return void
-     *
      * @dataProvider arrayConstantNotationProvider
      */
     public function testArrayConstantNotation($value, $valid)
@@ -554,9 +524,7 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     *
      * @return void
-     *
      * @dataProvider arrayConfigNotationProvider
      */
     public function testArrayConfigNotation($value, $valid)
@@ -602,9 +570,7 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     *
      * @return void
-     *
      * @dataProvider multiConstantNotationProvider
      */
     public function testMultiConstantNotation($value, $valid)
@@ -621,9 +587,7 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     *
      * @return void
-     *
      * @dataProvider multiConstantNotationProvider
      */
     public function testMultiConstantBooleanOrNotation($value, $valid)
@@ -658,14 +622,13 @@ class NotEmptyTest extends TestCase
             [null, true],
         ];
     }
+
     /**
      * Ensures that the validator follows expected behavior
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     *
      * @return void
-     *
      * @dataProvider stringNotationProvider
      */
     public function testStringNotation($value, $valid)
@@ -707,9 +670,7 @@ class NotEmptyTest extends TestCase
      *
      * @param string  $string   Array of string type values
      * @param integer $expected Expected type setting value
-     *
      * @return void
-     *
      * @dataProvider duplicateStringSettingProvider
      */
     public function testStringNotationWithDuplicate($string, $expected)
@@ -750,9 +711,7 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     *
      * @return void
-     *
      * @dataProvider singleStringNotationProvider
      */
     public function testSingleStringConstructorNotation($value, $valid)
@@ -768,9 +727,7 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     *
      * @return void
-     *
      * @dataProvider singleStringNotationProvider
      */
     public function testSingleStringSetTypeNotation($value, $valid)
@@ -808,15 +765,13 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     *
      * @return void
-     *
      * @dataProvider configObjectProvider
      */
     public function testConfigObject($value, $valid)
     {
         $options = ['type' => 'all'];
-        $config  = new \Laminas\Config\Config($options);
+        $config  = new Config($options);
 
         $this->validator = new NotEmpty(
             $config
@@ -873,8 +828,6 @@ class NotEmptyTest extends TestCase
 
     /**
      * @group Laminas-3236
-     *
-     * @return void
      */
     public function testStringWithZeroShouldNotBeTreatedAsEmpty(): void
     {
@@ -893,8 +846,6 @@ class NotEmptyTest extends TestCase
 
     /**
      * @Laminas-4352
-     *
-     * @return void
      */
     public function testNonStringValidation(): void
     {
@@ -904,7 +855,6 @@ class NotEmptyTest extends TestCase
 
     /**
      * @Laminas-8767
-     *
      * @return void
      */
     public function testLaminas8767()
@@ -922,7 +872,7 @@ class NotEmptyTest extends TestCase
      */
     public function testObjects()
     {
-        $valid = new NotEmpty(NotEmpty::STRING);
+        $valid  = new NotEmpty(NotEmpty::STRING);
         $object = new stdClass();
 
         $this->assertFalse($valid->isValid($object));
@@ -963,13 +913,9 @@ class NotEmptyTest extends TestCase
 
     /**
      * @group Laminas-11566
-     *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     *
      * @dataProvider arrayConfigNotationWithoutKeyProvider
-     *
-     * @return void
      */
     public function testArrayConfigNotationWithoutKey($value, $valid): void
     {
@@ -1006,8 +952,11 @@ class NotEmptyTest extends TestCase
 
     public function testEqualsMessageTemplates(): void
     {
-        $validator = $this->validator;
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $messageTemplates = [
+            'isEmpty'         => "Value is required and can't be empty",
+            'notEmptyInvalid' => "Invalid type given. String, integer, float, boolean or array expected",
+        ];
+        $this->assertSame($messageTemplates, $this->validator->getOption('messageTemplates'));
     }
 
     public function testTypeAutoDetectionHasNoSideEffect(): void
@@ -1034,7 +983,6 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to validate
      * @param bool  $valid Expected validity
-     *
      * @return void
      */
     protected function checkValidationValue($value, $valid)

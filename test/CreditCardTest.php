@@ -1,17 +1,14 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Config;
 use Laminas\Validator\CreditCard;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+
+use function array_keys;
+use function current;
 
 /**
  * @group      Laminas_Validator
@@ -37,10 +34,10 @@ class CreditCardTest extends TestCase
      *
      * @dataProvider basicValues
      */
-    public function testBasic($input, $expected): void
+    public function testBasic(string $input, bool $expected): void
     {
-        $validator      = new CreditCard();
-        $this->assertEquals($expected, $validator->isValid($input));
+        $validator = new CreditCard();
+        $this->assertSame($expected, $validator->isValid($input));
     }
 
     /**
@@ -112,12 +109,10 @@ class CreditCardTest extends TestCase
      * Test specific provider
      *
      * @dataProvider visaValues
-     *
-     * @return void
      */
-    public function testProvider($input, $expected): void
+    public function testProvider(string $input, bool $expected): void
     {
-        $validator      = new CreditCard(CreditCard::VISA);
+        $validator = new CreditCard(CreditCard::VISA);
         $this->assertEquals($expected, $validator->isValid($input));
     }
 
@@ -150,14 +145,12 @@ class CreditCardTest extends TestCase
      * Test service class with invalid validation
      *
      * @dataProvider serviceValues
-     *
-     * @return void
      */
-    public function testServiceClass($input, $expected): void
+    public function testServiceClass(string $input, bool $expected): void
     {
         $validator = new CreditCard();
         $this->assertEquals(null, $validator->getService());
-        $validator->setService([CreditCardTest::class, 'staticCallback']);
+        $validator->setService([self::class, 'staticCallback']);
         $this->assertEquals($expected, $validator->isValid($input));
     }
 
@@ -179,15 +172,13 @@ class CreditCardTest extends TestCase
      * Test non string input
      *
      * @dataProvider optionsValues
-     *
-     * @return void
      */
-    public function testConstructionWithOptions($input, $expected): void
+    public function testConstructionWithOptions(string $input, bool $expected): void
     {
         $validator = new CreditCard(
             [
-                'type' => CreditCard::VISA,
-                'service' => [CreditCardTest::class, 'staticCallback'],
+                'type'    => CreditCard::VISA,
+                'service' => [self::class, 'staticCallback'],
             ]
         );
 
@@ -197,9 +188,9 @@ class CreditCardTest extends TestCase
     /**
      * Data provider
      *
-     * @return string[][]|bool[][]
+     * @psalm-return array<array-key, array{0: string, 1: bool}>
      */
-    public function jcbValues()
+    public function jcbValues(): array
     {
         return [
             ['3566003566003566', true],
@@ -218,14 +209,10 @@ class CreditCardTest extends TestCase
      * Test JCB number validity
      *
      * @dataProvider jcbValues
-     *
      * @param string $input
      * @param bool   $expected
-     *
      * @group 6278
      * @group 6927
-     *
-     * @return void
      */
     public function testJcbCard($input, $expected): void
     {
@@ -237,9 +224,9 @@ class CreditCardTest extends TestCase
     /**
      * Data provider
      *
-     * @return string[][]|bool[][]
+     * @psalm-return array<array-key, array{0: string, 1: bool}>
      */
-    public function mastercardValues()
+    public function mastercardValues(): array
     {
         return [
             ['4111111111111111', false],
@@ -261,11 +248,8 @@ class CreditCardTest extends TestCase
      * Test mastercard number validity
      *
      * @dataProvider mastercardValues
-     *
      * @param string $input
      * @param bool   $expected
-     *
-     * @return void
      */
     public function testMastercardCard($input, $expected): void
     {
@@ -277,9 +261,9 @@ class CreditCardTest extends TestCase
     /**
      * Data provider
      *
-     * @return string[][]|bool[][]
+     * @psalm-return array<array-key, array{0: string, 1: bool}>
      */
-    public function mirValues()
+    public function mirValues(): array
     {
         return [
             ['3011111111111000', false],
@@ -302,11 +286,8 @@ class CreditCardTest extends TestCase
      * Test mir card number validity
      *
      * @dataProvider mirValues
-     *
      * @param string $input
      * @param bool   $expected
-     *
-     * @return void
      */
     public function testMirCard($input, $expected): void
     {
@@ -327,7 +308,7 @@ class CreditCardTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid callback given');
-        $validator->setService([CreditCardTest::class, 'nocallback']);
+        $validator->setService([self::class, 'nocallback']);
     }
 
     /**
@@ -338,7 +319,7 @@ class CreditCardTest extends TestCase
     public function testConfigObject()
     {
         $options = ['type' => 'Visa'];
-        $config = new Config\Config($options, false);
+        $config  = new Config\Config($options, false);
 
         $validator = new CreditCard($config);
         $this->assertEquals(['Visa'], $validator->getType());
@@ -352,12 +333,12 @@ class CreditCardTest extends TestCase
     public function testOptionalConstructorParameterByConfigObject()
     {
         $config = new Config\Config(
-            ['type' => 'Visa', 'service' => [CreditCardTest::class, 'staticCallback']]
+            ['type' => 'Visa', 'service' => [self::class, 'staticCallback']]
         );
 
         $validator = new CreditCard($config);
         $this->assertEquals(['Visa'], $validator->getType());
-        $this->assertEquals([CreditCardTest::class, 'staticCallback'], $validator->getService());
+        $this->assertEquals([self::class, 'staticCallback'], $validator->getService());
     }
 
     /**
@@ -367,19 +348,17 @@ class CreditCardTest extends TestCase
      */
     public function testOptionalConstructorParameter()
     {
-        $validator = new CreditCard('Visa', [CreditCardTest::class, 'staticCallback']);
+        $validator = new CreditCard('Visa', [self::class, 'staticCallback']);
         $this->assertEquals(['Visa'], $validator->getType());
-        $this->assertEquals([CreditCardTest::class, 'staticCallback'], $validator->getService());
+        $this->assertEquals([self::class, 'staticCallback'], $validator->getService());
     }
 
     /**
      * @group Laminas-9477
-     *
-     * @return void
      */
     public function testMultiInstitute(): void
     {
-        $validator      = new CreditCard(['type' => CreditCard::MASTERCARD]);
+        $validator = new CreditCard(['type' => CreditCard::MASTERCARD]);
         $this->assertFalse($validator->isValid('4111111111111111'));
         $message = $validator->getMessages();
         $this->assertStringContainsString('not from an allowed institute', current($message));
@@ -388,14 +367,23 @@ class CreditCardTest extends TestCase
     public function testEqualsMessageTemplates(): void
     {
         $validator = new CreditCard();
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertSame(
+            [
+                CreditCard::CHECKSUM,
+                CreditCard::CONTENT,
+                CreditCard::INVALID,
+                CreditCard::LENGTH,
+                CreditCard::PREFIX,
+                CreditCard::SERVICE,
+                CreditCard::SERVICEFAILURE,
+            ],
+            array_keys($validator->getMessageTemplates())
+        );
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     /**
      * @see https://github.com/zendframework/zend-validator/pull/202
-     *
-     * @return void
      */
     public function testValidatorAllowsExtensionsToDefineAdditionalTypesViaConstants(): void
     {
@@ -407,7 +395,7 @@ class CreditCardTest extends TestCase
     /**
      * @return false
      */
-    public static function staticCallback($value): bool
+    public static function staticCallback(): bool
     {
         return false;
     }

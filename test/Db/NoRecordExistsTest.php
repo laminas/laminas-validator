@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator\Db;
 
 use ArrayObject;
@@ -27,7 +21,7 @@ class NoRecordExistsTest extends TestCase
     /**
      * Return a Mock object for a Db result with rows
      *
-     * @return \Laminas\Db\Adapter\Adapter
+     * @return Adapter
      */
     protected function getMockHasResult()
     {
@@ -69,7 +63,7 @@ class NoRecordExistsTest extends TestCase
     /**
      * Return a Mock object for a Db result without rows
      *
-     * @return \Laminas\Db\Adapter\Adapter
+     * @return Adapter
      */
     protected function getMockNoResult()
     {
@@ -205,7 +199,7 @@ class NoRecordExistsTest extends TestCase
     public function testWithSchema()
     {
         $validator = new NoRecordExists([
-            'table' => 'users',
+            'table'  => 'users',
             'schema' => 'my',
         ], 'field1', null, $this->getMockHasResult());
         $this->assertFalse($validator->isValid('value1'));
@@ -219,7 +213,7 @@ class NoRecordExistsTest extends TestCase
     public function testWithSchemaNoResult()
     {
         $validator = new NoRecordExists([
-            'table' => 'users',
+            'table'  => 'users',
             'schema' => 'my',
         ], 'field1', null, $this->getMockNoResult());
         $this->assertTrue($validator->isValid('value1'));
@@ -227,8 +221,12 @@ class NoRecordExistsTest extends TestCase
 
     public function testEqualsMessageTemplates(): void
     {
-        $validator  = new NoRecordExists('users', 'field1');
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $validator        = new NoRecordExists('users', 'field1');
+        $messageTemplates = [
+            'noRecordFound' => 'No record matching the input was found',
+            'recordFound'   => 'A record matching the input was found',
+        ];
+        $this->assertSame($messageTemplates, $validator->getOption('messageTemplates'));
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 }

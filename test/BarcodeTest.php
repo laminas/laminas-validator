@@ -1,18 +1,16 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
+use Laminas\Config\Config;
 use Laminas\Validator\Barcode;
 use Laminas\Validator\Barcode\AdapterInterface;
 use Laminas\Validator\Barcode\Ean13;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+
+use function array_keys;
+use function extension_loaded;
 
 /**
  * \Laminas\Barcode
@@ -27,16 +25,15 @@ class BarcodeTest extends TestCase
     public function provideBarcodeConstructor(): array
     {
         return [
-            'null' => [null, Barcode\Ean13::class],
+            'null'        => [null, Barcode\Ean13::class],
             'empty-array' => [[], Barcode\Ean13::class],
         ];
     }
+
     /**
      * @dataProvider provideBarcodeConstructor
-     *
-     * @return void
      */
-    public function testBarcodeConstructor($options, $expectedInstance): void
+    public function testBarcodeConstructor(?array $options, string $expectedInstance): void
     {
         $barcode = new Barcode($options);
         $this->assertInstanceOf($expectedInstance, $barcode->getAdapter());
@@ -46,7 +43,7 @@ class BarcodeTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('not found');
-        $barcode = new Barcode('\Laminas\Validate\BarcodeTest\NonExistentClassName');
+        new Barcode('\Laminas\Validate\BarcodeTest\NonExistentClassName');
     }
 
     public function testSetAdapter(): void
@@ -69,8 +66,6 @@ class BarcodeTest extends TestCase
 
     /**
      * @Laminas-4352
-     *
-     * @return void
      */
     public function testNonStringValidation(): void
     {
@@ -168,8 +163,8 @@ class BarcodeTest extends TestCase
 
     public function testConfigConstructAdapter(): void
     {
-        $array = ['adapter' => 'Ean13', 'options' => 'unknown', 'useChecksum' => false];
-        $config = new \Laminas\Config\Config($array);
+        $array  = ['adapter' => 'Ean13', 'options' => 'unknown', 'useChecksum' => false];
+        $config = new Config($array);
 
         $barcode = new Barcode($config);
         $this->assertTrue($barcode->isValid('0075678164125'));
@@ -427,8 +422,6 @@ class BarcodeTest extends TestCase
 
     /**
      * @group Laminas-10116
-     *
-     * @return void
      */
     public function testArrayLengthMessage(): void
     {
@@ -441,8 +434,6 @@ class BarcodeTest extends TestCase
 
     /**
      * @group Laminas-8673
-     *
-     * @return void
      */
     public function testCODABAR(): void
     {
@@ -458,8 +449,6 @@ class BarcodeTest extends TestCase
 
     /**
      * @group Laminas-11532
-     *
-     * @return void
      */
     public function testIssnWithMod0(): void
     {
@@ -469,8 +458,6 @@ class BarcodeTest extends TestCase
 
     /**
      * @group Laminas-8674
-     *
-     * @return void
      */
     public function testCODE128(): void
     {
@@ -492,8 +479,6 @@ class BarcodeTest extends TestCase
      * Test if EAN-13 contains only numeric characters
      *
      * @group Laminas-3297
-     *
-     * @return void
      */
     public function testEan13ContainsOnlyNumeric(): void
     {
@@ -504,14 +489,25 @@ class BarcodeTest extends TestCase
     public function testEqualsMessageTemplates(): void
     {
         $validator = new Barcode('code25');
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
+        $this->assertSame(
+            [
+                Barcode::FAILED,
+                Barcode::INVALID_CHARS,
+                Barcode::INVALID_LENGTH,
+                Barcode::INVALID,
+            ],
+            array_keys($validator->getMessageTemplates())
+        );
         $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
     {
-        $validator = new Barcode('code25');
-        $this->assertObjectHasAttribute('messageVariables', $validator);
-        $this->assertEquals(array_keys($validator->getOption('messageVariables')), $validator->getMessageVariables());
+        $validator        = new Barcode('code25');
+        $messageVariables = [
+            'length' => ['options' => 'length'],
+        ];
+        $this->assertSame($messageVariables, $validator->getOption('messageVariables'));
+        $this->assertEquals(array_keys($messageVariables), $validator->getMessageVariables());
     }
 }
