@@ -1,16 +1,17 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File;
 use PHPUnit\Framework\TestCase;
+
+use function array_merge;
+use function basename;
+use function current;
+use function is_array;
+
+use const UPLOAD_ERR_NO_FILE;
 
 /**
  * @group      Laminas_Validator
@@ -18,62 +19,93 @@ use PHPUnit\Framework\TestCase;
 class ImageSizeTest extends TestCase
 {
     /**
-     * @return array
+     * @psalm-return array<array-key, array{
+     *     0: array<string, int>,
+     *     1: string|array{
+     *         tmp_name: string,
+     *         name: string,
+     *         size: int,
+     *         error: int,
+     *         type: string
+     *     },
+     *     2: bool,
+     *     3: string|string[]
+     * }>
      */
-    public function basicBehaviorDataProvider()
+    public function basicBehaviorDataProvider(): array
     {
-        $testFile = __DIR__ . '/_files/picture.jpg';
+        $testFile     = __DIR__ . '/_files/picture.jpg';
         $pictureTests = [
             //    Options, isValid Param, Expected value, Expected message
             [
                 ['minWidth' => 0,   'minHeight' => 10,  'maxWidth' => 1000, 'maxHeight' => 2000],
-                $testFile, true, '',
+                $testFile,
+                true,
+                '',
             ],
             [
                 ['minWidth' => 0,   'minHeight' => 0,   'maxWidth' => 200,  'maxHeight' => 200],
-                $testFile, true, '',
+                $testFile,
+                true,
+                '',
             ],
             [
                 ['minWidth' => 150, 'minHeight' => 150, 'maxWidth' => 200,  'maxHeight' => 200],
-                $testFile, false, ['fileImageSizeWidthTooSmall', 'fileImageSizeHeightTooSmall'],
+                $testFile,
+                false,
+                ['fileImageSizeWidthTooSmall', 'fileImageSizeHeightTooSmall'],
             ],
             [
                 ['minWidth' => 80,  'minHeight' => 0,   'maxWidth' => 80,   'maxHeight' => 200],
-                $testFile, true, '',
+                $testFile,
+                true,
+                '',
             ],
             [
                 ['minWidth' => 0,   'minHeight' => 0,   'maxWidth' => 60,   'maxHeight' => 200],
-                $testFile, false, 'fileImageSizeWidthTooBig',
+                $testFile,
+                false,
+                'fileImageSizeWidthTooBig',
             ],
             [
                 ['minWidth' => 90,  'minHeight' => 0,   'maxWidth' => 200,  'maxHeight' => 200],
-                $testFile, false, 'fileImageSizeWidthTooSmall',
+                $testFile,
+                false,
+                'fileImageSizeWidthTooSmall',
             ],
             [
                 ['minWidth' => 0,   'minHeight' => 0,   'maxWidth' => 200,  'maxHeight' => 80],
-                $testFile, false, 'fileImageSizeHeightTooBig',
+                $testFile,
+                false,
+                'fileImageSizeHeightTooBig',
             ],
             [
                 ['minWidth' => 0,   'minHeight' => 110, 'maxWidth' => 200,  'maxHeight' => 140],
-                $testFile, false, 'fileImageSizeHeightTooSmall',
+                $testFile,
+                false,
+                'fileImageSizeHeightTooSmall',
             ],
         ];
 
-        $testFile = __DIR__ . '/_files/nofile.mo';
+        $testFile    = __DIR__ . '/_files/nofile.mo';
         $noFileTests = [
             //    Options, isValid Param, Expected value, message
             [
                 ['minWidth' => 0, 'minHeight' => 10, 'maxWidth' => 1000, 'maxHeight' => 2000],
-                $testFile, false, 'fileImageSizeNotReadable',
+                $testFile,
+                false,
+                'fileImageSizeNotReadable',
             ],
         ];
 
-        $testFile = __DIR__ . '/_files/badpicture.jpg';
+        $testFile    = __DIR__ . '/_files/badpicture.jpg';
         $badPicTests = [
             //    Options, isValid Param, Expected value, message
             [
                 ['minWidth' => 0, 'minHeight' => 10, 'maxWidth' => 1000, 'maxHeight' => 2000],
-                $testFile, false,  'fileImageSizeNotDetected',
+                $testFile,
+                false,
+                'fileImageSizeNotDetected',
             ],
         ];
 
@@ -96,9 +128,10 @@ class ImageSizeTest extends TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider basicBehaviorDataProvider
-     * @return void
+     * @param string|array $isValidParam
+     * @param string|string[] $messageKeys
      */
-    public function testBasic($options, $isValidParam, $expected, $messageKeys)
+    public function testBasic(array $options, $isValidParam, bool $expected, $messageKeys): void
     {
         $validator = new File\ImageSize($options);
         $this->assertEquals($expected, $validator->isValid($isValidParam));
@@ -116,9 +149,10 @@ class ImageSizeTest extends TestCase
      * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
      * @dataProvider basicBehaviorDataProvider
-     * @return void
+     * @param string|array $isValidParam
+     * @param string|string[] $messageKeys
      */
-    public function testLegacy($options, $isValidParam, $expected, $messageKeys)
+    public function testLegacy(array $options, $isValidParam, bool $expected, $messageKeys): void
     {
         // Test legacy Laminas\Transfer API
         if (is_array($isValidParam)) {
@@ -147,7 +181,7 @@ class ImageSizeTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        $validator = new File\ImageSize(['minWidth' => 1000, 'minHeight' => 100, 'maxWidth' => 10, 'maxHeight' => 1]);
+        new File\ImageSize(['minWidth' => 1000, 'minHeight' => 100, 'maxWidth' => 10, 'maxHeight' => 1]);
     }
 
     /**
@@ -191,7 +225,7 @@ class ImageSizeTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        $validator = new File\ImageSize([
+        new File\ImageSize([
             'minWidth'  => 10000,
             'minHeight' => 1000,
             'maxWidth'  => 100,
@@ -295,8 +329,6 @@ class ImageSizeTest extends TestCase
 
     /**
      * @group Laminas-11258
-     *
-     * @return void
      */
     public function testLaminas11258(): void
     {
@@ -319,11 +351,11 @@ class ImageSizeTest extends TestCase
         $this->assertArrayHasKey(File\ImageSize::NOT_READABLE, $validator->getMessages());
 
         $filesArray = [
-            'name'      => '',
-            'size'      => 0,
-            'tmp_name'  => '',
-            'error'     => UPLOAD_ERR_NO_FILE,
-            'type'      => '',
+            'name'     => '',
+            'size'     => 0,
+            'tmp_name' => '',
+            'error'    => UPLOAD_ERR_NO_FILE,
+            'type'     => '',
         ];
 
         $this->assertFalse($validator->isValid($filesArray));
@@ -352,7 +384,7 @@ class ImageSizeTest extends TestCase
             'maxWidth'  => 10000,
             'maxHeight' => 100000,
         ]);
-        $value = ['foo' => 'bar'];
+        $value     = ['foo' => 'bar'];
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Value array must be in $_FILES format');

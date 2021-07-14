@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 declare(strict_types=1);
 
 namespace Laminas\Validator;
@@ -30,15 +24,15 @@ class Date extends AbstractValidator
     /**#@+
      * Validity constants
      */
-    public const INVALID        = 'dateInvalid';
-    public const INVALID_DATE   = 'dateInvalidDate';
-    public const FALSEFORMAT    = 'dateFalseFormat';
+    public const INVALID      = 'dateInvalid';
+    public const INVALID_DATE = 'dateInvalidDate';
+    public const FALSEFORMAT  = 'dateFalseFormat';
     /**#@-*/
 
     /**
      * Default format constant
      */
-    const FORMAT_DEFAULT = 'Y-m-d';
+    public const FORMAT_DEFAULT = 'Y-m-d';
 
     /**
      * Validation failure message template definitions
@@ -72,9 +66,9 @@ class Date extends AbstractValidator
         if ($options instanceof Traversable) {
             $options = iterator_to_array($options);
         } elseif (! is_array($options)) {
-            $options = func_get_args();
+            $options        = func_get_args();
             $temp['format'] = array_shift($options);
-            $options = $temp;
+            $options        = $temp;
         }
 
         parent::__construct($options);

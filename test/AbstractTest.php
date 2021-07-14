@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\AbstractValidator;
@@ -14,6 +8,14 @@ use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Hostname;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
+use stdClass;
+
+use function extension_loaded;
+use function reset;
+use function restore_error_handler;
+use function set_error_handler;
+use function sprintf;
+use function var_export;
 
 /**
  * @group      Laminas_Validator
@@ -30,12 +32,12 @@ class AbstractTest extends TestCase
      */
     protected $errorOccurred = false;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->validator = new TestAsset\ConcreteValidator();
     }
 
-    protected function tearDown() : void
+    protected function tearDown(): void
     {
         AbstractValidator::setDefaultTranslator(null, 'default');
     }
@@ -70,11 +72,11 @@ class AbstractTest extends TestCase
             $this->markTestSkipped('ext/intl not enabled');
         }
 
-        $loader = new TestAsset\ArrayTranslator();
+        $loader               = new TestAsset\ArrayTranslator();
         $loader->translations = [
             '%value% was passed' => 'This is the translated message for %value%',
         ];
-        $translator = new TestAsset\Translator();
+        $translator           = new TestAsset\Translator();
         $translator->getPluginManager()->setService('default', $loader);
         $translator->addTranslationFile('default', null);
 
@@ -113,12 +115,10 @@ class AbstractTest extends TestCase
 
     /**
      * @group Laminas-4463
-     *
-     * @return void
      */
     public function testDoesNotFailOnObjectInput(): void
     {
-        $this->assertFalse($this->validator->isValid(new \stdClass()));
+        $this->assertFalse($this->validator->isValid(new stdClass()));
         $messages = $this->validator->getMessages();
         $this->assertArrayHasKey('fooMessage', $messages);
     }
@@ -137,11 +137,11 @@ class AbstractTest extends TestCase
             $this->markTestSkipped('ext/intl not enabled');
         }
 
-        $loader = new TestAsset\ArrayTranslator();
+        $loader               = new TestAsset\ArrayTranslator();
         $loader->translations = [
             '%value% was passed' => 'This is the translated message for %value%',
         ];
-        $translator = new TestAsset\Translator();
+        $translator           = new TestAsset\Translator();
         $translator->getPluginManager()->setService('default', $loader);
         $translator->addTranslationFile('default', null);
         $this->validator->setTranslator($translator);
@@ -178,7 +178,7 @@ class AbstractTest extends TestCase
 
     public function testInvokeProxiesToIsValid(): void
     {
-        $validator = new TestAsset\ConcreteValidator;
+        $validator = new TestAsset\ConcreteValidator();
         $this->assertFalse($validator('foo'));
         $this->assertContains('foo was passed', $validator->getMessages());
     }
@@ -263,7 +263,7 @@ class AbstractTest extends TestCase
 
         $validator->setMessages([
             EmailAddress::INVALID_HOSTNAME => 'This is the same error message',
-            Hostname::UNKNOWN_TLD => 'This is the same error message',
+            Hostname::UNKNOWN_TLD          => 'This is the same error message',
         ]);
 
         $this->assertFalse($validator->isValid('invalid@email.coma'));
@@ -302,20 +302,21 @@ class AbstractTest extends TestCase
     public function invalidOptionsArguments(): array
     {
         return [
-            'null' => [null],
-            'true' => [true],
-            'false' => [false],
-            'zero' => [0],
-            'int' => [1],
+            'null'       => [null],
+            'true'       => [true],
+            'false'      => [false],
+            'zero'       => [0],
+            'int'        => [1],
             'zero-float' => [0.0],
-            'float' => [1.1],
-            'string' => ['string'],
-            'object' => [(object) []],
+            'float'      => [1.1],
+            'string'     => ['string'],
+            'object'     => [(object) []],
         ];
     }
 
     /**
      * @dataProvider invalidOptionsArguments
+     * @param mixed $options
      */
     public function testSettingOptionsWithNonTraversableRaisesException($options): void
     {

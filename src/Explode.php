@@ -1,48 +1,38 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Validator;
 
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
 
+use function explode;
+use function is_array;
+use function is_string;
+use function sprintf;
+
 class Explode extends AbstractValidator implements ValidatorPluginManagerAwareInterface
 {
-    const INVALID = 'explodeInvalid';
+    public const INVALID = 'explodeInvalid';
 
+    /** @var null|ValidatorPluginManager */
     protected $pluginManager;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $messageTemplates = [
         self::INVALID => 'Invalid type given',
     ];
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $messageVariables = [];
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $valueDelimiter = ',';
 
-    /**
-     * @var ValidatorInterface
-     */
+    /** @var ValidatorInterface */
     protected $validator;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $breakOnFirstFailure = false;
 
     /**
@@ -70,7 +60,6 @@ class Explode extends AbstractValidator implements ValidatorPluginManagerAwareIn
     /**
      * Set validator plugin manager
      *
-     * @param ValidatorPluginManager $pluginManager
      * @return void
      */
     public function setValidatorPluginManager(ValidatorPluginManager $pluginManager)
@@ -86,7 +75,7 @@ class Explode extends AbstractValidator implements ValidatorPluginManagerAwareIn
     public function getValidatorPluginManager()
     {
         if (! $this->pluginManager) {
-            $this->setValidatorPluginManager(new ValidatorPluginManager(new ServiceManager));
+            $this->setValidatorPluginManager(new ValidatorPluginManager(new ServiceManager()));
         }
 
         return $this->pluginManager;
@@ -107,8 +96,8 @@ class Explode extends AbstractValidator implements ValidatorPluginManagerAwareIn
                     'Invalid validator specification provided; does not include "name" key'
                 );
             }
-            $name = $validator['name'];
-            $options = isset($validator['options']) ? $validator['options'] : [];
+            $name      = $validator['name'];
+            $options   = $validator['options'] ?? [];
             $validator = $this->getValidatorPluginManager()->get($name, $options);
         }
 

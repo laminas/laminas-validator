@@ -1,16 +1,15 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File\ExcludeMimeType;
 use PHPUnit\Framework\TestCase;
+
+use function basename;
+use function is_array;
+
+use const UPLOAD_ERR_NO_FILE;
 
 /**
  * ExcludeMimeType testbed
@@ -20,11 +19,22 @@ use PHPUnit\Framework\TestCase;
 class ExcludeMimeTypeTest extends TestCase
 {
     /**
-     * @return array
+     * @psalm-return array<array-key, array{
+     *     0: string|string[],
+     *     1: array{
+     *         tmp_name: string,
+     *         name: string,
+     *         size: int,
+     *         error: int,
+     *         type: string
+     *     },
+     *     2: bool,
+     *     3: array<string, string>
+     * }>
      */
-    public function basicBehaviorDataProvider()
+    public function basicBehaviorDataProvider(): array
     {
-        $testFile = __DIR__ . '/_files/picture.jpg';
+        $testFile   = __DIR__ . '/_files/picture.jpg';
         $fileUpload = [
             'tmp_name' => $testFile,
             'name'     => basename($testFile),
@@ -37,13 +47,13 @@ class ExcludeMimeTypeTest extends TestCase
 
         return [
             //    Options, isValid Param, Expected value, messages
-            ['image/gif',                 $fileUpload, true,  []],
+            ['image/gif', $fileUpload, true, []],
             ['image',                     $fileUpload, false, $falseTypeMessage],
-            ['test/notype',               $fileUpload, true,  []],
+            ['test/notype', $fileUpload, true, []],
             ['image/gif, image/jpeg',     $fileUpload, false, $falseTypeMessage],
-            [['image/vasa', 'image/gif'], $fileUpload, true,  []],
-            [['image/gif', 'jpeg'],       $fileUpload, false, $falseTypeMessage],
-            [['image/gif', 'gif'],        $fileUpload, true,  []],
+            [['image/vasa', 'image/gif'], $fileUpload, true, []],
+            [['image/gif', 'jpeg'], $fileUpload, false, $falseTypeMessage],
+            [['image/gif', 'gif'], $fileUpload, true, []],
         ];
     }
 
@@ -51,15 +61,10 @@ class ExcludeMimeTypeTest extends TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider basicBehaviorDataProvider
-     *
-     * @param string|array $options
+     * @param string|string[] $options
      * @param array $isValidParam
-     * @param bool $expected
-     * @param array $messages
-     *
-     * @return void
      */
-    public function testBasic($options, array $isValidParam, $expected, array $messages): void
+    public function testBasic($options, array $isValidParam, bool $expected, array $messages): void
     {
         $validator = new ExcludeMimeType($options);
         $validator->enableHeaderCheck();
@@ -71,9 +76,10 @@ class ExcludeMimeTypeTest extends TestCase
      * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
      * @dataProvider basicBehaviorDataProvider
-     * @return void
+     * @param string|string[] $options
+     * @param array $isValidParam
      */
-    public function testLegacy($options, $isValidParam, $expected)
+    public function testLegacy($options, $isValidParam, bool $expected): void
     {
         if (is_array($isValidParam)) {
             $validator = new ExcludeMimeType($options);
@@ -159,11 +165,11 @@ class ExcludeMimeTypeTest extends TestCase
         $validator = new ExcludeMimeType();
 
         $filesArray = [
-            'name'      => '',
-            'size'      => 0,
-            'tmp_name'  => '',
-            'error'     => UPLOAD_ERR_NO_FILE,
-            'type'      => '',
+            'name'     => '',
+            'size'     => 0,
+            'tmp_name' => '',
+            'error'    => UPLOAD_ERR_NO_FILE,
+            'type'     => '',
         ];
 
         $this->assertFalse($validator->isValid($filesArray));

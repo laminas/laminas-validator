@@ -1,11 +1,5 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
@@ -18,33 +12,36 @@ use PHPUnit\Framework\TestCase;
 class IsbnTest extends TestCase
 {
     /**
+     * @psalm-return array<string, array{
+     *     0: string,
+     *     1: bool
+     * }>
+     */
+    public function basicProvider(): array
+    {
+        return [
+            'Brave New World by Aldous Huxley - True'                       => ['0060929871', true],
+            'Brave New World by Aldous Huxley - False'                      => ['006092987X', false],
+            'Time Rations by Benjamin Friedlander - True'                   => ['188202205X', true],
+            'Time Rations by Benjamin Friedlander - False'                  => ['1882022059', false],
+            'Towards The Primeval Lighting Field by Will Alexander - True'  => ['1882022300', true],
+            'Towards The Primeval Lighting Field by Will Alexander - False' => ['1882022301', false],
+            'ISBN-13 for dummies by Zoë Wykes - True'                       => ['9780555023402', true],
+            'ISBN-13 for dummies by Zoë Wykes - False'                      => ['97805550234029', false],
+            'Change Your Brain, Change Your Life Daniel G. Amen - True'     => ['9780812929980', true],
+            'Change Your Brain, Change Your Life Daniel G. Amen - False'    => ['9780812929981', false],
+        ];
+    }
+
+    /**
      * Ensures that the validator follows expected behavior
      *
-     * @return void
+     * @dataProvider basicProvider
      */
-    public function testBasic()
+    public function testBasic(string $value, bool $expected): void
     {
         $validator = new Isbn();
-
-        // Brave New World by Aldous Huxley
-        $this->assertTrue($validator->isValid('0060929871'));
-        $this->assertFalse($validator->isValid('006092987X'));
-
-        // Time Rations by Benjamin Friedlander
-        $this->assertTrue($validator->isValid('188202205X'));
-        $this->assertFalse($validator->isValid('1882022059'));
-
-        // Towards The Primeval Lighting Field by Will Alexander
-        $this->assertTrue($validator->isValid('1882022300'));
-        $this->assertFalse($validator->isValid('1882022301'));
-
-        //  ISBN-13 for dummies by Zoë Wykes
-        $this->assertTrue($validator->isValid('9780555023402'));
-        $this->assertFalse($validator->isValid('97805550234029'));
-
-        // Change Your Brain, Change Your Life Daniel G. Amen
-        $this->assertTrue($validator->isValid('9780812929980'));
-        $this->assertFalse($validator->isValid('9780812929981'));
+        $this->assertSame($expected, $validator->isValid($value));
     }
 
     /**
@@ -100,7 +97,7 @@ class IsbnTest extends TestCase
      */
     public function testInitialization()
     {
-        $options = [
+        $options   = [
             'type'      => Isbn::AUTO,
             'separator' => ' ',
         ];
@@ -108,7 +105,7 @@ class IsbnTest extends TestCase
         $this->assertEquals(Isbn::AUTO, $validator->getType());
         $this->assertEquals(' ', $validator->getSeparator());
 
-        $options = [
+        $options   = [
             'type'      => Isbn::ISBN10,
             'separator' => '-',
         ];
@@ -116,7 +113,7 @@ class IsbnTest extends TestCase
         $this->assertEquals(Isbn::ISBN10, $validator->getType());
         $this->assertEquals('-', $validator->getSeparator());
 
-        $options = [
+        $options   = [
             'type'      => Isbn::ISBN13,
             'separator' => '',
         ];
@@ -213,8 +210,6 @@ class IsbnTest extends TestCase
 
     /**
      * @group Laminas-9605
-     *
-     * @return void
      */
     public function testInvalidTypeGiven(): void
     {

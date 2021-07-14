@@ -1,13 +1,8 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
+use Exception;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\ServiceManager;
@@ -17,6 +12,9 @@ use Laminas\Validator\ValidatorPluginManager;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
+use function get_class;
+use function sprintf;
+
 /**
  * @group      Laminas_Validator
  */
@@ -24,9 +22,9 @@ class ValidatorPluginManagerTest extends TestCase
 {
     use ProphecyTrait;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
-        $this->validators = new ValidatorPluginManager(new ServiceManager);
+        $this->validators = new ValidatorPluginManager(new ServiceManager());
     }
 
     public function testAllowsInjectingTranslator(): void
@@ -62,7 +60,7 @@ class ValidatorPluginManagerTest extends TestCase
             $this->assertStringContainsString(ValidatorInterface::class, $e->getMessage());
         } catch (RuntimeException $e) {
             $this->assertStringContainsString(ValidatorInterface::class, $e->getMessage());
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->fail(sprintf(
                 'Unexpected exception of type "%s" when testing for invalid validator types',
                 get_class($e)
@@ -72,14 +70,14 @@ class ValidatorPluginManagerTest extends TestCase
 
     public function testLoadingInvalidValidatorRaisesException(): void
     {
-        $this->validators->setInvokableClass('test', get_class($this));
+        $this->validators->setInvokableClass('test', static::class);
         try {
             $this->validators->get('test');
         } catch (InvalidServiceException $e) {
             $this->assertStringContainsString(ValidatorInterface::class, $e->getMessage());
         } catch (RuntimeException $e) {
             $this->assertStringContainsString(ValidatorInterface::class, $e->getMessage());
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->fail(sprintf(
                 'Unexpected exception of type "%s" when testing for invalid validator types',
                 get_class($e)

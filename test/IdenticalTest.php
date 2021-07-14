@@ -1,17 +1,14 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Stdlib\Parameters;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Identical;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function array_keys;
 
 /**
  * @group      Laminas_Validator
@@ -21,9 +18,9 @@ class IdenticalTest extends TestCase
     /** @var Identical */
     public $validator;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
-        $this->validator = new Identical;
+        $this->validator = new Identical();
     }
 
     public function testTokenInitiallyNull(): void
@@ -77,8 +74,6 @@ class IdenticalTest extends TestCase
 
     /**
      * @group Laminas-6953
-     *
-     * @return void
      */
     public function testValidatingAgainstEmptyToken(): void
     {
@@ -88,8 +83,6 @@ class IdenticalTest extends TestCase
 
     /**
      * @group Laminas-7128
-     *
-     * @return void
      */
     public function testValidatingAgainstNonStrings(): void
     {
@@ -258,10 +251,7 @@ class IdenticalTest extends TestCase
 
     /**
      * @dataProvider invalidContextProvider
-     *
      * @param mixed $context
-     *
-     * @return void
      */
     public function testIsValidThrowsExceptionOnInvalidContext($context): void
     {
@@ -277,7 +267,7 @@ class IdenticalTest extends TestCase
     {
         return [
             [false],
-            [new \stdClass()],
+            [new stdClass()],
             ['dummy'],
         ];
     }

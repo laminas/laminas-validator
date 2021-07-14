@@ -1,15 +1,11 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\GreaterThan;
 use PHPUnit\Framework\TestCase;
+
+use function array_keys;
 
 /**
  * @group      Laminas_Validator
@@ -150,8 +146,6 @@ class GreaterThanTest extends TestCase
 
     /**
      * @dataProvider correctInclusiveMessageDataProvider
-     *
-     * @return void
      */
     public function testCorrectInclusiveMessageReturn(float $input): void
     {
@@ -164,7 +158,8 @@ class GreaterThanTest extends TestCase
     }
 
     /**
-     * @psalm-return array<string, array{0: int|float}>
+     * @psalm-return array{0: array{0: 0}, '0.5': array{0: float}, 5: array{0: 5}, 10: array{0: 10}}
+     * @return (float|int)[][]
      */
     public function correctInclusiveMessageDataProvider(): array
     {
@@ -178,8 +173,6 @@ class GreaterThanTest extends TestCase
 
     /**
      * @dataProvider correctNotInclusiveMessageDataProvider
-     *
-     * @return void
      */
     public function testCorrectNotInclusiveMessageReturn(float $input): void
     {
@@ -192,7 +185,8 @@ class GreaterThanTest extends TestCase
     }
 
     /**
-     * @psalm-return array<string, array{0: int|float}>
+     * @psalm-return array{0: array{0: 0}, '0.5': array{0: float}, 5: array{0: 5}, 9: array{0: 9}}
+     * @return (float|int)[][]
      */
     public function correctNotInclusiveMessageDataProvider(): array
     {
@@ -200,7 +194,7 @@ class GreaterThanTest extends TestCase
             '0'   => [0],
             '0.5' => [0.5],
             '5'   => [5],
-            '9'  => [9],
+            '9'   => [9],
         ];
     }
 

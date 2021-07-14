@@ -1,16 +1,17 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File;
 use PHPUnit\Framework\TestCase;
+
+use function array_merge;
+use function basename;
+use function current;
+use function is_array;
+
+use const UPLOAD_ERR_NO_FILE;
 
 /**
  * Sha1 testbed
@@ -20,26 +21,41 @@ use PHPUnit\Framework\TestCase;
 class Sha1Test extends TestCase
 {
     /**
-     * @return array
+     * @psalm-return array<array-key, array{
+     *     0: string|string[],
+     *     1: string|array{
+     *         tmp_name: string,
+     *         name: string,
+     *         size: int,
+     *         error: int,
+     *         type: string
+     *     },
+     *     2: bool,
+     *     3: string
+     * }>
      */
-    public function basicBehaviorDataProvider()
+    public function basicBehaviorDataProvider(): array
     {
-        $testFile   = __DIR__ . '/_files/picture.jpg';
+        $testFile     = __DIR__ . '/_files/picture.jpg';
         $pictureTests = [
             //    Options, isValid Param, Expected value, Expected message
             ['b2a5334847b4328e7d19d9b41fd874dffa911c98', $testFile, true,  ''],
             ['52a5334847b4328e7d19d9b41fd874dffa911c98', $testFile, false, 'fileSha1DoesNotMatch'],
             [
                 ['42a5334847b4328e7d19d9b41fd874dffa911c98', 'b2a5334847b4328e7d19d9b41fd874dffa911c98'],
-                $testFile, true, '',
+                $testFile,
+                true,
+                '',
             ],
             [
                 ['42a5334847b4328e7d19d9b41fd874dffa911c98', '72a5334847b4328e7d19d9b41fd874dffa911c98'],
-                $testFile, false, 'fileSha1DoesNotMatch',
+                $testFile,
+                false,
+                'fileSha1DoesNotMatch',
             ],
         ];
 
-        $testFile   = __DIR__ . '/_files/nofile.mo';
+        $testFile    = __DIR__ . '/_files/nofile.mo';
         $noFileTests = [
             //    Options, isValid Param, Expected value, message
             ['b2a5334847b4328e7d19d9b41fd874dffa911c98', $testFile, false, 'fileSha1NotFound'],
@@ -64,9 +80,10 @@ class Sha1Test extends TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider basicBehaviorDataProvider
-     * @return void
+     * @param string|string[] $options
+     * @param string|array $isValidParam
      */
-    public function testBasic($options, $isValidParam, $expected, $messageKey)
+    public function testBasic($options, $isValidParam, bool $expected, string $messageKey): void
     {
         $validator = new File\Sha1($options);
         $this->assertEquals($expected, $validator->isValid($isValidParam));
@@ -79,9 +96,10 @@ class Sha1Test extends TestCase
      * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
      * @dataProvider basicBehaviorDataProvider
-     * @return void
+     * @param string|string[] $options
+     * @param string|array $isValidParam
      */
-    public function testLegacy($options, $isValidParam, $expected, $messageKey)
+    public function testLegacy($options, $isValidParam, bool $expected, string $messageKey): void
     {
         if (is_array($isValidParam)) {
             $validator = new File\Sha1($options);
@@ -188,8 +206,6 @@ class Sha1Test extends TestCase
 
     /**
      * @group Laminas-11258
-     *
-     * @return void
      */
     public function testLaminas11258(): void
     {
@@ -207,11 +223,11 @@ class Sha1Test extends TestCase
         $this->assertArrayHasKey(File\Sha1::NOT_FOUND, $validator->getMessages());
 
         $filesArray = [
-            'name'      => '',
-            'size'      => 0,
-            'tmp_name'  => '',
-            'error'     => UPLOAD_ERR_NO_FILE,
-            'type'      => '',
+            'name'     => '',
+            'size'     => 0,
+            'tmp_name' => '',
+            'error'    => UPLOAD_ERR_NO_FILE,
+            'type'     => '',
         ];
 
         $this->assertFalse($validator->isValid($filesArray));

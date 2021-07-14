@@ -1,17 +1,14 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Regex;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
+
+use function array_keys;
+use function implode;
 
 /**
  * @group      Laminas_Validator
@@ -91,13 +88,11 @@ class RegexTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Internal error parsing');
-        $validator = new Regex('/');
+        new Regex('/');
     }
 
     /**
      * @Laminas-4352
-     *
-     * @return void
      */
     public function testNonStringValidation(): void
     {
@@ -107,12 +102,9 @@ class RegexTest extends TestCase
 
     /**
      * @Laminas-11863
-     *
      * @dataProvider specialCharValidationProvider
-     *
-     * @return void
      */
-    public function testSpecialCharValidation($expected, $input): void
+    public function testSpecialCharValidation(bool $expected, string $input): void
     {
         $validator = new Regex('/^[[:alpha:]\']+$/iu');
         $this->assertEquals(
@@ -174,20 +166,19 @@ class RegexTest extends TestCase
 
     /**
      * @dataProvider invalidConstructorArgumentsProvider
-     *
-     * @return void
+     * @param mixed $options
      */
     public function testConstructorRaisesExceptionWhenProvidedInvalidArguments($options): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $validator = new Regex($options);
+        new Regex($options);
     }
 
     public function testConstructorRaisesExceptionWhenProvidedWithInvalidOptionsArray(): void
     {
         $options = ['foo' => 'bar'];
         $this->expectException(InvalidArgumentException::class);
-        $validator = new Regex($options);
+        new Regex($options);
     }
 
     public function testIsValidShouldReturnFalseWhenRegexPatternIsInvalid(): void

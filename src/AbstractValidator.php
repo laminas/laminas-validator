@@ -1,15 +1,30 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Validator;
 
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
+
+use function array_key_exists;
+use function array_keys;
+use function array_unique;
+use function current;
+use function get_class;
+use function get_class_methods;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_object;
+use function key;
+use function method_exists;
+use function str_repeat;
+use function str_replace;
+use function strlen;
+use function substr;
+use function ucfirst;
+use function var_export;
+
+use const SORT_REGULAR;
 
 abstract class AbstractValidator implements
     Translator\TranslatorAwareInterface,
@@ -24,12 +39,14 @@ abstract class AbstractValidator implements
 
     /**
      * Default translation object for all validate objects
+     *
      * @var Translator\TranslatorInterface
      */
     protected static $defaultTranslator;
 
     /**
      * Default text domain to be used with translator
+     *
      * @var string
      */
     protected static $defaultTranslatorTextDomain = 'default';
@@ -41,14 +58,15 @@ abstract class AbstractValidator implements
      */
     protected static $messageLength = -1;
 
+    /** @var array<string, mixed> */
     protected $abstractOptions = [
         'messages'             => [], // Array of validation failure messages
         'messageTemplates'     => [], // Array of validation failure message templates
         'messageVariables'     => [], // Array of additional variables available for validation failure messages
-        'translator'           => null,    // Translation object to used -> Translator\TranslatorInterface
-        'translatorTextDomain' => null,    // Translation text domain
-        'translatorEnabled'    => true,    // Is translation enabled?
-        'valueObscured'        => false,   // Flag indicating whether or not value should be obfuscated
+        'translator'           => null, // Translation object to used -> Translator\TranslatorInterface
+        'translatorTextDomain' => null, // Translation text domain
+        'translatorEnabled'    => true, // Is translation enabled?
+        'valueObscured'        => false, // Flag indicating whether or not value should be obfuscated
                                            // in error messages
     ];
 
@@ -120,8 +138,8 @@ abstract class AbstractValidator implements
      * Sets one or multiple options
      *
      * @param  array|Traversable $options Options to set
-     * @throws Exception\InvalidArgumentException If $options is not an array or Traversable
      * @return $this Provides fluid interface
+     * @throws Exception\InvalidArgumentException If $options is not an array or Traversable.
      */
     public function setOptions($options = [])
     {
@@ -130,7 +148,7 @@ abstract class AbstractValidator implements
         }
 
         foreach ($options as $name => $option) {
-            $fname = 'set' . ucfirst($name);
+            $fname  = 'set' . ucfirst($name);
             $fname2 = 'is' . ucfirst($name);
             if (($name !== 'setOptions') && method_exists($this, $name)) {
                 $this->{$name}($option);
@@ -240,7 +258,7 @@ abstract class AbstractValidator implements
      */
     public function __get($property)
     {
-        if ($property == 'value') {
+        if ($property === 'value') {
             return $this->value;
         }
 
@@ -285,7 +303,8 @@ abstract class AbstractValidator implements
 
         $message = $this->translateMessage($messageKey, $message);
 
-        if (is_object($value) &&
+        if (
+            is_object($value) &&
             ! in_array('__toString', get_class_methods($value))
         ) {
             $value = get_class($value) . ' object';
@@ -328,7 +347,7 @@ abstract class AbstractValidator implements
     protected function error($messageKey, $value = null)
     {
         if ($messageKey === null) {
-            $keys = array_keys($this->abstractOptions['messageTemplates']);
+            $keys       = array_keys($this->abstractOptions['messageTemplates']);
             $messageKey = current($keys);
         }
 
@@ -357,7 +376,7 @@ abstract class AbstractValidator implements
      */
     protected function setValue($value)
     {
-        $this->value               = $value;
+        $this->value                       = $value;
         $this->abstractOptions['messages'] = [];
     }
 
@@ -387,12 +406,11 @@ abstract class AbstractValidator implements
     /**
      * Set translation object
      *
-     * @param  Translator\TranslatorInterface|null $translator
      * @param  string          $textDomain (optional)
      * @return $this
      * @throws Exception\InvalidArgumentException
      */
-    public function setTranslator(Translator\TranslatorInterface $translator = null, $textDomain = null)
+    public function setTranslator(?Translator\TranslatorInterface $translator = null, $textDomain = null)
     {
         $this->abstractOptions['translator'] = $translator;
         if (null !== $textDomain) {
@@ -458,12 +476,11 @@ abstract class AbstractValidator implements
     /**
      * Set default translation object for all validate objects
      *
-     * @param  Translator\TranslatorInterface|null $translator
      * @param  string          $textDomain (optional)
      * @return void
      * @throws Exception\InvalidArgumentException
      */
-    public static function setDefaultTranslator(Translator\TranslatorInterface $translator = null, $textDomain = null)
+    public static function setDefaultTranslator(?Translator\TranslatorInterface $translator = null, $textDomain = null)
     {
         static::$defaultTranslator = $translator;
         if (null !== $textDomain) {
@@ -515,12 +532,12 @@ abstract class AbstractValidator implements
     /**
      * Indicate whether or not translation should be enabled
      *
-     * @param  bool $flag
+     * @param  bool $enabled
      * @return $this
      */
-    public function setTranslatorEnabled($flag = true)
+    public function setTranslatorEnabled($enabled = true)
     {
-        $this->abstractOptions['translatorEnabled'] = (bool) $flag;
+        $this->abstractOptions['translatorEnabled'] = (bool) $enabled;
         return $this;
     }
 

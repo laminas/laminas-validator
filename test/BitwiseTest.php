@@ -1,31 +1,23 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
+use ArrayObject;
 use Laminas\Validator\Bitwise;
 use PHPUnit\Framework\TestCase;
 
 class BitwiseTest extends TestCase
 {
-    /**
-     * @var \Laminas\Validator\Bitwise
-     */
+    /** @var Bitwise */
     public $validator;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->validator = new Bitwise();
     }
 
     /**
      * @covers \Laminas\Validator\Bitwise::__construct()
-     *
      * @dataProvider constructDataProvider
      */
     public function testConstruct(array $args, array $options): void
@@ -36,15 +28,15 @@ class BitwiseTest extends TestCase
         $this->assertSame($options['operator'], $validator->getOperator());
         $this->assertSame($options['strict'], $validator->getStrict());
     }
+
     /**
      * @covers \Laminas\Validator\Bitwise::__construct()
-     *
      * @dataProvider constructDataProvider
      */
     public function testConstructWithTravesableOptions(array $args, array $options): void
     {
         $validator = new Bitwise(
-            new \ArrayObject($args)
+            new ArrayObject($args)
         );
 
         $this->assertSame($options['control'], $validator->getControl());
@@ -137,16 +129,42 @@ class BitwiseTest extends TestCase
     }
 
     /**
-     * @covers \Laminas\Validator\Bitwise::isvalid()
+     * @psalm-return array<array-key, array{
+     *     0: int,
+     *     1: bool,
+     *     2: array<string, string>
+     * }>
      */
-    public function testBitwiseXor(): void
+    public function bitwiseXorProvider(): array
+    {
+        return [
+            [0x2, true, []],
+            [0x8, true, []],
+            [0x10, true, []],
+            [0x1, false, [Bitwise::NOT_XOR => "The input has common bit set with '5'"]],
+            [0x4, false, [Bitwise::NOT_XOR => "The input has common bit set with '5'"]],
+            [0x8 | 0x10, true, []],
+            [0x1 | 0x4, false, [Bitwise::NOT_XOR => "The input has common bit set with '5'"]],
+            [0x1 | 0x8, false, [Bitwise::NOT_XOR => "The input has common bit set with '5'"]],
+            [0x4 | 0x8, false, [Bitwise::NOT_XOR => "The input has common bit set with '5'"]],
+        ];
+    }
+
+    /**
+     * @covers \Laminas\Validator\Bitwise::isvalid()
+     * @dataProvider bitwiseXorProvider
+     */
+    public function testBitwiseXor(int $value, bool $expected, array $expectedMessages): void
     {
         $controlSum = 0x5; // (0x1 | 0x4) === 0x5
-
-        $validator = new Bitwise();
+        $validator  = new Bitwise();
         $validator->setControl($controlSum);
         $validator->setOperator(Bitwise::OP_XOR);
 
+        $this->assertSame($expected, $validator->isValid($value));
+        $this->assertSame($expectedMessages, $validator->getMessages());
+
+        /*
         $this->assertTrue($validator->isValid(0x2));
         $this->assertTrue($validator->isValid(0x8));
         $this->assertTrue($validator->isValid(0x10));
@@ -162,6 +180,7 @@ class BitwiseTest extends TestCase
         $this->assertFalse($validator->isValid(0x1 | 0x4));
         $this->assertFalse($validator->isValid(0x1 | 0x8));
         $this->assertFalse($validator->isValid(0x4 | 0x8));
+         */
     }
 
     /**

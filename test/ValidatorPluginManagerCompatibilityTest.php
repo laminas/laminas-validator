@@ -1,10 +1,4 @@
-<?php
-
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
+<?php // phpcs:disable SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedMethod
 
 namespace LaminasTest\Validator;
 
@@ -16,20 +10,26 @@ use Laminas\Validator\ValidatorPluginManager;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
+use function method_exists;
+use function strpos;
+
 class ValidatorPluginManagerCompatibilityTest extends TestCase
 {
     use CommonPluginManagerTrait;
 
+    /** @return ValidatorPluginManager */
     protected function getPluginManager()
     {
         return new ValidatorPluginManager(new ServiceManager());
     }
 
+    /** @return string */
     protected function getV2InvalidPluginException()
     {
         return RuntimeException::class;
     }
 
+    /** @return string */
     protected function getInstanceOf()
     {
         return ValidatorInterface::class;
@@ -40,7 +40,7 @@ class ValidatorPluginManagerCompatibilityTest extends TestCase
      */
     public function aliasProvider(): iterable
     {
-        $pluginManager = $this->getPluginManager();
+        $pluginManager     = $this->getPluginManager();
         $isV2PluginManager = method_exists($pluginManager, 'validatePlugin');
 
         $r = new ReflectionProperty($pluginManager, 'aliases');
@@ -95,7 +95,7 @@ class ValidatorPluginManagerCompatibilityTest extends TestCase
     /**
      * Provided only for compatibility with the lowest integration tests from Laminas\ServiceManager (v2)
      */
-    private function setExpectedException(string $exceptionClassName) : void
+    private function setExpectedException(string $exceptionClassName): void
     {
         $this->expectException($exceptionClassName);
     }

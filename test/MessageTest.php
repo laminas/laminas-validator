@@ -1,28 +1,23 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\StringLength;
 use PHPUnit\Framework\TestCase;
 
+use function array_keys;
+use function current;
+
 /**
  * @group      Laminas_Validator
  */
 class MessageTest extends TestCase
 {
-    /**
-     * @var StringLength
-     */
+    /** @var StringLength */
     protected $validator;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->validator = new StringLength(4, 8);
     }
@@ -245,8 +240,6 @@ class MessageTest extends TestCase
      * Ensures that getMessageVariables() returns an array of
      * strings and that these strings that can be used as variables
      * in a message.
-     *
-     * @return void
      */
     public function testGetMessageVariables(): void
     {

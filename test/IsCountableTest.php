@@ -1,16 +1,14 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-validator for the canonical source repository
- * @copyright https://github.com/laminas/laminas-validator/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-validator/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception;
 use Laminas\Validator\IsCountable;
 use PHPUnit\Framework\TestCase;
+use SplQueue;
+use stdClass;
+
+use function json_encode;
 
 class IsCountableTest extends TestCase
 {
@@ -74,7 +72,7 @@ class IsCountableTest extends TestCase
     {
         $sut = new IsCountable();
 
-        $this->assertTrue($sut->isValid(new \SplQueue()), json_encode($sut->getMessages()));
+        $this->assertTrue($sut->isValid(new SplQueue()), json_encode($sut->getMessages()));
         $this->assertCount(0, $sut->getMessages());
     }
 
@@ -122,7 +120,7 @@ class IsCountableTest extends TestCase
     {
         $sut = new IsCountable();
 
-        $this->assertFalse($sut->isValid(new \stdClass()));
+        $this->assertFalse($sut->isValid(new stdClass()));
         $this->assertCount(1, $sut->getMessages());
     }
 
