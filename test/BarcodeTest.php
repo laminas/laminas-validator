@@ -170,6 +170,15 @@ class BarcodeTest extends TestCase
         $this->assertTrue($barcode->isValid('0075678164125'));
     }
 
+    public function testRoyalmailIsValid(): void
+    {
+        $array  = ['adapter' => 'Royalmail', 'useChecksum' => true];
+        $config = new Config($array);
+
+        $barcode = new Barcode($config);
+        $this->assertTrue($barcode->isValid('1234562'));
+    }
+
     public function testCODE25(): void
     {
         $barcode = new Barcode('code25');
