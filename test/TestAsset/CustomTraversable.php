@@ -3,6 +3,7 @@
 namespace LaminasTest\Validator\TestAsset;
 
 use Iterator;
+use ReturnTypeWillChange;
 
 use function current;
 use function key;
@@ -19,7 +20,9 @@ class CustomTraversable implements Iterator
         $this->data = $data;
     }
 
-    public function current(): mixed
+    /** @return mixed */
+    #[ReturnTypeWillChange]
+    public function current()
     {
         return current($this->data);
     }
@@ -30,7 +33,8 @@ class CustomTraversable implements Iterator
     }
 
     /** @return int|string */
-    public function key(): mixed
+    #[ReturnTypeWillChange]
+    public function key()
     {
         return key($this->data);
     }

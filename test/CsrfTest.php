@@ -6,7 +6,6 @@ use Laminas\Session\Config\StandardConfig;
 use Laminas\Session\Container;
 use Laminas\Session\Storage\ArrayStorage;
 use Laminas\Validator\Csrf;
-use LaminasTest\Validator\TestAsset\SessionArrayStorage;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 
@@ -37,7 +36,7 @@ class CsrfTest extends TestCase
         $_SESSION       = [];
         $sessionManager = new TestAsset\SessionManager(
             new StandardConfig(),
-            new SessionArrayStorage()
+            new ArrayStorage()
         );
         $this->sessionManager = $sessionManager;
         Container::setDefaultManager($sessionManager);

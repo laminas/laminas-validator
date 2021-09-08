@@ -1,6 +1,6 @@
 <?php
 
-namespace LaminasTest\Validator\TestAsset;
+namespace Laminas\Session\Storage;
 
 use ArrayIterator;
 use Laminas\Session\Exception;
@@ -16,14 +16,14 @@ use function microtime;
 use function sprintf;
 
 /**
- * Array session storage
+ * Test shim for PHP 8.1 compatibility
  *
- * This is inlined here to allow testing against PHP 8.1, and replaces
- * Laminas\Session\Storage\ArrayStorage.
+ * This class replaces the laminas-session equivalent during development only, for
+ * purposes of testing against PHP 8.1.
  *
- * @todo Remove class and references to it once laminas-session has a release targeting PHP 8.1.
+ * @todo Remove when laminas-session has a release targetting PHP 8.1.
  */
-class SessionArrayStorage extends ArrayObject implements StorageInterface
+class ArrayStorage extends ArrayObject implements StorageInterface
 {
     /**
      * Is storage marked isImmutable?
