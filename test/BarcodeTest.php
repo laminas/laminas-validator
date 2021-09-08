@@ -163,6 +163,7 @@ class BarcodeTest extends TestCase
 
     public function testTraversableConstructAdapter(): void
     {
+        /** @psalm-suppress InvalidArgument we do use ArrayObject on purpose: checks compatibility with older config */
         $barcode = new Barcode(new ArrayObject(['adapter' => 'Ean13', 'options' => 'unknown', 'useChecksum' => false]));
         $this->assertTrue($barcode->isValid('0075678164125'));
     }
