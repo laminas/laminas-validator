@@ -2,7 +2,7 @@
 
 namespace LaminasTest\Validator;
 
-use Laminas\Config\Config;
+use ArrayObject;
 use Laminas\Validator\Barcode;
 use Laminas\Validator\Barcode\AdapterInterface;
 use Laminas\Validator\Barcode\Ean13;
@@ -161,10 +161,10 @@ class BarcodeTest extends TestCase
         $this->assertTrue($barcode->isValid('0075678164125'));
     }
 
-    public function testConfigConstructAdapter(): void
+    public function testTraversableConstructAdapter(): void
     {
         $array  = ['adapter' => 'Ean13', 'options' => 'unknown', 'useChecksum' => false];
-        $config = new Config($array);
+        $config = new ArrayObject($array);
 
         $barcode = new Barcode($config);
         $this->assertTrue($barcode->isValid('0075678164125'));

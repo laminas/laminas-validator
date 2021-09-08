@@ -1,10 +1,11 @@
-<?php
+<?php // phpcs:disable SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
 
 namespace Laminas\Validator;
 
 use Countable;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\PriorityQueue;
+use ReturnTypeWillChange;
 
 use function array_replace_recursive;
 use function count;
@@ -51,6 +52,7 @@ class ValidatorChain implements
      *
      * @return int
      */
+    #[ReturnTypeWillChange]
     public function count()
     {
         return count($this->validators);

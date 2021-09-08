@@ -34,10 +34,10 @@ class CsrfTest extends TestCase
     {
         // Setup session handling
         $_SESSION             = [];
-        $sessionConfig        = new StandardConfig([
-            'storage' => ArrayStorage::class,
-        ]);
-        $sessionManager       = new TestAsset\SessionManager($sessionConfig);
+        $sessionManager       = new TestAsset\SessionManager(
+            new StandardConfig(),
+            new ArrayStorage()
+        );
         $this->sessionManager = $sessionManager;
         Container::setDefaultManager($sessionManager);
 
@@ -111,7 +111,7 @@ class CsrfTest extends TestCase
 
     /**
      * @dataProvider timeoutValuesDataProvider
-     * @param null|int|numeric $timeout
+     * @param null|int|string $timeout
      */
     public function testTimeoutIsMutable($timeout, ?int $expected): void
     {

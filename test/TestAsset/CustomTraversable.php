@@ -1,8 +1,9 @@
-<?php
+<?php // phpcs:disable SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
 
 namespace LaminasTest\Validator\TestAsset;
 
 use Iterator;
+use ReturnTypeWillChange;
 
 use function current;
 use function key;
@@ -20,31 +21,30 @@ class CustomTraversable implements Iterator
     }
 
     /** @return mixed */
+    #[ReturnTypeWillChange]
     public function current()
     {
         return current($this->data);
     }
 
-    /** @return void */
-    public function next()
+    public function next(): void
     {
         next($this->data);
     }
 
     /** @return int|string */
+    #[ReturnTypeWillChange]
     public function key()
     {
         return key($this->data);
     }
 
-    /** @return bool */
-    public function valid()
+    public function valid(): bool
     {
         return $this->key() !== null;
     }
 
-    /** @return void */
-    public function rewind()
+    public function rewind(): void
     {
         reset($this->data);
     }

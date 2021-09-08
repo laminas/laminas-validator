@@ -355,6 +355,10 @@ class Csrf extends AbstractValidator
 
     protected function getTokenFromHash(?string $hash): ?string
     {
+        if (null === $hash) {
+            return null;
+        }
+
         $data = explode('-', $hash);
         return $data[0] ?: null;
     }
