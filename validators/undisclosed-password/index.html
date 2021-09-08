@@ -639,6 +639,7 @@
 <li><strong>Since 2.13.0</strong></li>
 </ul>
 <p><code>Laminas\Validator\UndisclosedPassword</code> allows you to validate if a given password was found in data breaches using the service <a href="https://www.haveibeenpwned.com">Have I Been Pwned?</a>, in a secure, anonymous way using <a href="https://www.troyhunt.com/ive-just-launched-pwned-passwords-version-2">K-Anonymity</a> to ensure passwords are not send in full over the wire.</p>
+<!-- markdownlint-disable-next-line MD001 -->
 <blockquote>
 <h3 id="installation-requirements">Installation requirements</h3>
 <p>This validator needs to make a request over HTTP; therefore it requires an HTTP client. The validator provides support only for HTTP clients implementing <a href="https://www.php-fig.org/psr/psr-18/">PSR-18</a> and <a href="https://www.php-fig.org/psr/psr-17/">PSR-17</a> request and response factories.</p>
@@ -662,7 +663,7 @@ $ composer require psr/http-factory</code></pre>
 $result = $validator-&gt;isValid('password');
 // $result is FALSE because "password" was found in a data breach
 
-$result = $validator-&gt;isValid('8aDk=XiW2E.77tLfuAcB'); 
+$result = $validator-&gt;isValid('8aDk=XiW2E.77tLfuAcB');
 // $result is TRUE because "8aDk=XiW2E.77tLfuAcB" was not found in a data breach</code></pre>
 <h2 id="a-simple-command-line-example">A simple command line example</h2>
 <p>In this example, I'm using <code>laminas/laminas-diactoros</code> to provide HTTP messages, and <code>php-http/curl-client</code> as the HTTP client. Let's begin with installation of all required packages:</p>

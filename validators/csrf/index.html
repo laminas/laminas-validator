@@ -641,6 +641,7 @@ This allows you to validate if a form submission originated from the same site, 
 <p>The typical mitigation is to create a one-time token that is transmitted as part of the original form, and which must then be transmitted back by the client.
 This token expires after first submission or after a short amount of time, preventing replays or further submissions.
 If the token provided does not match what was originally sent, an error should be returned.</p>
+<!-- markdownlint-disable-next-line MD001 -->
 <blockquote>
 <h3 id="installation-requirements">Installation Requirements</h3>
 <p>The CSRF validator depends on <a href="https://docs.laminas.dev/laminas-math/">laminas-math</a> to generate the hash and on <a href="https://docs.laminas.dev/laminas-session/">laminas-session</a> to persist the generated token between requests.
