@@ -19,32 +19,28 @@ class CustomTraversable implements Iterator
         $this->data = $data;
     }
 
-    /** @return mixed */
-    public function current()
+    public function current(): mixed
     {
         return current($this->data);
     }
 
-    /** @return void */
-    public function next()
+    public function next(): void
     {
         next($this->data);
     }
 
     /** @return int|string */
-    public function key()
+    public function key(): mixed
     {
         return key($this->data);
     }
 
-    /** @return bool */
-    public function valid()
+    public function valid(): bool
     {
         return $this->key() !== null;
     }
 
-    /** @return void */
-    public function rewind()
+    public function rewind(): void
     {
         reset($this->data);
     }
