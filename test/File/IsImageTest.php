@@ -10,6 +10,8 @@ use function current;
 use function extension_loaded;
 use function is_array;
 
+use const PHP_VERSION_ID;
+
 /**
  * IsImage testbed
  *

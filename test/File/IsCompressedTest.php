@@ -14,6 +14,7 @@ use function in_array;
 use function is_array;
 
 use const FILEINFO_MIME_TYPE;
+use const PHP_VERSION_ID;
 
 /**
  * IsCompressed testbed

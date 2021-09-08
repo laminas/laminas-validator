@@ -33,8 +33,8 @@ class CsrfTest extends TestCase
     protected function setUp(): void
     {
         // Setup session handling
-        $_SESSION       = [];
-        $sessionManager = new TestAsset\SessionManager(
+        $_SESSION             = [];
+        $sessionManager       = new TestAsset\SessionManager(
             new StandardConfig(),
             new ArrayStorage()
         );
@@ -111,7 +111,7 @@ class CsrfTest extends TestCase
 
     /**
      * @dataProvider timeoutValuesDataProvider
-     * @param null|int|numeric $timeout
+     * @param null|int|string $timeout
      */
     public function testTimeoutIsMutable($timeout, ?int $expected): void
     {

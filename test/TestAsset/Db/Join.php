@@ -5,6 +5,13 @@ namespace Laminas\Db\Sql;
 use Countable;
 use Iterator;
 
+use function array_shift;
+use function count;
+use function is_array;
+use function is_string;
+use function key;
+use function sprintf;
+
 /**
  * Test shim for PHP 8.1 compatibility
  *
@@ -15,13 +22,13 @@ use Iterator;
  */
 class Join implements Iterator, Countable
 {
-    const JOIN_INNER       = 'inner';
-    const JOIN_OUTER       = 'outer';
-    const JOIN_FULL_OUTER  = 'full outer';
-    const JOIN_LEFT        = 'left';
-    const JOIN_RIGHT       = 'right';
-    const JOIN_RIGHT_OUTER = 'right outer';
-    const JOIN_LEFT_OUTER  = 'left outer';
+    public const JOIN_INNER       = 'inner';
+    public const JOIN_OUTER       = 'outer';
+    public const JOIN_FULL_OUTER  = 'full outer';
+    public const JOIN_LEFT        = 'left';
+    public const JOIN_RIGHT       = 'right';
+    public const JOIN_RIGHT_OUTER = 'right outer';
+    public const JOIN_LEFT_OUTER  = 'left outer';
 
     /**
      * Current iterator position.
@@ -102,9 +109,9 @@ class Join implements Iterator, Countable
      *     the columns to join.
      * @param string $type The JOIN type to use; see the JOIN_* constants.
      * @return self Provides a fluent interface
-     * @throws Exception\InvalidArgumentException for invalid $name values.
+     * @throws Exception\InvalidArgumentException For invalid $name values.
      */
-    public function join($name, $on, $columns = [Select::SQL_STAR], $type = Join::JOIN_INNER)
+    public function join($name, $on, $columns = [Select::SQL_STAR], $type = self::JOIN_INNER)
     {
         if (is_array($name) && (! is_string(key($name)) || count($name) !== 1)) {
             throw new Exception\InvalidArgumentException(
@@ -120,7 +127,7 @@ class Join implements Iterator, Countable
             'name'    => $name,
             'on'      => $on,
             'columns' => $columns,
-            'type'    => $type ? $type : Join::JOIN_INNER
+            'type'    => $type ? $type : self::JOIN_INNER,
         ];
 
         return $this;

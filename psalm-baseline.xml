@@ -2264,9 +2264,6 @@
     <MixedOperand occurrences="1">
       <code>$_SERVER['REQUEST_TIME']</code>
     </MixedOperand>
-    <PossiblyInvalidArgument occurrences="1">
-      <code>testTimeoutIsMutable</code>
-    </PossiblyInvalidArgument>
   </file>
   <file src="test/Db/NoRecordExistsTest.php">
     <DeprecatedMethod occurrences="2">

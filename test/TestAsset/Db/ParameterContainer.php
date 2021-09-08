@@ -3,8 +3,22 @@
 namespace Laminas\Db\Adapter;
 
 use ArrayAccess;
+use ArrayIterator;
 use Countable;
 use Iterator;
+
+use function array_key_exists;
+use function array_values;
+use function count;
+use function current;
+use function is_array;
+use function is_int;
+use function is_string;
+use function key;
+use function ltrim;
+use function next;
+use function reset;
+use function strpos;
 
 /**
  * Test shim for PHP 8.1 compatibility
@@ -16,13 +30,13 @@ use Iterator;
  */
 class ParameterContainer implements Iterator, ArrayAccess, Countable
 {
-    const TYPE_AUTO    = 'auto';
-    const TYPE_NULL    = 'null';
-    const TYPE_DOUBLE  = 'double';
-    const TYPE_INTEGER = 'integer';
-    const TYPE_BINARY  = 'binary';
-    const TYPE_STRING  = 'string';
-    const TYPE_LOB     = 'lob';
+    public const TYPE_AUTO    = 'auto';
+    public const TYPE_NULL    = 'null';
+    public const TYPE_DOUBLE  = 'double';
+    public const TYPE_INTEGER = 'integer';
+    public const TYPE_BINARY  = 'binary';
+    public const TYPE_STRING  = 'string';
+    public const TYPE_LOB     = 'lob';
 
     /**
      * Data
@@ -31,9 +45,7 @@ class ParameterContainer implements Iterator, ArrayAccess, Countable
      */
     protected $data = [];
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $positions = [];
 
     /**
@@ -50,9 +62,7 @@ class ParameterContainer implements Iterator, ArrayAccess, Countable
      */
     protected $maxLength = [];
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $nameMapping = [];
 
     /**
@@ -72,7 +82,7 @@ class ParameterContainer implements Iterator, ArrayAccess, Countable
      */
     public function offsetExists(mixed $name): bool
     {
-        return (isset($this->data[$name]));
+        return isset($this->data[$name]);
     }
 
     /**
@@ -96,19 +106,19 @@ class ParameterContainer implements Iterator, ArrayAccess, Countable
     }
 
     /**
-     * @param $name
-     * @param $from
+     * @param string $name
+     * @param string $from
+     * @return void
      */
     public function offsetSetReference($name, $from)
     {
-        $this->data[$name] =& $this->data[$from];
+        $this->data[$name] = &$this->data[$from];
     }
 
     /**
      * Offset set
      *
      * @param string|int $name
-     * @param mixed $value
      * @param mixed $errata
      * @param mixed $maxLength
      * @throws Exception\InvalidArgumentException
@@ -121,7 +131,7 @@ class ParameterContainer implements Iterator, ArrayAccess, Countable
         if (is_int($name)) {
             if (isset($this->positions[$name])) {
                 $position = $name;
-                $name = $this->positions[$name];
+                $name     = $this->positions[$name];
             } else {
                 $name = (string) $name;
             }
@@ -229,7 +239,7 @@ class ParameterContainer implements Iterator, ArrayAccess, Countable
         if (is_int($name)) {
             $name = $this->positions[$name];
         }
-        return (isset($this->maxLength[$name]));
+        return isset($this->maxLength[$name]);
     }
 
     /**
@@ -252,11 +262,11 @@ class ParameterContainer implements Iterator, ArrayAccess, Countable
     /**
      * Get max length iterator
      *
-     * @return \ArrayIterator
+     * @return ArrayIterator
      */
     public function getMaxLengthIterator()
     {
-        return new \ArrayIterator($this->maxLength);
+        return new ArrayIterator($this->maxLength);
     }
 
     /**
@@ -302,7 +312,7 @@ class ParameterContainer implements Iterator, ArrayAccess, Countable
         if (is_int($name)) {
             $name = $this->positions[$name];
         }
-        return (isset($this->errata[$name]));
+        return isset($this->errata[$name]);
     }
 
     /**
@@ -325,11 +335,11 @@ class ParameterContainer implements Iterator, ArrayAccess, Countable
     /**
      * Get errata iterator
      *
-     * @return \ArrayIterator
+     * @return ArrayIterator
      */
     public function getErrataIterator()
     {
-        return new \ArrayIterator($this->errata);
+        return new ArrayIterator($this->errata);
     }
 
     /**
@@ -389,7 +399,7 @@ class ParameterContainer implements Iterator, ArrayAccess, Countable
      */
     public function valid(): bool
     {
-        return (current($this->data) !== false);
+        return current($this->data) !== false;
     }
 
     /**
@@ -413,7 +423,7 @@ class ParameterContainer implements Iterator, ArrayAccess, Countable
             );
         }
 
-        if (count($parameters) == 0) {
+        if (count($parameters) === 0) {
             return $this;
         }
 
