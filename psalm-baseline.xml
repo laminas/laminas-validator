@@ -619,9 +619,6 @@
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$value</code>
     </MoreSpecificImplementedParamType>
-    <PossiblyNullArgument occurrences="1">
-      <code>$hash</code>
-    </PossiblyNullArgument>
     <PossiblyNullArrayOffset occurrences="1">
       <code>$session-&gt;tokenList</code>
     </PossiblyNullArrayOffset>
@@ -1040,12 +1037,11 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/File/Extension.php">
-    <MixedArgument occurrences="5">
+    <MixedArgument occurrences="4">
       <code>$ext</code>
       <code>$fileInfo['file']</code>
       <code>$fileInfo['filename']</code>
       <code>$fileInfo['filename']</code>
-      <code>$this-&gt;options['extension']</code>
     </MixedArgument>
     <MixedArgumentTypeCoercion occurrences="1">
       <code>$extensions</code>
@@ -2271,7 +2267,6 @@
     <PossiblyInvalidArgument occurrences="1">
       <code>testTimeoutIsMutable</code>
     </PossiblyInvalidArgument>
-    <TooManyArguments occurrences="1"/>
   </file>
   <file src="test/Db/NoRecordExistsTest.php">
     <DeprecatedMethod occurrences="2">
