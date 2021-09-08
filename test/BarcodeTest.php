@@ -2,7 +2,6 @@
 
 namespace LaminasTest\Validator;
 
-use Laminas\Config\Config;
 use Laminas\Validator\Barcode;
 use Laminas\Validator\Barcode\AdapterInterface;
 use Laminas\Validator\Barcode\Ean13;
@@ -163,19 +162,13 @@ class BarcodeTest extends TestCase
 
     public function testConfigConstructAdapter(): void
     {
-        $array  = ['adapter' => 'Ean13', 'options' => 'unknown', 'useChecksum' => false];
-        $config = new Config($array);
-
-        $barcode = new Barcode($config);
+        $barcode = new Barcode(['adapter' => 'Ean13', 'options' => 'unknown', 'useChecksum' => false]);
         $this->assertTrue($barcode->isValid('0075678164125'));
     }
 
     public function testRoyalmailIsValid(): void
     {
-        $array  = ['adapter' => 'Royalmail', 'useChecksum' => true];
-        $config = new Config($array);
-
-        $barcode = new Barcode($config);
+        $barcode = new Barcode(['adapter' => 'Royalmail', 'useChecksum' => true]);
         $this->assertTrue($barcode->isValid('1234562'));
     }
 
