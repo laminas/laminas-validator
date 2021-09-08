@@ -65,6 +65,13 @@
         }
     },
     "autoload-dev": {
+        "files": [
+            "test/TestAsset/Db/AbstractResultSet.php",
+            "test/TestAsset/Db/Join.php",
+            "test/TestAsset/Db/ParameterContainer.php",
+            "test/TestAsset/Db/PredicateSet.php",
+            "test/TestAsset/Db/ResultSet.php"
+        ],
         "psr-4": {
             "LaminasTest\\Validator\\": "test/"
         }
