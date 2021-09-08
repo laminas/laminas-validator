@@ -70,7 +70,8 @@
             "test/TestAsset/Db/Join.php",
             "test/TestAsset/Db/ParameterContainer.php",
             "test/TestAsset/Db/PredicateSet.php",
-            "test/TestAsset/Db/ResultSet.php"
+            "test/TestAsset/Db/ResultSet.php",
+            "test/TestAsset/Uri/Uri.php"
         ],
         "psr-4": {
             "LaminasTest\\Validator\\": "test/"
