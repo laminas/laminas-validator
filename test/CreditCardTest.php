@@ -319,7 +319,7 @@ class CreditCardTest extends TestCase
     public function testTraversableObject()
     {
         $options = ['type' => 'Visa'];
-        $config  = new ArrayObject($options, false);
+        $config  = new ArrayObject($options);
 
         $validator = new CreditCard($config);
         $this->assertEquals(['Visa'], $validator->getType());
