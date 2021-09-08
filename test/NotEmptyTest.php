@@ -2,7 +2,7 @@
 
 namespace LaminasTest\Validator;
 
-use Laminas\Config\Config;
+use ArrayObject;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\NotEmpty;
 use PHPUnit\Framework\TestCase;
@@ -768,10 +768,10 @@ class NotEmptyTest extends TestCase
      * @return void
      * @dataProvider configObjectProvider
      */
-    public function testConfigObject($value, $valid)
+    public function testTraversableObject($value, $valid)
     {
         $options = ['type' => 'all'];
-        $config  = new Config($options);
+        $config  = new ArrayObject($options);
 
         $this->validator = new NotEmpty(
             $config

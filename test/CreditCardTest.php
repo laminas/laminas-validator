@@ -2,7 +2,7 @@
 
 namespace LaminasTest\Validator;
 
-use Laminas\Config;
+use ArrayObject;
 use Laminas\Validator\CreditCard;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -316,10 +316,10 @@ class CreditCardTest extends TestCase
      *
      * @return void
      */
-    public function testConfigObject()
+    public function testTraversableObject()
     {
         $options = ['type' => 'Visa'];
-        $config  = new Config\Config($options, false);
+        $config  = new ArrayObject($options, false);
 
         $validator = new CreditCard($config);
         $this->assertEquals(['Visa'], $validator->getType());
@@ -330,9 +330,9 @@ class CreditCardTest extends TestCase
      *
      * @return void
      */
-    public function testOptionalConstructorParameterByConfigObject()
+    public function testOptionalConstructorParameterByTraversableObject()
     {
-        $config = new Config\Config(
+        $config = new ArrayObject(
             ['type' => 'Visa', 'service' => [self::class, 'staticCallback']]
         );
 
