@@ -121,6 +121,13 @@ class Extension extends AbstractValidator
      */
     public function getExtension()
     {
+        if (
+            ! array_key_exists('extension', $this->options)
+            || ! is_string($this->options['extension'])
+        ) {
+            return [];
+        }
+
         return explode(',', $this->options['extension']);
     }
 
