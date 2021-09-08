@@ -161,6 +161,9 @@ class IsImageTest extends TestCase
         $this->assertArrayHasKey('fileIsImageFalseType', $error);
     }
 
+    /**
+     * @todo Restore test branches under PHP 8.1 when https://bugs.php.net/bug.php?id=81426 is resolved
+     */
     public function testOptionsAtConstructor(): void
     {
         if (! extension_loaded('fileinfo')) {
@@ -168,14 +171,25 @@ class IsImageTest extends TestCase
         }
 
         $magicFile = $this->getMagicMime();
-        $validator = new File\IsImage([
-            'image/gif',
-            'image/jpg',
-            'magicFile'         => $magicFile,
-            'enableHeaderCheck' => true,
-        ]);
+        $options   = PHP_VERSION_ID >= 80100
+            ? [
+                'image/gif',
+                'image/jpg',
+                'enableHeaderCheck' => true,
+            ]
+            : [
+                'image/gif',
+                'image/jpg',
+                'magicFile'         => $magicFile,
+                'enableHeaderCheck' => true,
+            ];
 
-        $this->assertEquals($magicFile, $validator->getMagicFile());
+        $validator = new File\IsImage($options);
+
+        if (PHP_VERSION_ID < 80100) {
+            $this->assertEquals($magicFile, $validator->getMagicFile());
+        }
+
         $this->assertTrue($validator->getHeaderCheck());
         $this->assertEquals('image/gif,image/jpg', $validator->getMimeType());
     }
