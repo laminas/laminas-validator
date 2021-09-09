@@ -195,8 +195,8 @@ class Count extends AbstractValidator
             }
         }
 
-        if ($file instanceof UploadedFileInterface) {
-            $this->files[$file->getClientFilename()] = $file->getClientFilename();
+        if ($file instanceof UploadedFileInterface && is_string($file->getClientFilename())) {
+            $this->files[(string) $file->getClientFilename()] = $file->getClientFilename();
         }
 
         return $this;

@@ -5,29 +5,16 @@ namespace LaminasTest\Validator\File;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
-use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use ReflectionClass;
+
+use function basename;
 
 /**
  * @group      Laminas_Validator
  */
 class CountTest extends TestCase
 {
-    /** @var ObjectProphecy|StreamInterface */
-    public $stream;
-
-    /** @var ObjectProphecy */
-    public $upload;
-
-    protected function setUp(): void
-    {
-        $this->stream = $this->prophesize(StreamInterface::class);
-        $this->upload = $this->prophesize(UploadedFileInterface::class);
-    }
-
     /**
      * Ensures that the validator follows expected behavior
      *
@@ -254,14 +241,12 @@ class CountTest extends TestCase
     {
         $testFile = __DIR__ . '/_files/testsize.mo';
 
-        $this->stream->getMetadata('uri')->willReturn($testFile);
-        $this->upload->getClientFilename()->willReturn(basename($testFile));
-        $this->upload->getClientMediaType()->willReturn(mime_content_type($testFile));
-        $this->upload->getStream()->willReturn($this->stream->reveal());
+        $upload = $this->createMock(UploadedFileInterface::class);
+        $upload->method('getClientFilename')->willReturn(basename($testFile));
 
         $validator = new File\Count(['min' => 1]);
 
-        $this->assertSame(true, $validator->isValid($this->upload->reveal()));
-        $this->assertSame(true, $validator->isValid($this->upload->reveal(), []));
+        $this->assertSame(true, $validator->isValid($upload));
+        $this->assertSame(true, $validator->isValid($upload, []));
     }
 }
