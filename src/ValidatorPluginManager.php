@@ -501,6 +501,7 @@ class ValidatorPluginManager extends AbstractPluginManager
         'laminasvalidatorinarray'                  => InvokableFactory::class,
         'laminasvalidatorip'                       => InvokableFactory::class,
         'laminasvalidatorisbn'                     => InvokableFactory::class,
+        'laminasvalidatoriscountable'              => InvokableFactory::class,
         'laminasvalidatorisinstanceof'             => InvokableFactory::class,
         'laminasvalidatorlessthan'                 => InvokableFactory::class,
         'laminasvalidatornotempty'                 => InvokableFactory::class,
