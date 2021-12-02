@@ -639,6 +639,12 @@
 handler to parse the URI. The validator allows for both validation of absolute
 and/or relative URIs. There is the possibility to exchange the handler for
 another one in case the parsing of the uri should be done differently.</p>
+<div class="admonition missing">
+<p class="admonition-title">Installation Requirements</p>
+<p>
+The default handler depends on <a href="https://docs.laminas.dev/laminas-uri/">laminas-uri</a> to parse the URI, so be sure to have it installed before getting started:</p>
+<pre class="highlight"><code class="language-bash">composer require laminas/laminas-uri</code></pre>
+</div>
 <h2 id="supported-options">Supported options</h2>
 <p>The following options are supported for <code>Laminas\Validator\Uri</code>:</p>
 <ul>
