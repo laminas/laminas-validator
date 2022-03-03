@@ -5,7 +5,6 @@ namespace Laminas\Validator;
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
 
-use function array_key_exists;
 use function array_shift;
 use function func_get_args;
 use function is_array;
