@@ -297,6 +297,9 @@ class BetweenTest extends TestCase
             'min-undefined' => [['min' => 0, 'foo' => 'bar']],
             'max-undefined' => [['max' => 5, 'foo' => 'bar']],
             'no-min-or-max' => [['bar' => 'foo', 'foo' => 'bar']],
+            'min-null'      => [['min' => null, 'max' => 5]],
+            'max-null'      => [['min' => 18, 'max' => null]],
+            'min-max-null'  => [['min' => null, 'max' => null]],
         ];
     }
 
