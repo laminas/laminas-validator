@@ -924,4 +924,14 @@ class EmailAddressTest extends TestCase
         $validator->useDomainCheck(false);
         $this->assertFalse($validator->getDomainCheck());
     }
+
+    public function testWillNotCheckEmptyDeepMxChecks(): void
+    {
+        $validator = new EmailAddress([
+            'useMxCheck'     => true,
+            'useDeepMxCheck' => true,
+        ]);
+
+        $this->assertFalse($validator->isValid('jon@example.com'));
+    }
 }

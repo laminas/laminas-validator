@@ -24,6 +24,7 @@ use function is_string;
 use function preg_match;
 use function strlen;
 use function strpos;
+use function trim;
 
 use const INTL_IDNA_VARIANT_UTS46;
 
@@ -451,6 +452,10 @@ class EmailAddress extends AbstractValidator
             $res = $this->isReserved($hostname);
             if (! $res) {
                 $reserved = false;
+            }
+
+            if (! is_string($hostname) || ! trim($hostname)) {
+                continue;
             }
 
             if (

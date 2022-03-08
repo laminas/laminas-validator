@@ -4,6 +4,7 @@
          bootstrap="./vendor/autoload.php"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTestsThatDoNotTestAnything="true"
+         failOnWarning="true"
          colors="true">
     <testsuites>
         <testsuite name="laminas-validator Test Suite">
