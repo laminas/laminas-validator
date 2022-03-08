@@ -18,14 +18,12 @@ use function getenv;
 use function implode;
 use function next;
 use function preg_replace;
-use function restore_error_handler;
 use function set_error_handler;
 use function sprintf;
 use function str_repeat;
 use function strstr;
 
 use const E_USER_NOTICE;
-use const E_WARNING;
 
 /**
  * @group      Laminas_Validator
@@ -934,15 +932,6 @@ class EmailAddressTest extends TestCase
             'useDeepMxCheck' => true,
         ]);
 
-        $called = false;
-        /** @psalm-suppress InvalidArgument **/
-        set_error_handler(static function () use (&$called) {
-            $called = true;
-        }, E_WARNING);
-
-        $validator->isValid('jon@example.com');
-
-        restore_error_handler();
-        $this->assertFalse($called);
+        $this->assertFalse($validator->isValid('jon@example.com'));
     }
 }
