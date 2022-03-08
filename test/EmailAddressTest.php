@@ -935,7 +935,8 @@ class EmailAddressTest extends TestCase
         ]);
 
         $called = false;
-        set_error_handler(function ($errno, $errstr, $errfile, $errline) use (&$called) {
+        /** @psalm-suppress InvalidArgument **/
+        set_error_handler(static function () use (&$called) {
             $called = true;
         }, E_WARNING);
 

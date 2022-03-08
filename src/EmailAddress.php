@@ -449,13 +449,13 @@ class EmailAddress extends AbstractValidator
         $validAddress = false;
         $reserved     = true;
         foreach (array_keys($this->mxRecord) as $hostname) {
-            if (! trim($hostname)) {
-                continue;
-            }
-
             $res = $this->isReserved($hostname);
             if (! $res) {
                 $reserved = false;
+            }
+
+            if (! is_string($hostname) || ! trim($hostname)) {
+                continue;
             }
 
             if (
