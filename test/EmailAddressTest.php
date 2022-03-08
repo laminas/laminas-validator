@@ -18,12 +18,14 @@ use function getenv;
 use function implode;
 use function next;
 use function preg_replace;
+use function restore_error_handler;
 use function set_error_handler;
 use function sprintf;
 use function str_repeat;
 use function strstr;
 
 use const E_USER_NOTICE;
+use const E_WARNING;
 
 /**
  * @group      Laminas_Validator
@@ -923,5 +925,23 @@ class EmailAddressTest extends TestCase
         $validator = new EmailAddress();
         $validator->useDomainCheck(false);
         $this->assertFalse($validator->getDomainCheck());
+    }
+
+    public function testWillNotCheckEmptyDeepMxChecks(): void
+    {
+        $validator = new EmailAddress([
+            'useMxCheck'     => true,
+            'useDeepMxCheck' => true,
+        ]);
+
+        $called = false;
+        set_error_handler(function ($errno, $errstr, $errfile, $errline) use (&$called) {
+            $called = true;
+        }, E_WARNING);
+
+        $validator->isValid('jon@example.com');
+
+        restore_error_handler();
+        $this->assertFalse($called);
     }
 }

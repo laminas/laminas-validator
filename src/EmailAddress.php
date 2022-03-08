@@ -24,6 +24,7 @@ use function is_string;
 use function preg_match;
 use function strlen;
 use function strpos;
+use function trim;
 
 use const INTL_IDNA_VARIANT_UTS46;
 
@@ -448,6 +449,10 @@ class EmailAddress extends AbstractValidator
         $validAddress = false;
         $reserved     = true;
         foreach (array_keys($this->mxRecord) as $hostname) {
+            if (! trim($hostname)) {
+                continue;
+            }
+
             $res = $this->isReserved($hostname);
             if (! $res) {
                 $reserved = false;
