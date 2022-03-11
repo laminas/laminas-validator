@@ -336,4 +336,11 @@ class BetweenTest extends TestCase
             $messages
         );
     }
+
+    public function testBetweenConstructorGivenArgumentsInsteadOfOptionsArray(): void
+    {
+        $validator = new Between(1, 4, true);
+
+        $this->assertTrue($validator->isValid(2));
+    }
 }
