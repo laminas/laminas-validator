@@ -5,7 +5,6 @@ namespace Laminas\Validator;
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
 
-use function array_key_exists;
 use function array_shift;
 use function func_get_args;
 use function is_array;
@@ -91,19 +90,13 @@ class Between extends AbstractValidator
             $options = $temp;
         }
 
-        if (! array_key_exists('min', $options) || ! array_key_exists('max', $options)) {
+        if (! isset($options['min'], $options['max'])) {
             throw new Exception\InvalidArgumentException("Missing option: 'min' and 'max' have to be given");
         }
 
-        if (
-            (isset($options['min']) && is_numeric($options['min']))
-            && (isset($options['max']) && is_numeric($options['max']))
-        ) {
+        if (is_numeric($options['min']) && is_numeric($options['max'])) {
             $this->numeric = true;
-        } elseif (
-            (isset($options['min']) && is_string($options['min']))
-            && (isset($options['max']) && is_string($options['max']))
-        ) {
+        } elseif (is_string($options['min']) && is_string($options['max'])) {
             $this->numeric = false;
         } else {
             throw new Exception\InvalidArgumentException(
