@@ -107,7 +107,7 @@ class Between extends AbstractValidator
             $this->numeric = false;
         } else {
             throw new Exception\InvalidArgumentException(
-                "Invalid options: 'min' and 'max' should be of the same scalar type"
+                "Invalid options: 'min' and 'max' must both be of type string or numeric"
             );
         }
 

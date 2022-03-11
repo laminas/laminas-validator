@@ -336,4 +336,12 @@ class BetweenTest extends TestCase
             $messages
         );
     }
+
+    public function testMinAndMaxBooleanScalarValuesExpectedInvalidArgumentExceptionThrown(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectErrorMessage("Invalid options: 'min' and 'max' must both be of type string or numeric");
+
+        new Between(['min' => false, 'max' => true]);
+    }
 }
