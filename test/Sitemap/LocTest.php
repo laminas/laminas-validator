@@ -9,7 +9,7 @@ use stdClass;
 use function current;
 
 /**
- * @group      Laminas_Validator
+ * @psalm-suppress UnevaluatedCode
  */
 class LocTest extends TestCase
 {
