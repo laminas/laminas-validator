@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.10.0@916b098b008f6de4543892b1e0651c1c3b92cbfa">
+<files psalm-version="4.23.0@f1fe6ff483bf325c803df9f510d09a03fd796f88">
   <file src="bin/update_hostname_validator.php">
     <MissingClosureParamType occurrences="2">
       <code>$domain</code>
@@ -16,8 +16,7 @@
     </MixedArgument>
   </file>
   <file src="src/AbstractValidator.php">
-    <DocblockTypeContradiction occurrences="2">
-      <code>! is_array($options) &amp;&amp; ! $options instanceof Traversable</code>
+    <DocblockTypeContradiction occurrences="1">
       <code>$messageKey === null</code>
     </DocblockTypeContradiction>
     <InvalidScalarArgument occurrences="1">
@@ -209,7 +208,8 @@
     </PossiblyInvalidArgument>
   </file>
   <file src="src/Barcode/Code128.php">
-    <DocblockTypeContradiction occurrences="2">
+    <DocblockTypeContradiction occurrences="3">
+      <code>! $this-&gt;utf8StringWrapper</code>
       <code>$this-&gt;utf8StringWrapper</code>
       <code>is_string($value)</code>
     </DocblockTypeContradiction>
@@ -582,9 +582,6 @@
     <PossiblyUndefinedVariable occurrences="1">
       <code>$temp</code>
     </PossiblyUndefinedVariable>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>empty($service)</code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Csrf.php">
     <DocblockTypeContradiction occurrences="3">
@@ -662,8 +659,7 @@
       <code>$step</code>
       <code>$timezone</code>
     </PropertyNotSetInConstructor>
-    <TypeDoesNotContainType occurrences="2">
-      <code>$baseDate instanceof DateTime || $baseDate instanceof DateTimeImmutable</code>
+    <TypeDoesNotContainType occurrences="1">
       <code>$baseDate instanceof DateTimeImmutable</code>
     </TypeDoesNotContainType>
   </file>
@@ -678,12 +674,8 @@
       <code>$this-&gt;exclude['field']</code>
       <code>$this-&gt;exclude['value']</code>
     </MixedArgument>
-    <MixedArrayAssignment occurrences="1">
-      <code>$parameters['where1']</code>
-    </MixedArrayAssignment>
-    <MixedAssignment occurrences="6">
+    <MixedAssignment occurrences="5">
       <code>$firstArgument</code>
-      <code>$parameters</code>
       <code>$temp['adapter']</code>
       <code>$temp['exclude']</code>
       <code>$temp['field']</code>
@@ -723,11 +715,15 @@
       <code>null</code>
       <code>null</code>
     </PossiblyNullPropertyAssignmentValue>
+    <PossiblyNullReference occurrences="1">
+      <code>$parameters</code>
+    </PossiblyNullReference>
     <PossiblyUndefinedVariable occurrences="1">
       <code>$temp</code>
     </PossiblyUndefinedVariable>
-    <PropertyNotSetInConstructor occurrences="1">
+    <PropertyNotSetInConstructor occurrences="2">
       <code>$schema</code>
+      <code>AbstractDb</code>
     </PropertyNotSetInConstructor>
     <RedundantCastGivenDocblockType occurrences="2">
       <code>(string) $field</code>
@@ -744,7 +740,8 @@
     <MixedArgument occurrences="1">
       <code>$value</code>
     </MixedArgument>
-    <PropertyNotSetInConstructor occurrences="1">
+    <PropertyNotSetInConstructor occurrences="2">
+      <code>NoRecordExists</code>
       <code>NoRecordExists</code>
     </PropertyNotSetInConstructor>
   </file>
@@ -755,7 +752,8 @@
     <MixedArgument occurrences="1">
       <code>$value</code>
     </MixedArgument>
-    <PropertyNotSetInConstructor occurrences="1">
+    <PropertyNotSetInConstructor occurrences="2">
+      <code>RecordExists</code>
       <code>RecordExists</code>
     </PropertyNotSetInConstructor>
   </file>
@@ -785,10 +783,7 @@
     <MixedArgument occurrences="1">
       <code>$this-&gt;getValue()</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="5">
-      <code>$hostname</code>
-      <code>$hostname</code>
-      <code>$hostname</code>
+    <MixedArgumentTypeCoercion occurrences="2">
       <code>$hostname</code>
       <code>$mxHosts</code>
     </MixedArgumentTypeCoercion>
@@ -841,7 +836,8 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/Explode.php">
-    <DocblockTypeContradiction occurrences="2">
+    <DocblockTypeContradiction occurrences="3">
+      <code>! $validator</code>
       <code>$validator</code>
       <code>[$value]</code>
     </DocblockTypeContradiction>
@@ -1516,9 +1512,8 @@
     <PossiblyNullArgument occurrences="1">
       <code>$file</code>
     </PossiblyNullArgument>
-    <RedundantConditionGivenDocblockType occurrences="4">
+    <RedundantConditionGivenDocblockType occurrences="3">
       <code>$file !== null</code>
-      <code>$file instanceof UploadedFileInterface</code>
       <code>is_array($files)</code>
     </RedundantConditionGivenDocblockType>
   </file>
@@ -1653,6 +1648,9 @@
       <code>(bool) $useIdnCheck</code>
       <code>(bool) $useTldCheck</code>
     </RedundantCastGivenDocblockType>
+    <RedundantCondition occurrences="1">
+      <code>! $allowLocal</code>
+    </RedundantCondition>
     <UnresolvableInclude occurrences="1">
       <code>include __DIR__ . '/' . $this-&gt;validIdns[$this-&gt;tld]</code>
     </UnresolvableInclude>
@@ -1678,7 +1676,7 @@
   </file>
   <file src="src/Identical.php">
     <DocblockTypeContradiction occurrences="1">
-      <code>! is_array($context) &amp;&amp; ! $context instanceof ArrayAccess</code>
+      <code>gettype($context)</code>
     </DocblockTypeContradiction>
     <MixedArgument occurrences="2">
       <code>$token['literal']</code>
@@ -1700,6 +1698,9 @@
       <code>(bool) $literal</code>
       <code>(bool) $strict</code>
     </RedundantCastGivenDocblockType>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>is_object($context)</code>
+    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/InArray.php">
     <DocblockTypeContradiction occurrences="1">
@@ -2037,7 +2038,8 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/ValidatorChain.php">
-    <DocblockTypeContradiction occurrences="1">
+    <DocblockTypeContradiction occurrences="2">
+      <code>! $this-&gt;plugins</code>
       <code>$this-&gt;plugins</code>
     </DocblockTypeContradiction>
     <MixedArgument occurrences="5">
@@ -2090,9 +2092,6 @@
     <DocblockTypeContradiction occurrences="1">
       <code>gettype($instance)</code>
     </DocblockTypeContradiction>
-    <InvalidScalarArgument occurrences="1">
-      <code>$e-&gt;getCode()</code>
-    </InvalidScalarArgument>
     <MissingParamType occurrences="1">
       <code>$configOrContainerInstance</code>
     </MissingParamType>
@@ -2111,8 +2110,10 @@
     <RedundantCondition occurrences="1">
       <code>$container === $this &amp;&amp; method_exists($container, 'getServiceLocator')</code>
     </RedundantCondition>
-    <RedundantConditionGivenDocblockType occurrences="2">
+    <RedundantConditionGivenDocblockType occurrences="4">
       <code>$container</code>
+      <code>$container</code>
+      <code>$container-&gt;getServiceLocator()</code>
       <code>is_object($instance)</code>
     </RedundantConditionGivenDocblockType>
   </file>
@@ -2173,8 +2174,7 @@
     <ArgumentTypeCoercion occurrences="1">
       <code>$expectedInstance</code>
     </ArgumentTypeCoercion>
-    <InvalidArgument occurrences="3">
-      <code>$config</code>
+    <InvalidArgument occurrences="2">
       <code>['065100004327']</code>
       <code>['065100004327']</code>
     </InvalidArgument>
@@ -2295,29 +2295,21 @@
       <code>'users'</code>
       <code>'users'</code>
     </InvalidArgument>
-    <MixedArrayAccess occurrences="2">
+    <PossiblyNullArrayAccess occurrences="1">
       <code>$parameters['where1']</code>
-      <code>$parameters['where2']</code>
-    </MixedArrayAccess>
-    <MixedAssignment occurrences="1">
+    </PossiblyNullArrayAccess>
+    <PossiblyNullReference occurrences="1">
       <code>$parameters</code>
-    </MixedAssignment>
+    </PossiblyNullReference>
     <UndefinedPropertyAssignment occurrences="1">
       <code>$mockHasResultRow-&gt;one</code>
     </UndefinedPropertyAssignment>
   </file>
   <file src="test/Db/TestAsset/ConcreteDbValidator.php">
-    <PropertyNotSetInConstructor occurrences="1">
+    <PropertyNotSetInConstructor occurrences="2">
+      <code>ConcreteDbValidator</code>
       <code>ConcreteDbValidator</code>
     </PropertyNotSetInConstructor>
-  </file>
-  <file src="test/Db/TestAsset/TrustingSql92Platform.php">
-    <MixedInferredReturnType occurrences="1">
-      <code>quoteValue</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$this-&gt;quoteTrustedValue($value)</code>
-    </MixedReturnStatement>
   </file>
   <file src="test/DigitsTest.php">
     <InvalidArgument occurrences="1">
@@ -2837,8 +2829,7 @@
     <InvalidScalarArgument occurrences="1">
       <code>$value</code>
     </InvalidScalarArgument>
-    <MixedArgument occurrences="2">
-      <code>current($messages)</code>
+    <MixedArgument occurrences="1">
       <code>current($messages)</code>
     </MixedArgument>
     <PossiblyInvalidCast occurrences="1">

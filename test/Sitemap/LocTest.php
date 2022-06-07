@@ -8,9 +8,6 @@ use stdClass;
 
 use function current;
 
-/**
- * @group      Laminas_Validator
- */
 class LocTest extends TestCase
 {
     /** @var Loc */
@@ -60,6 +57,7 @@ class LocTest extends TestCase
      *
      * @todo A change in the URI API has led to most of these now validating
      * @dataProvider invalidLocs
+     * @psalm-suppress UnevaluatedCode
      */
     public function testInvalidLocs(string $url): void
     {
