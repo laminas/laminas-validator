@@ -34,7 +34,7 @@ class InArray extends AbstractValidator
      */
     public const COMPARE_NOT_STRICT = -1;
 
-    /** @var array */
+    /** @var array<string, string> */
     protected $messageTemplates = [
         self::NOT_IN_ARRAY => 'The input was not found in the haystack',
     ];

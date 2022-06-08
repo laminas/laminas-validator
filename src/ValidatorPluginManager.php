@@ -46,6 +46,9 @@ use function is_object;
 use function method_exists;
 use function sprintf;
 
+/**
+ * @method ValidatorInterface get(string $name, ?array $options = null)
+ */
 class ValidatorPluginManager extends AbstractPluginManager
 {
     /**
@@ -534,7 +537,7 @@ class ValidatorPluginManager extends AbstractPluginManager
     /**
      * Default instance type
      *
-     * @var null|string
+     * @var string
      */
     protected $instanceOf = ValidatorInterface::class;
 

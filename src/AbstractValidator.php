@@ -8,13 +8,13 @@ use Traversable;
 use function array_key_exists;
 use function array_keys;
 use function array_unique;
+use function assert;
 use function current;
 use function get_class;
-use function get_class_methods;
 use function implode;
-use function in_array;
 use function is_array;
 use function is_object;
+use function is_string;
 use function key;
 use function method_exists;
 use function str_repeat;
@@ -26,6 +26,20 @@ use function var_export;
 
 use const SORT_REGULAR;
 
+/**
+ * @psalm-type AbstractOptions = array{
+ *     messages: array<string, string>,
+ *     messageTemplates: array<string, string>,
+ *     messageVariables: array<string, mixed>,
+ *     translator: Translator\TranslatorInterface|null,
+ *     translatorTextDomain: string|null,
+ *     translatorEnabled: bool,
+ *     valueObscured: bool,
+ * }
+ * @property array<string, mixed> $options
+ * @property array<string, string> $messageTemplates
+ * @property array<string, mixed> $messageVariables
+ */
 abstract class AbstractValidator implements
     Translator\TranslatorAwareInterface,
     ValidatorInterface
@@ -58,7 +72,7 @@ abstract class AbstractValidator implements
      */
     protected static $messageLength = -1;
 
-    /** @var array<string, mixed> */
+    /** @var AbstractOptions&array<string, mixed> */
     protected $abstractOptions = [
         'messages'             => [], // Array of validation failure messages
         'messageTemplates'     => [], // Array of validation failure message templates
@@ -66,8 +80,7 @@ abstract class AbstractValidator implements
         'translator'           => null, // Translation object to used -> Translator\TranslatorInterface
         'translatorTextDomain' => null, // Translation text domain
         'translatorEnabled'    => true, // Is translation enabled?
-        'valueObscured'        => false, // Flag indicating whether or not value should be obfuscated
-                                           // in error messages
+        'valueObscured'        => false, // Flag indicating whether value should be obfuscated in error messages
     ];
 
     /**
@@ -78,20 +91,23 @@ abstract class AbstractValidator implements
      *  - an array f.e. Validator(array($first => 'first', $second => 'second', $third => 'third'))
      *  - an instance of Traversable f.e. Validator($config_instance)
      *
-     * @param array|Traversable $options
+     * @param array<string, mixed>|Traversable<string, mixed> $options
      */
     public function __construct($options = null)
     {
         // The abstract constructor allows no scalar values
         if ($options instanceof Traversable) {
+            /** @psalm-var array<string, mixed> $options */
             $options = ArrayUtils::iteratorToArray($options);
         }
 
-        if (isset($this->messageTemplates)) {
+        /** @psalm-suppress RedundantConditionGivenDocblockType */
+        if (isset($this->messageTemplates) && is_array($this->messageTemplates)) {
             $this->abstractOptions['messageTemplates'] = $this->messageTemplates;
         }
 
-        if (isset($this->messageVariables)) {
+        /** @psalm-suppress RedundantConditionGivenDocblockType */
+        if (isset($this->messageVariables) && is_array($this->messageVariables)) {
             $this->abstractOptions['messageVariables'] = $this->messageVariables;
         }
 
@@ -113,6 +129,7 @@ abstract class AbstractValidator implements
             return $this->abstractOptions[$option];
         }
 
+        /** @psalm-suppress RedundantConditionGivenDocblockType */
         if (isset($this->options) && array_key_exists($option, $this->options)) {
             return $this->options[$option];
         }
@@ -123,12 +140,13 @@ abstract class AbstractValidator implements
     /**
      * Returns all available options
      *
-     * @return array Array with all available options
+     * @return array<string, mixed> Array with all available options
      */
     public function getOptions()
     {
         $result = $this->abstractOptions;
-        if (isset($this->options)) {
+        /** @psalm-suppress RedundantConditionGivenDocblockType */
+        if (isset($this->options) && is_array($this->options)) {
             $result += $this->options;
         }
         return $result;
@@ -137,16 +155,21 @@ abstract class AbstractValidator implements
     /**
      * Sets one or multiple options
      *
-     * @param  array|Traversable $options Options to set
+     * @param  array<string, mixed>|Traversable<string, mixed> $options Options to set
      * @return $this Provides fluid interface
      * @throws Exception\InvalidArgumentException If $options is not an array or Traversable.
      */
     public function setOptions($options = [])
     {
+        /** @psalm-suppress DocblockTypeContradiction */
         if (! is_array($options) && ! $options instanceof Traversable) {
             throw new Exception\InvalidArgumentException(__METHOD__ . ' expects an array or Traversable');
         }
 
+        /**
+         * @psalm-suppress RedundantConditionGivenDocblockType
+         * @psalm-var mixed $option
+         */
         foreach ($options as $name => $option) {
             $fname  = 'set' . ucfirst($name);
             $fname2 = 'is' . ucfirst($name);
@@ -156,7 +179,7 @@ abstract class AbstractValidator implements
                 $this->{$fname}($option);
             } elseif (method_exists($this, $fname2)) {
                 $this->{$fname2}($option);
-            } elseif (isset($this->options)) {
+            } elseif (isset($this->options) && is_array($this->options)) {
                 $this->options[$name] = $option;
             } else {
                 $this->abstractOptions[$name] = $option;
@@ -169,7 +192,7 @@ abstract class AbstractValidator implements
     /**
      * Returns array of validation failure messages
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getMessages()
     {
@@ -190,7 +213,7 @@ abstract class AbstractValidator implements
     /**
      * Returns an array of the names of variables that are used in constructing validation failure messages
      *
-     * @return array
+     * @return list<string>
      */
     public function getMessageVariables()
     {
@@ -200,7 +223,7 @@ abstract class AbstractValidator implements
     /**
      * Returns the message templates from the validator
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getMessageTemplates()
     {
@@ -210,8 +233,8 @@ abstract class AbstractValidator implements
     /**
      * Sets the validation failure message template for a particular key
      *
-     * @param  string $messageString
-     * @param  string $messageKey     OPTIONAL
+     * @param  string      $messageString
+     * @param  string|null $messageKey     OPTIONAL
      * @return $this Provides a fluent interface
      * @throws Exception\InvalidArgumentException
      */
@@ -237,7 +260,7 @@ abstract class AbstractValidator implements
      * Sets validation failure message templates given as an array, where the array keys are the message keys,
      * and the array values are the message template strings.
      *
-     * @param  array $messages
+     * @param  array<string, string> $messages
      * @return $this
      */
     public function setMessages(array $messages)
@@ -263,6 +286,7 @@ abstract class AbstractValidator implements
         }
 
         if (array_key_exists($property, $this->abstractOptions['messageVariables'])) {
+            /** @psalm-var mixed $result */
             $result = $this->abstractOptions['messageVariables'][$property];
             if (is_array($result)) {
                 return $this->{key($result)}[current($result)];
@@ -270,7 +294,9 @@ abstract class AbstractValidator implements
             return $this->{$result};
         }
 
+        /** @psalm-suppress RedundantConditionGivenDocblockType */
         if (isset($this->messageVariables) && array_key_exists($property, $this->messageVariables)) {
+            /** @psalm-var mixed $result */
             $result = $this->{$this->messageVariables[$property]};
             if (is_array($result)) {
                 return $this->{key($result)}[current($result)];
@@ -296,21 +322,21 @@ abstract class AbstractValidator implements
     protected function createMessage($messageKey, $value)
     {
         if (! isset($this->abstractOptions['messageTemplates'][$messageKey])) {
-            return;
+            return null;
         }
 
         $message = $this->abstractOptions['messageTemplates'][$messageKey];
 
         $message = $this->translateMessage($messageKey, $message);
 
-        if (
-            is_object($value) &&
-            ! in_array('__toString', get_class_methods($value))
-        ) {
-            $value = get_class($value) . ' object';
+        if (is_object($value)) {
+            $value = method_exists($value, '__toString')
+                ? (string) $value
+                : get_class($value) . ' object';
         } elseif (is_array($value)) {
-            $value = var_export($value, 1);
+            $value = var_export($value, true);
         } else {
+            /** @psalm-suppress RedundantCastGivenDocblockType $value */
             $value = (string) $value;
         }
 
@@ -318,7 +344,7 @@ abstract class AbstractValidator implements
             $value = str_repeat('*', strlen($value));
         }
 
-        $message = str_replace('%value%', (string) $value, $message);
+        $message = str_replace('%value%', $value, $message);
         foreach ($this->abstractOptions['messageVariables'] as $ident => $property) {
             if (is_array($property)) {
                 $value = $this->{key($property)}[current($property)];
@@ -340,7 +366,7 @@ abstract class AbstractValidator implements
     }
 
     /**
-     * @param  string                   $messageKey
+     * @param  string|null              $messageKey
      * @param  null|string|array|object $value      OPTIONAL
      * @return void
      */
@@ -351,11 +377,19 @@ abstract class AbstractValidator implements
             $messageKey = current($keys);
         }
 
+        assert(is_string($messageKey));
+
         if ($value === null) {
+            /** @psalm-var string|array|object $value */
             $value = $this->value;
         }
 
-        $this->abstractOptions['messages'][$messageKey] = $this->createMessage($messageKey, $value);
+        $message = $this->createMessage($messageKey, $value);
+        if (! is_string($message)) {
+            return;
+        }
+
+        $this->abstractOptions['messages'][$messageKey] = $message;
     }
 
     /**
@@ -388,6 +422,7 @@ abstract class AbstractValidator implements
      */
     public function setValueObscured($flag)
     {
+        /** @psalm-suppress RedundantCastGivenDocblockType */
         $this->abstractOptions['valueObscured'] = (bool) $flag;
         return $this;
     }
@@ -427,7 +462,7 @@ abstract class AbstractValidator implements
     public function getTranslator()
     {
         if (! $this->isTranslatorEnabled()) {
-            return;
+            return null;
         }
 
         if (null === $this->abstractOptions['translator']) {
@@ -537,6 +572,7 @@ abstract class AbstractValidator implements
      */
     public function setTranslatorEnabled($enabled = true)
     {
+        /** @psalm-suppress RedundantCastGivenDocblockType */
         $this->abstractOptions['translatorEnabled'] = (bool) $enabled;
         return $this;
     }

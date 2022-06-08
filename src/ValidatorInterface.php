@@ -25,7 +25,7 @@ interface ValidatorInterface
      * If isValid() was never called or if the most recent isValid() call
      * returned true, then this method returns an empty array.
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getMessages();
 }

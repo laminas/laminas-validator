@@ -6,14 +6,13 @@ use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Between;
 use Laminas\Validator\GreaterThan;
 use Laminas\Validator\NotEmpty;
+use Laminas\Validator\Timezone;
 use Laminas\Validator\ValidatorChain;
 use Laminas\Validator\ValidatorInterface;
 use PHPUnit\Framework\TestCase;
 
+use function array_keys;
 use function array_shift;
-use function in_array;
-use function is_array;
-use function is_string;
 use function serialize;
 use function strstr;
 use function unserialize;
@@ -257,19 +256,8 @@ class ValidatorChainTest extends TestCase
 
         $this->assertFalse($this->validator->isValid('foo'));
         $messages = $this->validator->getMessages();
-        $found    = false;
-        $test     = 'Second callback trapped';
-        foreach ($messages as $messageSet) {
-            if (is_string($messageSet) && $messageSet === $test) {
-                $found = true;
-                break;
-            }
-            if (is_array($messageSet) && in_array('Second callback trapped', $messageSet)) {
-                $found = true;
-                break;
-            }
-        }
-        $this->assertTrue($found);
+        self::assertContains('Second callback trapped', $messages);
+        self::assertNotContains('This should not be seen in the messages', $messages);
     }
 
     public function testCanSerializeValidatorChain(): void
@@ -315,5 +303,36 @@ class ValidatorChainTest extends TestCase
         $this->assertInstanceOf(GreaterThan::class, $validator);
         $this->assertArrayHasKey('breakChainOnFailure', $spec);
         $this->assertTrue($spec['breakChainOnFailure']);
+    }
+
+    public function testGetValidatorsReturnsAnArrayOfQueueItems(): void
+    {
+        $empty   = new NotEmpty();
+        $between = new Between(['min' => 10, 'max' => 20]);
+        $expect  = [
+            ['instance' => $empty, 'breakChainOnFailure' => false],
+            ['instance' => $between, 'breakChainOnFailure' => false],
+        ];
+
+        $chain = new ValidatorChain();
+        $chain->attach($empty);
+        $chain->attach($between);
+
+        self::assertEquals($expect, $chain->getValidators());
+    }
+
+    public function testMessagesAreASingleDimensionHash(): void
+    {
+        $timezone = new Timezone();
+        $between  = new Between(['min' => 10, 'max' => 20]);
+        $chain    = new ValidatorChain();
+        $chain->attach($timezone);
+        $chain->attach($between);
+
+        self::assertFalse($chain->isValid(0));
+        $messages = $chain->getMessages();
+        self::assertCount(2, $messages);
+        self::assertContainsOnly('string', array_keys($messages));
+        self::assertContainsOnly('string', $messages);
     }
 }
