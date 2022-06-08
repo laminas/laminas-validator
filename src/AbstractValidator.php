@@ -8,7 +8,6 @@ use Traversable;
 use function array_key_exists;
 use function array_keys;
 use function array_unique;
-use function assert;
 use function current;
 use function get_class;
 use function implode;
@@ -376,8 +375,6 @@ abstract class AbstractValidator implements
             $keys       = array_keys($this->abstractOptions['messageTemplates']);
             $messageKey = current($keys);
         }
-
-        assert(is_string($messageKey));
 
         if ($value === null) {
             /** @psalm-var string|array|object $value */
