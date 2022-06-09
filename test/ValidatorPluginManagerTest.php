@@ -6,7 +6,9 @@ use Exception;
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\ServiceManager;
+use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\RuntimeException;
+use Laminas\Validator\NotEmpty;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
 use PHPUnit\Framework\TestCase;
@@ -37,7 +39,8 @@ class ValidatorPluginManagerTest extends TestCase
 
         $validators = new ValidatorPluginManager($container->reveal());
 
-        $validator = $validators->get('notempty');
+        $validator = $validators->get(NotEmpty::class);
+        self::assertInstanceOf(AbstractValidator::class, $validator);
         $this->assertEquals($translator, $validator->getTranslator());
     }
 
@@ -48,7 +51,8 @@ class ValidatorPluginManagerTest extends TestCase
 
         $validators = new ValidatorPluginManager($container->reveal());
 
-        $validator = $validators->get('notempty');
+        $validator = $validators->get(NotEmpty::class);
+        self::assertInstanceOf(AbstractValidator::class, $validator);
         $this->assertNull($validator->getTranslator());
     }
 

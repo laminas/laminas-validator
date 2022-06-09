@@ -7,12 +7,16 @@ use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\PriorityQueue;
 use ReturnTypeWillChange;
 
-use function array_replace_recursive;
+use function array_replace;
+use function assert;
 use function count;
 use function rsort;
 
 use const SORT_NUMERIC;
 
+/**
+ * @psalm-type QueueElement = array{instance: ValidatorInterface, breakChainOnFailure: bool}
+ */
 class ValidatorChain implements
     Countable,
     ValidatorInterface
@@ -22,20 +26,20 @@ class ValidatorChain implements
      */
     public const DEFAULT_PRIORITY = 1;
 
-    /** @var ValidatorPluginManager */
+    /** @var ValidatorPluginManager|null */
     protected $plugins;
 
     /**
      * Validator chain
      *
-     * @var PriorityQueue
+     * @var PriorityQueue<QueueElement, int>
      */
     protected $validators;
 
     /**
      * Array of validation failure messages
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $messages = [];
 
@@ -44,6 +48,7 @@ class ValidatorChain implements
      */
     public function __construct()
     {
+        /** @psalm-suppress InvalidPropertyAssignmentValue */
         $this->validators = new PriorityQueue();
     }
 
@@ -75,6 +80,7 @@ class ValidatorChain implements
      * Set plugin manager instance
      *
      * @param  ValidatorPluginManager $plugins Plugin manager
+     * @psalm-assert ValidatorPluginManager $this->plugins
      * @return $this
      */
     public function setPluginManager(ValidatorPluginManager $plugins)
@@ -98,15 +104,14 @@ class ValidatorChain implements
 
     /**
      * Attach a validator to the end of the chain
-     *
      * If $breakChainOnFailure is true, then if the validator fails, the next validator in the chain,
      * if one exists, will not be executed.
      *
-     * @param  bool               $breakChainOnFailure
-     * @param  int                $priority            Priority at which to enqueue validator; defaults to
-     *                                                          1 (higher executes earlier)
-     * @throws Exception\InvalidArgumentException
+     * @param bool $breakChainOnFailure
+     * @param int  $priority            Priority at which to enqueue validator; defaults to
+     *                                  1 (higher executes earlier)
      * @return $this
+     * @throws Exception\InvalidArgumentException
      */
     public function attach(
         ValidatorInterface $validator,
@@ -173,10 +178,10 @@ class ValidatorChain implements
     /**
      * Use the plugin manager to add a validator by name
      *
-     * @param  string $name
-     * @param  array $options
-     * @param  bool $breakChainOnFailure
-     * @param  int $priority
+     * @param  string    $name
+     * @param  array     $options
+     * @param  bool      $breakChainOnFailure
+     * @param  int       $priority
      * @return $this
      */
     public function attachByName($name, $options = [], $breakChainOnFailure = false, $priority = self::DEFAULT_PRIORITY)
@@ -239,12 +244,13 @@ class ValidatorChain implements
         $result         = true;
         foreach ($this->validators as $element) {
             $validator = $element['instance'];
+            assert($validator instanceof ValidatorInterface);
             if ($validator->isValid($value, $context)) {
                 continue;
             }
             $result         = false;
             $messages       = $validator->getMessages();
-            $this->messages = array_replace_recursive($this->messages, $messages);
+            $this->messages = array_replace($this->messages, $messages);
             if ($element['breakChainOnFailure']) {
                 break;
             }
@@ -269,7 +275,7 @@ class ValidatorChain implements
     /**
      * Returns array of validation failure messages
      *
-     * @return array
+     * @return array<string, string>
      */
     public function getMessages()
     {
@@ -279,7 +285,7 @@ class ValidatorChain implements
     /**
      * Get all the validators
      *
-     * @return array
+     * @return list<QueueElement>
      */
     public function getValidators()
     {

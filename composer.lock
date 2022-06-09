@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0ab16e4f22b3ddb83ac4802a1f9b03ea",
+    "content-hash": "9cfab05d9913bbc9e4ac25184c989da7",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -44,16 +44,16 @@
         },
         {
             "name": "laminas/laminas-stdlib",
-            "version": "3.7.1",
+            "version": "3.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-stdlib.git",
-                "reference": "bcd869e2fe88d567800057c1434f2380354fe325"
+                "reference": "449c0405e182bfe77702604a474668fbb63e9907"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-stdlib/zipball/bcd869e2fe88d567800057c1434f2380354fe325",
-                "reference": "bcd869e2fe88d567800057c1434f2380354fe325",
+                "url": "https://api.github.com/repos/laminas/laminas-stdlib/zipball/449c0405e182bfe77702604a474668fbb63e9907",
+                "reference": "449c0405e182bfe77702604a474668fbb63e9907",
                 "shasum": ""
             },
             "require": {
@@ -99,7 +99,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-01-21T15:50:46+00:00"
+            "time": "2022-06-09T08:43:49+00:00"
         },
         {
             "name": "psr/container",
