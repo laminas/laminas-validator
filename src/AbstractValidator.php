@@ -96,7 +96,6 @@ abstract class AbstractValidator implements
     {
         // The abstract constructor allows no scalar values
         if ($options instanceof Traversable) {
-            /** @psalm-var array<string, mixed> $options */
             $options = ArrayUtils::iteratorToArray($options);
         }
 

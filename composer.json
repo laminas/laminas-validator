@@ -33,7 +33,7 @@
     "require": {
         "php": "^7.3 || ~8.0.0 || ~8.1.0",
         "container-interop/container-interop": "^1.1",
-        "laminas/laminas-stdlib": "^3.6"
+        "laminas/laminas-stdlib": "^3.10"
     },
     "require-dev": {
         "laminas/laminas-cache": "^2.6.1",

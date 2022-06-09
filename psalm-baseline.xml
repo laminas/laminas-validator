@@ -412,9 +412,6 @@
     <MixedReturnStatement occurrences="1">
       <code>$this-&gt;options['inclusive']</code>
     </MixedReturnStatement>
-    <PossiblyInvalidArgument occurrences="1">
-      <code>$options</code>
-    </PossiblyInvalidArgument>
   </file>
   <file src="src/Bitwise.php">
     <DocblockTypeContradiction occurrences="4">
