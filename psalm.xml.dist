@@ -33,6 +33,6 @@
     </plugins>
 
     <stubs>
-        <file name=".psr-container-stub.php" preloadClasses="true" />
+        <file name=".psr-container.php.stub" preloadClasses="true" />
     </stubs>
 </psalm>

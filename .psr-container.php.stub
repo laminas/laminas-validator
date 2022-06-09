@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * File named as .stub to avoid duplicate declaration of the interface in consuming projects
+ */
 declare(strict_types=1);
 
 namespace Psr\Container {
