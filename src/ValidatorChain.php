@@ -92,9 +92,13 @@ class ValidatorChain implements
     /**
      * Retrieve a validator by name
      *
-     * @param  string     $name    Name of validator to return
-     * @param  null|array $options Options to pass to validator constructor (if not already instantiated)
+     * @param string|class-string<ValidatorInterface> $name    Name of validator to return
+     * @param null|array                              $options Options to pass to validator constructor
+     *                                                         (if not already instantiated)
      * @return ValidatorInterface
+     * @template T of ValidatorInterface
+     * @psalm-param string|class-string<T> $name
+     * @psalm-return ($name is class-string ? T : ValidatorInterface)
      */
     public function plugin($name, ?array $options = null)
     {
@@ -118,6 +122,7 @@ class ValidatorChain implements
         $breakChainOnFailure = false,
         $priority = self::DEFAULT_PRIORITY
     ) {
+        /** @psalm-suppress RedundantCastGivenDocblockType */
         $this->validators->insert(
             [
                 'instance'            => $validator,
@@ -165,6 +170,7 @@ class ValidatorChain implements
             $priority = $extractedNodes[0] + 1;
         }
 
+        /** @psalm-suppress RedundantCastGivenDocblockType */
         $this->validators->insert(
             [
                 'instance'            => $validator,
@@ -178,10 +184,10 @@ class ValidatorChain implements
     /**
      * Use the plugin manager to add a validator by name
      *
-     * @param  string    $name
-     * @param  array     $options
-     * @param  bool      $breakChainOnFailure
-     * @param  int       $priority
+     * @param  string|class-string<ValidatorInterface> $name
+     * @param  array                                   $options
+     * @param  bool                                    $breakChainOnFailure
+     * @param  int                                     $priority
      * @return $this
      */
     public function attachByName($name, $options = [], $breakChainOnFailure = false, $priority = self::DEFAULT_PRIORITY)
@@ -217,9 +223,9 @@ class ValidatorChain implements
     /**
      * Use the plugin manager to prepend a validator by name
      *
-     * @param  string $name
-     * @param  array  $options
-     * @param  bool   $breakChainOnFailure
+     * @param  string|class-string<ValidatorInterface> $name
+     * @param  array                                   $options
+     * @param  bool                                    $breakChainOnFailure
      * @return $this
      */
     public function prependByName($name, $options = [], $breakChainOnFailure = false)
