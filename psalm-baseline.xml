@@ -2026,10 +2026,6 @@
     <MixedPropertyTypeCoercion occurrences="1">
       <code>new PriorityQueue()</code>
     </MixedPropertyTypeCoercion>
-    <RedundantCastGivenDocblockType occurrences="2">
-      <code>(bool) $breakChainOnFailure</code>
-      <code>(bool) $breakChainOnFailure</code>
-    </RedundantCastGivenDocblockType>
     <TooManyArguments occurrences="1">
       <code>isValid</code>
     </TooManyArguments>
