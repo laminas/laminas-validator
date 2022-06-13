@@ -26,7 +26,7 @@ class ValidatorChain implements
      */
     public const DEFAULT_PRIORITY = 1;
 
-    /** @var ValidatorPluginManager|null */
+    /** @var ValidatorPluginManager<ValidatorInterface>|null */
     protected $plugins;
 
     /**
@@ -66,7 +66,7 @@ class ValidatorChain implements
     /**
      * Get plugin manager instance
      *
-     * @return ValidatorPluginManager
+     * @return ValidatorPluginManager<ValidatorInterface>
      */
     public function getPluginManager()
     {
@@ -98,7 +98,7 @@ class ValidatorChain implements
      * @return ValidatorInterface
      * @template T of ValidatorInterface
      * @psalm-param string|class-string<T> $name
-     * @psalm-return ($name is class-string ? T : ValidatorInterface)
+     * @psalm-return ValidatorInterface
      */
     public function plugin($name, ?array $options = null)
     {

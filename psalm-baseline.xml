@@ -779,32 +779,15 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/Explode.php">
-    <DocblockTypeContradiction occurrences="3">
-      <code>! $validator</code>
-      <code>$validator</code>
+    <DocblockTypeContradiction occurrences="1">
       <code>[$value]</code>
     </DocblockTypeContradiction>
-    <InvalidNullableReturnType occurrences="1">
-      <code>ValidatorPluginManager</code>
-    </InvalidNullableReturnType>
-    <MixedArgument occurrences="2">
-      <code>$name</code>
-      <code>$options</code>
-    </MixedArgument>
     <MixedArrayAssignment occurrences="1">
       <code>$this-&gt;abstractOptions['messages'][]</code>
     </MixedArrayAssignment>
-    <MixedAssignment occurrences="3">
-      <code>$name</code>
-      <code>$options</code>
+    <MixedAssignment occurrences="1">
       <code>$value</code>
     </MixedAssignment>
-    <NullableReturnStatement occurrences="1">
-      <code>$this-&gt;pluginManager</code>
-    </NullableReturnStatement>
-    <PropertyNotSetInConstructor occurrences="1">
-      <code>$validator</code>
-    </PropertyNotSetInConstructor>
     <PropertyTypeCoercion occurrences="1">
       <code>$this-&gt;abstractOptions</code>
     </PropertyTypeCoercion>
@@ -1840,9 +1823,6 @@
     </MoreSpecificImplementedParamType>
   </file>
   <file src="src/StaticValidator.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>null === static::$plugins</code>
-    </DocblockTypeContradiction>
     <RedundantCondition occurrences="1">
       <code>method_exists($plugins, 'configure')</code>
     </RedundantCondition>
@@ -2035,19 +2015,15 @@
       <code>getServiceLocator</code>
       <code>getServiceLocator</code>
     </DeprecatedMethod>
-    <DocblockTypeContradiction occurrences="1">
-      <code>gettype($instance)</code>
-    </DocblockTypeContradiction>
     <MethodSignatureMismatch occurrences="1">
       <code>ValidatorPluginManager</code>
     </MethodSignatureMismatch>
     <MissingParamType occurrences="1">
       <code>$configOrContainerInstance</code>
     </MissingParamType>
-    <MixedArgument occurrences="3">
+    <MixedArgument occurrences="2">
       <code>$configOrContainerInstance</code>
       <code>$container-&gt;get('MvcTranslator')</code>
-      <code>$plugin</code>
     </MixedArgument>
     <MixedMethodCall occurrences="2">
       <code>get</code>
@@ -2059,11 +2035,10 @@
     <RedundantCondition occurrences="1">
       <code>$container === $this &amp;&amp; method_exists($container, 'getServiceLocator')</code>
     </RedundantCondition>
-    <RedundantConditionGivenDocblockType occurrences="4">
+    <RedundantConditionGivenDocblockType occurrences="3">
       <code>$container</code>
       <code>$container</code>
       <code>$container-&gt;getServiceLocator()</code>
-      <code>is_object($instance)</code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/ValidatorPluginManagerAwareInterface.php">
@@ -2075,11 +2050,6 @@
     <DeprecatedInterface occurrences="1">
       <code>ValidatorPluginManagerFactory</code>
     </DeprecatedInterface>
-    <MissingParamType occurrences="3">
-      <code>$name</code>
-      <code>$name</code>
-      <code>$requestedName</code>
-    </MissingParamType>
     <MixedArgument occurrences="1">
       <code>$config['validators']</code>
     </MixedArgument>

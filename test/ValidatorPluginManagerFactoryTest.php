@@ -2,7 +2,7 @@
 
 namespace LaminasTest\Validator;
 
-use Interop\Container\ContainerInterface;
+use Interop\Container\ContainerInterface; // phpcs:ignore
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Validator\Digits;
 use Laminas\Validator\ValidatorInterface;

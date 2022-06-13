@@ -9,6 +9,7 @@ use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Between;
 use Laminas\Validator\StaticValidator;
+use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
 use PHPUnit\Framework\TestCase;
 
@@ -130,7 +131,7 @@ class StaticValidatorTest extends TestCase
     /**
      * @psalm-return array<string, array{
      *     0: int,
-     *     1: string,
+     *     1: class-string<ValidatorInterface>,
      *     2: array<string, int>,
      *     3: bool
      * }>
@@ -138,15 +139,16 @@ class StaticValidatorTest extends TestCase
     public function parameterizedData(): array
     {
         return [
-            'valid-positive-range'   => [5, 'between', ['min' => 1, 'max' => 10], true],
-            'valid-negative-range'   => [-5, 'between', ['min' => -10, 'max' => -1], true],
-            'invalid-positive-range' => [-5, 'between', ['min' => 1, 'max' => 10], false],
-            'invalid-negative-range' => [5, 'between', ['min' => -10, 'max' => -1], false],
+            'valid-positive-range'   => [5, Between::class, ['min' => 1, 'max' => 10], true],
+            'valid-negative-range'   => [-5, Between::class, ['min' => -10, 'max' => -1], true],
+            'invalid-positive-range' => [-5, Between::class, ['min' => 1, 'max' => 10], false],
+            'invalid-negative-range' => [5, Between::class, ['min' => -10, 'max' => -1], false],
         ];
     }
 
     /**
      * @dataProvider parameterizedData
+     * @param class-string<ValidatorInterface> $validator
      */
     public function testExecuteValidWithParameters(
         int $value,
@@ -158,18 +160,19 @@ class StaticValidatorTest extends TestCase
     }
 
     /**
-     * @psalm-return array<string, array{0: int, 1: string, 2: int[]}>
+     * @psalm-return array<string, array{0: int, 1: class-string<ValidatorInterface>, 2: int[]}>
      */
     public function invalidParameterizedData(): array
     {
         return [
-            'positive-range' => [5, 'between', [1, 10]],
-            'negative-range' => [-5, 'between', [-10, -1]],
+            'positive-range' => [5, Between::class, [1, 10]],
+            'negative-range' => [-5, Between::class, [-10, -1]],
         ];
     }
 
     /**
      * @dataProvider invalidParameterizedData
+     * @param class-string<ValidatorInterface> $validator
      */
     public function testExecuteRaisesExceptionForIndexedOptionsArray(
         int $value,
@@ -193,6 +196,7 @@ class StaticValidatorTest extends TestCase
     public function testStaticFactoryClassNotFound()
     {
         $this->expectException(ServiceNotFoundException::class);
+        /** @psalm-suppress ArgumentTypeCoercion, UndefinedClass */
         StaticValidator::execute('1234', 'UnknownValidator');
     }
 }

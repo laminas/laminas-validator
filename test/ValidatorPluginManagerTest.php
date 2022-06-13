@@ -3,7 +3,7 @@
 namespace LaminasTest\Validator;
 
 use Exception;
-use Interop\Container\ContainerInterface;
+use Interop\Container\ContainerInterface; // phpcs:ignore
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\AbstractValidator;
