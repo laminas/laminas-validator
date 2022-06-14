@@ -2,7 +2,6 @@
 
 namespace Laminas\Validator;
 
-use Laminas\Math\Rand;
 use Laminas\Session\Container as SessionContainer;
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
@@ -11,6 +10,7 @@ use function explode;
 use function is_array;
 use function is_string;
 use function md5;
+use function random_bytes;
 use function sprintf;
 use function str_replace;
 use function strtolower;
@@ -301,7 +301,7 @@ class Csrf extends AbstractValidator
      */
     protected function generateHash()
     {
-        $token = md5($this->getSalt() . Rand::getBytes(32) . $this->getName());
+        $token = md5($this->getSalt() . random_bytes(32) . $this->getName());
 
         $this->hash = $this->formatHash($token, $this->generateTokenId());
 
@@ -314,7 +314,7 @@ class Csrf extends AbstractValidator
      */
     protected function generateTokenId()
     {
-        return md5(Rand::getBytes(32));
+        return md5(random_bytes(32));
     }
 
     /**
