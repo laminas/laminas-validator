@@ -248,7 +248,7 @@ class ValidatorPluginManager extends AbstractPluginManager
         \Zend\Validator\Bitwise::class      => Bitwise::class,
         \Zend\Validator\Callback::class     => Callback::class,
         \Zend\Validator\CreditCard::class   => CreditCard::class,
-        \zend\validator\csrf::class         => Csrf::class,
+        \Zend\Validator\Csrf::class         => Csrf::class,
         \Zend\Validator\DateStep::class     => DateStep::class,
         \Zend\Validator\Date::class         => Date::class,
         DateTime::class                     => I18nValidator\DateTime::class,
