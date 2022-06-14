@@ -9,7 +9,7 @@ use function method_exists;
 
 class StaticValidator
 {
-    /** @var ValidatorPluginManager */
+    /** @var ValidatorPluginManager|null */
     protected static $plugins;
 
     /**
@@ -38,17 +38,20 @@ class StaticValidator
      */
     public static function getPluginManager()
     {
-        if (null === static::$plugins) {
-            static::setPluginManager(new ValidatorPluginManager(new ServiceManager()));
+        if (! static::$plugins instanceof ValidatorPluginManager) {
+            $plugins = new ValidatorPluginManager(new ServiceManager());
+            static::setPluginManager($plugins);
+
+            return $plugins;
         }
         return static::$plugins;
     }
 
     /**
-     * @param  mixed    $value
-     * @param  string   $classBaseName
-     * @param  array    $options OPTIONAL associative array of options to pass as
-     *     the sole argument to the validator constructor.
+     * @param  mixed                            $value
+     * @param  class-string<ValidatorInterface> $classBaseName
+     * @param  array                            $options OPTIONAL associative array of options to pass as
+     *                                                   the sole argument to the validator constructor.
      * @return bool
      * @throws Exception\InvalidArgumentException For an invalid $options argument.
      */

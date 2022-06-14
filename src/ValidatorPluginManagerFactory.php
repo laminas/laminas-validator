@@ -2,26 +2,35 @@
 
 namespace Laminas\Validator;
 
-use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Config;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceManager;
+use Psr\Container\ContainerInterface;
 
 use function is_array;
 
+/**
+ * @link ServiceManager
+ *
+ * @psalm-import-type ServiceManagerConfiguration from ServiceManager
+ */
 class ValidatorPluginManagerFactory implements FactoryInterface
 {
     /**
      * laminas-servicemanager v2 support for invocation options.
      *
-     * @var null|array
+     * @var null|ServiceManagerConfiguration
      */
     protected $creationOptions;
 
     /**
      * {@inheritDoc}
      *
+     * @param string $name
+     * @param ServiceManagerConfiguration|null $options
      * @return ValidatorPluginManager
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function __invoke(ContainerInterface $container, $name, ?array $options = null)
     {
@@ -54,6 +63,8 @@ class ValidatorPluginManagerFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      *
+     * @param string|null $name
+     * @param string|null $requestedName
      * @return ValidatorPluginManager
      */
     public function createService(ServiceLocatorInterface $container, $name = null, $requestedName = null)
@@ -64,7 +75,7 @@ class ValidatorPluginManagerFactory implements FactoryInterface
     /**
      * laminas-servicemanager v2 support for invocation options.
      *
-     * @param array $options
+     * @param ServiceManagerConfiguration $options
      * @return void
      */
     public function setCreationOptions(array $options)

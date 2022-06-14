@@ -11,6 +11,9 @@ use function is_array;
 use function is_string;
 use function sprintf;
 
+/**
+ * @psalm-import-type ValidatorSpecification from ValidatorInterface
+ */
 class Explode extends AbstractValidator implements ValidatorPluginManagerAwareInterface
 {
     public const INVALID = 'explodeInvalid';
@@ -29,7 +32,7 @@ class Explode extends AbstractValidator implements ValidatorPluginManagerAwareIn
     /** @var string */
     protected $valueDelimiter = ',';
 
-    /** @var ValidatorInterface */
+    /** @var ValidatorInterface|null */
     protected $validator;
 
     /** @var bool */
@@ -75,7 +78,7 @@ class Explode extends AbstractValidator implements ValidatorPluginManagerAwareIn
     public function getValidatorPluginManager()
     {
         if (! $this->pluginManager) {
-            $this->setValidatorPluginManager(new ValidatorPluginManager(new ServiceManager()));
+            $this->pluginManager = new ValidatorPluginManager(new ServiceManager());
         }
 
         return $this->pluginManager;
@@ -84,7 +87,7 @@ class Explode extends AbstractValidator implements ValidatorPluginManagerAwareIn
     /**
      * Sets the Validator for validating each value
      *
-     * @param ValidatorInterface|array $validator
+     * @param ValidatorInterface|ValidatorSpecification $validator
      * @throws Exception\RuntimeException
      * @return $this
      */
@@ -96,8 +99,9 @@ class Explode extends AbstractValidator implements ValidatorPluginManagerAwareIn
                     'Invalid validator specification provided; does not include "name" key'
                 );
             }
-            $name      = $validator['name'];
-            $options   = $validator['options'] ?? [];
+            $name    = $validator['name'];
+            $options = $validator['options'] ?? [];
+            /** @psalm-suppress MixedAssignment $validator */
             $validator = $this->getValidatorPluginManager()->get($name, $options);
         }
 
@@ -114,7 +118,7 @@ class Explode extends AbstractValidator implements ValidatorPluginManagerAwareIn
     /**
      * Gets the Validator for validating each value
      *
-     * @return ValidatorInterface
+     * @return ValidatorInterface|null
      */
     public function getValidator()
     {

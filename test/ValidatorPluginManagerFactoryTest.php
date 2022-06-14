@@ -2,7 +2,6 @@
 
 namespace LaminasTest\Validator;
 
-use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Validator\Digits;
 use Laminas\Validator\ValidatorInterface;
@@ -10,6 +9,7 @@ use Laminas\Validator\ValidatorPluginManager;
 use Laminas\Validator\ValidatorPluginManagerFactory;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Psr\Container\ContainerInterface;
 
 class ValidatorPluginManagerFactoryTest extends TestCase
 {

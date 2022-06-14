@@ -2,6 +2,14 @@
 
 namespace Laminas\Validator;
 
+/**
+ * @psalm-type ValidatorSpecification = array{
+ *     name: string|class-string<ValidatorInterface>,
+ *     priority?: int,
+ *     break_chain_on_failure?: bool,
+ *     options?: array<string, mixed>,
+ * }
+ */
 interface ValidatorInterface
 {
     /**

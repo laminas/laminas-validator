@@ -18,7 +18,7 @@
     "config": {
         "sort-packages": true,
         "platform": {
-            "php": "7.3.99"
+            "php": "7.4.99"
         },
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
@@ -31,28 +31,27 @@
         }
     },
     "require": {
-        "php": "^7.3 || ~8.0.0 || ~8.1.0",
-        "container-interop/container-interop": "^1.1",
+        "php": "^7.4 || ~8.0.0 || ~8.1.0",
+        "laminas/laminas-servicemanager": "^3.12.0",
         "laminas/laminas-stdlib": "^3.10"
     },
     "require-dev": {
         "laminas/laminas-cache": "^2.6.1",
         "laminas/laminas-coding-standard": "~2.2.1",
         "laminas/laminas-db": "^2.7",
-        "laminas/laminas-filter": "^2.6",
+        "laminas/laminas-filter": "^2.14.0",
         "laminas/laminas-http": "^2.14.2",
-        "laminas/laminas-i18n": "^2.6",
-        "laminas/laminas-math": "^2.6",
-        "laminas/laminas-servicemanager": "^2.7.11 || ^3.0.3",
-        "laminas/laminas-session": "^2.8",
-        "laminas/laminas-uri": "^2.7",
+        "laminas/laminas-i18n": "^2.15.0",
+        "laminas/laminas-math": "^2.7.1",
+        "laminas/laminas-session": "^2.12.1",
+        "laminas/laminas-uri": "^2.9.1",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpunit/phpunit": "^9.5.5",
         "psalm/plugin-phpunit": "^0.15.0",
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.0",
         "psr/http-message": "^1.0",
-        "vimeo/psalm": "^4.3"
+        "vimeo/psalm": "^4.23"
     },
     "suggest": {
         "laminas/laminas-db": "Laminas\\Db component, required by the (No)RecordExists validator",

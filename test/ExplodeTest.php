@@ -142,6 +142,7 @@ class ExplodeTest extends TestCase
     {
         $validator = new Explode();
         $this->expectException(RuntimeException::class);
+        /** @psalm-suppress InvalidArgument */
         $validator->setValidator([
             'options' => [],
         ]);
