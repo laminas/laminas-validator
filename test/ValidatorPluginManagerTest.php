@@ -7,6 +7,7 @@ use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\RuntimeException;
+use Laminas\Validator\Explode;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
@@ -14,6 +15,7 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 
+use function assert;
 use function get_class;
 use function sprintf;
 
@@ -94,7 +96,8 @@ class ValidatorPluginManagerTest extends TestCase
 
     public function testInjectedValidatorPluginManager(): void
     {
-        $validator = $this->validators->get('explode');
+        $validator = $this->validators->get(Explode::class);
+        assert($validator instanceof Explode);
         $this->assertSame($this->validators, $validator->getValidatorPluginManager());
     }
 }

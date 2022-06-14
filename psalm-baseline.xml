@@ -2818,14 +2818,6 @@
       <code>$container</code>
     </UnusedClosureParam>
   </file>
-  <file src="test/ValidatorPluginManagerTest.php">
-    <MixedAssignment occurrences="1">
-      <code>$validator</code>
-    </MixedAssignment>
-    <MixedMethodCall occurrences="1">
-      <code>getValidatorPluginManager</code>
-    </MixedMethodCall>
-  </file>
   <file src="test/_files/MyBarcode1.php">
     <UndefinedFunction occurrences="1">
       <code>'invalid'</code>
