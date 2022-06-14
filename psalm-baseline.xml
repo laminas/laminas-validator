@@ -2822,21 +2822,9 @@
     <MixedAssignment occurrences="1">
       <code>$validator</code>
     </MixedAssignment>
-    <MixedMethodCall occurrences="5">
-      <code>get</code>
-      <code>get</code>
+    <MixedMethodCall occurrences="1">
       <code>getValidatorPluginManager</code>
-      <code>setInvokableClass</code>
-      <code>setService</code>
     </MixedMethodCall>
-    <UndefinedThisPropertyAssignment occurrences="1">
-      <code>$this-&gt;validators</code>
-    </UndefinedThisPropertyAssignment>
-    <UndefinedThisPropertyFetch occurrences="3">
-      <code>$this-&gt;validators</code>
-      <code>$this-&gt;validators</code>
-      <code>$this-&gt;validators</code>
-    </UndefinedThisPropertyFetch>
   </file>
   <file src="test/_files/MyBarcode1.php">
     <UndefinedFunction occurrences="1">

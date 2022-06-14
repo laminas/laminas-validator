@@ -32,7 +32,7 @@
     },
     "require": {
         "php": "^7.4 || ~8.0.0 || ~8.1.0",
-        "container-interop/container-interop": "^1.1",
+        "laminas/laminas-servicemanager": "^3.12.0",
         "laminas/laminas-stdlib": "^3.10"
     },
     "require-dev": {
@@ -43,7 +43,6 @@
         "laminas/laminas-http": "^2.14.2",
         "laminas/laminas-i18n": "^2.15.0",
         "laminas/laminas-math": "^2.7.1",
-        "laminas/laminas-servicemanager": "^3.12.0",
         "laminas/laminas-session": "^2.12.1",
         "laminas/laminas-uri": "^2.9.1",
         "phpspec/prophecy-phpunit": "^2.0",

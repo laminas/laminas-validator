@@ -2,13 +2,13 @@
 
 namespace Laminas\Validator;
 
-use Interop\Container\ContainerInterface; // phpcs:ignore
 use Laminas\I18n\Validator as I18nValidator;
 use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\ConfigInterface;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 use Laminas\ServiceManager\ServiceManager;
+use Psr\Container\ContainerInterface;
 use Zend\I18n\Validator\Alnum;
 use Zend\I18n\Validator\Alpha;
 use Zend\I18n\Validator\DateTime;
