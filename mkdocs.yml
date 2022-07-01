@@ -12,6 +12,7 @@ nav:
         - Validators:
             - Barcode: validators/barcode.md
             - Between: validators/between.md
+            - BIC: validators/bic.md
             - Callback: validators/callback.md
             - CreditCard: validators/credit-card.md
             - Csrf: validators/csrf.md
