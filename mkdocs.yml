@@ -12,6 +12,7 @@ nav:
         - Validators:
             - Barcode: validators/barcode.md
             - Between: validators/between.md
+            - BIC: validators/bic.md
             - Callback: validators/callback.md
             - CreditCard: validators/credit-card.md
             - Csrf: validators/csrf.md
@@ -66,5 +67,6 @@ site_description: "Validation classes for a wide range of domains, and the abili
 repo_url: 'https://github.com/laminas/laminas-validator'
 extra:
     project: Components
-    config_provider_class: 'Laminas\Validator\ConfigProvider'
-    module_class: 'Laminas\Validator\Module'
+    installation:
+        config_provider_class: 'Laminas\Validator\ConfigProvider'
+        module_class: 'Laminas\Validator\Module'
