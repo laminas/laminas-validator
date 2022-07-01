@@ -211,6 +211,12 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../validators/bic/" class="subnavigation__link">BIC</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../validators/callback/" class="subnavigation__link">Callback</a>
     </li>
 
@@ -601,13 +607,144 @@
 
 
 
+    <h1>Installation</h1>
+<div class="toc">
+    <h6 class="toc__headline">On this page</h6>
+    <ul class="toc__list">
+        <li class="toc__entry">
+            <a href="#standard-installation" class="toc__link nav-link">Standard Installation</a>
+        </li>
 
+        
+        <li class="toc__entry">
+            <a href="#installation-for-mezzio-and-laminas-mvc-application" class="toc__link nav-link">
+                Installation for a
+                Mezzio
+                or
+                laminas-mvc
+                Application
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+<h2 id="standard-installation">Standard Installation</h2>
+<p>To install the library use <a href="https://getcomposer.org/">Composer</a>:</p>
+<pre><code class="language-bash">$ composer require laminas/laminas-validator</code></pre>
+
+
+
+<h2 id="installation-for-mezzio-and-laminas-mvc-application">
+    Installation for a
+    Mezzio
+    or
+    laminas-mvc
+    Application
+</h2>
+
+<h3>Installation and Automated Configuration</h3>
+<p>
+    The <a href="https://docs.laminas.dev/laminas-component-installer/">laminas-component-installer</a>
+    is the recommended installation method when using in
+    a Mezzio-based
+    or
+    a laminas-mvc-based application.
+    It will automatically inject
+    the config-provider
+    or
+    the module
+    in the configuration during the installation process.
+</p>
+
+<blockquote>
+    <h3>Installation Requirements</h3>
+    <p>
+        The following descriptions depends on the laminas-component-installer component,
+         so be sure to have it installed before getting started.
+    </p>
+
+    <h4>Global Installation</h4>
+    <p>
+        With a <a href="https://docs.laminas.dev/laminas-component-installer/#global-installation">global installation</a>
+        of laminas-component-installer it can be used for all projects without a
+        reinstallation.
+    </p>
+    <pre><code class="language-bash">$ composer global require laminas/laminas-component-installer</code></pre>
+    <h4>As Development Dependency</h4>
+    <pre><code class="language-bash">$ composer require --dev laminas/laminas-component-installer</code></pre>
+</blockquote>
+
+<h4>Install laminas-validator and Inject Configuration</h4>
+<p>To install the library use Composer:</p>
+<pre><code class="language-bash">$ composer require laminas/laminas-validator</code></pre>
+<p>
+    This will install an initial set of dependencies and it will also prompt to
+    inject the component configuration.
+</p>
+<ul>
+    
+    <li>For a Mezzio application, choose <code>config/config.php</code>.</li>
     
     
+    <li>For a laminas-mvc application, choose either <code>modules.config.php</code> or <code>application.config.php</code>.</li>
+    
+</ul>
+<p>
+    If additional dependencies are to be installed, the option for other packages
+    can be remembered.
+</p>
 
-    <p><strong>This is only a placeholder.</strong></p>
-<p>The content of this page can be found under:</p>
-<p>https://github.com/laminas/documentation-theme/blob/master/theme/pages/installation.html</p>
+<details><summary>Installation and Manual Configuration</summary>
+<p>
+    If the installer is not used, the manual configuration is needed to add the
+    component to the application.
+</p>
+
+<h4>Install laminas-validator</h4>
+<p>To install the library use Composer:</p>
+<pre><code class="language-bash">$ composer require laminas/laminas-validator</code></pre>
+
+
+    <h4>Manual Configuration for a Mezzio-based Application</h4>
+    <p>
+        Add the configuration provider of laminas-validator to the configuration file,
+        e.g. <code>config/config.php</code>:
+    </p>
+
+<pre data-line="5"><code class="language-php">
+$aggregator = new Laminas\ConfigAggregator\ConfigAggregator([
+    // …
+    Mezzio\ConfigProvider::class,
+    Mezzio\Router\ConfigProvider::class,
+    Laminas\Validator\ConfigProvider, // Add this line
+    // …
+]);
+</code></pre>
+
+
+
+    <h4>Manual Configuration for a laminas-mvc-based Application</h4>
+    <p>
+        Add laminas-validator as component at the top of the configuration file for
+        modules, e.g. <code>config/modules.config.php</code>:
+    </p>
+
+<pre data-line="2"><code class="language-php">
+return [
+    'Laminas\Validator\Module', // Add this line
+    'Laminas\Router',
+    'Laminas\Session',
+    'Laminas\Validator',
+    'Application',
+];
+</code></pre>
+
+</details>
+
+
+    
 
 
 
@@ -748,6 +885,12 @@
                 
     <li class="subnavigation__list-item ">
         <a href="../validators/between/" class="subnavigation__link">Between</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../validators/bic/" class="subnavigation__link">BIC</a>
     </li>
 
             
@@ -1124,7 +1267,7 @@
                         <h4 class="footer__headline">License</h4>
                         <p>
                             Code licensed under <a
-                                href="https://github.com/laminas/laminas-validatorblob/master/LICENSE.md">BSD 3-Clause</a>.
+                                href="https://github.com/laminas/laminas-validator/blob/-/LICENSE.md">BSD 3-Clause</a>.
                         </p>
                     </div>
 
@@ -1133,7 +1276,7 @@
                         <h4 class="footer__headline">Copyright</h4>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
-                            <a href="https://github.com/laminas/laminas-validatorgraphs/contributors">contributors</a>.<br>-->
+                            <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
                             &copy; 2022 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>

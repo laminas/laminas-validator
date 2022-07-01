@@ -211,6 +211,12 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../bic/" class="subnavigation__link">BIC</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../callback/" class="subnavigation__link">Callback</a>
     </li>
 
@@ -648,14 +654,6 @@ This allows you to validate if a form submission originated from the same site, 
 <p>The typical mitigation is to create a one-time token that is transmitted as part of the original form, and which must then be transmitted back by the client.
 This token expires after first submission or after a short amount of time, preventing replays or further submissions.
 If the token provided does not match what was originally sent, an error should be returned.</p>
-<!-- markdownlint-disable-next-line MD001 -->
-<blockquote>
-<h3 id="installation-requirements">Installation Requirements</h3>
-<p>The CSRF validator depends on <a href="https://docs.laminas.dev/laminas-math/">laminas-math</a> to generate the hash and on <a href="https://docs.laminas.dev/laminas-session/">laminas-session</a> to persist the generated token between requests.
-Consequently, both components must be installed before the validator can be used.
-To install both components, run the following command.</p>
-<pre class="highlight"><code class="language-bash">composer require laminas/laminas-math laminas/laminas-session</code></pre>
-</blockquote>
 <h2 id="supported-options">Supported Options</h2>
 <p>The following options are supported for <code>Laminas\Validator\Csrf</code>.</p>
 <div class="table-responsive"><table>
@@ -847,6 +845,12 @@ echo ($validator-&gt;isValid($hash))
                 
     <li class="subnavigation__list-item ">
         <a href="../between/" class="subnavigation__link">Between</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../bic/" class="subnavigation__link">BIC</a>
     </li>
 
             
@@ -1223,7 +1227,7 @@ echo ($validator-&gt;isValid($hash))
                         <h4 class="footer__headline">License</h4>
                         <p>
                             Code licensed under <a
-                                href="https://github.com/laminas/laminas-validatorblob/master/LICENSE.md">BSD 3-Clause</a>.
+                                href="https://github.com/laminas/laminas-validator/blob/-/LICENSE.md">BSD 3-Clause</a>.
                         </p>
                     </div>
 
@@ -1232,7 +1236,7 @@ echo ($validator-&gt;isValid($hash))
                         <h4 class="footer__headline">Copyright</h4>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
-                            <a href="https://github.com/laminas/laminas-validatorgraphs/contributors">contributors</a>.<br>-->
+                            <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
                             &copy; 2022 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
