@@ -80,7 +80,7 @@ class ValidatorChain implements
      * Set plugin manager instance
      *
      * @param  ValidatorPluginManager $plugins Plugin manager
-     * @psalm-assert ValidatorPluginManager $this->plugins
+     * @psalm-assert ValidatorPluginManager $plugins
      * @return $this
      */
     public function setPluginManager(ValidatorPluginManager $plugins)
