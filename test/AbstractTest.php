@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\AbstractValidator;
@@ -84,7 +86,7 @@ class AbstractTest extends TestCase
         $this->assertFalse($this->validator->isValid('bar'));
         $messages = $this->validator->getMessages();
         $this->assertArrayHasKey('fooMessage', $messages);
-        $this->assertStringContainsString('bar', $messages['fooMessage'], var_export($messages, 1));
+        $this->assertStringContainsString('bar', $messages['fooMessage'], var_export($messages, true));
         $this->assertStringContainsString('This is the translated message for ', $messages['fooMessage']);
     }
 

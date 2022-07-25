@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LaminasTest\Validator\File;
 
 use LaminasTest\Validator\File\TestAsset\FileInformation;

@@ -6,7 +6,7 @@
 /.laminas-ci.json export-ignore
 /.psr-container.php.stub export-ignore
 /mkdocs.yml export-ignore
-/phpcs.xml.dist export-ignore
+/phpcs.xml export-ignore
 /phpunit.xml.dist export-ignore
 /psalm-baseline.xml export-ignore
 /psalm.xml.dist export-ignore
