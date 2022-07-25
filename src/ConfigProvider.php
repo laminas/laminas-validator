@@ -28,7 +28,7 @@ class ConfigProvider
                 'ValidatorManager' => ValidatorPluginManager::class,
 
                 // Legacy Zend Framework aliases
-                \Zend\Validator\ValidatorPluginManager::class => ValidatorPluginManager::class,
+                'Zend\Validator\ValidatorPluginManager' => ValidatorPluginManager::class,
             ],
             'factories' => [
                 ValidatorPluginManager::class => ValidatorPluginManagerFactory::class,

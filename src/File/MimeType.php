@@ -276,6 +276,7 @@ class MimeType extends AbstractValidator
      *
      * @param  bool $asArray Returns the values as array, when false a concatenated string is returned
      * @return string|array
+     * @psalm-return ($asArray is true ? list<string> : string)
      */
     public function getMimeType($asArray = false)
     {
