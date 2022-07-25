@@ -10,7 +10,7 @@
     <arg name="parallel" value="80"/>
 
     <!-- Show progress -->
-    <arg value="p"/>
+    <arg value="ps"/>
 
     <!-- Paths to check -->
     <file>src</file>
@@ -23,5 +23,9 @@
     <rule ref="Generic.Files.LineLength.TooLong">
         <exclude-pattern>src/BusinessIdentifierCode.php</exclude-pattern>
         <exclude-pattern>test/HostnameTest.php</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing">
+        <exclude-pattern>src/</exclude-pattern>
     </rule>
 </ruleset>

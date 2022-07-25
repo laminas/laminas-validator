@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.23.0@f1fe6ff483bf325c803df9f510d09a03fd796f88">
+<files psalm-version="4.24.0@06dd975cb55d36af80f242561738f16c5f58264f">
   <file src="bin/update_hostname_validator.php">
     <MissingClosureParamType occurrences="2">
       <code>$domain</code>
@@ -906,19 +906,12 @@
       <code>$this-&gt;type</code>
       <code>$this-&gt;type</code>
     </MixedArgument>
-    <MixedAssignment occurrences="2">
-      <code>$mime</code>
+    <MixedAssignment occurrences="1">
       <code>$this-&gt;type</code>
     </MixedAssignment>
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$value</code>
     </MoreSpecificImplementedParamType>
-    <PossiblyInvalidArgument occurrences="1">
-      <code>$mimetype</code>
-    </PossiblyInvalidArgument>
-    <PossiblyInvalidIterator occurrences="1">
-      <code>$mimetype</code>
-    </PossiblyInvalidIterator>
     <PossiblyNullPropertyAssignmentValue occurrences="1">
       <code>null</code>
     </PossiblyNullPropertyAssignmentValue>
@@ -1229,13 +1222,8 @@
       <code>static::NOT_DETECTED</code>
       <code>static::NOT_READABLE</code>
     </MixedArgument>
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$mimetypes</code>
-    </MixedArgumentTypeCoercion>
-    <MixedAssignment occurrences="4">
+    <MixedAssignment occurrences="2">
       <code>$file</code>
-      <code>$mime</code>
-      <code>$mt</code>
       <code>$this-&gt;type</code>
     </MixedAssignment>
     <MixedInferredReturnType occurrences="3">
@@ -1252,14 +1240,9 @@
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$value</code>
     </MoreSpecificImplementedParamType>
-    <PossiblyInvalidArgument occurrences="3">
-      <code>$mimetype</code>
-      <code>$mimetypes</code>
+    <PossiblyInvalidArgument occurrences="1">
       <code>$options</code>
     </PossiblyInvalidArgument>
-    <PossiblyInvalidIterator occurrences="1">
-      <code>$mimetype</code>
-    </PossiblyInvalidIterator>
     <PossiblyNullPropertyAssignmentValue occurrences="2">
       <code>null</code>
       <code>null</code>
@@ -1268,8 +1251,7 @@
       <code>$finfo</code>
       <code>$type</code>
     </PropertyNotSetInConstructor>
-    <RedundantCastGivenDocblockType occurrences="3">
-      <code>(bool) $asArray</code>
+    <RedundantCastGivenDocblockType occurrences="2">
       <code>(bool) $disable</code>
       <code>(bool) $headerCheck</code>
     </RedundantCastGivenDocblockType>
@@ -2667,9 +2649,6 @@
     <InvalidArgument occurrences="1">
       <code>1</code>
     </InvalidArgument>
-    <InvalidScalarArgument occurrences="1">
-      <code>123</code>
-    </InvalidScalarArgument>
     <NullArgument occurrences="1">
       <code>null</code>
     </NullArgument>
@@ -2705,11 +2684,7 @@
     <ArgumentTypeCoercion occurrences="1">
       <code>$classOrInstance</code>
     </ArgumentTypeCoercion>
-    <InvalidArgument occurrences="2">
-      <code>$this-&gt;httpClient</code>
-      <code>$this-&gt;httpRequest</code>
-    </InvalidArgument>
-    <InvalidPropertyAssignmentValue occurrences="3"/>
+    <InvalidPropertyAssignmentValue occurrences="1"/>
     <MixedArgument occurrences="2"/>
     <MixedInferredReturnType occurrences="2">
       <code>array</code>
