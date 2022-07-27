@@ -121,17 +121,17 @@ class CountTest extends TestCase
     public function testSetMax()
     {
         $validator = new File\Count(['min' => 1000, 'max' => 10000]);
-        $validator->setMax(1000000);
-        $this->assertEquals(1000000, $validator->getMax());
+        $validator->setMax(1_000_000);
+        $this->assertEquals(1_000_000, $validator->getMax());
 
         $validator->setMin(100);
-        $this->assertEquals(1000000, $validator->getMax());
+        $this->assertEquals(1_000_000, $validator->getMax());
     }
 
     public function testCanSetMaxValueUsingAnArrayWithMaxKey(): void
     {
         $validator   = new File\Count(['min' => 1000, 'max' => 10000]);
-        $maxValue    = 33333333;
+        $maxValue    = 33_333_333;
         $setMaxArray = ['max' => $maxValue];
 
         $validator->setMax($setMaxArray);

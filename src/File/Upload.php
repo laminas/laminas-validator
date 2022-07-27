@@ -2,7 +2,6 @@
 
 namespace Laminas\Validator\File;
 
-use Countable;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception;
 use Psr\Http\Message\UploadedFileInterface;
@@ -12,6 +11,7 @@ use function array_key_exists;
 use function array_merge;
 use function count;
 use function is_array;
+use function is_countable;
 use function is_string;
 use function is_uploaded_file;
 
@@ -117,7 +117,7 @@ class Upload extends AbstractValidator
     {
         if (
             null === $files
-            || ((is_array($files) || $files instanceof Countable)
+            || ((is_countable($files))
                 && count($files) === 0)
         ) {
             $this->options['files'] = $_FILES;

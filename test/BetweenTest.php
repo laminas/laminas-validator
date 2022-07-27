@@ -150,14 +150,14 @@ class BetweenTest extends TestCase
             ],
             'inclusive-int-invalid-string'           => [
                 'min'       => 0,
-                'max'       => 99999999,
+                'max'       => 99_999_999,
                 'inclusive' => true,
                 'expected'  => false,
                 'value'     => 'asdasd',
             ],
             'inclusive-int-invalid-char'             => [
                 'min'       => 0,
-                'max'       => 99999999,
+                'max'       => 99_999_999,
                 'inclusive' => true,
                 'expected'  => false,
                 'value'     => 'q',

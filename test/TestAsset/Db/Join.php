@@ -34,10 +34,8 @@ class Join implements Iterator, Countable
 
     /**
      * Current iterator position.
-     *
-     * @var int
      */
-    private $position = 0;
+    private int $position = 0;
 
     /**
      * JOIN specifications
@@ -129,7 +127,7 @@ class Join implements Iterator, Countable
             'name'    => $name,
             'on'      => $on,
             'columns' => $columns,
-            'type'    => $type ? $type : self::JOIN_INNER,
+            'type'    => $type ?: self::JOIN_INNER,
         ];
 
         return $this;

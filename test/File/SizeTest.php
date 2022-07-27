@@ -159,7 +159,7 @@ class SizeTest extends TestCase
         $validator = new File\Size(['max' => 0, 'useByteString' => true]);
         $this->assertEquals('0B', $validator->getMax());
 
-        $validator->setMax(1000000);
+        $validator->setMax(1_000_000);
         $this->assertEquals('976.56kB', $validator->getMax());
 
         $validator->setMin(100);

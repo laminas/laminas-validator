@@ -23,10 +23,8 @@ class Between extends AbstractValidator
 
     /**
      * Retain if min and max are numeric values. Allow to not compare string and numeric types
-     *
-     * @var boolean
      */
-    private $numeric;
+    private ?bool $numeric = null;
 
     /**
      * Validation failure message template definitions

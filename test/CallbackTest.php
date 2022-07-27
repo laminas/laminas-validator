@@ -90,9 +90,7 @@ class CallbackTest extends TestCase
     {
         $value     = 'bar';
         $context   = ['foo' => 'bar', 'bar' => 'baz'];
-        $validator = new Callback(function ($v, $c) use ($value, $context) {
-            return ($value === $v) && ($context === $c);
-        });
+        $validator = new Callback(static fn($v, $c) => ($value === $v) && ($context === $c));
         $this->assertTrue($validator->isValid($value, $context));
     }
 
@@ -101,9 +99,10 @@ class CallbackTest extends TestCase
         $value     = 'bar';
         $context   = ['foo' => 'bar', 'bar' => 'baz'];
         $options   = ['baz' => 'bat'];
-        $validator = new Callback(function ($v, $c, $baz) use ($value, $context, $options) {
-            return ($value === $v) && ($context === $c) && ($options['baz'] === $baz);
-        });
+        $validator = new Callback(
+            static fn($v, $c, $baz) => ($value === $v)
+            && ($context === $c) && ($options['baz'] === $baz)
+        );
         $validator->setCallbackOptions($options);
         $this->assertTrue($validator->isValid($value, $context));
     }

@@ -73,9 +73,7 @@ class ValidatorPluginManagerFactoryTest extends TestCase
                     'test' => Digits::class,
                 ],
                 'factories' => [
-                    'test-too' => function ($container) use ($validator): ValidatorInterface {
-                        return $validator;
-                    },
+                    'test-too' => static fn($container): ValidatorInterface => $validator,
                 ],
             ],
         ];

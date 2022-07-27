@@ -25,7 +25,6 @@ use function in_array;
 use function is_array;
 use function max;
 use function min;
-use function pow;
 use function preg_match;
 use function sprintf;
 use function strpos;
@@ -463,7 +462,7 @@ class DateStep extends Date
 
         // If we use PHP_INT_MAX DateInterval::__construct falls over with a bad format error
         // before we reach the max on 64 bit machines
-        $maxInteger = min(pow(2, 31), PHP_INT_MAX);
+        $maxInteger = min(2 ** 31, PHP_INT_MAX);
         // check for integer overflow and split $minimum interval if needed
         $maximumInterval        = max($intervalParts);
         $requiredStepIterations = 1;

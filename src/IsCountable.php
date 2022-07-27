@@ -2,11 +2,11 @@
 
 namespace Laminas\Validator;
 
-use Countable;
 use Traversable;
 
 use function count;
 use function is_array;
+use function is_countable;
 use function is_numeric;
 use function sprintf;
 use function ucfirst;
@@ -94,7 +94,7 @@ class IsCountable extends AbstractValidator
      */
     public function isValid($value)
     {
-        if (! (is_array($value) || $value instanceof Countable)) {
+        if (! is_countable($value)) {
             $this->error(self::NOT_COUNTABLE);
             return false;
         }
