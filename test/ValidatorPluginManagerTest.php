@@ -67,9 +67,7 @@ class ValidatorPluginManagerTest extends TestCase
         try {
             /** @psalm-suppress InvalidArgument */
             $this->validators->setService('test', $this);
-        } catch (InvalidServiceException $e) {
-            $this->assertStringContainsString(ValidatorInterface::class, $e->getMessage());
-        } catch (RuntimeException $e) {
+        } catch (InvalidServiceException | RuntimeException $e) {
             $this->assertStringContainsString(ValidatorInterface::class, $e->getMessage());
         } catch (Exception $e) {
             $this->fail(sprintf(
@@ -84,9 +82,7 @@ class ValidatorPluginManagerTest extends TestCase
         $this->validators->setInvokableClass('test', static::class);
         try {
             $this->validators->get('test');
-        } catch (InvalidServiceException $e) {
-            $this->assertStringContainsString(ValidatorInterface::class, $e->getMessage());
-        } catch (RuntimeException $e) {
+        } catch (InvalidServiceException | RuntimeException $e) {
             $this->assertStringContainsString(ValidatorInterface::class, $e->getMessage());
         } catch (Exception $e) {
             $this->fail(sprintf(

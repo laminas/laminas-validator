@@ -1016,9 +1016,7 @@ class Uri implements UriInterface
 
         $regex   = '/(?:[^' . self::CHAR_UNRESERVED . self::CHAR_SUB_DELIMS . '%:]|%(?![A-Fa-f0-9]{2}))/';
         $escaper = static::getEscaper();
-        $replace = function ($match) use ($escaper) {
-            return $escaper->escapeUrl($match[0]);
-        };
+        $replace = static fn($match) => $escaper->escapeUrl($match[0]);
 
         return preg_replace_callback($regex, $replace, $userInfo);
     }
@@ -1044,9 +1042,7 @@ class Uri implements UriInterface
 
         $regex   = '/(?:[^' . self::CHAR_UNRESERVED . ')(:@&=\+\$,\/;%]+|%(?![A-Fa-f0-9]{2}))/';
         $escaper = static::getEscaper();
-        $replace = function ($match) use ($escaper) {
-            return $escaper->escapeUrl($match[0]);
-        };
+        $replace = static fn($match) => $escaper->escapeUrl($match[0]);
 
         return preg_replace_callback($regex, $replace, $path);
     }
@@ -1073,9 +1069,7 @@ class Uri implements UriInterface
 
         $regex   = '/(?:[^' . self::CHAR_UNRESERVED . self::CHAR_SUB_DELIMS . '%:@\/\?]+|%(?![A-Fa-f0-9]{2}))/';
         $escaper = static::getEscaper();
-        $replace = function ($match) use ($escaper) {
-            return $escaper->escapeUrl($match[0]);
-        };
+        $replace = static fn($match) => $escaper->escapeUrl($match[0]);
 
         return preg_replace_callback($regex, $replace, $input);
     }
@@ -1387,7 +1381,7 @@ class Uri implements UriInterface
      */
     protected static function decodeUrlEncodedChars($input, $allowed = '')
     {
-        $decodeCb = function ($match) use ($allowed) {
+        $decodeCb = static function ($match) use ($allowed) {
             $char = rawurldecode($match[0]);
             if (preg_match($allowed, $char)) {
                 return $char;

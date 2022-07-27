@@ -139,11 +139,11 @@ class WordCountTest extends TestCase
     public function testSetMax()
     {
         $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
-        $validator->setMax(1000000);
-        $this->assertEquals(1000000, $validator->getMax());
+        $validator->setMax(1_000_000);
+        $this->assertEquals(1_000_000, $validator->getMax());
 
         $validator->setMin(100);
-        $this->assertEquals(1000000, $validator->getMax());
+        $this->assertEquals(1_000_000, $validator->getMax());
     }
 
     /**
@@ -216,7 +216,7 @@ class WordCountTest extends TestCase
     public function testCanSetMaxValueUsingOptionsArray(): void
     {
         $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
-        $maxValue  = 33333333;
+        $maxValue  = 33_333_333;
         $options   = ['max' => $maxValue];
 
         $validator->setMax($options);

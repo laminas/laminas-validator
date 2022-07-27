@@ -13,8 +13,7 @@ use stdClass;
  */
 final class UuidTest extends TestCase
 {
-    /** @var Uuid */
-    protected $validator;
+    protected Uuid $validator;
 
     protected function setUp(): void
     {

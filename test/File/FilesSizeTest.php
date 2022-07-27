@@ -161,7 +161,7 @@ class FilesSizeTest extends TestCase
     public function testSetMax()
     {
         $validator = new File\FilesSize(['min' => 1000, 'max' => 10000]);
-        $validator->setMax(1000000);
+        $validator->setMax(1_000_000);
         $this->assertEquals('976.56kB', $validator->getMax());
 
         $validator->setMin(100);

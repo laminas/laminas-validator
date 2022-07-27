@@ -12,7 +12,6 @@ use ReflectionProperty;
 
 use function basename;
 use function current;
-use function dirname;
 use function extension_loaded;
 use function getenv;
 use function is_array;
@@ -240,7 +239,7 @@ class MimeTypeTest extends TestCase
         $files = [
             'name'      => 'picture.jpg',
             'size'      => 200,
-            'tmp_name'  => dirname(__FILE__) . '/_files/picture.jpg',
+            'tmp_name'  => __DIR__ . '/_files/picture.jpg',
             'error'     => 0,
             'magicFile' => false,
         ];

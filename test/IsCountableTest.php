@@ -12,6 +12,8 @@ use stdClass;
 
 use function json_encode;
 
+use const JSON_THROW_ON_ERROR;
+
 class IsCountableTest extends TestCase
 {
     /**
@@ -66,7 +68,7 @@ class IsCountableTest extends TestCase
             'max' => 10,
         ]);
 
-        $this->assertTrue($sut->isValid(['Foo']), json_encode($sut->getMessages()));
+        $this->assertTrue($sut->isValid(['Foo']), json_encode($sut->getMessages(), JSON_THROW_ON_ERROR));
         $this->assertCount(0, $sut->getMessages());
     }
 
@@ -74,7 +76,7 @@ class IsCountableTest extends TestCase
     {
         $sut = new IsCountable();
 
-        $this->assertTrue($sut->isValid(new SplQueue()), json_encode($sut->getMessages()));
+        $this->assertTrue($sut->isValid(new SplQueue()), json_encode($sut->getMessages(), JSON_THROW_ON_ERROR));
         $this->assertCount(0, $sut->getMessages());
     }
 

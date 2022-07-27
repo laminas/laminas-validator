@@ -39,13 +39,9 @@ final class UndisclosedPassword extends AbstractValidator
         self::NOT_A_STRING      => 'The provided password is not a string, please provide a correct password',
     ];
 
-    // phpcs:enable
+    private ClientInterface $httpClient;
 
-    /** @var ClientInterface */
-    private $httpClient;
-
-    /** @var RequestFactoryInterface */
-    private $makeHttpRequest;
+    private RequestFactoryInterface $makeHttpRequest;
 
     public function __construct(ClientInterface $httpClient, RequestFactoryInterface $makeHttpRequest)
     {

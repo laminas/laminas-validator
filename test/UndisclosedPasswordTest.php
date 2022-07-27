@@ -7,16 +7,17 @@ namespace LaminasTest\Validator;
 use Exception;
 use Laminas\Validator\UndisclosedPassword;
 use LaminasTest\Validator\TestAsset\HttpClientException;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionClass;
 use stdClass;
 
-use function rand;
+use function assert;
+use function random_int;
 use function sha1;
 use function sprintf;
 use function strtoupper;
@@ -24,17 +25,13 @@ use function substr;
 
 class UndisclosedPasswordTest extends TestCase
 {
-    /** @var ClientInterface */
-    private $httpClient;
+    private ?MockObject $httpClient;
 
-    /** @var RequestInterface */
-    private $httpRequest;
+    private MockObject $httpRequest;
 
-    /** @var ResponseInterface */
-    private $httpResponse;
+    private MockObject $httpResponse;
 
-    /** @var UndisclosedPassword */
-    private $validator;
+    private UndisclosedPassword $validator;
 
     /**
      * @inheritDoc
@@ -134,9 +131,12 @@ class UndisclosedPasswordTest extends TestCase
                         'HIBP_K_ANONYMITY_HASH_RANGE_LENGTH',
                         UndisclosedPassword::class
                     ))),
-                    rand(0, 100000)
+                    random_int(0, 100000)
                 );
             });
+
+        assert($this->httpClient instanceof MockObject);
+
         $this->httpClient->method('sendRequest')
             ->willReturn($this->httpResponse);
 
@@ -163,9 +163,12 @@ class UndisclosedPasswordTest extends TestCase
                         'HIBP_K_ANONYMITY_HASH_RANGE_LENGTH',
                         UndisclosedPassword::class
                     ))),
-                    rand(0, 100000)
+                    random_int(0, 100000)
                 );
             });
+
+        assert($this->httpClient instanceof MockObject);
+
         $this->httpClient->method('sendRequest')
             ->willReturn($this->httpResponse);
 
@@ -183,6 +186,8 @@ class UndisclosedPasswordTest extends TestCase
      */
     public function testBreachedPasswordReturnErrorMessages($password): void
     {
+        assert($this->httpClient instanceof MockObject);
+
         $this->httpClient->method('sendRequest')
             ->will($this->throwException(new Exception('foo')));
 
@@ -213,6 +218,9 @@ class UndisclosedPasswordTest extends TestCase
     {
         $clientException = $this->getMockBuilder(HttpClientException::class)
             ->getMock();
+
+        assert($this->httpClient instanceof MockObject);
+
         $this->httpClient->method('sendRequest')
             ->will($this->throwException($clientException));
 
