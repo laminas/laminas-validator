@@ -232,13 +232,13 @@ class ValidatorChainTest extends TestCase
     public function testCanAttachMultipleValidatorsOfTheSameTypeAsDiscreteInstances(): void
     {
         $this->validator->attachByName('Callback', [
-            'callback' => static fn($value) => true,
+            'callback' => static fn($value): bool => true,
             'messages' => [
                 'callbackValue' => 'This should not be seen in the messages',
             ],
         ]);
         $this->validator->attachByName('Callback', [
-            'callback' => static fn($value) => false,
+            'callback' => static fn($value): bool => false,
             'messages' => [
                 'callbackValue' => 'Second callback trapped',
             ],
