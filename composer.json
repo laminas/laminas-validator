@@ -36,7 +36,7 @@
         "laminas/laminas-stdlib": "^3.10"
     },
     "require-dev": {
-        "laminas/laminas-coding-standard": "~2.3.0",
+        "laminas/laminas-coding-standard": "^2.4.0",
         "laminas/laminas-db": "^2.7",
         "laminas/laminas-filter": "^2.14.0",
         "laminas/laminas-http": "^2.14.2",
