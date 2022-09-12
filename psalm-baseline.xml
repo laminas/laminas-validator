@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.24.0@06dd975cb55d36af80f242561738f16c5f58264f">
+<files psalm-version="4.26.0@6998fabb2bf528b65777bf9941920888d23c03ac">
   <file src="bin/update_hostname_validator.php">
     <MissingClosureParamType occurrences="2">
       <code>$domain</code>
@@ -579,6 +579,9 @@
     <PossiblyUndefinedVariable occurrences="1">
       <code>$temp</code>
     </PossiblyUndefinedVariable>
+    <TypeDoesNotContainType occurrences="1">
+      <code>$errors === false</code>
+    </TypeDoesNotContainType>
   </file>
   <file src="src/DateStep.php">
     <ArgumentTypeCoercion occurrences="1">
@@ -1431,7 +1434,7 @@
     </PossiblyNullArgument>
     <RedundantConditionGivenDocblockType occurrences="3">
       <code>$file !== null</code>
-      <code>is_array($files)</code>
+      <code>is_countable($files)</code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/File/UploadFile.php">
@@ -2045,9 +2048,6 @@
       <code>[$this, 'errorHandlerIgnore']</code>
       <code>[$this, 'errorHandlerIgnore']</code>
     </InvalidArgument>
-    <InvalidScalarArgument occurrences="1">
-      <code>1</code>
-    </InvalidScalarArgument>
     <MixedArgument occurrences="2">
       <code>$message</code>
       <code>$options</code>
@@ -2059,9 +2059,6 @@
       <code>null</code>
       <code>null</code>
     </NullArgument>
-    <PossiblyNullArgument occurrences="1">
-      <code>var_export($messages, 1)</code>
-    </PossiblyNullArgument>
   </file>
   <file src="test/BarcodeTest.php">
     <ArgumentTypeCoercion occurrences="1">
@@ -2167,9 +2164,6 @@
       <code>'users'</code>
       <code>'users'</code>
     </InvalidArgument>
-    <UndefinedPropertyAssignment occurrences="1">
-      <code>$mockHasResultRow-&gt;one</code>
-    </UndefinedPropertyAssignment>
   </file>
   <file src="test/Db/RecordExistsTest.php">
     <DeprecatedMethod occurrences="2">
@@ -2188,9 +2182,6 @@
     <PossiblyNullReference occurrences="1">
       <code>$parameters</code>
     </PossiblyNullReference>
-    <UndefinedPropertyAssignment occurrences="1">
-      <code>$mockHasResultRow-&gt;one</code>
-    </UndefinedPropertyAssignment>
   </file>
   <file src="test/Db/TestAsset/ConcreteDbValidator.php">
     <PropertyNotSetInConstructor occurrences="2">
@@ -2684,31 +2675,11 @@
     <ArgumentTypeCoercion occurrences="1">
       <code>$classOrInstance</code>
     </ArgumentTypeCoercion>
-    <InvalidPropertyAssignmentValue occurrences="1"/>
     <MixedArgument occurrences="2"/>
     <MixedInferredReturnType occurrences="2">
       <code>array</code>
       <code>array</code>
     </MixedInferredReturnType>
-    <MixedMethodCall occurrences="6">
-      <code>will</code>
-      <code>will</code>
-      <code>willReturn</code>
-      <code>willReturn</code>
-      <code>willReturnCallback</code>
-      <code>willReturnCallback</code>
-    </MixedMethodCall>
-    <PossiblyNullPropertyAssignmentValue occurrences="1">
-      <code>null</code>
-    </PossiblyNullPropertyAssignmentValue>
-    <UndefinedInterfaceMethod occurrences="6">
-      <code>method</code>
-      <code>method</code>
-      <code>method</code>
-      <code>method</code>
-      <code>method</code>
-      <code>method</code>
-    </UndefinedInterfaceMethod>
   </file>
   <file src="test/UriTest.php">
     <InvalidArgument occurrences="4">
