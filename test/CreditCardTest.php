@@ -44,10 +44,8 @@ class CreditCardTest extends TestCase
 
     /**
      * Ensures that getMessages() returns expected default value
-     *
-     * @return void
      */
-    public function testGetMessages()
+    public function testGetMessages(): void
     {
         $validator = new CreditCard();
         $this->assertEquals([], $validator->getMessages());
@@ -55,10 +53,8 @@ class CreditCardTest extends TestCase
 
     /**
      * Ensures that get and setType works as expected
-     *
-     * @return void
      */
-    public function testGetSetType()
+    public function testGetSetType(): void
     {
         $validator = new CreditCard();
         $this->assertCount(12, $validator->getType());
@@ -120,10 +116,8 @@ class CreditCardTest extends TestCase
 
     /**
      * Test non string input
-     *
-     * @return void
      */
-    public function testIsValidWithNonString()
+    public function testIsValidWithNonString(): void
     {
         $validator = new CreditCard(CreditCard::VISA);
         $this->assertFalse($validator->isValid(['something']));
@@ -300,10 +294,8 @@ class CreditCardTest extends TestCase
 
     /**
      * Test an invalid service class
-     *
-     * @return void
      */
-    public function testInvalidServiceClass()
+    public function testInvalidServiceClass(): void
     {
         $validator = new CreditCard();
         $this->assertEquals(null, $validator->getService());
@@ -315,10 +307,8 @@ class CreditCardTest extends TestCase
 
     /**
      * Test a config object
-     *
-     * @return void
      */
-    public function testTraversableObject()
+    public function testTraversableObject(): void
     {
         $options = ['type' => 'Visa'];
         $config  = new ArrayObject($options);
@@ -329,10 +319,8 @@ class CreditCardTest extends TestCase
 
     /**
      * Test optional parameters with config object
-     *
-     * @return void
      */
-    public function testOptionalConstructorParameterByTraversableObject()
+    public function testOptionalConstructorParameterByTraversableObject(): void
     {
         $config = new ArrayObject(
             ['type' => 'Visa', 'service' => [self::class, 'staticCallback']]
@@ -345,10 +333,8 @@ class CreditCardTest extends TestCase
 
     /**
      * Test optional constructor parameters
-     *
-     * @return void
      */
-    public function testOptionalConstructorParameter()
+    public function testOptionalConstructorParameter(): void
     {
         $validator = new CreditCard('Visa', [self::class, 'staticCallback']);
         $this->assertEquals(['Visa'], $validator->getType());

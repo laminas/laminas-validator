@@ -95,10 +95,8 @@ class MimeTypeTest extends TestCase
 
     /**
      * Ensures that getMimeType() returns expected value
-     *
-     * @return void
      */
-    public function testGetMimeType()
+    public function testGetMimeType(): void
     {
         $validator = new File\MimeType('image/gif');
         $this->assertEquals('image/gif', $validator->getMimeType());
@@ -112,10 +110,8 @@ class MimeTypeTest extends TestCase
 
     /**
      * Ensures that setMimeType() returns expected value
-     *
-     * @return void
      */
-    public function testSetMimeType()
+    public function testSetMimeType(): void
     {
         $validator = new File\MimeType('image/gif');
         $validator->setMimeType('image/jpeg');
@@ -133,10 +129,8 @@ class MimeTypeTest extends TestCase
 
     /**
      * Ensures that addMimeType() returns expected value
-     *
-     * @return void
      */
-    public function testAddMimeType()
+    public function testAddMimeType(): void
     {
         $validator = new File\MimeType('image/gif');
         $validator->addMimeType('text');

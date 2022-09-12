@@ -21,9 +21,8 @@ class RegexTest extends TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider basicDataProvider
-     * @return void
      */
-    public function testBasic(array $options, string $input, bool $expected)
+    public function testBasic(array $options, string $input, bool $expected): void
     {
         $validator = new Regex(...$options);
         $this->assertSame($expected, $validator->isValid($input));
@@ -61,10 +60,8 @@ class RegexTest extends TestCase
 
     /**
      * Ensures that getMessages() returns expected default value
-     *
-     * @return void
      */
-    public function testGetMessages()
+    public function testGetMessages(): void
     {
         $validator = new Regex('/./');
         $this->assertEquals([], $validator->getMessages());
@@ -72,10 +69,8 @@ class RegexTest extends TestCase
 
     /**
      * Ensures that getPattern() returns expected value
-     *
-     * @return void
      */
-    public function testGetPattern()
+    public function testGetPattern(): void
     {
         $validator = new Regex('/./');
         $this->assertEquals('/./', $validator->getPattern());
@@ -83,10 +78,8 @@ class RegexTest extends TestCase
 
     /**
      * Ensures that a bad pattern results in a thrown exception upon isValid() call
-     *
-     * @return void
      */
-    public function testBadPattern()
+    public function testBadPattern(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Internal error parsing');

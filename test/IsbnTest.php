@@ -50,10 +50,8 @@ class IsbnTest extends TestCase
 
     /**
      * Ensures that setSeparator() works as expected
-     *
-     * @return void
      */
-    public function testType()
+    public function testType(): void
     {
         $validator = new Isbn();
 
@@ -73,10 +71,8 @@ class IsbnTest extends TestCase
 
     /**
      * Ensures that setSeparator() works as expected
-     *
-     * @return void
      */
-    public function testSeparator()
+    public function testSeparator(): void
     {
         $validator = new Isbn();
 
@@ -96,10 +92,8 @@ class IsbnTest extends TestCase
 
     /**
      * Ensures that __construct() works as expected
-     *
-     * @return void
      */
-    public function testInitialization()
+    public function testInitialization(): void
     {
         $options   = [
             'type'      => Isbn::AUTO,
@@ -128,10 +122,8 @@ class IsbnTest extends TestCase
 
     /**
      * Ensures that the validator follows expected behavior
-     *
-     * @return void
      */
-    public function testTypeAuto()
+    public function testTypeAuto(): void
     {
         $validator = new Isbn();
 

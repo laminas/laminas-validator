@@ -66,10 +66,8 @@ class CountTest extends TestCase
 
     /**
      * Ensures that getMin() returns expected value
-     *
-     * @return void
      */
-    public function testGetMin()
+    public function testGetMin(): void
     {
         $validator = new File\Count(['min' => 1, 'max' => 5]);
         $this->assertEquals(1, $validator->getMin());
@@ -84,10 +82,8 @@ class CountTest extends TestCase
 
     /**
      * Ensures that setMin() returns expected value
-     *
-     * @return void
      */
-    public function testSetMin()
+    public function testSetMin(): void
     {
         $validator = new File\Count(['min' => 1000, 'max' => 10000]);
         $validator->setMin(100);
@@ -100,10 +96,8 @@ class CountTest extends TestCase
 
     /**
      * Ensures that getMax() returns expected value
-     *
-     * @return void
      */
-    public function testGetMax()
+    public function testGetMax(): void
     {
         $validator = new File\Count(['min' => 1, 'max' => 100]);
         $this->assertEquals(100, $validator->getMax());
@@ -115,10 +109,8 @@ class CountTest extends TestCase
 
     /**
      * Ensures that setMax() returns expected value
-     *
-     * @return void
      */
-    public function testSetMax()
+    public function testSetMax(): void
     {
         $validator = new File\Count(['min' => 1000, 'max' => 10000]);
         $validator->setMax(1_000_000);

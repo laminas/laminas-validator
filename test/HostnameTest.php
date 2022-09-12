@@ -48,9 +48,8 @@ class HostnameTest extends TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider basicDataProvider
-     * @return void
      */
-    public function testBasic(int $option, bool $expected, string $hostname)
+    public function testBasic(int $option, bool $expected, string $hostname): void
     {
         $validator = new Hostname($option);
         self::assertSame($expected, $validator->isValid($hostname));
@@ -87,9 +86,8 @@ class HostnameTest extends TestCase
 
     /**
      * @dataProvider combinationDataProvider
-     * @return void
      */
-    public function testCombination(int $option, bool $expected, string $hostname)
+    public function testCombination(int $option, bool $expected, string $hostname): void
     {
         $validator = new Hostname($option);
         self::assertSame($expected, $validator->isValid($hostname));
@@ -176,10 +174,8 @@ class HostnameTest extends TestCase
 
     /**
      * Ensures that getMessages() returns expected default value
-     *
-     * @return void
      */
-    public function testGetMessages()
+    public function testGetMessages(): void
     {
         self::assertSame([], $this->validator->getMessages());
     }
@@ -310,10 +306,8 @@ class HostnameTest extends TestCase
 
     /**
      * Ensures that getAllow() returns expected default value
-     *
-     * @return void
      */
-    public function testGetAllow()
+    public function testGetAllow(): void
     {
         self::assertSame(Hostname::ALLOW_DNS, $this->validator->getAllow());
     }

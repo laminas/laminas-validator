@@ -19,8 +19,8 @@ class BetweenTest extends TestCase
 {
     /**
      * @psalm-return array<string, array{
-     *     min: int,
-     *     max: int,
+     *     min: int|string,
+     *     max: int|string,
      *     inclusive: bool,
      *     expected: bool,
      *     value: int|float|string
@@ -185,12 +185,9 @@ class BetweenTest extends TestCase
      * @dataProvider providerBasic
      * @param int|float|string $min
      * @param int|float|string $max
-     * @param bool $inclusive
-     * @param bool $expected
      * @param mixed $value
-     * @return void
      */
-    public function testBasic($min, $max, $inclusive, $expected, $value)
+    public function testBasic($min, $max, bool $inclusive, bool $expected, $value): void
     {
         $validator = new Between(['min' => $min, 'max' => $max, 'inclusive' => $inclusive]);
 
@@ -203,10 +200,8 @@ class BetweenTest extends TestCase
 
     /**
      * Ensures that getMessages() returns expected default value
-     *
-     * @return void
      */
-    public function testGetMessages()
+    public function testGetMessages(): void
     {
         $validator = new Between(['min' => 1, 'max' => 10]);
         $this->assertEquals([], $validator->getMessages());
@@ -214,10 +209,8 @@ class BetweenTest extends TestCase
 
     /**
      * Ensures that getMin() returns expected value
-     *
-     * @return void
      */
-    public function testGetMin()
+    public function testGetMin(): void
     {
         $validator = new Between(['min' => 1, 'max' => 10]);
         $this->assertEquals(1, $validator->getMin());
@@ -225,10 +218,8 @@ class BetweenTest extends TestCase
 
     /**
      * Ensures that getMax() returns expected value
-     *
-     * @return void
      */
-    public function testGetMax()
+    public function testGetMax(): void
     {
         $validator = new Between(['min' => 1, 'max' => 10]);
         $this->assertEquals(10, $validator->getMax());
@@ -236,10 +227,8 @@ class BetweenTest extends TestCase
 
     /**
      * Ensures that getInclusive() returns expected default value
-     *
-     * @return void
      */
-    public function testGetInclusive()
+    public function testGetInclusive(): void
     {
         $validator = new Between(['min' => 1, 'max' => 10]);
         $this->assertEquals(true, $validator->getInclusive());

@@ -27,10 +27,8 @@ class MessageTest extends TestCase
     /**
      * Ensures that we can change a specified message template by its key
      * and that this message is returned when the input is invalid.
-     *
-     * @return void
      */
-    public function testSetMessage()
+    public function testSetMessage(): void
     {
         $inputInvalid = 'abcdefghij';
         $this->assertFalse($this->validator->isValid($inputInvalid));
@@ -52,10 +50,8 @@ class MessageTest extends TestCase
      * the first one in the list of message templates.
      * In the case of Laminas_Validate_StringLength, TOO_SHORT is
      * the one we should expect to change.
-     *
-     * @return void
      */
-    public function testSetMessageDefaultKey()
+    public function testSetMessageDefaultKey(): void
     {
         $this->validator->setMessage(
             'Your value is too short',
@@ -72,10 +68,8 @@ class MessageTest extends TestCase
     /**
      * Ensures that we can include the %value% parameter in the message,
      * and that it is substituted with the value we are validating.
-     *
-     * @return void
      */
-    public function testSetMessageWithValueParam()
+    public function testSetMessageWithValueParam(): void
     {
         $this->validator->setMessage(
             "Your value '%value%' is too long",
@@ -91,10 +85,8 @@ class MessageTest extends TestCase
     /**
      * Ensures that we can include the %length% parameter in the message,
      * and that it is substituted with the length of the value we are validating.
-     *
-     * @return void
      */
-    public function testSetMessageWithLengthParam()
+    public function testSetMessageWithLengthParam(): void
     {
         $this->validator->setMessage(
             "The length of your value is '%length%'",
@@ -111,10 +103,8 @@ class MessageTest extends TestCase
      * class-by-class basis, in the message string.
      * In the case of Laminas_Validate_StringLength, one such parameter
      * is %max%.
-     *
-     * @return void
      */
-    public function testSetMessageWithOtherParam()
+    public function testSetMessageWithOtherParam(): void
     {
         $this->validator->setMessage(
             'Your value is too long, it should be no longer than %max%',
@@ -131,10 +121,8 @@ class MessageTest extends TestCase
      * Ensures that if we set a parameter in the message that is not
      * known to the validator class, it is not changed; %shazam% is
      * left as literal text in the message.
-     *
-     * @return void
      */
-    public function testSetMessageWithUnknownParam()
+    public function testSetMessageWithUnknownParam(): void
     {
         $this->validator->setMessage(
             'Your value is too long, and btw, %shazam%!',
@@ -150,10 +138,8 @@ class MessageTest extends TestCase
     /**
      * Ensures that the validator throws an exception when we
      * try to set a message for a key that is unknown to the class.
-     *
-     * @return void
      */
-    public function testSetMessageExceptionInvalidKey()
+    public function testSetMessageExceptionInvalidKey(): void
     {
         $keyInvalid = 'invalidKey';
 
@@ -169,10 +155,8 @@ class MessageTest extends TestCase
      * Ensures that we can set more than one message at a time,
      * by passing an array of key/message pairs.  Both messages
      * should be defined.
-     *
-     * @return void
      */
-    public function testSetMessages()
+    public function testSetMessages(): void
     {
         $this->validator->setMessages(
             [
@@ -195,10 +179,8 @@ class MessageTest extends TestCase
      * that are permitted to be substituted in the message string.
      * The access is by the parameter name, not by the protected
      * property variable name.
-     *
-     * @return void
      */
-    public function testGetProperty()
+    public function testGetProperty(): void
     {
         $this->validator->setMessage(
             'Your value is too long',
@@ -219,10 +201,8 @@ class MessageTest extends TestCase
     /**
      * Ensures that the class throws an exception when we try to
      * access a property that doesn't exist as a parameter.
-     *
-     * @return void
      */
-    public function testGetPropertyException()
+    public function testGetPropertyException(): void
     {
         $this->validator->setMessage(
             'Your value is too long',

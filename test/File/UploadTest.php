@@ -21,10 +21,8 @@ class UploadTest extends TestCase
 
     /**
      * Ensures that the validator follows expected behavior
-     *
-     * @return void
      */
-    public function testBasic()
+    public function testBasic(): void
     {
         $_FILES = [
             'test'  => [
@@ -244,10 +242,8 @@ class UploadTest extends TestCase
 
     /**
      * Ensures that getFiles() returns expected value
-     *
-     * @return void
      */
-    public function testGetFiles()
+    public function testGetFiles(): void
     {
         $_FILES = [
             'test'  => [
@@ -336,10 +332,8 @@ class UploadTest extends TestCase
 
     /**
      * Ensures that setFiles() returns expected value
-     *
-     * @return void
      */
-    public function testSetFiles()
+    public function testSetFiles(): void
     {
         $files = [
             'test'  => [

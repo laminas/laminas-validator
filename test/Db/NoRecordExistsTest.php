@@ -105,10 +105,8 @@ class NoRecordExistsTest extends TestCase
 
     /**
      * Test basic function of RecordExists (no exclusion)
-     *
-     * @return void
      */
-    public function testBasicFindsRecord()
+    public function testBasicFindsRecord(): void
     {
         $validator = new NoRecordExists('users', 'field1', null, $this->getMockHasResult());
         $this->assertFalse($validator->isValid('value1'));
@@ -116,10 +114,8 @@ class NoRecordExistsTest extends TestCase
 
     /**
      * Test basic function of RecordExists (no exclusion)
-     *
-     * @return void
      */
-    public function testBasicFindsNoRecord()
+    public function testBasicFindsNoRecord(): void
     {
         $validator = new NoRecordExists('users', 'field1', null, $this->getMockNoResult());
         $this->assertTrue($validator->isValid('nosuchvalue'));
@@ -127,10 +123,8 @@ class NoRecordExistsTest extends TestCase
 
     /**
      * Test the exclusion function
-     *
-     * @return void
      */
-    public function testExcludeWithArray()
+    public function testExcludeWithArray(): void
     {
         $validator = new NoRecordExists(
             'users',
@@ -144,10 +138,8 @@ class NoRecordExistsTest extends TestCase
     /**
      * Test the exclusion function
      * with an array
-     *
-     * @return void
      */
-    public function testExcludeWithArrayNoRecord()
+    public function testExcludeWithArrayNoRecord(): void
     {
         $validator = new NoRecordExists(
             'users',
@@ -161,10 +153,8 @@ class NoRecordExistsTest extends TestCase
     /**
      * Test the exclusion function
      * with a string
-     *
-     * @return void
      */
-    public function testExcludeWithString()
+    public function testExcludeWithString(): void
     {
         $validator = new NoRecordExists('users', 'field1', 'id != 1', $this->getMockHasResult());
         $this->assertFalse($validator->isValid('value3'));
@@ -173,10 +163,8 @@ class NoRecordExistsTest extends TestCase
     /**
      * Test the exclusion function
      * with a string
-     *
-     * @return void
      */
-    public function testExcludeWithStringNoRecord()
+    public function testExcludeWithStringNoRecord(): void
     {
         $validator = new NoRecordExists('users', 'field1', 'id != 1', $this->getMockNoResult());
         $this->assertTrue($validator->isValid('nosuchvalue'));
@@ -185,10 +173,8 @@ class NoRecordExistsTest extends TestCase
     /**
      * Test that the class throws an exception if no adapter is provided
      * and no default is set.
-     *
-     * @return void
      */
-    public function testThrowsExceptionWithNoAdapter()
+    public function testThrowsExceptionWithNoAdapter(): void
     {
         $validator = new NoRecordExists('users', 'field1', 'id != 1');
         $this->expectException(RuntimeException::class);
@@ -198,10 +184,8 @@ class NoRecordExistsTest extends TestCase
 
     /**
      * Test that schemas are supported and run without error
-     *
-     * @return void
      */
-    public function testWithSchema()
+    public function testWithSchema(): void
     {
         $validator = new NoRecordExists([
             'table'  => 'users',
@@ -212,10 +196,8 @@ class NoRecordExistsTest extends TestCase
 
     /**
      * Test that schemas are supported and run without error
-     *
-     * @return void
      */
-    public function testWithSchemaNoResult()
+    public function testWithSchemaNoResult(): void
     {
         $validator = new NoRecordExists([
             'table'  => 'users',

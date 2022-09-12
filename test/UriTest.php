@@ -157,10 +157,8 @@ class UriTest extends TestCase
 
     /**
      * Ensures that getMessages() returns expected default value
-     *
-     * @return void
      */
-    public function testGetMessages()
+    public function testGetMessages(): void
     {
         self::assertSame([], $this->validator->getMessages());
     }

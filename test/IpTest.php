@@ -42,10 +42,8 @@ class IpTest extends TestCase
 
     /**
      * Ensures that the validator follows expected behavior
-     *
-     * @return void
      */
-    public function testBasic()
+    public function testBasic(): void
     {
         $this->assertTrue($this->validator->isValid('1.2.3.4'));
         $this->assertTrue($this->validator->isValid('10.0.0.1'));
@@ -356,10 +354,8 @@ class IpTest extends TestCase
 
     /**
      * Ensures that getMessages() returns expected default value
-     *
-     * @return void
      */
-    public function testGetMessages()
+    public function testGetMessages(): void
     {
         $this->assertEquals([], $this->validator->getMessages());
     }

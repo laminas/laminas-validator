@@ -139,10 +139,8 @@ class HashTest extends TestCase
 
     /**
      * Ensures that getHash() returns expected value
-     *
-     * @return void
      */
-    public function testgetHash()
+    public function testgetHash(): void
     {
         $validator = new File\Hash('12345');
         $this->assertEquals(['12345' => 'crc32'], $validator->getHash());
@@ -153,10 +151,8 @@ class HashTest extends TestCase
 
     /**
      * Ensures that setHash() returns expected value
-     *
-     * @return void
      */
-    public function testSetHash()
+    public function testSetHash(): void
     {
         $validator = new File\Hash('12345');
         $validator->setHash('12333');
@@ -168,10 +164,8 @@ class HashTest extends TestCase
 
     /**
      * Ensures that addHash() returns expected value
-     *
-     * @return void
      */
-    public function testAddHash()
+    public function testAddHash(): void
     {
         $validator = new File\Hash('12345');
         $validator->addHash('12344');

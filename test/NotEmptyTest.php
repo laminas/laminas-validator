@@ -28,10 +28,9 @@ class NotEmptyTest extends TestCase
      *
      * @param array $types Array of type strings or constants
      * @param integer $expected Expected value of calculated type
-     * @return void
      * @dataProvider constructorWithTypeArrayProvider
      */
-    public function testConstructorWithTypeArray($types, $expected)
+    public function testConstructorWithTypeArray($types, $expected): void
     {
         $validator = new NotEmpty($types);
         $this->assertEquals($expected, $validator->getType());
@@ -62,10 +61,9 @@ class NotEmptyTest extends TestCase
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
      * @group Laminas-6708
-     * @return void
      * @dataProvider basicProvider
      */
-    public function testBasic($value, $valid)
+    public function testBasic($value, $valid): void
     {
         $this->checkValidationValue($value, $valid);
     }
@@ -101,10 +99,9 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     * @return void
      * @dataProvider booleanProvider
      */
-    public function testOnlyBoolean($value, $valid)
+    public function testOnlyBoolean($value, $valid): void
     {
         $this->validator->setType(NotEmpty::BOOLEAN);
         $this->checkValidationValue($value, $valid);
@@ -139,10 +136,9 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     * @return void
      * @dataProvider integerOnlyProvider
      */
-    public function testOnlyInteger($value, $valid)
+    public function testOnlyInteger($value, $valid): void
     {
         $this->validator->setType(NotEmpty::INTEGER);
         $this->checkValidationValue($value, $valid);
@@ -177,10 +173,9 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     * @return void
      * @dataProvider floatOnlyProvider
      */
-    public function testOnlyFloat($value, $valid)
+    public function testOnlyFloat($value, $valid): void
     {
         $this->validator->setType(NotEmpty::FLOAT);
         $this->checkValidationValue($value, $valid);
@@ -215,10 +210,9 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     * @return void
      * @dataProvider stringOnlyProvider
      */
-    public function testOnlyString($value, $valid)
+    public function testOnlyString($value, $valid): void
     {
         $this->validator->setType(NotEmpty::STRING);
         $this->checkValidationValue($value, $valid);
@@ -253,10 +247,9 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     * @return void
      * @dataProvider zeroOnlyProvider
      */
-    public function testOnlyZero($value, $valid)
+    public function testOnlyZero($value, $valid): void
     {
         $this->validator->setType(NotEmpty::ZERO);
         $this->checkValidationValue($value, $valid);
@@ -291,10 +284,9 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     * @return void
      * @dataProvider arrayOnlyProvider
      */
-    public function testOnlyArray($value, $valid)
+    public function testOnlyArray($value, $valid): void
     {
         $this->validator->setType(NotEmpty::EMPTY_ARRAY);
         $this->checkValidationValue($value, $valid);
@@ -329,10 +321,9 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     * @return void
      * @dataProvider nullOnlyProvider
      */
-    public function testOnlyNull($value, $valid)
+    public function testOnlyNull($value, $valid): void
     {
         $this->validator->setType(NotEmpty::NULL);
         $this->checkValidationValue($value, $valid);
@@ -367,10 +358,9 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     * @return void
      * @dataProvider phpOnlyProvider
      */
-    public function testOnlyPHP($value, $valid)
+    public function testOnlyPHP($value, $valid): void
     {
         $this->validator->setType(NotEmpty::PHP);
         $this->checkValidationValue($value, $valid);
@@ -405,10 +395,9 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     * @return void
      * @dataProvider spaceOnlyProvider
      */
-    public function testOnlySpace($value, $valid)
+    public function testOnlySpace($value, $valid): void
     {
         $this->validator->setType(NotEmpty::SPACE);
         $this->checkValidationValue($value, $valid);
@@ -443,10 +432,9 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     * @return void
      * @dataProvider onlyAllProvider
      */
-    public function testOnlyAll($value, $valid)
+    public function testOnlyAll($value, $valid): void
     {
         $this->validator->setType(NotEmpty::ALL);
         $this->checkValidationValue($value, $valid);
@@ -481,10 +469,9 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     * @return void
      * @dataProvider arrayConstantNotationProvider
      */
-    public function testArrayConstantNotation($value, $valid)
+    public function testArrayConstantNotation($value, $valid): void
     {
         $this->validator = new NotEmpty([
             'type' => [
@@ -526,10 +513,9 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     * @return void
      * @dataProvider arrayConfigNotationProvider
      */
-    public function testArrayConfigNotation($value, $valid)
+    public function testArrayConfigNotation($value, $valid): void
     {
         $this->validator = new NotEmpty([
             'type' => [
@@ -572,10 +558,9 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     * @return void
      * @dataProvider multiConstantNotationProvider
      */
-    public function testMultiConstantNotation($value, $valid)
+    public function testMultiConstantNotation($value, $valid): void
     {
         $this->validator = new NotEmpty(
             NotEmpty::ZERO + NotEmpty::STRING + NotEmpty::BOOLEAN
@@ -589,10 +574,9 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     * @return void
      * @dataProvider multiConstantNotationProvider
      */
-    public function testMultiConstantBooleanOrNotation($value, $valid)
+    public function testMultiConstantBooleanOrNotation($value, $valid): void
     {
         $this->validator = new NotEmpty(
             NotEmpty::ZERO | NotEmpty::STRING | NotEmpty::BOOLEAN
@@ -630,10 +614,9 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     * @return void
      * @dataProvider stringNotationProvider
      */
-    public function testStringNotation($value, $valid)
+    public function testStringNotation($value, $valid): void
     {
         $this->validator = new NotEmpty([
             'type' => ['zero', 'string', 'boolean'],
@@ -672,10 +655,9 @@ class NotEmptyTest extends TestCase
      *
      * @param string  $string   Array of string type values
      * @param integer $expected Expected type setting value
-     * @return void
      * @dataProvider duplicateStringSettingProvider
      */
-    public function testStringNotationWithDuplicate($string, $expected)
+    public function testStringNotationWithDuplicate($string, $expected): void
     {
         $type = [$string, $string];
         $this->validator->setType($type);
@@ -713,10 +695,9 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     * @return void
      * @dataProvider singleStringNotationProvider
      */
-    public function testSingleStringConstructorNotation($value, $valid)
+    public function testSingleStringConstructorNotation($value, $valid): void
     {
         $this->validator = new NotEmpty(
             'boolean'
@@ -729,10 +710,9 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     * @return void
      * @dataProvider singleStringNotationProvider
      */
-    public function testSingleStringSetTypeNotation($value, $valid)
+    public function testSingleStringSetTypeNotation($value, $valid): void
     {
         $this->validator->setType('boolean');
         $this->checkValidationValue($value, $valid);
@@ -767,10 +747,9 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to test
      * @param boolean $valid Expected validity of value
-     * @return void
      * @dataProvider configObjectProvider
      */
-    public function testTraversableObject($value, $valid)
+    public function testTraversableObject($value, $valid): void
     {
         $options = ['type' => 'all'];
         $config  = new ArrayObject($options);
@@ -808,10 +787,8 @@ class NotEmptyTest extends TestCase
 
     /**
      * Ensures that the validator follows expected behavior
-     *
-     * @return void
      */
-    public function testSettingFalseType()
+    public function testSettingFalseType(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Unknown');
@@ -820,10 +797,8 @@ class NotEmptyTest extends TestCase
 
     /**
      * Ensures that the validator follows expected behavior
-     *
-     * @return void
      */
-    public function testGetType()
+    public function testGetType(): void
     {
         $this->assertEquals($this->validator->getDefaultType(), $this->validator->getType());
     }
@@ -838,10 +813,8 @@ class NotEmptyTest extends TestCase
 
     /**
      * Ensures that getMessages() returns expected default value
-     *
-     * @return void
      */
-    public function testGetMessages()
+    public function testGetMessages(): void
     {
         $this->assertEquals([], $this->validator->getMessages());
     }
@@ -869,10 +842,7 @@ class NotEmptyTest extends TestCase
         $this->assertStringContainsString("can't be empty", $messages['isEmpty']);
     }
 
-    /**
-     * @return void
-     */
-    public function testObjects()
+    public function testObjects(): void
     {
         $valid  = new NotEmpty(NotEmpty::STRING);
         $object = new stdClass();
@@ -883,10 +853,7 @@ class NotEmptyTest extends TestCase
         $this->assertTrue($valid->isValid($object));
     }
 
-    /**
-     * @return void
-     */
-    public function testStringObjects()
+    public function testStringObjects(): void
     {
         $valid = new NotEmpty(NotEmpty::STRING);
 

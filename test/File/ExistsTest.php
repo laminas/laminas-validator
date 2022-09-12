@@ -85,10 +85,8 @@ class ExistsTest extends TestCase
 
     /**
      * Ensures that getDirectory() returns expected value
-     *
-     * @return void
      */
-    public function testGetDirectory()
+    public function testGetDirectory(): void
     {
         $validator = new File\Exists('C:/temp');
         $this->assertEquals('C:/temp', $validator->getDirectory());
@@ -102,10 +100,8 @@ class ExistsTest extends TestCase
 
     /**
      * Ensures that setDirectory() returns expected value
-     *
-     * @return void
      */
-    public function testSetDirectory()
+    public function testSetDirectory(): void
     {
         $validator = new File\Exists('temp');
         $validator->setDirectory('gif');
@@ -123,10 +119,8 @@ class ExistsTest extends TestCase
 
     /**
      * Ensures that addDirectory() returns expected value
-     *
-     * @return void
      */
-    public function testAddDirectory()
+    public function testAddDirectory(): void
     {
         $validator = new File\Exists('temp');
         $validator->addDirectory('gif');

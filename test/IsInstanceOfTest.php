@@ -20,10 +20,8 @@ class IsInstanceOfTest extends TestCase
 {
     /**
      * Ensures that the validator follows expected behavior
-     *
-     * @return void
      */
-    public function testBasic()
+    public function testBasic(): void
     {
         $validator = new Validator\IsInstanceOf(DateTime::class);
         $this->assertTrue($validator->isValid(new DateTime())); // True
@@ -41,10 +39,8 @@ class IsInstanceOfTest extends TestCase
 
     /**
      * Ensures that getMessages() returns expected default value
-     *
-     * @return void
      */
-    public function testGetMessages()
+    public function testGetMessages(): void
     {
         $validator = new Validator\IsInstanceOf(DateTime::class);
         $this->assertEquals([], $validator->getMessages());
@@ -52,10 +48,8 @@ class IsInstanceOfTest extends TestCase
 
     /**
      * Ensures that getClassName() returns expected value
-     *
-     * @return void
      */
-    public function testGetClassName()
+    public function testGetClassName(): void
     {
         $validator = new Validator\IsInstanceOf(DateTime::class);
         $this->assertEquals(DateTime::class, $validator->getClassName());

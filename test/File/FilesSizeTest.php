@@ -98,10 +98,8 @@ class FilesSizeTest extends TestCase
 
     /**
      * Ensures that getMin() returns expected value
-     *
-     * @return void
      */
-    public function testGetMin()
+    public function testGetMin(): void
     {
         $validator = new File\FilesSize(['min' => 1, 'max' => 100]);
         $this->assertEquals('1B', $validator->getMin());
@@ -116,10 +114,8 @@ class FilesSizeTest extends TestCase
 
     /**
      * Ensures that setMin() returns expected value
-     *
-     * @return void
      */
-    public function testSetMin()
+    public function testSetMin(): void
     {
         $validator = new File\FilesSize(['min' => 1000, 'max' => 10000]);
         $validator->setMin(100);
@@ -132,10 +128,8 @@ class FilesSizeTest extends TestCase
 
     /**
      * Ensures that getMax() returns expected value
-     *
-     * @return void
      */
-    public function testGetMax()
+    public function testGetMax(): void
     {
         $validator = new File\FilesSize(['min' => 1, 'max' => 100]);
         $this->assertEquals('100B', $validator->getMax());
@@ -155,10 +149,8 @@ class FilesSizeTest extends TestCase
 
     /**
      * Ensures that setMax() returns expected value
-     *
-     * @return void
      */
-    public function testSetMax()
+    public function testSetMax(): void
     {
         $validator = new File\FilesSize(['min' => 1000, 'max' => 10000]);
         $validator->setMax(1_000_000);
@@ -177,10 +169,8 @@ class FilesSizeTest extends TestCase
 
     /**
      * Ensures that the validator returns size infos
-     *
-     * @return void
      */
-    public function testFailureMessage()
+    public function testFailureMessage(): void
     {
         $validator = new File\FilesSize(['min' => 9999, 'max' => 10000]);
         $this->assertFalse($validator->isValid([
