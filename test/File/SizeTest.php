@@ -84,12 +84,12 @@ class SizeTest extends TestCase
      */
     public function testLegacy($options, $isValidParam, bool $expected): void
     {
-        if (is_array($isValidParam)) {
-            $validator = new File\Size($options);
-            $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
-        } else {
-            $this->expectNotToPerformAssertions();
+        if (! is_array($isValidParam)) {
+            $this->markTestSkipped('An array is expected for legacy compat tests');
         }
+
+        $validator = new File\Size($options);
+        $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
     }
 
     /**
