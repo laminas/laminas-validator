@@ -78,6 +78,8 @@ class ExistsTest extends TestCase
         if (is_array($isValidParam)) {
             $validator = new File\Exists($options);
             $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+        } else {
+            $this->expectNotToPerformAssertions();
         }
     }
 

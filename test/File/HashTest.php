@@ -132,6 +132,8 @@ class HashTest extends TestCase
             if (! $expected) {
                 $this->assertArrayHasKey($messageKey, $validator->getMessages());
             }
+        } else {
+            $this->expectNotToPerformAssertions();
         }
     }
 

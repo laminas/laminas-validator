@@ -168,6 +168,8 @@ class ImageSizeTest extends TestCase
                     $this->assertArrayHasKey($messageKey, $validator->getMessages());
                 }
             }
+        } else {
+            $this->expectNotToPerformAssertions();
         }
     }
 

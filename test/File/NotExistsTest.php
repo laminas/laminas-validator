@@ -79,6 +79,8 @@ class NotExistsTest extends TestCase
         if (is_array($isValidParam)) {
             $validator = new File\NotExists($options);
             $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+        } else {
+            $this->expectNotToPerformAssertions();
         }
     }
 
