@@ -207,6 +207,10 @@ class Date extends AbstractValidator
         // Invalid dates can show up as warnings (ie. "2007-02-99")
         // and still return a DateTime object.
         $errors = DateTime::getLastErrors();
+        if ($errors === false) {
+            return $date;
+        }
+
         if ($errors['warning_count'] > 0) {
             if ($addErrors) {
                 $this->error(self::FALSEFORMAT);
