@@ -39,7 +39,7 @@ class DateTest extends TestCase
     /**
      * @return array[]
      * @psalm-return array<array{
-     *     0: string|numeric|DateTime|object|array,
+     *     0: string|numeric|DateTime|object|array|null,
      *     1: null|string,
      *     2: bool,
      *     3: bool
@@ -97,6 +97,10 @@ class DateTest extends TestCase
             [new DateTime(),            null,              true,     false],
             // invalid obj
             [new stdClass(),            null,              false,    false],
+            // Empty Values
+            [[], null, false, false],
+            ['',                        null,              false,    false],
+            [null,                      null,              false,    false],
         ];
     }
 
@@ -104,24 +108,24 @@ class DateTest extends TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider datesDataProvider
-     * @param string|numeric|DateTime|object|array $input
+     * @param string|numeric|DateTime|object|array|null $input
      */
     public function testBasic($input, ?string $format, bool $result, bool $resultStrict): void
     {
         $this->validator->setFormat($format);
-        /** @psalm-suppress ArgumentTypeCoercion */
+        /** @psalm-suppress ArgumentTypeCoercion, PossiblyNullArgument */
         $this->assertEquals($result, $this->validator->isValid($input));
     }
 
     /**
      * @dataProvider datesDataProvider
-     * @param string|numeric|DateTime|object|array $input
+     * @param string|numeric|DateTime|object|array|null $input
      */
     public function testBasicStrictMode($input, ?string $format, bool $result, bool $resultStrict): void
     {
         $this->validator->setStrict(true);
         $this->validator->setFormat($format);
-        /** @psalm-suppress ArgumentTypeCoercion */
+        /** @psalm-suppress ArgumentTypeCoercion, PossiblyNullArgument */
         $this->assertSame($resultStrict, $this->validator->isValid($input));
     }
 
