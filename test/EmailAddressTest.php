@@ -45,20 +45,16 @@ class EmailAddressTest extends TestCase
 
     /**
      * Ensures that a basic valid e-mail address passes validation
-     *
-     * @return void
      */
-    public function testBasic()
+    public function testBasic(): void
     {
         $this->assertTrue($this->validator->isValid('username@example.com'));
     }
 
     /**
      * Ensures that localhost address is valid
-     *
-     * @return void
      */
-    public function testLocalhostAllowed()
+    public function testLocalhostAllowed(): void
     {
         $validator = new EmailAddress(Hostname::ALLOW_ALL);
         $this->assertTrue($validator->isValid('username@localhost'));
@@ -66,10 +62,8 @@ class EmailAddressTest extends TestCase
 
     /**
      * Ensures that local domain names are valid
-     *
-     * @return void
      */
-    public function testLocaldomainAllowed()
+    public function testLocalDomainAllowed(): void
     {
         $validator = new EmailAddress(Hostname::ALLOW_ALL);
         $this->assertTrue($validator->isValid('username@localhost.localdomain'));
@@ -77,10 +71,8 @@ class EmailAddressTest extends TestCase
 
     /**
      * Ensures that IP hostnames are valid
-     *
-     * @return void
      */
-    public function testIPAllowed()
+    public function testIPAllowed(): void
     {
         $validator      = new EmailAddress(Hostname::ALLOW_DNS | Hostname::ALLOW_IP);
         $valuesExpected = [
@@ -96,10 +88,8 @@ class EmailAddressTest extends TestCase
 
     /**
      * Ensures that validation fails when the local part is missing
-     *
-     * @return void
      */
-    public function testLocalPartMissing()
+    public function testLocalPartMissing(): void
     {
         $this->assertFalse($this->validator->isValid('@example.com'));
         $messages = $this->validator->getMessages();
@@ -109,10 +99,8 @@ class EmailAddressTest extends TestCase
 
     /**
      * Ensures that validation fails and produces the expected messages when the local part is invalid
-     *
-     * @return void
      */
-    public function testLocalPartInvalid()
+    public function testLocalPartInvalid(): void
     {
         $this->assertFalse($this->validator->isValid('Some User@example.com'));
 
@@ -132,10 +120,8 @@ class EmailAddressTest extends TestCase
 
     /**
      * Ensures that no validation failure message is produced when the local part follows the quoted-string format
-     *
-     * @return void
      */
-    public function testLocalPartQuotedString()
+    public function testLocalPartQuotedString(): void
     {
         $this->assertTrue($this->validator->isValid('"Some User"@example.com'));
 
@@ -147,10 +133,8 @@ class EmailAddressTest extends TestCase
 
     /**
      * Ensures that validation fails when the hostname is invalid
-     *
-     * @return void
      */
-    public function testHostnameInvalid()
+    public function testHostnameInvalid(): void
     {
         $this->assertFalse($this->validator->isValid('username@ example . com'));
         $messages = $this->validator->getMessages();
@@ -160,10 +144,8 @@ class EmailAddressTest extends TestCase
 
     /**
      * Ensures that quoted-string local part is considered valid
-     *
-     * @return void
      */
-    public function testQuotedString()
+    public function testQuotedString(): void
     {
         $emailAddresses = [
             '""@domain.com', // Optional
@@ -195,10 +177,8 @@ class EmailAddressTest extends TestCase
 
     /**
      * Ensures that quoted-string local part is considered invalid
-     *
-     * @return void
      */
-    public function testInvalidQuotedString()
+    public function testInvalidQuotedString(): void
     {
         $emailAddresses = [
             "\"\x00\"@example.com",
@@ -219,10 +199,8 @@ class EmailAddressTest extends TestCase
     /**
      * Ensures that validation fails when the e-mail is given as for display,
      * with angle brackets around the actual address
-     *
-     * @return void
      */
-    public function testEmailDisplay()
+    public function testEmailDisplay(): void
     {
         $this->assertFalse($this->validator->isValid('User Name <username@example.com>'));
         $messages = $this->validator->getMessages();
@@ -319,10 +297,8 @@ class EmailAddressTest extends TestCase
 
     /**
      * Ensures that the validator follows expected behavior for valid email addresses with complex local parts
-     *
-     * @return void
      */
-    public function testComplexLocalValid()
+    public function testComplexLocalValid(): void
     {
         $emailAddresses = [
             'Bob.Jones@domain.com',
@@ -341,10 +317,8 @@ class EmailAddressTest extends TestCase
 
     /**
      * Ensures that the validator follows expected behavior for valid email addresses with the non-strict option
-     *
-     * @return void
      */
-    public function testNonStrict()
+    public function testNonStrict(): void
     {
         $validator      = new EmailAddress(['strict' => false]);
         $emailAddresses = [
@@ -365,10 +339,8 @@ class EmailAddressTest extends TestCase
 
     /**
      * Ensures that the validator follows expected behavior for checking MX records
-     *
-     * @return void
      */
-    public function testMXRecords()
+    public function testMXRecords(): void
     {
         $this->skipIfOnlineTestsDisabled();
 
@@ -406,10 +378,8 @@ class EmailAddressTest extends TestCase
      * This behavior is documented in RFC 2821, section 5: "If no MX records are found, but an A RR is
      * found, the A RR is treated as if it was associated with an implicit MX RR, with a preference of 0,
      * pointing to that host.
-     *
-     * @return void
      */
-    public function testNoMxRecordARecordFallback()
+    public function testNoMxRecordARecordFallback(): void
     {
         $this->skipIfOnlineTestsDisabled();
 
@@ -435,10 +405,8 @@ class EmailAddressTest extends TestCase
 
     /**
      * Test changing hostname settings via EmailAddress object
-     *
-     * @return void
      */
-    public function testHostnameSettings()
+    public function testHostnameSettings(): void
     {
         $validator = new EmailAddress();
 
@@ -469,10 +437,8 @@ class EmailAddressTest extends TestCase
 
     /**
      * Ensures that getMessages() returns expected default value (an empty array)
-     *
-     * @return void
      */
-    public function testGetMessages()
+    public function testGetMessages(): void
     {
         $this->assertEquals([], $this->validator->getMessages());
     }

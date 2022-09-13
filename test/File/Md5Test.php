@@ -147,10 +147,8 @@ class Md5Test extends TestCase
 
     /**
      * Ensures that getHash() returns expected value
-     *
-     * @return void
      */
-    public function testgetHash()
+    public function testgetHash(): void
     {
         $validator = new File\Md5('12345');
         $this->assertEquals(['12345' => 'md5'], $validator->getHash());
@@ -176,10 +174,8 @@ class Md5Test extends TestCase
 
     /**
      * Ensures that setHash() returns expected value
-     *
-     * @return void
      */
-    public function testSetHash()
+    public function testSetHash(): void
     {
         $validator = new File\Md5('12345');
         $validator->setHash('12333');
@@ -209,10 +205,8 @@ class Md5Test extends TestCase
 
     /**
      * Ensures that addHash() returns expected value
-     *
-     * @return void
      */
-    public function testAddHash()
+    public function testAddHash(): void
     {
         $validator = new File\Md5('12345');
         $validator->addHash('12344');

@@ -2083,11 +2083,9 @@
     <InvalidArgument occurrences="1">
       <code>1</code>
     </InvalidArgument>
-    <LessSpecificReturnStatement occurrences="1"/>
     <MixedOperand occurrences="1">
       <code>$value</code>
     </MixedOperand>
-    <MoreSpecificReturnType occurrences="1"/>
     <PossiblyInvalidArgument occurrences="1">
       <code>$args</code>
     </PossiblyInvalidArgument>

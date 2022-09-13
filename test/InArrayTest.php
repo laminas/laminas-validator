@@ -89,20 +89,16 @@ class InArrayTest extends TestCase
 
     /**
      * Ensures that getMessages() returns expected default value
-     *
-     * @return void
      */
-    public function testGetMessages()
+    public function testGetMessages(): void
     {
         $this->assertEquals([], $this->validator->getMessages());
     }
 
     /**
      * Ensures that getHaystack() returns expected value
-     *
-     * @return void
      */
-    public function testGetHaystack()
+    public function testGetHaystack(): void
     {
         $this->assertEquals([1, 2, 3], $this->validator->getHaystack());
     }
@@ -117,10 +113,8 @@ class InArrayTest extends TestCase
 
     /**
      * Ensures that getStrict() returns expected default value
-     *
-     * @return void
      */
-    public function testGetStrict()
+    public function testGetStrict(): void
     {
         $this->assertFalse($this->validator->getStrict());
     }

@@ -123,10 +123,8 @@ class ExcludeExtensionTest extends TestCase
 
     /**
      * Ensures that getExtension() returns expected value
-     *
-     * @return void
      */
-    public function testGetExtension()
+    public function testGetExtension(): void
     {
         $validator = new File\ExcludeExtension('mo');
         $this->assertEquals(['mo'], $validator->getExtension());
@@ -137,10 +135,8 @@ class ExcludeExtensionTest extends TestCase
 
     /**
      * Ensures that setExtension() returns expected value
-     *
-     * @return void
      */
-    public function testSetExtension()
+    public function testSetExtension(): void
     {
         $validator = new File\ExcludeExtension('mo');
         $validator->setExtension('gif');
@@ -155,10 +151,8 @@ class ExcludeExtensionTest extends TestCase
 
     /**
      * Ensures that addExtension() returns expected value
-     *
-     * @return void
      */
-    public function testAddExtension()
+    public function testAddExtension(): void
     {
         $validator = new File\ExcludeExtension('mo');
         $validator->addExtension('gif');

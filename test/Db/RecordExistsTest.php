@@ -109,10 +109,8 @@ class RecordExistsTest extends TestCase
 
     /**
      * Test basic function of RecordExists (no exclusion)
-     *
-     * @return void
      */
-    public function testBasicFindsRecord()
+    public function testBasicFindsRecord(): void
     {
         $validator = new RecordExists([
             'table'   => 'users',
@@ -124,10 +122,8 @@ class RecordExistsTest extends TestCase
 
     /**
      * Test basic function of RecordExists (no exclusion)
-     *
-     * @return void
      */
-    public function testBasicFindsNoRecord()
+    public function testBasicFindsNoRecord(): void
     {
         $validator = new RecordExists([
             'table'   => 'users',
@@ -139,10 +135,8 @@ class RecordExistsTest extends TestCase
 
     /**
      * Test the exclusion function
-     *
-     * @return void
      */
-    public function testExcludeWithArray()
+    public function testExcludeWithArray(): void
     {
         $validator = new RecordExists([
             'table'   => 'users',
@@ -159,10 +153,8 @@ class RecordExistsTest extends TestCase
     /**
      * Test the exclusion function
      * with an array
-     *
-     * @return void
      */
-    public function testExcludeWithArrayNoRecord()
+    public function testExcludeWithArrayNoRecord(): void
     {
         $validator = new RecordExists([
             'table'   => 'users',
@@ -179,10 +171,8 @@ class RecordExistsTest extends TestCase
     /**
      * Test the exclusion function
      * with a string
-     *
-     * @return void
      */
-    public function testExcludeWithString()
+    public function testExcludeWithString(): void
     {
         $validator = new RecordExists([
             'table'   => 'users',
@@ -196,10 +186,8 @@ class RecordExistsTest extends TestCase
     /**
      * Test the exclusion function
      * with a string
-     *
-     * @return void
      */
-    public function testExcludeWithStringNoRecord()
+    public function testExcludeWithStringNoRecord(): void
     {
         $validator = new RecordExists('users', 'field1', 'id != 1', $this->getMockNoResult());
         $this->assertFalse($validator->isValid('nosuchvalue'));
@@ -217,10 +205,8 @@ class RecordExistsTest extends TestCase
     /**
      * Test that the class throws an exception if no adapter is provided
      * and no default is set.
-     *
-     * @return void
      */
-    public function testThrowsExceptionWithNoAdapter()
+    public function testThrowsExceptionWithNoAdapter(): void
     {
         $validator = new RecordExists('users', 'field1', 'id != 1');
         $this->expectException(RuntimeException::class);
@@ -230,10 +216,8 @@ class RecordExistsTest extends TestCase
 
     /**
      * Test that schemas are supported and run without error
-     *
-     * @return void
      */
-    public function testWithSchema()
+    public function testWithSchema(): void
     {
         $validator = new RecordExists([
             'table'  => 'users',

@@ -193,9 +193,8 @@ class StaticValidatorTest extends TestCase
      * Refactored to conform with Laminas-2724.
      *
      * @group  Laminas-2724
-     * @return void
      */
-    public function testStaticFactoryClassNotFound()
+    public function testStaticFactoryClassNotFound(): void
     {
         $this->expectException(ServiceNotFoundException::class);
         /** @psalm-suppress ArgumentTypeCoercion, UndefinedClass */

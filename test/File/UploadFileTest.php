@@ -91,10 +91,7 @@ class UploadFileTest extends TestCase
         $this->assertArrayHasKey($messageKey, $validator->getMessages());
     }
 
-    /**
-     * @return void
-     */
-    public function testRaisesExceptionWhenValueArrayIsBad()
+    public function testRaisesExceptionWhenValueArrayIsBad(): void
     {
         $validator = new File\UploadFile();
         $this->expectException(InvalidArgumentException::class);

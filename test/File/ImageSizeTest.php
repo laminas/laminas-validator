@@ -174,10 +174,8 @@ class ImageSizeTest extends TestCase
 
     /**
      * Ensures that getImageMin() returns expected value
-     *
-     * @return void
      */
-    public function testGetImageMin()
+    public function testGetImageMin(): void
     {
         $validator = new File\ImageSize(['minWidth' => 1, 'minHeight' => 10, 'maxWidth' => 100, 'maxHeight' => 1000]);
         $this->assertEquals(['minWidth' => 1, 'minHeight' => 10], $validator->getImageMin());
@@ -189,10 +187,8 @@ class ImageSizeTest extends TestCase
 
     /**
      * Ensures that setImageMin() returns expected value
-     *
-     * @return void
      */
-    public function testSetImageMin()
+    public function testSetImageMin(): void
     {
         $validator = new File\ImageSize([
             'minWidth'  => 100,
@@ -213,10 +209,8 @@ class ImageSizeTest extends TestCase
 
     /**
      * Ensures that getImageMax() returns expected value
-     *
-     * @return void
      */
-    public function testGetImageMax()
+    public function testGetImageMax(): void
     {
         $validator = new File\ImageSize([
             'minWidth'  => 10,
@@ -238,10 +232,8 @@ class ImageSizeTest extends TestCase
 
     /**
      * Ensures that setImageMax() returns expected value
-     *
-     * @return void
      */
-    public function testSetImageMax()
+    public function testSetImageMax(): void
     {
         $validator = new File\ImageSize([
             'minWidth'  => 10,
@@ -268,10 +260,8 @@ class ImageSizeTest extends TestCase
 
     /**
      * Ensures that getImageWidth() returns expected value
-     *
-     * @return void
      */
-    public function testGetImageWidth()
+    public function testGetImageWidth(): void
     {
         $validator = new File\ImageSize(['minWidth' => 1, 'minHeight' => 10, 'maxWidth' => 100, 'maxHeight' => 1000]);
         $this->assertEquals(['minWidth' => 1, 'maxWidth' => 100], $validator->getImageWidth());
@@ -279,10 +269,8 @@ class ImageSizeTest extends TestCase
 
     /**
      * Ensures that setImageWidth() returns expected value
-     *
-     * @return void
      */
-    public function testSetImageWidth()
+    public function testSetImageWidth(): void
     {
         $validator = new File\ImageSize([
             'minWidth'  => 100,
@@ -300,10 +288,8 @@ class ImageSizeTest extends TestCase
 
     /**
      * Ensures that getImageHeight() returns expected value
-     *
-     * @return void
      */
-    public function testGetImageHeight()
+    public function testGetImageHeight(): void
     {
         $validator = new File\ImageSize(['minWidth' => 1, 'minHeight' => 10, 'maxWidth' => 100, 'maxHeight' => 1000]);
         $this->assertEquals(['minHeight' => 10, 'maxHeight' => 1000], $validator->getImageHeight());
@@ -311,10 +297,8 @@ class ImageSizeTest extends TestCase
 
     /**
      * Ensures that setImageHeight() returns expected value
-     *
-     * @return void
      */
-    public function testSetImageHeight()
+    public function testSetImageHeight(): void
     {
         $validator = new File\ImageSize([
             'minWidth'  => 100,

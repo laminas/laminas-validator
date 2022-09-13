@@ -27,9 +27,8 @@ class HexTest extends TestCase
      *
      * @dataProvider basicDataProvider
      * @param int|string $input
-     * @return void
      */
-    public function testBasic($input, bool $expected)
+    public function testBasic($input, bool $expected): void
     {
         $this->assertSame($expected, $this->validator->isValid($input));
     }
@@ -60,10 +59,8 @@ class HexTest extends TestCase
 
     /**
      * Ensures that getMessages() returns expected default value
-     *
-     * @return void
      */
-    public function testGetMessages()
+    public function testGetMessages(): void
     {
         $this->assertEquals([], $this->validator->getMessages());
     }

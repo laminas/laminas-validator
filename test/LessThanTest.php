@@ -19,9 +19,8 @@ class LessThanTest extends TestCase
      *
      * @dataProvider basicDataProvider
      * @param int|string $input
-     * @return void
      */
-    public function testBasic(array $options, $input, bool $expected)
+    public function testBasic(array $options, $input, bool $expected): void
     {
         $validator = new LessThan(...$options);
         $this->assertSame($expected, $validator->isValid($input));
@@ -97,10 +96,8 @@ class LessThanTest extends TestCase
 
     /**
      * Ensures that getMessages() returns expected default value
-     *
-     * @return void
      */
-    public function testGetMessages()
+    public function testGetMessages(): void
     {
         $validator = new LessThan(10);
         $this->assertEquals([], $validator->getMessages());
@@ -108,10 +105,8 @@ class LessThanTest extends TestCase
 
     /**
      * Ensures that getMax() returns expected value
-     *
-     * @return void
      */
-    public function testGetMax()
+    public function testGetMax(): void
     {
         $validator = new LessThan(10);
         $this->assertEquals(10, $validator->getMax());
@@ -119,10 +114,8 @@ class LessThanTest extends TestCase
 
     /**
      * Ensures that getInclusive() returns expected default value
-     *
-     * @return void
      */
-    public function testGetInclusive()
+    public function testGetInclusive(): void
     {
         $validator = new LessThan(10);
         $this->assertEquals(false, $validator->getInclusive());

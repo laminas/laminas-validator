@@ -31,9 +31,8 @@ class StringLengthTest extends TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider basicDataProvider
-     * @return void
      */
-    public function testBasic(array $options, bool $expected, string $input)
+    public function testBasic(array $options, bool $expected, string $input): void
     {
         ini_set('default_charset', 'UTF-8');
 
@@ -81,40 +80,32 @@ class StringLengthTest extends TestCase
 
     /**
      * Ensures that getMessages() returns expected default value
-     *
-     * @return void
      */
-    public function testGetMessages()
+    public function testGetMessages(): void
     {
         $this->assertEquals([], $this->validator->getMessages());
     }
 
     /**
      * Ensures that getMin() returns expected default value
-     *
-     * @return void
      */
-    public function testGetMin()
+    public function testGetMin(): void
     {
         $this->assertEquals(0, $this->validator->getMin());
     }
 
     /**
      * Ensures that getMax() returns expected default value
-     *
-     * @return void
      */
-    public function testGetMax()
+    public function testGetMax(): void
     {
         $this->assertEquals(null, $this->validator->getMax());
     }
 
     /**
      * Ensures that setMin() throws an exception when given a value greater than the maximum
-     *
-     * @return void
      */
-    public function testSetMinExceptionGreaterThanMax()
+    public function testSetMinExceptionGreaterThanMax(): void
     {
         $max = 1;
         $min = 2;
@@ -126,10 +117,8 @@ class StringLengthTest extends TestCase
 
     /**
      * Ensures that setMax() throws an exception when given a value less than the minimum
-     *
-     * @return void
      */
-    public function testSetMaxExceptionLessThanMin()
+    public function testSetMaxExceptionLessThanMin(): void
     {
         $max = 1;
         $min = 2;
@@ -139,10 +128,7 @@ class StringLengthTest extends TestCase
         $this->validator->setMin($min)->setMax($max);
     }
 
-    /**
-     * @return void
-     */
-    public function testDifferentEncodingWithValidator()
+    public function testDifferentEncodingWithValidator(): void
     {
         ini_set('default_charset', 'UTF-8');
 

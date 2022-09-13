@@ -26,9 +26,8 @@ class DigitsTest extends TestCase
      * Ensures that the validator follows expected behavior for basic input values
      *
      * @dataProvider basicDataProvider
-     * @return void
      */
-    public function testExpectedResultsWithBasicInputValues(string $input, bool $expected)
+    public function testExpectedResultsWithBasicInputValues(string $input, bool $expected): void
     {
         $this->assertSame($expected, $this->validator->isValid($input));
     }
@@ -56,18 +55,13 @@ class DigitsTest extends TestCase
 
     /**
      * Ensures that getMessages() returns expected initial value
-     *
-     * @return void
      */
-    public function testMessagesEmptyInitially()
+    public function testMessagesEmptyInitially(): void
     {
         $this->assertEquals([], $this->validator->getMessages());
     }
 
-    /**
-     * @return void
-     */
-    public function testEmptyStringValueResultsInProperValidationFailureMessages()
+    public function testEmptyStringValueResultsInProperValidationFailureMessages(): void
     {
         $this->assertFalse($this->validator->isValid(''));
         $messages      = $this->validator->getMessages();
@@ -77,10 +71,7 @@ class DigitsTest extends TestCase
         $this->assertSame($arrayExpected, $messages);
     }
 
-    /**
-     * @return void
-     */
-    public function testInvalidValueResultsInProperValidationFailureMessages()
+    public function testInvalidValueResultsInProperValidationFailureMessages(): void
     {
         $this->assertFalse($this->validator->isValid('#'));
         $messages      = $this->validator->getMessages();

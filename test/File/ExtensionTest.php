@@ -127,10 +127,8 @@ class ExtensionTest extends TestCase
 
     /**
      * Ensures that getExtension() returns expected value
-     *
-     * @return void
      */
-    public function testGetExtension()
+    public function testGetExtension(): void
     {
         $validator = new File\Extension('mo');
         $this->assertEquals(['mo'], $validator->getExtension());
@@ -141,10 +139,8 @@ class ExtensionTest extends TestCase
 
     /**
      * Ensures that setExtension() returns expected value
-     *
-     * @return void
      */
-    public function testSetExtension()
+    public function testSetExtension(): void
     {
         $validator = new File\Extension('mo');
         $validator->setExtension('gif');
@@ -159,10 +155,8 @@ class ExtensionTest extends TestCase
 
     /**
      * Ensures that addExtension() returns expected value
-     *
-     * @return void
      */
-    public function testAddExtension()
+    public function testAddExtension(): void
     {
         $validator = new File\Extension('mo');
         $validator->addExtension('gif');

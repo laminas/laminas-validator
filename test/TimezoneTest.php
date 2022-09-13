@@ -197,10 +197,8 @@ class TimezoneTest extends TestCase
 
     /**
      * Test pass `type` option through constructor
-     *
-     *  @return void
      */
-    public function testTypeThroughConstructor()
+    public function testTypeThroughConstructor(): void
     {
         $timezone1 = new Timezone(Timezone::LOCATION);
         $this->assertTrue($timezone1->isValid('Asia/Dubai'));

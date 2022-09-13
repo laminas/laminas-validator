@@ -19,10 +19,8 @@ class CallbackTest extends TestCase
 {
     /**
      * Ensures that the validator follows expected behavior
-     *
-     * @return void
      */
-    public function testBasic()
+    public function testBasic(): void
     {
         $valid = new Callback([$this, 'objectCallback']);
         $this->assertTrue($valid->isValid('test'));

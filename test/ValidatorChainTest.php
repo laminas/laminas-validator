@@ -52,10 +52,8 @@ class ValidatorChainTest extends TestCase
 
     /**
      * Ensures expected results from empty validator chain
-     *
-     * @return void
      */
-    public function testEmpty()
+    public function testEmpty(): void
     {
         $this->assertEquals([], $this->validator->getMessages());
         $this->assertTrue($this->validator->isValid('something'));
@@ -63,10 +61,8 @@ class ValidatorChainTest extends TestCase
 
     /**
      * Ensures expected behavior from a validator known to succeed
-     *
-     * @return void
      */
-    public function testTrue()
+    public function testTrue(): void
     {
         $this->validator->attach($this->getValidatorTrue());
         $this->assertTrue($this->validator->isValid(null));
@@ -75,10 +71,8 @@ class ValidatorChainTest extends TestCase
 
     /**
      * Ensures expected behavior from a validator known to fail
-     *
-     * @return void
      */
-    public function testFalse()
+    public function testFalse(): void
     {
         $this->validator->attach($this->getValidatorFalse());
         $this->assertFalse($this->validator->isValid(null));
@@ -87,10 +81,8 @@ class ValidatorChainTest extends TestCase
 
     /**
      * Ensures that a validator may break the chain
-     *
-     * @return void
      */
-    public function testBreakChainOnFailure()
+    public function testBreakChainOnFailure(): void
     {
         $this->validator->attach($this->getValidatorFalse(), true)
             ->attach($this->getValidatorFalse());
