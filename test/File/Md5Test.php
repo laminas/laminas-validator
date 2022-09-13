@@ -120,12 +120,14 @@ class Md5Test extends TestCase
      */
     public function testLegacy($options, $isValidParam, bool $expected, string $messageKey): void
     {
-        if (is_array($isValidParam)) {
-            $validator = new File\Md5($options);
-            $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
-            if (! $expected) {
-                $this->assertArrayHasKey($messageKey, $validator->getMessages());
-            }
+        if (! is_array($isValidParam)) {
+            $this->markTestSkipped('An array is expected for legacy compat tests');
+        }
+
+        $validator = new File\Md5($options);
+        $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+        if (! $expected) {
+            $this->assertArrayHasKey($messageKey, $validator->getMessages());
         }
     }
 

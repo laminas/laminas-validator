@@ -156,17 +156,18 @@ class ImageSizeTest extends TestCase
      */
     public function testLegacy(array $options, $isValidParam, bool $expected, $messageKeys): void
     {
-        // Test legacy Laminas\Transfer API
-        if (is_array($isValidParam)) {
-            $validator = new File\ImageSize($options);
-            $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
-            if (! $expected) {
-                if (! is_array($messageKeys)) {
-                    $messageKeys = [$messageKeys];
-                }
-                foreach ($messageKeys as $messageKey) {
-                    $this->assertArrayHasKey($messageKey, $validator->getMessages());
-                }
+        if (! is_array($isValidParam)) {
+            $this->markTestSkipped('An array is expected for legacy compat tests');
+        }
+
+        $validator = new File\ImageSize($options);
+        $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+        if (! $expected) {
+            if (! is_array($messageKeys)) {
+                $messageKeys = [$messageKeys];
+            }
+            foreach ($messageKeys as $messageKey) {
+                $this->assertArrayHasKey($messageKey, $validator->getMessages());
             }
         }
     }

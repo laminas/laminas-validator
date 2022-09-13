@@ -35,7 +35,10 @@ class RecordExistsTest extends TestCase
         $mockConnection = $this->createMock(ConnectionInterface::class);
 
         // Mock has result
-        $mockHasResultRow      = new ArrayObject();
+        $mockHasResultRow = new class extends ArrayObject {
+            public ?string $one = null;
+        };
+
         $mockHasResultRow->one = 'one';
 
         $mockHasResult = $this->createMock(ResultInterface::class);
