@@ -3,9 +3,11 @@
 namespace Laminas\Validator;
 
 use Countable;
+use IteratorAggregate;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\PriorityQueue;
 use ReturnTypeWillChange;
+use Traversable;
 
 use function array_replace;
 use function assert;
@@ -16,10 +18,10 @@ use const SORT_NUMERIC;
 
 /**
  * @psalm-type QueueElement = array{instance: ValidatorInterface, breakChainOnFailure: bool}
+ * @implements IteratorAggregate<array-key, QueueElement>
+ * @final
  */
-class ValidatorChain implements
-    Countable,
-    ValidatorInterface
+class ValidatorChain implements Countable, IteratorAggregate, ValidatorInterface
 {
     /**
      * Default priority at which validators are added
@@ -248,7 +250,7 @@ class ValidatorChain implements
     {
         $this->messages = [];
         $result         = true;
-        foreach ($this->validators as $element) {
+        foreach ($this as $element) {
             $validator = $element['instance'];
             assert($validator instanceof ValidatorInterface);
             if ($validator->isValid($value, $context)) {
@@ -330,5 +332,11 @@ class ValidatorChain implements
     public function __sleep()
     {
         return ['validators', 'messages'];
+    }
+
+    /** @return Traversable<array-key, QueueElement> */
+    public function getIterator(): Traversable
+    {
+        return clone $this->validators;
     }
 }
