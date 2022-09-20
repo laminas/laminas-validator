@@ -13,32 +13,30 @@ use function is_array;
 use function is_string;
 use function max;
 
-class StringLength extends AbstractValidator
+/**
+ * @psalm-type OptionsArray array{
+ *     min: int,
+ *     max: int|null,
+ *     encoding: string,
+ * }
+ */
+class StringLength
 {
     public const INVALID   = 'stringLengthInvalid';
     public const TOO_SHORT = 'stringLengthTooShort';
     public const TOO_LONG  = 'stringLengthTooLong';
 
-    /** @var array<string, string> */
-    protected $messageTemplates = [
+    private const TEMPLATES = [
         self::INVALID   => 'Invalid type given. String expected',
         self::TOO_SHORT => 'The input is less than %min% characters long',
         self::TOO_LONG  => 'The input is more than %max% characters long',
     ];
 
-    /** @var array<string, array<string, string>> */
-    protected $messageVariables = [
-        'min'    => ['options' => 'min'],
-        'max'    => ['options' => 'max'],
-        'length' => ['options' => 'length'],
-    ];
-
-    /** @var array<string, mixed> */
-    protected $options = [
+    /** @var OptionsArray */
+    private array $options = [
         'min'      => 0, // Minimum length
         'max'      => null, // Maximum length, null if there is no length limitation
         'encoding' => 'UTF-8', // Encoding to use
-        'length'   => 0, // Actual length
     ];
 
     /** @var null|StringWrapperInterface */
@@ -64,8 +62,6 @@ class StringLength extends AbstractValidator
 
             $options = $temp;
         }
-
-        parent::__construct($options);
     }
 
     /**
@@ -134,7 +130,7 @@ class StringLength extends AbstractValidator
      *
      * @return StringWrapper
      */
-    public function getStringWrapper()
+    public function getStringWrapper(): StringWrapper
     {
         if (! $this->stringWrapper) {
             $this->stringWrapper = StringUtils::getWrapper($this->getEncoding());
@@ -202,32 +198,37 @@ class StringLength extends AbstractValidator
     /**
      * Returns true if and only if the string length of $value is at least the min option and
      * no greater than the max option (when the max option is not null).
-     *
-     * @param  string $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): ValidationResult
     {
+        $result = ValidationResult::new(
+            self::TEMPLATES,
+            [
+                'min'    => $this->getMin(),
+                'max'    => $this->getMax(),
+                'length' => $this->getLength(),
+            ],
+            $value,
+            false,
+            null, // $this->translator
+            'default' // $this->textDomain
+        );
+
         if (! is_string($value)) {
-            $this->error(self::INVALID);
-            return false;
+            return $result->withError(self::INVALID);
         }
 
-        $this->setValue($value);
+        $length = $this->getStringWrapper()->strlen($value);
+        $result = $result->withVariable('length', $length);
 
-        $this->setLength($this->getStringWrapper()->strlen($value));
-        if ($this->getLength() < $this->getMin()) {
-            $this->error(self::TOO_SHORT);
+        if ($length < $this->getMin()) {
+            $result = $result->withError(self::TOO_SHORT);
         }
 
-        if (null !== $this->getMax() && $this->getMax() < $this->getLength()) {
-            $this->error(self::TOO_LONG);
+        if (null !== $this->getMax() && $this->getMax() < $length) {
+            $result = $result->withError(self::TOO_LONG);
         }
 
-        if ($this->getMessages()) {
-            return false;
-        }
-
-        return true;
+        return $result;
     }
 }
