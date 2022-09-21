@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use Laminas\Stdlib\StringUtils;
@@ -20,7 +22,7 @@ use function max;
  *     encoding: string,
  * }
  */
-class StringLength
+class StringLength implements ValidatorInterface
 {
     public const INVALID   = 'stringLengthInvalid';
     public const TOO_SHORT = 'stringLengthTooShort';
@@ -195,11 +197,16 @@ class StringLength
         return $this;
     }
 
+    public function isValid(mixed $value, ?array $context = null): bool
+    {
+        return $this->validate($value, $context)->isValid();
+    }
+
     /**
      * Returns true if and only if the string length of $value is at least the min option and
      * no greater than the max option (when the max option is not null).
      */
-    public function isValid(mixed $value): ValidationResult
+    public function validate(mixed $value, ?array $context = null): ValidationResult
     {
         $result = ValidationResult::new(
             self::TEMPLATES,
