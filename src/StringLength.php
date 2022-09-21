@@ -205,10 +205,12 @@ class StringLength implements ValidatorInterface
     /**
      * Returns true if and only if the string length of $value is at least the min option and
      * no greater than the max option (when the max option is not null).
+     *
+     * @return ValidationFailure<mixed>|ValidationSuccess<string>
      */
     public function validate(mixed $value, ?array $context = null): ValidationResult
     {
-        $result = ValidationResult::new(
+        $result = ValidationFailure::new(
             self::TEMPLATES,
             [
                 'min'    => $this->getMin(),
@@ -216,6 +218,7 @@ class StringLength implements ValidatorInterface
                 'length' => $this->getLength(),
             ],
             $value,
+            [],
             false,
             null, // $this->translator
             'default' // $this->textDomain
@@ -229,13 +232,13 @@ class StringLength implements ValidatorInterface
         $result = $result->withVariable('length', $length);
 
         if ($length < $this->getMin()) {
-            $result = $result->withError(self::TOO_SHORT);
+            return $result->withError(self::TOO_SHORT);
         }
 
         if (null !== $this->getMax() && $this->getMax() < $length) {
-            $result = $result->withError(self::TOO_LONG);
+            return $result->withError(self::TOO_LONG);
         }
 
-        return $result;
+        return ValidationSuccess::new($value);
     }
 }
