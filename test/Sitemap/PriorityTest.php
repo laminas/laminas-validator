@@ -11,15 +11,17 @@ use stdClass;
 use function current;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\Sitemap\Priority
  */
-class PriorityTest extends TestCase
+final class PriorityTest extends TestCase
 {
-    /** @var Priority */
-    protected $validator;
+    private Priority $validator;
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->validator = new Priority();
     }
 
@@ -51,7 +53,7 @@ class PriorityTest extends TestCase
         ];
 
         foreach ($values as $value) {
-            $this->assertTrue($this->validator->isValid($value));
+            self::assertTrue($this->validator->isValid($value));
         }
     }
 
@@ -72,9 +74,11 @@ class PriorityTest extends TestCase
         ];
 
         foreach ($values as $value) {
-            $this->assertFalse($this->validator->isValid($value));
+            self::assertFalse($this->validator->isValid($value));
+
             $messages = $this->validator->getMessages();
-            $this->assertStringContainsString('is not a valid', current($messages));
+
+            self::assertStringContainsString('is not a valid', current($messages));
         }
     }
 
@@ -92,9 +96,11 @@ class PriorityTest extends TestCase
         ];
 
         foreach ($values as $value) {
-            $this->assertFalse($this->validator->isValid($value));
+            self::assertFalse($this->validator->isValid($value));
+
             $messages = $this->validator->getMessages();
-            $this->assertStringContainsString('integer or float expected', current($messages));
+
+            self::assertStringContainsString('integer or float expected', current($messages));
         }
     }
 }

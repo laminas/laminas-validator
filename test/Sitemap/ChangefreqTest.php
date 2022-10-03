@@ -11,15 +11,17 @@ use stdClass;
 use function current;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\Sitemap\Changefreq
  */
-class ChangefreqTest extends TestCase
+final class ChangefreqTest extends TestCase
 {
-    /** @var Changefreq */
-    protected $validator;
+    private Changefreq $validator;
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->validator = new Changefreq();
     }
 
@@ -39,7 +41,7 @@ class ChangefreqTest extends TestCase
         ];
 
         foreach ($values as $value) {
-            $this->assertTrue($this->validator->isValid($value));
+            self::assertTrue($this->validator->isValid($value));
         }
     }
 
@@ -61,9 +63,11 @@ class ChangefreqTest extends TestCase
         ];
 
         foreach ($values as $value) {
-            $this->assertFalse($this->validator->isValid($value));
+            self::assertFalse($this->validator->isValid($value));
+
             $messages = $this->validator->getMessages();
-            $this->assertStringContainsString('is not a valid', current($messages));
+
+            self::assertStringContainsString('is not a valid', current($messages));
         }
     }
 
@@ -82,9 +86,11 @@ class ChangefreqTest extends TestCase
         ];
 
         foreach ($values as $value) {
-            $this->assertFalse($this->validator->isValid($value));
+            self::assertFalse($this->validator->isValid($value));
+
             $messages = $this->validator->getMessages();
-            $this->assertStringContainsString('String expected', current($messages));
+
+            self::assertStringContainsString('String expected', current($messages));
         }
     }
 }

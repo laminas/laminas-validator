@@ -52,9 +52,7 @@ final class UndisclosedPassword extends AbstractValidator
         $this->makeHttpRequest = $makeHttpRequest;
     }
 
-    /**
-     * @inheritDoc
-     */
+    /** {@inheritDoc} */
     public function isValid($value): bool
     {
         if (! is_string($value)) {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Laminas\Validator\File;
+use Laminas\Validator\File\Extension;
 use PHPUnit\Framework\TestCase;
 
 use function array_merge;
@@ -16,9 +16,10 @@ use function is_array;
 use const UPLOAD_ERR_NO_FILE;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\File\Extension
  */
-class ExtensionTest extends TestCase
+final class ExtensionTest extends TestCase
 {
     /**
      * @psalm-return array<array-key, array{
@@ -79,10 +80,12 @@ class ExtensionTest extends TestCase
      */
     public function testBasic($options, $isValidParam, bool $expected, string $messageKey): void
     {
-        $validator = new File\Extension($options);
-        $this->assertEquals($expected, $validator->isValid($isValidParam));
+        $validator = new Extension($options);
+
+        self::assertSame($expected, $validator->isValid($isValidParam));
+
         if (! $expected) {
-            $this->assertArrayHasKey($messageKey, $validator->getMessages());
+            self::assertArrayHasKey($messageKey, $validator->getMessages());
         }
     }
 
@@ -96,20 +99,19 @@ class ExtensionTest extends TestCase
     public function testLegacy($options, $isValidParam, bool $expected, string $messageKey): void
     {
         if (! is_array($isValidParam)) {
-            $this->markTestSkipped('An array is expected for legacy compat tests');
+            self::markTestSkipped('An array is expected for legacy compat tests');
         }
 
-        $validator = new File\Extension($options);
-        $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+        $validator = new Extension($options);
+
+        self::assertSame($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+
         if (! $expected) {
-            $this->assertArrayHasKey($messageKey, $validator->getMessages());
+            self::assertArrayHasKey($messageKey, $validator->getMessages());
         }
     }
 
-    /**
-     * @return void
-     */
-    public function testLaminas891()
+    public function testLaminas891(): void
     {
         $files     = [
             'name'     => 'testsize.mo',
@@ -118,39 +120,61 @@ class ExtensionTest extends TestCase
             'tmp_name' => __DIR__ . '/_files/testsize.mo',
             'error'    => 0,
         ];
-        $validator = new File\Extension(['MO', 'case' => true]);
-        $this->assertEquals(false, $validator->isValid(__DIR__ . '/_files/testsize.mo', $files));
+        $validator = new Extension(['MO', 'case' => true]);
 
-        $validator = new File\Extension(['MO', 'case' => false]);
-        $this->assertEquals(true, $validator->isValid(__DIR__ . '/_files/testsize.mo', $files));
+        self::assertFalse($validator->isValid(__DIR__ . '/_files/testsize.mo', $files));
+
+        $validator = new Extension(['MO', 'case' => false]);
+
+        self::assertTrue($validator->isValid(__DIR__ . '/_files/testsize.mo', $files));
+    }
+
+    /** @psalm-return array<array{string|string[], string[]}> */
+    public function getExtensionProvider(): array
+    {
+        return [
+            ['mo', ['mo']],
+            [['mo', 'gif', 'jpg'], ['mo', 'gif', 'jpg']],
+        ];
     }
 
     /**
      * Ensures that getExtension() returns expected value
+     *
+     * @dataProvider getExtensionProvider
+     * @param string|string[] $extension
+     * @param string[] $expected
      */
-    public function testGetExtension(): void
+    public function testGetExtension($extension, array $expected): void
     {
-        $validator = new File\Extension('mo');
-        $this->assertEquals(['mo'], $validator->getExtension());
+        $validator = new Extension($extension);
 
-        $validator = new File\Extension(['mo', 'gif', 'jpg']);
-        $this->assertEquals(['mo', 'gif', 'jpg'], $validator->getExtension());
+        self::assertSame($expected, $validator->getExtension());
+    }
+
+    /** @psalm-return array<array{string|string[], string[]}> */
+    public function setExtensionProvider(): array
+    {
+        return [
+            ['gif', ['gif']],
+            ['jpg, mo', ['jpg', 'mo']],
+            [['zip', 'ti'], ['zip', 'ti']],
+        ];
     }
 
     /**
      * Ensures that setExtension() returns expected value
+     *
+     * @dataProvider setExtensionProvider
+     * @param string|string[] $extension
+     * @param string[] $expected
      */
-    public function testSetExtension(): void
+    public function testSetExtension($extension, array $expected): void
     {
-        $validator = new File\Extension('mo');
-        $validator->setExtension('gif');
-        $this->assertEquals(['gif'], $validator->getExtension());
+        $validator = new Extension('mo');
+        $validator->setExtension($extension);
 
-        $validator->setExtension('jpg, mo');
-        $this->assertEquals(['jpg', 'mo'], $validator->getExtension());
-
-        $validator->setExtension(['zip', 'ti']);
-        $this->assertEquals(['zip', 'ti'], $validator->getExtension());
+        self::assertSame($expected, $validator->getExtension());
     }
 
     /**
@@ -158,18 +182,22 @@ class ExtensionTest extends TestCase
      */
     public function testAddExtension(): void
     {
-        $validator = new File\Extension('mo');
+        $validator = new Extension('mo');
         $validator->addExtension('gif');
-        $this->assertEquals(['mo', 'gif'], $validator->getExtension());
+
+        self::assertSame(['mo', 'gif'], $validator->getExtension());
 
         $validator->addExtension('jpg, to');
-        $this->assertEquals(['mo', 'gif', 'jpg', 'to'], $validator->getExtension());
+
+        self::assertSame(['mo', 'gif', 'jpg', 'to'], $validator->getExtension());
 
         $validator->addExtension(['zip', 'ti']);
-        $this->assertEquals(['mo', 'gif', 'jpg', 'to', 'zip', 'ti'], $validator->getExtension());
+
+        self::assertSame(['mo', 'gif', 'jpg', 'to', 'zip', 'ti'], $validator->getExtension());
 
         $validator->addExtension('');
-        $this->assertEquals(['mo', 'gif', 'jpg', 'to', 'zip', 'ti'], $validator->getExtension());
+
+        self::assertSame(['mo', 'gif', 'jpg', 'to', 'zip', 'ti'], $validator->getExtension());
     }
 
     /**
@@ -177,18 +205,19 @@ class ExtensionTest extends TestCase
      */
     public function testLaminas11258(): void
     {
-        $validator = new File\Extension('gif');
-        $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
-        $this->assertArrayHasKey('fileExtensionNotFound', $validator->getMessages());
-        $this->assertStringContainsString('does not exist', current($validator->getMessages()));
+        $validator = new Extension('gif');
+
+        self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
+        self::assertArrayHasKey('fileExtensionNotFound', $validator->getMessages());
+        self::assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
-        $validator = new File\Extension('foo');
+        $validator = new Extension('foo');
 
-        $this->assertFalse($validator->isValid(''));
-        $this->assertArrayHasKey(File\Extension::NOT_FOUND, $validator->getMessages());
+        self::assertFalse($validator->isValid(''));
+        self::assertArrayHasKey(Extension::NOT_FOUND, $validator->getMessages());
 
         $filesArray = [
             'name'     => '',
@@ -198,16 +227,18 @@ class ExtensionTest extends TestCase
             'type'     => '',
         ];
 
-        $this->assertFalse($validator->isValid($filesArray));
-        $this->assertArrayHasKey(File\Extension::NOT_FOUND, $validator->getMessages());
+        self::assertFalse($validator->isValid($filesArray));
+        self::assertArrayHasKey(Extension::NOT_FOUND, $validator->getMessages());
     }
 
     public function testIsValidRaisesExceptionForArrayNotInFilesFormat(): void
     {
-        $validator = new File\Extension('foo');
+        $validator = new Extension('foo');
         $value     = ['foo' => 'bar'];
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Value array must be in $_FILES format');
+
         $validator->isValid($value);
     }
 }

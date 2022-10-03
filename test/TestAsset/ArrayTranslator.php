@@ -6,10 +6,9 @@ namespace LaminasTest\Validator\TestAsset;
 
 use Laminas\I18n\Translator as I18nTranslator;
 
-class ArrayTranslator implements I18nTranslator\Loader\FileLoaderInterface
+final class ArrayTranslator implements I18nTranslator\Loader\FileLoaderInterface
 {
-    /** @var array */
-    public $translations;
+    public array $translations;
 
     /**
      * @param string $filename

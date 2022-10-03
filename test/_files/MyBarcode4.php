@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\Barcode;
 
-class MyBarcode4 extends AbstractAdapter
+final class MyBarcode4 extends AbstractAdapter
 {
     public function __construct()
     {

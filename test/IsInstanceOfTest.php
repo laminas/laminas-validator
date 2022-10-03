@@ -7,34 +7,37 @@ namespace LaminasTest\Validator;
 use ArrayIterator;
 use DateTime;
 use Exception;
-use Laminas\Validator;
 use Laminas\Validator\Exception\InvalidArgumentException;
+use Laminas\Validator\IsInstanceOf;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
 /**
  * @covers \Laminas\Validator\IsInstanceOf
- * @group      Laminas_Validator
+ * @group Laminas_Validator
  */
-class IsInstanceOfTest extends TestCase
+final class IsInstanceOfTest extends TestCase
 {
     /**
      * Ensures that the validator follows expected behavior
      */
     public function testBasic(): void
     {
-        $validator = new Validator\IsInstanceOf(DateTime::class);
-        $this->assertTrue($validator->isValid(new DateTime())); // True
-        $this->assertFalse($validator->isValid(null)); // False
-        $this->assertFalse($validator->isValid($this)); // False
+        $validator = new IsInstanceOf(DateTime::class);
 
-        $validator = new Validator\IsInstanceOf(Exception::class);
-        $this->assertTrue($validator->isValid(new Exception())); // True
-        $this->assertFalse($validator->isValid(null)); // False
-        $this->assertFalse($validator->isValid($this)); // False
+        self::assertTrue($validator->isValid(new DateTime())); // True
+        self::assertFalse($validator->isValid(null)); // False
+        self::assertFalse($validator->isValid($this)); // False
 
-        $validator = new Validator\IsInstanceOf(TestCase::class);
-        $this->assertTrue($validator->isValid($this)); // True
+        $validator = new IsInstanceOf(Exception::class);
+
+        self::assertTrue($validator->isValid(new Exception())); // True
+        self::assertFalse($validator->isValid(null)); // False
+        self::assertFalse($validator->isValid($this)); // False
+
+        $validator = new IsInstanceOf(TestCase::class);
+
+        self::assertTrue($validator->isValid($this)); // True
     }
 
     /**
@@ -42,8 +45,9 @@ class IsInstanceOfTest extends TestCase
      */
     public function testGetMessages(): void
     {
-        $validator = new Validator\IsInstanceOf(DateTime::class);
-        $this->assertEquals([], $validator->getMessages());
+        $validator = new IsInstanceOf(DateTime::class);
+
+        self::assertSame([], $validator->getMessages());
     }
 
     /**
@@ -51,19 +55,20 @@ class IsInstanceOfTest extends TestCase
      */
     public function testGetClassName(): void
     {
-        $validator = new Validator\IsInstanceOf(DateTime::class);
-        $this->assertEquals(DateTime::class, $validator->getClassName());
+        $validator = new IsInstanceOf(DateTime::class);
+
+        self::assertSame(DateTime::class, $validator->getClassName());
     }
 
     public function testEqualsMessageTemplates(): void
     {
-        $validator  = new Validator\IsInstanceOf(DateTime::class);
+        $validator  = new IsInstanceOf(DateTime::class);
         $reflection = new ReflectionClass($validator);
 
         $property = $reflection->getProperty('messageTemplates');
         $property->setAccessible(true);
 
-        $this->assertEquals(
+        self::assertSame(
             $property->getValue($validator),
             $validator->getOption('messageTemplates')
         );
@@ -71,13 +76,13 @@ class IsInstanceOfTest extends TestCase
 
     public function testEqualsMessageVariables(): void
     {
-        $validator  = new Validator\IsInstanceOf(DateTime::class);
+        $validator  = new IsInstanceOf(DateTime::class);
         $reflection = new ReflectionClass($validator);
 
         $property = $reflection->getProperty('messageVariables');
         $property->setAccessible(true);
 
-        $this->assertEquals(
+        self::assertSame(
             $property->getValue($validator),
             $validator->getOption('messageVariables')
         );
@@ -85,11 +90,12 @@ class IsInstanceOfTest extends TestCase
 
     public function testPassTraversableToConstructor(): void
     {
-        $validator = new Validator\IsInstanceOf(new ArrayIterator(['className' => DateTime::class]));
-        $this->assertEquals(DateTime::class, $validator->getClassName());
-        $this->assertTrue($validator->isValid(new DateTime()));
-        $this->assertFalse($validator->isValid(null));
-        $this->assertFalse($validator->isValid($this));
+        $validator = new IsInstanceOf(new ArrayIterator(['className' => DateTime::class]));
+
+        self::assertSame(DateTime::class, $validator->getClassName());
+        self::assertTrue($validator->isValid(new DateTime()));
+        self::assertFalse($validator->isValid(null));
+        self::assertFalse($validator->isValid($this));
     }
 
     public function testPassOptionsWithoutClassNameKey(): void
@@ -97,7 +103,6 @@ class IsInstanceOfTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Missing option "className"');
 
-        $options = ['NotClassNameKey' => DateTime::class];
-        new Validator\IsInstanceOf($options);
+        new IsInstanceOf(['NotClassNameKey' => DateTime::class]);
     }
 }

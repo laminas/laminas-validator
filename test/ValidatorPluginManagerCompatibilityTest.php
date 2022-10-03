@@ -13,24 +13,21 @@ use ReflectionProperty;
 use function method_exists;
 use function strpos;
 
-class ValidatorPluginManagerCompatibilityTest extends TestCase
+final class ValidatorPluginManagerCompatibilityTest extends TestCase
 {
     use CommonPluginManagerTrait;
 
-    /** @return ValidatorPluginManager */
-    protected function getPluginManager()
+    protected function getPluginManager(): ValidatorPluginManager
     {
         return new ValidatorPluginManager(new ServiceManager());
     }
 
-    /** @return string */
-    protected function getV2InvalidPluginException()
+    protected function getV2InvalidPluginException(): string
     {
         return RuntimeException::class;
     }
 
-    /** @return string */
-    protected function getInstanceOf()
+    protected function getInstanceOf(): string
     {
         return ValidatorInterface::class;
     }

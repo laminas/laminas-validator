@@ -13,6 +13,8 @@ use Laminas\Validator\Between;
 use Laminas\Validator\StaticValidator;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
+use LaminasTest\Validator\TestAsset\ArrayTranslator;
+use LaminasTest\Validator\TestAsset\Translator;
 use PHPUnit\Framework\TestCase;
 
 use function current;
@@ -20,18 +22,20 @@ use function extension_loaded;
 use function strlen;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\StaticValidator
  */
-class StaticValidatorTest extends TestCase
+final class StaticValidatorTest extends TestCase
 {
-    /** @var Alpha */
-    public $validator;
+    private Alpha $validator;
 
     /**
      * Creates a new validation object for each test method
      */
     protected function setUp(): void
     {
+        parent::setUp();
+
         AbstractValidator::setDefaultTranslator(null);
         StaticValidator::setPluginManager(null);
         $this->validator = new Alpha();
@@ -39,95 +43,114 @@ class StaticValidatorTest extends TestCase
 
     protected function tearDown(): void
     {
+        parent::tearDown();
+
         AbstractValidator::setDefaultTranslator(null);
         AbstractValidator::setMessageLength(-1);
     }
 
     public function testCanSetGlobalDefaultTranslator(): void
     {
-        $translator = new TestAsset\Translator();
+        $translator = new Translator();
         AbstractValidator::setDefaultTranslator($translator);
-        $this->assertSame($translator, AbstractValidator::getDefaultTranslator());
+
+        self::assertSame($translator, AbstractValidator::getDefaultTranslator());
     }
 
     public function testGlobalDefaultTranslatorUsedWhenNoLocalTranslatorSet(): void
     {
         $this->testCanSetGlobalDefaultTranslator();
-        $this->assertSame(AbstractValidator::getDefaultTranslator(), $this->validator->getTranslator());
+
+        self::assertSame(AbstractValidator::getDefaultTranslator(), $this->validator->getTranslator());
     }
 
     public function testLocalTranslatorPreferredOverGlobalTranslator(): void
     {
         $this->testCanSetGlobalDefaultTranslator();
-        $translator = new TestAsset\Translator();
+        $translator = new Translator();
         $this->validator->setTranslator($translator);
-        $this->assertNotSame(AbstractValidator::getDefaultTranslator(), $this->validator->getTranslator());
+
+        self::assertNotSame(AbstractValidator::getDefaultTranslator(), $this->validator->getTranslator());
     }
 
     public function testMaximumErrorMessageLength(): void
     {
         if (! extension_loaded('intl')) {
-            $this->markTestSkipped('ext/intl not enabled');
+            self::markTestSkipped('ext/intl not enabled');
         }
 
-        $this->assertEquals(-1, AbstractValidator::getMessageLength());
-        AbstractValidator::setMessageLength(10);
-        $this->assertEquals(10, AbstractValidator::getMessageLength());
+        self::assertSame(-1, AbstractValidator::getMessageLength());
 
-        $loader               = new TestAsset\ArrayTranslator();
+        AbstractValidator::setMessageLength(10);
+
+        self::assertSame(10, AbstractValidator::getMessageLength());
+
+        $loader               = new ArrayTranslator();
         $loader->translations = [
             'Invalid type given. String expected' => 'This is the translated message for %value%',
         ];
-        $translator           = new TestAsset\Translator();
+        $translator           = new Translator();
         $translator->getPluginManager()->setService('default', $loader);
         $translator->addTranslationFile('default', null);
 
         $this->validator->setTranslator($translator);
-        $this->assertFalse($this->validator->isValid(123));
+
+        self::assertFalse($this->validator->isValid(123));
+
         $messages = $this->validator->getMessages();
 
-        $this->assertArrayHasKey(Alpha::INVALID, $messages);
-        $this->assertEquals('This is...', $messages[Alpha::INVALID]);
+        self::assertArrayHasKey(Alpha::INVALID, $messages);
+        self::assertSame('This is...', $messages[Alpha::INVALID]);
     }
 
     public function testSetGetMessageLengthLimitation(): void
     {
         AbstractValidator::setMessageLength(5);
-        $this->assertEquals(5, AbstractValidator::getMessageLength());
+
+        self::assertSame(5, AbstractValidator::getMessageLength());
 
         $valid = new Between(1, 10);
-        $this->assertFalse($valid->isValid(24));
+
+        self::assertFalse($valid->isValid(24));
+
         $message = current($valid->getMessages());
-        $this->assertLessThanOrEqual(5, strlen($message));
+
+        self::assertLessThanOrEqual(5, strlen($message));
     }
 
     public function testSetGetDefaultTranslator(): void
     {
-        $translator = new TestAsset\Translator();
+        $translator = new Translator();
         AbstractValidator::setDefaultTranslator($translator);
-        $this->assertSame($translator, AbstractValidator::getDefaultTranslator());
+
+        self::assertSame($translator, AbstractValidator::getDefaultTranslator());
     }
 
     public function testLazyLoadsValidatorPluginManagerByDefault(): void
     {
         $plugins = StaticValidator::getPluginManager();
-        $this->assertInstanceOf(ValidatorPluginManager::class, $plugins);
+
+        self::assertInstanceOf(ValidatorPluginManager::class, $plugins);
     }
 
     public function testCanSetCustomPluginManager(): void
     {
         $plugins = new ValidatorPluginManager($this->getMockBuilder(ServiceManager::class)->getMock());
         StaticValidator::setPluginManager($plugins);
-        $this->assertSame($plugins, StaticValidator::getPluginManager());
+
+        self::assertSame($plugins, StaticValidator::getPluginManager());
     }
 
     public function testPassingNullWhenSettingPluginManagerResetsPluginManager(): void
     {
         $plugins = new ValidatorPluginManager($this->getMockBuilder(ServiceManager::class)->getMock());
         StaticValidator::setPluginManager($plugins);
-        $this->assertSame($plugins, StaticValidator::getPluginManager());
+
+        self::assertSame($plugins, StaticValidator::getPluginManager());
+
         StaticValidator::setPluginManager(null);
-        $this->assertNotSame($plugins, StaticValidator::getPluginManager());
+
+        self::assertNotSame($plugins, StaticValidator::getPluginManager());
     }
 
     /**
@@ -158,7 +181,7 @@ class StaticValidatorTest extends TestCase
         array $options,
         bool $expected
     ): void {
-        $this->assertSame($expected, StaticValidator::execute($value, $validator, $options));
+        self::assertSame($expected, StaticValidator::execute($value, $validator, $options));
     }
 
     /**
@@ -183,6 +206,7 @@ class StaticValidatorTest extends TestCase
     ): void {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('options');
+
         StaticValidator::execute($value, $validator, $options);
     }
 
@@ -192,11 +216,12 @@ class StaticValidatorTest extends TestCase
      *
      * Refactored to conform with Laminas-2724.
      *
-     * @group  Laminas-2724
+     * @group Laminas-2724
      */
     public function testStaticFactoryClassNotFound(): void
     {
         $this->expectException(ServiceNotFoundException::class);
+
         /** @psalm-suppress ArgumentTypeCoercion, UndefinedClass */
         StaticValidator::execute('1234', 'UnknownValidator');
     }

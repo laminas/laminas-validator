@@ -5,38 +5,39 @@ declare(strict_types=1);
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Laminas\Validator\File;
+use Laminas\Validator\File\Count;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\File\Count
  */
-class CountTest extends TestCase
+final class CountTest extends TestCase
 {
     /**
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider basicDataProvider
      * @param array|int $options
-     * @return void
      */
-    public function testBasic($options, bool $expected1, bool $expected2, bool $expected3, bool $expected4)
+    public function testBasic($options, bool $expected1, bool $expected2, bool $expected3, bool $expected4): void
     {
-        $validator = new File\Count($options);
-        $this->assertSame(
+        $validator = new Count($options);
+
+        self::assertSame(
             $expected1,
             $validator->isValid(__DIR__ . '/_files/testsize.mo')
         );
-        $this->assertSame(
+        self::assertSame(
             $expected2,
             $validator->isValid(__DIR__ . '/_files/testsize2.mo')
         );
-        $this->assertSame(
+        self::assertSame(
             $expected3,
             $validator->isValid(__DIR__ . '/_files/testsize3.mo')
         );
-        $this->assertSame(
+        self::assertSame(
             $expected4,
             $validator->isValid(__DIR__ . '/_files/testsize4.mo')
         );
@@ -69,15 +70,17 @@ class CountTest extends TestCase
      */
     public function testGetMin(): void
     {
-        $validator = new File\Count(['min' => 1, 'max' => 5]);
-        $this->assertEquals(1, $validator->getMin());
+        $validator = new Count(['min' => 1, 'max' => 5]);
+
+        self::assertSame(1, $validator->getMin());
     }
 
     public function testGetMinGreaterThanOrEqualThrowsException(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        new File\Count(['min' => 5, 'max' => 1]);
+
+        new Count(['min' => 5, 'max' => 1]);
     }
 
     /**
@@ -85,12 +88,14 @@ class CountTest extends TestCase
      */
     public function testSetMin(): void
     {
-        $validator = new File\Count(['min' => 1000, 'max' => 10000]);
+        $validator = new Count(['min' => 1000, 'max' => 10000]);
         $validator->setMin(100);
-        $this->assertEquals(100, $validator->getMin());
+
+        self::assertSame(100, $validator->getMin());
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('less than or equal');
+
         $validator->setMin(20000);
     }
 
@@ -99,12 +104,14 @@ class CountTest extends TestCase
      */
     public function testGetMax(): void
     {
-        $validator = new File\Count(['min' => 1, 'max' => 100]);
-        $this->assertEquals(100, $validator->getMax());
+        $validator = new Count(['min' => 1, 'max' => 100]);
+
+        self::assertSame(100, $validator->getMax());
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        new File\Count(['min' => 5, 'max' => 1]);
+
+        new Count(['min' => 5, 'max' => 1]);
     }
 
     /**
@@ -112,22 +119,25 @@ class CountTest extends TestCase
      */
     public function testSetMax(): void
     {
-        $validator = new File\Count(['min' => 1000, 'max' => 10000]);
+        $validator = new Count(['min' => 1000, 'max' => 10000]);
         $validator->setMax(1_000_000);
-        $this->assertEquals(1_000_000, $validator->getMax());
+
+        self::assertSame(1_000_000, $validator->getMax());
 
         $validator->setMin(100);
-        $this->assertEquals(1_000_000, $validator->getMax());
+
+        self::assertSame(1_000_000, $validator->getMax());
     }
 
     public function testCanSetMaxValueUsingAnArrayWithMaxKey(): void
     {
-        $validator   = new File\Count(['min' => 1000, 'max' => 10000]);
+        $validator   = new Count(['min' => 1000, 'max' => 10000]);
         $maxValue    = 33_333_333;
         $setMaxArray = ['max' => $maxValue];
 
         $validator->setMax($setMaxArray);
-        $this->assertSame($maxValue, $validator->getMax());
+
+        self::assertSame($maxValue, $validator->getMax());
     }
 
     /**
@@ -151,7 +161,8 @@ class CountTest extends TestCase
      */
     public function testSettingMaxWithInvalidArgumentRaisesException($max): void
     {
-        $validator = new File\Count(['min' => 1000, 'max' => 10000]);
+        $validator = new Count(['min' => 1000, 'max' => 10000]);
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid options to validator provided');
 
@@ -160,12 +171,13 @@ class CountTest extends TestCase
 
     public function testCanSetMinUsingAnArrayWithAMinKey(): void
     {
-        $validator   = new File\Count(['min' => 1000, 'max' => 10000]);
+        $validator   = new Count(['min' => 1000, 'max' => 10000]);
         $minValue    = 33;
         $setMinArray = ['min' => $minValue];
 
         $validator->setMin($setMinArray);
-        $this->assertEquals($minValue, $validator->getMin());
+
+        self::assertSame($minValue, $validator->getMin());
     }
 
     /**
@@ -174,15 +186,17 @@ class CountTest extends TestCase
      */
     public function testSettingMinWithInvalidArgumentRaisesException($min): void
     {
-        $validator = new File\Count(['min' => 1000, 'max' => 10000]);
+        $validator = new Count(['min' => 1000, 'max' => 10000]);
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid options to validator provided');
+
         $validator->setMin($min);
     }
 
     public function testThrowErrorReturnsFalseAndSetsMessageWhenProvidedWithArrayRepresentingTooFewFiles(): void
     {
-        $validator = new File\Count(['min' => 1000, 'max' => 10000]);
+        $validator = new Count(['min' => 1000, 'max' => 10000]);
         $filename  = 'test.txt';
         $fileArray = ['name' => $filename];
 
@@ -194,15 +208,15 @@ class CountTest extends TestCase
         $property = $reflection->getProperty('value');
         $property->setAccessible(true);
 
-        $result = $method->invoke($validator, $fileArray, File\Count::TOO_FEW);
+        $result = $method->invoke($validator, $fileArray, Count::TOO_FEW);
 
-        $this->assertFalse($result);
-        $this->assertEquals($filename, $property->getValue($validator));
+        self::assertFalse($result);
+        self::assertSame($filename, $property->getValue($validator));
     }
 
     public function testThrowErrorReturnsFalseAndSetsMessageWhenProvidedWithASingleFilename(): void
     {
-        $validator  = new File\Count(['min' => 1000, 'max' => 10000]);
+        $validator  = new Count(['min' => 1000, 'max' => 10000]);
         $filename   = 'test.txt';
         $reflection = new ReflectionClass($validator);
 
@@ -212,19 +226,19 @@ class CountTest extends TestCase
         $property = $reflection->getProperty('value');
         $property->setAccessible(true);
 
-        $result = $method->invoke($validator, $filename, File\Count::TOO_FEW);
+        $result = $method->invoke($validator, $filename, Count::TOO_FEW);
 
-        $this->assertFalse($result);
-        $this->assertEquals($filename, $property->getValue($validator));
+        self::assertFalse($result);
+        self::assertSame($filename, $property->getValue($validator));
     }
 
     public function testCanProvideMinAndMaxAsDiscreteConstructorArguments(): void
     {
         $min       = 1000;
         $max       = 10000;
-        $validator = new File\Count($min, $max);
+        $validator = new Count($min, $max);
 
-        $this->assertSame($min, $validator->getMin());
-        $this->assertSame($max, $validator->getMax());
+        self::assertSame($min, $validator->getMin());
+        self::assertSame($max, $validator->getMax());
     }
 }

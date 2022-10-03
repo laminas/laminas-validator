@@ -11,6 +11,7 @@ use Laminas\Validator\NotEmpty;
 use Laminas\Validator\Timezone;
 use Laminas\Validator\ValidatorChain;
 use Laminas\Validator\ValidatorInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
@@ -20,21 +21,25 @@ use function strstr;
 use function unserialize;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\ValidatorChain
  */
-class ValidatorChainTest extends TestCase
+final class ValidatorChainTest extends TestCase
 {
-    /** @var ValidatorChain */
-    protected $validator;
+    private ValidatorChain $validator;
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         AbstractValidator::setMessageLength(-1);
         $this->validator = new ValidatorChain();
     }
 
     protected function tearDown(): void
     {
+        parent::tearDown();
+
         AbstractValidator::setDefaultTranslator(null);
         AbstractValidator::setMessageLength(-1);
     }
@@ -47,7 +52,7 @@ class ValidatorChainTest extends TestCase
 
     public function testValidatorChainIsEmptyByDefault(): void
     {
-        $this->assertCount(0, $this->validator->getValidators());
+        self::assertCount(0, $this->validator->getValidators());
     }
 
     /**
@@ -55,8 +60,8 @@ class ValidatorChainTest extends TestCase
      */
     public function testEmpty(): void
     {
-        $this->assertEquals([], $this->validator->getMessages());
-        $this->assertTrue($this->validator->isValid('something'));
+        self::assertSame([], $this->validator->getMessages());
+        self::assertTrue($this->validator->isValid('something'));
     }
 
     /**
@@ -65,8 +70,9 @@ class ValidatorChainTest extends TestCase
     public function testTrue(): void
     {
         $this->validator->attach($this->getValidatorTrue());
-        $this->assertTrue($this->validator->isValid(null));
-        $this->assertEquals([], $this->validator->getMessages());
+
+        self::assertTrue($this->validator->isValid(null));
+        self::assertSame([], $this->validator->getMessages());
     }
 
     /**
@@ -75,8 +81,9 @@ class ValidatorChainTest extends TestCase
     public function testFalse(): void
     {
         $this->validator->attach($this->getValidatorFalse());
-        $this->assertFalse($this->validator->isValid(null));
-        $this->assertEquals(['error' => 'validation failed'], $this->validator->getMessages());
+
+        self::assertFalse($this->validator->isValid(null));
+        self::assertSame(['error' => 'validation failed'], $this->validator->getMessages());
     }
 
     /**
@@ -84,28 +91,38 @@ class ValidatorChainTest extends TestCase
      */
     public function testBreakChainOnFailure(): void
     {
-        $this->validator->attach($this->getValidatorFalse(), true)
+        $this->validator
+            ->attach($this->getValidatorFalse(), true)
             ->attach($this->getValidatorFalse());
-        $this->assertFalse($this->validator->isValid(null));
-        $this->assertEquals(['error' => 'validation failed'], $this->validator->getMessages());
+
+        self::assertFalse($this->validator->isValid(null));
+        self::assertSame(['error' => 'validation failed'], $this->validator->getMessages());
     }
 
     public function testAllowsPrependingValidators(): void
     {
-        $this->validator->attach($this->getValidatorTrue())
+        $this->validator
+            ->attach($this->getValidatorTrue())
             ->prependValidator($this->getValidatorFalse(), true);
-        $this->assertFalse($this->validator->isValid(true));
+
+        self::assertFalse($this->validator->isValid(true));
+
         $messages = $this->validator->getMessages();
-        $this->assertArrayHasKey('error', $messages);
+
+        self::assertArrayHasKey('error', $messages);
     }
 
     public function testAllowsPrependingValidatorsByName(): void
     {
-        $this->validator->attach($this->getValidatorTrue())
+        $this->validator
+            ->attach($this->getValidatorTrue())
             ->prependByName('NotEmpty', [], true);
-        $this->assertFalse($this->validator->isValid(''));
+
+        self::assertFalse($this->validator->isValid(''));
+
         $messages = $this->validator->getMessages();
-        $this->assertArrayHasKey('isEmpty', $messages);
+
+        self::assertArrayHasKey('isEmpty', $messages);
     }
 
     /**
@@ -114,11 +131,15 @@ class ValidatorChainTest extends TestCase
      */
     public function testValidatorsAreExecutedAccordingToPriority(): void
     {
-        $this->validator->attach($this->getValidatorTrue(), false, 1000)
-                        ->attach($this->getValidatorFalse(), true, 2000);
-        $this->assertFalse($this->validator->isValid(true));
+        $this->validator
+            ->attach($this->getValidatorTrue(), false, 1000)
+            ->attach($this->getValidatorFalse(), true, 2000);
+
+        self::assertFalse($this->validator->isValid(true));
+
         $messages = $this->validator->getMessages();
-        $this->assertArrayHasKey('error', $messages);
+
+        self::assertArrayHasKey('error', $messages);
     }
 
     /**
@@ -127,11 +148,15 @@ class ValidatorChainTest extends TestCase
      */
     public function testPrependValidatorsAreExecutedAccordingToPriority(): void
     {
-        $this->validator->attach($this->getValidatorTrue(), false, 1000)
+        $this->validator
+            ->attach($this->getValidatorTrue(), false, 1000)
             ->prependValidator($this->getValidatorFalse(), true);
-        $this->assertFalse($this->validator->isValid(true));
+
+        self::assertFalse($this->validator->isValid(true));
+
         $messages = $this->validator->getMessages();
-        $this->assertArrayHasKey('error', $messages);
+
+        self::assertArrayHasKey('error', $messages);
     }
 
     /**
@@ -147,7 +172,7 @@ class ValidatorChainTest extends TestCase
 
         $this->validator->merge($mergedValidatorChain);
 
-        $this->assertCount(2, $this->validator->getValidators());
+        self::assertCount(2, $this->validator->getValidators());
     }
 
     /**
@@ -158,33 +183,31 @@ class ValidatorChainTest extends TestCase
     {
         $this->validator->attach(new NotEmpty());
 
-        $this->assertCount(1, $this->validator->getValidators());
+        self::assertCount(1, $this->validator->getValidators());
 
         $clonedValidatorChain = clone $this->validator;
 
-        $this->assertCount(1, $clonedValidatorChain->getValidators());
+        self::assertCount(1, $clonedValidatorChain->getValidators());
 
         $clonedValidatorChain->attach(new NotEmpty());
 
-        $this->assertCount(1, $this->validator->getValidators());
-        $this->assertCount(2, $clonedValidatorChain->getValidators());
+        self::assertCount(1, $this->validator->getValidators());
+        self::assertCount(2, $clonedValidatorChain->getValidators());
     }
 
     public function testCountGivesCountOfAttachedValidators(): void
     {
         $this->populateValidatorChain();
-        $this->assertCount(2, $this->validator->getValidators());
+
+        self::assertCount(2, $this->validator->getValidators());
     }
 
     /**
      * Handle file not found errors
      *
      * @group  Laminas-2724
-     * @param  int    $errnum
-     * @param  string $errstr
-     * @return void
      */
-    public function handleNotFoundError($errnum, $errstr)
+    public function handleNotFoundError(int $errnum, string $errstr): void
     {
         if (strstr($errstr, 'No such file')) {
             $this->error = true;
@@ -192,29 +215,35 @@ class ValidatorChainTest extends TestCase
     }
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject|ValidatorInterface
+     * @return ValidatorInterface&MockObject
      */
-    public function getValidatorTrue()
+    public function getValidatorTrue(): ValidatorInterface
     {
         $validator = $this->createMock(ValidatorInterface::class);
         $validator
+            ->expects(self::any())
             ->method('isValid')
             ->willReturn(true);
+
         return $validator;
     }
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject|ValidatorInterface
+     * @return ValidatorInterface&MockObject
      */
-    public function getValidatorFalse()
+    public function getValidatorFalse(): ValidatorInterface
     {
         $validator = $this->createMock(ValidatorInterface::class);
         $validator
+            ->expects(self::any())
             ->method('isValid')
             ->willReturn(false);
+
         $validator
+            ->expects(self::any())
             ->method('getMessages')
             ->willReturn(['error' => 'validation failed']);
+
         return $validator;
     }
 
@@ -236,16 +265,20 @@ class ValidatorChainTest extends TestCase
             ],
         ]);
 
-        $this->assertCount(2, $this->validator);
+        self::assertCount(2, $this->validator);
+
         $validators = $this->validator->getValidators();
         $compare    = null;
         foreach ($validators as $validator) {
-            $this->assertNotSame($compare, $validator);
+            self::assertNotSame($compare, $validator);
+
             $compare = $validator;
         }
 
-        $this->assertFalse($this->validator->isValid('foo'));
+        self::assertFalse($this->validator->isValid('foo'));
+
         $messages = $this->validator->getMessages();
+
         self::assertContains('Second callback trapped', $messages);
         self::assertNotContains('This should not be seen in the messages', $messages);
     }
@@ -256,9 +289,10 @@ class ValidatorChainTest extends TestCase
         $serialized = serialize($this->validator);
 
         $unserialized = unserialize($serialized);
-        $this->assertInstanceOf(ValidatorChain::class, $unserialized);
-        $this->assertCount(2, $unserialized);
-        $this->assertFalse($unserialized->isValid(''));
+
+        self::assertInstanceOf(ValidatorChain::class, $unserialized);
+        self::assertCount(2, $unserialized);
+        self::assertFalse($unserialized->isValid(''));
     }
 
     /**
@@ -283,16 +317,20 @@ class ValidatorChainTest extends TestCase
             $option => true,
             'min'   => 1,
         ]);
-        $this->assertCount(1, $this->validator);
+
+        self::assertCount(1, $this->validator);
+
         $validators = $this->validator->getValidators();
         $spec       = array_shift($validators);
 
-        $this->assertIsArray($spec);
-        $this->assertArrayHasKey('instance', $spec);
+        self::assertIsArray($spec);
+        self::assertArrayHasKey('instance', $spec);
+
         $validator = $spec['instance'];
-        $this->assertInstanceOf(GreaterThan::class, $validator);
-        $this->assertArrayHasKey('breakChainOnFailure', $spec);
-        $this->assertTrue($spec['breakChainOnFailure']);
+
+        self::assertInstanceOf(GreaterThan::class, $validator);
+        self::assertArrayHasKey('breakChainOnFailure', $spec);
+        self::assertTrue($spec['breakChainOnFailure']);
     }
 
     public function testGetValidatorsReturnsAnArrayOfQueueItems(): void
@@ -308,7 +346,7 @@ class ValidatorChainTest extends TestCase
         $chain->attach($empty);
         $chain->attach($between);
 
-        self::assertEquals($expect, $chain->getValidators());
+        self::assertSame($expect, $chain->getValidators());
     }
 
     public function testMessagesAreASingleDimensionHash(): void
@@ -320,7 +358,9 @@ class ValidatorChainTest extends TestCase
         $chain->attach($between);
 
         self::assertFalse($chain->isValid(0));
+
         $messages = $chain->getMessages();
+
         self::assertCount(2, $messages);
         self::assertContainsOnly('string', array_keys($messages));
         self::assertContainsOnly('string', $messages);

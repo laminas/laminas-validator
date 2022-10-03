@@ -6,11 +6,9 @@ namespace LaminasTest\Validator\Db\TestAsset;
 
 use Laminas\Db\Adapter\Platform\Sql92;
 
-class TrustingSql92Platform extends Sql92
+final class TrustingSql92Platform extends Sql92
 {
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public function quoteValue($value)
     {
         return $this->quoteTrustedValue($value);

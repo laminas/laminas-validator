@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator\File;
 
-use Laminas\Validator\File;
+use Laminas\Validator\File\IsCompressed;
 use PHPUnit\Framework\TestCase;
 
 use function basename;
@@ -21,9 +21,10 @@ use const PHP_VERSION_ID;
 /**
  * IsCompressed testbed
  *
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\File\IsCompressed
  */
-class IsCompressedTest extends TestCase
+final class IsCompressedTest extends TestCase
 {
     protected function getMagicMime(): string
     {
@@ -78,7 +79,7 @@ class IsCompressedTest extends TestCase
     protected function skipIfNoFileInfoExtension(): void
     {
         if (! extension_loaded('fileinfo')) {
-            $this->markTestSkipped(
+            self::markTestSkipped(
                 'This PHP Version has no finfo extension'
             );
         }
@@ -103,8 +104,9 @@ class IsCompressedTest extends TestCase
         // Sometimes finfo gives application/zip and sometimes
         // application/x-zip ...
         $expectedMimeType = finfo_file(finfo_open(FILEINFO_MIME_TYPE), __DIR__ . '/_files/test.zip');
+
         if (! in_array($expectedMimeType, ['application/zip', 'application/x-zip'])) {
-            $this->markTestSkipped('finfo exhibits buggy behavior on this system!');
+            self::markTestSkipped('finfo exhibits buggy behavior on this system!');
         }
     }
 
@@ -113,16 +115,17 @@ class IsCompressedTest extends TestCase
      *
      * @dataProvider basicBehaviorDataProvider
      * @param null|string|string[] $options
-     * @param array $isValidParam
+     * @psalm-param array<string, string|int> $isValidParam
      */
-    public function testBasic($options, $isValidParam, bool $expected): void
+    public function testBasic($options, array $isValidParam, bool $expected): void
     {
         $this->skipIfNoFileInfoExtension();
         $this->skipIfBuggyMimeContentType($options);
 
-        $validator = new File\IsCompressed($options);
+        $validator = new IsCompressed($options);
         $validator->enableHeaderCheck();
-        $this->assertEquals($expected, $validator->isValid($isValidParam));
+
+        self::assertSame($expected, $validator->isValid($isValidParam));
     }
 
     /**
@@ -130,55 +133,67 @@ class IsCompressedTest extends TestCase
      *
      * @dataProvider basicBehaviorDataProvider
      * @param null|string|string[] $options
-     * @param array $isValidParam
+     * @psalm-param array<string, string|int> $isValidParam
      */
-    public function testLegacy($options, $isValidParam, bool $expected): void
+    public function testLegacy($options, array $isValidParam, bool $expected): void
     {
-        if (! is_array($isValidParam)) {
-            // nothing to test
-            return;
-        }
-
         $this->skipIfNoFileInfoExtension();
         $this->skipIfBuggyMimeContentType($options);
 
-        $validator = new File\IsCompressed($options);
+        $validator = new IsCompressed($options);
         $validator->enableHeaderCheck();
-        $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+
+        self::assertSame($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+    }
+
+    /** @psalm-return array<array{string|string[], string|string[], bool}> */
+    public function getMimeTypeProvider(): array
+    {
+        return [
+            ['image/gif', 'image/gif', false],
+            [['image/gif', 'video', 'text/test'], 'image/gif,video,text/test', false],
+            [['image/gif', 'video', 'text/test'], ['image/gif', 'video', 'text/test'], true],
+        ];
     }
 
     /**
      * Ensures that getMimeType() returns expected value
+     *
+     * @dataProvider getMimeTypeProvider
+     * @param string|string[] $mimeType
+     * @param string|string[] $expected
      */
-    public function testGetMimeType(): void
+    public function testGetMimeType($mimeType, $expected, bool $asArray): void
     {
-        $validator = new File\IsCompressed('image/gif');
-        $this->assertEquals('image/gif', $validator->getMimeType());
+        $validator = new IsCompressed($mimeType);
 
-        $validator = new File\IsCompressed(['image/gif', 'video', 'text/test']);
-        $this->assertEquals('image/gif,video,text/test', $validator->getMimeType());
+        self::assertSame($expected, $validator->getMimeType($asArray));
+    }
 
-        $validator = new File\IsCompressed(['image/gif', 'video', 'text/test']);
-        $this->assertEquals(['image/gif', 'video', 'text/test'], $validator->getMimeType(true));
+    /** @psalm-return array<array{string|string[], string, string[]}> */
+    public function setMimeTypeProvider(): array
+    {
+        return [
+            ['image/jpeg', 'image/jpeg', ['image/jpeg']],
+            ['image/gif, text/test', 'image/gif,text/test', ['image/gif', 'text/test']],
+            [['video/mpeg', 'gif'], 'video/mpeg,gif', ['video/mpeg', 'gif']],
+        ];
     }
 
     /**
      * Ensures that setMimeType() returns expected value
+     *
+     * @dataProvider setMimeTypeProvider
+     * @param string|string[] $mimeType
+     * @param string[] $expectedAsArray
      */
-    public function testSetMimeType(): void
+    public function testSetMimeType($mimeType, string $expected, array $expectedAsArray): void
     {
-        $validator = new File\IsCompressed('image/gif');
-        $validator->setMimeType('image/jpeg');
-        $this->assertEquals('image/jpeg', $validator->getMimeType());
-        $this->assertEquals(['image/jpeg'], $validator->getMimeType(true));
+        $validator = new IsCompressed('image/gif');
+        $validator->setMimeType($mimeType);
 
-        $validator->setMimeType('image/gif, text/test');
-        $this->assertEquals('image/gif,text/test', $validator->getMimeType());
-        $this->assertEquals(['image/gif', 'text/test'], $validator->getMimeType(true));
-
-        $validator->setMimeType(['video/mpeg', 'gif']);
-        $this->assertEquals('video/mpeg,gif', $validator->getMimeType());
-        $this->assertEquals(['video/mpeg', 'gif'], $validator->getMimeType(true));
+        self::assertSame($expected, $validator->getMimeType());
+        self::assertSame($expectedAsArray, $validator->getMimeType(true));
     }
 
     /**
@@ -186,22 +201,26 @@ class IsCompressedTest extends TestCase
      */
     public function testAddMimeType(): void
     {
-        $validator = new File\IsCompressed('image/gif');
+        $validator = new IsCompressed('image/gif');
         $validator->addMimeType('text');
-        $this->assertEquals('image/gif,text', $validator->getMimeType());
-        $this->assertEquals(['image/gif', 'text'], $validator->getMimeType(true));
+
+        self::assertSame('image/gif,text', $validator->getMimeType());
+        self::assertSame(['image/gif', 'text'], $validator->getMimeType(true));
 
         $validator->addMimeType('jpg, to');
-        $this->assertEquals('image/gif,text,jpg,to', $validator->getMimeType());
-        $this->assertEquals(['image/gif', 'text', 'jpg', 'to'], $validator->getMimeType(true));
+
+        self::assertSame('image/gif,text,jpg,to', $validator->getMimeType());
+        self::assertSame(['image/gif', 'text', 'jpg', 'to'], $validator->getMimeType(true));
 
         $validator->addMimeType(['zip', 'ti']);
-        $this->assertEquals('image/gif,text,jpg,to,zip,ti', $validator->getMimeType());
-        $this->assertEquals(['image/gif', 'text', 'jpg', 'to', 'zip', 'ti'], $validator->getMimeType(true));
+
+        self::assertSame('image/gif,text,jpg,to,zip,ti', $validator->getMimeType());
+        self::assertSame(['image/gif', 'text', 'jpg', 'to', 'zip', 'ti'], $validator->getMimeType(true));
 
         $validator->addMimeType('');
-        $this->assertEquals('image/gif,text,jpg,to,zip,ti', $validator->getMimeType());
-        $this->assertEquals(['image/gif', 'text', 'jpg', 'to', 'zip', 'ti'], $validator->getMimeType(true));
+
+        self::assertSame('image/gif,text,jpg,to,zip,ti', $validator->getMimeType());
+        self::assertSame(['image/gif', 'text', 'jpg', 'to', 'zip', 'ti'], $validator->getMimeType(true));
     }
 
     /**
@@ -217,11 +236,11 @@ class IsCompressedTest extends TestCase
             'error'    => 0,
         ];
 
-        $validator = new File\IsCompressed('test/notype');
+        $validator = new IsCompressed('test/notype');
         $validator->enableHeaderCheck();
-        $this->assertFalse($validator->isValid(__DIR__ . '/_files/picture.jpg', $files));
-        $error = $validator->getMessages();
-        $this->assertArrayHasKey('fileIsCompressedFalseType', $error);
+
+        self::assertFalse($validator->isValid(__DIR__ . '/_files/picture.jpg', $files));
+        self::assertArrayHasKey('fileIsCompressedFalseType', $validator->getMessages());
     }
 
     /**
@@ -230,7 +249,7 @@ class IsCompressedTest extends TestCase
     public function testOptionsAtConstructor(): void
     {
         if (! extension_loaded('fileinfo')) {
-            $this->markTestSkipped('This PHP Version has no finfo installed');
+            self::markTestSkipped('This PHP Version has no finfo installed');
         }
 
         $magicFile = $this->getMagicMime();
@@ -246,23 +265,23 @@ class IsCompressedTest extends TestCase
                 'magicFile'         => $magicFile,
                 'enableHeaderCheck' => true,
             ];
-        $validator = new File\IsCompressed($options);
+        $validator = new IsCompressed($options);
 
         if (PHP_VERSION_ID < 80100) {
-            $this->assertEquals($magicFile, $validator->getMagicFile());
+            self::assertSame($magicFile, $validator->getMagicFile());
         }
 
-        $this->assertTrue($validator->getHeaderCheck());
-        $this->assertEquals('image/gif,image/jpg', $validator->getMimeType());
+        self::assertTrue($validator->getHeaderCheck());
+        self::assertSame('image/gif,image/jpg', $validator->getMimeType());
     }
 
     public function testNonMimeOptionsAtConstructorStillSetsDefaults(): void
     {
-        $validator = new File\IsCompressed([
+        $validator = new IsCompressed([
             'enableHeaderCheck' => true,
         ]);
 
-        $this->assertNotEmpty($validator->getMimeType());
+        self::assertNotEmpty($validator->getMimeType());
     }
 
     /**
@@ -270,9 +289,10 @@ class IsCompressedTest extends TestCase
      */
     public function testLaminas11258(): void
     {
-        $validator = new File\IsCompressed();
-        $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
-        $this->assertArrayHasKey('fileIsCompressedNotReadable', $validator->getMessages());
-        $this->assertStringContainsString('does not exist', current($validator->getMessages()));
+        $validator = new IsCompressed();
+
+        self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
+        self::assertArrayHasKey('fileIsCompressedNotReadable', $validator->getMessages());
+        self::assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 }

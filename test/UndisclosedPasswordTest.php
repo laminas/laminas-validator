@@ -16,44 +16,36 @@ use Psr\Http\Message\ResponseInterface;
 use ReflectionClass;
 use stdClass;
 
-use function assert;
 use function random_int;
 use function sha1;
 use function sprintf;
 use function strtoupper;
 use function substr;
 
-class UndisclosedPasswordTest extends TestCase
+/** @covers \Laminas\Validator\UndisclosedPassword */
+final class UndisclosedPasswordTest extends TestCase
 {
-    private ?MockObject $httpClient;
+    /** @var ClientInterface&MockObject */
+    private ClientInterface $httpClient;
 
-    private MockObject $httpRequest;
+    /** @var RequestFactoryInterface&MockObject */
+    private RequestFactoryInterface $httpRequest;
 
-    private MockObject $httpResponse;
+    /** @var ResponseInterface&MockObject */
+    private ResponseInterface $httpResponse;
 
     private UndisclosedPassword $validator;
 
-    /**
-     * @inheritDoc
-     */
+    /** {@inheritDoc} */
     protected function setUp(): void
     {
-        $this->httpClient   = $this->getMockBuilder(ClientInterface::class)
-            ->getMockForAbstractClass();
-        $this->httpRequest  = $this->getMockBuilder(RequestFactoryInterface::class)
-            ->getMockForAbstractClass();
-        $this->httpResponse = $this->getMockBuilder(ResponseInterface::class)
-            ->getMockForAbstractClass();
+        parent::setUp();
+
+        $this->httpClient   = $this->createMock(ClientInterface::class);
+        $this->httpRequest  = $this->createMock(RequestFactoryInterface::class);
+        $this->httpResponse = $this->createMock(ResponseInterface::class);
 
         $this->validator = new UndisclosedPassword($this->httpClient, $this->httpRequest);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function tearDown(): void
-    {
-        $this->httpClient = null;
     }
 
     /**
@@ -63,6 +55,7 @@ class UndisclosedPasswordTest extends TestCase
     public function getConstant(string $constant, $classOrInstance)
     {
         $r = new ReflectionClass($classOrInstance);
+
         return $r->getConstant($constant);
     }
 
@@ -70,9 +63,9 @@ class UndisclosedPasswordTest extends TestCase
      * Data provider returning good, strong and unseen
      * passwords to be used in the validator.
      *
-     * @return array
+     * @psalm-return array<list<string>>
      */
-    public function goodPasswordProvider()
+    public function goodPasswordProvider(): array
     {
         return [
             ['ABi$B47es.Pfg3n9PjPi'],
@@ -85,9 +78,9 @@ class UndisclosedPasswordTest extends TestCase
      *
      * @see https://en.wikipedia.org/wiki/List_of_the_most_common_passwords
      *
-     * @return array
+     * @psalm-return array<list<string>>
      */
-    public function seenPasswordProvider()
+    public function seenPasswordProvider(): array
     {
         return [
             ['123456'],
@@ -107,24 +100,26 @@ class UndisclosedPasswordTest extends TestCase
      */
     public function testValidationFailsForInvalidInput(): void
     {
-        $this->assertFalse($this->validator->isValid(true));
-        $this->assertFalse($this->validator->isValid(new stdClass()));
-        $this->assertFalse($this->validator->isValid(['foo']));
+        self::assertFalse($this->validator->isValid(true));
+        self::assertFalse($this->validator->isValid(new stdClass()));
+        self::assertFalse($this->validator->isValid(['foo']));
     }
 
     /**
      * Test that a given password was not found in the HIBP
      * API service.
      *
-     * @param string $password
      * @covers \Laminas\Validator\UndisclosedPassword
      * @dataProvider goodPasswordProvider
      */
-    public function testStrongUnseenPasswordsPassValidation($password): void
+    public function testStrongUnseenPasswordsPassValidation(string $password): void
     {
-        $this->httpResponse->method('getBody')
-            ->willReturnCallback(function () {
+        $this->httpResponse
+            ->expects(self::once())
+            ->method('getBody')
+            ->willReturnCallback(function (): string {
                 $hash = sha1('laminas-validator');
+
                 return sprintf(
                     '%s:%d',
                     strtoupper(substr($hash, $this->getConstant(
@@ -135,28 +130,30 @@ class UndisclosedPasswordTest extends TestCase
                 );
             });
 
-        assert($this->httpClient instanceof MockObject);
-
-        $this->httpClient->method('sendRequest')
+        $this->httpClient
+            ->expects(self::once())
+            ->method('sendRequest')
             ->willReturn($this->httpResponse);
 
-        $this->assertTrue($this->validator->isValid($password));
+        self::assertTrue($this->validator->isValid($password));
     }
 
     /**
      * Test that a given password was already seen in the HIBP
      * AP service.
      *
-     * @param string $password
      * @dataProvider seenPasswordProvider
      * @covers \Laminas\Validator\UndisclosedPassword
      * @covers \Laminas\Validator\AbstractValidator
      */
-    public function testBreachedPasswordsDoNotPassValidation($password): void
+    public function testBreachedPasswordsDoNotPassValidation(string $password): void
     {
-        $this->httpResponse->method('getBody')
-            ->willReturnCallback(function () use ($password) {
+        $this->httpResponse
+            ->expects(self::once())
+            ->method('getBody')
+            ->willReturnCallback(function () use ($password): string {
                 $hash = sha1($password);
+
                 return sprintf(
                     '%s:%d',
                     strtoupper(substr($hash, $this->getConstant(
@@ -167,33 +164,34 @@ class UndisclosedPasswordTest extends TestCase
                 );
             });
 
-        assert($this->httpClient instanceof MockObject);
-
-        $this->httpClient->method('sendRequest')
+        $this->httpClient
+            ->expects(self::once())
+            ->method('sendRequest')
             ->willReturn($this->httpResponse);
 
-        $this->assertFalse($this->validator->isValid($password));
+        self::assertFalse($this->validator->isValid($password));
     }
 
     /**
      * Testing we are setting error messages when a password was found
      * in the breach database.
      *
-     * @param string $password
      * @depends testBreachedPasswordsDoNotPassValidation
      * @dataProvider seenPasswordProvider
      * @covers \Laminas\Validator\UndisclosedPassword
      */
-    public function testBreachedPasswordReturnErrorMessages($password): void
+    public function testBreachedPasswordReturnErrorMessages(string $password): void
     {
-        assert($this->httpClient instanceof MockObject);
-
-        $this->httpClient->method('sendRequest')
-            ->will($this->throwException(new Exception('foo')));
+        $this->httpClient
+            ->expects(self::once())
+            ->method('sendRequest')
+            ->willThrowException(new Exception('foo'));
 
         $this->expectException(Exception::class);
+
         $this->validator->isValid($password);
-        $this->fail('Expected exception was not thrown');
+
+        self::fail('Expected exception was not thrown');
     }
 
     /**
@@ -202,31 +200,30 @@ class UndisclosedPasswordTest extends TestCase
      */
     public function testMessageTemplatesAreInitialized(): void
     {
-        $this->assertNotEmpty($this->validator->getMessageTemplates());
+        self::assertNotEmpty($this->validator->getMessageTemplates());
     }
 
     /**
      * Testing that we capture any failures when trying to connect with
      * the HIBP web service.
      *
-     * @param string $password
      * @depends testBreachedPasswordsDoNotPassValidation
      * @dataProvider seenPasswordProvider
      * @covers \Laminas\Validator\UndisclosedPassword
      */
-    public function testValidationDegradesGracefullyWhenNoConnectionCanBeMade($password): void
+    public function testValidationDegradesGracefullyWhenNoConnectionCanBeMade(string $password): void
     {
-        $clientException = $this->getMockBuilder(HttpClientException::class)
-            ->getMock();
+        $clientException = $this->createMock(HttpClientException::class);
 
-        assert($this->httpClient instanceof MockObject);
-
-        $this->httpClient->method('sendRequest')
-            ->will($this->throwException($clientException));
+        $this->httpClient
+            ->expects(self::once())
+            ->method('sendRequest')
+            ->willThrowException($clientException);
 
         $this->expectException(ClientExceptionInterface::class);
 
         $this->validator->isValid($password);
-        $this->fail('Expected ClientException was not thrown');
+
+        self::fail('Expected ClientException was not thrown');
     }
 }

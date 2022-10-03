@@ -28,18 +28,19 @@ use function strstr;
 use const E_USER_NOTICE;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\EmailAddress
  */
-class EmailAddressTest extends TestCase
+final class EmailAddressTest extends TestCase
 {
-    /** @var EmailAddress */
-    protected $validator;
+    private EmailAddress $validator;
 
-    /** @var bool */
-    public $multipleOptionsDetected;
+    private bool $multipleOptionsDetected;
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->validator = new EmailAddress();
     }
 
@@ -48,7 +49,7 @@ class EmailAddressTest extends TestCase
      */
     public function testBasic(): void
     {
-        $this->assertTrue($this->validator->isValid('username@example.com'));
+        self::assertTrue($this->validator->isValid('username@example.com'));
     }
 
     /**
@@ -57,7 +58,8 @@ class EmailAddressTest extends TestCase
     public function testLocalhostAllowed(): void
     {
         $validator = new EmailAddress(Hostname::ALLOW_ALL);
-        $this->assertTrue($validator->isValid('username@localhost'));
+
+        self::assertTrue($validator->isValid('username@localhost'));
     }
 
     /**
@@ -66,7 +68,8 @@ class EmailAddressTest extends TestCase
     public function testLocalDomainAllowed(): void
     {
         $validator = new EmailAddress(Hostname::ALLOW_ALL);
-        $this->assertTrue($validator->isValid('username@localhost.localdomain'));
+
+        self::assertTrue($validator->isValid('username@localhost.localdomain'));
     }
 
     /**
@@ -81,7 +84,7 @@ class EmailAddressTest extends TestCase
         ];
         foreach ($valuesExpected as $element) {
             foreach ($element[2] as $input) {
-                $this->assertEquals($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()));
+                self::assertSame($element[1], $validator->isValid($input), implode("\n", $validator->getMessages()));
             }
         }
     }
@@ -91,10 +94,12 @@ class EmailAddressTest extends TestCase
      */
     public function testLocalPartMissing(): void
     {
-        $this->assertFalse($this->validator->isValid('@example.com'));
+        self::assertFalse($this->validator->isValid('@example.com'));
+
         $messages = $this->validator->getMessages();
-        $this->assertCount(1, $messages);
-        $this->assertStringContainsString('local-part@hostname', current($messages));
+
+        self::assertCount(1, $messages);
+        self::assertStringContainsString('local-part@hostname', current($messages));
     }
 
     /**
@@ -102,20 +107,20 @@ class EmailAddressTest extends TestCase
      */
     public function testLocalPartInvalid(): void
     {
-        $this->assertFalse($this->validator->isValid('Some User@example.com'));
+        self::assertFalse($this->validator->isValid('Some User@example.com'));
 
         $messages = $this->validator->getMessages();
 
-        $this->assertCount(3, $messages);
+        self::assertCount(3, $messages);
 
-        $this->assertStringContainsString('Some User', current($messages));
-        $this->assertStringContainsString('dot-atom', current($messages));
+        self::assertStringContainsString('Some User', current($messages));
+        self::assertStringContainsString('dot-atom', current($messages));
 
-        $this->assertStringContainsString('Some User', next($messages));
-        $this->assertStringContainsString('quoted-string', current($messages));
+        self::assertStringContainsString('Some User', next($messages));
+        self::assertStringContainsString('quoted-string', current($messages));
 
-        $this->assertStringContainsString('Some User', next($messages));
-        $this->assertStringContainsString('not a valid local part', current($messages));
+        self::assertStringContainsString('Some User', next($messages));
+        self::assertStringContainsString('not a valid local part', current($messages));
     }
 
     /**
@@ -123,12 +128,12 @@ class EmailAddressTest extends TestCase
      */
     public function testLocalPartQuotedString(): void
     {
-        $this->assertTrue($this->validator->isValid('"Some User"@example.com'));
+        self::assertTrue($this->validator->isValid('"Some User"@example.com'));
 
         $messages = $this->validator->getMessages();
 
-        $this->assertIsArray($messages);
-        $this->assertCount(0, $messages);
+        self::assertIsArray($messages);
+        self::assertCount(0, $messages);
     }
 
     /**
@@ -136,10 +141,12 @@ class EmailAddressTest extends TestCase
      */
     public function testHostnameInvalid(): void
     {
-        $this->assertFalse($this->validator->isValid('username@ example . com'));
+        self::assertFalse($this->validator->isValid('username@ example . com'));
+
         $messages = $this->validator->getMessages();
-        $this->assertGreaterThanOrEqual(1, count($messages));
-        $this->assertStringContainsString('not a valid hostname', current($messages));
+
+        self::assertGreaterThanOrEqual(1, count($messages));
+        self::assertStringContainsString('not a valid hostname', current($messages));
     }
 
     /**
@@ -170,8 +177,10 @@ class EmailAddressTest extends TestCase
         ];
 
         foreach ($emailAddresses as $input) {
-            $this->assertTrue($this->validator->isValid($input), "$input failed to pass validation:\n"
-                            . implode("\n", $this->validator->getMessages()));
+            self::assertTrue(
+                $this->validator->isValid($input),
+                "$input failed to pass validation:\n" . implode("\n", $this->validator->getMessages()),
+            );
         }
     }
 
@@ -191,8 +200,10 @@ class EmailAddressTest extends TestCase
         ];
 
         foreach ($emailAddresses as $input) {
-            $this->assertFalse($this->validator->isValid($input), "$input failed to pass validation:\n"
-                            . implode("\n", $this->validator->getMessages()));
+            self::assertFalse(
+                $this->validator->isValid($input),
+                "$input failed to pass validation:\n" . implode("\n", $this->validator->getMessages()),
+            );
         }
     }
 
@@ -202,12 +213,14 @@ class EmailAddressTest extends TestCase
      */
     public function testEmailDisplay(): void
     {
-        $this->assertFalse($this->validator->isValid('User Name <username@example.com>'));
+        self::assertFalse($this->validator->isValid('User Name <username@example.com>'));
+
         $messages = $this->validator->getMessages();
-        $this->assertGreaterThanOrEqual(3, count($messages));
-        $this->assertStringContainsString('not a valid hostname', current($messages));
-        $this->assertStringContainsString('cannot match TLD', next($messages));
-        $this->assertStringContainsString('does not appear to be a valid local network name', next($messages));
+
+        self::assertGreaterThanOrEqual(3, count($messages));
+        self::assertStringContainsString('not a valid hostname', current($messages));
+        self::assertStringContainsString('cannot match TLD', next($messages));
+        self::assertStringContainsString('does not appear to be a valid local network name', next($messages));
     }
 
     /**
@@ -248,7 +261,7 @@ class EmailAddressTest extends TestCase
      */
     public function testBasicValid(string $value): void
     {
-        $this->assertTrue(
+        self::assertTrue(
             $this->validator->isValid($value),
             sprintf(
                 '%s failed validation: %s',
@@ -292,7 +305,7 @@ class EmailAddressTest extends TestCase
      */
     public function testBasicInvalid(string $value): void
     {
-        $this->assertFalse($this->validator->isValid($value));
+        self::assertFalse($this->validator->isValid($value));
     }
 
     /**
@@ -311,7 +324,7 @@ class EmailAddressTest extends TestCase
         ];
 
         foreach ($emailAddresses as $input) {
-            $this->assertTrue($this->validator->isValid($input));
+            self::assertTrue($this->validator->isValid($input));
         }
     }
 
@@ -333,7 +346,7 @@ class EmailAddressTest extends TestCase
         ];
 
         foreach ($emailAddresses as $input) {
-            $this->assertTrue($validator->isValid($input));
+            self::assertTrue($validator->isValid($input));
         }
     }
 
@@ -348,7 +361,7 @@ class EmailAddressTest extends TestCase
 
         // Are MX checks supported by this system?
         if (! $validator->isMxSupported()) {
-            $this->markTestSkipped('Testing MX records is not supported with this configuration');
+            self::markTestSkipped('Testing MX records is not supported with this configuration');
         }
 
         $valuesExpected = [
@@ -358,7 +371,7 @@ class EmailAddressTest extends TestCase
 
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
+                self::assertSame($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
             }
         }
 
@@ -368,7 +381,7 @@ class EmailAddressTest extends TestCase
         $validator->useMxCheck(true);
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
+                self::assertSame($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
             }
         }
     }
@@ -387,20 +400,20 @@ class EmailAddressTest extends TestCase
 
         // Are MX checks supported by this system?
         if (! $validator->isMxSupported()) {
-            $this->markTestSkipped('Testing MX records is not supported with this configuration');
+            self::markTestSkipped('Testing MX records is not supported with this configuration');
         }
 
         $email = 'good@www.getlaminas.org';
         $host  = preg_replace('/.*@/', null, $email);
 
         //Assert that email host contains no MX records.
-        $this->assertFalse(checkdnsrr($host, 'MX'), 'Email host contains MX records');
+        self::assertFalse(checkdnsrr($host, 'MX'), 'Email host contains MX records');
 
         //Asert that email host contains at least one A record.
-        $this->assertTrue(checkdnsrr($host, 'A'), 'Email host contains no A records');
+        self::assertTrue(checkdnsrr($host, 'A'), 'Email host contains no A records');
 
         //Assert that validtor falls back to A record.
-        $this->assertTrue($validator->isValid($email), implode("\n", $validator->getMessages()));
+        self::assertTrue($validator->isValid($email), implode("\n", $validator->getMessages()));
     }
 
     /**
@@ -418,7 +431,7 @@ class EmailAddressTest extends TestCase
 
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
+                self::assertSame($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
             }
         }
 
@@ -430,7 +443,7 @@ class EmailAddressTest extends TestCase
 
         foreach ($valuesExpected as $element) {
             foreach ($element[1] as $input) {
-                $this->assertEquals($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
+                self::assertSame($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
             }
         }
     }
@@ -440,7 +453,7 @@ class EmailAddressTest extends TestCase
      */
     public function testGetMessages(): void
     {
-        $this->assertEquals([], $this->validator->getMessages());
+        self::assertSame([], $this->validator->getMessages());
     }
 
     /**
@@ -449,7 +462,7 @@ class EmailAddressTest extends TestCase
     public function testHostnameValidatorMessagesShouldBeTranslated(): void
     {
         if (! extension_loaded('intl')) {
-            $this->markTestSkipped('ext/intl not enabled');
+            self::markTestSkipped('ext/intl not enabled');
         }
 
         $hostnameValidator    = new Hostname();
@@ -477,12 +490,15 @@ class EmailAddressTest extends TestCase
         $found    = false;
         foreach ($messages as $code => $message) {
             if (array_key_exists($code, $translations)) {
-                $this->assertEquals($translations[$code], $message);
+                self::assertSame($translations[$code], $message);
+
                 $found = true;
+
                 break;
             }
         }
-        $this->assertTrue($found);
+
+        self::assertTrue($found);
     }
 
     /**
@@ -496,8 +512,9 @@ class EmailAddressTest extends TestCase
             'bob@verylongdomainsupercalifragilisticexpialidociousspoonfulofsugarverylongdomainsupercalifragilisticexpialidociousspoonfulofsugarverylongdomainsupercalifragilisticexpialidociousspoonfulofsugarverylongdomainsupercalifragilisticexpialidociousspoonfulofsugarexpialidociousspoonfulofsugar.com',
         ];
         // @codingStandardsIgnoreEnd
+
         foreach ($emailAddresses as $input) {
-            $this->assertFalse($this->validator->isValid($input));
+            self::assertFalse($this->validator->isValid($input));
         }
     }
 
@@ -506,7 +523,7 @@ class EmailAddressTest extends TestCase
      */
     public function testNonStringValidation(): void
     {
-        $this->assertFalse($this->validator->isValid([1 => 1]));
+        self::assertFalse($this->validator->isValid([1 => 1]));
     }
 
     /**
@@ -531,13 +548,15 @@ class EmailAddressTest extends TestCase
         $found    = false;
         foreach ($messages as $code => $message) {
             if (array_key_exists($code, $translations)) {
-                $this->assertEquals($translations[$code], $message);
+                self::assertSame($translations[$code], $message);
+
                 $found = true;
+
                 break;
             }
         }
 
-        $this->assertTrue($found);
+        self::assertTrue($found);
     }
 
     /**
@@ -549,18 +568,18 @@ class EmailAddressTest extends TestCase
         $validator = new EmailAddress();
         $options   = $validator->getOptions();
 
-        $this->assertEquals(Hostname::ALLOW_DNS, $options['allow']);
-        $this->assertFalse($options['useMxCheck']);
+        self::assertSame(Hostname::ALLOW_DNS, $options['allow']);
+        self::assertFalse($options['useMxCheck']);
 
         try {
             $validator = new EmailAddress(Hostname::ALLOW_ALL, true, new Hostname(Hostname::ALLOW_ALL));
             $options   = $validator->getOptions();
 
-            $this->assertEquals(Hostname::ALLOW_ALL, $options['allow']);
-            $this->assertTrue($options['useMxCheck']);
+            self::assertSame(Hostname::ALLOW_ALL, $options['allow']);
+            self::assertTrue($options['useMxCheck']);
             set_error_handler($handler);
         } catch (InvalidArgumentException $e) {
-            $this->markTestSkipped('MX not available on this system');
+            self::markTestSkipped('MX not available on this system');
         }
     }
 
@@ -571,12 +590,14 @@ class EmailAddressTest extends TestCase
     {
         $this->validator->setOptions(['messages' => [EmailAddress::INVALID => 'TestMessage']]);
         $messages = $this->validator->getMessageTemplates();
-        $this->assertEquals('TestMessage', $messages[EmailAddress::INVALID]);
+
+        self::assertSame('TestMessage', $messages[EmailAddress::INVALID]);
 
         $oldHostname = $this->validator->getHostnameValidator();
         $this->validator->setOptions(['hostnameValidator' => new Hostname(Hostname::ALLOW_ALL)]);
         $hostname = $this->validator->getHostnameValidator();
-        $this->assertNotEquals($oldHostname, $hostname);
+
+        self::assertNotSame($oldHostname, $hostname);
     }
 
     /**
@@ -585,20 +606,25 @@ class EmailAddressTest extends TestCase
     public function testSetSingleMessage(): void
     {
         $messages = $this->validator->getMessageTemplates();
-        $this->assertNotEquals('TestMessage', $messages[EmailAddress::INVALID]);
+
+        self::assertNotSame('TestMessage', $messages[EmailAddress::INVALID]);
+
         $this->validator->setMessage('TestMessage', EmailAddress::INVALID);
         $messages = $this->validator->getMessageTemplates();
-        $this->assertEquals('TestMessage', $messages[EmailAddress::INVALID]);
+
+        self::assertSame('TestMessage', $messages[EmailAddress::INVALID]);
     }
 
     public function testSetSingleMessageViaOptions(): void
     {
         $validator = new EmailAddress(['message' => 'TestMessage']);
+
         foreach ($validator->getMessageTemplates() as $message) {
-            $this->assertEquals('TestMessage', $message);
+            self::assertSame('TestMessage', $message);
         }
+
         foreach ($validator->getHostnameValidator()->getMessageTemplates() as $message) {
-            $this->assertEquals('TestMessage', $message);
+            self::assertSame('TestMessage', $message);
         }
     }
 
@@ -606,7 +632,8 @@ class EmailAddressTest extends TestCase
     {
         $validator = new EmailAddress(['messages' => [EmailAddress::INVALID => 'TestMessage']]);
         $messages  = $validator->getMessageTemplates();
-        $this->assertEquals('TestMessage', $messages[EmailAddress::INVALID]);
+
+        self::assertSame('TestMessage', $messages[EmailAddress::INVALID]);
     }
 
     /**
@@ -614,7 +641,7 @@ class EmailAddressTest extends TestCase
      */
     public function testGetValidateMx(): void
     {
-        $this->assertFalse($this->validator->getMxCheck());
+        self::assertFalse($this->validator->getMxCheck());
     }
 
     /**
@@ -622,7 +649,7 @@ class EmailAddressTest extends TestCase
      */
     public function testGetDeepMxCheck(): void
     {
-        $this->assertFalse($this->validator->getDeepMxCheck());
+        self::assertFalse($this->validator->getDeepMxCheck());
     }
 
     /**
@@ -633,13 +660,17 @@ class EmailAddressTest extends TestCase
     public function testSetMultipleMessages(): void
     {
         $messages = $this->validator->getMessageTemplates();
-        $this->assertNotEquals('TestMessage', $messages[EmailAddress::INVALID]);
+
+        self::assertNotSame('TestMessage', $messages[EmailAddress::INVALID]);
+
         $this->validator->setMessage('TestMessage');
+
         foreach ($this->validator->getMessageTemplates() as $message) {
-            $this->assertEquals('TestMessage', $message);
+            self::assertSame('TestMessage', $message);
         }
+
         foreach ($this->validator->getHostnameValidator()->getMessageTemplates() as $message) {
-            $this->assertEquals('TestMessage', $message);
+            self::assertSame('TestMessage', $message);
         }
     }
 
@@ -648,7 +679,7 @@ class EmailAddressTest extends TestCase
      */
     public function testGetDomainCheck(): void
     {
-        $this->assertTrue($this->validator->getDomainCheck());
+        self::assertTrue($this->validator->getDomainCheck());
     }
 
     public function errorHandler(int $errno, string $errstr): void
@@ -664,9 +695,9 @@ class EmailAddressTest extends TestCase
      */
     public function testEmailAddressesWithTrailingDotInHostPartAreRejected(): void
     {
-        $this->assertFalse($this->validator->isValid('example@gmail.com.'));
-        $this->assertFalse($this->validator->isValid('test@test.co.'));
-        $this->assertFalse($this->validator->isValid('test@test.co.za.'));
+        self::assertFalse($this->validator->isValid('example@gmail.com.'));
+        self::assertFalse($this->validator->isValid('test@test.co.'));
+        self::assertFalse($this->validator->isValid('test@test.co.za.'));
     }
 
     /**
@@ -675,13 +706,15 @@ class EmailAddressTest extends TestCase
     public function testNotSetHostnameValidator(): void
     {
         $hostname = $this->validator->getHostnameValidator();
-        $this->assertInstanceOf(Hostname::class, $hostname);
+
+        self::assertInstanceOf(Hostname::class, $hostname);
     }
 
     public function testIsMxSupported(): void
     {
         $validator = new EmailAddress(['useMxCheck' => true, 'allow' => Hostname::ALLOW_ALL]);
-        $this->assertIsBool($validator->isMxSupported());
+
+        self::assertIsBool($validator->isMxSupported());
     }
 
     /**
@@ -694,17 +727,19 @@ class EmailAddressTest extends TestCase
         $validator = new EmailAddress(['useMxCheck' => true, 'allow' => Hostname::ALLOW_ALL]);
 
         if (! $validator->isMxSupported()) {
-            $this->markTestSkipped('Testing MX records is not supported with this configuration');
+            self::markTestSkipped('Testing MX records is not supported with this configuration');
         }
 
-        $this->assertTrue($validator->isValid('john.doe@gmail.com'));
+        self::assertTrue($validator->isValid('john.doe@gmail.com'));
+
         $result = $validator->getMXRecord();
-        $this->assertNotEmpty($result);
+
+        self::assertNotEmpty($result);
     }
 
     public function testEqualsMessageTemplates(): void
     {
-        $this->assertSame(
+        self::assertSame(
             [
                 EmailAddress::INVALID,
                 EmailAddress::INVALID_FORMAT,
@@ -718,7 +753,7 @@ class EmailAddressTest extends TestCase
             ],
             array_keys($this->validator->getMessageTemplates())
         );
-        $this->assertEquals($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
+        self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
@@ -727,8 +762,9 @@ class EmailAddressTest extends TestCase
             'hostname'  => 'hostname',
             'localPart' => 'localPart',
         ];
-        $this->assertSame($messageVariables, $this->validator->getOption('messageVariables'));
-        $this->assertEquals(array_keys($messageVariables), $this->validator->getMessageVariables());
+
+        self::assertSame($messageVariables, $this->validator->getOption('messageVariables'));
+        self::assertSame(array_keys($messageVariables), $this->validator->getMessageVariables());
     }
 
     /**
@@ -762,8 +798,10 @@ class EmailAddressTest extends TestCase
         }
 
         foreach ($emailAddresses as $input) {
-            $this->assertTrue($validator->isValid($input), "$input failed to pass validation:\n"
-                            . implode("\n", $validator->getMessages()));
+            self::assertTrue(
+                $validator->isValid($input),
+                "$input failed to pass validation:\n" . implode("\n", $validator->getMessages()),
+            );
         }
     }
 
@@ -802,7 +840,7 @@ class EmailAddressTest extends TestCase
         }
 
         foreach ($emailAddresses as $input) {
-            $this->assertFalse($validator->isValid($input), implode("\n", $this->validator->getMessages()) . $input);
+            self::assertFalse($validator->isValid($input), implode("\n", $this->validator->getMessages()) . $input);
         }
     }
 
@@ -812,50 +850,65 @@ class EmailAddressTest extends TestCase
     public function testReservedIpRangeValidation(): void
     {
         $validator = new TestAsset\EmailValidatorWithExposedIsReserved();
+
         // 0.0.0.0/8
-        $this->assertTrue($validator->isReserved('0.0.0.0'));
-        $this->assertTrue($validator->isReserved('0.255.255.255'));
+        self::assertTrue($validator->isReserved('0.0.0.0'));
+        self::assertTrue($validator->isReserved('0.255.255.255'));
+
         // 10.0.0.0/8
-        $this->assertTrue($validator->isReserved('10.0.0.0'));
-        $this->assertTrue($validator->isReserved('10.255.255.255'));
+        self::assertTrue($validator->isReserved('10.0.0.0'));
+        self::assertTrue($validator->isReserved('10.255.255.255'));
+
         // 127.0.0.0/8
-        $this->assertTrue($validator->isReserved('127.0.0.0'));
-        $this->assertTrue($validator->isReserved('127.255.255.255'));
+        self::assertTrue($validator->isReserved('127.0.0.0'));
+        self::assertTrue($validator->isReserved('127.255.255.255'));
+
         // 100.64.0.0/10
-        $this->assertTrue($validator->isReserved('100.64.0.0'));
-        $this->assertTrue($validator->isReserved('100.127.255.255'));
+        self::assertTrue($validator->isReserved('100.64.0.0'));
+        self::assertTrue($validator->isReserved('100.127.255.255'));
+
         // 172.16.0.0/12
-        $this->assertTrue($validator->isReserved('172.16.0.0'));
-        $this->assertTrue($validator->isReserved('172.31.255.255'));
+        self::assertTrue($validator->isReserved('172.16.0.0'));
+        self::assertTrue($validator->isReserved('172.31.255.255'));
+
         // 198.18.0.0./15
-        $this->assertTrue($validator->isReserved('198.18.0.0'));
-        $this->assertTrue($validator->isReserved('198.19.255.255'));
+        self::assertTrue($validator->isReserved('198.18.0.0'));
+        self::assertTrue($validator->isReserved('198.19.255.255'));
+
         // 169.254.0.0/16
-        $this->assertTrue($validator->isReserved('169.254.0.0'));
-        $this->assertTrue($validator->isReserved('169.254.255.255'));
+        self::assertTrue($validator->isReserved('169.254.0.0'));
+        self::assertTrue($validator->isReserved('169.254.255.255'));
+
         // 192.168.0.0/16
-        $this->assertTrue($validator->isReserved('192.168.0.0'));
-        $this->assertTrue($validator->isReserved('192.168.255.25'));
+        self::assertTrue($validator->isReserved('192.168.0.0'));
+        self::assertTrue($validator->isReserved('192.168.255.25'));
+
         // 192.0.2.0/24
-        $this->assertTrue($validator->isReserved('192.0.2.0'));
-        $this->assertTrue($validator->isReserved('192.0.2.255'));
+        self::assertTrue($validator->isReserved('192.0.2.0'));
+        self::assertTrue($validator->isReserved('192.0.2.255'));
+
         // 192.88.99.0/24
-        $this->assertTrue($validator->isReserved('192.88.99.0'));
-        $this->assertTrue($validator->isReserved('192.88.99.255'));
+        self::assertTrue($validator->isReserved('192.88.99.0'));
+        self::assertTrue($validator->isReserved('192.88.99.255'));
+
         // 198.51.100.0/24
-        $this->assertTrue($validator->isReserved('198.51.100.0'));
-        $this->assertTrue($validator->isReserved('198.51.100.255'));
+        self::assertTrue($validator->isReserved('198.51.100.0'));
+        self::assertTrue($validator->isReserved('198.51.100.255'));
+
         // 203.0.113.0/24
-        $this->assertTrue($validator->isReserved('203.0.113.0'));
-        $this->assertTrue($validator->isReserved('203.0.113.255'));
+        self::assertTrue($validator->isReserved('203.0.113.0'));
+        self::assertTrue($validator->isReserved('203.0.113.255'));
+
         // 224.0.0.0/4
-        $this->assertTrue($validator->isReserved('224.0.0.0'));
-        $this->assertTrue($validator->isReserved('239.255.255.255'));
+        self::assertTrue($validator->isReserved('224.0.0.0'));
+        self::assertTrue($validator->isReserved('239.255.255.255'));
+
         // 240.0.0.0/4
-        $this->assertTrue($validator->isReserved('240.0.0.0'));
-        $this->assertTrue($validator->isReserved('255.255.255.254'));
+        self::assertTrue($validator->isReserved('240.0.0.0'));
+        self::assertTrue($validator->isReserved('255.255.255.254'));
+
         // 255.255.255.255/32
-        $this->assertTrue($validator->isReserved('255.255.55.255'));
+        self::assertTrue($validator->isReserved('255.255.55.255'));
     }
 
     /**
@@ -864,25 +917,27 @@ class EmailAddressTest extends TestCase
     public function testIpRangeValidationOnRangesNoLongerMarkedAsReserved(): void
     {
         $validator = new TestAsset\EmailValidatorWithExposedIsReserved();
+
         // 128.0.0.0/16
-        $this->assertFalse($validator->isReserved('128.0.0.0'));
-        $this->assertFalse($validator->isReserved('128.0.255.255'));
+        self::assertFalse($validator->isReserved('128.0.0.0'));
+        self::assertFalse($validator->isReserved('128.0.255.255'));
+
         // 191.255.0.0/16
-        $this->assertFalse($validator->isReserved('191.255.0.0'));
-        $this->assertFalse($validator->isReserved('191.255.255.255'));
+        self::assertFalse($validator->isReserved('191.255.0.0'));
+        self::assertFalse($validator->isReserved('191.255.255.255'));
+
         // 223.255.255.0/24
-        $this->assertFalse($validator->isReserved('223.255.255.0'));
-        $this->assertFalse($validator->isReserved('223.255.255.255'));
+        self::assertFalse($validator->isReserved('223.255.255.0'));
+        self::assertFalse($validator->isReserved('223.255.255.255'));
     }
 
     /**
      * @throws PHPUnit_Framework_SkippedTestError
-     * @return void
      */
-    private function skipIfOnlineTestsDisabled()
+    private function skipIfOnlineTestsDisabled(): void
     {
         if (! getenv('TESTS_LAMINAS_VALIDATOR_ONLINE_ENABLED')) {
-            $this->markTestSkipped('Testing MX records has been disabled');
+            self::markTestSkipped('Testing MX records has been disabled');
         }
     }
 
@@ -890,7 +945,8 @@ class EmailAddressTest extends TestCase
     {
         $validator = new EmailAddress();
         $validator->useDomainCheck(false);
-        $this->assertFalse($validator->getDomainCheck());
+
+        self::assertFalse($validator->getDomainCheck());
     }
 
     public function testWillNotCheckEmptyDeepMxChecks(): void
@@ -900,6 +956,6 @@ class EmailAddressTest extends TestCase
             'useDeepMxCheck' => true,
         ]);
 
-        $this->assertFalse($validator->isValid('jon@example.com'));
+        self::assertFalse($validator->isValid('jon@example.com'));
     }
 }

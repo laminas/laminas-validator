@@ -13,9 +13,10 @@ use function array_merge;
 use function implode;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\Iban
  */
-class IbanTest extends TestCase
+final class IbanTest extends TestCase
 {
     /**
      * @psalm-return array<array-key, array{0: string, 1: bool}>
@@ -104,7 +105,8 @@ class IbanTest extends TestCase
     public function testBasic(string $iban, bool $expected): void
     {
         $validator = new IbanValidator();
-        $this->assertEquals(
+
+        self::assertSame(
             $expected,
             $validator->isValid($iban),
             implode("\n", array_merge($validator->getMessages()))
@@ -114,39 +116,48 @@ class IbanTest extends TestCase
     public function testSettingAndGettingCountryCode(): void
     {
         $validator = new IbanValidator();
-
         $validator->setCountryCode('DE');
-        $this->assertEquals('DE', $validator->getCountryCode());
+
+        self::assertSame('DE', $validator->getCountryCode());
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('ISO 3166-1');
+
         $validator->setCountryCode('foo');
     }
 
     public function testInstanceWithCountryCode(): void
     {
         $validator = new IbanValidator(['country_code' => 'AT']);
-        $this->assertEquals('AT', $validator->getCountryCode());
+
+        self::assertSame('AT', $validator->getCountryCode());
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('ISO 3166-1');
+
         new IbanValidator(['country_code' => 'BAR']);
     }
 
     public function testSepaNotSupportedCountryCode(): void
     {
         $validator = new IbanValidator();
-        $this->assertTrue($validator->isValid('DO17552081023122561803924090'));
+
+        self::assertTrue($validator->isValid('DO17552081023122561803924090'));
+
         $validator->setAllowNonSepa(false);
-        $this->assertFalse($validator->isValid('DO17552081023122561803924090'));
+
+        self::assertFalse($validator->isValid('DO17552081023122561803924090'));
+
         $validator->setAllowNonSepa(true);
-        $this->assertTrue($validator->isValid('DO17552081023122561803924090'));
+
+        self::assertTrue($validator->isValid('DO17552081023122561803924090'));
     }
 
     public function testIbanNotSupportedCountryCode(): void
     {
         $validator = new IbanValidator();
-        $this->assertFalse($validator->isValid('US611904300234573201'));
+
+        self::assertFalse($validator->isValid('US611904300234573201'));
     }
 
     /**
@@ -155,13 +166,15 @@ class IbanTest extends TestCase
     public function testIbanDetectionWithoutCountryCode(): void
     {
         $validator = new IbanValidator();
-        $this->assertTrue($validator->isValid('AT611904300234573201'));
+
+        self::assertTrue($validator->isValid('AT611904300234573201'));
     }
 
     public function testEqualsMessageTemplates(): void
     {
         $validator = new IbanValidator();
-        $this->assertSame(
+
+        self::assertSame(
             [
                 IbanValidator::NOTSUPPORTED,
                 IbanValidator::SEPANOTSUPPORTED,
@@ -170,14 +183,15 @@ class IbanTest extends TestCase
             ],
             array_keys($validator->getMessageTemplates())
         );
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testConstructorAllowsSettingOptionsViaOptionsArray(): void
     {
         $validator = new IbanValidator(['country_code' => 'AT', 'allow_non_sepa' => false]);
-        $this->assertSame('AT', $validator->getCountryCode());
-        $this->assertFalse($validator->allowNonSepa());
+
+        self::assertSame('AT', $validator->getCountryCode());
+        self::assertFalse($validator->allowNonSepa());
     }
 
     /**
@@ -205,6 +219,7 @@ class IbanTest extends TestCase
     public function testIsValidReturnsFalseForNonStringValue($value): void
     {
         $validator = new IbanValidator();
-        $this->assertFalse($validator->isValid([]));
+
+        self::assertFalse($validator->isValid([]));
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Laminas\Validator\File;
+use Laminas\Validator\File\Crc32;
 use PHPUnit\Framework\TestCase;
 
 use function array_merge;
@@ -16,9 +16,10 @@ use function is_array;
 use const UPLOAD_ERR_NO_FILE;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\File\Crc32
  */
-class Crc32Test extends TestCase
+final class Crc32Test extends TestCase
 {
     /**
      * @psalm-return array<array-key, array{
@@ -70,6 +71,7 @@ class Crc32Test extends TestCase
             ];
             $testData[] = [$data[0], $fileUpload, $data[2], $data[3]];
         }
+
         return $testData;
     }
 
@@ -82,10 +84,12 @@ class Crc32Test extends TestCase
      */
     public function testBasic($options, $isValidParam, bool $expected, string $messageKey): void
     {
-        $validator = new File\Crc32($options);
-        $this->assertEquals($expected, $validator->isValid($isValidParam));
+        $validator = new Crc32($options);
+
+        self::assertSame($expected, $validator->isValid($isValidParam));
+
         if (! $expected) {
-            $this->assertArrayHasKey($messageKey, $validator->getMessages());
+            self::assertArrayHasKey($messageKey, $validator->getMessages());
         }
     }
 
@@ -99,55 +103,59 @@ class Crc32Test extends TestCase
     public function testLegacy($options, $isValidParam, bool $expected, string $messageKey): void
     {
         if (! is_array($isValidParam)) {
-            $this->markTestSkipped('An array is expected for legacy compat tests');
+            self::markTestSkipped('An array is expected for legacy compat tests');
         }
 
-        $validator = new File\Crc32($options);
-        $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+        $validator = new Crc32($options);
+
+        self::assertSame($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+
         if (! $expected) {
-            $this->assertArrayHasKey($messageKey, $validator->getMessages());
+            self::assertArrayHasKey($messageKey, $validator->getMessages());
         }
     }
 
     /**
      * Ensures that getCrc32() returns expected value
-     *
-     * @return void
      */
-    public function testgetCrc32()
+    public function testGetCrc32(): void
     {
-        $validator = new File\Crc32('12345');
-        $this->assertEquals(['12345' => 'crc32'], $validator->getCrc32());
+        $validator = new Crc32('12345');
 
-        $validator = new File\Crc32(['12345', '12333', '12344']);
-        $this->assertEquals(['12345' => 'crc32', '12333' => 'crc32', '12344' => 'crc32'], $validator->getCrc32());
+        self::assertSame(['12345' => 'crc32'], $validator->getCrc32());
+
+        $validator = new Crc32(['12345', '12333', '12344']);
+
+        self::assertSame(['12345' => 'crc32', '12333' => 'crc32', '12344' => 'crc32'], $validator->getCrc32());
     }
 
     /**
      * Ensures that getHash() returns expected value
      */
-    public function testgetHash(): void
+    public function testGetHash(): void
     {
-        $validator = new File\Crc32('12345');
-        $this->assertEquals(['12345' => 'crc32'], $validator->getHash());
+        $validator = new Crc32('12345');
 
-        $validator = new File\Crc32(['12345', '12333', '12344']);
-        $this->assertEquals(['12345' => 'crc32', '12333' => 'crc32', '12344' => 'crc32'], $validator->getHash());
+        self::assertSame(['12345' => 'crc32'], $validator->getHash());
+
+        $validator = new Crc32(['12345', '12333', '12344']);
+
+        self::assertSame(['12345' => 'crc32', '12333' => 'crc32', '12344' => 'crc32'], $validator->getHash());
     }
 
     /**
      * Ensures that setCrc32() returns expected value
-     *
-     * @return void
      */
-    public function testSetCrc32()
+    public function testSetCrc32(): void
     {
-        $validator = new File\Crc32('12345');
+        $validator = new Crc32('12345');
         $validator->setCrc32('12333');
-        $this->assertEquals(['12333' => 'crc32'], $validator->getCrc32());
+
+        self::assertSame(['12333' => 'crc32'], $validator->getCrc32());
 
         $validator->setCrc32(['12321', '12121']);
-        $this->assertEquals(['12321' => 'crc32', '12121' => 'crc32'], $validator->getCrc32());
+
+        self::assertSame(['12321' => 'crc32', '12121' => 'crc32'], $validator->getCrc32());
     }
 
     /**
@@ -155,27 +163,29 @@ class Crc32Test extends TestCase
      */
     public function testSetHash(): void
     {
-        $validator = new File\Crc32('12345');
+        $validator = new Crc32('12345');
         $validator->setHash('12333');
-        $this->assertEquals(['12333' => 'crc32'], $validator->getCrc32());
+
+        self::assertSame(['12333' => 'crc32'], $validator->getCrc32());
 
         $validator->setHash(['12321', '12121']);
-        $this->assertEquals(['12321' => 'crc32', '12121' => 'crc32'], $validator->getCrc32());
+
+        self::assertSame(['12321' => 'crc32', '12121' => 'crc32'], $validator->getCrc32());
     }
 
     /**
      * Ensures that addCrc32() returns expected value
-     *
-     * @return void
      */
-    public function testAddCrc32()
+    public function testAddCrc32(): void
     {
-        $validator = new File\Crc32('12345');
+        $validator = new Crc32('12345');
         $validator->addCrc32('12344');
-        $this->assertEquals(['12345' => 'crc32', '12344' => 'crc32'], $validator->getCrc32());
+
+        self::assertSame(['12345' => 'crc32', '12344' => 'crc32'], $validator->getCrc32());
 
         $validator->addCrc32(['12321', '12121']);
-        $this->assertEquals(
+
+        self::assertSame(
             ['12345' => 'crc32', '12344' => 'crc32', '12321' => 'crc32', '12121' => 'crc32'],
             $validator->getCrc32()
         );
@@ -186,12 +196,14 @@ class Crc32Test extends TestCase
      */
     public function testAddHash(): void
     {
-        $validator = new File\Crc32('12345');
+        $validator = new Crc32('12345');
         $validator->addHash('12344');
-        $this->assertEquals(['12345' => 'crc32', '12344' => 'crc32'], $validator->getCrc32());
+
+        self::assertSame(['12345' => 'crc32', '12344' => 'crc32'], $validator->getCrc32());
 
         $validator->addHash(['12321', '12121']);
-        $this->assertEquals(
+
+        self::assertSame(
             ['12345' => 'crc32', '12344' => 'crc32', '12321' => 'crc32', '12121' => 'crc32'],
             $validator->getCrc32()
         );
@@ -202,18 +214,19 @@ class Crc32Test extends TestCase
      */
     public function testLaminas11258(): void
     {
-        $validator = new File\Crc32('3f8d07e2');
-        $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
-        $this->assertArrayHasKey('fileCrc32NotFound', $validator->getMessages());
-        $this->assertStringContainsString('does not exist', current($validator->getMessages()));
+        $validator = new Crc32('3f8d07e2');
+
+        self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
+        self::assertArrayHasKey('fileCrc32NotFound', $validator->getMessages());
+        self::assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
-        $validator = new File\Crc32();
+        $validator = new Crc32();
 
-        $this->assertFalse($validator->isValid(''));
-        $this->assertArrayHasKey(File\Crc32::NOT_FOUND, $validator->getMessages());
+        self::assertFalse($validator->isValid(''));
+        self::assertArrayHasKey(Crc32::NOT_FOUND, $validator->getMessages());
 
         $filesArray = [
             'name'     => '',
@@ -223,15 +236,17 @@ class Crc32Test extends TestCase
             'type'     => '',
         ];
 
-        $this->assertFalse($validator->isValid($filesArray));
-        $this->assertArrayHasKey(File\Crc32::NOT_FOUND, $validator->getMessages());
+        self::assertFalse($validator->isValid($filesArray));
+        self::assertArrayHasKey(Crc32::NOT_FOUND, $validator->getMessages());
     }
 
     public function testShouldThrowInvalidArgumentExceptionForArrayValueNotInFilesFormat(): void
     {
-        $validator    = new File\Crc32();
+        $validator    = new Crc32();
         $invalidArray = ['foo' => 'bar'];
+
         $this->expectException(InvalidArgumentException::class);
+
         $validator->isValid($invalidArray);
     }
 }

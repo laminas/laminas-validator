@@ -11,26 +11,26 @@ use PHPUnit\Framework\TestCase;
 use function array_keys;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\Ip
  */
-class IpTest extends TestCase
+final class IpTest extends TestCase
 {
-    /** @var Ip */
-    protected $validator;
+    private Ip $validator;
 
     /**
      * The list with the options supported.
      * By default all options are disabled.
-     *
-     * @var array
      */
-    protected $options;
+    private array $options;
 
     /**
      * Creates a new IP Validator for each test
      */
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->validator = new Ip();
         $this->options   = [
             'allowipv4'      => false,
@@ -45,44 +45,47 @@ class IpTest extends TestCase
      */
     public function testBasic(): void
     {
-        $this->assertTrue($this->validator->isValid('1.2.3.4'));
-        $this->assertTrue($this->validator->isValid('10.0.0.1'));
-        $this->assertTrue($this->validator->isValid('255.255.255.255'));
+        self::assertTrue($this->validator->isValid('1.2.3.4'));
+        self::assertTrue($this->validator->isValid('10.0.0.1'));
+        self::assertTrue($this->validator->isValid('255.255.255.255'));
 
-        $this->assertFalse($this->validator->isValid('0.0.0.256'));
-        $this->assertFalse($this->validator->isValid('1.2.3.4.5'));
+        self::assertFalse($this->validator->isValid('0.0.0.256'));
+        self::assertFalse($this->validator->isValid('1.2.3.4.5'));
     }
 
     public function testZeroIpForLaminas420(): void
     {
-        $this->assertTrue($this->validator->isValid('0.0.0.0'));
+        self::assertTrue($this->validator->isValid('0.0.0.0'));
     }
 
     public function testOnlyIpv4(): void
     {
         $this->options['allowipv4'] = true;
         $this->validator->setOptions($this->options);
-        $this->assertTrue($this->validator->isValid('1.2.3.4'));
-        $this->assertFalse($this->validator->isValid('a:b:c:d:e::1.2.3.4'));
-        $this->assertFalse($this->validator->isValid('v1.09azAZ-._~!$&\'()*+,;='));
+
+        self::assertTrue($this->validator->isValid('1.2.3.4'));
+        self::assertFalse($this->validator->isValid('a:b:c:d:e::1.2.3.4'));
+        self::assertFalse($this->validator->isValid('v1.09azAZ-._~!$&\'()*+,;='));
     }
 
     public function testOnlyIpv6(): void
     {
         $this->options['allowipv6'] = true;
         $this->validator->setOptions($this->options);
-        $this->assertFalse($this->validator->isValid('1.2.3.4'));
-        $this->assertTrue($this->validator->isValid('a:b:c:d:e::1.2.3.4'));
-        $this->assertFalse($this->validator->isValid('v1.09azAZ-._~!$&\'()*+,;='));
+
+        self::assertFalse($this->validator->isValid('1.2.3.4'));
+        self::assertTrue($this->validator->isValid('a:b:c:d:e::1.2.3.4'));
+        self::assertFalse($this->validator->isValid('v1.09azAZ-._~!$&\'()*+,;='));
     }
 
     public function testOnlyIpvfuture(): void
     {
         $this->options['allowipvfuture'] = true;
         $this->validator->setOptions($this->options);
-        $this->assertFalse($this->validator->isValid('1.2.3.4'));
-        $this->assertFalse($this->validator->isValid('a:b:c:d:e::1.2.3.4'));
-        $this->assertTrue($this->validator->isValid("v1.09azAZ-._~!$&'()*+,;=:"));
+
+        self::assertFalse($this->validator->isValid('1.2.3.4'));
+        self::assertFalse($this->validator->isValid('a:b:c:d:e::1.2.3.4'));
+        self::assertTrue($this->validator->isValid("v1.09azAZ-._~!$&'()*+,;=:"));
     }
 
     public function testLiteral(): void
@@ -95,14 +98,14 @@ class IpTest extends TestCase
         ];
         $this->validator->setOptions($this->options);
 
-        $this->assertFalse($this->validator->isValid('[1.2.3.4]'));
-        $this->assertTrue($this->validator->isValid('[a:b:c:d:e::1.2.3.4]'));
-        $this->assertFalse($this->validator->isValid('[[a:b:c:d:e::1.2.3.4]]'));
-        $this->assertFalse($this->validator->isValid('[[a:b:c:d:e::1.2.3.4]'));
-        $this->assertFalse($this->validator->isValid('[[a:b:c:d:e::1.2.3.4'));
-        $this->assertFalse($this->validator->isValid('[a:b:c:d:e::1.2.3.4]]'));
-        $this->assertFalse($this->validator->isValid('a:b:c:d:e::1.2.3.4]]'));
-        $this->assertTrue($this->validator->isValid('[v1.ZZ:ZZ]'));
+        self::assertFalse($this->validator->isValid('[1.2.3.4]'));
+        self::assertTrue($this->validator->isValid('[a:b:c:d:e::1.2.3.4]'));
+        self::assertFalse($this->validator->isValid('[[a:b:c:d:e::1.2.3.4]]'));
+        self::assertFalse($this->validator->isValid('[[a:b:c:d:e::1.2.3.4]'));
+        self::assertFalse($this->validator->isValid('[[a:b:c:d:e::1.2.3.4'));
+        self::assertFalse($this->validator->isValid('[a:b:c:d:e::1.2.3.4]]'));
+        self::assertFalse($this->validator->isValid('a:b:c:d:e::1.2.3.4]]'));
+        self::assertTrue($this->validator->isValid('[v1.ZZ:ZZ]'));
     }
 
     /**
@@ -132,24 +135,26 @@ class IpTest extends TestCase
     {
         $this->options['allowipvfuture'] = true;
         $this->validator->setOptions($this->options);
-        $this->assertSame($expected, $this->validator->isValid($ip));
+
+        self::assertSame($expected, $this->validator->isValid($ip));
     }
 
     public function testNoValidation(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Nothing to validate');
+
         $this->validator->setOptions($this->options);
     }
 
     public function testInvalidIpForLaminas4809(): void
     {
-        $this->assertFalse($this->validator->isValid('1.2.333'));
+        self::assertFalse($this->validator->isValid('1.2.333'));
     }
 
     public function testInvalidIpForLaminas435(): void
     {
-        $this->assertFalse($this->validator->isValid('192.168.0.2 adfs'));
+        self::assertFalse($this->validator->isValid('192.168.0.2 adfs'));
     }
 
     /**
@@ -233,9 +238,9 @@ class IpTest extends TestCase
 
         foreach ($ips as $ip => $expectedOutcome) {
             if ($expectedOutcome) {
-                $this->assertTrue($this->validator->isValid($ip), $ip . ' failed validation (expects true)');
+                self::assertTrue($this->validator->isValid($ip), $ip . ' failed validation (expects true)');
             } else {
-                $this->assertFalse($this->validator->isValid($ip), $ip . ' failed validation (expects false)');
+                self::assertFalse($this->validator->isValid($ip), $ip . ' failed validation (expects false)');
             }
         }
     }
@@ -245,7 +250,7 @@ class IpTest extends TestCase
      */
     public function testNonStringValidation(): void
     {
-        $this->assertFalse($this->validator->isValid([1 => 1]));
+        self::assertFalse($this->validator->isValid([1 => 1]));
     }
 
     /**
@@ -253,7 +258,7 @@ class IpTest extends TestCase
      */
     public function testNonNewlineValidation(): void
     {
-        $this->assertFalse($this->validator->isValid("::C0A8:2\n"));
+        self::assertFalse($this->validator->isValid("::C0A8:2\n"));
     }
 
     /**
@@ -287,9 +292,9 @@ class IpTest extends TestCase
 
         foreach ($ips as $ip => $expectedOutcome) {
             if ($expectedOutcome) {
-                $this->assertTrue($this->validator->isValid($ip), $ip . ' failed validation (expects true)');
+                self::assertTrue($this->validator->isValid($ip), $ip . ' failed validation (expects true)');
             } else {
-                $this->assertFalse($this->validator->isValid($ip), $ip . ' failed validation (expects false)');
+                self::assertFalse($this->validator->isValid($ip), $ip . ' failed validation (expects false)');
             }
         }
     }
@@ -302,7 +307,8 @@ class IpTest extends TestCase
         $this->options['allowipvfuture'] = true;
         $this->options['allowliteral']   = true;
         $this->validator->setOptions($this->options);
-        $this->assertEquals($expected, $this->validator->isValid($ip));
+
+        self::assertSame($expected, $this->validator->isValid($ip));
     }
 
     /**
@@ -357,19 +363,19 @@ class IpTest extends TestCase
      */
     public function testGetMessages(): void
     {
-        $this->assertEquals([], $this->validator->getMessages());
+        self::assertSame([], $this->validator->getMessages());
     }
 
     public function testEqualsMessageTemplates(): void
     {
-        $this->assertSame(
+        self::assertSame(
             [
                 Ip::INVALID,
                 Ip::NOT_IP_ADDRESS,
             ],
             array_keys($this->validator->getMessageTemplates())
         );
-        $this->assertEquals($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
+        self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 
     /**
@@ -393,6 +399,6 @@ class IpTest extends TestCase
      */
     public function testIpV4ValidationShouldFailForIpV4AddressesMissingQuartets(string $address): void
     {
-        $this->assertFalse($this->validator->isValid($address));
+        self::assertFalse($this->validator->isValid($address));
     }
 }

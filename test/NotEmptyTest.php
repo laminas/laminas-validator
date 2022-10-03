@@ -11,15 +11,17 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\NotEmpty
  */
-class NotEmptyTest extends TestCase
+final class NotEmptyTest extends TestCase
 {
-    /** @var NotEmpty */
-    protected $validator;
+    private NotEmpty $validator;
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->validator = new NotEmpty();
     }
 
@@ -30,17 +32,15 @@ class NotEmptyTest extends TestCase
      * @param integer $expected Expected value of calculated type
      * @dataProvider constructorWithTypeArrayProvider
      */
-    public function testConstructorWithTypeArray($types, $expected): void
+    public function testConstructorWithTypeArray(array $types, int $expected): void
     {
         $validator = new NotEmpty($types);
-        $this->assertEquals($expected, $validator->getType());
+
+        self::assertSame($expected, $validator->getType());
     }
 
     /**
-     * @psalm-return array<array-key, array{
-     *     0: array<array-key, string|int>,
-     *     1: int
-     * }>
+     * @psalm-return array<array-key, array{list<string|int>, int}>
      */
     public function constructorWithTypeArrayProvider(): array
     {
@@ -63,7 +63,7 @@ class NotEmptyTest extends TestCase
      * @group Laminas-6708
      * @dataProvider basicProvider
      */
-    public function testBasic($value, $valid): void
+    public function testBasic($value, bool $valid): void
     {
         $this->checkValidationValue($value, $valid);
     }
@@ -71,9 +71,9 @@ class NotEmptyTest extends TestCase
     /**
      * Provides values and expected validity for the basic test
      *
-     * @return array
+     * @psalm-return array<array{scalar|list<int>|stdClass|null, bool}>
      */
-    public function basicProvider()
+    public function basicProvider(): array
     {
         return [
             ['word', true],
@@ -101,18 +101,19 @@ class NotEmptyTest extends TestCase
      * @param boolean $valid Expected validity of value
      * @dataProvider booleanProvider
      */
-    public function testOnlyBoolean($value, $valid): void
+    public function testOnlyBoolean($value, bool $valid): void
     {
         $this->validator->setType(NotEmpty::BOOLEAN);
+
         $this->checkValidationValue($value, $valid);
     }
 
     /**
      * Provides values and their expected validity for boolean empty
      *
-     * @return array
+     * @psalm-return array<array{scalar|list<string>|null, bool}>
      */
-    public function booleanProvider()
+    public function booleanProvider(): array
     {
         return [
             [false, false],
@@ -138,18 +139,19 @@ class NotEmptyTest extends TestCase
      * @param boolean $valid Expected validity of value
      * @dataProvider integerOnlyProvider
      */
-    public function testOnlyInteger($value, $valid): void
+    public function testOnlyInteger($value, bool $valid): void
     {
         $this->validator->setType(NotEmpty::INTEGER);
+
         $this->checkValidationValue($value, $valid);
     }
 
     /**
      * Provides values and their expected validity for when the validator is testing empty integer values
      *
-     * @return array
+     * @psalm-return array<array{scalar|list<string>|null, bool}>
      */
-    public function integerOnlyProvider()
+    public function integerOnlyProvider(): array
     {
         return [
             [false, true],
@@ -175,18 +177,19 @@ class NotEmptyTest extends TestCase
      * @param boolean $valid Expected validity of value
      * @dataProvider floatOnlyProvider
      */
-    public function testOnlyFloat($value, $valid): void
+    public function testOnlyFloat($value, bool $valid): void
     {
         $this->validator->setType(NotEmpty::FLOAT);
+
         $this->checkValidationValue($value, $valid);
     }
 
     /**
      * Provides values and their expected validity for boolean empty
      *
-     * @return array
+     * @psalm-return array<array{scalar|list<string>|null, bool}>
      */
-    public function floatOnlyProvider()
+    public function floatOnlyProvider(): array
     {
         return [
             [false, true],
@@ -212,18 +215,19 @@ class NotEmptyTest extends TestCase
      * @param boolean $valid Expected validity of value
      * @dataProvider stringOnlyProvider
      */
-    public function testOnlyString($value, $valid): void
+    public function testOnlyString($value, bool $valid): void
     {
         $this->validator->setType(NotEmpty::STRING);
+
         $this->checkValidationValue($value, $valid);
     }
 
     /**
      * Provides values and their expected validity for boolean empty
      *
-     * @return array
+     * @psalm-return array<array{scalar|list<string>|null, bool}>
      */
-    public function stringOnlyProvider()
+    public function stringOnlyProvider(): array
     {
         return [
             [false, true],
@@ -249,18 +253,19 @@ class NotEmptyTest extends TestCase
      * @param boolean $valid Expected validity of value
      * @dataProvider zeroOnlyProvider
      */
-    public function testOnlyZero($value, $valid): void
+    public function testOnlyZero($value, bool $valid): void
     {
         $this->validator->setType(NotEmpty::ZERO);
+
         $this->checkValidationValue($value, $valid);
     }
 
     /**
      * Provides values and their expected validity for boolean empty
      *
-     * @return array
+     * @psalm-return array<array{scalar|list<string>|null, bool}>
      */
-    public function zeroOnlyProvider()
+    public function zeroOnlyProvider(): array
     {
         return [
             [false, true],
@@ -286,18 +291,19 @@ class NotEmptyTest extends TestCase
      * @param boolean $valid Expected validity of value
      * @dataProvider arrayOnlyProvider
      */
-    public function testOnlyArray($value, $valid): void
+    public function testOnlyArray($value, bool $valid): void
     {
         $this->validator->setType(NotEmpty::EMPTY_ARRAY);
+
         $this->checkValidationValue($value, $valid);
     }
 
     /**
      * Provides values and their expected validity for boolean empty
      *
-     * @return array
+     * @psalm-return array<array{scalar|list<string>|null, bool}>
      */
-    public function arrayOnlyProvider()
+    public function arrayOnlyProvider(): array
     {
         return [
             [false, true],
@@ -323,18 +329,19 @@ class NotEmptyTest extends TestCase
      * @param boolean $valid Expected validity of value
      * @dataProvider nullOnlyProvider
      */
-    public function testOnlyNull($value, $valid): void
+    public function testOnlyNull($value, bool $valid): void
     {
         $this->validator->setType(NotEmpty::NULL);
+
         $this->checkValidationValue($value, $valid);
     }
 
     /**
      * Provides values and their expected validity for boolean empty
      *
-     * @return array
+     * @psalm-return array<array{scalar|list<string>|null, bool}>
      */
-    public function nullOnlyProvider()
+    public function nullOnlyProvider(): array
     {
         return [
             [false, true],
@@ -360,18 +367,19 @@ class NotEmptyTest extends TestCase
      * @param boolean $valid Expected validity of value
      * @dataProvider phpOnlyProvider
      */
-    public function testOnlyPHP($value, $valid): void
+    public function testOnlyPHP($value, bool $valid): void
     {
         $this->validator->setType(NotEmpty::PHP);
+
         $this->checkValidationValue($value, $valid);
     }
 
     /**
      * Provides values and their expected validity for boolean empty
      *
-     * @return array
+     * @psalm-return array<array{scalar|list<string>|null, bool}>
      */
-    public function phpOnlyProvider()
+    public function phpOnlyProvider(): array
     {
         return [
             [false, false],
@@ -397,18 +405,19 @@ class NotEmptyTest extends TestCase
      * @param boolean $valid Expected validity of value
      * @dataProvider spaceOnlyProvider
      */
-    public function testOnlySpace($value, $valid): void
+    public function testOnlySpace($value, bool $valid): void
     {
         $this->validator->setType(NotEmpty::SPACE);
+
         $this->checkValidationValue($value, $valid);
     }
 
     /**
      * Provides values and their expected validity for boolean empty
      *
-     * @return array
+     * @psalm-return array<array{scalar|list<string>|null, bool}>
      */
-    public function spaceOnlyProvider()
+    public function spaceOnlyProvider(): array
     {
         return [
             [false, true],
@@ -434,18 +443,19 @@ class NotEmptyTest extends TestCase
      * @param boolean $valid Expected validity of value
      * @dataProvider onlyAllProvider
      */
-    public function testOnlyAll($value, $valid): void
+    public function testOnlyAll($value, bool $valid): void
     {
         $this->validator->setType(NotEmpty::ALL);
+
         $this->checkValidationValue($value, $valid);
     }
 
     /**
      * Provides values and their expected validity for boolean empty
      *
-     * @return array
+     * @psalm-return array<array{scalar|list<string>|null, bool}>
      */
-    public function onlyAllProvider()
+    public function onlyAllProvider(): array
     {
         return [
             [false, false],
@@ -471,7 +481,7 @@ class NotEmptyTest extends TestCase
      * @param boolean $valid Expected validity of value
      * @dataProvider arrayConstantNotationProvider
      */
-    public function testArrayConstantNotation($value, $valid): void
+    public function testArrayConstantNotation($value, bool $valid): void
     {
         $this->validator = new NotEmpty([
             'type' => [
@@ -487,9 +497,9 @@ class NotEmptyTest extends TestCase
     /**
      * Provides values and their expected validity for boolean empty
      *
-     * @return array
+     * @psalm-return array<array{scalar|list<string>|null, bool}>
      */
-    public function arrayConstantNotationProvider()
+    public function arrayConstantNotationProvider(): array
     {
         return [
             [false, false],
@@ -515,7 +525,7 @@ class NotEmptyTest extends TestCase
      * @param boolean $valid Expected validity of value
      * @dataProvider arrayConfigNotationProvider
      */
-    public function testArrayConfigNotation($value, $valid): void
+    public function testArrayConfigNotation($value, bool $valid): void
     {
         $this->validator = new NotEmpty([
             'type' => [
@@ -532,9 +542,9 @@ class NotEmptyTest extends TestCase
     /**
      * Provides values and their expected validity for boolean empty
      *
-     * @return array
+     * @psalm-return array<array{scalar|list<string>|null, bool}>
      */
-    public function arrayConfigNotationProvider()
+    public function arrayConfigNotationProvider(): array
     {
         return [
             [false, false],
@@ -560,7 +570,7 @@ class NotEmptyTest extends TestCase
      * @param boolean $valid Expected validity of value
      * @dataProvider multiConstantNotationProvider
      */
-    public function testMultiConstantNotation($value, $valid): void
+    public function testMultiConstantNotation($value, bool $valid): void
     {
         $this->validator = new NotEmpty(
             NotEmpty::ZERO + NotEmpty::STRING + NotEmpty::BOOLEAN
@@ -576,7 +586,7 @@ class NotEmptyTest extends TestCase
      * @param boolean $valid Expected validity of value
      * @dataProvider multiConstantNotationProvider
      */
-    public function testMultiConstantBooleanOrNotation($value, $valid): void
+    public function testMultiConstantBooleanOrNotation($value, bool $valid): void
     {
         $this->validator = new NotEmpty(
             NotEmpty::ZERO | NotEmpty::STRING | NotEmpty::BOOLEAN
@@ -588,9 +598,9 @@ class NotEmptyTest extends TestCase
     /**
      * Provides values and their expected validity for boolean empty
      *
-     * @return array
+     * @psalm-return array<array{scalar|list<string>|null, bool}>
      */
-    public function multiConstantNotationProvider()
+    public function multiConstantNotationProvider(): array
     {
         return [
             [false, false],
@@ -616,7 +626,7 @@ class NotEmptyTest extends TestCase
      * @param boolean $valid Expected validity of value
      * @dataProvider stringNotationProvider
      */
-    public function testStringNotation($value, $valid): void
+    public function testStringNotation($value, bool $valid): void
     {
         $this->validator = new NotEmpty([
             'type' => ['zero', 'string', 'boolean'],
@@ -628,9 +638,9 @@ class NotEmptyTest extends TestCase
     /**
      * Provides values and their expected validity for boolean empty
      *
-     * @return array
+     * @psalm-return array<array{scalar|list<string>|null, bool}>
      */
-    public function stringNotationProvider()
+    public function stringNotationProvider(): array
     {
         return [
             [false, false],
@@ -657,21 +667,21 @@ class NotEmptyTest extends TestCase
      * @param integer $expected Expected type setting value
      * @dataProvider duplicateStringSettingProvider
      */
-    public function testStringNotationWithDuplicate($string, $expected): void
+    public function testStringNotationWithDuplicate(string $string, int $expected): void
     {
         $type = [$string, $string];
         $this->validator->setType($type);
 
-        $this->assertEquals($expected, $this->validator->getType());
+        self::assertSame($expected, $this->validator->getType());
     }
 
     /**
      * Data provider for testStringNotationWithDuplicate method. Provides a string which will be duplicated. The test
      * ensures that setting a string value more than once only turns on the appropriate bit once
      *
-     * @return array
+     * @psalm-return array<array{string, int}>
      */
-    public function duplicateStringSettingProvider()
+    public function duplicateStringSettingProvider(): array
     {
         return [
             ['boolean',      NotEmpty::BOOLEAN],
@@ -697,11 +707,12 @@ class NotEmptyTest extends TestCase
      * @param boolean $valid Expected validity of value
      * @dataProvider singleStringNotationProvider
      */
-    public function testSingleStringConstructorNotation($value, $valid): void
+    public function testSingleStringConstructorNotation($value, bool $valid): void
     {
         $this->validator = new NotEmpty(
             'boolean'
         );
+
         $this->checkValidationValue($value, $valid);
     }
 
@@ -712,18 +723,19 @@ class NotEmptyTest extends TestCase
      * @param boolean $valid Expected validity of value
      * @dataProvider singleStringNotationProvider
      */
-    public function testSingleStringSetTypeNotation($value, $valid): void
+    public function testSingleStringSetTypeNotation($value, bool $valid): void
     {
         $this->validator->setType('boolean');
+
         $this->checkValidationValue($value, $valid);
     }
 
     /**
      * Provides values and their expected validity for boolean empty
      *
-     * @return array
+     * @psalm-return array<array{scalar|list<string>|null, bool}>
      */
-    public function singleStringNotationProvider()
+    public function singleStringNotationProvider(): array
     {
         return [
             [false, false],
@@ -749,7 +761,7 @@ class NotEmptyTest extends TestCase
      * @param boolean $valid Expected validity of value
      * @dataProvider configObjectProvider
      */
-    public function testTraversableObject($value, $valid): void
+    public function testTraversableObject($value, bool $valid): void
     {
         $options = ['type' => 'all'];
         $config  = new ArrayObject($options);
@@ -764,9 +776,9 @@ class NotEmptyTest extends TestCase
     /**
      * Provides values and their expected validity for boolean empty
      *
-     * @return array
+     * @psalm-return array<array{scalar|list<string>|null, bool}>
      */
-    public function configObjectProvider()
+    public function configObjectProvider(): array
     {
         return [
             [false, false],
@@ -792,6 +804,7 @@ class NotEmptyTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Unknown');
+
         $this->validator->setType(true);
     }
 
@@ -800,7 +813,7 @@ class NotEmptyTest extends TestCase
      */
     public function testGetType(): void
     {
-        $this->assertEquals($this->validator->getDefaultType(), $this->validator->getType());
+        self::assertSame($this->validator->getDefaultType(), $this->validator->getType());
     }
 
     /**
@@ -808,7 +821,7 @@ class NotEmptyTest extends TestCase
      */
     public function testStringWithZeroShouldNotBeTreatedAsEmpty(): void
     {
-        $this->assertTrue($this->validator->isValid('0'));
+        self::assertTrue($this->validator->isValid('0'));
     }
 
     /**
@@ -816,7 +829,7 @@ class NotEmptyTest extends TestCase
      */
     public function testGetMessages(): void
     {
-        $this->assertEquals([], $this->validator->getMessages());
+        self::assertSame([], $this->validator->getMessages());
     }
 
     /**
@@ -825,21 +838,23 @@ class NotEmptyTest extends TestCase
     public function testNonStringValidation(): void
     {
         $v2 = new NotEmpty();
-        $this->assertTrue($this->validator->isValid($v2));
+
+        self::assertTrue($this->validator->isValid($v2));
     }
 
     /**
      * @Laminas-8767
-     * @return void
      */
-    public function testLaminas8767()
+    public function testLaminas8767(): void
     {
         $valid = new NotEmpty(NotEmpty::STRING);
 
-        $this->assertFalse($valid->isValid(''));
+        self::assertFalse($valid->isValid(''));
+
         $messages = $valid->getMessages();
-        $this->assertArrayHasKey('isEmpty', $messages);
-        $this->assertStringContainsString("can't be empty", $messages['isEmpty']);
+
+        self::assertArrayHasKey('isEmpty', $messages);
+        self::assertStringContainsString("can't be empty", $messages['isEmpty']);
     }
 
     public function testObjects(): void
@@ -847,10 +862,11 @@ class NotEmptyTest extends TestCase
         $valid  = new NotEmpty(NotEmpty::STRING);
         $object = new stdClass();
 
-        $this->assertFalse($valid->isValid($object));
+        self::assertFalse($valid->isValid($object));
 
         $valid = new NotEmpty(NotEmpty::OBJECT);
-        $this->assertTrue($valid->isValid($object));
+
+        self::assertTrue($valid->isValid($object));
     }
 
     public function testStringObjects(): void
@@ -858,26 +874,30 @@ class NotEmptyTest extends TestCase
         $valid = new NotEmpty(NotEmpty::STRING);
 
         $object = $this->getMockBuilder(stdClass::class)
-            ->setMethods(['__toString'])
+            ->addMethods(['__toString'])
             ->getMock();
 
-        $object->expects($this->atLeastOnce())
+        $object
+            ->expects(self::atLeastOnce())
             ->method('__toString')
             ->willReturn('Test');
 
-        $this->assertFalse($valid->isValid($object));
+        self::assertFalse($valid->isValid($object));
 
         $valid = new NotEmpty(NotEmpty::OBJECT_STRING);
-        $this->assertTrue($valid->isValid($object));
+
+        self::assertTrue($valid->isValid($object));
 
         $object = $this->getMockBuilder(stdClass::class)
-            ->setMethods(['__toString'])
+            ->addMethods(['__toString'])
             ->getMock();
-        $object->expects($this->atLeastOnce())
+
+        $object
+            ->expects(self::atLeastOnce())
             ->method('__toString')
             ->willReturn('');
 
-        $this->assertFalse($valid->isValid($object));
+        self::assertFalse($valid->isValid($object));
     }
 
     /**
@@ -886,7 +906,7 @@ class NotEmptyTest extends TestCase
      * @param boolean $valid Expected validity of value
      * @dataProvider arrayConfigNotationWithoutKeyProvider
      */
-    public function testArrayConfigNotationWithoutKey($value, $valid): void
+    public function testArrayConfigNotationWithoutKey($value, bool $valid): void
     {
         $this->validator = new NotEmpty(
             ['zero', 'string', 'boolean']
@@ -898,9 +918,9 @@ class NotEmptyTest extends TestCase
     /**
      * Provides values and their expected validity for boolean empty
      *
-     * @return array
+     * @psalm-return array<array{scalar|list<string>|null, bool}>
      */
-    public function arrayConfigNotationWithoutKeyProvider()
+    public function arrayConfigNotationWithoutKeyProvider(): array
     {
         return [
             [false, false],
@@ -925,18 +945,20 @@ class NotEmptyTest extends TestCase
             'isEmpty'         => "Value is required and can't be empty",
             'notEmptyInvalid' => "Invalid type given. String, integer, float, boolean or array expected",
         ];
-        $this->assertSame($messageTemplates, $this->validator->getOption('messageTemplates'));
+
+        self::assertSame($messageTemplates, $this->validator->getOption('messageTemplates'));
     }
 
     public function testTypeAutoDetectionHasNoSideEffect(): void
     {
         $validator = new NotEmpty(['translatorEnabled' => true]);
-        $this->assertEquals($validator->getDefaultType(), $validator->getType());
+
+        self::assertSame($validator->getDefaultType(), $validator->getType());
     }
 
     public function testDefaultType(): void
     {
-        $this->assertSame(
+        self::assertSame(
             NotEmpty::BOOLEAN
                 | NotEmpty::STRING
                 | NotEmpty::EMPTY_ARRAY
@@ -952,16 +974,15 @@ class NotEmptyTest extends TestCase
      *
      * @param mixed $value Value to validate
      * @param bool  $valid Expected validity
-     * @return void
      */
-    protected function checkValidationValue($value, $valid)
+    protected function checkValidationValue($value, bool $valid): void
     {
         $isValid = $this->validator->isValid($value);
 
         if ($valid) {
-            $this->assertTrue($isValid);
+            self::assertTrue($isValid);
         } else {
-            $this->assertFalse($isValid);
+            self::assertFalse($isValid);
         }
     }
 }

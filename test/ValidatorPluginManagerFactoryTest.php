@@ -10,20 +10,19 @@ use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
 use Laminas\Validator\ValidatorPluginManagerFactory;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 
-class ValidatorPluginManagerFactoryTest extends TestCase
+/** @covers \Laminas\Validator\ValidatorPluginManagerFactory */
+final class ValidatorPluginManagerFactoryTest extends TestCase
 {
-    use ProphecyTrait;
-
     public function testFactoryReturnsPluginManager(): void
     {
-        $container = $this->prophesize(ContainerInterface::class)->reveal();
+        $container = $this->createMock(ContainerInterface::class);
         $factory   = new ValidatorPluginManagerFactory();
 
         $validators = $factory($container, ValidatorPluginManagerFactory::class);
-        $this->assertInstanceOf(ValidatorPluginManager::class, $validators);
+
+        self::assertInstanceOf(ValidatorPluginManager::class, $validators);
     }
 
     /**
@@ -31,8 +30,8 @@ class ValidatorPluginManagerFactoryTest extends TestCase
      */
     public function testFactoryConfiguresPluginManagerUnderContainerInterop(): void
     {
-        $container = $this->prophesize(ContainerInterface::class)->reveal();
-        $validator = $this->prophesize(ValidatorInterface::class)->reveal();
+        $container = $this->createMock(ContainerInterface::class);
+        $validator = $this->createMock(ValidatorInterface::class);
 
         $factory    = new ValidatorPluginManagerFactory();
         $validators = $factory($container, ValidatorPluginManagerFactory::class, [
@@ -40,7 +39,8 @@ class ValidatorPluginManagerFactoryTest extends TestCase
                 'test' => $validator,
             ],
         ]);
-        $this->assertSame($validator, $validators->get('test'));
+
+        self::assertSame($validator, $validators->get('test'));
     }
 
     /**
@@ -48,10 +48,8 @@ class ValidatorPluginManagerFactoryTest extends TestCase
      */
     public function testFactoryConfiguresPluginManagerUnderServiceManagerV2(): void
     {
-        $container = $this->prophesize(ServiceLocatorInterface::class);
-        $container->willImplement(ContainerInterface::class);
-
-        $validator = $this->prophesize(ValidatorInterface::class)->reveal();
+        $container = $this->createMock(ServiceLocatorInterface::class);
+        $validator = $this->createMock(ValidatorInterface::class);
 
         $factory = new ValidatorPluginManagerFactory();
         $factory->setCreationOptions([
@@ -60,13 +58,14 @@ class ValidatorPluginManagerFactoryTest extends TestCase
             ],
         ]);
 
-        $validators = $factory->createService($container->reveal());
-        $this->assertSame($validator, $validators->get('test'));
+        $validators = $factory->createService($container);
+
+        self::assertSame($validator, $validators->get('test'));
     }
 
     public function testConfiguresValidatorServicesWhenFound(): void
     {
-        $validator = $this->prophesize(ValidatorInterface::class)->reveal();
+        $validator = $this->createMock(ValidatorInterface::class);
         $config    = [
             'validators' => [
                 'aliases'   => [
@@ -78,72 +77,104 @@ class ValidatorPluginManagerFactoryTest extends TestCase
             ],
         ];
 
-        $container = $this->prophesize(ServiceLocatorInterface::class);
-        $container->willImplement(ContainerInterface::class);
+        $container = $this->createMock(ServiceLocatorInterface::class);
 
-        $container->has('ServiceListener')->willReturn(false);
-        $container->has('config')->willReturn(true);
-        $container->get('config')->willReturn($config);
-        $container->has('MvcTranslator')->willReturn(false); // necessary due to default initializers
+        $container
+            ->expects(self::exactly(3))
+            ->method('has')
+            ->withConsecutive(
+                ['ServiceListener'],
+                ['config'],
+                ['MvcTranslator'], // necessary due to default initializers
+            )
+            ->willReturn(false, true, false);
+
+        $container
+            ->expects(self::once())
+            ->method('get')
+            ->with('config')
+            ->willReturn($config);
 
         $factory    = new ValidatorPluginManagerFactory();
-        $validators = $factory($container->reveal(), 'ValidatorManager');
+        $validators = $factory($container, 'ValidatorManager');
 
-        $this->assertInstanceOf(ValidatorPluginManager::class, $validators);
-        $this->assertTrue($validators->has('test'));
-        $this->assertInstanceOf(Digits::class, $validators->get('test'));
-        $this->assertTrue($validators->has('test-too'));
-        $this->assertSame($validator, $validators->get('test-too'));
+        self::assertInstanceOf(ValidatorPluginManager::class, $validators);
+        self::assertTrue($validators->has('test'));
+        self::assertInstanceOf(Digits::class, $validators->get('test'));
+        self::assertTrue($validators->has('test-too'));
+        self::assertSame($validator, $validators->get('test-too'));
     }
 
     public function testDoesNotConfigureValidatorServicesWhenServiceListenerPresent(): void
     {
-        $container = $this->prophesize(ServiceLocatorInterface::class);
-        $container->willImplement(ContainerInterface::class);
+        $container = $this->createMock(ServiceLocatorInterface::class);
 
-        $container->has('ServiceListener')->willReturn(true);
-        $container->has('config')->shouldNotBeCalled();
-        $container->get('config')->shouldNotBeCalled();
-        $container->has('MvcTranslator')->willReturn(false); // necessary due to default initializers
+        $container
+            ->expects(self::once())
+            ->method('has')
+            ->with('ServiceListener')
+            ->willReturn(true);
+
+        $container
+            ->expects(self::never())
+            ->method('get')
+            ->with('config');
 
         $factory    = new ValidatorPluginManagerFactory();
-        $validators = $factory($container->reveal(), 'ValidatorManager');
+        $validators = $factory($container, 'ValidatorManager');
 
-        $this->assertInstanceOf(ValidatorPluginManager::class, $validators);
-        $this->assertFalse($validators->has('test'));
-        $this->assertFalse($validators->has('test-too'));
+        self::assertInstanceOf(ValidatorPluginManager::class, $validators);
+        self::assertFalse($validators->has('test'));
+        self::assertFalse($validators->has('test-too'));
     }
 
     public function testDoesNotConfigureValidatorServicesWhenConfigServiceNotPresent(): void
     {
-        $container = $this->prophesize(ServiceLocatorInterface::class);
-        $container->willImplement(ContainerInterface::class);
+        $container = $this->createMock(ServiceLocatorInterface::class);
 
-        $container->has('ServiceListener')->willReturn(false);
-        $container->has('config')->willReturn(false);
-        $container->get('config')->shouldNotBeCalled();
-        $container->has('MvcTranslator')->willReturn(false); // necessary due to default initializers
+        $container
+            ->expects(self::exactly(2))
+            ->method('has')
+            ->withConsecutive(
+                ['ServiceListener'],
+                ['config'],
+            )
+            ->willReturn(false, false);
+
+        $container
+            ->expects(self::never())
+            ->method('get')
+            ->with('config');
 
         $factory    = new ValidatorPluginManagerFactory();
-        $validators = $factory($container->reveal(), 'ValidatorManager');
+        $validators = $factory($container, 'ValidatorManager');
 
-        $this->assertInstanceOf(ValidatorPluginManager::class, $validators);
+        self::assertInstanceOf(ValidatorPluginManager::class, $validators);
     }
 
     public function testDoesNotConfigureValidatorServicesWhenConfigServiceDoesNotContainValidatorsConfig(): void
     {
-        $container = $this->prophesize(ServiceLocatorInterface::class);
-        $container->willImplement(ContainerInterface::class);
+        $container = $this->createMock(ServiceLocatorInterface::class);
 
-        $container->has('ServiceListener')->willReturn(false);
-        $container->has('config')->willReturn(true);
-        $container->get('config')->willReturn(['foo' => 'bar']);
-        $container->has('MvcTranslator')->willReturn(false); // necessary due to default initializers
+        $container
+            ->expects(self::exactly(2))
+            ->method('has')
+            ->withConsecutive(
+                ['ServiceListener'],
+                ['config'],
+            )
+            ->willReturn(false, true);
+
+        $container
+            ->expects(self::once())
+            ->method('get')
+            ->with('config')
+            ->willReturn(['foo' => 'bar']);
 
         $factory    = new ValidatorPluginManagerFactory();
-        $validators = $factory($container->reveal(), 'ValidatorManager');
+        $validators = $factory($container, 'ValidatorManager');
 
-        $this->assertInstanceOf(ValidatorPluginManager::class, $validators);
-        $this->assertFalse($validators->has('foo'));
+        self::assertInstanceOf(ValidatorPluginManager::class, $validators);
+        self::assertFalse($validators->has('foo'));
     }
 }

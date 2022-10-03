@@ -13,9 +13,10 @@ use function array_keys;
 use function implode;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\Between
  */
-class BetweenTest extends TestCase
+final class BetweenTest extends TestCase
 {
     /**
      * @psalm-return array<string, array{
@@ -191,7 +192,7 @@ class BetweenTest extends TestCase
     {
         $validator = new Between(['min' => $min, 'max' => $max, 'inclusive' => $inclusive]);
 
-        $this->assertSame(
+        self::assertSame(
             $expected,
             $validator->isValid($value),
             'Failed value: ' . $value . ':' . implode("\n", $validator->getMessages())
@@ -204,7 +205,8 @@ class BetweenTest extends TestCase
     public function testGetMessages(): void
     {
         $validator = new Between(['min' => 1, 'max' => 10]);
-        $this->assertEquals([], $validator->getMessages());
+
+        self::assertSame([], $validator->getMessages());
     }
 
     /**
@@ -213,7 +215,8 @@ class BetweenTest extends TestCase
     public function testGetMin(): void
     {
         $validator = new Between(['min' => 1, 'max' => 10]);
-        $this->assertEquals(1, $validator->getMin());
+
+        self::assertSame(1, $validator->getMin());
     }
 
     /**
@@ -222,7 +225,8 @@ class BetweenTest extends TestCase
     public function testGetMax(): void
     {
         $validator = new Between(['min' => 1, 'max' => 10]);
-        $this->assertEquals(10, $validator->getMax());
+
+        self::assertSame(10, $validator->getMax());
     }
 
     /**
@@ -231,13 +235,15 @@ class BetweenTest extends TestCase
     public function testGetInclusive(): void
     {
         $validator = new Between(['min' => 1, 'max' => 10]);
-        $this->assertEquals(true, $validator->getInclusive());
+
+        self::assertSame(true, $validator->getInclusive());
     }
 
     public function testEqualsMessageTemplates(): void
     {
         $validator = new Between(['min' => 1, 'max' => 10]);
-        $this->assertSame(
+
+        self::assertSame(
             [
                 Between::NOT_BETWEEN,
                 Between::NOT_BETWEEN_STRICT,
@@ -246,7 +252,7 @@ class BetweenTest extends TestCase
             ],
             array_keys($validator->getMessageTemplates())
         );
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
@@ -256,8 +262,9 @@ class BetweenTest extends TestCase
             'min' => ['options' => 'min'],
             'max' => ['options' => 'max'],
         ];
-        $this->assertSame($messageVariables, $validator->getOption('messageVariables'));
-        $this->assertEquals(array_keys($messageVariables), $validator->getMessageVariables());
+
+        self::assertSame($messageVariables, $validator->getOption('messageVariables'));
+        self::assertSame(array_keys($messageVariables), $validator->getMessageVariables());
     }
 
     /**
@@ -294,7 +301,8 @@ class BetweenTest extends TestCase
     public function testConstructorCanAcceptInclusiveParameter(): void
     {
         $validator = new Between(1, 10, false);
-        $this->assertFalse($validator->getInclusive());
+
+        self::assertFalse($validator->getInclusive());
     }
 
     public function testConstructWithTraversableOptions(): void
@@ -302,16 +310,19 @@ class BetweenTest extends TestCase
         $options   = new ArrayObject(['min' => 1, 'max' => 10, 'inclusive' => false]);
         $validator = new Between($options);
 
-        $this->assertTrue($validator->isValid(5));
-        $this->assertFalse($validator->isValid(10));
+        self::assertTrue($validator->isValid(5));
+        self::assertFalse($validator->isValid(10));
     }
 
     public function testStringValidatedAgainstNumericMinAndMaxIsInvalidAndReturnsAFailureMessage(): void
     {
         $validator = new Between(['min' => 1, 'max' => 10]);
-        $this->assertFalse($validator->isValid('a'));
+
+        self::assertFalse($validator->isValid('a'));
+
         $messages = $validator->getMessages();
-        $this->assertContains(
+
+        self::assertContains(
             'The min (\'1\') and max (\'10\') values are numeric, but the input is not',
             $messages
         );
@@ -320,9 +331,12 @@ class BetweenTest extends TestCase
     public function testNumericValidatedAgainstStringMinAndMaxIsInvalidAndReturnsAFailureMessage(): void
     {
         $validator = new Between(['min' => 'a', 'max' => 'z']);
-        $this->assertFalse($validator->isValid(10));
+
+        self::assertFalse($validator->isValid(10));
+
         $messages = $validator->getMessages();
-        $this->assertContains(
+
+        self::assertContains(
             'The min (\'a\') and max (\'z\') values are non-numeric strings, but the input is not a string',
             $messages
         );

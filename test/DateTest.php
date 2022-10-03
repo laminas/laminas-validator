@@ -6,7 +6,7 @@ namespace LaminasTest\Validator;
 
 use DateTime;
 use DateTimeImmutable;
-use Laminas\Validator;
+use Laminas\Validator\Date;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -15,25 +15,28 @@ use function date_get_last_errors;
 use function var_export;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\Date
  */
-class DateTest extends TestCase
+final class DateTest extends TestCase
 {
-    /** @var Validator\Date */
-    protected $validator;
+    private Date $validator;
 
     /**
      * Creates a new Laminas\Validator\Date object for each test method
      */
     protected function setUp(): void
     {
-        $this->validator = new Validator\Date();
+        parent::setUp();
+
+        $this->validator = new Date();
     }
 
     public function testSetFormatIgnoresNull(): void
     {
         $this->validator->setFormat(null);
-        $this->assertEquals(Validator\Date::FORMAT_DEFAULT, $this->validator->getFormat());
+
+        self::assertSame(Date::FORMAT_DEFAULT, $this->validator->getFormat());
     }
 
     /**
@@ -113,8 +116,9 @@ class DateTest extends TestCase
     public function testBasic($input, ?string $format, bool $result, bool $resultStrict): void
     {
         $this->validator->setFormat($format);
+
         /** @psalm-suppress ArgumentTypeCoercion, PossiblyNullArgument */
-        $this->assertEquals($result, $this->validator->isValid($input));
+        self::assertSame($result, $this->validator->isValid($input));
     }
 
     /**
@@ -125,13 +129,14 @@ class DateTest extends TestCase
     {
         $this->validator->setStrict(true);
         $this->validator->setFormat($format);
+
         /** @psalm-suppress ArgumentTypeCoercion, PossiblyNullArgument */
-        $this->assertSame($resultStrict, $this->validator->isValid($input));
+        self::assertSame($resultStrict, $this->validator->isValid($input));
     }
 
     public function testDateTimeImmutable(): void
     {
-        $this->assertTrue($this->validator->isValid(new DateTimeImmutable()));
+        self::assertTrue($this->validator->isValid(new DateTimeImmutable()));
     }
 
     /**
@@ -139,7 +144,7 @@ class DateTest extends TestCase
      */
     public function testGetMessages(): void
     {
-        $this->assertEquals([], $this->validator->getMessages());
+        self::assertSame([], $this->validator->getMessages());
     }
 
     /**
@@ -149,31 +154,31 @@ class DateTest extends TestCase
      */
     public function testUseManualFormat(): void
     {
-        $this->assertTrue(
+        self::assertTrue(
             $this->validator->setFormat('d.m.Y')->isValid('10.01.2008'),
             var_export(date_get_last_errors(), true)
         );
-        $this->assertEquals('d.m.Y', $this->validator->getFormat());
+        self::assertSame('d.m.Y', $this->validator->getFormat());
 
-        $this->assertTrue($this->validator->setFormat('m Y')->isValid('01 2010'));
-        $this->assertFalse($this->validator->setFormat('d/m/Y')->isValid('2008/10/22'));
-        $this->assertTrue($this->validator->setFormat('d/m/Y')->isValid('22/10/08'));
-        $this->assertFalse($this->validator->setFormat('d/m/Y')->isValid('22/10'));
-        $this->assertTrue($this->validator->setFormat('s')->isValid('00'));
-        $this->assertFalse($this->validator->setFormat('s')->isValid('0'));
+        self::assertTrue($this->validator->setFormat('m Y')->isValid('01 2010'));
+        self::assertFalse($this->validator->setFormat('d/m/Y')->isValid('2008/10/22'));
+        self::assertTrue($this->validator->setFormat('d/m/Y')->isValid('22/10/08'));
+        self::assertFalse($this->validator->setFormat('d/m/Y')->isValid('22/10'));
+        self::assertTrue($this->validator->setFormat('s')->isValid('00'));
+        self::assertFalse($this->validator->setFormat('s')->isValid('0'));
     }
 
     public function testEqualsMessageTemplates(): void
     {
-        $this->assertSame(
+        self::assertSame(
             [
-                Validator\Date::INVALID,
-                Validator\Date::INVALID_DATE,
-                Validator\Date::FALSEFORMAT,
+                Date::INVALID,
+                Date::INVALID_DATE,
+                Date::FALSEFORMAT,
             ],
             array_keys($this->validator->getMessageTemplates())
         );
-        $this->assertEquals($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
+        self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
@@ -181,15 +186,16 @@ class DateTest extends TestCase
         $messageVariables = [
             'format' => 'format',
         ];
-        $this->assertSame($messageVariables, $this->validator->getOption('messageVariables'));
-        $this->assertEquals(array_keys($messageVariables), $this->validator->getMessageVariables());
+
+        self::assertSame($messageVariables, $this->validator->getOption('messageVariables'));
+        self::assertSame(array_keys($messageVariables), $this->validator->getMessageVariables());
     }
 
     public function testConstructorWithFormatParameter(): void
     {
         $format    = 'd/m/Y';
-        $validator = new Validator\Date($format);
+        $validator = new Date($format);
 
-        $this->assertEquals($format, $validator->getFormat());
+        self::assertSame($format, $validator->getFormat());
     }
 }

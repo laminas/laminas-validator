@@ -10,15 +10,17 @@ use PHPUnit\Framework\TestCase;
 use function array_keys;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\Digits
  */
-class DigitsTest extends TestCase
+final class DigitsTest extends TestCase
 {
-    /** @var Digits */
-    protected $validator;
+    private Digits $validator;
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->validator = new Digits();
     }
 
@@ -29,7 +31,7 @@ class DigitsTest extends TestCase
      */
     public function testExpectedResultsWithBasicInputValues(string $input, bool $expected): void
     {
-        $this->assertSame($expected, $this->validator->isValid($input));
+        self::assertSame($expected, $this->validator->isValid($input));
     }
 
     /**
@@ -58,27 +60,31 @@ class DigitsTest extends TestCase
      */
     public function testMessagesEmptyInitially(): void
     {
-        $this->assertEquals([], $this->validator->getMessages());
+        self::assertSame([], $this->validator->getMessages());
     }
 
     public function testEmptyStringValueResultsInProperValidationFailureMessages(): void
     {
-        $this->assertFalse($this->validator->isValid(''));
+        self::assertFalse($this->validator->isValid(''));
+
         $messages      = $this->validator->getMessages();
         $arrayExpected = [
             Digits::STRING_EMPTY => 'The input is an empty string',
         ];
-        $this->assertSame($arrayExpected, $messages);
+
+        self::assertSame($arrayExpected, $messages);
     }
 
     public function testInvalidValueResultsInProperValidationFailureMessages(): void
     {
-        $this->assertFalse($this->validator->isValid('#'));
+        self::assertFalse($this->validator->isValid('#'));
+
         $messages      = $this->validator->getMessages();
         $arrayExpected = [
             Digits::NOT_DIGITS => 'The input must contain only digits',
         ];
-        $this->assertSame($arrayExpected, $messages);
+
+        self::assertSame($arrayExpected, $messages);
     }
 
     /**
@@ -86,12 +92,12 @@ class DigitsTest extends TestCase
      */
     public function testNonStringValidation(): void
     {
-        $this->assertFalse($this->validator->isValid([1 => 1]));
+        self::assertFalse($this->validator->isValid([1 => 1]));
     }
 
     public function testEqualsMessageTemplates(): void
     {
-        $this->assertSame(
+        self::assertSame(
             [
                 Digits::NOT_DIGITS,
                 Digits::STRING_EMPTY,
@@ -99,6 +105,6 @@ class DigitsTest extends TestCase
             ],
             array_keys($this->validator->getMessageTemplates())
         );
-        $this->assertEquals($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
+        self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 }

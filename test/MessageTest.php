@@ -12,15 +12,16 @@ use function array_keys;
 use function current;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
  */
-class MessageTest extends TestCase
+final class MessageTest extends TestCase
 {
-    /** @var StringLength */
-    protected $validator;
+    private StringLength $validator;
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->validator = new StringLength(4, 8);
     }
 
@@ -31,18 +32,23 @@ class MessageTest extends TestCase
     public function testSetMessage(): void
     {
         $inputInvalid = 'abcdefghij';
-        $this->assertFalse($this->validator->isValid($inputInvalid));
+
+        self::assertFalse($this->validator->isValid($inputInvalid));
+
         $messages = $this->validator->getMessages();
-        $this->assertEquals('The input is more than 8 characters long', current($messages));
+
+        self::assertSame('The input is more than 8 characters long', current($messages));
 
         $this->validator->setMessage(
             'Your value is too long',
             StringLength::TOO_LONG
         );
 
-        $this->assertFalse($this->validator->isValid('abcdefghij'));
+        self::assertFalse($this->validator->isValid('abcdefghij'));
+
         $messages = $this->validator->getMessages();
-        $this->assertEquals('Your value is too long', current($messages));
+
+        self::assertSame('Your value is too long', current($messages));
     }
 
     /**
@@ -58,11 +64,15 @@ class MessageTest extends TestCase
             StringLength::TOO_SHORT
         );
 
-        $this->assertFalse($this->validator->isValid('abc'));
+        self::assertFalse($this->validator->isValid('abc'));
+
         $messages = $this->validator->getMessages();
-        $this->assertEquals('Your value is too short', current($messages));
+
+        self::assertSame('Your value is too short', current($messages));
+
         $errors = array_keys($this->validator->getMessages());
-        $this->assertEquals(StringLength::TOO_SHORT, current($errors));
+
+        self::assertSame(StringLength::TOO_SHORT, current($errors));
     }
 
     /**
@@ -77,9 +87,12 @@ class MessageTest extends TestCase
         );
 
         $inputInvalid = 'abcdefghij';
-        $this->assertFalse($this->validator->isValid($inputInvalid));
+
+        self::assertFalse($this->validator->isValid($inputInvalid));
+
         $messages = $this->validator->getMessages();
-        $this->assertEquals("Your value '$inputInvalid' is too long", current($messages));
+
+        self::assertSame("Your value '$inputInvalid' is too long", current($messages));
     }
 
     /**
@@ -93,9 +106,12 @@ class MessageTest extends TestCase
             StringLength::TOO_LONG
         );
         $inputInvalid = 'abcdefghij';
-        $this->assertFalse($this->validator->isValid($inputInvalid));
+
+        self::assertFalse($this->validator->isValid($inputInvalid));
+
         $messages = $this->validator->getMessages();
-        $this->assertEquals("The length of your value is '10'", current($messages));
+
+        self::assertSame("The length of your value is '10'", current($messages));
     }
 
     /**
@@ -112,9 +128,12 @@ class MessageTest extends TestCase
         );
 
         $inputInvalid = 'abcdefghij';
-        $this->assertFalse($this->validator->isValid($inputInvalid));
+
+        self::assertFalse($this->validator->isValid($inputInvalid));
+
         $messages = $this->validator->getMessages();
-        $this->assertEquals('Your value is too long, it should be no longer than 8', current($messages));
+
+        self::assertSame('Your value is too long, it should be no longer than 8', current($messages));
     }
 
     /**
@@ -130,9 +149,12 @@ class MessageTest extends TestCase
         );
 
         $inputInvalid = 'abcdefghij';
-        $this->assertFalse($this->validator->isValid($inputInvalid));
+
+        self::assertFalse($this->validator->isValid($inputInvalid));
+
         $messages = $this->validator->getMessages();
-        $this->assertEquals('Your value is too long, and btw, %shazam%!', current($messages));
+
+        self::assertSame('Your value is too long, and btw, %shazam%!', current($messages));
     }
 
     /**
@@ -145,6 +167,7 @@ class MessageTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('No message template exists for key');
+
         $this->validator->setMessage(
             'Your value is too long',
             $keyInvalid
@@ -165,13 +188,17 @@ class MessageTest extends TestCase
             ]
         );
 
-        $this->assertFalse($this->validator->isValid('abcdefghij'));
-        $messages = $this->validator->getMessages();
-        $this->assertEquals('Your value is too long', current($messages));
+        self::assertFalse($this->validator->isValid('abcdefghij'));
 
-        $this->assertFalse($this->validator->isValid('abc'));
         $messages = $this->validator->getMessages();
-        $this->assertEquals('Your value is too short', current($messages));
+
+        self::assertSame('Your value is too long', current($messages));
+
+        self::assertFalse($this->validator->isValid('abc'));
+
+        $messages = $this->validator->getMessages();
+
+        self::assertSame('Your value is too short', current($messages));
     }
 
     /**
@@ -189,13 +216,15 @@ class MessageTest extends TestCase
 
         $inputInvalid = 'abcdefghij';
 
-        $this->assertFalse($this->validator->isValid($inputInvalid));
-        $messages = $this->validator->getMessages();
-        $this->assertEquals('Your value is too long', current($messages));
+        self::assertFalse($this->validator->isValid($inputInvalid));
 
-        $this->assertEquals($inputInvalid, $this->validator->value);
-        $this->assertEquals(8, $this->validator->max);
-        $this->assertEquals(4, $this->validator->min);
+        $messages = $this->validator->getMessages();
+
+        self::assertSame('Your value is too long', current($messages));
+
+        self::assertSame($inputInvalid, $this->validator->value);
+        self::assertSame(8, $this->validator->max);
+        self::assertSame(4, $this->validator->min);
     }
 
     /**
@@ -209,12 +238,15 @@ class MessageTest extends TestCase
             StringLength::TOO_LONG
         );
 
-        $this->assertFalse($this->validator->isValid('abcdefghij'));
+        self::assertFalse($this->validator->isValid('abcdefghij'));
+
         $messages = $this->validator->getMessages();
-        $this->assertEquals('Your value is too long', current($messages));
+
+        self::assertSame('Your value is too long', current($messages));
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('No property exists by the name ');
+
         $this->validator->unknownProperty;
     }
 
@@ -227,22 +259,26 @@ class MessageTest extends TestCase
     {
         $vars = $this->validator->getMessageVariables();
 
-        $this->assertIsArray($vars);
-        $this->assertEquals(['min', 'max', 'length'], $vars);
+        self::assertIsArray($vars);
+        self::assertSame(['min', 'max', 'length'], $vars);
+
         $message = 'variables: %notvar% ';
         foreach ($vars as $var) {
             $message .= "%$var% ";
         }
+
         $this->validator->setMessage($message, StringLength::TOO_SHORT);
 
-        $this->assertFalse($this->validator->isValid('abc'));
+        self::assertFalse($this->validator->isValid('abc'));
+
         $messages = $this->validator->getMessages();
-        $this->assertEquals('variables: %notvar% 4 8 3 ', current($messages));
+
+        self::assertSame('variables: %notvar% 4 8 3 ', current($messages));
     }
 
     public function testEqualsMessageTemplates(): void
     {
-        $this->assertSame(
+        self::assertSame(
             [
                 StringLength::INVALID,
                 StringLength::TOO_SHORT,
@@ -250,7 +286,7 @@ class MessageTest extends TestCase
             ],
             array_keys($this->validator->getMessageTemplates())
         );
-        $this->assertEquals($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
+        self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
@@ -260,7 +296,8 @@ class MessageTest extends TestCase
             'max'    => ['options' => 'max'],
             'length' => ['options' => 'length'],
         ];
-        $this->assertSame($messageVariables, $this->validator->getOption('messageVariables'));
-        $this->assertEquals(array_keys($messageVariables), $this->validator->getMessageVariables());
+
+        self::assertSame($messageVariables, $this->validator->getOption('messageVariables'));
+        self::assertSame(array_keys($messageVariables), $this->validator->getMessageVariables());
     }
 }

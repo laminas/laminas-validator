@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Laminas\Validator\File;
+use Laminas\Validator\File\Hash;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
@@ -20,9 +20,10 @@ use const UPLOAD_ERR_NO_FILE;
 /**
  * Hash testbed
  *
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\File\Hash
  */
-class HashTest extends TestCase
+final class HashTest extends TestCase
 {
     /**
      * @psalm-return array<array-key, array{
@@ -98,6 +99,7 @@ class HashTest extends TestCase
             ];
             $testData[] = [$data[0], $fileUpload, $data[2], $data[3]];
         }
+
         return $testData;
     }
 
@@ -110,10 +112,12 @@ class HashTest extends TestCase
      */
     public function testBasic($options, $isValidParam, bool $expected, string $messageKey): void
     {
-        $validator = new File\Hash($options);
-        $this->assertEquals($expected, $validator->isValid($isValidParam));
+        $validator = new Hash($options);
+
+        self::assertSame($expected, $validator->isValid($isValidParam));
+
         if (! $expected) {
-            $this->assertArrayHasKey($messageKey, $validator->getMessages());
+            self::assertArrayHasKey($messageKey, $validator->getMessages());
         }
     }
 
@@ -127,39 +131,54 @@ class HashTest extends TestCase
     public function testLegacy($options, $isValidParam, bool $expected, string $messageKey): void
     {
         if (! is_array($isValidParam)) {
-            $this->markTestSkipped('An array is expected for legacy compat tests');
+            self::markTestSkipped('An array is expected for legacy compat tests');
         }
 
-        $validator = new File\Hash($options);
-        $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+        $validator = new Hash($options);
+
+        self::assertSame($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+
         if (! $expected) {
-            $this->assertArrayHasKey($messageKey, $validator->getMessages());
+            self::assertArrayHasKey($messageKey, $validator->getMessages());
         }
+    }
+
+    /** @psalm-return array<array{string|string[], array<numeric, string>}> */
+    public function hashProvider(): array
+    {
+        return [
+            ['12345', ['12345' => 'crc32']],
+            [['12345', '12333', '12344'], ['12345' => 'crc32', '12333' => 'crc32', '12344' => 'crc32']],
+        ];
     }
 
     /**
      * Ensures that getHash() returns expected value
+     *
+     * @dataProvider hashProvider
+     * @param string|string[] $hash
+     * @psalm-param array<numeric, string> $expected
      */
-    public function testgetHash(): void
+    public function testGetHash($hash, array $expected): void
     {
-        $validator = new File\Hash('12345');
-        $this->assertEquals(['12345' => 'crc32'], $validator->getHash());
+        $validator = new Hash($hash);
 
-        $validator = new File\Hash(['12345', '12333', '12344']);
-        $this->assertEquals(['12345' => 'crc32', '12333' => 'crc32', '12344' => 'crc32'], $validator->getHash());
+        self::assertSame($expected, $validator->getHash());
     }
 
     /**
      * Ensures that setHash() returns expected value
+     *
+     * @dataProvider hashProvider
+     * @param string|string[] $hash
+     * @psalm-param array<numeric, string> $expected
      */
-    public function testSetHash(): void
+    public function testSetHash($hash, array $expected): void
     {
-        $validator = new File\Hash('12345');
-        $validator->setHash('12333');
-        $this->assertEquals(['12333' => 'crc32'], $validator->getHash());
+        $validator = new Hash('12333');
+        $validator->setHash($hash);
 
-        $validator->setHash(['12321', '12121']);
-        $this->assertEquals(['12321' => 'crc32', '12121' => 'crc32'], $validator->getHash());
+        self::assertSame($expected, $validator->getHash());
     }
 
     /**
@@ -167,12 +186,14 @@ class HashTest extends TestCase
      */
     public function testAddHash(): void
     {
-        $validator = new File\Hash('12345');
+        $validator = new Hash('12345');
         $validator->addHash('12344');
-        $this->assertEquals(['12345' => 'crc32', '12344' => 'crc32'], $validator->getHash());
+
+        self::assertSame(['12345' => 'crc32', '12344' => 'crc32'], $validator->getHash());
 
         $validator->addHash(['12321', '12121']);
-        $this->assertEquals(
+
+        self::assertSame(
             ['12345' => 'crc32', '12344' => 'crc32', '12321' => 'crc32', '12121' => 'crc32'],
             $validator->getHash()
         );
@@ -183,18 +204,19 @@ class HashTest extends TestCase
      */
     public function testLaminas11258(): void
     {
-        $validator = new File\Hash('3f8d07e2');
-        $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
-        $this->assertArrayHasKey('fileHashNotFound', $validator->getMessages());
-        $this->assertStringContainsString('does not exist', current($validator->getMessages()));
+        $validator = new Hash('3f8d07e2');
+
+        self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
+        self::assertArrayHasKey('fileHashNotFound', $validator->getMessages());
+        self::assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
-        $validator = new File\Hash();
+        $validator = new Hash();
 
-        $this->assertFalse($validator->isValid(''));
-        $this->assertArrayHasKey(File\Hash::NOT_FOUND, $validator->getMessages());
+        self::assertFalse($validator->isValid(''));
+        self::assertArrayHasKey(Hash::NOT_FOUND, $validator->getMessages());
 
         $filesArray = [
             'name'     => '',
@@ -204,8 +226,8 @@ class HashTest extends TestCase
             'type'     => '',
         ];
 
-        $this->assertFalse($validator->isValid($filesArray));
-        $this->assertArrayHasKey(File\Hash::NOT_FOUND, $validator->getMessages());
+        self::assertFalse($validator->isValid($filesArray));
+        self::assertArrayHasKey(Hash::NOT_FOUND, $validator->getMessages());
     }
 
     /**
@@ -231,40 +253,47 @@ class HashTest extends TestCase
      */
     public function testAddHashRaisesExceptionForInvalidType($value): void
     {
-        $validator = new File\Hash('12345');
+        $validator = new Hash('12345');
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('False parameter given');
+
         $validator->addHash($value);
     }
 
     public function testAddHashRaisesExceptionWithInvalidAlgorithm(): void
     {
-        $validator = new File\Hash('12345');
+        $validator = new Hash('12345');
         $algorithm = 'foobar123';
         $options   = ['algorithm' => $algorithm];
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(sprintf("Unknown algorithm '%s'", $algorithm));
+
         $validator->addHash($options);
     }
 
     public function testIsValidRaisesExceptionForArrayValueNotInFilesFormat(): void
     {
-        $validator = new File\Hash('12345');
+        $validator = new Hash('12345');
         $value     = ['foo' => 'bar'];
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Value array must be in $_FILES format');
+
         $validator->isValid($value);
     }
 
     public function testConstructorCanAcceptAllOptionsAsDiscreteArguments(): void
     {
         $algorithm = 'md5';
-        $validator = new File\Hash('12345', $algorithm);
+        $validator = new Hash('12345', $algorithm);
 
         $r = new ReflectionProperty($validator, 'options');
         $r->setAccessible(true);
         $options = $r->getValue($validator);
-        $this->assertSame($algorithm, $options['algorithm']);
+
+        self::assertSame($algorithm, $options['algorithm']);
     }
 
     /**
@@ -273,23 +302,24 @@ class HashTest extends TestCase
      */
     public function testInvalidHashProvidedInArrayFormat($hash): void
     {
-        $validator = new File\Hash('12345');
+        $validator = new Hash('12345');
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Hash must be a string');
+
         $validator->addHash([$hash]);
     }
 
     public function testIntHash(): void
     {
-        $validator = new File\Hash('10713230');
+        $validator = new Hash('10713230');
 
         self::assertTrue($validator->isValid(__DIR__ . '/_files/crc32-int.pdf'));
     }
 
     public function testHashMustMatchWithTheAlgorithm(): void
     {
-        $validator = new File\Hash();
+        $validator = new Hash();
         // swapped hashes for given algorithms
         $validator->addHash(['6507f172bceb9ed0cc59246d41569c4d', 'algorithm' => 'crc32']);
         $validator->addHash(['10713230', 'algorithm' => 'md5']);

@@ -11,15 +11,17 @@ use stdClass;
 use function current;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\Sitemap\Lastmod
  */
-class LastmodTest extends TestCase
+final class LastmodTest extends TestCase
 {
-    /** @var Lastmod */
-    protected $validator;
+    private Lastmod $validator;
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->validator = new Lastmod();
     }
 
@@ -44,7 +46,7 @@ class LastmodTest extends TestCase
         ];
 
         foreach ($values as $value) {
-            $this->assertTrue($this->validator->isValid($value));
+            self::assertTrue($this->validator->isValid($value));
         }
     }
 
@@ -62,9 +64,11 @@ class LastmodTest extends TestCase
         ];
 
         foreach ($values as $value) {
-            $this->assertFalse($this->validator->isValid($value));
+            self::assertFalse($this->validator->isValid($value));
+
             $messages = $this->validator->getMessages();
-            $this->assertStringContainsString('is not a valid', current($messages));
+
+            self::assertStringContainsString('is not a valid', current($messages));
         }
     }
 
@@ -83,9 +87,11 @@ class LastmodTest extends TestCase
         ];
 
         foreach ($values as $value) {
-            $this->assertFalse($this->validator->isValid($value));
+            self::assertFalse($this->validator->isValid($value));
+
             $messages = $this->validator->getMessages();
-            $this->assertStringContainsString('String expected', current($messages));
+
+            self::assertStringContainsString('String expected', current($messages));
         }
     }
 }

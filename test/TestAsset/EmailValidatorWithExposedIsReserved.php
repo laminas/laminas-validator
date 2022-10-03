@@ -9,7 +9,7 @@ use Laminas\Validator\EmailAddress;
 /**
  * @see Laminas-12347
  */
-class EmailValidatorWithExposedIsReserved extends EmailAddress
+final class EmailValidatorWithExposedIsReserved extends EmailAddress
 {
     /**
      * @param string $host

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator\File;
 
-use Laminas\Validator\File;
+use Laminas\Validator\File\IsImage;
 use PHPUnit\Framework\TestCase;
 
 use function basename;
@@ -17,9 +17,10 @@ use const PHP_VERSION_ID;
 /**
  * IsImage testbed
  *
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\File\IsImage
  */
-class IsImageTest extends TestCase
+final class IsImageTest extends TestCase
 {
     protected function getMagicMime(): string
     {
@@ -27,9 +28,9 @@ class IsImageTest extends TestCase
     }
 
     /**
-     * @return array
+     * @psalm-return array<array{list<string>|string|null, array<string, string|int>, bool}>
      */
-    public function basicBehaviorDataProvider()
+    public function basicBehaviorDataProvider(): array
     {
         $testFile   = __DIR__ . '/_files/picture.jpg';
         $fileUpload = [
@@ -39,6 +40,7 @@ class IsImageTest extends TestCase
             'error'    => 0,
             'type'     => 'image/jpeg',
         ];
+
         return [
             //    Options, isValid Param, Expected value
             [null,                         $fileUpload, true],
@@ -58,62 +60,82 @@ class IsImageTest extends TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider basicBehaviorDataProvider
-     * @param mixed $options
+     * @psalm-param list<string>|string|null $options
+     * @param array<string, string|int> $isValidParam
      */
     public function testBasic($options, array $isValidParam, bool $expected): void
     {
-        $validator = new File\IsImage($options);
+        $validator = new IsImage($options);
         $validator->enableHeaderCheck();
-        $this->assertEquals($expected, $validator->isValid($isValidParam));
+
+        self::assertSame($expected, $validator->isValid($isValidParam));
     }
 
     /**
      * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
      * @dataProvider basicBehaviorDataProvider
-     * @param mixed $options
+     * @psalm-param list<string>|string|null $options
+     * @param array<string, string|int> $isValidParam
      */
     public function testLegacy($options, array $isValidParam, bool $expected): void
     {
         if (is_array($isValidParam)) {
-            $validator = new File\IsImage($options);
+            $validator = new IsImage($options);
             $validator->enableHeaderCheck();
-            $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+
+            self::assertSame($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
         }
+    }
+
+    /** @psalm-return array<array{string|string[], string|string[], bool}> */
+    public function getMimeTypeProvider(): array
+    {
+        return [
+            ['image/gif', 'image/gif', false],
+            [['image/gif', 'video', 'text/test'], 'image/gif,video,text/test', false],
+            [['image/gif', 'video', 'text/test'], ['image/gif', 'video', 'text/test'], true],
+        ];
     }
 
     /**
      * Ensures that getMimeType() returns expected value
+     *
+     * @dataProvider getMimeTypeProvider
+     * @param string|string[] $mimeType
+     * @param string|string[] $expected
      */
-    public function testGetMimeType(): void
+    public function testGetMimeType($mimeType, $expected, bool $asArray): void
     {
-        $validator = new File\IsImage('image/gif');
-        $this->assertEquals('image/gif', $validator->getMimeType());
+        $validator = new IsImage($mimeType);
 
-        $validator = new File\IsImage(['image/gif', 'video', 'text/test']);
-        $this->assertEquals('image/gif,video,text/test', $validator->getMimeType());
+        self::assertSame($expected, $validator->getMimeType($asArray));
+    }
 
-        $validator = new File\IsImage(['image/gif', 'video', 'text/test']);
-        $this->assertEquals(['image/gif', 'video', 'text/test'], $validator->getMimeType(true));
+    /** @psalm-return array<array{string|string[], string, string[]}> */
+    public function setMimeTypeProvider(): array
+    {
+        return [
+            ['image/jpeg', 'image/jpeg', ['image/jpeg']],
+            ['image/gif, text/test', 'image/gif,text/test', ['image/gif', 'text/test']],
+            [['video/mpeg', 'gif'], 'video/mpeg,gif', ['video/mpeg', 'gif']],
+        ];
     }
 
     /**
      * Ensures that setMimeType() returns expected value
+     *
+     * @dataProvider setMimeTypeProvider
+     * @param string|string[] $mimeType
+     * @param string[] $expectedAsArray
      */
-    public function testSetMimeType(): void
+    public function testSetMimeType($mimeType, string $expected, array $expectedAsArray): void
     {
-        $validator = new File\IsImage('image/gif');
-        $validator->setMimeType('image/jpeg');
-        $this->assertEquals('image/jpeg', $validator->getMimeType());
-        $this->assertEquals(['image/jpeg'], $validator->getMimeType(true));
+        $validator = new IsImage('image/gif');
+        $validator->setMimeType($mimeType);
 
-        $validator->setMimeType('image/gif, text/test');
-        $this->assertEquals('image/gif,text/test', $validator->getMimeType());
-        $this->assertEquals(['image/gif', 'text/test'], $validator->getMimeType(true));
-
-        $validator->setMimeType(['video/mpeg', 'gif']);
-        $this->assertEquals('video/mpeg,gif', $validator->getMimeType());
-        $this->assertEquals(['video/mpeg', 'gif'], $validator->getMimeType(true));
+        self::assertSame($expected, $validator->getMimeType());
+        self::assertSame($expectedAsArray, $validator->getMimeType(true));
     }
 
     /**
@@ -121,22 +143,26 @@ class IsImageTest extends TestCase
      */
     public function testAddMimeType(): void
     {
-        $validator = new File\IsImage('image/gif');
+        $validator = new IsImage('image/gif');
         $validator->addMimeType('text');
-        $this->assertEquals('image/gif,text', $validator->getMimeType());
-        $this->assertEquals(['image/gif', 'text'], $validator->getMimeType(true));
+
+        self::assertSame('image/gif,text', $validator->getMimeType());
+        self::assertSame(['image/gif', 'text'], $validator->getMimeType(true));
 
         $validator->addMimeType('jpg, to');
-        $this->assertEquals('image/gif,text,jpg,to', $validator->getMimeType());
-        $this->assertEquals(['image/gif', 'text', 'jpg', 'to'], $validator->getMimeType(true));
+
+        self::assertSame('image/gif,text,jpg,to', $validator->getMimeType());
+        self::assertSame(['image/gif', 'text', 'jpg', 'to'], $validator->getMimeType(true));
 
         $validator->addMimeType(['zip', 'ti']);
-        $this->assertEquals('image/gif,text,jpg,to,zip,ti', $validator->getMimeType());
-        $this->assertEquals(['image/gif', 'text', 'jpg', 'to', 'zip', 'ti'], $validator->getMimeType(true));
+
+        self::assertSame('image/gif,text,jpg,to,zip,ti', $validator->getMimeType());
+        self::assertSame(['image/gif', 'text', 'jpg', 'to', 'zip', 'ti'], $validator->getMimeType(true));
 
         $validator->addMimeType('');
-        $this->assertEquals('image/gif,text,jpg,to,zip,ti', $validator->getMimeType());
-        $this->assertEquals(['image/gif', 'text', 'jpg', 'to', 'zip', 'ti'], $validator->getMimeType(true));
+
+        self::assertSame('image/gif,text,jpg,to,zip,ti', $validator->getMimeType());
+        self::assertSame(['image/gif', 'text', 'jpg', 'to', 'zip', 'ti'], $validator->getMimeType(true));
     }
 
     /**
@@ -152,11 +178,11 @@ class IsImageTest extends TestCase
             'error'    => 0,
         ];
 
-        $validator = new File\IsImage('test/notype');
+        $validator = new IsImage('test/notype');
         $validator->enableHeaderCheck();
-        $this->assertFalse($validator->isValid(__DIR__ . '/_files/picture.jpg', $files));
-        $error = $validator->getMessages();
-        $this->assertArrayHasKey('fileIsImageFalseType', $error);
+
+        self::assertFalse($validator->isValid(__DIR__ . '/_files/picture.jpg', $files));
+        self::assertArrayHasKey('fileIsImageFalseType', $validator->getMessages());
     }
 
     /**
@@ -165,7 +191,7 @@ class IsImageTest extends TestCase
     public function testOptionsAtConstructor(): void
     {
         if (! extension_loaded('fileinfo')) {
-            $this->markTestSkipped('This PHP Version has no finfo installed');
+            self::markTestSkipped('This PHP Version has no finfo installed');
         }
 
         $magicFile = $this->getMagicMime();
@@ -182,23 +208,23 @@ class IsImageTest extends TestCase
                 'enableHeaderCheck' => true,
             ];
 
-        $validator = new File\IsImage($options);
+        $validator = new IsImage($options);
 
         if (PHP_VERSION_ID < 80100) {
-            $this->assertEquals($magicFile, $validator->getMagicFile());
+            self::assertSame($magicFile, $validator->getMagicFile());
         }
 
-        $this->assertTrue($validator->getHeaderCheck());
-        $this->assertEquals('image/gif,image/jpg', $validator->getMimeType());
+        self::assertTrue($validator->getHeaderCheck());
+        self::assertSame('image/gif,image/jpg', $validator->getMimeType());
     }
 
     public function testNonMimeOptionsAtConstructorStillSetsDefaults(): void
     {
-        $validator = new File\IsImage([
+        $validator = new IsImage([
             'enableHeaderCheck' => true,
         ]);
 
-        $this->assertNotEmpty($validator->getMimeType());
+        self::assertNotEmpty($validator->getMimeType());
     }
 
     /**
@@ -206,9 +232,10 @@ class IsImageTest extends TestCase
      */
     public function testLaminas11258(): void
     {
-        $validator = new File\IsImage();
-        $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
-        $this->assertArrayHasKey('fileIsImageNotReadable', $validator->getMessages());
-        $this->assertStringContainsString('does not exist', current($validator->getMessages()));
+        $validator = new IsImage();
+
+        self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
+        self::assertArrayHasKey('fileIsImageNotReadable', $validator->getMessages());
+        self::assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 }

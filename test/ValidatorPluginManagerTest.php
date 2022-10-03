@@ -13,8 +13,8 @@ use Laminas\Validator\Explode;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
+use LaminasTest\Validator\TestAsset\Translator;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 
 use function assert;
@@ -22,44 +22,67 @@ use function get_class;
 use function sprintf;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\ValidatorPluginManager
  */
-class ValidatorPluginManagerTest extends TestCase
+final class ValidatorPluginManagerTest extends TestCase
 {
-    use ProphecyTrait;
-
     private ValidatorPluginManager $validators;
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->validators = new ValidatorPluginManager(new ServiceManager());
     }
 
     public function testAllowsInjectingTranslator(): void
     {
-        $translator = $this->prophesize(TestAsset\Translator::class)->reveal();
+        $translator = $this->createMock(Translator::class);
 
-        $container = $this->prophesize(ContainerInterface::class);
-        $container->has('MvcTranslator')->willReturn(true);
-        $container->get('MvcTranslator')->willReturn($translator);
+        $container = $this->createMock(ContainerInterface::class);
 
-        $validators = new ValidatorPluginManager($container->reveal());
+        $container
+            ->expects(self::once())
+            ->method('has')
+            ->with('MvcTranslator')
+            ->willReturn(true);
+
+        $container
+            ->expects(self::once())
+            ->method('get')
+            ->with('MvcTranslator')
+            ->willReturn($translator);
+
+        $validators = new ValidatorPluginManager($container);
 
         $validator = $validators->get(NotEmpty::class);
+
         self::assertInstanceOf(AbstractValidator::class, $validator);
-        $this->assertEquals($translator, $validator->getTranslator());
+        self::assertEquals($translator, $validator->getTranslator());
     }
 
     public function testNoTranslatorInjectedWhenTranslatorIsNotPresent(): void
     {
-        $container = $this->prophesize(ContainerInterface::class);
-        $container->has('MvcTranslator')->willReturn(false);
+        $container = $this->createMock(ContainerInterface::class);
 
-        $validators = new ValidatorPluginManager($container->reveal());
+        $container
+            ->expects(self::once())
+            ->method('has')
+            ->with('MvcTranslator')
+            ->willReturn(false);
+
+        $container
+            ->expects(self::never())
+            ->method('get')
+            ->with('MvcTranslator');
+
+        $validators = new ValidatorPluginManager($container);
 
         $validator = $validators->get(NotEmpty::class);
+
         self::assertInstanceOf(AbstractValidator::class, $validator);
-        $this->assertNull($validator->getTranslator());
+        self::assertNull($validator->getTranslator());
     }
 
     public function testRegisteringInvalidValidatorRaisesException(): void
@@ -68,9 +91,9 @@ class ValidatorPluginManagerTest extends TestCase
             /** @psalm-suppress InvalidArgument */
             $this->validators->setService('test', $this);
         } catch (InvalidServiceException | RuntimeException $e) {
-            $this->assertStringContainsString(ValidatorInterface::class, $e->getMessage());
+            self::assertStringContainsString(ValidatorInterface::class, $e->getMessage());
         } catch (Exception $e) {
-            $this->fail(sprintf(
+            self::fail(sprintf(
                 'Unexpected exception of type "%s" when testing for invalid validator types',
                 get_class($e)
             ));
@@ -80,12 +103,13 @@ class ValidatorPluginManagerTest extends TestCase
     public function testLoadingInvalidValidatorRaisesException(): void
     {
         $this->validators->setInvokableClass('test', static::class);
+
         try {
             $this->validators->get('test');
         } catch (InvalidServiceException | RuntimeException $e) {
-            $this->assertStringContainsString(ValidatorInterface::class, $e->getMessage());
+            self::assertStringContainsString(ValidatorInterface::class, $e->getMessage());
         } catch (Exception $e) {
-            $this->fail(sprintf(
+            self::fail(sprintf(
                 'Unexpected exception of type "%s" when testing for invalid validator types',
                 get_class($e)
             ));
@@ -95,7 +119,9 @@ class ValidatorPluginManagerTest extends TestCase
     public function testInjectedValidatorPluginManager(): void
     {
         $validator = $this->validators->get(Explode::class);
+
         assert($validator instanceof Explode);
-        $this->assertSame($this->validators, $validator->getValidatorPluginManager());
+
+        self::assertSame($this->validators, $validator->getValidatorPluginManager());
     }
 }

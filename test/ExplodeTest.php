@@ -17,15 +17,18 @@ use stdClass;
 use function array_keys;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\Explode
  */
-class ExplodeTest extends TestCase
+final class ExplodeTest extends TestCase
 {
     public function testRaisesExceptionWhenValidatorIsMissing(): void
     {
         $validator = new Explode();
+
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('validator');
+
         $validator->isValid('foo,bar');
     }
 
@@ -92,33 +95,36 @@ class ExplodeTest extends TestCase
             'breakOnFirstFailure' => $breakOnFirst,
         ]);
 
-        $this->assertEquals($expects, $validator->isValid($value));
-        $this->assertEquals($messages, $validator->getMessages());
+        self::assertSame($expects, $validator->isValid($value));
+        self::assertSame($messages, $validator->getMessages());
     }
 
     public function testGetMessagesReturnsDefaultValue(): void
     {
         $validator = new Explode();
-        $this->assertEquals([], $validator->getMessages());
+
+        self::assertSame([], $validator->getMessages());
     }
 
     public function testEqualsMessageTemplates(): void
     {
         $validator = new Explode([]);
-        $this->assertSame(
+
+        self::assertSame(
             [
                 Explode::INVALID,
             ],
             array_keys($validator->getMessageTemplates())
         );
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
     {
         $validator = new Explode([]);
-        $this->assertSame([], $validator->getOption('messageVariables'));
-        $this->assertEquals(array_keys([]), $validator->getMessageVariables());
+
+        self::assertSame([], $validator->getOption('messageVariables'));
+        self::assertSame(array_keys([]), $validator->getMessageVariables());
     }
 
     public function testSetValidatorAsArray(): void
@@ -133,17 +139,17 @@ class ExplodeTest extends TestCase
 
         /** @var InArray $inArrayValidator */
         $inArrayValidator = $validator->getValidator();
-        $this->assertInstanceOf(InArray::class, $inArrayValidator);
-        $this->assertSame(
-            ['a', 'b', 'c'],
-            $inArrayValidator->getHaystack()
-        );
+
+        self::assertInstanceOf(InArray::class, $inArrayValidator);
+        self::assertSame(['a', 'b', 'c'], $inArrayValidator->getHaystack());
     }
 
     public function testSetValidatorMissingName(): void
     {
         $validator = new Explode();
+
         $this->expectException(RuntimeException::class);
+
         /** @psalm-suppress InvalidArgument */
         $validator->setValidator([
             'options' => [],
@@ -153,7 +159,9 @@ class ExplodeTest extends TestCase
     public function testSetValidatorInvalidParam(): void
     {
         $validator = new Explode();
+
         $this->expectException(RuntimeException::class);
+
         $validator->setValidator('inarray');
     }
 
@@ -177,8 +185,8 @@ class ExplodeTest extends TestCase
             ],
         ];
 
-        $this->assertFalse($validator->isValid('api-tools-devteam@zend.com,abc,defghij'));
-        $this->assertEquals($messages, $validator->getMessages());
+        self::assertFalse($validator->isValid('api-tools-devteam@zend.com,abc,defghij'));
+        self::assertSame($messages, $validator->getMessages());
     }
 
     /**
@@ -196,7 +204,8 @@ class ExplodeTest extends TestCase
             'valueDelimiter'      => ',',
             'breakOnFirstFailure' => false,
         ]);
-        $this->assertTrue($validator->isValid('a,b,c', $context));
-        $this->assertTrue($contextSame);
+
+        self::assertTrue($validator->isValid('a,b,c', $context));
+        self::assertTrue($contextSame);
     }
 }

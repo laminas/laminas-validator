@@ -10,7 +10,7 @@ use function key;
 use function next;
 use function reset;
 
-class CustomTraversable implements Iterator
+final class CustomTraversable implements Iterator
 {
     private array $data;
 

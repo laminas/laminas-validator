@@ -6,7 +6,6 @@ namespace LaminasTest\Validator\Db;
 
 use ArrayObject;
 use Laminas\Db\Adapter\Adapter;
-use Laminas\Db\Adapter\Driver\ConnectionInterface;
 use Laminas\Db\Adapter\Driver\DriverInterface;
 use Laminas\Db\Adapter\Driver\ResultInterface;
 use Laminas\Db\Adapter\Driver\StatementInterface;
@@ -17,23 +16,22 @@ use Laminas\Db\Sql\TableIdentifier;
 use Laminas\Validator\Db\RecordExists;
 use Laminas\Validator\Exception\RuntimeException;
 use LaminasTest\Validator\Db\TestAsset\TrustingSql92Platform;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\Db\RecordExists
  */
-class RecordExistsTest extends TestCase
+final class RecordExistsTest extends TestCase
 {
     /**
      * Return a Mock object for a Db result with rows
      *
-     * @return Adapter
+     * @return Adapter&MockObject
      */
-    protected function getMockHasResult()
+    protected function getMockHasResult(): Adapter
     {
-        // mock the adapter, driver, and parts
-        $mockConnection = $this->createMock(ConnectionInterface::class);
-
         // Mock has result
         $mockHasResultRow = new class extends ArrayObject {
             public ?string $one = null;
@@ -43,28 +41,32 @@ class RecordExistsTest extends TestCase
 
         $mockHasResult = $this->createMock(ResultInterface::class);
         $mockHasResult
+            ->expects(self::any())
             ->method('current')
             ->willReturn($mockHasResultRow);
 
         $mockHasResultStatement = $this->createMock(StatementInterface::class);
         $mockHasResultStatement
+            ->expects(self::any())
             ->method('execute')
             ->willReturn($mockHasResult);
 
         $mockHasResultStatement
+            ->expects(self::any())
             ->method('getParameterContainer')
             ->willReturn(new ParameterContainer());
 
         $mockHasResultDriver = $this->createMock(DriverInterface::class);
         $mockHasResultDriver
+            ->expects(self::any())
             ->method('createStatement')
             ->willReturn($mockHasResultStatement);
         $mockHasResultDriver
-            ->method('getConnection')
-            ->willReturn($mockConnection);
+            ->expects(self::never())
+            ->method('getConnection');
 
         return $this->getMockBuilder(Adapter::class)
-            ->setMethods(null)
+            ->addMethods([])
             ->setConstructorArgs([$mockHasResultDriver])
             ->getMock();
     }
@@ -72,37 +74,38 @@ class RecordExistsTest extends TestCase
     /**
      * Return a Mock object for a Db result without rows
      *
-     * @return Adapter
+     * @return Adapter&MockObject
      */
-    protected function getMockNoResult()
+    protected function getMockNoResult(): Adapter
     {
-        // mock the adapter, driver, and parts
-        $mockConnection = $this->createMock(ConnectionInterface::class);
-
         $mockNoResult = $this->createMock(ResultInterface::class);
         $mockNoResult
+            ->expects(self::once())
             ->method('current')
             ->willReturn(null);
 
         $mockNoResultStatement = $this->createMock(StatementInterface::class);
         $mockNoResultStatement
+            ->expects(self::once())
             ->method('execute')
             ->willReturn($mockNoResult);
 
         $mockNoResultStatement
+            ->expects(self::exactly(2))
             ->method('getParameterContainer')
             ->willReturn(new ParameterContainer());
 
         $mockNoResultDriver = $this->createMock(DriverInterface::class);
         $mockNoResultDriver
+            ->expects(self::once())
             ->method('createStatement')
             ->willReturn($mockNoResultStatement);
         $mockNoResultDriver
-            ->method('getConnection')
-            ->willReturn($mockConnection);
+            ->expects(self::never())
+            ->method('getConnection');
 
         return $this->getMockBuilder(Adapter::class)
-            ->setMethods(null)
+            ->addMethods([])
             ->setConstructorArgs([$mockNoResultDriver])
             ->getMock();
     }
@@ -117,7 +120,8 @@ class RecordExistsTest extends TestCase
             'field'   => 'field1',
             'adapter' => $this->getMockHasResult(),
         ]);
-        $this->assertTrue($validator->isValid('value1'));
+
+        self::assertTrue($validator->isValid('value1'));
     }
 
     /**
@@ -130,7 +134,8 @@ class RecordExistsTest extends TestCase
             'field'   => 'field1',
             'adapter' => $this->getMockNoResult(),
         ]);
-        $this->assertFalse($validator->isValid('nosuchvalue'));
+
+        self::assertFalse($validator->isValid('nosuchvalue'));
     }
 
     /**
@@ -147,7 +152,8 @@ class RecordExistsTest extends TestCase
             ],
             'adapter' => $this->getMockHasResult(),
         ]);
-        $this->assertTrue($validator->isValid('value3'));
+
+        self::assertTrue($validator->isValid('value3'));
     }
 
     /**
@@ -165,7 +171,8 @@ class RecordExistsTest extends TestCase
             ],
             'adapter' => $this->getMockNoResult(),
         ]);
-        $this->assertFalse($validator->isValid('nosuchvalue'));
+
+        self::assertFalse($validator->isValid('nosuchvalue'));
     }
 
     /**
@@ -180,7 +187,8 @@ class RecordExistsTest extends TestCase
             'exclude' => 'id != 1',
             'adapter' => $this->getMockHasResult(),
         ]);
-        $this->assertTrue($validator->isValid('value3'));
+
+        self::assertTrue($validator->isValid('value3'));
     }
 
     /**
@@ -190,7 +198,8 @@ class RecordExistsTest extends TestCase
     public function testExcludeWithStringNoRecord(): void
     {
         $validator = new RecordExists('users', 'field1', 'id != 1', $this->getMockNoResult());
-        $this->assertFalse($validator->isValid('nosuchvalue'));
+
+        self::assertFalse($validator->isValid('nosuchvalue'));
     }
 
     /**
@@ -199,7 +208,8 @@ class RecordExistsTest extends TestCase
     public function testExcludeConstructor(): void
     {
         $validator = new RecordExists('users', 'field1', 'id != 1', $this->getMockHasResult());
-        $this->assertTrue($validator->isValid('value3'));
+
+        self::assertTrue($validator->isValid('value3'));
     }
 
     /**
@@ -209,8 +219,10 @@ class RecordExistsTest extends TestCase
     public function testThrowsExceptionWithNoAdapter(): void
     {
         $validator = new RecordExists('users', 'field1', 'id != 1');
+
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('No database adapter present');
+
         $validator->isValid('nosuchvalue');
     }
 
@@ -223,7 +235,8 @@ class RecordExistsTest extends TestCase
             'table'  => 'users',
             'schema' => 'my',
         ], 'field1', null, $this->getMockHasResult());
-        $this->assertTrue($validator->isValid('value1'));
+
+        self::assertTrue($validator->isValid('value1'));
     }
 
     /**
@@ -235,7 +248,8 @@ class RecordExistsTest extends TestCase
             'table'  => 'users',
             'schema' => 'my',
         ], 'field1', null, $this->getMockNoResult());
-        $this->assertFalse($validator->isValid('value1'));
+
+        self::assertFalse($validator->isValid('value1'));
     }
 
     /**
@@ -249,8 +263,9 @@ class RecordExistsTest extends TestCase
             'schema' => 'my',
         ], 'field1', null, $this->getMockHasResult());
         $table     = $validator->getSelect()->getRawState('table');
-        $this->assertInstanceOf(TableIdentifier::class, $table);
-        $this->assertEquals(['users', 'my'], $table->getTableAndSchema());
+
+        self::assertInstanceOf(TableIdentifier::class, $table);
+        self::assertSame(['users', 'my'], $table->getTableAndSchema());
     }
 
     public function testEqualsMessageTemplates(): void
@@ -260,8 +275,9 @@ class RecordExistsTest extends TestCase
             'noRecordFound' => 'No record matching the input was found',
             'recordFound'   => 'A record matching the input was found',
         ];
-        $this->assertSame($messageTemplates, $validator->getOption('messageTemplates'));
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+
+        self::assertSame($messageTemplates, $validator->getOption('messageTemplates'));
+        self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     /**
@@ -282,8 +298,9 @@ class RecordExistsTest extends TestCase
             $this->getMockHasResult()
         );
         $select    = $validator->getSelect();
-        $this->assertInstanceOf(Select::class, $select);
-        $this->assertEquals(
+
+        self::assertInstanceOf(Select::class, $select);
+        self::assertSame(
             'SELECT "my"."users"."field1" AS "field1" FROM "my"."users" WHERE "field1" = \'\' AND "foo" != \'bar\'',
             $select->getSqlString(new TrustingSql92Platform())
         );
@@ -291,8 +308,9 @@ class RecordExistsTest extends TestCase
         $sql        = new Sql($this->getMockHasResult());
         $statement  = $sql->prepareStatementForSqlObject($select);
         $parameters = $statement->getParameterContainer();
-        $this->assertNull($parameters['where1']);
-        $this->assertEquals($parameters['where2'], 'bar');
+
+        self::assertNull($parameters['where1']);
+        self::assertSame($parameters['where2'], 'bar');
     }
 
     /**
@@ -314,8 +332,9 @@ class RecordExistsTest extends TestCase
             $this->getMockHasResult()
         );
         $select    = $validator->getSelect();
-        $this->assertInstanceOf(Select::class, $select);
-        $this->assertEquals(
+
+        self::assertInstanceOf(Select::class, $select);
+        self::assertSame(
             'SELECT "my"."users"."field1" AS "field1" FROM "my"."users" WHERE "field1" = \'\' AND "foo" != \'bar\'',
             $select->getSqlString(new TrustingSql92Platform())
         );
@@ -329,8 +348,9 @@ class RecordExistsTest extends TestCase
             'value' => 'fieldvalueexclude',
         ]);
         $select = $validator->getSelect();
-        $this->assertInstanceOf(Select::class, $select);
-        $this->assertEquals(
+
+        self::assertInstanceOf(Select::class, $select);
+        self::assertSame(
             'SELECT "otherschema"."othertable"."fieldother" AS "fieldother" FROM "otherschema"."othertable" '
             . 'WHERE "fieldother" = \'\' AND "fieldexclude" != \'fieldvalueexclude\'',
             $select->getSqlString(new TrustingSql92Platform())
