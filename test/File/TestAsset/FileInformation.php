@@ -9,7 +9,7 @@ use Laminas\Validator\File\FileInformationTrait;
 /**
  * Validator which checks if the file already exists in the directory
  */
-class FileInformation
+final class FileInformation
 {
     use FileInformationTrait;
 
@@ -20,14 +20,13 @@ class FileInformation
      * @param  null|array          $file     File data (when using legacy Laminas_File_Transfer API)
      * @param  bool                $hasType  Return with filetype (optional)
      * @param  bool                $basename Return with basename - is calculated from location path (optional)
-     * @return array
      */
     public function checkFileInformation(
         $value,
         ?array $file = null,
-        $hasType = false,
+        bool $hasType = false,
         bool $hasBasename = false
-    ) {
+    ): array {
         return $this->getFileInfo($value, $file, $hasType, $hasBasename);
     }
 }

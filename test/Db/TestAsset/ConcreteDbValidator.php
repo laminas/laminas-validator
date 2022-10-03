@@ -6,7 +6,7 @@ namespace LaminasTest\Validator\Db\TestAsset;
 
 use Laminas\Validator\Db\AbstractDb;
 
-class ConcreteDbValidator extends AbstractDb
+final class ConcreteDbValidator extends AbstractDb
 {
     public const FOO_MESSAGE = 'fooMessage';
     public const BAR_MESSAGE = 'barMessage';
@@ -26,6 +26,7 @@ class ConcreteDbValidator extends AbstractDb
         $this->setValue($value);
         $this->error(self::FOO_MESSAGE);
         $this->error(self::BAR_MESSAGE);
+
         return false;
     }
 }

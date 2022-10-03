@@ -10,13 +10,17 @@ use stdClass;
 
 /**
  * Uuid test cases based on https://github.com/beberlei/assert/blob/master/tests/Assert/Tests/AssertTest.php
+ *
+ * @covers \Laminas\Validator\Uuid
  */
 final class UuidTest extends TestCase
 {
-    protected Uuid $validator;
+    private Uuid $validator;
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->validator = new Uuid();
     }
 
@@ -25,9 +29,11 @@ final class UuidTest extends TestCase
      */
     public function testValidUuid(string $uuid): void
     {
-        $this->assertTrue($this->validator->isValid($uuid));
+        self::assertTrue($this->validator->isValid($uuid));
+
         $messages = $this->validator->getMessages();
-        $this->assertCount(0, $messages);
+
+        self::assertCount(0, $messages);
     }
 
     /**
@@ -36,17 +42,19 @@ final class UuidTest extends TestCase
      */
     public function testInvalidUuid($uuid, string $expectedMessageKey): void
     {
-        $this->assertFalse($this->validator->isValid($uuid));
+        self::assertFalse($this->validator->isValid($uuid));
+
         $messages = $this->validator->getMessages();
-        $this->assertCount(1, $messages);
-        $this->assertArrayHasKey($expectedMessageKey, $messages);
-        $this->assertNotEmpty($messages[$expectedMessageKey]);
+
+        self::assertCount(1, $messages);
+        self::assertArrayHasKey($expectedMessageKey, $messages);
+        self::assertNotEmpty($messages[$expectedMessageKey]);
     }
 
     /**
-     * @return array
+     * @psalm-return array<string, list<string>>
      */
-    public function validUuidProvider()
+    public function validUuidProvider(): array
     {
         return [
             'zero-fill' => ['00000000-0000-0000-0000-000000000000'],
@@ -60,9 +68,9 @@ final class UuidTest extends TestCase
     }
 
     /**
-     * @return array
+     * @psalm-return array<string, array{string|int|stdClass, string}>
      */
-    public function invalidUuidProvider()
+    public function invalidUuidProvider(): array
     {
         return [
             'invalid-characters' => ['laminas6f8cb0-c57d-11e1-9b21-0800200c9a66', Uuid::INVALID],

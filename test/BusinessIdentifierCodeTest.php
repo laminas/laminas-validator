@@ -8,7 +8,8 @@ use Laminas\Validator\BusinessIdentifierCode;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class BusinessIdentifierCodeTest extends TestCase
+/** @covers \Laminas\Validator\BusinessIdentifierCode */
+final class BusinessIdentifierCodeTest extends TestCase
 {
     /** @psalm-return array<string, array{0: string}> */
     public function successProvider(): array
@@ -44,6 +45,7 @@ class BusinessIdentifierCodeTest extends TestCase
     public function testValidateSuccess(string $code): void
     {
         $validator = new BusinessIdentifierCode();
+
         self::assertTrue($validator->isValid($code));
     }
 
@@ -64,6 +66,7 @@ class BusinessIdentifierCodeTest extends TestCase
     public function testNotAStringFailure($code): void
     {
         $validator = new BusinessIdentifierCode();
+
         self::assertFalse($validator->isValid($code));
         self::assertCount(1, $validator->getMessages());
         self::assertSame(
@@ -88,6 +91,7 @@ class BusinessIdentifierCodeTest extends TestCase
     public function testNotBicFormatFailure(string $code): void
     {
         $validator = new BusinessIdentifierCode();
+
         self::assertFalse($validator->isValid($code));
         self::assertCount(1, $validator->getMessages());
         self::assertSame('Invalid BIC format', $validator->getMessages()[BusinessIdentifierCode::INVALID]);
@@ -108,6 +112,7 @@ class BusinessIdentifierCodeTest extends TestCase
     public function testNotSwiftCountryCodeFailure(string $code): void
     {
         $validator = new BusinessIdentifierCode();
+
         self::assertFalse($validator->isValid($code));
         self::assertCount(1, $validator->getMessages());
         self::assertSame('Invalid country code', $validator->getMessages()[BusinessIdentifierCode::NOT_VALID_COUNTRY]);

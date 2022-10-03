@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Laminas\Validator\File;
+use Laminas\Validator\File\NotExists;
 use PHPUnit\Framework\TestCase;
 
 use function basename;
@@ -16,9 +16,10 @@ use function is_array;
 /**
  * NotExists testbed
  *
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\File\NotExists
  */
-class NotExistsTest extends TestCase
+final class NotExistsTest extends TestCase
 {
     /**
      * @psalm-return array<array-key, array{
@@ -64,8 +65,9 @@ class NotExistsTest extends TestCase
      */
     public function testBasic(string $options, $isValidParam, bool $expected): void
     {
-        $validator = new File\NotExists($options);
-        $this->assertEquals($expected, $validator->isValid($isValidParam));
+        $validator = new NotExists($options);
+
+        self::assertSame($expected, $validator->isValid($isValidParam));
     }
 
     /**
@@ -77,45 +79,62 @@ class NotExistsTest extends TestCase
     public function testLegacy(string $options, $isValidParam, bool $expected): void
     {
         if (! is_array($isValidParam)) {
-            $this->markTestSkipped('An array is expected for legacy compat tests');
+            self::markTestSkipped('An array is expected for legacy compat tests');
         }
 
-        $validator = new File\NotExists($options);
-        $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+        $validator = new NotExists($options);
+
+        self::assertSame($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+    }
+
+    /** @psalm-return array<array{string|string[], string|string[], bool}> */
+    public function getDirectoryProvider(): array
+    {
+        return [
+            ['C:/temp', 'C:/temp', false],
+            [['temp', 'dir', 'jpg'], 'temp,dir,jpg', false],
+            [['temp', 'dir', 'jpg'], ['temp', 'dir', 'jpg'], true],
+        ];
     }
 
     /**
      * Ensures that getDirectory() returns expected value
+     *
+     * @dataProvider getDirectoryProvider
+     * @param string|string[] $directory
+     * @param string|string[] $expected
      */
-    public function testGetDirectory(): void
+    public function testGetDirectory($directory, $expected, bool $asArray): void
     {
-        $validator = new File\NotExists('C:/temp');
-        $this->assertEquals('C:/temp', $validator->getDirectory());
+        $validator = new NotExists($directory);
 
-        $validator = new File\NotExists(['temp', 'dir', 'jpg']);
-        $this->assertEquals('temp,dir,jpg', $validator->getDirectory());
+        self::assertSame($expected, $validator->getDirectory($asArray));
+    }
 
-        $validator = new File\NotExists(['temp', 'dir', 'jpg']);
-        $this->assertEquals(['temp', 'dir', 'jpg'], $validator->getDirectory(true));
+    /** @psalm-return array<array{string|string[], string, string[]}> */
+    public function setDirectoryProvider(): array
+    {
+        return [
+            ['gif', 'gif', ['gif']],
+            ['jpg, temp', 'jpg,temp', ['jpg', 'temp']],
+            [['zip', 'ti'], 'zip,ti', ['zip', 'ti']],
+        ];
     }
 
     /**
      * Ensures that setDirectory() returns expected value
+     *
+     * @dataProvider setDirectoryProvider
+     * @param string|string[] $directory
+     * @param string[] $expectedAsArray
      */
-    public function testSetDirectory(): void
+    public function testSetDirectory($directory, string $expected, array $expectedAsArray): void
     {
-        $validator = new File\NotExists('temp');
-        $validator->setDirectory('gif');
-        $this->assertEquals('gif', $validator->getDirectory());
-        $this->assertEquals(['gif'], $validator->getDirectory(true));
+        $validator = new NotExists('temp');
+        $validator->setDirectory($directory);
 
-        $validator->setDirectory('jpg, temp');
-        $this->assertEquals('jpg,temp', $validator->getDirectory());
-        $this->assertEquals(['jpg', 'temp'], $validator->getDirectory(true));
-
-        $validator->setDirectory(['zip', 'ti']);
-        $this->assertEquals('zip,ti', $validator->getDirectory());
-        $this->assertEquals(['zip', 'ti'], $validator->getDirectory(true));
+        self::assertSame($expected, $validator->getDirectory());
+        self::assertSame($expectedAsArray, $validator->getDirectory(true));
     }
 
     /**
@@ -123,22 +142,26 @@ class NotExistsTest extends TestCase
      */
     public function testAddDirectory(): void
     {
-        $validator = new File\NotExists('temp');
+        $validator = new NotExists('temp');
         $validator->addDirectory('gif');
-        $this->assertEquals('temp,gif', $validator->getDirectory());
-        $this->assertEquals(['temp', 'gif'], $validator->getDirectory(true));
+
+        self::assertSame('temp,gif', $validator->getDirectory());
+        self::assertSame(['temp', 'gif'], $validator->getDirectory(true));
 
         $validator->addDirectory('jpg, to');
-        $this->assertEquals('temp,gif,jpg,to', $validator->getDirectory());
-        $this->assertEquals(['temp', 'gif', 'jpg', 'to'], $validator->getDirectory(true));
+
+        self::assertSame('temp,gif,jpg,to', $validator->getDirectory());
+        self::assertSame(['temp', 'gif', 'jpg', 'to'], $validator->getDirectory(true));
 
         $validator->addDirectory(['zip', 'ti']);
-        $this->assertEquals('temp,gif,jpg,to,zip,ti', $validator->getDirectory());
-        $this->assertEquals(['temp', 'gif', 'jpg', 'to', 'zip', 'ti'], $validator->getDirectory(true));
+
+        self::assertSame('temp,gif,jpg,to,zip,ti', $validator->getDirectory());
+        self::assertSame(['temp', 'gif', 'jpg', 'to', 'zip', 'ti'], $validator->getDirectory(true));
 
         $validator->addDirectory('');
-        $this->assertEquals('temp,gif,jpg,to,zip,ti', $validator->getDirectory());
-        $this->assertEquals(['temp', 'gif', 'jpg', 'to', 'zip', 'ti'], $validator->getDirectory(true));
+
+        self::assertSame('temp,gif,jpg,to,zip,ti', $validator->getDirectory());
+        self::assertSame(['temp', 'gif', 'jpg', 'to', 'zip', 'ti'], $validator->getDirectory(true));
     }
 
     /**
@@ -146,23 +169,26 @@ class NotExistsTest extends TestCase
      */
     public function testLaminas11258(): void
     {
-        $validator = new File\NotExists();
-        $this->assertFalse($validator->isValid(__DIR__ . '/_files/testsize.mo'));
-        $this->assertArrayHasKey('fileNotExistsDoesExist', $validator->getMessages());
-        $this->assertStringContainsString('File exists', current($validator->getMessages()));
+        $validator = new NotExists();
+
+        self::assertFalse($validator->isValid(__DIR__ . '/_files/testsize.mo'));
+        self::assertArrayHasKey('fileNotExistsDoesExist', $validator->getMessages());
+        self::assertStringContainsString('File exists', current($validator->getMessages()));
     }
 
     public function testIsValidShouldThrowInvalidArgumentExceptionForArrayNotInFilesFormat(): void
     {
-        $validator = new File\NotExists();
+        $validator = new NotExists();
         $value     = ['foo' => 'bar'];
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Value array must be in $_FILES format');
+
         $validator->isValid($value);
     }
 
     /**
-     * @psalm-return array<string, array{0: mixed}>
+     * @psalm-return array<string, list<scalar|object|null>>
      */
     public function invalidDirectoryArguments(): array
     {
@@ -180,12 +206,14 @@ class NotExistsTest extends TestCase
 
     /**
      * @dataProvider invalidDirectoryArguments
-     * @param mixed $value
+     * @psalm-param scalar|object|null $value
      */
     public function testAddingDirectoryUsingInvalidTypeRaisesException($value): void
     {
-        $validator = new File\NotExists();
+        $validator = new NotExists();
+
         $this->expectException(InvalidArgumentException::class);
+
         $validator->addDirectory($value);
     }
 }

@@ -6,30 +6,28 @@ namespace LaminasTest\Validator\Db;
 
 use ArrayObject;
 use Laminas\Db\Adapter\Adapter;
-use Laminas\Db\Adapter\Driver\ConnectionInterface;
 use Laminas\Db\Adapter\Driver\DriverInterface;
 use Laminas\Db\Adapter\Driver\ResultInterface;
 use Laminas\Db\Adapter\Driver\StatementInterface;
 use Laminas\Db\Adapter\ParameterContainer;
 use Laminas\Validator\Db\NoRecordExists;
 use Laminas\Validator\Exception\RuntimeException;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\Db\NoRecordExists
  */
-class NoRecordExistsTest extends TestCase
+final class NoRecordExistsTest extends TestCase
 {
     /**
      * Return a Mock object for a Db result with rows
      *
-     * @return Adapter
+     * @return Adapter&MockObject
      */
-    protected function getMockHasResult()
+    protected function getMockHasResult(): Adapter
     {
-        // mock the adapter, driver, and parts
-        $mockConnection = $this->createMock(ConnectionInterface::class);
-
         // Mock has result
         $mockHasResultRow = new class extends ArrayObject {
             public ?string $one = null;
@@ -39,28 +37,32 @@ class NoRecordExistsTest extends TestCase
 
         $mockHasResult = $this->createMock(ResultInterface::class);
         $mockHasResult
+            ->expects(self::once())
             ->method('current')
             ->willReturn($mockHasResultRow);
 
         $mockHasResultStatement = $this->createMock(StatementInterface::class);
         $mockHasResultStatement
+            ->expects(self::once())
             ->method('execute')
             ->willReturn($mockHasResult);
 
         $mockHasResultStatement
+            ->expects(self::exactly(2))
             ->method('getParameterContainer')
             ->willReturn(new ParameterContainer());
 
         $mockHasResultDriver = $this->createMock(DriverInterface::class);
         $mockHasResultDriver
+            ->expects(self::once())
             ->method('createStatement')
             ->willReturn($mockHasResultStatement);
         $mockHasResultDriver
-            ->method('getConnection')
-            ->willReturn($mockConnection);
+            ->expects(self::never())
+            ->method('getConnection');
 
         return $this->getMockBuilder(Adapter::class)
-            ->setMethods(null)
+            ->addMethods([])
             ->setConstructorArgs([$mockHasResultDriver])
             ->getMock();
     }
@@ -68,37 +70,38 @@ class NoRecordExistsTest extends TestCase
     /**
      * Return a Mock object for a Db result without rows
      *
-     * @return Adapter
+     * @return Adapter&MockObject
      */
-    protected function getMockNoResult()
+    protected function getMockNoResult(): Adapter
     {
-        // mock the adapter, driver, and parts
-        $mockConnection = $this->createMock(ConnectionInterface::class);
-
         $mockNoResult = $this->createMock(ResultInterface::class);
         $mockNoResult
+            ->expects(self::once())
             ->method('current')
             ->willReturn(null);
 
         $mockNoResultStatement = $this->createMock(StatementInterface::class);
         $mockNoResultStatement
+            ->expects(self::once())
             ->method('execute')
             ->willReturn($mockNoResult);
 
         $mockNoResultStatement
+            ->expects(self::exactly(2))
             ->method('getParameterContainer')
             ->willReturn(new ParameterContainer());
 
         $mockNoResultDriver = $this->createMock(DriverInterface::class);
         $mockNoResultDriver
+            ->expects(self::once())
             ->method('createStatement')
             ->willReturn($mockNoResultStatement);
         $mockNoResultDriver
-            ->method('getConnection')
-            ->willReturn($mockConnection);
+            ->expects(self::never())
+            ->method('getConnection');
 
         return $this->getMockBuilder(Adapter::class)
-            ->setMethods(null)
+            ->addMethods([])
             ->setConstructorArgs([$mockNoResultDriver])
             ->getMock();
     }
@@ -109,7 +112,8 @@ class NoRecordExistsTest extends TestCase
     public function testBasicFindsRecord(): void
     {
         $validator = new NoRecordExists('users', 'field1', null, $this->getMockHasResult());
-        $this->assertFalse($validator->isValid('value1'));
+
+        self::assertFalse($validator->isValid('value1'));
     }
 
     /**
@@ -118,7 +122,8 @@ class NoRecordExistsTest extends TestCase
     public function testBasicFindsNoRecord(): void
     {
         $validator = new NoRecordExists('users', 'field1', null, $this->getMockNoResult());
-        $this->assertTrue($validator->isValid('nosuchvalue'));
+
+        self::assertTrue($validator->isValid('nosuchvalue'));
     }
 
     /**
@@ -132,7 +137,8 @@ class NoRecordExistsTest extends TestCase
             ['field' => 'id', 'value' => 1],
             $this->getMockHasResult()
         );
-        $this->assertFalse($validator->isValid('value3'));
+
+        self::assertFalse($validator->isValid('value3'));
     }
 
     /**
@@ -147,7 +153,8 @@ class NoRecordExistsTest extends TestCase
             ['field' => 'id', 'value' => 1],
             $this->getMockNoResult()
         );
-        $this->assertTrue($validator->isValid('nosuchvalue'));
+
+        self::assertTrue($validator->isValid('nosuchvalue'));
     }
 
     /**
@@ -157,7 +164,8 @@ class NoRecordExistsTest extends TestCase
     public function testExcludeWithString(): void
     {
         $validator = new NoRecordExists('users', 'field1', 'id != 1', $this->getMockHasResult());
-        $this->assertFalse($validator->isValid('value3'));
+
+        self::assertFalse($validator->isValid('value3'));
     }
 
     /**
@@ -167,7 +175,8 @@ class NoRecordExistsTest extends TestCase
     public function testExcludeWithStringNoRecord(): void
     {
         $validator = new NoRecordExists('users', 'field1', 'id != 1', $this->getMockNoResult());
-        $this->assertTrue($validator->isValid('nosuchvalue'));
+
+        self::assertTrue($validator->isValid('nosuchvalue'));
     }
 
     /**
@@ -177,8 +186,10 @@ class NoRecordExistsTest extends TestCase
     public function testThrowsExceptionWithNoAdapter(): void
     {
         $validator = new NoRecordExists('users', 'field1', 'id != 1');
+
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('No database adapter present');
+
         $validator->isValid('nosuchvalue');
     }
 
@@ -191,7 +202,8 @@ class NoRecordExistsTest extends TestCase
             'table'  => 'users',
             'schema' => 'my',
         ], 'field1', null, $this->getMockHasResult());
-        $this->assertFalse($validator->isValid('value1'));
+
+        self::assertFalse($validator->isValid('value1'));
     }
 
     /**
@@ -203,7 +215,8 @@ class NoRecordExistsTest extends TestCase
             'table'  => 'users',
             'schema' => 'my',
         ], 'field1', null, $this->getMockNoResult());
-        $this->assertTrue($validator->isValid('value1'));
+
+        self::assertTrue($validator->isValid('value1'));
     }
 
     public function testEqualsMessageTemplates(): void
@@ -213,7 +226,8 @@ class NoRecordExistsTest extends TestCase
             'noRecordFound' => 'No record matching the input was found',
             'recordFound'   => 'A record matching the input was found',
         ];
-        $this->assertSame($messageTemplates, $validator->getOption('messageTemplates'));
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+
+        self::assertSame($messageTemplates, $validator->getOption('messageTemplates'));
+        self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 }

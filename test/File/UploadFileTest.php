@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Laminas\Validator\File;
+use Laminas\Validator\File\UploadFile;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\UploadedFileInterface;
 
@@ -16,10 +16,20 @@ use const UPLOAD_ERR_NO_FILE;
 use const UPLOAD_ERR_OK;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\File\UploadFile
  */
-class UploadFileTest extends TestCase
+final class UploadFileTest extends TestCase
 {
+    private UploadFile $validator;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->validator = new UploadFile();
+    }
+
     /**
      * @psalm-return array<string, array{
      *     0: UploadedFileInterface|array<string, mixed>,
@@ -67,12 +77,19 @@ class UploadFileTest extends TestCase
                 continue;
             }
 
-            $name   = sprintf('PSR-7 - %s', $errorType);
-            $upload = $this->prophesize(UploadedFileInterface::class);
-            $upload->getClientFilename()->willReturn('test' . $errorCode);
-            $upload->getError()->willReturn($errorCode);
+            $name = sprintf('PSR-7 - %s', $errorType);
 
-            $data[$name] = [$upload->reveal(), $errorType];
+            $upload = $this->createMock(UploadedFileInterface::class);
+            $upload
+                ->expects(self::never())
+                ->method('getClientFilename');
+
+            $upload
+                ->expects(self::once())
+                ->method('getError')
+                ->willReturn($errorCode);
+
+            $data[$name] = [$upload, $errorType];
         }
 
         return $data;
@@ -86,17 +103,16 @@ class UploadFileTest extends TestCase
      */
     public function testBasic($fileInfo, string $messageKey): void
     {
-        $validator = new File\UploadFile();
-        $this->assertFalse($validator->isValid($fileInfo));
-        $this->assertArrayHasKey($messageKey, $validator->getMessages());
+        self::assertFalse($this->validator->isValid($fileInfo));
+        self::assertArrayHasKey($messageKey, $this->validator->getMessages());
     }
 
     public function testRaisesExceptionWhenValueArrayIsBad(): void
     {
-        $validator = new File\UploadFile();
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('$_FILES format');
-        $validator->isValid(['foo', 'bar']);
+
+        $this->validator->isValid(['foo', 'bar']);
     }
 
     /**
@@ -104,24 +120,19 @@ class UploadFileTest extends TestCase
      */
     public function testLaminas11258(): void
     {
-        $validator = new File\UploadFile();
-        $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
-        $this->assertArrayHasKey('fileUploadFileErrorFileNotFound', $validator->getMessages());
-        $this->assertStringContainsString('not found', current($validator->getMessages()));
+        self::assertFalse($this->validator->isValid(__DIR__ . '/_files/nofile.mo'));
+        self::assertArrayHasKey('fileUploadFileErrorFileNotFound', $this->validator->getMessages());
+        self::assertStringContainsString('not found', current($this->validator->getMessages()));
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
-        $validator = new File\UploadFile();
-
-        $this->assertFalse($validator->isValid(''));
-        $this->assertArrayHasKey(File\UploadFile::FILE_NOT_FOUND, $validator->getMessages());
+        self::assertFalse($this->validator->isValid(''));
+        self::assertArrayHasKey(UploadFile::FILE_NOT_FOUND, $this->validator->getMessages());
     }
 
     public function testUploadErrorCodeShouldPrecedeEmptyFileCheck(): void
     {
-        $validator = new File\UploadFile();
-
         $filesArray = [
             'name'     => '',
             'size'     => 0,
@@ -130,8 +141,8 @@ class UploadFileTest extends TestCase
             'type'     => '',
         ];
 
-        $this->assertFalse($validator->isValid($filesArray));
-        $this->assertArrayHasKey(File\UploadFile::NO_FILE, $validator->getMessages());
-        $this->assertArrayNotHasKey(File\UploadFile::FILE_NOT_FOUND, $validator->getMessages());
+        self::assertFalse($this->validator->isValid($filesArray));
+        self::assertArrayHasKey(UploadFile::NO_FILE, $this->validator->getMessages());
+        self::assertArrayNotHasKey(UploadFile::FILE_NOT_FOUND, $this->validator->getMessages());
     }
 }

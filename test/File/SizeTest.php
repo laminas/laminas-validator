@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Laminas\Validator\File;
+use Laminas\Validator\File\Size;
 use PHPUnit\Framework\TestCase;
 
 use function basename;
@@ -15,9 +15,10 @@ use function is_array;
 use const UPLOAD_ERR_NO_FILE;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\File\Size
  */
-class SizeTest extends TestCase
+final class SizeTest extends TestCase
 {
     /**
      * @psalm-return array<array-key, array{
@@ -59,6 +60,7 @@ class SizeTest extends TestCase
             ];
             $testData[] = [$data[0], $fileUpload, $data[2]];
         }
+
         return $testData;
     }
 
@@ -71,8 +73,9 @@ class SizeTest extends TestCase
      */
     public function testBasic($options, $isValidParam, bool $expected): void
     {
-        $validator = new File\Size($options);
-        $this->assertEquals($expected, $validator->isValid($isValidParam));
+        $validator = new Size($options);
+
+        self::assertSame($expected, $validator->isValid($isValidParam));
     }
 
     /**
@@ -85,11 +88,12 @@ class SizeTest extends TestCase
     public function testLegacy($options, $isValidParam, bool $expected): void
     {
         if (! is_array($isValidParam)) {
-            $this->markTestSkipped('An array is expected for legacy compat tests');
+            self::markTestSkipped('An array is expected for legacy compat tests');
         }
 
-        $validator = new File\Size($options);
-        $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+        $validator = new Size($options);
+
+        self::assertSame($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
     }
 
     /**
@@ -97,15 +101,18 @@ class SizeTest extends TestCase
      */
     public function testGetMin(): void
     {
-        $validator = new File\Size(['min' => 1, 'max' => 100]);
-        $this->assertEquals('1B', $validator->getMin());
+        $validator = new Size(['min' => 1, 'max' => 100]);
 
-        $validator = new File\Size(['min' => 1, 'max' => 100, 'useByteString' => false]);
-        $this->assertEquals(1, $validator->getMin());
+        self::assertSame('1B', $validator->getMin());
+
+        $validator = new Size(['min' => 1, 'max' => 100, 'useByteString' => false]);
+
+        self::assertSame(1, $validator->getMin());
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        new File\Size(['min' => 100, 'max' => 1]);
+
+        new Size(['min' => 100, 'max' => 1]);
     }
 
     /**
@@ -113,16 +120,19 @@ class SizeTest extends TestCase
      */
     public function testSetMin(): void
     {
-        $validator = new File\Size(['min' => 1000, 'max' => 10000]);
+        $validator = new Size(['min' => 1000, 'max' => 10000]);
         $validator->setMin(100);
-        $this->assertEquals('100B', $validator->getMin());
 
-        $validator = new File\Size(['min' => 1000, 'max' => 10000, 'useByteString' => false]);
+        self::assertSame('100B', $validator->getMin());
+
+        $validator = new Size(['min' => 1000, 'max' => 10000, 'useByteString' => false]);
         $validator->setMin(100);
-        $this->assertEquals(100, $validator->getMin());
+
+        self::assertSame(100, $validator->getMin());
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('less than or equal');
+
         $validator->setMin(20000);
     }
 
@@ -131,60 +141,54 @@ class SizeTest extends TestCase
      */
     public function testGetMax(): void
     {
-        $validator = new File\Size(['min' => 1, 'max' => 100, 'useByteString' => false]);
-        $this->assertEquals(100, $validator->getMax());
+        $validator = new Size(['min' => 1, 'max' => 100, 'useByteString' => false]);
 
-        $validator = new File\Size(['min' => 1, 'max' => 100000]);
-        $this->assertEquals('97.66kB', $validator->getMax());
+        self::assertSame(100, $validator->getMax());
 
-        $validator = new File\Size(2000);
-        $this->assertEquals('1.95kB', $validator->getMax());
+        $validator = new Size(['min' => 1, 'max' => 100000]);
+
+        self::assertSame('97.66kB', $validator->getMax());
+
+        $validator = new Size(2000);
+
+        self::assertSame('1.95kB', $validator->getMax());
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        new File\Size(['min' => 100, 'max' => 1]);
+
+        new Size(['min' => 100, 'max' => 1]);
+    }
+
+    /** @psalm-return array<array{string|int, string}> */
+    public function setMaxProvider(): array
+    {
+        return [
+            [1_000_000, '976.56kB'],
+            ['100 AB', '100B'],
+            ['100 kB', '100kB'],
+            ['100 MB', '100MB'],
+            ['1 GB', '1GB'],
+            ['0.001 TB', '1.02GB'],
+            ['0.000001 PB', '1.05GB'],
+            ['0.000000001 EB', '1.07GB'],
+            ['0.000000000001 ZB', '1.1GB'],
+            ['0.000000000000001 YB', '1.13GB'],
+        ];
     }
 
     /**
      * Ensures that setMax() returns expected value
+     *
+     * @dataProvider setMaxProvider
+     * @param string|int $max
      */
-    public function testSetMax(): void
+    public function testSetMax($max, string $expected): void
     {
-        $validator = new File\Size(['max' => 0, 'useByteString' => true]);
-        $this->assertEquals('0B', $validator->getMax());
+        $validator = new Size(['max' => 0, 'useByteString' => true]);
+        self::assertSame('0B', $validator->getMax());
 
-        $validator->setMax(1_000_000);
-        $this->assertEquals('976.56kB', $validator->getMax());
-
-        $validator->setMin(100);
-        $this->assertEquals('976.56kB', $validator->getMax());
-
-        $validator->setMax('100 AB');
-        $this->assertEquals('100B', $validator->getMax());
-
-        $validator->setMax('100 kB');
-        $this->assertEquals('100kB', $validator->getMax());
-
-        $validator->setMax('100 MB');
-        $this->assertEquals('100MB', $validator->getMax());
-
-        $validator->setMax('1 GB');
-        $this->assertEquals('1GB', $validator->getMax());
-
-        $validator->setMax('0.001 TB');
-        $this->assertEquals('1.02GB', $validator->getMax());
-
-        $validator->setMax('0.000001 PB');
-        $this->assertEquals('1.05GB', $validator->getMax());
-
-        $validator->setMax('0.000000001 EB');
-        $this->assertEquals('1.07GB', $validator->getMax());
-
-        $validator->setMax('0.000000000001 ZB');
-        $this->assertEquals('1.1GB', $validator->getMax());
-
-        $validator->setMax('0.000000000000001 YB');
-        $this->assertEquals('1.13GB', $validator->getMax());
+        $validator->setMax($max);
+        self::assertSame($expected, $validator->getMax());
     }
 
     /**
@@ -192,17 +196,23 @@ class SizeTest extends TestCase
      */
     public function testFailureMessage(): void
     {
-        $validator = new File\Size(['min' => 9999, 'max' => 10000]);
-        $this->assertFalse($validator->isValid(__DIR__ . '/_files/testsize.mo'));
-        $messages = $validator->getMessages();
-        $this->assertStringContainsString('9.76kB', current($messages));
-        $this->assertStringContainsString('794B', current($messages));
+        $validator = new Size(['min' => 9999, 'max' => 10000]);
 
-        $validator = new File\Size(['min' => 9999, 'max' => 10000, 'useByteString' => false]);
-        $this->assertFalse($validator->isValid(__DIR__ . '/_files/testsize.mo'));
+        self::assertFalse($validator->isValid(__DIR__ . '/_files/testsize.mo'));
+
         $messages = $validator->getMessages();
-        $this->assertStringContainsString('9999', current($messages));
-        $this->assertStringContainsString('794', current($messages));
+
+        self::assertStringContainsString('9.76kB', current($messages));
+        self::assertStringContainsString('794B', current($messages));
+
+        $validator = new Size(['min' => 9999, 'max' => 10000, 'useByteString' => false]);
+
+        self::assertFalse($validator->isValid(__DIR__ . '/_files/testsize.mo'));
+
+        $messages = $validator->getMessages();
+
+        self::assertStringContainsString('9999', current($messages));
+        self::assertStringContainsString('794', current($messages));
     }
 
     /**
@@ -210,18 +220,19 @@ class SizeTest extends TestCase
      */
     public function testLaminas11258(): void
     {
-        $validator = new File\Size(['min' => 1, 'max' => 10000]);
-        $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
-        $this->assertArrayHasKey('fileSizeNotFound', $validator->getMessages());
-        $this->assertStringContainsString('does not exist', current($validator->getMessages()));
+        $validator = new Size(['min' => 1, 'max' => 10000]);
+
+        self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
+        self::assertArrayHasKey('fileSizeNotFound', $validator->getMessages());
+        self::assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
-        $validator = new File\Size();
+        $validator = new Size();
 
-        $this->assertFalse($validator->isValid(''));
-        $this->assertArrayHasKey(File\Size::NOT_FOUND, $validator->getMessages());
+        self::assertFalse($validator->isValid(''));
+        self::assertArrayHasKey(Size::NOT_FOUND, $validator->getMessages());
 
         $filesArray = [
             'name'     => '',
@@ -231,8 +242,8 @@ class SizeTest extends TestCase
             'type'     => '',
         ];
 
-        $this->assertFalse($validator->isValid($filesArray));
-        $this->assertArrayHasKey(File\Size::NOT_FOUND, $validator->getMessages());
+        self::assertFalse($validator->isValid($filesArray));
+        self::assertArrayHasKey(Size::NOT_FOUND, $validator->getMessages());
     }
 
     /**
@@ -255,9 +266,11 @@ class SizeTest extends TestCase
      */
     public function testSetMinWithInvalidArgument($value): void
     {
-        $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
+        $validator = new Size(['min' => 0, 'max' => 2000]);
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid options to validator provided');
+
         $validator->setMin($value);
     }
 
@@ -267,9 +280,11 @@ class SizeTest extends TestCase
      */
     public function testSetMaxWithInvalidArgument($value): void
     {
-        $validator = new File\FilesSize(['min' => 0, 'max' => 2000]);
+        $validator = new Size(['min' => 0, 'max' => 2000]);
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid options to validator provided');
+
         $validator->setMax($value);
     }
 }

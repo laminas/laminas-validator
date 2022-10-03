@@ -7,24 +7,22 @@ namespace LaminasTest\Validator\Db;
 use Laminas\Db\Adapter\Adapter;
 use Laminas\Db\Adapter\AdapterAwareInterface;
 use Laminas\Db\Sql\Select;
-use Laminas\Validator\Db\AbstractDb;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use LaminasTest\Validator\Db\TestAsset\ConcreteDbValidator;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\Db\AbstractDb
  */
-class AbstractDbTest extends TestCase
+final class AbstractDbTest extends TestCase
 {
-    use ProphecyTrait;
-
-    /** @var AbstractDb */
-    protected $validator;
+    private ConcreteDbValidator $validator;
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->validator = new ConcreteDbValidator([
             'table'  => 'table',
             'field'  => 'field',
@@ -36,6 +34,7 @@ class AbstractDbTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Table or Schema option missing!');
+
         $this->validator = new ConcreteDbValidator([
             'field' => 'field',
         ]);
@@ -45,6 +44,7 @@ class AbstractDbTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Field option missing!');
+
         new ConcreteDbValidator([
             'schema' => 'schema',
             'table'  => 'table',
@@ -56,7 +56,7 @@ class AbstractDbTest extends TestCase
         $select = new Select();
         $this->validator->setSelect($select);
 
-        $this->assertSame($select, $this->validator->getSelect());
+        self::assertSame($select, $this->validator->getSelect());
     }
 
     public function testGetSchema(): void
@@ -64,7 +64,7 @@ class AbstractDbTest extends TestCase
         $schema = 'test_db';
         $this->validator->setSchema($schema);
 
-        $this->assertEquals($schema, $this->validator->getSchema());
+        self::assertSame($schema, $this->validator->getSchema());
     }
 
     public function testGetTable(): void
@@ -72,7 +72,7 @@ class AbstractDbTest extends TestCase
         $table = 'test_table';
         $this->validator->setTable($table);
 
-        $this->assertEquals($table, $this->validator->getTable());
+        self::assertSame($table, $this->validator->getTable());
     }
 
     public function testGetField(): void
@@ -80,7 +80,7 @@ class AbstractDbTest extends TestCase
         $field = 'test_field';
         $this->validator->setField($field);
 
-        $this->assertEquals($field, $this->validator->getField());
+        self::assertSame($field, $this->validator->getField());
     }
 
     public function testGetExclude(): void
@@ -88,7 +88,7 @@ class AbstractDbTest extends TestCase
         $field = 'test_field';
         $this->validator->setField($field);
 
-        $this->assertEquals($field, $this->validator->getField());
+        self::assertSame($field, $this->validator->getField());
     }
 
     /**
@@ -96,7 +96,7 @@ class AbstractDbTest extends TestCase
      */
     public function testImplementationsAreDbAdapterAware(): void
     {
-        $this->assertInstanceOf(AdapterAwareInterface::class, $this->validator);
+        self::assertInstanceOf(AdapterAwareInterface::class, $this->validator);
     }
 
     /**
@@ -108,11 +108,13 @@ class AbstractDbTest extends TestCase
         $adapterSecond = $this->createStub(Adapter::class);
 
         $this->validator->setAdapter($adapterFirst);
-        $this->assertObjectHasAttribute('adapter', $this->validator);
-        $this->assertEquals($adapterFirst, $this->validator->getAdapter());
+
+        self::assertObjectHasAttribute('adapter', $this->validator);
+        self::assertEquals($adapterFirst, $this->validator->getAdapter());
 
         $this->validator->setDbAdapter($adapterSecond);
-        $this->assertObjectHasAttribute('adapter', $this->validator);
-        $this->assertEquals($adapterSecond, $this->validator->getAdapter());
+
+        self::assertObjectHasAttribute('adapter', $this->validator);
+        self::assertEquals($adapterSecond, $this->validator->getAdapter());
     }
 }

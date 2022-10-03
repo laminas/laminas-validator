@@ -4,26 +4,23 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator;
 
-use Laminas\Validator;
 use Laminas\Validator\Step;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 
-class StepTest extends TestCase
+/** @covers \Laminas\Validator\Step */
+final class StepTest extends TestCase
 {
-    /**
-     * Step object
-     *
-     * @var Step
-     */
-    protected $validator;
+    private Step $validator;
 
     /**
      * Creates a new Laminas\Validator\Step object for each test method
      */
     protected function setUp(): void
     {
-        $this->validator = new Validator\Step();
+        parent::setUp();
+
+        $this->validator = new Step();
     }
 
     /**
@@ -54,7 +51,7 @@ class StepTest extends TestCase
     public function testBasic($value, bool $expected): void
     {
         // By default, baseValue == 0 and step == 1
-        $this->assertSame(
+        self::assertSame(
             $expected,
             $this->validator->isValid($value)
         );
@@ -83,12 +80,12 @@ class StepTest extends TestCase
      */
     public function testDecimalBaseValue($value, bool $expected): void
     {
-        $validator = new Validator\Step([
+        $validator = new Step([
             'baseValue' => 0.1,
             'step'      => 2,
         ]);
 
-        $this->assertSame($expected, $validator->isValid($value));
+        self::assertSame($expected, $validator->isValid($value));
     }
 
     /**
@@ -123,11 +120,12 @@ class StepTest extends TestCase
      */
     public function testDecimalStep($value, bool $expected): void
     {
-        $validator = new Validator\Step([
+        $validator = new Step([
             'baseValue' => 0,
             'step'      => 2.1,
         ]);
-        $this->assertSame($expected, $validator->isValid($value));
+
+        self::assertSame($expected, $validator->isValid($value));
     }
 
     /**
@@ -147,12 +145,12 @@ class StepTest extends TestCase
      */
     public function testDecimalStepSubstractionBug(int $baseValue, float $value, bool $expected): void
     {
-        $validator = new Validator\Step([
+        $validator = new Step([
             'baseValue' => $baseValue,
             'step'      => 0.01,
         ]);
 
-        $this->assertSame($expected, $validator->isValid($value));
+        self::assertSame($expected, $validator->isValid($value));
     }
 
     /**
@@ -187,12 +185,12 @@ class StepTest extends TestCase
      */
     public function testdecimalHundredthStep(float $value, bool $expected): void
     {
-        $validator = new Validator\Step([
+        $validator = new Step([
             'baseValue' => 0,
             'step'      => 0.01,
         ]);
 
-        $this->assertSame($expected, $validator->isValid($value));
+        self::assertSame($expected, $validator->isValid($value));
     }
 
     /**
@@ -200,7 +198,7 @@ class StepTest extends TestCase
      */
     public function testGetMessages(): void
     {
-        $this->assertEquals([], $this->validator->getMessages());
+        self::assertSame([], $this->validator->getMessages());
     }
 
     /**
@@ -209,7 +207,8 @@ class StepTest extends TestCase
     public function testCanSetBaseValue(): void
     {
         $this->validator->setBaseValue(2);
-        $this->assertEquals('2', $this->validator->getBaseValue());
+
+        self::assertSame(2, $this->validator->getBaseValue());
     }
 
     /**
@@ -218,49 +217,53 @@ class StepTest extends TestCase
     public function testCanSetStepValue(): void
     {
         $this->validator->setStep(2);
-        $this->assertEquals('2', $this->validator->getStep());
+
+        self::assertSame(2.0, $this->validator->getStep());
     }
 
     public function testEqualsMessageTemplates(): void
     {
-        $validator = new Validator\Step();
-        $this->assertObjectHasAttribute('messageTemplates', $validator);
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        $validator = new Step();
+
+        self::assertObjectHasAttribute('messageTemplates', $validator);
+        self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testSetStepFloat(): void
     {
         $step = 0.01;
         $this->validator->setStep($step);
-        $this->assertObjectHasAttribute('step', $this->validator);
-        $this->assertEquals($step, $this->validator->getStep());
+
+        self::assertObjectHasAttribute('step', $this->validator);
+        self::assertSame($step, $this->validator->getStep());
     }
 
     public function testSetStepString(): void
     {
         $step = '0.01';
         $this->validator->setStep($step);
-        $this->assertObjectHasAttribute('step', $this->validator);
-        $this->assertEquals((float) $step, $this->validator->getStep());
+
+        self::assertObjectHasAttribute('step', $this->validator);
+        self::assertSame((float) $step, $this->validator->getStep());
     }
 
     public function testConstructorCanAcceptAllOptionsAsDiscreteArguments(): void
     {
         $baseValue = 1.00;
         $step      = 0.01;
-        $validator = new Validator\Step($baseValue, $step);
+        $validator = new Step($baseValue, $step);
 
-        $this->assertSame($step, $validator->getStep());
-        $this->assertSame($baseValue, $validator->getBaseValue());
+        self::assertSame($step, $validator->getStep());
+        self::assertSame($baseValue, $validator->getBaseValue());
     }
 
     public function testFModNormalizesZeroToFloatOne(): void
     {
-        $validator = new Validator\Step();
+        $validator = new Step();
 
         $r = new ReflectionMethod($validator, 'fmod');
         $r->setAccessible(true);
 
-        $this->assertSame(1.0, $r->invoke($validator, 0, 0));
+        self::assertSame(1.0, $r->invoke($validator, 0, 0));
     }
 }

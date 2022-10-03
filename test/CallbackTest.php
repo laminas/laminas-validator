@@ -13,9 +13,10 @@ use function array_keys;
 use function func_get_args;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\Callback
  */
-class CallbackTest extends TestCase
+final class CallbackTest extends TestCase
 {
     /**
      * Ensures that the validator follows expected behavior
@@ -23,7 +24,8 @@ class CallbackTest extends TestCase
     public function testBasic(): void
     {
         $valid = new Callback([$this, 'objectCallback']);
-        $this->assertTrue($valid->isValid('test'));
+
+        self::assertTrue($valid->isValid('test'));
     }
 
     public function testStaticCallback(): void
@@ -31,28 +33,32 @@ class CallbackTest extends TestCase
         $valid = new Callback(
             [self::class, 'staticCallback']
         );
-        $this->assertTrue($valid->isValid('test'));
+
+        self::assertTrue($valid->isValid('test'));
     }
 
     public function testSettingDefaultOptionsAfterwards(): void
     {
         $valid = new Callback([$this, 'objectCallback']);
         $valid->setCallbackOptions('options');
-        $this->assertEquals(['options'], $valid->getCallbackOptions());
-        $this->assertTrue($valid->isValid('test'));
+
+        self::assertSame(['options'], $valid->getCallbackOptions());
+        self::assertTrue($valid->isValid('test'));
     }
 
     public function testSettingDefaultOptions(): void
     {
         $valid = new Callback(['callback' => [$this, 'objectCallback'], 'callbackOptions' => 'options']);
-        $this->assertEquals(['options'], $valid->getCallbackOptions());
-        $this->assertTrue($valid->isValid('test'));
+
+        self::assertSame(['options'], $valid->getCallbackOptions());
+        self::assertTrue($valid->isValid('test'));
     }
 
     public function testGettingCallback(): void
     {
         $valid = new Callback([$this, 'objectCallback']);
-        $this->assertEquals([$this, 'objectCallback'], $valid->getCallback());
+
+        self::assertSame([$this, 'objectCallback'], $valid->getCallback());
     }
 
     public function testInvalidCallback(): void
@@ -61,27 +67,30 @@ class CallbackTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid callback given');
+
         $valid->setCallback('invalidcallback');
     }
 
     public function testAddingValueOptions(): void
     {
         $valid = new Callback(['callback' => [$this, 'optionsCallback'], 'callbackOptions' => 'options']);
-        $this->assertEquals(['options'], $valid->getCallbackOptions());
-        $this->assertTrue($valid->isValid('test', 'something'));
+
+        self::assertSame(['options'], $valid->getCallbackOptions());
+        self::assertTrue($valid->isValid('test', 'something'));
     }
 
     public function testEqualsMessageTemplates(): void
     {
         $validator = new Callback([$this, 'objectCallback']);
-        $this->assertSame(
+
+        self::assertSame(
             [
                 Callback::INVALID_VALUE,
                 Callback::INVALID_CALLBACK,
             ],
             array_keys($validator->getMessageTemplates())
         );
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testCanAcceptContextWithoutOptions(): void
@@ -89,7 +98,8 @@ class CallbackTest extends TestCase
         $value     = 'bar';
         $context   = ['foo' => 'bar', 'bar' => 'baz'];
         $validator = new Callback(static fn($v, $c): bool => ($value === $v) && ($context === $c));
-        $this->assertTrue($validator->isValid($value, $context));
+
+        self::assertTrue($validator->isValid($value, $context));
     }
 
     public function testCanAcceptContextWithOptions(): void
@@ -102,7 +112,8 @@ class CallbackTest extends TestCase
             && ($context === $c) && ($options['baz'] === $baz)
         );
         $validator->setCallbackOptions($options);
-        $this->assertTrue($validator->isValid($value, $context));
+
+        self::assertTrue($validator->isValid($value, $context));
     }
 
     /**
@@ -127,7 +138,9 @@ class CallbackTest extends TestCase
     public function optionsCallback(): array
     {
         $args = func_get_args();
-        $this->assertContains('something', $args);
+
+        self::assertContains('something', $args);
+
         return $args;
     }
 
@@ -145,6 +158,7 @@ class CallbackTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('No callback given');
+
         $validator->isValid('test');
     }
 }

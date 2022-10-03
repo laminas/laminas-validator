@@ -10,9 +10,10 @@ use PHPUnit\Framework\TestCase;
 use function array_keys;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\LessThan
  */
-class LessThanTest extends TestCase
+final class LessThanTest extends TestCase
 {
     /**
      * Ensures that the validator follows expected behavior
@@ -23,7 +24,8 @@ class LessThanTest extends TestCase
     public function testBasic(array $options, $input, bool $expected): void
     {
         $validator = new LessThan(...$options);
-        $this->assertSame($expected, $validator->isValid($input));
+
+        self::assertSame($expected, $validator->isValid($input));
     }
 
     /**
@@ -100,7 +102,8 @@ class LessThanTest extends TestCase
     public function testGetMessages(): void
     {
         $validator = new LessThan(10);
-        $this->assertEquals([], $validator->getMessages());
+
+        self::assertSame([], $validator->getMessages());
     }
 
     /**
@@ -109,7 +112,8 @@ class LessThanTest extends TestCase
     public function testGetMax(): void
     {
         $validator = new LessThan(10);
-        $this->assertEquals(10, $validator->getMax());
+
+        self::assertSame(10, $validator->getMax());
     }
 
     /**
@@ -118,20 +122,22 @@ class LessThanTest extends TestCase
     public function testGetInclusive(): void
     {
         $validator = new LessThan(10);
-        $this->assertEquals(false, $validator->getInclusive());
+
+        self::assertSame(false, $validator->getInclusive());
     }
 
     public function testEqualsMessageTemplates(): void
     {
         $validator = new LessThan(10);
-        $this->assertSame(
+
+        self::assertSame(
             [
                 LessThan::NOT_LESS,
                 LessThan::NOT_LESS_INCLUSIVE,
             ],
             array_keys($validator->getMessageTemplates())
         );
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
@@ -140,14 +146,16 @@ class LessThanTest extends TestCase
         $messageVariables = [
             'max' => 'max',
         ];
-        $this->assertSame($messageVariables, $validator->getOption('messageVariables'));
-        $this->assertEquals(array_keys($messageVariables), $validator->getMessageVariables());
+
+        self::assertSame($messageVariables, $validator->getOption('messageVariables'));
+        self::assertSame(array_keys($messageVariables), $validator->getMessageVariables());
     }
 
     public function testConstructorAllowsSettingAllOptionsAsDiscreteArguments(): void
     {
         $validator = new LessThan(10, true);
-        $this->assertSame(10, $validator->getMax());
-        $this->assertTrue($validator->getInclusive());
+
+        self::assertSame(10, $validator->getMax());
+        self::assertTrue($validator->getInclusive());
     }
 }

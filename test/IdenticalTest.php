@@ -13,65 +13,76 @@ use stdClass;
 use function array_keys;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\Identical
  */
-class IdenticalTest extends TestCase
+final class IdenticalTest extends TestCase
 {
-    /** @var Identical */
-    public $validator;
+    private Identical $validator;
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->validator = new Identical();
     }
 
     public function testTokenInitiallyNull(): void
     {
-        $this->assertNull($this->validator->getToken());
+        self::assertNull($this->validator->getToken());
     }
 
     public function testCanSetToken(): void
     {
         $this->testTokenInitiallyNull();
+
         $this->validator->setToken('foo');
-        $this->assertEquals('foo', $this->validator->getToken());
+
+        self::assertSame('foo', $this->validator->getToken());
     }
 
     public function testCanSetTokenViaConstructor(): void
     {
         $validator = new Identical('foo');
-        $this->assertEquals('foo', $validator->getToken());
+
+        self::assertSame('foo', $validator->getToken());
     }
 
     public function testValidatingWhenTokenNullReturnsFalse(): void
     {
-        $this->assertFalse($this->validator->isValid('foo'));
+        self::assertFalse($this->validator->isValid('foo'));
     }
 
     public function testValidatingWhenTokenNullSetsMissingTokenMessage(): void
     {
         $this->testValidatingWhenTokenNullReturnsFalse();
+
         $messages = $this->validator->getMessages();
-        $this->assertArrayHasKey('missingToken', $messages);
+
+        self::assertArrayHasKey('missingToken', $messages);
     }
 
     public function testValidatingAgainstTokenWithNonMatchingValueReturnsFalse(): void
     {
         $this->validator->setToken('foo');
-        $this->assertFalse($this->validator->isValid('bar'));
+
+        self::assertFalse($this->validator->isValid('bar'));
     }
 
     public function testValidatingAgainstTokenWithNonMatchingValueSetsNotSameMessage(): void
     {
         $this->testValidatingAgainstTokenWithNonMatchingValueReturnsFalse();
+
         $messages = $this->validator->getMessages();
-        $this->assertArrayHasKey('notSame', $messages);
+
+        self::assertArrayHasKey('notSame', $messages);
     }
 
     public function testValidatingAgainstTokenWithMatchingValueReturnsTrue(): void
     {
         $this->validator->setToken('foo');
-        $this->assertTrue($this->validator->isValid('foo'));
+
+        self::assertTrue($this->validator->isValid('foo'));
     }
 
     /**
@@ -80,7 +91,8 @@ class IdenticalTest extends TestCase
     public function testValidatingAgainstEmptyToken(): void
     {
         $this->validator->setToken('');
-        $this->assertTrue($this->validator->isValid(''));
+
+        self::assertTrue($this->validator->isValid(''));
     }
 
     /**
@@ -89,81 +101,85 @@ class IdenticalTest extends TestCase
     public function testValidatingAgainstNonStrings(): void
     {
         $this->validator->setToken(true);
-        $this->assertTrue($this->validator->isValid(true));
-        $this->assertFalse($this->validator->isValid(1));
+
+        self::assertTrue($this->validator->isValid(true));
+        self::assertFalse($this->validator->isValid(1));
 
         $this->validator->setToken(['one' => 'two', 'three']);
-        $this->assertTrue($this->validator->isValid(['one' => 'two', 'three']));
-        $this->assertFalse($this->validator->isValid([]));
+
+        self::assertTrue($this->validator->isValid(['one' => 'two', 'three']));
+        self::assertFalse($this->validator->isValid([]));
     }
 
     public function testValidatingTokenArray(): void
     {
         $validator = new Identical(['token' => 123]);
-        $this->assertTrue($validator->isValid(123));
-        $this->assertFalse($validator->isValid(['token' => 123]));
+
+        self::assertTrue($validator->isValid(123));
+        self::assertFalse($validator->isValid(['token' => 123]));
     }
 
     public function testValidatingNonStrictToken(): void
     {
         $validator = new Identical(['token' => 123, 'strict' => false]);
-        $this->assertTrue($validator->isValid('123'));
+
+        self::assertTrue($validator->isValid('123'));
 
         $validator->setStrict(true);
-        $this->assertFalse($validator->isValid(['token' => '123']));
+
+        self::assertFalse($validator->isValid(['token' => '123']));
     }
 
     public function testEqualsMessageTemplates(): void
     {
-        $this->assertSame(
+        self::assertSame(
             [
                 Identical::NOT_SAME,
                 Identical::MISSING_TOKEN,
             ],
             array_keys($this->validator->getMessageTemplates())
         );
-        $this->assertEquals($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
+        self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
     {
-        $messageVariables = [
-            'token' => 'tokenString',
-        ];
-        $this->assertSame($messageVariables, $this->validator->getOption('messageVariables'));
-        $this->assertEquals(array_keys($messageVariables), $this->validator->getMessageVariables());
+        $messageVariables = ['token' => 'tokenString'];
+
+        self::assertSame($messageVariables, $this->validator->getOption('messageVariables'));
+        self::assertSame(array_keys($messageVariables), $this->validator->getMessageVariables());
     }
 
     public function testValidatingStringTokenInContext(): void
     {
         $this->validator->setToken('email');
 
-        $this->assertTrue($this->validator->isValid(
+        self::assertTrue($this->validator->isValid(
             'john@doe.com',
             ['email' => 'john@doe.com']
         ));
 
-        $this->assertFalse($this->validator->isValid(
+        self::assertFalse($this->validator->isValid(
             'john@doe.com',
             ['email' => 'harry@hoe.com']
         ));
 
-        $this->assertFalse($this->validator->isValid(
+        self::assertFalse($this->validator->isValid(
             'harry@hoe.com',
             ['email' => 'john@doe.com']
         ));
 
-        $this->assertTrue($this->validator->isValid(
+        self::assertTrue($this->validator->isValid(
             'john@doe.com',
             new Parameters(['email' => 'john@doe.com'])
         ));
 
-        $this->assertFalse($this->validator->isValid(
+        self::assertFalse($this->validator->isValid(
             'john@doe.com',
             new Parameters(['email' => 'harry@hoe.com'])
         ));
 
-        $this->assertFalse($this->validator->isValid(
+        self::assertFalse($this->validator->isValid(
             'harry@hoe.com',
             new Parameters(['email' => 'john@doe.com'])
         ));
@@ -173,7 +189,7 @@ class IdenticalTest extends TestCase
     {
         $this->validator->setToken(['user' => 'email']);
 
-        $this->assertTrue($this->validator->isValid(
+        self::assertTrue($this->validator->isValid(
             'john@doe.com',
             [
                 'user' => [
@@ -182,7 +198,7 @@ class IdenticalTest extends TestCase
             ]
         ));
 
-        $this->assertFalse($this->validator->isValid(
+        self::assertFalse($this->validator->isValid(
             'john@doe.com',
             [
                 'user' => [
@@ -191,7 +207,7 @@ class IdenticalTest extends TestCase
             ]
         ));
 
-        $this->assertFalse($this->validator->isValid(
+        self::assertFalse($this->validator->isValid(
             'harry@hoe.com',
             [
                 'user' => [
@@ -200,7 +216,7 @@ class IdenticalTest extends TestCase
             ]
         ));
 
-        $this->assertTrue($this->validator->isValid(
+        self::assertTrue($this->validator->isValid(
             'john@doe.com',
             new Parameters([
                 'user' => [
@@ -209,7 +225,7 @@ class IdenticalTest extends TestCase
             ])
         ));
 
-        $this->assertFalse($this->validator->isValid(
+        self::assertFalse($this->validator->isValid(
             'john@doe.com',
             new Parameters([
                 'user' => [
@@ -218,7 +234,7 @@ class IdenticalTest extends TestCase
             ])
         ));
 
-        $this->assertFalse($this->validator->isValid(
+        self::assertFalse($this->validator->isValid(
             'harry@hoe.com',
             new Parameters([
                 'user' => [
@@ -233,18 +249,20 @@ class IdenticalTest extends TestCase
         $validator = new Identical(['token' => 'foo', 'literal' => true]);
         // Default is false
         $validator->setLiteral(true);
-        $this->assertTrue($validator->getLiteral());
+
+        self::assertTrue($validator->getLiteral());
     }
 
     public function testLiteralParameterDoesNotAffectValidationWhenNoContextIsProvided(): void
     {
         $this->validator->setToken(['foo' => 'bar']);
-
         $this->validator->setLiteral(false);
-        $this->assertTrue($this->validator->isValid(['foo' => 'bar']));
+
+        self::assertTrue($this->validator->isValid(['foo' => 'bar']));
 
         $this->validator->setLiteral(true);
-        $this->assertTrue($this->validator->isValid(['foo' => 'bar']));
+
+        self::assertTrue($this->validator->isValid(['foo' => 'bar']));
     }
 
     public function testLiteralParameterWorksWhenContextIsProvided(): void
@@ -252,7 +270,7 @@ class IdenticalTest extends TestCase
         $this->validator->setToken(['foo' => 'bar']);
         $this->validator->setLiteral(true);
 
-        $this->assertTrue($this->validator->isValid(
+        self::assertTrue($this->validator->isValid(
             ['foo' => 'bar'],
             ['foo' => 'baz'] // Provide a context to make sure the literal parameter will work
         ));
@@ -272,7 +290,7 @@ class IdenticalTest extends TestCase
     /**
      * @return mixed[][]
      */
-    public function invalidContextProvider()
+    public function invalidContextProvider(): array
     {
         return [
             [false],

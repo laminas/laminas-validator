@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Laminas\Validator\File;
+use Laminas\Validator\File\Sha1;
 use PHPUnit\Framework\TestCase;
 
 use function array_merge;
@@ -18,9 +18,10 @@ use const UPLOAD_ERR_NO_FILE;
 /**
  * Sha1 testbed
  *
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\File\Sha1
  */
-class Sha1Test extends TestCase
+final class Sha1Test extends TestCase
 {
     /**
      * @psalm-return array<array-key, array{
@@ -75,6 +76,7 @@ class Sha1Test extends TestCase
             ];
             $testData[] = [$data[0], $fileUpload, $data[2], $data[3]];
         }
+
         return $testData;
     }
 
@@ -87,10 +89,12 @@ class Sha1Test extends TestCase
      */
     public function testBasic($options, $isValidParam, bool $expected, string $messageKey): void
     {
-        $validator = new File\Sha1($options);
-        $this->assertEquals($expected, $validator->isValid($isValidParam));
+        $validator = new Sha1($options);
+
+        self::assertSame($expected, $validator->isValid($isValidParam));
+
         if (! $expected) {
-            $this->assertArrayHasKey($messageKey, $validator->getMessages());
+            self::assertArrayHasKey($messageKey, $validator->getMessages());
         }
     }
 
@@ -104,83 +108,98 @@ class Sha1Test extends TestCase
     public function testLegacy($options, $isValidParam, bool $expected, string $messageKey): void
     {
         if (! is_array($isValidParam)) {
-            $this->markTestSkipped('An array is expected for legacy compat tests');
+            self::markTestSkipped('An array is expected for legacy compat tests');
         }
 
-        $validator = new File\Sha1($options);
-        $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+        $validator = new Sha1($options);
+
+        self::assertSame($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+
         if (! $expected) {
-            $this->assertArrayHasKey($messageKey, $validator->getMessages());
+            self::assertArrayHasKey($messageKey, $validator->getMessages());
         }
+    }
+
+    /** @psalm-return array<array{string|list<string>, array<numeric, string>}> */
+    public function getHashProvider(): array
+    {
+        return [
+            ['12333', ['12333' => 'sha1']],
+            [['12345', '12333', '12344'], ['12345' => 'sha1', '12333' => 'sha1', '12344' => 'sha1']],
+        ];
     }
 
     /**
      * Ensures that getSha1() returns expected value
      *
-     * @return void
+     * @dataProvider getHashProvider
+     * @psalm-param string|list<string> $hash
+     * @psalm-param array<numeric, string> $expected
      */
-    public function testgetSha1()
+    public function testGetSha1($hash, array $expected): void
     {
-        $validator = new File\Sha1('12345');
-        $this->assertEquals(['12345' => 'sha1'], $validator->getSha1());
+        $validator = new Sha1($hash);
 
-        $validator = new File\Sha1(['12345', '12333', '12344']);
-        $this->assertEquals(['12345' => 'sha1', '12333' => 'sha1', '12344' => 'sha1'], $validator->getSha1());
+        self::assertSame($expected, $validator->getSha1());
     }
 
     /**
      * Ensures that getHash() returns expected value
+     *
+     * @dataProvider getHashProvider
+     * @psalm-param string|list<string> $hash
+     * @psalm-param array<numeric, string> $expected
      */
-    public function testGetHash(): void
+    public function testGetHash($hash, array $expected): void
     {
-        $validator = new File\Sha1('12345');
-        $this->assertEquals(['12345' => 'sha1'], $validator->getHash());
+        $validator = new Sha1($hash);
 
-        $validator = new File\Sha1(['12345', '12333', '12344']);
-        $this->assertEquals(['12345' => 'sha1', '12333' => 'sha1', '12344' => 'sha1'], $validator->getHash());
+        self::assertSame($expected, $validator->getHash());
     }
 
     /**
      * Ensures that setSha1() returns expected value
      *
-     * @return void
+     * @dataProvider getHashProvider
+     * @psalm-param string|list<string> $hash
+     * @psalm-param array<numeric, string> $expected
      */
-    public function testSetSha1()
+    public function testSetSha1($hash, array $expected): void
     {
-        $validator = new File\Sha1('12345');
-        $validator->setSha1('12333');
-        $this->assertEquals(['12333' => 'sha1'], $validator->getSha1());
+        $validator = new Sha1('12345');
+        $validator->setSha1($hash);
 
-        $validator->setSha1(['12321', '12121']);
-        $this->assertEquals(['12321' => 'sha1', '12121' => 'sha1'], $validator->getSha1());
+        self::assertSame($expected, $validator->getSha1());
     }
 
     /**
      * Ensures that setHash() returns expected value
+     *
+     * @dataProvider getHashProvider
+     * @psalm-param string|list<string> $hash
+     * @psalm-param array<numeric, string> $expected
      */
-    public function testSetHash(): void
+    public function testSetHash($hash, array $expected): void
     {
-        $validator = new File\Sha1('12345');
-        $validator->setHash('12333');
-        $this->assertEquals(['12333' => 'sha1'], $validator->getSha1());
+        $validator = new Sha1('12345');
+        $validator->setHash($hash);
 
-        $validator->setHash(['12321', '12121']);
-        $this->assertEquals(['12321' => 'sha1', '12121' => 'sha1'], $validator->getSha1());
+        self::assertSame($expected, $validator->getSha1());
     }
 
     /**
      * Ensures that addSha1() returns expected value
-     *
-     * @return void
      */
-    public function testAddSha1()
+    public function testAddSha1(): void
     {
-        $validator = new File\Sha1('12345');
+        $validator = new Sha1('12345');
         $validator->addSha1('12344');
-        $this->assertEquals(['12345' => 'sha1', '12344' => 'sha1'], $validator->getSha1());
+
+        self::assertSame(['12345' => 'sha1', '12344' => 'sha1'], $validator->getSha1());
 
         $validator->addSha1(['12321', '12121']);
-        $this->assertEquals(
+
+        self::assertSame(
             ['12345' => 'sha1', '12344' => 'sha1', '12321' => 'sha1', '12121' => 'sha1'],
             $validator->getSha1()
         );
@@ -191,12 +210,14 @@ class Sha1Test extends TestCase
      */
     public function testAddHash(): void
     {
-        $validator = new File\Sha1('12345');
+        $validator = new Sha1('12345');
         $validator->addHash('12344');
-        $this->assertEquals(['12345' => 'sha1', '12344' => 'sha1'], $validator->getSha1());
+
+        self::assertSame(['12345' => 'sha1', '12344' => 'sha1'], $validator->getSha1());
 
         $validator->addHash(['12321', '12121']);
-        $this->assertEquals(
+
+        self::assertSame(
             ['12345' => 'sha1', '12344' => 'sha1', '12321' => 'sha1', '12121' => 'sha1'],
             $validator->getSha1()
         );
@@ -207,18 +228,19 @@ class Sha1Test extends TestCase
      */
     public function testLaminas11258(): void
     {
-        $validator = new File\Sha1('12345');
-        $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
-        $this->assertArrayHasKey('fileSha1NotFound', $validator->getMessages());
-        $this->assertStringContainsString('does not exist', current($validator->getMessages()));
+        $validator = new Sha1('12345');
+
+        self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
+        self::assertArrayHasKey('fileSha1NotFound', $validator->getMessages());
+        self::assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
-        $validator = new File\Sha1();
+        $validator = new Sha1();
 
-        $this->assertFalse($validator->isValid(''));
-        $this->assertArrayHasKey(File\Sha1::NOT_FOUND, $validator->getMessages());
+        self::assertFalse($validator->isValid(''));
+        self::assertArrayHasKey(Sha1::NOT_FOUND, $validator->getMessages());
 
         $filesArray = [
             'name'     => '',
@@ -228,16 +250,18 @@ class Sha1Test extends TestCase
             'type'     => '',
         ];
 
-        $this->assertFalse($validator->isValid($filesArray));
-        $this->assertArrayHasKey(File\Sha1::NOT_FOUND, $validator->getMessages());
+        self::assertFalse($validator->isValid($filesArray));
+        self::assertArrayHasKey(Sha1::NOT_FOUND, $validator->getMessages());
     }
 
     public function testIsValidShouldThrowInvalidArgumentExceptionForArrayNotInFilesFormat(): void
     {
-        $validator = new File\Sha1();
+        $validator = new Sha1();
         $value     = ['foo' => 'bar'];
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Value array must be in $_FILES format');
+
         $validator->isValid($value);
     }
 }

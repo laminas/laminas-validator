@@ -10,9 +10,10 @@ use PHPUnit\Framework\TestCase;
 use function array_keys;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\GreaterThan
  */
-class GreaterThanTest extends TestCase
+final class GreaterThanTest extends TestCase
 {
     /**
      * Ensures that the validator follows expected behavior
@@ -23,7 +24,8 @@ class GreaterThanTest extends TestCase
     public function testBasic(array $options, $input, bool $expected): void
     {
         $validator = new GreaterThan(...$options);
-        $this->assertSame($expected, $validator->isValid($input));
+
+        self::assertSame($expected, $validator->isValid($input));
     }
 
     /**
@@ -104,7 +106,8 @@ class GreaterThanTest extends TestCase
     public function testGetMessages(): void
     {
         $validator = new GreaterThan(10);
-        $this->assertEquals([], $validator->getMessages());
+
+        self::assertSame([], $validator->getMessages());
     }
 
     /**
@@ -113,7 +116,8 @@ class GreaterThanTest extends TestCase
     public function testGetMin(): void
     {
         $validator = new GreaterThan(10);
-        $this->assertEquals(10, $validator->getMin());
+
+        self::assertSame(10, $validator->getMin());
     }
 
     /**
@@ -122,20 +126,22 @@ class GreaterThanTest extends TestCase
     public function testGetInclusive(): void
     {
         $validator = new GreaterThan(10);
-        $this->assertEquals(false, $validator->getInclusive());
+
+        self::assertFalse($validator->getInclusive());
     }
 
     public function testEqualsMessageTemplates(): void
     {
         $validator = new GreaterThan(1);
-        $this->assertSame(
+
+        self::assertSame(
             [
                 GreaterThan::NOT_GREATER,
                 GreaterThan::NOT_GREATER_INCLUSIVE,
             ],
             array_keys($validator->getMessageTemplates())
         );
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
@@ -144,8 +150,9 @@ class GreaterThanTest extends TestCase
         $messageVariables = [
             'min' => 'min',
         ];
-        $this->assertSame($messageVariables, $validator->getOption('messageVariables'));
-        $this->assertEquals(array_keys($messageVariables), $validator->getMessageVariables());
+
+        self::assertSame($messageVariables, $validator->getOption('messageVariables'));
+        self::assertSame(array_keys($messageVariables), $validator->getMessageVariables());
     }
 
     /**
@@ -157,8 +164,8 @@ class GreaterThanTest extends TestCase
         $validator->isValid($input);
         $message = $validator->getMessages();
 
-        $this->assertArrayHaskey('notGreaterThan', $message);
-        $this->assertEquals($message['notGreaterThan'], "The input is not greater than '10'");
+        self::assertArrayHaskey('notGreaterThan', $message);
+        self::assertSame($message['notGreaterThan'], "The input is not greater than '10'");
     }
 
     /**
@@ -184,8 +191,8 @@ class GreaterThanTest extends TestCase
         $validator->isValid($input);
         $message = $validator->getMessages();
 
-        $this->assertArrayHaskey('notGreaterThanInclusive', $message);
-        $this->assertEquals($message['notGreaterThanInclusive'], "The input is not greater than or equal to '10'");
+        self::assertArrayHaskey('notGreaterThanInclusive', $message);
+        self::assertSame($message['notGreaterThanInclusive'], "The input is not greater than or equal to '10'");
     }
 
     /**
@@ -205,6 +212,7 @@ class GreaterThanTest extends TestCase
     public function testConstructorCanAcceptInclusiveFlagAsAnArgument(): void
     {
         $validator = new GreaterThan(10, true);
-        $this->assertTrue($validator->getInclusive());
+
+        self::assertTrue($validator->getInclusive());
     }
 }

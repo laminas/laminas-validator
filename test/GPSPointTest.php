@@ -8,15 +8,17 @@ use Laminas\Validator\GpsPoint;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\GpsPoint
  */
-class GPSPointTest extends TestCase
+final class GPSPointTest extends TestCase
 {
-    /** @var GpsPoint */
-    protected $validator;
+    private GpsPoint $validator;
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->validator = new GpsPoint();
     }
 
@@ -26,7 +28,7 @@ class GPSPointTest extends TestCase
      */
     public function testBasic(string $gpsPoint): void
     {
-        $this->assertTrue($this->validator->isValid($gpsPoint));
+        self::assertTrue($this->validator->isValid($gpsPoint));
     }
 
     /** @psalm-return array<array-key, array{0: string, 1: bool}> */
@@ -46,7 +48,7 @@ class GPSPointTest extends TestCase
      */
     public function testBoundariesAreRespected(string $value, bool $expected): void
     {
-        $this->assertSame($expected, $this->validator->isValid($value));
+        self::assertSame($expected, $this->validator->isValid($value));
     }
 
     /**
@@ -55,10 +57,12 @@ class GPSPointTest extends TestCase
      */
     public function testErrorsSetOnOccur(string $value, string $messageKey, string $messageValue): void
     {
-        $this->assertFalse($this->validator->isValid($value));
+        self::assertFalse($this->validator->isValid($value));
+
         $messages = $this->validator->getMessages();
-        $this->assertArrayHasKey($messageKey, $messages);
-        $this->assertStringContainsString($messageValue, $messages[$messageKey]);
+
+        self::assertArrayHasKey($messageKey, $messages);
+        self::assertStringContainsString($messageValue, $messages[$messageKey]);
     }
 
     /**

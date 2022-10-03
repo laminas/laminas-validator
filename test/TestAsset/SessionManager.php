@@ -8,7 +8,7 @@ use Laminas\EventManager\EventManagerInterface;
 use Laminas\Session\AbstractManager;
 use Laminas\Session\Storage\ArrayStorage;
 
-class SessionManager extends AbstractManager
+final class SessionManager extends AbstractManager
 {
     /** @var bool */
     public $started = false;

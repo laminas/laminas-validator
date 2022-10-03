@@ -13,9 +13,10 @@ use function array_keys;
 use function implode;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\Regex
  */
-class RegexTest extends TestCase
+final class RegexTest extends TestCase
 {
     /**
      * Ensures that the validator follows expected behavior
@@ -25,7 +26,8 @@ class RegexTest extends TestCase
     public function testBasic(array $options, string $input, bool $expected): void
     {
         $validator = new Regex(...$options);
-        $this->assertSame($expected, $validator->isValid($input));
+
+        self::assertSame($expected, $validator->isValid($input));
     }
 
     /**
@@ -64,7 +66,8 @@ class RegexTest extends TestCase
     public function testGetMessages(): void
     {
         $validator = new Regex('/./');
-        $this->assertEquals([], $validator->getMessages());
+
+        self::assertSame([], $validator->getMessages());
     }
 
     /**
@@ -73,7 +76,8 @@ class RegexTest extends TestCase
     public function testGetPattern(): void
     {
         $validator = new Regex('/./');
-        $this->assertEquals('/./', $validator->getPattern());
+
+        self::assertSame('/./', $validator->getPattern());
     }
 
     /**
@@ -83,6 +87,7 @@ class RegexTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Internal error parsing');
+
         new Regex('/');
     }
 
@@ -92,7 +97,8 @@ class RegexTest extends TestCase
     public function testNonStringValidation(): void
     {
         $validator = new Regex('/./');
-        $this->assertFalse($validator->isValid([1 => 1]));
+
+        self::assertFalse($validator->isValid([1 => 1]));
     }
 
     /**
@@ -102,7 +108,8 @@ class RegexTest extends TestCase
     public function testSpecialCharValidation(bool $expected, string $input): void
     {
         $validator = new Regex('/^[[:alpha:]\']+$/iu');
-        $this->assertEquals(
+
+        self::assertSame(
             $expected,
             $validator->isValid($input),
             'Reason: ' . implode('', $validator->getMessages())
@@ -132,7 +139,8 @@ class RegexTest extends TestCase
     public function testEqualsMessageTemplates(): void
     {
         $validator = new Regex('//');
-        $this->assertSame(
+
+        self::assertSame(
             [
                 Regex::INVALID,
                 Regex::NOT_MATCH,
@@ -140,7 +148,7 @@ class RegexTest extends TestCase
             ],
             array_keys($validator->getMessageTemplates())
         );
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
@@ -149,7 +157,8 @@ class RegexTest extends TestCase
         $messageVariables = [
             'pattern' => 'pattern',
         ];
-        $this->assertSame($messageVariables, $validator->getOption('messageVariables'));
+
+        self::assertSame($messageVariables, $validator->getOption('messageVariables'));
     }
 
     /**
@@ -175,13 +184,16 @@ class RegexTest extends TestCase
     public function testConstructorRaisesExceptionWhenProvidedInvalidArguments($options): void
     {
         $this->expectException(InvalidArgumentException::class);
+
         new Regex($options);
     }
 
     public function testConstructorRaisesExceptionWhenProvidedWithInvalidOptionsArray(): void
     {
         $options = ['foo' => 'bar'];
+
         $this->expectException(InvalidArgumentException::class);
+
         new Regex($options);
     }
 
@@ -194,6 +206,6 @@ class RegexTest extends TestCase
         $r->setAccessible(true);
         $r->setValue($validator, $pattern);
 
-        $this->assertFalse($validator->isValid('test'));
+        self::assertFalse($validator->isValid('test'));
     }
 }

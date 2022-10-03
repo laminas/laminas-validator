@@ -14,13 +14,14 @@ use stdClass;
  *
  * @covers \Laminas\Validator\Timezone
  */
-class TimezoneTest extends TestCase
+final class TimezoneTest extends TestCase
 {
-    /** @var Timezone */
-    protected $validator;
+    private Timezone $validator;
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->validator = new Timezone();
     }
 
@@ -32,6 +33,7 @@ class TimezoneTest extends TestCase
     public function testLocations(?string $value, bool $valid): void
     {
         $this->validator->setType(Timezone::LOCATION);
+
         $this->checkValidationValue($value, $valid);
     }
 
@@ -43,6 +45,7 @@ class TimezoneTest extends TestCase
     public function testLocationsByTypeAsString(?string $value, bool $valid): void
     {
         $this->validator->setType('location');
+
         $this->checkValidationValue($value, $valid);
     }
 
@@ -79,6 +82,7 @@ class TimezoneTest extends TestCase
     public function testAbbreviations(?string $value, bool $valid): void
     {
         $this->validator->setType(Timezone::ABBREVIATION);
+
         $this->checkValidationValue($value, $valid);
     }
 
@@ -90,6 +94,7 @@ class TimezoneTest extends TestCase
     public function testAbbreviationsByTypeAsString(?string $value, bool $valid): void
     {
         $this->validator->setType('abbreviation');
+
         $this->checkValidationValue($value, $valid);
     }
 
@@ -120,6 +125,7 @@ class TimezoneTest extends TestCase
     public function testlocationsAndAbbreviationsWithAllTypeAsString(?string $value, bool $valid): void
     {
         $this->validator->setType(Timezone::ALL);
+
         $this->checkValidationValue($value, $valid);
     }
 
@@ -131,6 +137,7 @@ class TimezoneTest extends TestCase
     public function testlocationsAndAbbreviationsWithAllTypeAsArray(?string $value, bool $valid): void
     {
         $this->validator->setType([Timezone::LOCATION, Timezone::ABBREVIATION]);
+
         $this->checkValidationValue($value, $valid);
     }
 
@@ -142,6 +149,7 @@ class TimezoneTest extends TestCase
     public function testLocationsAndAbbreviationsWithAllTypeAsArrayWithStrings(?string $value, bool $valid): void
     {
         $this->validator->setType(['location', 'abbreviation']);
+
         $this->checkValidationValue($value, $valid);
     }
 
@@ -201,37 +209,45 @@ class TimezoneTest extends TestCase
     public function testTypeThroughConstructor(): void
     {
         $timezone1 = new Timezone(Timezone::LOCATION);
-        $this->assertTrue($timezone1->isValid('Asia/Dubai'));
-        $this->assertFalse($timezone1->isValid('sast'));
+
+        self::assertTrue($timezone1->isValid('Asia/Dubai'));
+        self::assertFalse($timezone1->isValid('sast'));
 
         $timezone2 = new Timezone('location');
-        $this->assertTrue($timezone2->isValid('Asia/Dubai'));
-        $this->assertFalse($timezone2->isValid('sast'));
+
+        self::assertTrue($timezone2->isValid('Asia/Dubai'));
+        self::assertFalse($timezone2->isValid('sast'));
 
         $timezone3 = new Timezone(['type' => 'location']);
-        $this->assertTrue($timezone3->isValid('Asia/Dubai'));
-        $this->assertFalse($timezone3->isValid('sast'));
+
+        self::assertTrue($timezone3->isValid('Asia/Dubai'));
+        self::assertFalse($timezone3->isValid('sast'));
 
         $timezone4 = new Timezone(Timezone::ABBREVIATION);
-        $this->assertFalse($timezone4->isValid('Asia/Dubai'));
-        $this->assertTrue($timezone4->isValid('sast'));
+
+        self::assertFalse($timezone4->isValid('Asia/Dubai'));
+        self::assertTrue($timezone4->isValid('sast'));
 
         $timezone5 = new Timezone('abbreviation');
-        $this->assertFalse($timezone5->isValid('Asia/Dubai'));
-        $this->assertTrue($timezone5->isValid('sast'));
+
+        self::assertFalse($timezone5->isValid('Asia/Dubai'));
+        self::assertTrue($timezone5->isValid('sast'));
 
         $timezone6 = new Timezone(['type' => 'abbreviation']);
-        $this->assertFalse($timezone6->isValid('Asia/Dubai'));
-        $this->assertTrue($timezone6->isValid('sast'));
+
+        self::assertFalse($timezone6->isValid('Asia/Dubai'));
+        self::assertTrue($timezone6->isValid('sast'));
 
         // default value is `all`
         $timezone7 = new Timezone();
-        $this->assertTrue($timezone7->isValid('Asia/Dubai'));
-        $this->assertTrue($timezone7->isValid('sast'));
+
+        self::assertTrue($timezone7->isValid('Asia/Dubai'));
+        self::assertTrue($timezone7->isValid('sast'));
 
         $timezone8 = new Timezone(['type' => ['location', 'abbreviation']]);
-        $this->assertTrue($timezone8->isValid('Asia/Dubai'));
-        $this->assertTrue($timezone8->isValid('sast'));
+
+        self::assertTrue($timezone8->isValid('Asia/Dubai'));
+        self::assertTrue($timezone8->isValid('sast'));
     }
 
     /**
@@ -250,16 +266,15 @@ class TimezoneTest extends TestCase
      *
      * @param mixed $value Value to validate
      * @param bool  $valid Expected validity
-     * @return void
      */
-    protected function checkValidationValue($value, $valid)
+    protected function checkValidationValue($value, bool $valid): void
     {
         $isValid = $this->validator->isValid($value);
 
         if ($valid) {
-            $this->assertTrue($isValid);
+            self::assertTrue($isValid);
         } else {
-            $this->assertFalse($isValid);
+            self::assertFalse($isValid);
         }
     }
 
@@ -267,11 +282,11 @@ class TimezoneTest extends TestCase
      * Checks expected exception on wrong type
      *
      * @param mixed $value Value to validate
-     * @return void
      */
-    protected function checkExpectedException($value)
+    protected function checkExpectedException($value): void
     {
         $this->expectException(InvalidArgumentException::class);
+
         $this->validator->setType($value);
     }
 
@@ -279,8 +294,9 @@ class TimezoneTest extends TestCase
      * Data provider
      *
      * @return mixed[][]
+     * @psalm-return array<list<stdClass|array|int|string>>
      */
-    public function getInvalidTypes()
+    public function getInvalidTypes(): array
     {
         return [
             [new stdClass()],

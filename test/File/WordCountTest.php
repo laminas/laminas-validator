@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Laminas\Validator\File;
+use Laminas\Validator\File\WordCount;
 use PHPUnit\Framework\TestCase;
 
 use function basename;
@@ -15,9 +15,10 @@ use function is_array;
 use const UPLOAD_ERR_NO_FILE;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\File\WordCount
  */
-class WordCountTest extends TestCase
+final class WordCountTest extends TestCase
 {
     /**
      * @psalm-return array<array-key, array{
@@ -54,6 +55,7 @@ class WordCountTest extends TestCase
             ];
             $testData[] = [$data[0], $fileUpload, $data[2]];
         }
+
         return $testData;
     }
 
@@ -66,8 +68,9 @@ class WordCountTest extends TestCase
      */
     public function testBasic($options, $isValidParam, bool $expected): void
     {
-        $validator = new File\WordCount($options);
-        $this->assertEquals($expected, $validator->isValid($isValidParam));
+        $validator = new WordCount($options);
+
+        self::assertSame($expected, $validator->isValid($isValidParam));
     }
 
     /**
@@ -80,11 +83,12 @@ class WordCountTest extends TestCase
     public function testLegacy($options, $isValidParam, bool $expected): void
     {
         if (! is_array($isValidParam)) {
-            $this->markTestSkipped('An array is expected for legacy compat tests');
+            self::markTestSkipped('An array is expected for legacy compat tests');
         }
 
-        $validator = new File\WordCount($options);
-        $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+        $validator = new WordCount($options);
+
+        self::assertSame($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
     }
 
     /**
@@ -92,12 +96,13 @@ class WordCountTest extends TestCase
      */
     public function testGetMin(): void
     {
-        $validator = new File\WordCount(['min' => 1, 'max' => 5]);
-        $this->assertEquals(1, $validator->getMin());
+        $validator = new WordCount(['min' => 1, 'max' => 5]);
+        self::assertSame(1, $validator->getMin());
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        new File\WordCount(['min' => 5, 'max' => 1]);
+
+        new WordCount(['min' => 5, 'max' => 1]);
     }
 
     /**
@@ -105,12 +110,14 @@ class WordCountTest extends TestCase
      */
     public function testSetMin(): void
     {
-        $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
+        $validator = new WordCount(['min' => 1000, 'max' => 10000]);
         $validator->setMin(100);
-        $this->assertEquals(100, $validator->getMin());
+
+        self::assertSame(100, $validator->getMin());
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('less than or equal');
+
         $validator->setMin(20000);
     }
 
@@ -119,12 +126,14 @@ class WordCountTest extends TestCase
      */
     public function testGetMax(): void
     {
-        $validator = new File\WordCount(['min' => 1, 'max' => 100]);
-        $this->assertEquals(100, $validator->getMax());
+        $validator = new WordCount(['min' => 1, 'max' => 100]);
+
+        self::assertSame(100, $validator->getMax());
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        new File\WordCount(['min' => 5, 'max' => 1]);
+
+        new WordCount(['min' => 5, 'max' => 1]);
     }
 
     /**
@@ -132,12 +141,14 @@ class WordCountTest extends TestCase
      */
     public function testSetMax(): void
     {
-        $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
+        $validator = new WordCount(['min' => 1000, 'max' => 10000]);
         $validator->setMax(1_000_000);
-        $this->assertEquals(1_000_000, $validator->getMax());
+
+        self::assertSame(1_000_000, $validator->getMax());
 
         $validator->setMin(100);
-        $this->assertEquals(1_000_000, $validator->getMax());
+
+        self::assertSame(1_000_000, $validator->getMax());
     }
 
     /**
@@ -145,18 +156,19 @@ class WordCountTest extends TestCase
      */
     public function testLaminas11258(): void
     {
-        $validator = new File\WordCount(['min' => 1, 'max' => 10000]);
-        $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
-        $this->assertArrayHasKey('fileWordCountNotFound', $validator->getMessages());
-        $this->assertStringContainsString('does not exist', current($validator->getMessages()));
+        $validator = new WordCount(['min' => 1, 'max' => 10000]);
+
+        self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
+        self::assertArrayHasKey('fileWordCountNotFound', $validator->getMessages());
+        self::assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
-        $validator = new File\WordCount();
+        $validator = new WordCount();
 
-        $this->assertFalse($validator->isValid(''));
-        $this->assertArrayHasKey(File\WordCount::NOT_FOUND, $validator->getMessages());
+        self::assertFalse($validator->isValid(''));
+        self::assertArrayHasKey(WordCount::NOT_FOUND, $validator->getMessages());
 
         $filesArray = [
             'name'     => '',
@@ -166,18 +178,19 @@ class WordCountTest extends TestCase
             'type'     => '',
         ];
 
-        $this->assertFalse($validator->isValid($filesArray));
-        $this->assertArrayHasKey(File\WordCount::NOT_FOUND, $validator->getMessages());
+        self::assertFalse($validator->isValid($filesArray));
+        self::assertArrayHasKey(WordCount::NOT_FOUND, $validator->getMessages());
     }
 
     public function testCanSetMinValueUsingOptionsArray(): void
     {
-        $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
+        $validator = new WordCount(['min' => 1000, 'max' => 10000]);
         $minValue  = 33;
         $options   = ['min' => $minValue];
 
         $validator->setMin($options);
-        $this->assertSame($minValue, $validator->getMin());
+
+        self::assertSame($minValue, $validator->getMin());
     }
 
     /**
@@ -201,20 +214,23 @@ class WordCountTest extends TestCase
      */
     public function testSettingMinValueRaisesExceptionForInvalidType($value): void
     {
-        $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
+        $validator = new WordCount(['min' => 1000, 'max' => 10000]);
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid options to validator provided');
+
         $validator->setMin($value);
     }
 
     public function testCanSetMaxValueUsingOptionsArray(): void
     {
-        $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
+        $validator = new WordCount(['min' => 1000, 'max' => 10000]);
         $maxValue  = 33_333_333;
         $options   = ['max' => $maxValue];
 
         $validator->setMax($options);
-        $this->assertSame($maxValue, $validator->getMax());
+
+        self::assertSame($maxValue, $validator->getMax());
     }
 
     /**
@@ -223,18 +239,22 @@ class WordCountTest extends TestCase
      */
     public function testSettingMaxValueRaisesExceptionForInvalidType($value): void
     {
-        $validator = new File\WordCount(['min' => 1000, 'max' => 10000]);
+        $validator = new WordCount(['min' => 1000, 'max' => 10000]);
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid options to validator provided');
+
         $validator->setMax($value);
     }
 
     public function testIsValidShouldThrowInvalidArgumentExceptionForArrayNotInFilesFormat(): void
     {
-        $validator = new File\WordCount(['min' => 1, 'max' => 10000]);
+        $validator = new WordCount(['min' => 1, 'max' => 10000]);
         $value     = ['foo' => 'bar'];
+
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Value array must be in $_FILES format');
+
         $validator->isValid($value);
     }
 
@@ -242,9 +262,9 @@ class WordCountTest extends TestCase
     {
         $min       = 1;
         $max       = 10000;
-        $validator = new File\WordCount($min, $max);
+        $validator = new WordCount($min, $max);
 
-        $this->assertSame($min, $validator->getMin());
-        $this->assertSame($max, $validator->getMax());
+        self::assertSame($min, $validator->getMin());
+        self::assertSame($max, $validator->getMax());
     }
 }

@@ -5,281 +5,305 @@ declare(strict_types=1);
 namespace LaminasTest\Validator\File;
 
 use LaminasTest\Validator\File\TestAsset\FileInformation;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
-use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 
 use function basename;
 use function mime_content_type;
 
-class FileInformationTraitTest extends TestCase
+/** @covers \Laminas\Validator\File\FileInformationTrait */
+final class FileInformationTraitTest extends TestCase
 {
-    use ProphecyTrait;
+    /** @var StreamInterface&MockObject */
+    private StreamInterface $stream;
 
-    /** @var ObjectProphecy|StreamInterface */
-    public $stream;
+    /** @var UploadedFileInterface&MockObject */
+    private UploadedFileInterface $upload;
 
-    /** @var ObjectProphecy */
-    public $upload;
+    private string $testFile;
+
+    private FileInformation $fileInformation;
 
     protected function setUp(): void
     {
-        $this->stream = $this->prophesize(StreamInterface::class);
-        $this->upload = $this->prophesize(UploadedFileInterface::class);
+        parent::setUp();
+
+        $this->stream = $this->createMock(StreamInterface::class);
+        $this->upload = $this->createMock(UploadedFileInterface::class);
+
+        $this->testFile = __DIR__ . '/_files/testsize.mo';
+
+        $this->fileInformation = new FileInformation();
     }
 
     public function testLegacyFileInfoBasic(): void
     {
-        $testFile = __DIR__ . '/_files/testsize.mo';
-        $basename = basename($testFile);
+        $basename = basename($this->testFile);
         $file     = [
             'name'     => $basename,
-            'tmp_name' => $testFile,
+            'tmp_name' => $this->testFile,
         ];
 
-        $fileInformation = new FileInformation();
-        $fileInfo        = $fileInformation->checkFileInformation(
+        $fileInfo = $this->fileInformation->checkFileInformation(
             $basename,
             $file
         );
 
-        $this->assertEquals($fileInfo, [
+        self::assertSame([
             'filename' => $file['name'],
             'file'     => $file['tmp_name'],
-        ]);
+        ], $fileInfo);
     }
 
     public function testLegacyFileInfoWithFiletype(): void
     {
-        $testFile = __DIR__ . '/_files/testsize.mo';
-        $basename = basename($testFile);
+        $basename = basename($this->testFile);
         $file     = [
             'name'     => $basename,
-            'tmp_name' => $testFile,
+            'tmp_name' => $this->testFile,
             'type'     => 'mo',
         ];
 
-        $fileInformation = new FileInformation();
-        $fileInfo        = $fileInformation->checkFileInformation(
+        $fileInfo = $this->fileInformation->checkFileInformation(
             $basename,
             $file,
             true
         );
 
-        $this->assertEquals($fileInfo, [
+        self::assertSame([
             'filename' => $file['name'],
             'file'     => $file['tmp_name'],
             'filetype' => $file['type'],
-        ]);
+        ], $fileInfo);
     }
 
     public function testLegacyFileInfoWithBasename(): void
     {
-        $testFile = __DIR__ . '/_files/testsize.mo';
-        $basename = basename($testFile);
+        $basename = basename($this->testFile);
         $file     = [
             'name'     => $basename,
-            'tmp_name' => $testFile,
+            'tmp_name' => $this->testFile,
         ];
 
-        $fileInformation = new FileInformation();
-        $fileInfo        = $fileInformation->checkFileInformation(
+        $fileInfo = $this->fileInformation->checkFileInformation(
             $basename,
             $file,
             false,
             true
         );
 
-        $this->assertEquals($fileInfo, [
+        self::assertSame([
             'filename' => $file['name'],
             'file'     => $file['tmp_name'],
             'basename' => basename($file['tmp_name']),
-        ]);
+        ], $fileInfo);
     }
 
     public function testSapiFileInfoBasic(): void
     {
-        $testFile = __DIR__ . '/_files/testsize.mo';
-        $file     = [
-            'name'     => basename($testFile),
-            'tmp_name' => $testFile,
+        $file = [
+            'name'     => basename($this->testFile),
+            'tmp_name' => $this->testFile,
         ];
 
-        $fileInformation = new FileInformation();
-        $fileInfo        = $fileInformation->checkFileInformation(
+        $fileInfo = $this->fileInformation->checkFileInformation(
             $file
         );
 
-        $this->assertEquals($fileInfo, [
-            'filename' => $file['name'],
+        self::assertSame([
             'file'     => $file['tmp_name'],
-        ]);
+            'filename' => $file['name'],
+        ], $fileInfo);
     }
 
     public function testSapiFileInfoWithFiletype(): void
     {
-        $testFile = __DIR__ . '/_files/testsize.mo';
-        $file     = [
-            'name'     => basename($testFile),
-            'tmp_name' => $testFile,
+        $file = [
+            'name'     => basename($this->testFile),
+            'tmp_name' => $this->testFile,
             'type'     => 'mo',
         ];
 
-        $fileInformation = new FileInformation();
-        $fileInfo        = $fileInformation->checkFileInformation(
+        $fileInfo = $this->fileInformation->checkFileInformation(
             $file,
             null,
             true
         );
 
-        $this->assertEquals($fileInfo, [
-            'filename' => $file['name'],
+        self::assertSame([
             'file'     => $file['tmp_name'],
+            'filename' => $file['name'],
             'filetype' => $file['type'],
-        ]);
+        ], $fileInfo);
     }
 
     public function testSapiFileInfoWithBasename(): void
     {
-        $testFile = __DIR__ . '/_files/testsize.mo';
-        $file     = [
-            'name'     => basename($testFile),
-            'tmp_name' => $testFile,
+        $file = [
+            'name'     => basename($this->testFile),
+            'tmp_name' => $this->testFile,
         ];
 
-        $fileInformation = new FileInformation();
-        $fileInfo        = $fileInformation->checkFileInformation(
+        $fileInfo = $this->fileInformation->checkFileInformation(
             $file,
             null,
             false,
             true
         );
 
-        $this->assertEquals($fileInfo, [
-            'filename' => $file['name'],
+        self::assertSame([
             'file'     => $file['tmp_name'],
+            'filename' => $file['name'],
             'basename' => basename($file['tmp_name']),
-        ]);
+        ], $fileInfo);
     }
 
     public function testPsr7FileInfoBasic(): void
     {
-        $testFile = __DIR__ . '/_files/testsize.mo';
+        $this->stream
+            ->expects(self::once())
+            ->method('getMetadata')
+            ->with('uri')
+            ->willReturn($this->testFile);
 
-        $this->stream->getMetadata('uri')->willReturn($testFile);
-        $this->upload->getClientFilename()->willReturn(basename($testFile));
-        $this->upload->getClientMediaType()->willReturn(mime_content_type($testFile));
-        $this->upload->getStream()->willReturn($this->stream->reveal());
+        $this->upload
+            ->expects(self::once())
+            ->method('getClientFilename')
+            ->willReturn(basename($this->testFile));
 
-        $fileInformation = new FileInformation();
-        $fileInfo        = $fileInformation->checkFileInformation(
-            $this->upload->reveal()
+        $this->upload
+            ->expects(self::never())
+            ->method('getClientMediaType');
+
+        $this->upload
+            ->expects(self::once())
+            ->method('getStream')
+            ->willReturn($this->stream);
+
+        $fileInfo = $this->fileInformation->checkFileInformation(
+            $this->upload
         );
 
-        $this->assertEquals($fileInfo, [
-            'filename' => basename($testFile),
-            'file'     => $testFile,
-        ]);
+        self::assertSame([
+            'file'     => $this->testFile,
+            'filename' => basename($this->testFile),
+        ], $fileInfo);
     }
 
     public function testPsr7FileInfoBasicWithFiletype(): void
     {
-        $testFile = __DIR__ . '/_files/testsize.mo';
+        $this->stream
+            ->expects(self::once())
+            ->method('getMetadata')
+            ->with('uri')
+            ->willReturn($this->testFile);
 
-        $this->stream->getMetadata('uri')->willReturn($testFile);
-        $this->upload->getClientFilename()->willReturn(basename($testFile));
-        $this->upload->getClientMediaType()->willReturn(mime_content_type($testFile));
-        $this->upload->getStream()->willReturn($this->stream->reveal());
+        $this->upload
+            ->expects(self::once())
+            ->method('getClientFilename')
+            ->willReturn(basename($this->testFile));
 
-        $fileInformation = new FileInformation();
-        $fileInfo        = $fileInformation->checkFileInformation(
-            $this->upload->reveal(),
+        $this->upload
+            ->expects(self::once())
+            ->method('getClientMediaType')
+            ->willReturn(mime_content_type($this->testFile));
+
+        $this->upload
+            ->expects(self::once())
+            ->method('getStream')
+            ->willReturn($this->stream);
+
+        $fileInfo = $this->fileInformation->checkFileInformation(
+            $this->upload,
             null,
             true
         );
 
-        $this->assertEquals($fileInfo, [
-            'filename' => basename($testFile),
-            'file'     => $testFile,
-            'filetype' => mime_content_type($testFile),
-        ]);
+        self::assertSame([
+            'file'     => $this->testFile,
+            'filename' => basename($this->testFile),
+            'filetype' => mime_content_type($this->testFile),
+        ], $fileInfo);
     }
 
     public function testPsr7FileInfoBasicWithBasename(): void
     {
-        $testFile = __DIR__ . '/_files/testsize.mo';
+        $this->stream
+            ->expects(self::once())
+            ->method('getMetadata')
+            ->with('uri')
+            ->willReturn($this->testFile);
 
-        $this->stream->getMetadata('uri')->willReturn($testFile);
-        $this->upload->getClientFilename()->willReturn(basename($testFile));
-        $this->upload->getClientMediaType()->willReturn(mime_content_type($testFile));
-        $this->upload->getStream()->willReturn($this->stream->reveal());
+        $this->upload
+            ->expects(self::once())
+            ->method('getClientFilename')
+            ->willReturn(basename($this->testFile));
 
-        $fileInformation = new FileInformation();
-        $fileInfo        = $fileInformation->checkFileInformation(
-            $this->upload->reveal(),
+        $this->upload
+            ->expects(self::never())
+            ->method('getClientMediaType');
+
+        $this->upload
+            ->expects(self::once())
+            ->method('getStream')
+            ->willReturn($this->stream);
+
+        $fileInfo = $this->fileInformation->checkFileInformation(
+            $this->upload,
             null,
             false,
             true
         );
 
-        $this->assertEquals($fileInfo, [
-            'filename' => basename($testFile),
-            'file'     => $testFile,
-            'basename' => basename($testFile),
-        ]);
+        self::assertSame([
+            'file'     => $this->testFile,
+            'filename' => basename($this->testFile),
+            'basename' => basename($this->testFile),
+        ], $fileInfo);
     }
 
     public function testFileBasedFileInfoBasic(): void
     {
-        $testFile = __DIR__ . '/_files/testsize.mo';
-
-        $fileInformation = new FileInformation();
-        $fileInfo        = $fileInformation->checkFileInformation(
-            $testFile
+        $fileInfo = $this->fileInformation->checkFileInformation(
+            $this->testFile
         );
 
-        $this->assertEquals($fileInfo, [
-            'filename' => basename($testFile),
-            'file'     => $testFile,
-        ]);
+        self::assertSame([
+            'file'     => $this->testFile,
+            'filename' => basename($this->testFile),
+        ], $fileInfo);
     }
 
     public function testFileBasedFileInfoBasicWithFiletype(): void
     {
-        $testFile = __DIR__ . '/_files/testsize.mo';
-
-        $fileInformation = new FileInformation();
-        $fileInfo        = $fileInformation->checkFileInformation(
-            $testFile,
+        $fileInfo = $this->fileInformation->checkFileInformation(
+            $this->testFile,
             null,
             true
         );
 
-        $this->assertEquals($fileInfo, [
-            'filename' => basename($testFile),
-            'file'     => $testFile,
+        self::assertSame([
+            'file'     => $this->testFile,
+            'filename' => basename($this->testFile),
             'filetype' => null,
-        ]);
+        ], $fileInfo);
     }
 
     public function testFileBasedFileInfoBasicWithBasename(): void
     {
-        $testFile = __DIR__ . '/_files/testsize.mo';
-
-        $fileInformation = new FileInformation();
-        $fileInfo        = $fileInformation->checkFileInformation(
-            $testFile,
+        $fileInfo = $this->fileInformation->checkFileInformation(
+            $this->testFile,
             null,
             false,
             true
         );
 
-        $this->assertEquals($fileInfo, [
-            'filename' => basename($testFile),
-            'file'     => $testFile,
-            'basename' => basename($testFile),
-        ]);
+        self::assertSame([
+            'file'     => $this->testFile,
+            'filename' => basename($this->testFile),
+            'basename' => basename($this->testFile),
+        ], $fileInfo);
     }
 }

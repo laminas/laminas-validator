@@ -11,9 +11,10 @@ use PHPUnit\Framework\TestCase;
 use function array_keys;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\Isbn
  */
-class IsbnTest extends TestCase
+final class IsbnTest extends TestCase
 {
     /**
      * @psalm-return array<string, array{
@@ -45,7 +46,8 @@ class IsbnTest extends TestCase
     public function testBasic(string $value, bool $expected): void
     {
         $validator = new Isbn();
-        $this->assertSame($expected, $validator->isValid($value));
+
+        self::assertSame($expected, $validator->isValid($value));
     }
 
     /**
@@ -56,16 +58,17 @@ class IsbnTest extends TestCase
         $validator = new Isbn();
 
         $validator->setType(Isbn::AUTO);
-        $this->assertEquals(Isbn::AUTO, $validator->getType());
+        self::assertSame(Isbn::AUTO, $validator->getType());
 
         $validator->setType(Isbn::ISBN10);
-        $this->assertEquals(Isbn::ISBN10, $validator->getType());
+        self::assertSame(Isbn::ISBN10, $validator->getType());
 
         $validator->setType(Isbn::ISBN13);
-        $this->assertEquals(Isbn::ISBN13, $validator->getType());
+        self::assertSame(Isbn::ISBN13, $validator->getType());
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid ISBN type');
+
         $validator->setType('X');
     }
 
@@ -77,16 +80,17 @@ class IsbnTest extends TestCase
         $validator = new Isbn();
 
         $validator->setSeparator('-');
-        $this->assertEquals('-', $validator->getSeparator());
+        self::assertSame('-', $validator->getSeparator());
 
         $validator->setSeparator(' ');
-        $this->assertEquals(' ', $validator->getSeparator());
+        self::assertSame(' ', $validator->getSeparator());
 
         $validator->setSeparator('');
-        $this->assertEquals('', $validator->getSeparator());
+        self::assertSame('', $validator->getSeparator());
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid ISBN separator');
+
         $validator->setSeparator('X');
     }
 
@@ -100,24 +104,27 @@ class IsbnTest extends TestCase
             'separator' => ' ',
         ];
         $validator = new Isbn($options);
-        $this->assertEquals(Isbn::AUTO, $validator->getType());
-        $this->assertEquals(' ', $validator->getSeparator());
+
+        self::assertSame(Isbn::AUTO, $validator->getType());
+        self::assertSame(' ', $validator->getSeparator());
 
         $options   = [
             'type'      => Isbn::ISBN10,
             'separator' => '-',
         ];
         $validator = new Isbn($options);
-        $this->assertEquals(Isbn::ISBN10, $validator->getType());
-        $this->assertEquals('-', $validator->getSeparator());
+
+        self::assertSame(Isbn::ISBN10, $validator->getType());
+        self::assertSame('-', $validator->getSeparator());
 
         $options   = [
             'type'      => Isbn::ISBN13,
             'separator' => '',
         ];
         $validator = new Isbn($options);
-        $this->assertEquals(Isbn::ISBN13, $validator->getType());
-        $this->assertEquals('', $validator->getSeparator());
+
+        self::assertSame(Isbn::ISBN13, $validator->getType());
+        self::assertSame('', $validator->getSeparator());
     }
 
     /**
@@ -127,57 +134,55 @@ class IsbnTest extends TestCase
     {
         $validator = new Isbn();
 
-        $this->assertTrue($validator->isValid('0060929871'));
-        $this->assertFalse($validator->isValid('0-06-092987-1'));
-        $this->assertFalse($validator->isValid('0 06 092987 1'));
+        self::assertTrue($validator->isValid('0060929871'));
+        self::assertFalse($validator->isValid('0-06-092987-1'));
+        self::assertFalse($validator->isValid('0 06 092987 1'));
 
-        $this->assertTrue($validator->isValid('9780555023402'));
-        $this->assertFalse($validator->isValid('978-0-555023-40-2'));
-        $this->assertFalse($validator->isValid('978 0 555023 40 2'));
+        self::assertTrue($validator->isValid('9780555023402'));
+        self::assertFalse($validator->isValid('978-0-555023-40-2'));
+        self::assertFalse($validator->isValid('978 0 555023 40 2'));
 
         $validator->setSeparator('-');
 
-        $this->assertFalse($validator->isValid('0060929871'));
-        $this->assertTrue($validator->isValid('0-06-092987-1'));
-        $this->assertFalse($validator->isValid('0 06 092987 1'));
+        self::assertFalse($validator->isValid('0060929871'));
+        self::assertTrue($validator->isValid('0-06-092987-1'));
+        self::assertFalse($validator->isValid('0 06 092987 1'));
 
-        $this->assertFalse($validator->isValid('9780555023402'));
-        $this->assertTrue($validator->isValid('978-0-555023-40-2'));
-        $this->assertFalse($validator->isValid('978 0 555023 40 2'));
+        self::assertFalse($validator->isValid('9780555023402'));
+        self::assertTrue($validator->isValid('978-0-555023-40-2'));
+        self::assertFalse($validator->isValid('978 0 555023 40 2'));
 
         $validator->setSeparator(' ');
 
-        $this->assertFalse($validator->isValid('0060929871'));
-        $this->assertFalse($validator->isValid('0-06-092987-1'));
-        $this->assertTrue($validator->isValid('0 06 092987 1'));
+        self::assertFalse($validator->isValid('0060929871'));
+        self::assertFalse($validator->isValid('0-06-092987-1'));
+        self::assertTrue($validator->isValid('0 06 092987 1'));
 
-        $this->assertFalse($validator->isValid('9780555023402'));
-        $this->assertFalse($validator->isValid('978-0-555023-40-2'));
-        $this->assertTrue($validator->isValid('978 0 555023 40 2'));
+        self::assertFalse($validator->isValid('9780555023402'));
+        self::assertFalse($validator->isValid('978-0-555023-40-2'));
+        self::assertTrue($validator->isValid('978 0 555023 40 2'));
     }
 
     /**
      * Ensures that the validator follows expected behavior
-     *
-     * @return void
      */
-    public function testType10()
+    public function testType10(): void
     {
         $validator = new Isbn();
         $validator->setType(Isbn::ISBN10);
 
-        $this->assertTrue($validator->isValid('0060929871'));
-        $this->assertFalse($validator->isValid('9780555023402'));
+        self::assertTrue($validator->isValid('0060929871'));
+        self::assertFalse($validator->isValid('9780555023402'));
 
         $validator->setSeparator('-');
 
-        $this->assertTrue($validator->isValid('0-06-092987-1'));
-        $this->assertFalse($validator->isValid('978-0-555023-40-2'));
+        self::assertTrue($validator->isValid('0-06-092987-1'));
+        self::assertFalse($validator->isValid('978-0-555023-40-2'));
 
         $validator->setSeparator(' ');
 
-        $this->assertTrue($validator->isValid('0 06 092987 1'));
-        $this->assertFalse($validator->isValid('978 0 555023 40 2'));
+        self::assertTrue($validator->isValid('0 06 092987 1'));
+        self::assertFalse($validator->isValid('978 0 555023 40 2'));
     }
 
     /**
@@ -190,18 +195,18 @@ class IsbnTest extends TestCase
         $validator = new Isbn();
         $validator->setType(Isbn::ISBN13);
 
-        $this->assertFalse($validator->isValid('0060929871'));
-        $this->assertTrue($validator->isValid('9780555023402'));
+        self::assertFalse($validator->isValid('0060929871'));
+        self::assertTrue($validator->isValid('9780555023402'));
 
         $validator->setSeparator('-');
 
-        $this->assertFalse($validator->isValid('0-06-092987-1'));
-        $this->assertTrue($validator->isValid('978-0-555023-40-2'));
+        self::assertFalse($validator->isValid('0-06-092987-1'));
+        self::assertTrue($validator->isValid('978-0-555023-40-2'));
 
         $validator->setSeparator(' ');
 
-        $this->assertFalse($validator->isValid('0 06 092987 1'));
-        $this->assertTrue($validator->isValid('978 0 555023 40 2'));
+        self::assertFalse($validator->isValid('0 06 092987 1'));
+        self::assertTrue($validator->isValid('978 0 555023 40 2'));
     }
 
     /**
@@ -212,20 +217,21 @@ class IsbnTest extends TestCase
         $validator = new Isbn();
         $validator->setType(Isbn::ISBN13);
 
-        $this->assertFalse($validator->isValid((float) 1.2345));
-        $this->assertFalse($validator->isValid((object) 'Test'));
+        self::assertFalse($validator->isValid((float) 1.2345));
+        self::assertFalse($validator->isValid((object) 'Test'));
     }
 
     public function testEqualsMessageTemplates(): void
     {
         $validator = new Isbn();
-        $this->assertSame(
+
+        self::assertSame(
             [
                 Isbn::INVALID,
                 Isbn::NO_ISBN,
             ],
             array_keys($validator->getMessageTemplates())
         );
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 }

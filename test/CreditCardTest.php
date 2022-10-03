@@ -7,15 +7,17 @@ namespace LaminasTest\Validator;
 use ArrayObject;
 use Laminas\Validator\CreditCard;
 use Laminas\Validator\Exception\InvalidArgumentException;
+use LaminasTest\Validator\TestAsset\CreditCardValidatorExtension;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
 use function current;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\CreditCard
  */
-class CreditCardTest extends TestCase
+final class CreditCardTest extends TestCase
 {
     /**
      * @psalm-return array<array-key, array{0: string, 1: bool}>
@@ -39,7 +41,8 @@ class CreditCardTest extends TestCase
     public function testBasic(string $input, bool $expected): void
     {
         $validator = new CreditCard();
-        $this->assertSame($expected, $validator->isValid($input));
+
+        self::assertSame($expected, $validator->isValid($input));
     }
 
     /**
@@ -48,7 +51,8 @@ class CreditCardTest extends TestCase
     public function testGetMessages(): void
     {
         $validator = new CreditCard();
-        $this->assertEquals([], $validator->getMessages());
+
+        self::assertSame([], $validator->getMessages());
     }
 
     /**
@@ -57,10 +61,12 @@ class CreditCardTest extends TestCase
     public function testGetSetType(): void
     {
         $validator = new CreditCard();
-        $this->assertCount(12, $validator->getType());
+
+        self::assertCount(12, $validator->getType());
 
         $validator->setType(CreditCard::MAESTRO);
-        $this->assertEquals([CreditCard::MAESTRO], $validator->getType());
+
+        self::assertSame([CreditCard::MAESTRO], $validator->getType());
 
         $validator->setType(
             [
@@ -68,7 +74,8 @@ class CreditCardTest extends TestCase
                 CreditCard::MAESTRO,
             ]
         );
-        $this->assertEquals(
+
+        self::assertSame(
             [
                 CreditCard::AMERICAN_EXPRESS,
                 CreditCard::MAESTRO,
@@ -79,7 +86,8 @@ class CreditCardTest extends TestCase
         $validator->addType(
             CreditCard::MASTERCARD
         );
-        $this->assertEquals(
+
+        self::assertSame(
             [
                 CreditCard::AMERICAN_EXPRESS,
                 CreditCard::MAESTRO,
@@ -111,7 +119,8 @@ class CreditCardTest extends TestCase
     public function testProvider(string $input, bool $expected): void
     {
         $validator = new CreditCard(CreditCard::VISA);
-        $this->assertEquals($expected, $validator->isValid($input));
+
+        self::assertSame($expected, $validator->isValid($input));
     }
 
     /**
@@ -120,7 +129,8 @@ class CreditCardTest extends TestCase
     public function testIsValidWithNonString(): void
     {
         $validator = new CreditCard(CreditCard::VISA);
-        $this->assertFalse($validator->isValid(['something']));
+
+        self::assertFalse($validator->isValid(['something']));
     }
 
     /**
@@ -145,9 +155,12 @@ class CreditCardTest extends TestCase
     public function testServiceClass(string $input, bool $expected): void
     {
         $validator = new CreditCard();
-        $this->assertEquals(null, $validator->getService());
+
+        self::assertSame(null, $validator->getService());
+
         $validator->setService([self::class, 'staticCallback']);
-        $this->assertEquals($expected, $validator->isValid($input));
+
+        self::assertSame($expected, $validator->isValid($input));
     }
 
     /**
@@ -178,7 +191,7 @@ class CreditCardTest extends TestCase
             ]
         );
 
-        $this->assertEquals($expected, $validator->isValid($input));
+        self::assertSame($expected, $validator->isValid($input));
     }
 
     /**
@@ -214,7 +227,7 @@ class CreditCardTest extends TestCase
     {
         $validator = new CreditCard(['type' => CreditCard::JCB]);
 
-        $this->assertEquals($expected, $validator->isValid($input));
+        self::assertSame($expected, $validator->isValid($input));
     }
 
     /**
@@ -251,7 +264,7 @@ class CreditCardTest extends TestCase
     {
         $validator = new CreditCard(['type' => CreditCard::MASTERCARD]);
 
-        $this->assertEquals($expected, $validator->isValid($input));
+        self::assertSame($expected, $validator->isValid($input));
     }
 
     /**
@@ -289,7 +302,7 @@ class CreditCardTest extends TestCase
     {
         $validator = new CreditCard(['type' => CreditCard::MIR]);
 
-        $this->assertEquals($expected, $validator->isValid($input));
+        self::assertSame($expected, $validator->isValid($input));
     }
 
     /**
@@ -298,10 +311,12 @@ class CreditCardTest extends TestCase
     public function testInvalidServiceClass(): void
     {
         $validator = new CreditCard();
-        $this->assertEquals(null, $validator->getService());
+
+        self::assertSame(null, $validator->getService());
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid callback given');
+
         $validator->setService([self::class, 'nocallback']);
     }
 
@@ -314,7 +329,8 @@ class CreditCardTest extends TestCase
         $config  = new ArrayObject($options);
 
         $validator = new CreditCard($config);
-        $this->assertEquals(['Visa'], $validator->getType());
+
+        self::assertSame(['Visa'], $validator->getType());
     }
 
     /**
@@ -327,8 +343,9 @@ class CreditCardTest extends TestCase
         );
 
         $validator = new CreditCard($config);
-        $this->assertEquals(['Visa'], $validator->getType());
-        $this->assertEquals([self::class, 'staticCallback'], $validator->getService());
+
+        self::assertSame(['Visa'], $validator->getType());
+        self::assertSame([self::class, 'staticCallback'], $validator->getService());
     }
 
     /**
@@ -337,8 +354,9 @@ class CreditCardTest extends TestCase
     public function testOptionalConstructorParameter(): void
     {
         $validator = new CreditCard('Visa', [self::class, 'staticCallback']);
-        $this->assertEquals(['Visa'], $validator->getType());
-        $this->assertEquals([self::class, 'staticCallback'], $validator->getService());
+
+        self::assertSame(['Visa'], $validator->getType());
+        self::assertSame([self::class, 'staticCallback'], $validator->getService());
     }
 
     /**
@@ -347,15 +365,19 @@ class CreditCardTest extends TestCase
     public function testMultiInstitute(): void
     {
         $validator = new CreditCard(['type' => CreditCard::MASTERCARD]);
-        $this->assertFalse($validator->isValid('4111111111111111'));
+
+        self::assertFalse($validator->isValid('4111111111111111'));
+
         $message = $validator->getMessages();
-        $this->assertStringContainsString('not from an allowed institute', current($message));
+
+        self::assertStringContainsString('not from an allowed institute', current($message));
     }
 
     public function testEqualsMessageTemplates(): void
     {
         $validator = new CreditCard();
-        $this->assertSame(
+
+        self::assertSame(
             [
                 CreditCard::CHECKSUM,
                 CreditCard::CONTENT,
@@ -367,7 +389,7 @@ class CreditCardTest extends TestCase
             ],
             array_keys($validator->getMessageTemplates())
         );
-        $this->assertEquals($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
+        self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     /**
@@ -375,9 +397,10 @@ class CreditCardTest extends TestCase
      */
     public function testValidatorAllowsExtensionsToDefineAdditionalTypesViaConstants(): void
     {
-        $validator = new TestAsset\CreditCardValidatorExtension();
-        $this->assertSame($validator, $validator->addType('test_type'));
-        $this->assertContains(TestAsset\CreditCardValidatorExtension::TEST_TYPE, $validator->getType());
+        $validator = new CreditCardValidatorExtension();
+
+        self::assertSame($validator, $validator->addType('test_type'));
+        self::assertContains(CreditCardValidatorExtension::TEST_TYPE, $validator->getType());
     }
 
     /**

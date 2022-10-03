@@ -10,13 +10,15 @@ use stdClass;
 
 use function current;
 
-class LocTest extends TestCase
+/** @covers \Laminas\Validator\Sitemap\Loc */
+final class LocTest extends TestCase
 {
-    /** @var Loc */
-    protected $validator;
+    private Loc $validator;
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->validator = new Loc();
     }
 
@@ -36,7 +38,7 @@ class LocTest extends TestCase
         ];
 
         foreach ($values as $value) {
-            $this->assertTrue($this->validator->isValid($value));
+            self::assertTrue($this->validator->isValid($value));
         }
     }
 
@@ -63,10 +65,13 @@ class LocTest extends TestCase
      */
     public function testInvalidLocs(string $url): void
     {
-        $this->markTestIncomplete('Test must be reworked');
-        $this->assertFalse($this->validator->isValid($url), $url);
+        self::markTestIncomplete('Test must be reworked');
+
+        self::assertFalse($this->validator->isValid($url), $url);
+
         $messages = $this->validator->getMessages();
-        $this->assertStringContainsString('is not a valid', current($messages));
+
+        self::assertStringContainsString('is not a valid', current($messages));
     }
 
     /**
@@ -84,9 +89,11 @@ class LocTest extends TestCase
         ];
 
         foreach ($values as $value) {
-            $this->assertFalse($this->validator->isValid($value));
+            self::assertFalse($this->validator->isValid($value));
+
             $messages = $this->validator->getMessages();
-            $this->assertStringContainsString('String expected', current($messages));
+
+            self::assertStringContainsString('String expected', current($messages));
         }
     }
 }

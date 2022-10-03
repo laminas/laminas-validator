@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Laminas\Validator\File;
+use Laminas\Validator\File\Md5;
 use PHPUnit\Framework\TestCase;
 
 use function array_merge;
@@ -18,9 +18,10 @@ use const UPLOAD_ERR_NO_FILE;
 /**
  * Md5 testbed
  *
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\File\Md5
  */
-class Md5Test extends TestCase
+final class Md5Test extends TestCase
 {
     /**
      * @psalm-return array<array-key, array{
@@ -92,6 +93,7 @@ class Md5Test extends TestCase
             ];
             $testData[] = [$data[0], $fileUpload, $data[2], $data[3]];
         }
+
         return $testData;
     }
 
@@ -104,10 +106,12 @@ class Md5Test extends TestCase
      */
     public function testBasic($options, $isValidParam, bool $expected, string $messageKey): void
     {
-        $validator = new File\Md5($options);
-        $this->assertEquals($expected, $validator->isValid($isValidParam));
+        $validator = new Md5($options);
+
+        self::assertSame($expected, $validator->isValid($isValidParam));
+
         if (! $expected) {
-            $this->assertArrayHasKey($messageKey, $validator->getMessages());
+            self::assertArrayHasKey($messageKey, $validator->getMessages());
         }
     }
 
@@ -121,55 +125,55 @@ class Md5Test extends TestCase
     public function testLegacy($options, $isValidParam, bool $expected, string $messageKey): void
     {
         if (! is_array($isValidParam)) {
-            $this->markTestSkipped('An array is expected for legacy compat tests');
+            self::markTestSkipped('An array is expected for legacy compat tests');
         }
 
-        $validator = new File\Md5($options);
-        $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+        $validator = new Md5($options);
+
+        self::assertSame($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+
         if (! $expected) {
-            $this->assertArrayHasKey($messageKey, $validator->getMessages());
+            self::assertArrayHasKey($messageKey, $validator->getMessages());
         }
     }
 
     /**
      * Ensures that getMd5() returns expected value
-     *
-     * @return void
      */
-    public function testgetMd5()
+    public function testGetMd5(): void
     {
-        $validator = new File\Md5('12345');
-        $this->assertEquals(['12345' => 'md5'], $validator->getMd5());
+        $validator = new Md5('12345');
+        self::assertSame(['12345' => 'md5'], $validator->getMd5());
 
-        $validator = new File\Md5(['12345', '12333', '12344']);
-        $this->assertEquals(['12345' => 'md5', '12333' => 'md5', '12344' => 'md5'], $validator->getMd5());
+        $validator = new Md5(['12345', '12333', '12344']);
+        self::assertSame(['12345' => 'md5', '12333' => 'md5', '12344' => 'md5'], $validator->getMd5());
     }
 
     /**
      * Ensures that getHash() returns expected value
      */
-    public function testgetHash(): void
+    public function testGetHash(): void
     {
-        $validator = new File\Md5('12345');
-        $this->assertEquals(['12345' => 'md5'], $validator->getHash());
+        $validator = new Md5('12345');
+        self::assertSame(['12345' => 'md5'], $validator->getHash());
 
-        $validator = new File\Md5(['12345', '12333', '12344']);
-        $this->assertEquals(['12345' => 'md5', '12333' => 'md5', '12344' => 'md5'], $validator->getHash());
+        $validator = new Md5(['12345', '12333', '12344']);
+        self::assertSame(['12345' => 'md5', '12333' => 'md5', '12344' => 'md5'], $validator->getHash());
     }
 
     /**
      * Ensures that setMd5() returns expected value
-     *
-     * @return void
      */
-    public function testSetMd5()
+    public function testSetMd5(): void
     {
-        $validator = new File\Md5('12345');
+        $validator = new Md5('12345');
         $validator->setMd5('12333');
-        $this->assertEquals(['12333' => 'md5'], $validator->getMd5());
+
+        self::assertSame(['12333' => 'md5'], $validator->getMd5());
 
         $validator->setMd5(['12321', '12121']);
-        $this->assertEquals(['12321' => 'md5', '12121' => 'md5'], $validator->getMd5());
+
+        self::assertSame(['12321' => 'md5', '12121' => 'md5'], $validator->getMd5());
     }
 
     /**
@@ -177,27 +181,29 @@ class Md5Test extends TestCase
      */
     public function testSetHash(): void
     {
-        $validator = new File\Md5('12345');
+        $validator = new Md5('12345');
         $validator->setHash('12333');
-        $this->assertEquals(['12333' => 'md5'], $validator->getMd5());
+
+        self::assertSame(['12333' => 'md5'], $validator->getMd5());
 
         $validator->setHash(['12321', '12121']);
-        $this->assertEquals(['12321' => 'md5', '12121' => 'md5'], $validator->getMd5());
+
+        self::assertSame(['12321' => 'md5', '12121' => 'md5'], $validator->getMd5());
     }
 
     /**
      * Ensures that addMd5() returns expected value
-     *
-     * @return void
      */
-    public function testAddMd5()
+    public function testAddMd5(): void
     {
-        $validator = new File\Md5('12345');
+        $validator = new Md5('12345');
         $validator->addMd5('12344');
-        $this->assertEquals(['12345' => 'md5', '12344' => 'md5'], $validator->getMd5());
+
+        self::assertSame(['12345' => 'md5', '12344' => 'md5'], $validator->getMd5());
 
         $validator->addMd5(['12321', '12121']);
-        $this->assertEquals(
+
+        self::assertSame(
             ['12345' => 'md5', '12344' => 'md5', '12321' => 'md5', '12121' => 'md5'],
             $validator->getMd5()
         );
@@ -208,12 +214,14 @@ class Md5Test extends TestCase
      */
     public function testAddHash(): void
     {
-        $validator = new File\Md5('12345');
+        $validator = new Md5('12345');
         $validator->addHash('12344');
-        $this->assertEquals(['12345' => 'md5', '12344' => 'md5'], $validator->getMd5());
+
+        self::assertSame(['12345' => 'md5', '12344' => 'md5'], $validator->getMd5());
 
         $validator->addHash(['12321', '12121']);
-        $this->assertEquals(
+
+        self::assertSame(
             ['12345' => 'md5', '12344' => 'md5', '12321' => 'md5', '12121' => 'md5'],
             $validator->getMd5()
         );
@@ -224,18 +232,19 @@ class Md5Test extends TestCase
      */
     public function testLaminas11258(): void
     {
-        $validator = new File\Md5('12345');
-        $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
-        $this->assertArrayHasKey('fileMd5NotFound', $validator->getMessages());
-        $this->assertStringContainsString('does not exist', current($validator->getMessages()));
+        $validator = new Md5('12345');
+
+        self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
+        self::assertArrayHasKey('fileMd5NotFound', $validator->getMessages());
+        self::assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
-        $validator = new File\Md5();
+        $validator = new Md5();
 
-        $this->assertFalse($validator->isValid(''));
-        $this->assertArrayHasKey(File\Md5::NOT_FOUND, $validator->getMessages());
+        self::assertFalse($validator->isValid(''));
+        self::assertArrayHasKey(Md5::NOT_FOUND, $validator->getMessages());
 
         $filesArray = [
             'name'     => '',
@@ -245,15 +254,17 @@ class Md5Test extends TestCase
             'type'     => '',
         ];
 
-        $this->assertFalse($validator->isValid($filesArray));
-        $this->assertArrayHasKey(File\Md5::NOT_FOUND, $validator->getMessages());
+        self::assertFalse($validator->isValid($filesArray));
+        self::assertArrayHasKey(Md5::NOT_FOUND, $validator->getMessages());
     }
 
     public function testIsValidShouldThrowInvalidArgumentExceptionForArrayNotInFilesFormat(): void
     {
-        $validator = new File\Md5();
+        $validator = new Md5();
         $value     = ['foo' => 'bar'];
+
         $this->expectException(InvalidArgumentException::class);
+
         $validator->isValid($value);
     }
 }

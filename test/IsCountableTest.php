@@ -14,7 +14,8 @@ use function json_encode;
 
 use const JSON_THROW_ON_ERROR;
 
-class IsCountableTest extends TestCase
+/** @covers \Laminas\Validator\IsCountable */
+final class IsCountableTest extends TestCase
 {
     /**
      * @psalm-return array<string, array{0: array<string, mixed>}>
@@ -34,6 +35,7 @@ class IsCountableTest extends TestCase
     {
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('conflicts');
+
         new IsCountable($options);
     }
 
@@ -56,8 +58,10 @@ class IsCountableTest extends TestCase
         array $secondaryOptions
     ): void {
         $validator = new IsCountable($originalOptions);
+
         $this->expectException(Exception\InvalidArgumentException::class);
         $this->expectExceptionMessage('conflicts');
+
         $validator->setOptions($secondaryOptions);
     }
 
@@ -68,16 +72,16 @@ class IsCountableTest extends TestCase
             'max' => 10,
         ]);
 
-        $this->assertTrue($sut->isValid(['Foo']), json_encode($sut->getMessages(), JSON_THROW_ON_ERROR));
-        $this->assertCount(0, $sut->getMessages());
+        self::assertTrue($sut->isValid(['Foo']), json_encode($sut->getMessages(), JSON_THROW_ON_ERROR));
+        self::assertCount(0, $sut->getMessages());
     }
 
     public function testIteratorIsValid(): void
     {
         $sut = new IsCountable();
 
-        $this->assertTrue($sut->isValid(new SplQueue()), json_encode($sut->getMessages(), JSON_THROW_ON_ERROR));
-        $this->assertCount(0, $sut->getMessages());
+        self::assertTrue($sut->isValid(new SplQueue()), json_encode($sut->getMessages(), JSON_THROW_ON_ERROR));
+        self::assertCount(0, $sut->getMessages());
     }
 
     public function testValidEquals(): void
@@ -86,8 +90,8 @@ class IsCountableTest extends TestCase
             'count' => 1,
         ]);
 
-        $this->assertTrue($sut->isValid(['Foo']));
-        $this->assertCount(0, $sut->getMessages());
+        self::assertTrue($sut->isValid(['Foo']));
+        self::assertCount(0, $sut->getMessages());
     }
 
     public function testValidMax(): void
@@ -96,8 +100,8 @@ class IsCountableTest extends TestCase
             'max' => 1,
         ]);
 
-        $this->assertTrue($sut->isValid(['Foo']));
-        $this->assertCount(0, $sut->getMessages());
+        self::assertTrue($sut->isValid(['Foo']));
+        self::assertCount(0, $sut->getMessages());
     }
 
     public function testValidMin(): void
@@ -106,8 +110,8 @@ class IsCountableTest extends TestCase
             'min' => 1,
         ]);
 
-        $this->assertTrue($sut->isValid(['Foo']));
-        $this->assertCount(0, $sut->getMessages());
+        self::assertTrue($sut->isValid(['Foo']));
+        self::assertCount(0, $sut->getMessages());
     }
 
     public function testInvalidNotEquals(): void
@@ -116,16 +120,16 @@ class IsCountableTest extends TestCase
             'count' => 2,
         ]);
 
-        $this->assertFalse($sut->isValid(['Foo']));
-        $this->assertCount(1, $sut->getMessages());
+        self::assertFalse($sut->isValid(['Foo']));
+        self::assertCount(1, $sut->getMessages());
     }
 
     public function testInvalidType(): void
     {
         $sut = new IsCountable();
 
-        $this->assertFalse($sut->isValid(new stdClass()));
-        $this->assertCount(1, $sut->getMessages());
+        self::assertFalse($sut->isValid(new stdClass()));
+        self::assertCount(1, $sut->getMessages());
     }
 
     public function testInvalidExceedsMax(): void
@@ -134,8 +138,8 @@ class IsCountableTest extends TestCase
             'max' => 1,
         ]);
 
-        $this->assertFalse($sut->isValid(['Foo', 'Bar']));
-        $this->assertCount(1, $sut->getMessages());
+        self::assertFalse($sut->isValid(['Foo', 'Bar']));
+        self::assertCount(1, $sut->getMessages());
     }
 
     public function testInvalidExceedsMin(): void
@@ -144,7 +148,7 @@ class IsCountableTest extends TestCase
             'min' => 2,
         ]);
 
-        $this->assertFalse($sut->isValid(['Foo']));
-        $this->assertCount(1, $sut->getMessages());
+        self::assertFalse($sut->isValid(['Foo']));
+        self::assertCount(1, $sut->getMessages());
     }
 }

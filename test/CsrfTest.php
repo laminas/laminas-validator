@@ -8,6 +8,7 @@ use Laminas\Session\Config\StandardConfig;
 use Laminas\Session\Container;
 use Laminas\Session\Storage\ArrayStorage;
 use Laminas\Validator\Csrf;
+use LaminasTest\Validator\TestAsset\SessionManager;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 
@@ -22,21 +23,22 @@ use function uniqid;
 /**
  * Laminas\Csrf
  *
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\Csrf
  */
-class CsrfTest extends TestCase
+final class CsrfTest extends TestCase
 {
-    /** @var Csrf */
-    public $validator;
+    private Csrf $validator;
 
-    /** @var TestAsset\SessionManager */
-    public $sessionManager;
+    private SessionManager $sessionManager;
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         // Setup session handling
         $_SESSION             = [];
-        $sessionManager       = new TestAsset\SessionManager(
+        $sessionManager       = new SessionManager(
             new StandardConfig(),
             new ArrayStorage()
         );
@@ -48,6 +50,8 @@ class CsrfTest extends TestCase
 
     protected function tearDown(): void
     {
+        parent::tearDown();
+
         if (! class_exists(Container::class)) {
             return;
         }
@@ -58,42 +62,46 @@ class CsrfTest extends TestCase
 
     public function testSaltHasDefaultValueIfNotSet(): void
     {
-        $this->assertEquals('salt', $this->validator->getSalt());
+        self::assertSame('salt', $this->validator->getSalt());
     }
 
     public function testSaltIsMutable(): void
     {
         $this->validator->setSalt('pepper');
-        $this->assertEquals('pepper', $this->validator->getSalt());
+
+        self::assertSame('pepper', $this->validator->getSalt());
     }
 
     public function testSessionContainerIsLazyLoadedIfNotSet(): void
     {
         $container = $this->validator->getSession();
-        $this->assertInstanceOf(Container::class, $container);
+
+        self::assertInstanceOf(Container::class, $container);
     }
 
     public function testSessionContainerIsMutable(): void
     {
         $container = new Container('foo', $this->sessionManager);
         $this->validator->setSession($container);
-        $this->assertSame($container, $this->validator->getSession());
+
+        self::assertSame($container, $this->validator->getSession());
     }
 
     public function testNameHasDefaultValue(): void
     {
-        $this->assertEquals('csrf', $this->validator->getName());
+        self::assertSame('csrf', $this->validator->getName());
     }
 
     public function testNameIsMutable(): void
     {
         $this->validator->setName('foo');
-        $this->assertEquals('foo', $this->validator->getName());
+
+        self::assertSame('foo', $this->validator->getName());
     }
 
     public function testTimeoutHasDefaultValue(): void
     {
-        $this->assertEquals(300, $this->validator->getTimeout());
+        self::assertSame(300, $this->validator->getTimeout());
     }
 
     /**
@@ -118,7 +126,8 @@ class CsrfTest extends TestCase
     public function testTimeoutIsMutable($timeout, ?int $expected): void
     {
         $this->validator->setTimeout($timeout);
-        $this->assertEquals($expected, $this->validator->getTimeout());
+
+        self::assertSame($expected, $this->validator->getTimeout());
     }
 
     public function testAllOptionsMayBeSetViaConstructor(): void
@@ -131,22 +140,29 @@ class CsrfTest extends TestCase
             'timeout' => 600,
         ];
         $validator = new Csrf($options);
+
         foreach ($options as $key => $value) {
             if ($key === 'session') {
-                $this->assertSame($container, $value);
+                self::assertSame($container, $value);
+
                 continue;
             }
+
             $method = 'get' . $key;
-            $this->assertEquals($value, $validator->$method());
+
+            self::assertSame($value, $validator->$method());
         }
     }
 
     public function testHashIsGeneratedOnFirstRetrieval(): void
     {
         $hash = $this->validator->getHash();
-        $this->assertNotEmpty($hash);
+
+        self::assertNotEmpty($hash);
+
         $test = $this->validator->getHash();
-        $this->assertEquals($hash, $test);
+
+        self::assertSame($hash, $test);
     }
 
     public function testSessionNameIsDerivedFromClassSaltAndName(): void
@@ -154,7 +170,8 @@ class CsrfTest extends TestCase
         $class    = get_class($this->validator);
         $class    = str_replace('\\', '_', $class);
         $expected = sprintf('%s_%s_%s', $class, $this->validator->getSalt(), $this->validator->getName());
-        $this->assertEquals($expected, $this->validator->getSessionName());
+
+        self::assertSame($expected, $this->validator->getSessionName());
     }
 
     public function testSessionNameRemainsValidForElementBelongingToFieldset(): void
@@ -164,26 +181,29 @@ class CsrfTest extends TestCase
         $class    = str_replace('\\', '_', $class);
         $name     = strtr($this->validator->getName(), ['[' => '_', ']' => '']);
         $expected = sprintf('%s_%s_%s', $class, $this->validator->getSalt(), $name);
-        $this->assertEquals($expected, $this->validator->getSessionName());
+
+        self::assertSame($expected, $this->validator->getSessionName());
     }
 
     public function testIsValidReturnsFalseWhenValueDoesNotMatchHash(): void
     {
-        $this->assertFalse($this->validator->isValid('foo'));
+        self::assertFalse($this->validator->isValid('foo'));
     }
 
     public function testValidationErrorMatchesNotSameConstantAndRelatedMessage(): void
     {
         $this->validator->isValid('foo');
         $messages = $this->validator->getMessages();
-        $this->assertArrayHasKey(Csrf::NOT_SAME, $messages);
-        $this->assertEquals('The form submitted did not originate from the expected site', $messages[Csrf::NOT_SAME]);
+
+        self::assertArrayHasKey(Csrf::NOT_SAME, $messages);
+        self::assertSame('The form submitted did not originate from the expected site', $messages[Csrf::NOT_SAME]);
     }
 
     public function testIsValidReturnsTrueWhenValueMatchesHash(): void
     {
         $hash = $this->validator->getHash();
-        $this->assertTrue($this->validator->isValid($hash));
+
+        self::assertTrue($this->validator->isValid($hash));
     }
 
     public function testSessionContainerContainsHashAfterHashHasBeenGenerated(): void
@@ -191,7 +211,8 @@ class CsrfTest extends TestCase
         $hash      = $this->validator->getHash();
         $container = $this->validator->getSession();
         $test      = $container->hash; // Doing this, as expiration hops are 1; have to grab on first access
-        $this->assertEquals($hash, $test);
+
+        self::assertSame($hash, $test);
     }
 
     public function testSettingNewSessionContainerSetsHashInNewContainer(): void
@@ -200,7 +221,8 @@ class CsrfTest extends TestCase
         $container = new Container('foo', $this->sessionManager);
         $this->validator->setSession($container);
         $test = $container->hash; // Doing this, as expiration hops are 1; have to grab on first access
-        $this->assertEquals($hash, $test);
+
+        self::assertSame($hash, $test);
     }
 
     public function testMultipleValidatorsSharingContainerGenerateDifferentHashes(): void
@@ -211,11 +233,12 @@ class CsrfTest extends TestCase
         $containerOne = $validatorOne->getSession();
         $containerTwo = $validatorOne->getSession();
 
-        $this->assertSame($containerOne, $containerTwo);
+        self::assertSame($containerOne, $containerTwo);
 
         $hashOne = $validatorOne->getHash();
         $hashTwo = $validatorTwo->getHash();
-        $this->assertNotEquals($hashOne, $hashTwo);
+
+        self::assertNotSame($hashOne, $hashTwo);
     }
 
     public function testCanValidateAnyHashWithinTheSameContainer(): void
@@ -226,10 +249,10 @@ class CsrfTest extends TestCase
         $hashOne = $validatorOne->getHash();
         $hashTwo = $validatorTwo->getHash();
 
-        $this->assertTrue($validatorOne->isValid($hashOne));
-        $this->assertTrue($validatorOne->isValid($hashTwo));
-        $this->assertTrue($validatorTwo->isValid($hashOne));
-        $this->assertTrue($validatorTwo->isValid($hashTwo));
+        self::assertTrue($validatorOne->isValid($hashOne));
+        self::assertTrue($validatorOne->isValid($hashTwo));
+        self::assertTrue($validatorTwo->isValid($hashOne));
+        self::assertTrue($validatorTwo->isValid($hashTwo));
     }
 
     public function testCannotValidateHashesOfOtherContainers(): void
@@ -240,29 +263,29 @@ class CsrfTest extends TestCase
         $containerOne = $validatorOne->getSession();
         $containerTwo = $validatorTwo->getSession();
 
-        $this->assertNotSame($containerOne, $containerTwo);
+        self::assertNotSame($containerOne, $containerTwo);
 
         $hashOne = $validatorOne->getHash();
         $hashTwo = $validatorTwo->getHash();
 
-        $this->assertTrue($validatorOne->isValid($hashOne));
-        $this->assertFalse($validatorOne->isValid($hashTwo));
-        $this->assertFalse($validatorTwo->isValid($hashOne));
-        $this->assertTrue($validatorTwo->isValid($hashTwo));
+        self::assertTrue($validatorOne->isValid($hashOne));
+        self::assertFalse($validatorOne->isValid($hashTwo));
+        self::assertFalse($validatorTwo->isValid($hashOne));
+        self::assertTrue($validatorTwo->isValid($hashTwo));
     }
 
     public function testCannotReValidateAnExpiredHash(): void
     {
         $hash = $this->validator->getHash();
 
-        $this->assertTrue($this->validator->isValid($hash));
+        self::assertTrue($this->validator->isValid($hash));
 
         $this->sessionManager->getStorage()->setMetadata(
             $this->validator->getSession()->getName(),
             ['EXPIRE' => $_SERVER['REQUEST_TIME'] - 18600]
         );
 
-        $this->assertFalse($this->validator->isValid($hash));
+        self::assertFalse($this->validator->isValid($hash));
     }
 
     public function testCanValidateHasheWithoutId(): void
@@ -273,12 +296,12 @@ class CsrfTest extends TestCase
         $hash      = $this->validator->getHash();
         $bareToken = $method->invoke($this->validator, $hash);
 
-        $this->assertTrue($this->validator->isValid($bareToken));
+        self::assertTrue($this->validator->isValid($bareToken));
     }
 
     public function testCanRejectArrayValues(): void
     {
-        $this->assertFalse($this->validator->isValid([]));
+        self::assertFalse($this->validator->isValid([]));
     }
 
     /**
@@ -305,6 +328,7 @@ class CsrfTest extends TestCase
     public function testWithFakeValues(string $value): void
     {
         $validator = new Csrf();
-        $this->assertFalse($validator->isValid($value));
+
+        self::assertFalse($validator->isValid($value));
     }
 }

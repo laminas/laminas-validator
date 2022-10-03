@@ -10,15 +10,17 @@ use PHPUnit\Framework\TestCase;
 use function array_keys;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\Hex
  */
-class HexTest extends TestCase
+final class HexTest extends TestCase
 {
-    /** @var Hex */
-    protected $validator;
+    private Hex $validator;
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->validator = new Hex();
     }
 
@@ -30,7 +32,7 @@ class HexTest extends TestCase
      */
     public function testBasic($input, bool $expected): void
     {
-        $this->assertSame($expected, $this->validator->isValid($input));
+        self::assertSame($expected, $this->validator->isValid($input));
     }
 
     /**
@@ -62,7 +64,7 @@ class HexTest extends TestCase
      */
     public function testGetMessages(): void
     {
-        $this->assertEquals([], $this->validator->getMessages());
+        self::assertSame([], $this->validator->getMessages());
     }
 
     /**
@@ -70,18 +72,18 @@ class HexTest extends TestCase
      */
     public function testNonStringValidation(): void
     {
-        $this->assertFalse($this->validator->isValid([1 => 1]));
+        self::assertFalse($this->validator->isValid([1 => 1]));
     }
 
     public function testEqualsMessageTemplates(): void
     {
-        $this->assertSame(
+        self::assertSame(
             [
                 Hex::INVALID,
                 Hex::NOT_HEX,
             ],
             array_keys($this->validator->getMessageTemplates())
         );
-        $this->assertEquals($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
+        self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 }

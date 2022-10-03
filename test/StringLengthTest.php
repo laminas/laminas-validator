@@ -12,18 +12,20 @@ use function array_keys;
 use function ini_set;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\StringLength
  */
-class StringLengthTest extends TestCase
+final class StringLengthTest extends TestCase
 {
-    /** @var StringLength */
-    protected $validator;
+    private StringLength $validator;
 
     /**
      * Creates a new StringLength object for each test method
      */
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->validator = new StringLength();
     }
 
@@ -37,7 +39,8 @@ class StringLengthTest extends TestCase
         ini_set('default_charset', 'UTF-8');
 
         $validator = new StringLength(...$options);
-        $this->assertSame($expected, $validator->isValid($input));
+
+        self::assertSame($expected, $validator->isValid($input));
     }
 
     /**
@@ -83,7 +86,7 @@ class StringLengthTest extends TestCase
      */
     public function testGetMessages(): void
     {
-        $this->assertEquals([], $this->validator->getMessages());
+        self::assertSame([], $this->validator->getMessages());
     }
 
     /**
@@ -91,7 +94,7 @@ class StringLengthTest extends TestCase
      */
     public function testGetMin(): void
     {
-        $this->assertEquals(0, $this->validator->getMin());
+        self::assertSame(0, $this->validator->getMin());
     }
 
     /**
@@ -99,7 +102,7 @@ class StringLengthTest extends TestCase
      */
     public function testGetMax(): void
     {
-        $this->assertEquals(null, $this->validator->getMax());
+        self::assertNull($this->validator->getMax());
     }
 
     /**
@@ -112,6 +115,7 @@ class StringLengthTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The minimum must be less than or equal to the maximum length, but');
+
         $this->validator->setMax($max)->setMin($min);
     }
 
@@ -125,6 +129,7 @@ class StringLengthTest extends TestCase
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The maximum must be greater than or equal to the minimum length, but ');
+
         $this->validator->setMin($min)->setMax($max);
     }
 
@@ -133,11 +138,13 @@ class StringLengthTest extends TestCase
         ini_set('default_charset', 'UTF-8');
 
         $validator = new StringLength(2, 2, 'UTF-8');
-        $this->assertEquals(true, $validator->isValid('ab'));
 
-        $this->assertEquals('UTF-8', $validator->getEncoding());
+        self::assertTrue($validator->isValid('ab'));
+        self::assertSame('UTF-8', $validator->getEncoding());
+
         $validator->setEncoding('ISO-8859-1');
-        $this->assertEquals('ISO-8859-1', $validator->getEncoding());
+
+        self::assertSame('ISO-8859-1', $validator->getEncoding());
     }
 
     /**
@@ -145,12 +152,12 @@ class StringLengthTest extends TestCase
      */
     public function testNonStringValidation(): void
     {
-        $this->assertFalse($this->validator->isValid([1 => 1]));
+        self::assertFalse($this->validator->isValid([1 => 1]));
     }
 
     public function testEqualsMessageTemplates(): void
     {
-        $this->assertSame(
+        self::assertSame(
             [
                 StringLength::INVALID,
                 StringLength::TOO_SHORT,
@@ -158,7 +165,7 @@ class StringLengthTest extends TestCase
             ],
             array_keys($this->validator->getMessageTemplates())
         );
-        $this->assertEquals($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
+        self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 
     public function testEqualsMessageVariables(): void
@@ -168,7 +175,8 @@ class StringLengthTest extends TestCase
             'max'    => ['options' => 'max'],
             'length' => ['options' => 'length'],
         ];
-        $this->assertSame($messageVariables, $this->validator->getOption('messageVariables'));
-        $this->assertEquals(array_keys($messageVariables), $this->validator->getMessageVariables());
+
+        self::assertSame($messageVariables, $this->validator->getOption('messageVariables'));
+        self::assertSame(array_keys($messageVariables), $this->validator->getMessageVariables());
     }
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Laminas\Validator\File;
+use Laminas\Validator\File\ImageSize;
 use PHPUnit\Framework\TestCase;
 
 use function array_merge;
@@ -16,9 +16,10 @@ use function is_array;
 use const UPLOAD_ERR_NO_FILE;
 
 /**
- * @group      Laminas_Validator
+ * @group Laminas_Validator
+ * @covers \Laminas\Validator\File\ImageSize
  */
-class ImageSizeTest extends TestCase
+final class ImageSizeTest extends TestCase
 {
     /**
      * @psalm-return array<array-key, array{
@@ -123,6 +124,7 @@ class ImageSizeTest extends TestCase
             ];
             $testData[] = [$data[0], $fileUpload, $data[2], $data[3]];
         }
+
         return $testData;
     }
 
@@ -135,14 +137,17 @@ class ImageSizeTest extends TestCase
      */
     public function testBasic(array $options, $isValidParam, bool $expected, $messageKeys): void
     {
-        $validator = new File\ImageSize($options);
-        $this->assertEquals($expected, $validator->isValid($isValidParam));
+        $validator = new ImageSize($options);
+
+        self::assertSame($expected, $validator->isValid($isValidParam));
+
         if (! $expected) {
             if (! is_array($messageKeys)) {
                 $messageKeys = [$messageKeys];
             }
+
             foreach ($messageKeys as $messageKey) {
-                $this->assertArrayHasKey($messageKey, $validator->getMessages());
+                self::assertArrayHasKey($messageKey, $validator->getMessages());
             }
         }
     }
@@ -157,17 +162,20 @@ class ImageSizeTest extends TestCase
     public function testLegacy(array $options, $isValidParam, bool $expected, $messageKeys): void
     {
         if (! is_array($isValidParam)) {
-            $this->markTestSkipped('An array is expected for legacy compat tests');
+            self::markTestSkipped('An array is expected for legacy compat tests');
         }
 
-        $validator = new File\ImageSize($options);
-        $this->assertEquals($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+        $validator = new ImageSize($options);
+
+        self::assertSame($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
+
         if (! $expected) {
             if (! is_array($messageKeys)) {
                 $messageKeys = [$messageKeys];
             }
+
             foreach ($messageKeys as $messageKey) {
-                $this->assertArrayHasKey($messageKey, $validator->getMessages());
+                self::assertArrayHasKey($messageKey, $validator->getMessages());
             }
         }
     }
@@ -177,12 +185,14 @@ class ImageSizeTest extends TestCase
      */
     public function testGetImageMin(): void
     {
-        $validator = new File\ImageSize(['minWidth' => 1, 'minHeight' => 10, 'maxWidth' => 100, 'maxHeight' => 1000]);
-        $this->assertEquals(['minWidth' => 1, 'minHeight' => 10], $validator->getImageMin());
+        $validator = new ImageSize(['minWidth' => 1, 'minHeight' => 10, 'maxWidth' => 100, 'maxHeight' => 1000]);
+
+        self::assertSame(['minWidth' => 1, 'minHeight' => 10], $validator->getImageMin());
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        new File\ImageSize(['minWidth' => 1000, 'minHeight' => 100, 'maxWidth' => 10, 'maxHeight' => 1]);
+
+        new ImageSize(['minWidth' => 1000, 'minHeight' => 100, 'maxWidth' => 10, 'maxHeight' => 1]);
     }
 
     /**
@@ -190,20 +200,23 @@ class ImageSizeTest extends TestCase
      */
     public function testSetImageMin(): void
     {
-        $validator = new File\ImageSize([
+        $validator = new ImageSize([
             'minWidth'  => 100,
             'minHeight' => 1000,
             'maxWidth'  => 10000,
             'maxHeight' => 100000,
         ]);
         $validator->setImageMin(['minWidth' => 10, 'minHeight' => 10]);
-        $this->assertEquals(['minWidth' => 10, 'minHeight' => 10], $validator->getImageMin());
+
+        self::assertSame(['minWidth' => 10, 'minHeight' => 10], $validator->getImageMin());
 
         $validator->setImageMin(['minWidth' => 9, 'minHeight' => 100]);
-        $this->assertEquals(['minWidth' => 9, 'minHeight' => 100], $validator->getImageMin());
+
+        self::assertSame(['minWidth' => 9, 'minHeight' => 100], $validator->getImageMin());
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('less than or equal');
+
         $validator->setImageMin(['minWidth' => 20000, 'minHeight' => 20000]);
     }
 
@@ -212,17 +225,19 @@ class ImageSizeTest extends TestCase
      */
     public function testGetImageMax(): void
     {
-        $validator = new File\ImageSize([
+        $validator = new ImageSize([
             'minWidth'  => 10,
             'minHeight' => 100,
             'maxWidth'  => 1000,
             'maxHeight' => 10000,
         ]);
-        $this->assertEquals(['maxWidth' => 1000, 'maxHeight' => 10000], $validator->getImageMax());
+
+        self::assertSame(['maxWidth' => 1000, 'maxHeight' => 10000], $validator->getImageMax());
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
-        new File\ImageSize([
+
+        new ImageSize([
             'minWidth'  => 10000,
             'minHeight' => 1000,
             'maxWidth'  => 100,
@@ -230,31 +245,39 @@ class ImageSizeTest extends TestCase
         ]);
     }
 
+    /** @psalm-return array<array{array<string, int>, array<string, int>}> */
+    public function imageMaxProvider(): array
+    {
+        return [
+            [['maxWidth' => 100, 'maxHeight' => 100], ['maxWidth' => 100, 'maxHeight' => 100]],
+            [['maxWidth' => 110, 'maxHeight' => 1000], ['maxWidth' => 110, 'maxHeight' => 1000]],
+            [['maxHeight' => 1100], ['maxWidth' => 1000, 'maxHeight' => 1100]],
+            [['maxWidth' => 120], ['maxWidth' => 120, 'maxHeight' => 10000]],
+        ];
+    }
+
     /**
      * Ensures that setImageMax() returns expected value
+     *
+     * @dataProvider imageMaxProvider
+     * @param array<string, int> $imageMax
+     * @param array<string, int> $expected
      */
-    public function testSetImageMax(): void
+    public function testSetImageMax(array $imageMax, array $expected): void
     {
-        $validator = new File\ImageSize([
+        $validator = new ImageSize([
             'minWidth'  => 10,
             'minHeight' => 100,
             'maxWidth'  => 1000,
             'maxHeight' => 10000,
         ]);
-        $validator->setImageMax(['maxWidth' => 100, 'maxHeight' => 100]);
-        $this->assertEquals(['maxWidth' => 100, 'maxHeight' => 100], $validator->getImageMax());
+        $validator->setImageMax($imageMax);
 
-        $validator->setImageMax(['maxWidth' => 110, 'maxHeight' => 1000]);
-        $this->assertEquals(['maxWidth' => 110, 'maxHeight' => 1000], $validator->getImageMax());
-
-        $validator->setImageMax(['maxHeight' => 1100]);
-        $this->assertEquals(['maxWidth' => 110, 'maxHeight' => 1100], $validator->getImageMax());
-
-        $validator->setImageMax(['maxWidth' => 120]);
-        $this->assertEquals(['maxWidth' => 120, 'maxHeight' => 1100], $validator->getImageMax());
+        self::assertSame($expected, $validator->getImageMax());
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('greater than or equal');
+
         $validator->setImageMax(['maxWidth' => 10000, 'maxHeight' => 1]);
     }
 
@@ -263,8 +286,9 @@ class ImageSizeTest extends TestCase
      */
     public function testGetImageWidth(): void
     {
-        $validator = new File\ImageSize(['minWidth' => 1, 'minHeight' => 10, 'maxWidth' => 100, 'maxHeight' => 1000]);
-        $this->assertEquals(['minWidth' => 1, 'maxWidth' => 100], $validator->getImageWidth());
+        $validator = new ImageSize(['minWidth' => 1, 'minHeight' => 10, 'maxWidth' => 100, 'maxHeight' => 1000]);
+
+        self::assertSame(['minWidth' => 1, 'maxWidth' => 100], $validator->getImageWidth());
     }
 
     /**
@@ -272,17 +296,19 @@ class ImageSizeTest extends TestCase
      */
     public function testSetImageWidth(): void
     {
-        $validator = new File\ImageSize([
+        $validator = new ImageSize([
             'minWidth'  => 100,
             'minHeight' => 1000,
             'maxWidth'  => 10000,
             'maxHeight' => 100000,
         ]);
         $validator->setImageWidth(['minWidth' => 2000, 'maxWidth' => 2200]);
-        $this->assertEquals(['minWidth' => 2000, 'maxWidth' => 2200], $validator->getImageWidth());
+
+        self::assertSame(['minWidth' => 2000, 'maxWidth' => 2200], $validator->getImageWidth());
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('less than or equal');
+
         $validator->setImageWidth(['minWidth' => 20000, 'maxWidth' => 200]);
     }
 
@@ -291,8 +317,9 @@ class ImageSizeTest extends TestCase
      */
     public function testGetImageHeight(): void
     {
-        $validator = new File\ImageSize(['minWidth' => 1, 'minHeight' => 10, 'maxWidth' => 100, 'maxHeight' => 1000]);
-        $this->assertEquals(['minHeight' => 10, 'maxHeight' => 1000], $validator->getImageHeight());
+        $validator = new ImageSize(['minWidth' => 1, 'minHeight' => 10, 'maxWidth' => 100, 'maxHeight' => 1000]);
+
+        self::assertSame(['minHeight' => 10, 'maxHeight' => 1000], $validator->getImageHeight());
     }
 
     /**
@@ -300,17 +327,19 @@ class ImageSizeTest extends TestCase
      */
     public function testSetImageHeight(): void
     {
-        $validator = new File\ImageSize([
+        $validator = new ImageSize([
             'minWidth'  => 100,
             'minHeight' => 1000,
             'maxWidth'  => 10000,
             'maxHeight' => 100000,
         ]);
         $validator->setImageHeight(['minHeight' => 2000, 'maxHeight' => 2200]);
-        $this->assertEquals(['minHeight' => 2000, 'maxHeight' => 2200], $validator->getImageHeight());
+
+        self::assertSame(['minHeight' => 2000, 'maxHeight' => 2200], $validator->getImageHeight());
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('less than or equal');
+
         $validator->setImageHeight(['minHeight' => 20000, 'maxHeight' => 200]);
     }
 
@@ -319,23 +348,24 @@ class ImageSizeTest extends TestCase
      */
     public function testLaminas11258(): void
     {
-        $validator = new File\ImageSize([
+        $validator = new ImageSize([
             'minWidth'  => 100,
             'minHeight' => 1000,
             'maxWidth'  => 10000,
             'maxHeight' => 100000,
         ]);
-        $this->assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
-        $this->assertArrayHasKey('fileImageSizeNotReadable', $validator->getMessages());
-        $this->assertStringContainsString('does not exist', current($validator->getMessages()));
+
+        self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
+        self::assertArrayHasKey('fileImageSizeNotReadable', $validator->getMessages());
+        self::assertStringContainsString('does not exist', current($validator->getMessages()));
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
-        $validator = new File\ImageSize();
+        $validator = new ImageSize();
 
-        $this->assertFalse($validator->isValid(''));
-        $this->assertArrayHasKey(File\ImageSize::NOT_READABLE, $validator->getMessages());
+        self::assertFalse($validator->isValid(''));
+        self::assertArrayHasKey(ImageSize::NOT_READABLE, $validator->getMessages());
 
         $filesArray = [
             'name'     => '',
@@ -345,8 +375,8 @@ class ImageSizeTest extends TestCase
             'type'     => '',
         ];
 
-        $this->assertFalse($validator->isValid($filesArray));
-        $this->assertArrayHasKey(File\ImageSize::NOT_READABLE, $validator->getMessages());
+        self::assertFalse($validator->isValid($filesArray));
+        self::assertArrayHasKey(ImageSize::NOT_READABLE, $validator->getMessages());
     }
 
     public function testConstructorCanAcceptAllOptionsAsDiscreteArguments(): void
@@ -355,17 +385,17 @@ class ImageSizeTest extends TestCase
         $minHeight = 10;
         $maxWidth  = 200;
         $maxHeight = 100;
-        $validator = new File\ImageSize($minWidth, $minHeight, $maxWidth, $maxHeight);
+        $validator = new ImageSize($minWidth, $minHeight, $maxWidth, $maxHeight);
 
-        $this->assertSame($minWidth, $validator->getMinWidth());
-        $this->assertSame($minHeight, $validator->getMinHeight());
-        $this->assertSame($maxWidth, $validator->getMaxWidth());
-        $this->assertSame($maxHeight, $validator->getMaxHeight());
+        self::assertSame($minWidth, $validator->getMinWidth());
+        self::assertSame($minHeight, $validator->getMinHeight());
+        self::assertSame($maxWidth, $validator->getMaxWidth());
+        self::assertSame($maxHeight, $validator->getMaxHeight());
     }
 
     public function testIsValidRaisesExceptionForArrayNotInFilesFormat(): void
     {
-        $validator = new File\ImageSize([
+        $validator = new ImageSize([
             'minWidth'  => 100,
             'minHeight' => 1000,
             'maxWidth'  => 10000,
