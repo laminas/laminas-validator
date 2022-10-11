@@ -571,6 +571,7 @@ class ValidatorPluginManager extends AbstractPluginManager
      * Validate plugin instance
      *
      * {@inheritDoc}
+     *
      * @param mixed $instance
      * @psalm-assert InstanceType $instance
      */
