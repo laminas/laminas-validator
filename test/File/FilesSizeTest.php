@@ -11,11 +11,7 @@ use PHPUnit\Framework\TestCase;
 use function basename;
 use function current;
 use function filesize;
-use function restore_error_handler;
-use function set_error_handler;
-use function strstr;
 
-use const E_USER_NOTICE;
 use const UPLOAD_ERR_NO_FILE;
 
 /**
@@ -171,13 +167,6 @@ final class FilesSizeTest extends TestCase
         self::assertSame('976.56kB', $validator->getMax());
     }
 
-    public function testConstructorShouldRaiseErrorWhenPassedMultipleOptions(): void
-    {
-        set_error_handler([$this, 'errorHandler'], E_USER_NOTICE);
-        new FilesSize(1000, 10000);
-        restore_error_handler();
-    }
-
     /**
      * Ensures that the validator returns size infos
      */
@@ -208,13 +197,6 @@ final class FilesSizeTest extends TestCase
 
         self::assertStringContainsString('9999', current($messages));
         self::assertStringContainsString('1588', current($messages));
-    }
-
-    public function errorHandler(int $errno, string $errstr): void
-    {
-        if (strstr($errstr, 'deprecated')) {
-            $this->multipleOptionsDetected = true;
-        }
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
