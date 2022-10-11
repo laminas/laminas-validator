@@ -9,7 +9,6 @@ use function array_key_exists;
 use function array_keys;
 use function array_unique;
 use function current;
-use function get_class;
 use function implode;
 use function is_array;
 use function is_object;
@@ -330,7 +329,7 @@ abstract class AbstractValidator implements
         if (is_object($value)) {
             $value = method_exists($value, '__toString')
                 ? (string) $value
-                : get_class($value) . ' object';
+                : $value::class . ' object';
         } elseif (is_array($value)) {
             $value = var_export($value, true);
         } else {

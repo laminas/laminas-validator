@@ -18,7 +18,6 @@ use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
 use function assert;
-use function get_class;
 use function sprintf;
 
 /**
@@ -95,7 +94,7 @@ final class ValidatorPluginManagerTest extends TestCase
         } catch (Exception $e) {
             self::fail(sprintf(
                 'Unexpected exception of type "%s" when testing for invalid validator types',
-                get_class($e)
+                $e::class
             ));
         }
     }
@@ -111,7 +110,7 @@ final class ValidatorPluginManagerTest extends TestCase
         } catch (Exception $e) {
             self::fail(sprintf(
                 'Unexpected exception of type "%s" when testing for invalid validator types',
-                get_class($e)
+                $e::class
             ));
         }
     }

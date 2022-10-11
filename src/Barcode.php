@@ -6,7 +6,6 @@ use Traversable;
 
 use function array_key_exists;
 use function class_exists;
-use function get_class;
 use function gettype;
 use function is_array;
 use function is_object;
@@ -114,7 +113,7 @@ class Barcode extends AbstractValidator
             throw new Exception\InvalidArgumentException(
                 sprintf(
                     'Adapter %s does not implement Laminas\\Validator\\Barcode\\AdapterInterface',
-                    is_object($adapter) ? get_class($adapter) : gettype($adapter)
+                    is_object($adapter) ? $adapter::class : gettype($adapter)
                 )
             );
         }
