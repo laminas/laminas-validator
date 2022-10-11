@@ -10,7 +10,6 @@ use function array_unique;
 use function array_values;
 use function func_get_arg;
 use function func_num_args;
-use function get_class;
 use function gettype;
 use function hash_algos;
 use function hash_file;
@@ -129,7 +128,7 @@ class Hash extends AbstractValidator
             if (! is_string($value)) {
                 throw new Exception\InvalidArgumentException(sprintf(
                     'Hash must be a string, %s received',
-                    is_object($value) ? get_class($value) : gettype($value)
+                    is_object($value) ? $value::class : gettype($value)
                 ));
             }
             $this->options['hash'][$value] = $algorithm;

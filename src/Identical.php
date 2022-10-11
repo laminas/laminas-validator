@@ -7,7 +7,6 @@ use Laminas\Stdlib\ArrayUtils;
 use Traversable;
 
 use function array_key_exists;
-use function get_class;
 use function gettype;
 use function is_array;
 use function is_int;
@@ -173,7 +172,7 @@ class Identical extends AbstractValidator
                 throw new Exception\InvalidArgumentException(sprintf(
                     'Context passed to %s must be array, ArrayObject or null; received "%s"',
                     __METHOD__,
-                    is_object($context) ? get_class($context) : gettype($context)
+                    is_object($context) ? $context::class : gettype($context)
                 ));
             }
 
