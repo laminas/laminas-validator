@@ -778,7 +778,8 @@
       <code>(bool) $domain</code>
       <code>(bool) $mx</code>
     </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType occurrences="1">
+    <RedundantConditionGivenDocblockType occurrences="2">
+      <code>array_combine($mxHosts, $weight)</code>
       <code>is_string($value)</code>
     </RedundantConditionGivenDocblockType>
     <TypeDoesNotContainType occurrences="1">
@@ -1896,16 +1897,13 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Timezone.php">
-    <DocblockTypeContradiction occurrences="2">
-      <code>is_object($type)</code>
+    <DocblockTypeContradiction occurrences="1">
       <code>is_string($type)</code>
     </DocblockTypeContradiction>
     <InvalidOperand occurrences="1">
       <code>array_search($value, $this-&gt;constants)</code>
     </InvalidOperand>
-    <MixedArgument occurrences="2">
-      <code>$type</code>
-    </MixedArgument>
+    <MixedArgument occurrences="1"/>
     <MixedAssignment occurrences="3">
       <code>$opts['type']</code>
       <code>$type</code>
@@ -1917,11 +1915,9 @@
       <code>$type</code>
       <code>$type</code>
     </MixedOperand>
-    <PossiblyFalseArgument occurrences="4">
+    <PossiblyFalseArgument occurrences="2">
       <code>$abbrs</code>
       <code>$abbrs</code>
-      <code>$locations</code>
-      <code>$locations</code>
     </PossiblyFalseArgument>
     <PossiblyFalseOperand occurrences="1">
       <code>array_search($value, $this-&gt;constants)</code>
@@ -1937,9 +1933,8 @@
     <PossiblyUndefinedVariable occurrences="1">
       <code>$opts</code>
     </PossiblyUndefinedVariable>
-    <RedundantConditionGivenDocblockType occurrences="2">
+    <RedundantConditionGivenDocblockType occurrences="1">
       <code>gettype($type)</code>
-      <code>is_object($type) ? get_class($type) : gettype($type)</code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Uri.php">
@@ -2271,9 +2266,6 @@
     <MoreSpecificReturnType occurrences="1"/>
   </file>
   <file src="test/File/FilesSizeTest.php">
-    <InvalidArgument occurrences="1">
-      <code>[$this, 'errorHandler']</code>
-    </InvalidArgument>
     <InvalidDocblock occurrences="1">
       <code>public function basicDataProvider(): array</code>
     </InvalidDocblock>
