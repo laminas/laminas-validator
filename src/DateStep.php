@@ -204,7 +204,7 @@ class DateStep extends Date
         // Invalid dates can show up as warnings (ie. "2007-02-99")
         // and still return a DateTime object.
         $errors = DateTime::getLastErrors();
-        if ($errors['warning_count'] > 0) {
+        if (is_array($errors) && $errors['warning_count'] > 0) {
             if ($addErrors) {
                 $this->error(self::FALSEFORMAT);
             }
