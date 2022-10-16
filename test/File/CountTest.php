@@ -248,7 +248,7 @@ class CountTest extends TestCase
 
         $this->assertSame(true, $validator->isValid($upload));
         $this->assertSame(true, $validator->isValid($upload, []));
-        
+
         $validator = new File\Count(['min' => 2]);
 
         $this->assertSame(false, $validator->isValid($upload));
