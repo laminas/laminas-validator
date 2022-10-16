@@ -7,6 +7,7 @@ namespace LaminasTest\Validator\File;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File\Count;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\UploadedFileInterface;
 use ReflectionClass;
 
 /**
@@ -240,5 +241,24 @@ final class CountTest extends TestCase
 
         self::assertSame($min, $validator->getMin());
         self::assertSame($max, $validator->getMax());
+    }
+
+    public function testPsr7FileTypes(): void
+    {
+        $testFile = __DIR__ . '/_files/testsize.mo';
+
+        $upload = $this->createMock(UploadedFileInterface::class);
+        $upload->method('getClientFilename')->willReturn(basename($testFile));
+
+        $validValidator = new Count(['min' => 1]);
+
+        $this->assertSame(true, $validValidator->isValid($upload));
+        $this->assertSame(true, $validValidator->isValid($upload, []));
+
+        $invalidMinValidator = new Count(['min' => 2]);
+        $invalidMaxValidator = new Count(['max' => 0]);
+
+        $this->assertSame(false, $invalidMinValidator->isValid($upload));
+        $this->assertSame(false, $invalidMaxValidator->isValid($upload));
     }
 }
