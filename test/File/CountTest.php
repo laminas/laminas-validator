@@ -10,6 +10,8 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\UploadedFileInterface;
 use ReflectionClass;
 
+use function basename;
+
 /**
  * @group Laminas_Validator
  * @covers \Laminas\Validator\File\Count
