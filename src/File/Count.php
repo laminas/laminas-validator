@@ -13,6 +13,7 @@ use function count;
 use function dirname;
 use function func_get_args;
 use function func_num_args;
+use function interface_exists;
 use function is_array;
 use function is_numeric;
 use function is_string;
@@ -213,18 +214,16 @@ class Count extends AbstractValidator
      */
     public function isValid($value, $file = null)
     {
-        $isUploadedFileInterface = $value instanceof UploadedFileInterface;
-
-        if ($isUploadedFileInterface) {
+        if ($this->isUploadedFilterInterface($value)) {
             $this->addFile($value);
-        }
+        } elseif ($file !== null) {
+            if (! array_key_exists('destination', $file)) {
+                $file['destination'] = dirname($value);
+            }
 
-        if (! $isUploadedFileInterface && ($file !== null) && ! array_key_exists('destination', $file)) {
-            $file['destination'] = dirname($value);
-        }
-
-        if (! $isUploadedFileInterface && ($file !== null) && array_key_exists('tmp_name', $file)) {
-            $value = $file['destination'] . DIRECTORY_SEPARATOR . $file['name'];
+            if (array_key_exists('tmp_name', $file)) {
+                $value = $file['destination'] . DIRECTORY_SEPARATOR . $file['name'];
+            }
         }
 
         if (($file === null) || ! empty($file['tmp_name'])) {
@@ -264,6 +263,22 @@ class Count extends AbstractValidator
         }
 
         $this->error($errorType);
+        return false;
+    }
+
+    /**
+     * Checks if the type of uploaded file is UploadedFileInterface.
+     * (backward compatible)
+     *
+     * @param  string|array|UploadedFileInterface $value Filenames to check for count
+     * @return bool
+     */
+    private function isUploadedFilterInterface($value)
+    {
+        if (interface_exists(UploadedFileInterface::class) && $value instanceof UploadedFileInterface) {
+            return true;
+        }
+
         return false;
     }
 }

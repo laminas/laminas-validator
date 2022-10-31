@@ -254,13 +254,13 @@ final class CountTest extends TestCase
 
         $validValidator = new Count(['min' => 1]);
 
-        $this->assertSame(true, $validValidator->isValid($upload));
-        $this->assertSame(true, $validValidator->isValid($upload, []));
+        $this->assertTrue($validValidator->isValid($upload));
+        $this->assertTrue($validValidator->isValid($upload, []));
 
         $invalidMinValidator = new Count(['min' => 2]);
         $invalidMaxValidator = new Count(['max' => 0]);
 
-        $this->assertSame(false, $invalidMinValidator->isValid($upload));
-        $this->assertSame(false, $invalidMaxValidator->isValid($upload));
+        $this->assertFalse($invalidMinValidator->isValid($upload));
+        $this->assertFalse($invalidMaxValidator->isValid($upload));
     }
 }
