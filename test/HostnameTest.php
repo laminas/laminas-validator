@@ -60,6 +60,31 @@ final class HostnameTest extends TestCase
         self::assertSame($expected, $validator->isValid($hostname));
     }
 
+    /**
+     * Test for multiple Hostname validation
+     */
+    public function testMultipleHostname(): void
+    {
+        $localValidator = new Hostname(Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL);
+        $ipValidator = new Hostname(Hostname::ALLOW_DNS | Hostname::ALLOW_IP);
+
+        $validDomains = [
+            'domain.com',
+            'localhost',
+        ];
+
+        $invalidDomains = [
+            'localhost',
+            'local.localhost',
+        ];
+
+        $mixedDomains = array_merge($validDomains, $invalidDomains);
+
+        self::assertTrue($localValidator->isValid($validDomains));
+        self::assertFalse($ipValidator->isValid($invalidDomains));
+        self::assertFalse($ipValidator->isValid($mixedDomains));
+    }
+
     /** @psalm-return array<array-key, array{0: int, 1: bool, 2: string}> */
     public function basicDataProvider(): array
     {

@@ -55,7 +55,7 @@ class Hostname extends AbstractValidator
     /** @var array */
     protected $messageTemplates = [
         self::CANNOT_DECODE_PUNYCODE  => "The input appears to be a DNS hostname but the given punycode notation cannot be decoded",
-        self::INVALID                 => "Invalid type given. String expected",
+        self::INVALID                 => "Invalid type given. String or Array expected",
         self::INVALID_DASH            => "The input appears to be a DNS hostname but contains a dash in an invalid position",
         self::INVALID_HOSTNAME        => "The input does not match the expected structure for a DNS hostname",
         self::INVALID_HOSTNAME_SCHEMA => "The input appears to be a DNS hostname but cannot match against hostname schema for TLD '%tld%'",
@@ -1955,10 +1955,29 @@ class Hostname extends AbstractValidator
      *
      * Returns true if and only if the $value is a valid hostname with respect to the current allow option
      *
-     * @param  string $value
+     * @param  string|array $value
      * @return bool
      */
     public function isValid($value)
+    {
+        if (is_array($value)) {
+            $isValid = true;
+
+            foreach ($value as $href) {
+                $valid = $this->checkIsValid($href);
+
+                if ($isValid == true) {
+                    $isValid = $valid;
+                }
+            }
+
+            return $isValid;
+        }
+
+        return $this->checkIsValid($value);
+    }
+
+    private function checkIsValid($value)
     {
         if (! is_string($value)) {
             $this->error(self::INVALID);

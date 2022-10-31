@@ -23,7 +23,7 @@ class Uri extends AbstractValidator
 
     /** @var array<string, string> */
     protected $messageTemplates = [
-        self::INVALID => 'Invalid type given. String expected',
+        self::INVALID => 'Invalid type given. String or Array expected',
         self::NOT_URI => 'The input does not appear to be a valid Uri',
     ];
 
@@ -152,10 +152,29 @@ class Uri extends AbstractValidator
     /**
      * Returns true if and only if $value validates as a Uri
      *
-     * @param  string $value
+     * @param  string|array $value
      * @return bool
      */
     public function isValid($value)
+    {
+        if (is_array($value)) {
+            $isValid = true;
+
+            foreach ($value as $href) {
+                $valid = $this->checkIsValid($href);
+
+                if ($isValid == true) {
+                    $isValid = $valid;
+                }
+            }
+
+            return $isValid;
+        }
+
+        return $this->checkIsValid($value);
+    }
+
+    private function checkIsValid($value)
     {
         if (! is_string($value)) {
             $this->error(self::INVALID);

@@ -240,7 +240,6 @@ final class UriTest extends TestCase
             'int'        => [1],
             'zero-float' => [0.0],
             'float'      => [1.1],
-            'array'      => [['http://example.com']],
             'object'     => [(object) ['uri' => 'http://example.com']],
         ];
     }
@@ -252,5 +251,27 @@ final class UriTest extends TestCase
     public function testIsValidReturnsFalseWhenProvidedUnsupportedType($value): void
     {
         self::assertFalse($this->validator->isValid($value));
+    }
+
+    /**
+     * Test for multiple Uri validation
+     */
+    public function testMultipleValidUri(): void
+    {
+        $absoluteValidator = new Uri([
+            'allowAbsolute' => true,
+        ]);
+
+        $relativeValidator = new Uri([
+            'allowAbsolute' => false,
+        ]);
+
+        $domains = [
+            'http://example.com',
+            'http://example2.com',
+        ];
+
+        self::assertTrue($absoluteValidator->isValid($domains));
+        self::assertFalse($relativeValidator->isValid($domains));
     }
 }
