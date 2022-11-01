@@ -13,7 +13,6 @@ use function count;
 use function dirname;
 use function func_get_args;
 use function func_num_args;
-use function interface_exists;
 use function is_array;
 use function is_numeric;
 use function is_string;
@@ -268,14 +267,13 @@ class Count extends AbstractValidator
 
     /**
      * Checks if the type of uploaded file is UploadedFileInterface.
-     * (backward compatible)
      *
      * @param  string|array|UploadedFileInterface $value Filenames to check for count
      * @return bool
      */
     private function isUploadedFilterInterface($value)
     {
-        if (interface_exists(UploadedFileInterface::class) && $value instanceof UploadedFileInterface) {
+        if ($value instanceof UploadedFileInterface) {
             return true;
         }
 
