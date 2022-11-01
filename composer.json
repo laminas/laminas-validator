@@ -33,7 +33,8 @@
     "require": {
         "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
         "laminas/laminas-servicemanager": "^3.12.0",
-        "laminas/laminas-stdlib": "^3.13"
+        "laminas/laminas-stdlib": "^3.13",
+        "psr/http-message": "^1.0.1"
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "^2.4.0",
@@ -47,7 +48,6 @@
         "psalm/plugin-phpunit": "^0.17.0",
         "psr/http-client": "^1.0.1",
         "psr/http-factory": "^1.0.1",
-        "psr/http-message": "^1.0.1",
         "vimeo/psalm": "^4.28"
     },
     "suggest": {
