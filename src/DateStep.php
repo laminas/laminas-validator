@@ -16,7 +16,6 @@ use function array_combine;
 use function array_count_values;
 use function array_map;
 use function array_shift;
-use function assert;
 use function ceil;
 use function date_default_timezone_get;
 use function explode;
@@ -409,7 +408,6 @@ class DateStep extends Date
             } else {
                 $baseDate = $baseDate->sub($minimumInterval);
             }
-            assert($baseDate !== false);
         }
 
         while (
@@ -421,8 +419,6 @@ class DateStep extends Date
             } else {
                 $baseDate = $baseDate->sub($step);
             }
-
-            assert($baseDate !== false);
 
             // phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedEqualOperator
             if ($baseDate == $valueDate) {
