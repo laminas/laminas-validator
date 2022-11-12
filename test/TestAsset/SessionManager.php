@@ -13,11 +13,10 @@ final class SessionManager extends AbstractManager
     /** @var bool */
     public $started = false;
 
-    /** @var string */
-    protected $configDefaultClass = 'Laminas\Session\Configuration\StandardConfiguration';
+    private string $configDefaultClass = 'Laminas\Session\Configuration\StandardConfiguration';
 
     /** @var string */
-    protected $storageDefaultClass = ArrayStorage::class;
+    private $storageDefaultClass = ArrayStorage::class;
 
     /**
      * @return void

@@ -33,7 +33,7 @@ final class AbstractValidatorTest extends TestCase
     /**
      * Whether an error occurred
      */
-    protected bool $errorOccurred = false;
+    private bool $errorOccurred = false;
 
     protected function setUp(): void
     {

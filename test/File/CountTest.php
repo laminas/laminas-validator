@@ -157,9 +157,8 @@ final class CountTest extends TestCase
 
     /**
      * @dataProvider invalidMinMaxValues
-     * @param mixed $max
      */
-    public function testSettingMaxWithInvalidArgumentRaisesException($max): void
+    public function testSettingMaxWithInvalidArgumentRaisesException(mixed $max): void
     {
         $validator = new Count(['min' => 1000, 'max' => 10000]);
 
@@ -182,9 +181,8 @@ final class CountTest extends TestCase
 
     /**
      * @dataProvider invalidMinMaxValues
-     * @param mixed $min
      */
-    public function testSettingMinWithInvalidArgumentRaisesException($min): void
+    public function testSettingMinWithInvalidArgumentRaisesException(mixed $min): void
     {
         $validator = new Count(['min' => 1000, 'max' => 10000]);
 

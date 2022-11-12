@@ -199,10 +199,9 @@ abstract class AbstractValidator implements
     /**
      * Invoke as command
      *
-     * @param  mixed $value
      * @return bool
      */
-    public function __invoke($value)
+    public function __invoke(mixed $value)
     {
         return $this->isValid($value);
     }
@@ -400,10 +399,9 @@ abstract class AbstractValidator implements
     /**
      * Sets the value to be validated and clears the messages and errors arrays
      *
-     * @param  mixed $value
      * @return void
      */
-    protected function setValue($value)
+    protected function setValue(mixed $value)
     {
         $this->value                       = $value;
         $this->abstractOptions['messages'] = [];

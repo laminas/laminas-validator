@@ -578,7 +578,7 @@ final class EmailAddressTest extends TestCase
             self::assertSame(Hostname::ALLOW_ALL, $options['allow']);
             self::assertTrue($options['useMxCheck']);
             set_error_handler($handler);
-        } catch (InvalidArgumentException $e) {
+        } catch (InvalidArgumentException) {
             self::markTestSkipped('MX not available on this system');
         }
     }

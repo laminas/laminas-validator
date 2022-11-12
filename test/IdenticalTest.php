@@ -278,9 +278,8 @@ final class IdenticalTest extends TestCase
 
     /**
      * @dataProvider invalidContextProvider
-     * @param mixed $context
      */
-    public function testIsValidThrowsExceptionOnInvalidContext($context): void
+    public function testIsValidThrowsExceptionOnInvalidContext(mixed $context): void
     {
         $this->expectException(InvalidArgumentException::class);
 

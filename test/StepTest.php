@@ -46,9 +46,8 @@ final class StepTest extends TestCase
      * Ensures that the validator follows expected behavior
      *
      * @dataProvider valuesToValidate
-     * @param mixed $value
      */
-    public function testBasic($value, bool $expected): void
+    public function testBasic(mixed $value, bool $expected): void
     {
         // By default, baseValue == 0 and step == 1
         self::assertSame(
@@ -76,9 +75,8 @@ final class StepTest extends TestCase
 
     /**
      * @dataProvider decimalValues
-     * @param mixed $value
      */
-    public function testDecimalBaseValue($value, bool $expected): void
+    public function testDecimalBaseValue(mixed $value, bool $expected): void
     {
         $validator = new Step([
             'baseValue' => 0.1,
@@ -116,9 +114,8 @@ final class StepTest extends TestCase
 
     /**
      * @dataProvider decimalStepValues
-     * @param mixed $value
      */
-    public function testDecimalStep($value, bool $expected): void
+    public function testDecimalStep(mixed $value, bool $expected): void
     {
         $validator = new Step([
             'baseValue' => 0,

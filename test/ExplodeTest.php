@@ -69,10 +69,9 @@ final class ExplodeTest extends TestCase
 
     /**
      * @dataProvider getExpectedData
-     * @param mixed $value
      */
     public function testExpectedBehavior(
-        $value,
+        mixed $value,
         ?string $delimiter,
         bool $breakOnFirst,
         int $numIsValidCalls,
@@ -197,7 +196,7 @@ final class ExplodeTest extends TestCase
         $context     = 'context';
         $contextSame = false;
         $validator   = new Explode([
-            'validator'           => new Callback(static function ($v, $c) use ($context, &$contextSame) {
+            'validator'           => new Callback(static function ($v, $c) use ($context, &$contextSame): bool {
                 $contextSame = $context === $c;
                 return true;
             }),
