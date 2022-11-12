@@ -247,9 +247,8 @@ final class UriTest extends TestCase
 
     /**
      * @dataProvider invalidValueTypes
-     * @param mixed $value
      */
-    public function testIsValidReturnsFalseWhenProvidedUnsupportedType($value): void
+    public function testIsValidReturnsFalseWhenProvidedUnsupportedType(mixed $value): void
     {
         self::assertFalse($this->validator->isValid($value));
     }

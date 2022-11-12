@@ -210,9 +210,8 @@ final class WordCountTest extends TestCase
 
     /**
      * @dataProvider invalidMinMaxValues
-     * @param mixed $value
      */
-    public function testSettingMinValueRaisesExceptionForInvalidType($value): void
+    public function testSettingMinValueRaisesExceptionForInvalidType(mixed $value): void
     {
         $validator = new WordCount(['min' => 1000, 'max' => 10000]);
 
@@ -235,9 +234,8 @@ final class WordCountTest extends TestCase
 
     /**
      * @dataProvider invalidMinMaxValues
-     * @param mixed $value
      */
-    public function testSettingMaxValueRaisesExceptionForInvalidType($value): void
+    public function testSettingMaxValueRaisesExceptionForInvalidType(mixed $value): void
     {
         $validator = new WordCount(['min' => 1000, 'max' => 10000]);
 

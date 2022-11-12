@@ -27,7 +27,7 @@ use function max;
 use function min;
 use function preg_match;
 use function sprintf;
-use function strpos;
+use function str_starts_with;
 
 use const PHP_INT_MAX;
 
@@ -191,7 +191,7 @@ class DateStep extends Date
     {
         // Custom week format support
         if (
-            strpos($this->format, 'Y-\WW') === 0
+            str_starts_with($this->format, 'Y-\WW')
             && preg_match('/^([0-9]{4})\-W([0-9]{2})/', $value, $matches)
         ) {
             $date = new DateTime();

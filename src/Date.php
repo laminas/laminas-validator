@@ -224,7 +224,6 @@ class Date extends AbstractValidator
     /**
      * Implodes the array into a string and proxies to {@link convertString()}.
      *
-     * @param array $value
      * @param bool $addErrors
      * @return false|DateTime
      * @todo   enhance the implosion

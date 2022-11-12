@@ -186,9 +186,8 @@ final class BetweenTest extends TestCase
      * @dataProvider providerBasic
      * @param int|float|string $min
      * @param int|float|string $max
-     * @param mixed $value
      */
-    public function testBasic($min, $max, bool $inclusive, bool $expected, $value): void
+    public function testBasic($min, $max, bool $inclusive, bool $expected, mixed $value): void
     {
         $validator = new Between(['min' => $min, 'max' => $max, 'inclusive' => $inclusive]);
 
@@ -270,7 +269,6 @@ final class BetweenTest extends TestCase
     /**
      * @covers \Laminas\Validator\Between::__construct()
      * @dataProvider constructBetweenValidatorInvalidDataProvider
-     * @param array $args
      */
     public function testMissingMinOrMax(array $args): void
     {

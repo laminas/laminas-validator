@@ -262,9 +262,8 @@ final class SizeTest extends TestCase
 
     /**
      * @dataProvider invalidMinMaxValues
-     * @param mixed $value
      */
-    public function testSetMinWithInvalidArgument($value): void
+    public function testSetMinWithInvalidArgument(mixed $value): void
     {
         $validator = new Size(['min' => 0, 'max' => 2000]);
 
@@ -276,9 +275,8 @@ final class SizeTest extends TestCase
 
     /**
      * @dataProvider invalidMinMaxValues
-     * @param mixed $value
      */
-    public function testSetMaxWithInvalidArgument($value): void
+    public function testSetMaxWithInvalidArgument(mixed $value): void
     {
         $validator = new Size(['min' => 0, 'max' => 2000]);
 

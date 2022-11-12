@@ -61,9 +61,8 @@ final class BusinessIdentifierCodeTest extends TestCase
 
     /**
      * @dataProvider notAStringProvider
-     * @param mixed $code
      */
-    public function testNotAStringFailure($code): void
+    public function testNotAStringFailure(mixed $code): void
     {
         $validator = new BusinessIdentifierCode();
 

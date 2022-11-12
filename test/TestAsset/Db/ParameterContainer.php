@@ -20,7 +20,7 @@ use function key;
 use function ltrim;
 use function next;
 use function reset;
-use function strpos;
+use function str_starts_with;
 
 /**
  * Test shim for PHP 8.1 compatibility
@@ -69,8 +69,6 @@ class ParameterContainer implements Iterator, ArrayAccess, Countable
 
     /**
      * Constructor
-     *
-     * @param array $data
      */
     public function __construct(array $data = [])
     {
@@ -121,11 +119,9 @@ class ParameterContainer implements Iterator, ArrayAccess, Countable
      * Offset set
      *
      * @param string|int $name
-     * @param mixed $errata
-     * @param mixed $maxLength
      * @throws Exception\InvalidArgumentException
      */
-    public function offsetSet(mixed $name, mixed $value, $errata = null, $maxLength = null): void
+    public function offsetSet(mixed $name, mixed $value, mixed $errata = null, mixed $maxLength = null): void
     {
         $position = false;
 
@@ -148,7 +144,7 @@ class ParameterContainer implements Iterator, ArrayAccess, Countable
             $position = array_key_exists($name, $this->data);
 
             // @todo: this assumes that any data begining with a ":" will be considered a parameter
-            if (is_string($value) && strpos($value, ':') === 0) {
+            if (is_string($value) && str_starts_with($value, ':')) {
                 // We have a named parameter; handle name mapping (container creation)
                 $this->nameMapping[ltrim($value, ':')] = $name;
             }
@@ -187,7 +183,6 @@ class ParameterContainer implements Iterator, ArrayAccess, Countable
     /**
      * Set from array
      *
-     * @param  array $data
      * @return self Provides a fluent interface
      */
     public function setFromArray(array $data)
@@ -202,9 +197,8 @@ class ParameterContainer implements Iterator, ArrayAccess, Countable
      * Offset set max length
      *
      * @param string|int $name
-     * @param mixed $maxLength
      */
-    public function offsetSetMaxLength($name, $maxLength)
+    public function offsetSetMaxLength($name, mixed $maxLength)
     {
         if (is_int($name)) {
             $name = $this->positions[$name];
@@ -275,9 +269,8 @@ class ParameterContainer implements Iterator, ArrayAccess, Countable
      * Offset set errata
      *
      * @param string|int $name
-     * @param mixed $errata
      */
-    public function offsetSetErrata($name, $errata)
+    public function offsetSetErrata($name, mixed $errata)
     {
         if (is_int($name)) {
             $name = $this->positions[$name];

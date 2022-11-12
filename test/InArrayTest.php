@@ -443,11 +443,9 @@ final class InArrayTest extends TestCase
      * @link https://github.com/laminas/laminas-validator/issues/81
      *
      * @param list<mixed> $haystack
-     * @param mixed $valid
-     * @param mixed $invalid
      * @dataProvider strictValidationSet
      */
-    public function testBooleanStrictEnforcesStrictMode(array $haystack, $valid, $invalid): void
+    public function testBooleanStrictEnforcesStrictMode(array $haystack, mixed $valid, mixed $invalid): void
     {
         $validator = new InArray([
             'haystack' => $haystack,
@@ -462,11 +460,9 @@ final class InArrayTest extends TestCase
      * @link https://github.com/laminas/laminas-validator/issues/81
      *
      * @param list<mixed> $haystack
-     * @param mixed $valid
-     * @param mixed $invalid
      * @dataProvider nonStrictValidationSet
      */
-    public function testBooleanNotStrictEnforcesNonStrictMode(array $haystack, $valid, $invalid): void
+    public function testBooleanNotStrictEnforcesNonStrictMode(array $haystack, mixed $valid, mixed $invalid): void
     {
         $validator = new InArray([
             'haystack' => $haystack,

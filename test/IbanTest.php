@@ -214,9 +214,8 @@ final class IbanTest extends TestCase
 
     /**
      * @dataProvider invalidValues
-     * @param mixed $value
      */
-    public function testIsValidReturnsFalseForNonStringValue($value): void
+    public function testIsValidReturnsFalseForNonStringValue(mixed $value): void
     {
         $validator = new IbanValidator();
 

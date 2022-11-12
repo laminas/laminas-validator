@@ -42,8 +42,7 @@ use Zend\Validator\Sitemap\Lastmod;
 use Zend\Validator\Sitemap\Loc;
 use Zend\Validator\Sitemap\Priority;
 
-use function gettype;
-use function is_object;
+use function get_debug_type;
 use function method_exists;
 use function sprintf;
 
@@ -582,7 +581,7 @@ class ValidatorPluginManager extends AbstractPluginManager
                 '%s expects only to create instances of %s; %s is invalid',
                 static::class,
                 $this->instanceOf,
-                is_object($instance) ? $instance::class : gettype($instance)
+                get_debug_type($instance)
             ));
         }
     }
@@ -592,18 +591,17 @@ class ValidatorPluginManager extends AbstractPluginManager
      *
      * Proxies to `validate()`.
      *
-     * @param mixed $plugin
      * @return void
      * @throws Exception\RuntimeException
      */
-    public function validatePlugin($plugin)
+    public function validatePlugin(mixed $plugin)
     {
         try {
             $this->validate($plugin);
         } catch (InvalidServiceException $e) {
             throw new Exception\RuntimeException(sprintf(
                 'Plugin of type %s is invalid; must implement %s',
-                is_object($plugin) ? $plugin::class : gettype($plugin),
+                get_debug_type($plugin),
                 ValidatorInterface::class
             ), $e->getCode(), $e);
         }

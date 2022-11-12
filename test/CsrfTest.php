@@ -13,7 +13,6 @@ use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 
 use function class_exists;
-use function get_class;
 use function md5;
 use function sprintf;
 use function str_replace;
@@ -167,7 +166,7 @@ final class CsrfTest extends TestCase
 
     public function testSessionNameIsDerivedFromClassSaltAndName(): void
     {
-        $class    = get_class($this->validator);
+        $class    = $this->validator::class;
         $class    = str_replace('\\', '_', $class);
         $expected = sprintf('%s_%s_%s', $class, $this->validator->getSalt(), $this->validator->getName());
 
@@ -177,7 +176,7 @@ final class CsrfTest extends TestCase
     public function testSessionNameRemainsValidForElementBelongingToFieldset(): void
     {
         $this->validator->setName('fieldset[csrf]');
-        $class    = get_class($this->validator);
+        $class    = $this->validator::class;
         $class    = str_replace('\\', '_', $class);
         $name     = strtr($this->validator->getName(), ['[' => '_', ']' => '']);
         $expected = sprintf('%s_%s_%s', $class, $this->validator->getSalt(), $name);
@@ -290,7 +289,7 @@ final class CsrfTest extends TestCase
 
     public function testCanValidateHasheWithoutId(): void
     {
-        $method = new ReflectionMethod(get_class($this->validator), 'getTokenFromHash');
+        $method = new ReflectionMethod($this->validator::class, 'getTokenFromHash');
         $method->setAccessible(true);
 
         $hash      = $this->validator->getHash();

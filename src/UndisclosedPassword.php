@@ -40,16 +40,9 @@ final class UndisclosedPassword extends AbstractValidator
     ];
 
     // phpcs:enable
-    private ClientInterface $httpClient;
-
-    private RequestFactoryInterface $makeHttpRequest;
-
-    public function __construct(ClientInterface $httpClient, RequestFactoryInterface $makeHttpRequest)
+    public function __construct(private ClientInterface $httpClient, private RequestFactoryInterface $makeHttpRequest)
     {
         parent::__construct();
-
-        $this->httpClient      = $httpClient;
-        $this->makeHttpRequest = $makeHttpRequest;
     }
 
     /** {@inheritDoc} */
@@ -123,7 +116,7 @@ final class UndisclosedPassword extends AbstractValidator
     private function hashInResponse(string $sha1Hash, string $resultStream): bool
     {
         $data   = explode("\r\n", $resultStream);
-        $hashes = array_filter($data, static function ($value) use ($sha1Hash) {
+        $hashes = array_filter($data, static function ($value) use ($sha1Hash): bool {
             [$hash] = explode(':', $value);
 
             return strcmp($hash, substr($sha1Hash, self::HIBP_K_ANONYMITY_HASH_RANGE_LENGTH)) === 0;

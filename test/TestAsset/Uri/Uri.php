@@ -7,17 +7,17 @@ namespace Laminas\Uri;
 use Exception as PhpException;
 use Laminas\Escaper\Escaper;
 use Laminas\Validator;
+use Stringable;
 
 use function array_intersect_assoc;
 use function array_pop;
 use function array_unshift;
 use function explode;
-use function gettype;
+use function get_debug_type;
 use function http_build_query;
 use function implode;
 use function in_array;
 use function is_array;
-use function is_object;
 use function is_string;
 use function parse_str;
 use function preg_match;
@@ -25,7 +25,9 @@ use function preg_replace_callback;
 use function preg_split;
 use function rawurldecode;
 use function sprintf;
+use function str_contains;
 use function str_replace;
+use function str_starts_with;
 use function strlen;
 use function strpos;
 use function strrpos;
@@ -44,7 +46,7 @@ use const PREG_SPLIT_NO_EMPTY;
  *
  * @todo Remove when laminas-uri has a release targetting PHP 8.1.
  */
-class Uri implements UriInterface
+class Uri implements UriInterface, Stringable
 {
     /**
      * Character classes defined in RFC-3986
@@ -181,7 +183,7 @@ class Uri implements UriInterface
         } elseif ($uri !== null) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Expecting a string or a URI object, received "%s"',
-                is_object($uri) ? $uri::class : gettype($uri)
+                get_debug_type($uri)
             ));
         }
     }
@@ -219,7 +221,7 @@ class Uri implements UriInterface
     public function isValid()
     {
         if ($this->host) {
-            if (is_string($this->path) && strlen($this->path) > 0 && 0 !== strpos($this->path, '/')) {
+            if (is_string($this->path) && strlen($this->path) > 0 && ! str_starts_with($this->path, '/')) {
                 return false;
             }
             return true;
@@ -231,7 +233,7 @@ class Uri implements UriInterface
 
         if ($this->path) {
             // Check path-only (no host) URI
-            if (0 === strpos($this->path, '//')) {
+            if (str_starts_with($this->path, '//')) {
                 return false;
             }
             return true;
@@ -258,7 +260,7 @@ class Uri implements UriInterface
 
         if ($this->path) {
             // Check path-only (no host) URI
-            if (0 === strpos($this->path, '//')) {
+            if (str_starts_with($this->path, '//')) {
                 return false;
             }
             return true;
@@ -318,7 +320,7 @@ class Uri implements UriInterface
             $uri       = substr($uri, strlen($match[0]));
 
             // Split authority into userInfo and host
-            if (strpos($authority, '@') !== false) {
+            if (str_contains($authority, '@')) {
                 // The userInfo can also contain '@' symbols; split $authority
                 // into segments, and set it to the last segment.
                 $segments  = explode('@', $authority);
@@ -369,7 +371,7 @@ class Uri implements UriInterface
         }
 
         // All that's left is the fragment
-        if ($uri && 0 === strpos($uri, '#')) {
+        if ($uri && str_starts_with($uri, '#')) {
             $this->setFragment(substr($uri, 1));
         }
 
@@ -515,7 +517,7 @@ class Uri implements UriInterface
                     $this->setQuery($baseUri->getQuery());
                 }
             } else {
-                if (0 === strpos($relPath, '/')) {
+                if (str_starts_with($relPath, '/')) {
                     $this->setPath(static::removePathDotSegments($relPath));
                 } else {
                     if ($baseUri->getHost() && ! $basePath) {
@@ -846,14 +848,12 @@ class Uri implements UriInterface
 
     /**
      * Magic method to convert the URI to a string
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         try {
             return $this->toString();
-        } catch (PhpException $e) {
+        } catch (PhpException) {
             return '';
         }
     }
@@ -1009,7 +1009,7 @@ class Uri implements UriInterface
         if (! is_string($userInfo)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Expecting a string, got %s',
-                is_object($userInfo) ? $userInfo::class : gettype($userInfo)
+                get_debug_type($userInfo)
             ));
         }
 
@@ -1035,7 +1035,7 @@ class Uri implements UriInterface
         if (! is_string($path)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Expecting a string, got %s',
-                is_object($path) ? $path::class : gettype($path)
+                get_debug_type($path)
             ));
         }
 
@@ -1062,7 +1062,7 @@ class Uri implements UriInterface
         if (! is_string($input)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Expecting a string, got %s',
-                is_object($input) ? $input::class : gettype($input)
+                get_debug_type($input)
             ));
         }
 
@@ -1092,7 +1092,7 @@ class Uri implements UriInterface
         if (! is_string($uriString)) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Expecting a string, got %s',
-                is_object($uriString) ? $uriString::class : gettype($uriString)
+                get_debug_type($uriString)
             ));
         }
 
@@ -1132,7 +1132,7 @@ class Uri implements UriInterface
                     }
                     $output = substr($output, 0, $lastSlashPos);
                     break;
-                case 0 === strpos($path, '/../'):
+                case str_starts_with($path, '/../'):
                     $path         = '/' . substr($path, 4);
                     $lastSlashPos = false;
                     if ($output !== '') {
@@ -1143,13 +1143,13 @@ class Uri implements UriInterface
                     }
                     $output = substr($output, 0, $lastSlashPos);
                     break;
-                case 0 === strpos($path, '/./'):
+                case str_starts_with($path, '/./'):
                     $path = substr($path, 2);
                     break;
-                case 0 === strpos($path, './'):
+                case str_starts_with($path, './'):
                     $path = substr($path, 2);
                     break;
-                case 0 === strpos($path, '../'):
+                case str_starts_with($path, '../'):
                     $path = substr($path, 3);
                     break;
                 default:

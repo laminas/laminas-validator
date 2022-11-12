@@ -14,7 +14,7 @@ use function in_array;
 use function is_array;
 use function is_string;
 use function sprintf;
-use function strpos;
+use function str_contains;
 
 /**
  * Test shim for PHP 8.1 compatibility
@@ -32,21 +32,16 @@ class PredicateSet implements PredicateInterface, Countable
     public const COMBINED_BY_OR = 'OR';
     public const OP_OR          = 'OR';
 
-    /** @var string */
-    protected $defaultCombination = self::COMBINED_BY_AND;
-
     /** @var PredicateInterface[] */
     protected $predicates = [];
 
     /**
      * Constructor
      *
-     * @param  null|array $predicates
      * @param  string $defaultCombination
      */
-    public function __construct(?array $predicates = null, $defaultCombination = self::COMBINED_BY_AND)
+    public function __construct(?array $predicates = null, protected $defaultCombination = self::COMBINED_BY_AND)
     {
-        $this->defaultCombination = $defaultCombination;
         if ($predicates) {
             foreach ($predicates as $predicate) {
                 $this->addPredicate($predicate);
@@ -98,7 +93,7 @@ class PredicateSet implements PredicateInterface, Countable
         }
         if (is_string($predicates)) {
             // String $predicate should be passed as an expression
-            $predicate = strpos($predicates, Expression::PLACEHOLDER) !== false
+            $predicate = str_contains($predicates, Expression::PLACEHOLDER)
                 ? new Expression($predicates) : new Literal($predicates);
             $this->addPredicate($predicate, $combination);
             return $this;
@@ -107,7 +102,7 @@ class PredicateSet implements PredicateInterface, Countable
             foreach ($predicates as $pkey => $pvalue) {
                 // loop through predicates
                 if (is_string($pkey)) {
-                    if (strpos($pkey, '?') !== false) {
+                    if (str_contains($pkey, '?')) {
                         // First, process strings that the abstraction replacement character ?
                         // as an Expression predicate
                         $predicate = new Expression($pkey, $pvalue);
@@ -131,7 +126,7 @@ class PredicateSet implements PredicateInterface, Countable
                     $predicate = $pvalue;
                 } else {
                     // must be an array of expressions (with int-indexed array)
-                    $predicate = strpos($pvalue, Expression::PLACEHOLDER) !== false
+                    $predicate = str_contains($pvalue, Expression::PLACEHOLDER)
                         ? new Expression($pvalue) : new Literal($pvalue);
                 }
                 $this->addPredicate($predicate, $combination);

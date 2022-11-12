@@ -249,9 +249,8 @@ final class HashTest extends TestCase
 
     /**
      * @dataProvider invalidHashTypes
-     * @param mixed $value
      */
-    public function testAddHashRaisesExceptionForInvalidType($value): void
+    public function testAddHashRaisesExceptionForInvalidType(mixed $value): void
     {
         $validator = new Hash('12345');
 
@@ -298,9 +297,8 @@ final class HashTest extends TestCase
 
     /**
      * @dataProvider invalidHashTypes
-     * @param mixed $hash
      */
-    public function testInvalidHashProvidedInArrayFormat($hash): void
+    public function testInvalidHashProvidedInArrayFormat(mixed $hash): void
     {
         $validator = new Hash('12345');
 

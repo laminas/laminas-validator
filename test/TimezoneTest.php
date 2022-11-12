@@ -180,9 +180,8 @@ final class TimezoneTest extends TestCase
      * Test wrong type
      *
      * @dataProvider wrongTypesProvider
-     * @param mixed $value
      */
-    public function testWrongType($value): void
+    public function testWrongType(mixed $value): void
     {
         $this->checkExpectedException($value);
     }
@@ -251,10 +250,9 @@ final class TimezoneTest extends TestCase
     }
 
     /**
-     * @param mixed $invalidType
      * @dataProvider getInvalidTypes
      */
-    public function testRejectsInvalidIntType($invalidType): void
+    public function testRejectsInvalidIntType(mixed $invalidType): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -267,7 +265,7 @@ final class TimezoneTest extends TestCase
      * @param mixed $value Value to validate
      * @param bool  $valid Expected validity
      */
-    protected function checkValidationValue($value, bool $valid): void
+    protected function checkValidationValue(mixed $value, bool $valid): void
     {
         $isValid = $this->validator->isValid($value);
 
@@ -283,7 +281,7 @@ final class TimezoneTest extends TestCase
      *
      * @param mixed $value Value to validate
      */
-    protected function checkExpectedException($value): void
+    protected function checkExpectedException(mixed $value): void
     {
         $this->expectException(InvalidArgumentException::class);
 

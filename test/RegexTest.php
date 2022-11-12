@@ -179,9 +179,8 @@ final class RegexTest extends TestCase
 
     /**
      * @dataProvider invalidConstructorArgumentsProvider
-     * @param mixed $options
      */
-    public function testConstructorRaisesExceptionWhenProvidedInvalidArguments($options): void
+    public function testConstructorRaisesExceptionWhenProvidedInvalidArguments(mixed $options): void
     {
         $this->expectException(InvalidArgumentException::class);
 
