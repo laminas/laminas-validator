@@ -1257,16 +1257,16 @@
         },
         {
             "name": "laminas/laminas-filter",
-            "version": "2.28.0",
+            "version": "2.28.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-filter.git",
-                "reference": "b0290636e88083acb42dba7b883aeaa16a60244f"
+                "reference": "336b7571820c1d1d2443c34fa46f39884885e67c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-filter/zipball/b0290636e88083acb42dba7b883aeaa16a60244f",
-                "reference": "b0290636e88083acb42dba7b883aeaa16a60244f",
+                "url": "https://api.github.com/repos/laminas/laminas-filter/zipball/336b7571820c1d1d2443c34fa46f39884885e67c",
+                "reference": "336b7571820c1d1d2443c34fa46f39884885e67c",
                 "shasum": ""
             },
             "require": {
@@ -1331,7 +1331,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2022-11-07T20:46:55+00:00"
+            "time": "2022-11-19T15:13:44+00:00"
         },
         {
             "name": "laminas/laminas-http",
