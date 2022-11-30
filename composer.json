@@ -48,7 +48,7 @@
         "psalm/plugin-phpunit": "^0.18.0",
         "psr/http-client": "^1.0.1",
         "psr/http-factory": "^1.0.1",
-        "vimeo/psalm": "^4.28"
+        "vimeo/psalm": "^5.0"
     },
     "suggest": {
         "laminas/laminas-db": "Laminas\\Db component, required by the (No)RecordExists validator",
