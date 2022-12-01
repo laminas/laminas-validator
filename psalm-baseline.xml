@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.29.0@7ec5ffbd5f68ae03782d7fd33fff0c45a69f95b3">
+<files psalm-version="5.0.0@4e177bf0c9f03c17d2fbfd83b7cc9c47605274d8">
   <file src="bin/update_hostname_validator.php">
     <MissingClosureParamType occurrences="2">
       <code>$domain</code>
@@ -16,10 +16,10 @@
     </MixedArgument>
   </file>
   <file src="src/AbstractValidator.php">
-    <InvalidPropertyAssignmentValue occurrences="1">
-      <code>$this-&gt;options</code>
-    </InvalidPropertyAssignmentValue>
-    <LessSpecificReturnStatement occurrences="1">
+    <LessSpecificReturnStatement occurrences="4">
+      <code>$this</code>
+      <code>$this</code>
+      <code>$this</code>
       <code>$this</code>
     </LessSpecificReturnStatement>
     <MixedArgumentTypeCoercion occurrences="1">
@@ -30,9 +30,8 @@
       <code>$this-&gt;{key($result)}[current($result)]</code>
       <code>$this-&gt;{key($result)}[current($result)]</code>
     </MixedArrayAccess>
-    <MixedArrayAssignment occurrences="2">
+    <MixedArrayAssignment occurrences="1">
       <code>$this-&gt;abstractOptions['messages'][$messageKey]</code>
-      <code>$this-&gt;options[$name]</code>
     </MixedArrayAssignment>
     <MixedArrayOffset occurrences="3">
       <code>$this-&gt;{key($property)}[current($property)]</code>
@@ -47,14 +46,42 @@
     <PropertyTypeCoercion occurrences="1">
       <code>$this-&gt;abstractOptions</code>
     </PropertyTypeCoercion>
-    <UndefinedThisPropertyAssignment occurrences="1">
+    <UndefinedThisPropertyAssignment occurrences="30">
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
+      <code>$this-&gt;options</code>
       <code>$this-&gt;options</code>
     </UndefinedThisPropertyAssignment>
   </file>
   <file src="src/Barcode.php">
-    <DocblockTypeContradiction occurrences="3">
+    <DocblockTypeContradiction occurrences="2">
       <code>$options instanceof Traversable</code>
-      <code>gettype($adapter)</code>
       <code>is_string($value)</code>
     </DocblockTypeContradiction>
     <MixedArgument occurrences="1">
@@ -78,7 +105,8 @@
     <MixedOperand occurrences="1">
       <code>$length</code>
     </MixedOperand>
-    <MixedReturnStatement occurrences="1">
+    <MixedReturnStatement occurrences="2">
+      <code>$this-&gt;options['adapter']</code>
       <code>$this-&gt;options['adapter']</code>
     </MixedReturnStatement>
     <MoreSpecificImplementedParamType occurrences="1">
@@ -87,9 +115,6 @@
     <PossiblyInvalidArgument occurrences="1">
       <code>$options</code>
     </PossiblyInvalidArgument>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>is_object($adapter)</code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Barcode/AbstractAdapter.php">
     <DocblockTypeContradiction occurrences="6">
@@ -137,10 +162,10 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Barcode/Codabar.php">
-    <InvalidScalarArgument occurrences="2">
+    <InvalidArgument occurrences="2">
       <code>'0123456789-$:/.+'</code>
       <code>'0123456789-$:/.+ABCDTN*E'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <PossiblyInvalidArgument occurrences="1">
       <code>$chars</code>
     </PossiblyInvalidArgument>
@@ -186,26 +211,26 @@
     </UnusedVariable>
   </file>
   <file src="src/Barcode/Code25.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <UndefinedFunction occurrences="1">
       <code>'code25'</code>
     </UndefinedFunction>
   </file>
   <file src="src/Barcode/Code25interleaved.php">
-    <InvalidScalarArgument occurrences="2">
+    <InvalidArgument occurrences="2">
       <code>'0123456789'</code>
       <code>'even'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <UndefinedFunction occurrences="1">
       <code>'code25'</code>
     </UndefinedFunction>
   </file>
   <file src="src/Barcode/Code39.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ -.$/+%'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <MixedAssignment occurrences="2">
       <code>$count</code>
       <code>$mod</code>
@@ -219,18 +244,20 @@
     </UndefinedFunction>
   </file>
   <file src="src/Barcode/Code93.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ -.$/+%'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <MixedAssignment occurrences="2">
       <code>$count</code>
       <code>$count</code>
     </MixedAssignment>
-    <MixedOperand occurrences="4">
+    <MixedOperand occurrences="6">
       <code>$count</code>
       <code>$count</code>
       <code>$this-&gt;check[$char]</code>
       <code>$this-&gt;check[$char]</code>
+      <code>$this-&gt;check[$char] * $length</code>
+      <code>$this-&gt;check[$char] * $length</code>
     </MixedOperand>
     <PossiblyFalseOperand occurrences="2">
       <code>$check</code>
@@ -241,96 +268,96 @@
     </UndefinedFunction>
   </file>
   <file src="src/Barcode/Ean12.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <UndefinedFunction occurrences="1">
       <code>'gtin'</code>
     </UndefinedFunction>
   </file>
   <file src="src/Barcode/Ean13.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <UndefinedFunction occurrences="1">
       <code>'gtin'</code>
     </UndefinedFunction>
   </file>
   <file src="src/Barcode/Ean14.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <UndefinedFunction occurrences="1">
       <code>'gtin'</code>
     </UndefinedFunction>
   </file>
   <file src="src/Barcode/Ean18.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <UndefinedFunction occurrences="1">
       <code>'gtin'</code>
     </UndefinedFunction>
   </file>
   <file src="src/Barcode/Ean2.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
   </file>
   <file src="src/Barcode/Ean5.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
   </file>
   <file src="src/Barcode/Ean8.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <UndefinedFunction occurrences="1">
       <code>'gtin'</code>
     </UndefinedFunction>
   </file>
   <file src="src/Barcode/Gtin12.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <UndefinedFunction occurrences="1">
       <code>'gtin'</code>
     </UndefinedFunction>
   </file>
   <file src="src/Barcode/Gtin13.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <UndefinedFunction occurrences="1">
       <code>'gtin'</code>
     </UndefinedFunction>
   </file>
   <file src="src/Barcode/Gtin14.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <UndefinedFunction occurrences="1">
       <code>'gtin'</code>
     </UndefinedFunction>
   </file>
   <file src="src/Barcode/Identcode.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <UndefinedFunction occurrences="1">
       <code>'identcode'</code>
     </UndefinedFunction>
   </file>
   <file src="src/Barcode/Intelligentmail.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
   </file>
   <file src="src/Barcode/Issn.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789X'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <PossiblyInvalidOperand occurrences="1">
       <code>$token</code>
     </PossiblyInvalidOperand>
@@ -341,66 +368,66 @@
     </UndefinedFunction>
   </file>
   <file src="src/Barcode/Itf14.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <UndefinedFunction occurrences="1">
       <code>'gtin'</code>
     </UndefinedFunction>
   </file>
   <file src="src/Barcode/Leitcode.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <UndefinedFunction occurrences="1">
       <code>'identcode'</code>
     </UndefinedFunction>
   </file>
   <file src="src/Barcode/Planet.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <UndefinedFunction occurrences="1">
       <code>'postnet'</code>
     </UndefinedFunction>
   </file>
   <file src="src/Barcode/Postnet.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <UndefinedFunction occurrences="1">
       <code>'postnet'</code>
     </UndefinedFunction>
   </file>
   <file src="src/Barcode/Royalmail.php">
-    <InvalidPropertyAssignmentValue occurrences="2"/>
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
+    <InvalidPropertyAssignmentValue occurrences="2"/>
     <UndefinedFunction occurrences="1">
       <code>'royalmail'</code>
     </UndefinedFunction>
   </file>
   <file src="src/Barcode/Sscc.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <UndefinedFunction occurrences="1">
       <code>'gtin'</code>
     </UndefinedFunction>
   </file>
   <file src="src/Barcode/Upca.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <UndefinedFunction occurrences="1">
       <code>'gtin'</code>
     </UndefinedFunction>
   </file>
   <file src="src/Barcode/Upce.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'0123456789'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <UndefinedFunction occurrences="1">
       <code>'gtin'</code>
     </UndefinedFunction>
@@ -521,7 +548,8 @@
       <code>is_string($value)</code>
       <code>null === $this-&gt;session</code>
     </DocblockTypeContradiction>
-    <MixedArgument occurrences="5">
+    <MixedArgument occurrences="6">
+      <code>$key</code>
       <code>$session-&gt;tokenList[$tokenId]</code>
       <code>$value</code>
       <code>$value</code>
@@ -529,12 +557,13 @@
       <code>$value</code>
     </MixedArgument>
     <MixedArgumentTypeCoercion occurrences="1">
-      <code>$key</code>
+      <code>$options</code>
     </MixedArgumentTypeCoercion>
     <MixedArrayAssignment occurrences="1">
       <code>$session-&gt;tokenList[$tokenId]</code>
     </MixedArrayAssignment>
-    <MixedAssignment occurrences="1">
+    <MixedAssignment occurrences="2">
+      <code>$key</code>
       <code>$value</code>
     </MixedAssignment>
     <MixedInferredReturnType occurrences="2">
@@ -548,9 +577,6 @@
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$value</code>
     </MoreSpecificImplementedParamType>
-    <PossiblyInvalidArgument occurrences="1">
-      <code>$options</code>
-    </PossiblyInvalidArgument>
     <PossiblyNullArrayOffset occurrences="1">
       <code>$session-&gt;tokenList</code>
     </PossiblyNullArrayOffset>
@@ -590,7 +616,8 @@
       <code>$temp['step']</code>
       <code>$temp['timezone']</code>
     </MixedAssignment>
-    <MoreSpecificImplementedParamType occurrences="1">
+    <MoreSpecificImplementedParamType occurrences="2">
+      <code>$value</code>
       <code>$value</code>
     </MoreSpecificImplementedParamType>
     <PropertyNotSetInConstructor occurrences="2">
@@ -619,6 +646,9 @@
       <code>$this-&gt;exclude['field']</code>
       <code>$this-&gt;exclude['value']</code>
     </MixedArgument>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$options</code>
+    </MixedArgumentTypeCoercion>
     <MixedAssignment occurrences="5">
       <code>$firstArgument</code>
       <code>$temp['adapter']</code>
@@ -637,9 +667,6 @@
     <NullArgument occurrences="1">
       <code>null</code>
     </NullArgument>
-    <PossiblyInvalidArgument occurrences="1">
-      <code>$options</code>
-    </PossiblyInvalidArgument>
     <PossiblyNullArgument occurrences="12">
       <code>$options</code>
       <code>$options</code>
@@ -707,9 +734,6 @@
       <code>! is_string($value)</code>
       <code>null === static::$filter</code>
     </DocblockTypeContradiction>
-    <MixedArgument occurrences="1">
-      <code>$this-&gt;getValue()</code>
-    </MixedArgument>
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$value</code>
     </MoreSpecificImplementedParamType>
@@ -750,8 +774,9 @@
     <MixedMethodCall occurrences="1">
       <code>setAllow</code>
     </MixedMethodCall>
-    <MixedReturnStatement occurrences="5">
+    <MixedReturnStatement occurrences="6">
       <code>$this-&gt;options['allow']</code>
+      <code>$this-&gt;options['hostnameValidator']</code>
       <code>$this-&gt;options['hostnameValidator']</code>
       <code>$this-&gt;options['useDeepMxCheck']</code>
       <code>$this-&gt;options['useDomainCheck']</code>
@@ -863,17 +888,21 @@
       <code>$count</code>
       <code>$files</code>
     </PropertyNotSetInConstructor>
-    <RedundantConditionGivenDocblockType occurrences="7">
+    <RedundantConditionGivenDocblockType occurrences="6">
       <code>$file !== null</code>
       <code>$this-&gt;getMax() !== null</code>
       <code>$this-&gt;getMax() !== null</code>
       <code>$this-&gt;getMin() !== null</code>
       <code>$this-&gt;getMin() !== null</code>
-      <code>is_array($file)</code>
       <code>is_string($file)</code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/File/Crc32.php">
+    <InvalidClassConstantType occurrences="3">
+      <code>DOES_NOT_MATCH</code>
+      <code>NOT_DETECTED</code>
+      <code>NOT_FOUND</code>
+    </InvalidClassConstantType>
     <InvalidPropertyAssignmentValue occurrences="1"/>
     <MixedArgument occurrences="2">
       <code>$fileInfo['file']</code>
@@ -884,6 +913,10 @@
     </MoreSpecificImplementedParamType>
   </file>
   <file src="src/File/ExcludeExtension.php">
+    <InvalidClassConstantType occurrences="2">
+      <code>FALSE_EXTENSION</code>
+      <code>NOT_FOUND</code>
+    </InvalidClassConstantType>
     <MixedArgument occurrences="4">
       <code>$ext</code>
       <code>$fileInfo['file']</code>
@@ -907,6 +940,11 @@
     <DocblockTypeContradiction occurrences="1">
       <code>! $this-&gt;isMagicFileDisabled() &amp;&amp; (! empty($mimefile) &amp;&amp; empty($this-&gt;finfo))</code>
     </DocblockTypeContradiction>
+    <InvalidClassConstantType occurrences="3">
+      <code>FALSE_TYPE</code>
+      <code>NOT_DETECTED</code>
+      <code>NOT_READABLE</code>
+    </InvalidClassConstantType>
     <MixedArgument occurrences="5">
       <code>$fileInfo['file']</code>
       <code>$fileInfo['file']</code>
@@ -1022,8 +1060,21 @@
       <code>$fileInfo['filetype']</code>
       <code>$fileInfo['filetype']</code>
     </MixedAssignment>
-    <PossiblyInvalidArgument occurrences="2">
+    <PossiblyInvalidArgument occurrences="15">
       <code>$fileInfo['file']</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
       <code>$value</code>
     </PossiblyInvalidArgument>
     <PossiblyInvalidCast occurrences="2">
@@ -1042,14 +1093,14 @@
       <code>$file</code>
       <code>$file</code>
     </InvalidArgument>
+    <InvalidClassConstantType occurrences="2">
+      <code>TOO_BIG</code>
+      <code>TOO_SMALL</code>
+    </InvalidClassConstantType>
     <InvalidPropertyAssignmentValue occurrences="2">
       <code>$this-&gt;toByteString($size)</code>
       <code>$this-&gt;toByteString($size)</code>
     </InvalidPropertyAssignmentValue>
-    <InvalidScalarArgument occurrences="2">
-      <code>$max</code>
-      <code>$min</code>
-    </InvalidScalarArgument>
     <MixedArgument occurrences="3">
       <code>$file</code>
       <code>$files</code>
@@ -1071,6 +1122,10 @@
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$value</code>
     </MoreSpecificImplementedParamType>
+    <PossiblyInvalidArgument occurrences="2">
+      <code>$max</code>
+      <code>$min</code>
+    </PossiblyInvalidArgument>
     <PossiblyInvalidCast occurrences="5">
       <code>$file</code>
       <code>$file</code>
@@ -1093,10 +1148,7 @@
     <DocblockTypeContradiction occurrences="1">
       <code>is_array($options)</code>
     </DocblockTypeContradiction>
-    <InvalidPropertyAssignmentValue occurrences="3">
-      <code>$this-&gt;options</code>
-      <code>$this-&gt;options</code>
-    </InvalidPropertyAssignmentValue>
+    <InvalidPropertyAssignmentValue occurrences="1"/>
     <MixedArgument occurrences="3">
       <code>$algorithm</code>
       <code>$fileInfo['file']</code>
@@ -1181,6 +1233,11 @@
     <DocblockTypeContradiction occurrences="1">
       <code>$options === null</code>
     </DocblockTypeContradiction>
+    <InvalidClassConstantType occurrences="3">
+      <code>FALSE_TYPE</code>
+      <code>NOT_DETECTED</code>
+      <code>NOT_READABLE</code>
+    </InvalidClassConstantType>
     <PropertyNotSetInConstructor occurrences="2">
       <code>IsCompressed</code>
       <code>IsCompressed</code>
@@ -1190,12 +1247,22 @@
     <DocblockTypeContradiction occurrences="1">
       <code>$options === null</code>
     </DocblockTypeContradiction>
+    <InvalidClassConstantType occurrences="3">
+      <code>FALSE_TYPE</code>
+      <code>NOT_DETECTED</code>
+      <code>NOT_READABLE</code>
+    </InvalidClassConstantType>
     <PropertyNotSetInConstructor occurrences="2">
       <code>IsImage</code>
       <code>IsImage</code>
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/File/Md5.php">
+    <InvalidClassConstantType occurrences="3">
+      <code>DOES_NOT_MATCH</code>
+      <code>NOT_DETECTED</code>
+      <code>NOT_FOUND</code>
+    </InvalidClassConstantType>
     <InvalidPropertyAssignmentValue occurrences="1"/>
     <MixedArgument occurrences="2">
       <code>$fileInfo['file']</code>
@@ -1239,15 +1306,17 @@
       <code>bool</code>
       <code>string</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="4">
+    <MixedReturnStatement occurrences="3">
       <code>$this-&gt;options['disableMagicFile']</code>
       <code>$this-&gt;options['enableHeaderCheck']</code>
-      <code>$this-&gt;options['magicFile']</code>
       <code>$this-&gt;options['magicFile']</code>
     </MixedReturnStatement>
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$value</code>
     </MoreSpecificImplementedParamType>
+    <NoValue occurrences="1">
+      <code>return $this-&gt;options['magicFile'];</code>
+    </NoValue>
     <PossiblyInvalidArgument occurrences="1">
       <code>$options</code>
     </PossiblyInvalidArgument>
@@ -1263,10 +1332,6 @@
       <code>(bool) $disable</code>
       <code>(bool) $headerCheck</code>
     </RedundantCastGivenDocblockType>
-    <RedundantCondition occurrences="2">
-      <code>$this-&gt;options['magicFile'] === null</code>
-      <code>$this-&gt;options['magicFile'] === null</code>
-    </RedundantCondition>
     <TypeDoesNotContainType occurrences="1">
       <code>$this-&gt;options['magicFile'] !== null</code>
     </TypeDoesNotContainType>
@@ -1290,22 +1355,34 @@
     </MoreSpecificImplementedParamType>
   </file>
   <file src="src/File/Sha1.php">
+    <InvalidClassConstantType occurrences="3">
+      <code>DOES_NOT_MATCH</code>
+      <code>NOT_DETECTED</code>
+      <code>NOT_FOUND</code>
+    </InvalidClassConstantType>
     <InvalidPropertyAssignmentValue occurrences="1"/>
     <MixedArgument occurrences="2">
       <code>$fileInfo['file']</code>
       <code>$fileInfo['file']</code>
     </MixedArgument>
-    <MoreSpecificImplementedParamType occurrences="1">
+    <MoreSpecificImplementedParamType occurrences="2">
+      <code>$value</code>
       <code>$value</code>
     </MoreSpecificImplementedParamType>
   </file>
   <file src="src/File/Size.php">
-    <DocblockTypeContradiction occurrences="4">
+    <DocblockTypeContradiction occurrences="3">
       <code>! is_string($max) &amp;&amp; ! is_numeric($max)</code>
       <code>! is_string($min) &amp;&amp; ! is_numeric($min)</code>
       <code>is_string($options)</code>
-      <code>is_string($options) || is_numeric($options)</code>
     </DocblockTypeContradiction>
+    <InvalidArgument occurrences="2">
+      <code>$size</code>
+      <code>$size</code>
+    </InvalidArgument>
+    <InvalidArrayOffset occurrences="1">
+      <code>$sizes[$i]</code>
+    </InvalidArrayOffset>
     <InvalidOperand occurrences="8">
       <code>$value</code>
       <code>$value</code>
@@ -1323,14 +1400,6 @@
       <code>$this-&gt;toByteString($size)</code>
       <code>$this-&gt;toByteString($size)</code>
     </InvalidPropertyAssignmentValue>
-    <InvalidScalarArgument occurrences="6">
-      <code>$max</code>
-      <code>$max</code>
-      <code>$min</code>
-      <code>$min</code>
-      <code>$size</code>
-      <code>$size</code>
-    </InvalidScalarArgument>
     <MixedArgument occurrences="4">
       <code>$fileInfo['file']</code>
       <code>$fileInfo['file']</code>
@@ -1351,14 +1420,25 @@
       <code>int|string</code>
       <code>int|string</code>
     </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="3">
+    <MixedOperand occurrences="1">
+      <code>$sizes[$i]</code>
+    </MixedOperand>
+    <MixedReturnStatement occurrences="5">
       <code>$max</code>
+      <code>$max</code>
+      <code>$min</code>
       <code>$min</code>
       <code>$this-&gt;options['useByteString']</code>
     </MixedReturnStatement>
     <MoreSpecificImplementedParamType occurrences="1">
       <code>$value</code>
     </MoreSpecificImplementedParamType>
+    <PossiblyInvalidArgument occurrences="4">
+      <code>$max</code>
+      <code>$max</code>
+      <code>$min</code>
+      <code>$min</code>
+    </PossiblyInvalidArgument>
     <PossiblyInvalidArrayAssignment occurrences="2">
       <code>$options['max']</code>
       <code>$options['useByteString']</code>
@@ -1377,8 +1457,7 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/File/Upload.php">
-    <DocblockTypeContradiction occurrences="3">
-      <code>$this-&gt;options['files'] === null</code>
+    <DocblockTypeContradiction occurrences="2">
       <code>$this-&gt;options['files'] === null</code>
       <code>null === $files</code>
     </DocblockTypeContradiction>
@@ -1580,9 +1659,6 @@
       <code>(bool) $useIdnCheck</code>
       <code>(bool) $useTldCheck</code>
     </RedundantCastGivenDocblockType>
-    <RedundantCondition occurrences="1">
-      <code>! $allowLocal</code>
-    </RedundantCondition>
     <UnresolvableInclude occurrences="1">
       <code>include __DIR__ . '/' . $this-&gt;validIdns[$this-&gt;tld]</code>
     </UnresolvableInclude>
@@ -1610,9 +1686,6 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Identical.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>gettype($context)</code>
-    </DocblockTypeContradiction>
     <MixedArgument occurrences="2">
       <code>$token['literal']</code>
       <code>$token['strict']</code>
@@ -1636,9 +1709,6 @@
       <code>(bool) $literal</code>
       <code>(bool) $strict</code>
     </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>is_object($context)</code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/InArray.php">
     <DocblockTypeContradiction occurrences="1">
@@ -1664,9 +1734,6 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Ip.php">
-    <ImplementedParamTypeMismatch occurrences="1">
-      <code>$options</code>
-    </ImplementedParamTypeMismatch>
     <LessSpecificImplementedReturnType occurrences="1">
       <code>AbstractValidator</code>
     </LessSpecificImplementedReturnType>
@@ -1674,14 +1741,11 @@
       <code>$regex</code>
       <code>$regex</code>
     </MixedArgument>
-    <PossiblyInvalidArgument occurrences="1">
+    <MixedArgumentTypeCoercion occurrences="1">
       <code>$options</code>
-    </PossiblyInvalidArgument>
+    </MixedArgumentTypeCoercion>
   </file>
   <file src="src/IsCountable.php">
-    <ImplementedParamTypeMismatch occurrences="1">
-      <code>$options</code>
-    </ImplementedParamTypeMismatch>
     <MixedArgumentTypeCoercion occurrences="1">
       <code>$options</code>
     </MixedArgumentTypeCoercion>
@@ -1767,9 +1831,6 @@
       <code>! is_string($value)</code>
       <code>is_array($pattern)</code>
     </DocblockTypeContradiction>
-    <InvalidScalarArgument occurrences="1">
-      <code>$value</code>
-    </InvalidScalarArgument>
     <MixedArgument occurrences="2">
       <code>$pattern['pattern']</code>
       <code>$value</code>
@@ -1826,10 +1887,12 @@
       <code>$options instanceof Traversable</code>
       <code>is_array($options)</code>
     </DocblockTypeContradiction>
-    <InvalidScalarArgument occurrences="3">
-      <code>$float</code>
+    <InvalidArgument occurrences="2">
       <code>$float</code>
       <code>$value</code>
+    </InvalidArgument>
+    <InvalidScalarArgument occurrences="1">
+      <code>$float</code>
     </InvalidScalarArgument>
     <MixedArgument occurrences="3">
       <code>$options</code>
@@ -1916,10 +1979,6 @@
       <code>$type</code>
       <code>$type</code>
     </MixedOperand>
-    <PossiblyFalseArgument occurrences="2">
-      <code>$abbrs</code>
-      <code>$abbrs</code>
-    </PossiblyFalseArgument>
     <PossiblyFalseOperand occurrences="1">
       <code>array_search($value, $this-&gt;constants)</code>
     </PossiblyFalseOperand>
@@ -1955,11 +2014,10 @@
       <code>$options['uriHandler']</code>
       <code>$this-&gt;uriHandler</code>
     </MixedArgument>
-    <MixedAssignment occurrences="4">
+    <MixedAssignment occurrences="3">
       <code>$temp['allowAbsolute']</code>
       <code>$temp['allowRelative']</code>
       <code>$temp['uriHandler']</code>
-      <code>$this-&gt;uriHandler</code>
     </MixedAssignment>
     <MixedMethodCall occurrences="1">
       <code>new $this-&gt;uriHandler()</code>
@@ -1973,6 +2031,9 @@
     <PossiblyInvalidArgument occurrences="1">
       <code>$options</code>
     </PossiblyInvalidArgument>
+    <PossiblyInvalidPropertyAssignmentValue occurrences="1">
+      <code>$uriHandler</code>
+    </PossiblyInvalidPropertyAssignmentValue>
     <PossiblyUndefinedVariable occurrences="1">
       <code>$temp</code>
     </PossiblyUndefinedVariable>
@@ -2000,7 +2061,8 @@
       <code>getServiceLocator</code>
       <code>getServiceLocator</code>
     </DeprecatedMethod>
-    <MethodSignatureMismatch occurrences="1">
+    <MethodSignatureMismatch occurrences="2">
+      <code>ValidatorPluginManager</code>
       <code>ValidatorPluginManager</code>
     </MethodSignatureMismatch>
     <MissingParamType occurrences="1">
@@ -2020,8 +2082,7 @@
     <RedundantCondition occurrences="1">
       <code>$container === $this &amp;&amp; method_exists($container, 'getServiceLocator')</code>
     </RedundantCondition>
-    <RedundantConditionGivenDocblockType occurrences="3">
-      <code>$container</code>
+    <RedundantConditionGivenDocblockType occurrences="2">
       <code>$container</code>
       <code>$container-&gt;getServiceLocator()</code>
     </RedundantConditionGivenDocblockType>
@@ -2032,6 +2093,9 @@
     </MissingReturnType>
   </file>
   <file src="src/ValidatorPluginManagerFactory.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$options ?: []</code>
+    </ArgumentTypeCoercion>
     <DeprecatedInterface occurrences="1">
       <code>ValidatorPluginManagerFactory</code>
     </DeprecatedInterface>
@@ -2064,7 +2128,11 @@
     <ArgumentTypeCoercion occurrences="1">
       <code>$expectedInstance</code>
     </ArgumentTypeCoercion>
-    <InvalidArgument occurrences="2">
+    <InvalidArgument occurrences="6">
+      <code>123</code>
+      <code>123</code>
+      <code>06510000.4327</code>
+      <code>106510000.4327</code>
       <code>['065100004327']</code>
       <code>['065100004327']</code>
     </InvalidArgument>
@@ -2072,12 +2140,6 @@
       <code>['065100004327']</code>
       <code>['065100004327']</code>
     </InvalidCast>
-    <InvalidScalarArgument occurrences="4">
-      <code>123</code>
-      <code>123</code>
-      <code>06510000.4327</code>
-      <code>106510000.4327</code>
-    </InvalidScalarArgument>
   </file>
   <file src="test/BetweenTest.php">
     <InvalidArgument occurrences="1">
@@ -2132,15 +2194,15 @@
     <InvalidCast occurrences="1">
       <code>[]</code>
     </InvalidCast>
-    <InvalidScalarArgument occurrences="1">
-      <code>$timeout</code>
-    </InvalidScalarArgument>
     <MixedArgument occurrences="1">
       <code>$bareToken</code>
     </MixedArgument>
     <MixedAssignment occurrences="1">
       <code>$bareToken</code>
     </MixedAssignment>
+    <PossiblyInvalidArgument occurrences="1">
+      <code>$timeout</code>
+    </PossiblyInvalidArgument>
     <PossiblyUndefinedArrayOffset occurrences="1">
       <code>$_SERVER['REQUEST_TIME']</code>
     </PossiblyUndefinedArrayOffset>
@@ -2156,6 +2218,9 @@
       <code>'users'</code>
       <code>'users'</code>
     </InvalidArgument>
+    <MissingTemplateParam occurrences="1">
+      <code>class extends ArrayObject {</code>
+    </MissingTemplateParam>
   </file>
   <file src="test/Db/RecordExistsTest.php">
     <InvalidArgument occurrences="4">
@@ -2164,6 +2229,9 @@
       <code>'users'</code>
       <code>'users'</code>
     </InvalidArgument>
+    <MissingTemplateParam occurrences="1">
+      <code>class extends ArrayObject {</code>
+    </MissingTemplateParam>
     <PossiblyNullArrayAccess occurrences="1">
       <code>$parameters['where1']</code>
     </PossiblyNullArrayAccess>
@@ -2236,13 +2304,13 @@
     </MixedArgument>
   </file>
   <file src="test/File/ExcludeExtensionTest.php">
-    <LessSpecificReturnStatement occurrences="1">
+    <InvalidReturnStatement occurrences="1">
       <code>$testData</code>
-    </LessSpecificReturnStatement>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="1"/>
     <MixedArgument occurrences="1">
       <code>$isValidParam['tmp_name']</code>
     </MixedArgument>
-    <MoreSpecificReturnType occurrences="1"/>
   </file>
   <file src="test/File/ExcludeMimeTypeTest.php">
     <MixedArgument occurrences="1">
@@ -2250,21 +2318,24 @@
     </MixedArgument>
   </file>
   <file src="test/File/ExistsTest.php">
-    <InvalidScalarArgument occurrences="1">
+    <ArgumentTypeCoercion occurrences="1">
       <code>$value</code>
-    </InvalidScalarArgument>
+    </ArgumentTypeCoercion>
     <MixedArgument occurrences="1">
       <code>$isValidParam['tmp_name']</code>
     </MixedArgument>
+    <PossiblyNullArgument occurrences="1">
+      <code>$value</code>
+    </PossiblyNullArgument>
   </file>
   <file src="test/File/ExtensionTest.php">
-    <LessSpecificReturnStatement occurrences="1">
+    <InvalidReturnStatement occurrences="1">
       <code>$testData</code>
-    </LessSpecificReturnStatement>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="1"/>
     <MixedArgument occurrences="1">
       <code>$isValidParam['tmp_name']</code>
     </MixedArgument>
-    <MoreSpecificReturnType occurrences="1"/>
   </file>
   <file src="test/File/FilesSizeTest.php">
     <InvalidDocblock occurrences="1">
@@ -2296,18 +2367,18 @@
     </MixedArgument>
   </file>
   <file src="test/File/IsCompressedTest.php">
-    <InvalidScalarArgument occurrences="1">
+    <PossiblyInvalidArgument occurrences="1">
       <code>$isValidParam['tmp_name']</code>
-    </InvalidScalarArgument>
+    </PossiblyInvalidArgument>
     <PossiblyNullArgument occurrences="2">
       <code>$options</code>
       <code>$options</code>
     </PossiblyNullArgument>
   </file>
   <file src="test/File/IsImageTest.php">
-    <InvalidScalarArgument occurrences="1">
+    <PossiblyInvalidArgument occurrences="1">
       <code>$isValidParam['tmp_name']</code>
-    </InvalidScalarArgument>
+    </PossiblyInvalidArgument>
     <PossiblyNullArgument occurrences="2">
       <code>$options</code>
       <code>$options</code>
@@ -2322,15 +2393,15 @@
     </MixedArgument>
   </file>
   <file src="test/File/MimeTypeTest.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$type</code>
+    </ArgumentTypeCoercion>
     <InvalidArgument occurrences="1">
       <code>[]</code>
     </InvalidArgument>
     <InvalidCast occurrences="1">
       <code>[]</code>
     </InvalidCast>
-    <InvalidScalarArgument occurrences="1">
-      <code>$type</code>
-    </InvalidScalarArgument>
     <MixedArgument occurrences="1">
       <code>$isValidParam['tmp_name']</code>
     </MixedArgument>
@@ -2340,17 +2411,23 @@
     <MixedAssignment occurrences="1">
       <code>$options</code>
     </MixedAssignment>
+    <PossiblyNullArgument occurrences="1">
+      <code>$type</code>
+    </PossiblyNullArgument>
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>is_array($isValidParam)</code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="test/File/NotExistsTest.php">
-    <InvalidScalarArgument occurrences="1">
+    <ArgumentTypeCoercion occurrences="1">
       <code>$value</code>
-    </InvalidScalarArgument>
+    </ArgumentTypeCoercion>
     <MixedArgument occurrences="1">
       <code>$isValidParam['tmp_name']</code>
     </MixedArgument>
+    <PossiblyNullArgument occurrences="1">
+      <code>$value</code>
+    </PossiblyNullArgument>
   </file>
   <file src="test/File/Sha1Test.php">
     <MixedArgument occurrences="1">
@@ -2403,9 +2480,9 @@
     <InvalidCast occurrences="1">
       <code>[1 =&gt; 1]</code>
     </InvalidCast>
-    <InvalidScalarArgument occurrences="1">
+    <PossiblyInvalidArgument occurrences="1">
       <code>$input</code>
-    </InvalidScalarArgument>
+    </PossiblyInvalidArgument>
   </file>
   <file src="test/HostnameTest.php">
     <InvalidArgument occurrences="14">
@@ -2472,15 +2549,13 @@
     </InvalidArgument>
   </file>
   <file src="test/IsbnTest.php">
-    <InvalidArgument occurrences="1">
+    <InvalidArgument occurrences="2">
+      <code>(float) 1.2345</code>
       <code>(object) 'Test'</code>
     </InvalidArgument>
     <InvalidCast occurrences="1">
       <code>(object) 'Test'</code>
     </InvalidCast>
-    <InvalidScalarArgument occurrences="1">
-      <code>(float) 1.2345</code>
-    </InvalidScalarArgument>
     <RedundantCast occurrences="1">
       <code>(float) 1.2345</code>
     </RedundantCast>
@@ -2515,12 +2590,12 @@
     </UndefinedMagicPropertyFetch>
   </file>
   <file src="test/NotEmptyTest.php">
-    <InvalidScalarArgument occurrences="4">
+    <InvalidArgument occurrences="4">
       <code>$type</code>
       <code>'boolean'</code>
       <code>'boolean'</code>
       <code>true</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
   </file>
   <file src="test/RegexTest.php">
     <InvalidArgument occurrences="1">
@@ -2535,35 +2610,35 @@
     </MixedArgument>
   </file>
   <file src="test/Sitemap/ChangefreqTest.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>$value</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <PossiblyInvalidCast occurrences="1">
       <code>$value</code>
     </PossiblyInvalidCast>
   </file>
   <file src="test/Sitemap/LastmodTest.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>$value</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <PossiblyInvalidCast occurrences="1">
       <code>$value</code>
     </PossiblyInvalidCast>
   </file>
   <file src="test/Sitemap/LocTest.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>$value</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <PossiblyInvalidCast occurrences="1">
       <code>$value</code>
     </PossiblyInvalidCast>
   </file>
   <file src="test/Sitemap/PriorityTest.php">
-    <InvalidScalarArgument occurrences="3">
+    <PossiblyInvalidArgument occurrences="3">
       <code>$value</code>
       <code>$value</code>
       <code>$value</code>
-    </InvalidScalarArgument>
+    </PossiblyInvalidArgument>
     <PossiblyInvalidCast occurrences="1">
       <code>$value</code>
     </PossiblyInvalidCast>
@@ -2593,12 +2668,12 @@
     </MixedArgument>
   </file>
   <file src="test/TimezoneTest.php">
-    <InvalidScalarArgument occurrences="4">
+    <InvalidArgument occurrences="4">
       <code>'abbreviation'</code>
       <code>'abbreviation'</code>
       <code>'location'</code>
       <code>'location'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <MixedArgument occurrences="1">
       <code>$value</code>
     </MixedArgument>
@@ -2683,9 +2758,9 @@
     </UndefinedFunction>
   </file>
   <file src="test/_files/MyBarcode4.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'odd'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <UndefinedFunction occurrences="1">
       <code>'_mod10'</code>
     </UndefinedFunction>
