@@ -5,6 +5,7 @@ namespace Laminas\Validator;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
+use SensitiveParameter;
 
 use function array_filter;
 use function explode;
@@ -45,9 +46,14 @@ final class UndisclosedPassword extends AbstractValidator
         parent::__construct();
     }
 
+    // The following rule is buggy for parameters attributes
+    // phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing.NoSpaceBetweenTypeHintAndParameter
+
     /** {@inheritDoc} */
-    public function isValid($value): bool
-    {
+    public function isValid(
+        #[SensitiveParameter]
+        $value
+    ): bool {
         if (! is_string($value)) {
             $this->error(self::NOT_A_STRING);
             return false;
@@ -61,8 +67,12 @@ final class UndisclosedPassword extends AbstractValidator
         return true;
     }
 
-    private function isPwnedPassword(string $password): bool
-    {
+    // phpcs:enable SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing.NoSpaceBetweenTypeHintAndParameter
+
+    private function isPwnedPassword(
+        #[SensitiveParameter]
+        string $password
+    ): bool {
         $sha1Hash  = $this->hashPassword($password);
         $rangeHash = $this->getRangeHash($sha1Hash);
         $hashList  = $this->retrieveHashList($rangeHash);
@@ -74,8 +84,10 @@ final class UndisclosedPassword extends AbstractValidator
      * We use a SHA1 hashed password for checking it against
      * the breached data set of HIBP.
      */
-    private function hashPassword(string $password): string
-    {
+    private function hashPassword(
+        #[SensitiveParameter]
+        string $password
+    ): string {
         $hashedPassword = sha1($password);
 
         return strtoupper($hashedPassword);
@@ -87,8 +99,10 @@ final class UndisclosedPassword extends AbstractValidator
      *
      * @see https://www.troyhunt.com/enhancing-pwned-passwords-privacy-by-exclusively-supporting-anonymity/
      */
-    private function getRangeHash(string $passwordHash): string
-    {
+    private function getRangeHash(
+        #[SensitiveParameter]
+        string $passwordHash
+    ): string {
         return substr($passwordHash, self::HIBP_K_ANONYMITY_HASH_RANGE_BASE, self::HIBP_K_ANONYMITY_HASH_RANGE_LENGTH);
     }
 
@@ -99,8 +113,10 @@ final class UndisclosedPassword extends AbstractValidator
      *
      * @throws ClientExceptionInterface
      */
-    private function retrieveHashList(string $passwordRange): string
-    {
+    private function retrieveHashList(
+        #[SensitiveParameter]
+        string $passwordRange
+    ): string {
         $request = $this->makeHttpRequest->createRequest(
             'GET',
             self::HIBP_API_URI . '/range/' . $passwordRange
@@ -113,8 +129,12 @@ final class UndisclosedPassword extends AbstractValidator
     /**
      * Checks if the password is in the response from HIBP
      */
-    private function hashInResponse(string $sha1Hash, string $resultStream): bool
-    {
+    private function hashInResponse(
+        #[SensitiveParameter]
+        string $sha1Hash,
+        #[SensitiveParameter]
+        string $resultStream
+    ): bool {
         $data   = explode("\r\n", $resultStream);
         $hashes = array_filter($data, static function ($value) use ($sha1Hash): bool {
             [$hash] = explode(':', $value);
