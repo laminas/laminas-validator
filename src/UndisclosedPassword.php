@@ -46,6 +46,9 @@ final class UndisclosedPassword extends AbstractValidator
         parent::__construct();
     }
 
+    // The following rule is buggy for parameters attributes
+    // phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing.NoSpaceBetweenTypeHintAndParameter
+
     /** {@inheritDoc} */
     public function isValid(
         #[SensitiveParameter]
@@ -63,6 +66,8 @@ final class UndisclosedPassword extends AbstractValidator
 
         return true;
     }
+
+    // phpcs:enable SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing.NoSpaceBetweenTypeHintAndParameter
 
     private function isPwnedPassword(
         #[SensitiveParameter]
