@@ -5,6 +5,7 @@ namespace Laminas\Validator;
 use Exception;
 use Laminas\Stdlib\ArrayUtils;
 use Laminas\Validator\Exception\InvalidArgumentException;
+use SensitiveParameter;
 use Traversable;
 
 use function array_key_exists;
@@ -361,8 +362,10 @@ class CreditCard extends AbstractValidator
      * @param  string $value
      * @return bool
      */
-    public function isValid($value)
-    {
+    public function isValid(
+        #[SensitiveParameter]
+        $value
+    ) {
         $this->setValue($value);
 
         if (! is_string($value)) {
