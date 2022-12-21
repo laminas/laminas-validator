@@ -206,7 +206,7 @@ final class ExistsTest extends TestCase
         $validator->isValid($value);
     }
 
-    /** @psalm-return array<string, list<scalar|object|null>> */
+    /** @psalm-return array<string, array{scalar|object|null}> */
     public function invalidDirectoryArguments(): array
     {
         return [

@@ -188,7 +188,7 @@ final class NotExistsTest extends TestCase
     }
 
     /**
-     * @psalm-return array<string, list<scalar|object|null>>
+     * @psalm-return array<string, array{scalar|object|null}>
      */
     public function invalidDirectoryArguments(): array
     {

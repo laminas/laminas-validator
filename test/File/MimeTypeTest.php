@@ -319,7 +319,7 @@ final class MimeTypeTest extends TestCase
     }
 
     /**
-     * @psalm-return array<string, list<scalar|object|null>>
+     * @psalm-return array<string, array{scalar|object|null}>
      */
     public function invalidMimeTypeTypes(): array
     {
