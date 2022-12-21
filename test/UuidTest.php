@@ -51,7 +51,7 @@ final class UuidTest extends TestCase
     }
 
     /**
-     * @psalm-return array<string, list<string>>
+     * @psalm-return array<string, array{string}>
      */
     public function validUuidProvider(): array
     {

@@ -49,21 +49,21 @@ final class UndisclosedPasswordTest extends TestCase
     }
 
     /**
-     * @param string|object $classOrInstance
+     * @param non-empty-string $constant
+     * @param class-string|object $classOrInstance
      * @return mixed
      */
-    public function getConstant(string $constant, $classOrInstance)
+    public function getConstant(string $constant, string|object $classOrInstance)
     {
-        $r = new ReflectionClass($classOrInstance);
-
-        return $r->getConstant($constant);
+        return (new ReflectionClass($classOrInstance))
+            ->getConstant($constant);
     }
 
     /**
      * Data provider returning good, strong and unseen
      * passwords to be used in the validator.
      *
-     * @psalm-return array<list<string>>
+     * @psalm-return array<array{string}>
      */
     public function goodPasswordProvider(): array
     {
@@ -78,7 +78,7 @@ final class UndisclosedPasswordTest extends TestCase
      *
      * @see https://en.wikipedia.org/wiki/List_of_the_most_common_passwords
      *
-     * @psalm-return array<list<string>>
+     * @psalm-return array<array{string}>
      */
     public function seenPasswordProvider(): array
     {
