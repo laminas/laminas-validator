@@ -6,6 +6,9 @@ namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\RuntimeException;
 use Laminas\Validator\InArray;
+use LaminasTest\Validator\TestAsset\Enum\TestBackedIntEnum;
+use LaminasTest\Validator\TestAsset\Enum\TestBackedStringEnum;
+use LaminasTest\Validator\TestAsset\Enum\TestUnitEnum;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
@@ -471,5 +474,40 @@ final class InArrayTest extends TestCase
 
         self::assertTrue($validator->isValid($valid));
         self::assertFalse($validator->isValid($invalid));
+    }
+
+    /**
+     * @requires PHP 8.1
+     */
+    public function testEnumValidation(): void
+    {
+        $validator = new InArray([
+            'haystack' => TestUnitEnum::class,
+        ]);
+
+        self::assertTrue($validator->isValid('foo'));
+        self::assertFalse($validator->isValid('baz'));
+
+        $validator = new InArray([
+            'haystack' => TestBackedStringEnum::class,
+        ]);
+
+        self::assertTrue($validator->isValid('foo'));
+        self::assertFalse($validator->isValid('baz'));
+
+        $validator = new InArray([
+            'haystack' => TestBackedIntEnum::class,
+        ]);
+
+        self::assertTrue($validator->isValid(1));
+        self::assertFalse($validator->isValid(3));
+
+        $validator = new InArray([
+            'haystack' => TestBackedIntEnum::class,
+            'strict'   => true,
+        ]);
+
+        self::assertTrue($validator->isValid(1));
+        self::assertFalse($validator->isValid('2'));
     }
 }

@@ -2,14 +2,20 @@
 
 namespace Laminas\Validator;
 
+use BackedEnum;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
+use UnitEnum;
 
+use function array_map;
 use function in_array;
+use function interface_exists;
+use function is_array;
 use function is_bool;
 use function is_float;
 use function is_int;
 use function is_string;
+use function is_subclass_of;
 
 class InArray extends AbstractValidator
 {
@@ -42,7 +48,7 @@ class InArray extends AbstractValidator
     /**
      * Haystack of possible values
      *
-     * @var array
+     * @var array|class-string<UnitEnum>
      */
     protected $haystack;
 
@@ -66,7 +72,7 @@ class InArray extends AbstractValidator
     /**
      * Returns the haystack option
      *
-     * @return mixed
+     * @return array|class-string<UnitEnum>
      * @throws Exception\RuntimeException If haystack option is not set.
      */
     public function getHaystack()
@@ -80,11 +86,21 @@ class InArray extends AbstractValidator
     /**
      * Sets the haystack option
      *
-     * @param  mixed $haystack
+     * @param array|UnitEnum|BackedEnum $haystack
      * @return $this Provides a fluent interface
      */
-    public function setHaystack(array $haystack)
+    public function setHaystack($haystack)
     {
+        if (! is_array($haystack)) {
+            if (! is_string($haystack) || ! interface_exists(UnitEnum::class)) {
+                throw new Exception\RuntimeException('haystack can only be an array');
+            }
+
+            if (! is_subclass_of($haystack, UnitEnum::class)) {
+                throw new Exception\RuntimeException('haystack has invalid type');
+            }
+        }
+
         $this->haystack = $haystack;
         return $this;
     }
@@ -171,6 +187,34 @@ class InArray extends AbstractValidator
     {
         // we create a copy of the haystack in case we need to modify it
         $haystack = $this->getHaystack();
+
+        if (! is_array($haystack)) {
+            if (is_subclass_of($haystack, 'BackedEnum')) {
+                $enumHaystack = array_map(
+                    static fn (BackedEnum $case) => $case->value,
+                    $haystack::cases()
+                );
+
+                if (in_array($value, $enumHaystack, (bool) $this->strict)) {
+                    return true;
+                }
+
+                $this->error(self::NOT_IN_ARRAY);
+                return false;
+            }
+
+            $enumHaystack = array_map(
+                static fn (UnitEnum $case): string => $case->name,
+                $haystack::cases()
+            );
+
+            if (in_array($value, $enumHaystack, (bool) $this->strict)) {
+                return true;
+            }
+
+            $this->error(self::NOT_IN_ARRAY);
+            return false;
+        }
 
         // if the input is a string or float, and vulnerability protection is on
         // we type cast the input to a string
