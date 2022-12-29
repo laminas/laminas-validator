@@ -86,7 +86,7 @@ class InArray extends AbstractValidator
     /**
      * Sets the haystack option
      *
-     * @param array|UnitEnum|BackedEnum $haystack
+     * @param array|class-string<UnitEnum> $haystack
      * @return $this Provides a fluent interface
      */
     public function setHaystack($haystack)
