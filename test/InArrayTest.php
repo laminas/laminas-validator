@@ -6,6 +6,7 @@ namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\RuntimeException;
 use Laminas\Validator\InArray;
+use LaminasTest\Validator\TestAsset\CustomTraversable;
 use LaminasTest\Validator\TestAsset\Enum\TestBackedIntEnum;
 use LaminasTest\Validator\TestAsset\Enum\TestBackedStringEnum;
 use LaminasTest\Validator\TestAsset\Enum\TestUnitEnum;
@@ -482,32 +483,45 @@ final class InArrayTest extends TestCase
     public function testEnumValidation(): void
     {
         $validator = new InArray([
-            'haystack' => TestUnitEnum::class,
+            'enum' => TestUnitEnum::class,
         ]);
 
         self::assertTrue($validator->isValid('foo'));
         self::assertFalse($validator->isValid('baz'));
 
         $validator = new InArray([
-            'haystack' => TestBackedStringEnum::class,
+            'enum' => TestBackedStringEnum::class,
         ]);
 
         self::assertTrue($validator->isValid('foo'));
         self::assertFalse($validator->isValid('baz'));
 
         $validator = new InArray([
-            'haystack' => TestBackedIntEnum::class,
+            'enum' => TestBackedIntEnum::class,
         ]);
 
         self::assertTrue($validator->isValid(1));
         self::assertFalse($validator->isValid(3));
 
         $validator = new InArray([
-            'haystack' => TestBackedIntEnum::class,
-            'strict'   => true,
+            'enum'   => TestBackedIntEnum::class,
+            'strict' => true,
         ]);
 
         self::assertTrue($validator->isValid(1));
         self::assertFalse($validator->isValid('2'));
+    }
+
+    /**
+     * @requires PHP 8.1
+     */
+    public function testEnumOptionException(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('enum has invalid type');
+
+        $validator = new InArray([
+            'enum' => CustomTraversable::class,
+        ]);
     }
 }
