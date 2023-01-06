@@ -58,14 +58,12 @@ final class GpsPoint extends AbstractValidator
             return false;
         }
 
-        $doubleLatitude = (double) $value;
-
-        if ($doubleLatitude <= $maxBoundary && $doubleLatitude >= $maxBoundary * -1) {
-            return true;
+        if (!$this->isValueInbound((float) $value, $maxBoundary)) {
+            $this->error(self::OUT_OF_BOUNDS);
+            return false;
         }
 
-        $this->error(self::OUT_OF_BOUNDS);
-        return false;
+        return true;
     }
 
     /**
@@ -85,7 +83,7 @@ final class GpsPoint extends AbstractValidator
             return false;
         }
 
-        return $matches[1][0] + $matches[2][0] / 60 + ((double) $matches[3][0]) / 3600;
+        return $matches[1][0] + $matches[2][0] / 60 + ((float) $matches[3][0]) / 3600;
     }
 
     private function removeWhiteSpace(string $value): string
@@ -96,5 +94,12 @@ final class GpsPoint extends AbstractValidator
     private function removeDegreeSign(string $value): string
     {
         return str_replace('°', '', $value);
+    }
+
+    private function isValueInbound(float $value, float $boundary): bool
+    {
+        $max = $boundary;
+        $min = -1 * $boundary;
+        return ($min <= $value && $value <= $max);
     }
 }
