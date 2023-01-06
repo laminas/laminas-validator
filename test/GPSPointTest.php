@@ -76,6 +76,7 @@ final class GPSPointTest extends TestCase
             ['63 47 24.691 N, 18 2 54.363 W', GpsPoint::OUT_OF_BOUNDS, '63 47 24.691 N'],
             ['° \' " N,° \' " E', GpsPoint::CONVERT_ERROR, '° \' " N'],
             ['° \' " N', GpsPoint::INCOMPLETE_COORDINATE, '° \' " N'],
+            ['foo,bar', GpsPoint::CONVERT_ERROR, '° \' " N'],
         ];
     }
 }
