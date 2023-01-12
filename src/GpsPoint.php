@@ -53,7 +53,7 @@ final class GpsPoint extends AbstractValidator
             $value = $this->removeDegreeSign($value);
         }
 
-        if ($value === false || $value === null) {
+        if ($value === false || $value === null || !is_numeric($value)) {
             $this->error(self::CONVERT_ERROR);
             return false;
         }

@@ -73,10 +73,11 @@ final class GPSPointTest extends TestCase
     public static function errorMessageTestValues(): array
     {
         return [
-            ['63 47 24.691 N, 18 2 54.363 W', GpsPoint::OUT_OF_BOUNDS, '63 47 24.691 N'],
+            ['63 47 24.691 N, 18 2 54.363 W', GpsPoint::CONVERT_ERROR, '63 47 24.691 N'],
+            ['65° 4\' N,-22.728867530822754', GpsPoint::CONVERT_ERROR, '65° 4\' N'],
             ['° \' " N,° \' " E', GpsPoint::CONVERT_ERROR, '° \' " N'],
             ['° \' " N', GpsPoint::INCOMPLETE_COORDINATE, '° \' " N'],
-            ['foo,bar', GpsPoint::CONVERT_ERROR, '° \' " N'],
+            ['foo,bar', GpsPoint::CONVERT_ERROR, 'foo'],
         ];
     }
 }
