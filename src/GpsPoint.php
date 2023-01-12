@@ -3,6 +3,7 @@
 namespace Laminas\Validator;
 
 use function explode;
+use function is_numeric;
 use function preg_match;
 use function preg_match_all;
 use function preg_replace;
@@ -53,12 +54,18 @@ final class GpsPoint extends AbstractValidator
             $value = $this->removeDegreeSign($value);
         }
 
-        if ($value === false || $value === null || !is_numeric($value)) {
+        if ($value === false) {
             $this->error(self::CONVERT_ERROR);
             return false;
         }
 
-        if (!$this->isValueInbound((float) $value, $maxBoundary)) {
+        $castedValue = (float) $value;
+        if (! is_numeric($value) && $castedValue === 0.0) {
+            $this->error(self::CONVERT_ERROR);
+            return false;
+        }
+
+        if (! $this->isValueInbound($castedValue, $maxBoundary)) {
             $this->error(self::OUT_OF_BOUNDS);
             return false;
         }
@@ -100,6 +107,6 @@ final class GpsPoint extends AbstractValidator
     {
         $max = $boundary;
         $min = -1 * $boundary;
-        return ($min <= $value && $value <= $max);
+        return $min <= $value && $value <= $max;
     }
 }

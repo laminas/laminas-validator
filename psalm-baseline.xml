@@ -1513,10 +1513,6 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/GpsPoint.php">
-    <DocblockTypeContradiction>
-      <code>$value === false || $value === null</code>
-      <code>$value === null</code>
-    </DocblockTypeContradiction>
     <InvalidOperand>
       <code>$matches[1][0]</code>
       <code>$matches[2][0]</code>
