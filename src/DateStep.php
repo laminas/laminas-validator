@@ -48,7 +48,7 @@ class DateStep extends Date
      *
      * @var string[]
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::INVALID      => 'Invalid type given. String, integer, array or DateTime expected',
         self::INVALID_DATE => 'The input does not appear to be a valid date',
         self::FALSEFORMAT  => "The input does not fit the date format '%format%'",
@@ -182,12 +182,8 @@ class DateStep extends Date
      * Supports formats with ISO week (W) definitions
      *
      * @see Date::convertString()
-     *
-     * @param string $value
-     * @param bool $addErrors
-     * @return DateTime|false
      */
-    protected function convertString($value, $addErrors = true)
+    protected function convertString(string $value): DateTime|false
     {
         // Custom week format support
         if (
@@ -204,9 +200,6 @@ class DateStep extends Date
         // and still return a DateTime object.
         $errors = DateTime::getLastErrors();
         if (is_array($errors) && $errors['warning_count'] > 0) {
-            if ($addErrors) {
-                $this->error(self::FALSEFORMAT);
-            }
             return false;
         }
 
@@ -217,17 +210,16 @@ class DateStep extends Date
      * Returns true if a date is within a valid step
      *
      * @param string|int|DateTimeInterface $value
-     * @return bool
      * @throws Exception\InvalidArgumentException
      */
-    public function isValid($value)
+    public function isValid($value): bool
     {
         if (! parent::isValid($value)) {
             return false;
         }
 
-        $valueDate = $this->convertToDateTime($value, false); // avoid duplicate errors
-        $baseDate  = $this->convertToDateTime($this->baseValue, false);
+        $valueDate = $this->convertToDateTime($value);
+        $baseDate  = $this->convertToDateTime($this->baseValue);
 
         if (false === $valueDate || false === $baseDate) {
             return false;

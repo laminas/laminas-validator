@@ -7,6 +7,7 @@ namespace Laminas\Validator;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
+use stdClass;
 use Traversable;
 
 use function array_shift;
@@ -39,22 +40,20 @@ class Date extends AbstractValidator
      *
      * @var string[]
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::INVALID      => 'Invalid type given. String, integer, array or DateTime expected',
         self::INVALID_DATE => 'The input does not appear to be a valid date',
         self::FALSEFORMAT  => "The input does not fit the date format '%format%'",
     ];
 
     /** @var string[] */
-    protected $messageVariables = [
+    protected array $messageVariables = [
         'format' => 'format',
     ];
 
-    /** @var string */
-    protected $format = self::FORMAT_DEFAULT;
+    protected string $format = self::FORMAT_DEFAULT;
 
-    /** @var bool */
-    protected $strict = false;
+    protected bool $strict = false;
 
     /**
      * Sets validator options
@@ -67,6 +66,7 @@ class Date extends AbstractValidator
             $options = iterator_to_array($options);
         } elseif (! is_array($options)) {
             $options        = func_get_args();
+            $temp           = [];
             $temp['format'] = array_shift($options);
             $options        = $temp;
         }
@@ -76,10 +76,8 @@ class Date extends AbstractValidator
 
     /**
      * Returns the format option
-     *
-     * @return string
      */
-    public function getFormat()
+    public function getFormat(): string
     {
         return $this->format;
     }
@@ -114,10 +112,9 @@ class Date extends AbstractValidator
     /**
      * Returns true if $value is a DateTimeInterface instance or can be converted into one.
      *
-     * @param  string|numeric|array|DateTimeInterface $value
-     * @return bool
+     * @param string|int|float|array|stdClass|DateTimeInterface|null $value
      */
-    public function isValid($value)
+    public function isValid($value): bool
     {
         $this->setValue($value);
 
@@ -138,11 +135,10 @@ class Date extends AbstractValidator
     /**
      * Attempts to convert an int, string, or array to a DateTime object
      *
-     * @param string|numeric|array|DateTimeInterface $param
-     * @param bool $addErrors
+     * @param string|int|float|array|stdClass|DateTimeInterface|null $param
      * @return false|DateTime
      */
-    protected function convertToDateTime($param, $addErrors = true)
+    protected function convertToDateTime($param): bool|DateTime
     {
         if ($param instanceof DateTime) {
             return $param;
@@ -152,55 +148,38 @@ class Date extends AbstractValidator
             return DateTime::createFromImmutable($param);
         }
 
-        $type = gettype($param);
-        switch ($type) {
-            case 'string':
-                return $this->convertString($param, $addErrors);
-            case 'integer':
-                return $this->convertInteger($param);
-            case 'double':
-                return $this->convertDouble($param);
-            case 'array':
-                return $this->convertArray($param, $addErrors);
-        }
+        /**
+         * @psalm-suppress PossiblyInvalidArgument
+         */
+        return match (gettype($param)) {
+            'string' => $this->convertString($param),
+            'integer', 'float' => $this->convertNumber($param),
+            'array' => $this->convertArray($param),
+            default => $this->addInvalidTypeError(),
+        };
+    }
 
-        if ($addErrors) {
-            $this->error(self::INVALID);
-        }
-
+    /**
+     * @return false
+     */
+    private function addInvalidTypeError(): bool
+    {
+        $this->error(self::INVALID);
         return false;
     }
 
     /**
-     * Attempts to convert an integer into a DateTime object
-     *
-     * @param integer $value
-     * @return false|DateTime
+     * Attempts to convert an number (float or integer) into a DateTime object
      */
-    protected function convertInteger($value)
-    {
-        return DateTime::createFromFormat('U', (string) $value);
-    }
-
-    /**
-     * Attempts to convert an double into a DateTime object
-     *
-     * @param double $value
-     * @return false|DateTime
-     */
-    protected function convertDouble($value)
+    protected function convertNumber(int|float $value): false|DateTime
     {
         return DateTime::createFromFormat('U', (string) $value);
     }
 
     /**
      * Attempts to convert a string into a DateTime object
-     *
-     * @param string $value
-     * @param bool $addErrors
-     * @return false|DateTime
      */
-    protected function convertString($value, $addErrors = true)
+    protected function convertString(string $value): false|DateTime
     {
         $date = DateTime::createFromFormat($this->format, $value);
 
@@ -212,9 +191,7 @@ class Date extends AbstractValidator
         }
 
         if ($errors['warning_count'] > 0) {
-            if ($addErrors) {
-                $this->error(self::FALSEFORMAT);
-            }
+            $this->error(self::FALSEFORMAT);
             return false;
         }
 
@@ -224,12 +201,10 @@ class Date extends AbstractValidator
     /**
      * Implodes the array into a string and proxies to {@link convertString()}.
      *
-     * @param bool $addErrors
-     * @return false|DateTime
-     * @todo   enhance the implosion
+     * @todo enhance the implosion
      */
-    protected function convertArray(array $value, $addErrors = true)
+    protected function convertArray(array $value): false|DateTime
     {
-        return $this->convertString(implode('-', $value), $addErrors);
+        return $this->convertString(implode('-', $value));
     }
 }
