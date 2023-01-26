@@ -420,6 +420,7 @@ class ValidatorPluginManager extends AbstractPluginManager
         Isbn::class                      => InvokableFactory::class,
         IsCountable::class               => InvokableFactory::class,
         IsInstanceOf::class              => InvokableFactory::class,
+        IsJsonString::class              => InvokableFactory::class,
         LessThan::class                  => InvokableFactory::class,
         NotEmpty::class                  => InvokableFactory::class,
         I18nValidator\PhoneNumber::class => InvokableFactory::class,
