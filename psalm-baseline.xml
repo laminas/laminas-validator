@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.3.0@b6faa3e96b8eb50ec71384c53799b8a107236bb6">
+<files psalm-version="5.4.0@62db5d4f6a7ae0a20f7cc5a4952d730272fc0863">
   <file src="bin/update_hostname_validator.php">
     <MissingClosureParamType occurrences="2">
       <code>$domain</code>
@@ -16,7 +16,8 @@
     </MixedArgument>
   </file>
   <file src="src/AbstractValidator.php">
-    <LessSpecificReturnStatement occurrences="4">
+    <LessSpecificReturnStatement occurrences="5">
+      <code>$this</code>
       <code>$this</code>
       <code>$this</code>
       <code>$this</code>
@@ -46,7 +47,8 @@
     <PropertyTypeCoercion occurrences="1">
       <code>$this-&gt;abstractOptions</code>
     </PropertyTypeCoercion>
-    <UndefinedThisPropertyAssignment occurrences="30">
+    <UndefinedThisPropertyAssignment occurrences="31">
+      <code>$this-&gt;options</code>
       <code>$this-&gt;options</code>
       <code>$this-&gt;options</code>
       <code>$this-&gt;options</code>
@@ -1615,22 +1617,11 @@
       <code>is_array($options)</code>
       <code>is_string($value)</code>
     </DocblockTypeContradiction>
-    <MixedArgument occurrences="12">
+    <MixedArgument occurrences="2">
       <code>$regexChar</code>
       <code>$regexKey</code>
-      <code>$value</code>
-      <code>128 + ($value &amp; 63)</code>
-      <code>128 + ($value &amp; 63)</code>
-      <code>128 + ($value &amp; 63)</code>
-      <code>128 + (($value &gt;&gt; 12) &amp; 63)</code>
-      <code>128 + (($value &gt;&gt; 6) &amp; 63)</code>
-      <code>128 + (($value &gt;&gt; 6) &amp; 63)</code>
-      <code>192 + ($value &gt;&gt; 6)</code>
-      <code>224 + ($value &gt;&gt; 12)</code>
-      <code>240 + ($value &gt;&gt; 18)</code>
     </MixedArgument>
-    <MixedAssignment occurrences="10">
-      <code>$decoded[$i]</code>
+    <MixedAssignment occurrences="8">
       <code>$partRegexChars</code>
       <code>$regexChar</code>
       <code>$regexChars</code>
@@ -1639,7 +1630,6 @@
       <code>$temp['ipValidator']</code>
       <code>$temp['useIdnCheck']</code>
       <code>$temp['useTldCheck']</code>
-      <code>$value</code>
     </MixedAssignment>
     <MixedInferredReturnType occurrences="4">
       <code>Ip</code>
@@ -1647,26 +1637,8 @@
       <code>bool</code>
       <code>int</code>
     </MixedInferredReturnType>
-    <MixedOperand occurrences="19">
+    <MixedOperand occurrences="1">
       <code>$regexChars</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value</code>
-      <code>$value &amp; 63</code>
-      <code>$value &amp; 63</code>
-      <code>$value &amp; 63</code>
-      <code>$value &gt;&gt; 12</code>
-      <code>$value &gt;&gt; 18</code>
-      <code>$value &gt;&gt; 6</code>
-      <code>($value &gt;&gt; 12) &amp; 63</code>
-      <code>($value &gt;&gt; 6) &amp; 63</code>
-      <code>($value &gt;&gt; 6) &amp; 63</code>
     </MixedOperand>
     <MixedReturnStatement occurrences="4">
       <code>$this-&gt;options['allow']</code>
