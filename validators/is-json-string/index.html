@@ -13,10 +13,10 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="laminas-validator">
 
-    <link rel="canonical" href="https://docs.laminas.dev/laminas-validator/validators/db/">
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-validator/validators/is-json-string/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Db\RecordExists and Db\NoRecordExists - laminas-validator - Laminas Docs</title>
+    <title>IsJsonString - laminas-validator - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -240,8 +240,8 @@
 
             
                 
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Db\RecordExists and Db\NoRecordExists</a>
+    <li class="subnavigation__list-item ">
+        <a href="../db/" class="subnavigation__link">Db\RecordExists and Db\NoRecordExists</a>
     </li>
 
             
@@ -324,8 +324,8 @@
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../is-json-string/" class="subnavigation__link">IsJsonString</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">IsJsonString</a>
     </li>
 
             
@@ -598,23 +598,15 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#supported-options" class="toc__link nav-link">Supported options</a>
+                        <a href="#basic-usage" class="toc__link nav-link">Basic Usage</a>
                     </li>
                 
                     <li class="toc__entry">
-                        <a href="#basic-usage" class="toc__link nav-link">Basic usage</a>
+                        <a href="#restricting-acceptable-json-types" class="toc__link nav-link">Restricting Acceptable JSON Types</a>
                     </li>
                 
                     <li class="toc__entry">
-                        <a href="#excluding-records" class="toc__link nav-link">Excluding records</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#database-schemas" class="toc__link nav-link">Database Schemas</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#using-a-select-object" class="toc__link nav-link">Using a Select object</a>
+                        <a href="#restricting-max-object-or-array-nesting-level" class="toc__link nav-link">Restricting Max Object or Array Nesting Level</a>
                     </li>
                 
             </ul>
@@ -649,7 +641,7 @@
                     
                 
 
-                <li class="breadcrumb-item active" aria-current="page">Db\RecordExists and Db\NoRecordExists</li>
+                <li class="breadcrumb-item active" aria-current="page">IsJsonString</li>
             
         
     </ol>
@@ -665,160 +657,49 @@
         <h2 class="chapter__headline">Validators</h2>
     
 
-    <h1 id="dbrecordexists-and-dbnorecordexists-validators">Db\RecordExists and Db\NoRecordExists Validators</h1>
-<p><code>Laminas\Validator\Db\RecordExists</code> and <code>Laminas\Validator\Db\NoRecordExists</code> provide
-a means to test whether a record exists in a given table of a database, with a
-given value.</p>
-<!-- markdownlint-disable-next-line MD001 -->
-<blockquote>
-<h3 id="installation-requirements">Installation requirements</h3>
-<p><code>Laminas\Validator\Db\NoRecordExists</code> and <code>Laminas\Validator\Db\RecordExists</code>
-depends on the laminas-db component, so be sure to have it installed before
-getting started:</p>
-<pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-db</code></pre>
-</blockquote>
-<h2 id="supported-options">Supported options</h2>
-<p>The following options are supported for <code>Laminas\Validator\Db\NoRecordExists</code> and
-<code>Laminas\Validator\Db\RecordExists</code>:</p>
+    <h1 id="isjsonstring">IsJsonString</h1>
+<p><code>Laminas\Validator\IsJsonString</code> allows you to validate whether a given value is a string that will be successfully decoded by <code>json_decode</code>.</p>
+<h2 id="basic-usage">Basic Usage</h2>
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\IsJsonString();
+$input = '{"some":"json"}';
+
+if ($validator-&gt;isValid($input)) {
+    // $input can be successfully decoded
+} else {
+    // $input is not a valid JSON string
+}</code></pre>
+<h2 id="restricting-acceptable-json-types">Restricting Acceptable JSON Types</h2>
+<p><code>json_decode</code> accepts numeric strings representing integers and floating point numbers, booleans, arrays and objects.
+You can restrict what is considered valid input using the <code>allow</code> option of the validator.</p>
+<pre class="highlight"><code class="language-php">use Laminas\Validator\IsJsonString;
+
+$validator = new IsJsonString([
+    'allow' =&gt; IsJsonString::ALLOW_ALL ^ IsJsonString::ALLOW_BOOL,
+]);
+
+$validator-&gt;isValid('true'); // false</code></pre>
+<p>The <code>allow</code> option is a bit mask of the <code>ALLOW_*</code> constants in <code>IsJsonString</code>:</p>
 <ul>
-<li><code>adapter</code>: The database adapter that will be used for the search.</li>
-<li><code>exclude</code>: Sets records that will be excluded from the search.</li>
-<li><code>field</code>: The database field within this table that will be searched for the record.</li>
-<li><code>schema</code>: Sets the schema that will be used for the search.</li>
-<li><code>table</code>: The table that will be searched for the record.</li>
+<li><code>IsJsonString::ALLOW_INT</code> - Accept integer such as <code>1</code></li>
+<li><code>IsJsonString::ALLOW_FLOAT</code> - Accept floating-point value such as <code>1.234</code></li>
+<li><code>IsJsonString::ALLOW_BOOL</code> - Accept <code>true</code> and <code>false</code></li>
+<li><code>IsJsonString::ALLOW_ARRAY</code> - Accept JSON arrays such as <code>["One", "Two"]</code></li>
+<li><code>IsJsonString::ALLOW_OBJECT</code> - Accept JSON objects such as <code>{"Some":"Object"}</code></li>
+<li><code>IsJsonString::ALLOW_ALL</code> - A convenience constant allowing all of the above <em>(Also the default)</em>.</li>
 </ul>
-<h2 id="basic-usage">Basic usage</h2>
-<p>An example of basic usage of the validators:</p>
-<pre class="highlight"><code class="language-php">// Check that the email address exists in the database
-$validator = new Laminas\Validator\Db\RecordExists([
-    'table'   =&gt; 'users',
-    'field'   =&gt; 'emailaddress',
-    'adapter' =&gt; $dbAdapter,
-]);
+<p>The <code>allow</code> option also has a companion setter method <code>setAllow</code>. For example, to only accept arrays and objects:</p>
+<pre class="highlight"><code class="language-php">use Laminas\Validator\IsJsonString;
 
-if ($validator-&gt;isValid($emailaddress)) {
-    // email address appears to be valid
-} else {
-    // email address is invalid; print the reasons
-    foreach ($validator-&gt;getMessages() as $message) {
-        echo "$message\n";
-    }
-}</code></pre>
-<p>The above will test that a given email address is in the database table. If no
-record is found containing the value of <code>$emailaddress</code> in the specified column,
-then an error message is displayed.</p>
-<pre class="highlight"><code class="language-php">// Check that the username is not present in the database
-$validator = new Laminas\Validator\Db\NoRecordExists([
-    'table'   =&gt; 'users',
-    'field'   =&gt; 'username',
-    'adapter' =&gt; $dbAdapter,
-]);
-
-if ($validator-&gt;isValid($username)) {
-    // username appears to be valid
-} else {
-    // username is invalid; print the reason
-    $messages = $validator-&gt;getMessages();
-    foreach ($messages as $message) {
-        echo "$message\n";
-    }
-}</code></pre>
-<p>The above will test that a given username is <em>not</em> in the database table. If a
-record is found containing the value of <code>$username</code> in the specified column,
-then an error message is displayed.</p>
-<h2 id="excluding-records">Excluding records</h2>
-<p><code>Laminas\Validator\Db\RecordExists</code> and <code>Laminas\Validator\Db\NoRecordExists</code> also
-provide a means to test the database, excluding a part of the table, either by
-providing a <code>WHERE</code> clause as a string, or an array with the keys <code>field</code> and
-<code>value</code>.</p>
-<p>When providing an array for the exclude clause, the <code>!=</code> operator is used, so
-you can check the rest of a table for a value before altering a record (for
-example on a user profile form)</p>
-<pre class="highlight"><code class="language-php">// Check no other users have the username
-$user_id   = $user-&gt;getId();
-$validator = new Laminas\Validator\Db\NoRecordExists([
-    'table' =&gt; 'users',
-    'field' =&gt; 'username',
-    'exclude' =&gt; [
-        'field' =&gt; 'id',
-        'value' =&gt; $user_id,
-    ],
-]);
-
-if ($validator-&gt;isValid($username)) {
-    // username appears to be valid
-} else {
-    // username is invalid; print the reason
-    $messages = $validator-&gt;getMessages();
-    foreach ($messages as $message) {
-        echo "$message\n";
-    }
-}</code></pre>
-<p>The above example will check the table to ensure no records other than the one
-where <code>id = $user_id</code> contains the value <code>$username</code>.</p>
-<p>You can also provide a string to the exclude clause so you can use an operator
-other than <code>!=</code>. This can be useful for testing against composite keys.</p>
-<pre class="highlight"><code class="language-php">$email     = 'user@example.com';
-$clause    = $dbAdapter-&gt;quoteIdentifier('email') . ' = ' . $dbAdapter-&gt;quoteValue($email);
-$validator = new Laminas\Validator\Db\RecordExists([
-    'table'   =&gt; 'users',
-    'field'   =&gt; 'username',
-    'adapter' =&gt; $dbAdapter,
-    'exclude' =&gt; $clause,
-]);
-
-if ($validator-&gt;isValid($username)) {
-    // username appears to be valid
-} else {
-    // username is invalid; print the reason
-    $messages = $validator-&gt;getMessages();
-    foreach ($messages as $message) {
-        echo "$message\n";
-    }
-}</code></pre>
-<p>The above example will check the <code>users</code> table to ensure that only a record with
-both the username <code>$username</code> and with the email <code>$email</code> is valid.</p>
-<h2 id="database-schemas">Database Schemas</h2>
-<p>You can specify a schema within your database for adapters such as PostgreSQL
-and DB/2 by supplying an array with <code>table</code> and <code>schema</code> keys, as demonstrated
-below:</p>
-<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Db\RecordExists([
-    'table'  =&gt; 'users',
-    'schema' =&gt; 'my',
-    'field'  =&gt; 'id',
-]);</code></pre>
-<h2 id="using-a-select-object">Using a Select object</h2>
-<p>It is also possible to supply the validators with a <code>Laminas\Db\Sql\Select</code> object
-in place of options. The validator then uses this object instead of building its
-own. This allows for greater flexibility with selection of records used for
-validation.</p>
-<pre class="highlight"><code class="language-php">use Laminas\Db\Sql\Select;
-use Laminas\Validator\Db\RecordExists;
-
-$select = new Select();
-$select
-    -&gt;from('users')
-    -&gt;where
-    -&gt;equalTo('id', $user_id)
-    -&gt;equalTo('email', $email);
-
-$validator = new RecordExists($select);
-
-// We still need to set our database adapter
-$validator-&gt;setAdapter($dbAdapter);
-
-// Validation is then performed as usual
-if ($validator-&gt;isValid($username)) {
-    // username appears to be valid
-} else {
-    // username is invalid; print the reason
-    $messages = $validator-&gt;getMessages();
-    foreach ($messages as $message) {
-        echo "$message\n";
-    }
-}</code></pre>
-<p>The above example will check the <code>users</code> table to ensure that only a record with
-both the username <code>$username</code> and with the email <code>$email</code> is valid.</p>
+$validator = new IsJsonString();
+$validator-&gt;setAllow(IsJsonString::ALLOW_ARRAY | IsJsonString::ALLOW_OBJECT);
+$validator-&gt;isValid('1.234'); // false</code></pre>
+<h2 id="restricting-max-object-or-array-nesting-level">Restricting Max Object or Array Nesting Level</h2>
+<p>If you wish to restrict the nesting level of arrays and objects that are considered valid, the validator accepts a <code>maxDepth</code> option. The default value of this option is <code>512</code> - the same default value as <code>json_decode</code>.</p>
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\IsJsonString(['maxDepth' =&gt; 2]);
+$validator-&gt;isValid('{"nested": {"object: "here"}}'); // false</code></pre>
+<p>Again, the max nesting level allowed has a companion setter method:</p>
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\IsJsonString();
+$validator-&gt;setMaxDepth(10);</code></pre>
 
 
 
@@ -829,10 +710,10 @@ both the username <code>$username</code> and with the email <code>$email</code> 
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../date/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../isinstanceof/">
                     <small class="page-nav__label">Previous</small>
                     <i class="fa fa-chevron-left"></i>
-                    Date
+                    IsInstanceOf
                 </a>
             
         </li>
@@ -840,9 +721,9 @@ both the username <code>$username</code> and with the email <code>$email</code> 
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../digits/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../less-than/">
                     <small class="page-nav__label">Next</small>
-                    Digits
+                    LessThan
                     <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -993,8 +874,8 @@ both the username <code>$username</code> and with the email <code>$email</code> 
 
             
                 
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Db\RecordExists and Db\NoRecordExists</a>
+    <li class="subnavigation__list-item ">
+        <a href="../db/" class="subnavigation__link">Db\RecordExists and Db\NoRecordExists</a>
     </li>
 
             
@@ -1077,8 +958,8 @@ both the username <code>$username</code> and with the email <code>$email</code> 
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../is-json-string/" class="subnavigation__link">IsJsonString</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">IsJsonString</a>
     </li>
 
             
