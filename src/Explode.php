@@ -29,7 +29,7 @@ class Explode extends AbstractValidator implements ValidatorPluginManagerAwareIn
     /** @var array */
     protected $messageVariables = [];
 
-    /** @var string */
+    /** @var non-empty-string */
     protected $valueDelimiter = ',';
 
     /** @var ValidatorInterface|null */
@@ -41,7 +41,7 @@ class Explode extends AbstractValidator implements ValidatorPluginManagerAwareIn
     /**
      * Sets the delimiter string that the values will be split upon
      *
-     * @param string $delimiter
+     * @param non-empty-string $delimiter
      * @return $this
      */
     public function setValueDelimiter($delimiter)
@@ -53,7 +53,7 @@ class Explode extends AbstractValidator implements ValidatorPluginManagerAwareIn
     /**
      * Returns the delimiter string that the values will be split upon
      *
-     * @return string
+     * @return non-empty-string
      */
     public function getValueDelimiter()
     {
