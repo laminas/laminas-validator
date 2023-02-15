@@ -2,14 +2,18 @@
 
 namespace Laminas\Validator;
 
+use BackedEnum;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
+use UnitEnum;
 
+use function array_map;
 use function in_array;
 use function is_bool;
 use function is_float;
 use function is_int;
 use function is_string;
+use function is_subclass_of;
 
 class InArray extends AbstractValidator
 {
@@ -47,6 +51,13 @@ class InArray extends AbstractValidator
     protected $haystack;
 
     /**
+     * Enum of possible values
+     *
+     * @var class-string<UnitEnum>|null
+     */
+    protected $enum;
+
+    /**
      * Type of strict check to be used. Due to "foo" == 0 === TRUE with in_array when strict = false,
      * an option has been added to prevent this. When $strict = 0/false, the most
      * secure non-strict check is implemented. if $strict = -1, the default in_array non-strict
@@ -66,7 +77,7 @@ class InArray extends AbstractValidator
     /**
      * Returns the haystack option
      *
-     * @return mixed
+     * @return array
      * @throws Exception\RuntimeException If haystack option is not set.
      */
     public function getHaystack()
@@ -80,12 +91,36 @@ class InArray extends AbstractValidator
     /**
      * Sets the haystack option
      *
-     * @param  mixed $haystack
+     * @param array $haystack
      * @return $this Provides a fluent interface
      */
     public function setHaystack(array $haystack)
     {
         $this->haystack = $haystack;
+        return $this;
+    }
+
+    /**
+     * @return class-string<UnitEnum>|null
+     */
+    public function getEnum(): ?string
+    {
+        return $this->enum;
+    }
+
+    /**
+     * Set the enum option
+     *
+     * @param class-string<UnitEnum> $enum
+     * @return $this Provides a fluent interface
+     */
+    public function setEnum(string $enum): self
+    {
+        if (! is_subclass_of($enum, UnitEnum::class)) {
+            throw new Exception\RuntimeException('enum has invalid type');
+        }
+
+        $this->enum = $enum;
         return $this;
     }
 
@@ -169,6 +204,35 @@ class InArray extends AbstractValidator
      */
     public function isValid($value)
     {
+        $enum = $this->getEnum();
+        if (is_string($enum)) {
+            if (is_subclass_of($enum, 'BackedEnum')) {
+                $enumHaystack = array_map(
+                    static fn (BackedEnum $case) => $case->value,
+                    $enum::cases()
+                );
+
+                if (in_array($value, $enumHaystack, (bool) $this->strict)) {
+                    return true;
+                }
+
+                $this->error(self::NOT_IN_ARRAY);
+                return false;
+            }
+
+            $enumHaystack = array_map(
+                static fn (UnitEnum $case): string => $case->name,
+                $enum::cases()
+            );
+
+            if (in_array($value, $enumHaystack, (bool) $this->strict)) {
+                return true;
+            }
+
+            $this->error(self::NOT_IN_ARRAY);
+            return false;
+        }
+
         // we create a copy of the haystack in case we need to modify it
         $haystack = $this->getHaystack();
 
