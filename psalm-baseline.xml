@@ -526,9 +526,6 @@
     <PossiblyInvalidArgument>
       <code>$options</code>
     </PossiblyInvalidArgument>
-    <PossiblyUndefinedVariable>
-      <code>$temp</code>
-    </PossiblyUndefinedVariable>
   </file>
   <file src="src/DateStep.php">
     <ArgumentTypeCoercion>

@@ -7,6 +7,7 @@ namespace LaminasTest\Validator;
 use DateTime;
 use DateTimeImmutable;
 use Laminas\Validator\Date;
+use LaminasTest\Validator\TestAsset\CustomDate;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -194,5 +195,23 @@ final class DateTest extends TestCase
         $validator = new Date($format);
 
         self::assertSame($format, $validator->getFormat());
+    }
+
+    public function testAddErrorsParam(): void
+    {
+        $customDateValidator = new Date();
+        /** @psalm-suppress InvalidArgument */
+        self::assertFalse($customDateValidator->isValid(new stdClass()));
+        self::assertArrayHasKey('dateInvalid', $customDateValidator->getMessages());
+    }
+
+    public function testExtensionDateValidator(): void
+    {
+        $customDateValidator = new CustomDate();
+        self::assertTrue($customDateValidator->isValid(16757802.07));
+
+        /** @psalm-suppress InvalidArgument */
+        self::assertFalse($customDateValidator->isValid(new stdClass()));
+        self::assertArrayNotHasKey('dateInvalid', $customDateValidator->getMessages());
     }
 }

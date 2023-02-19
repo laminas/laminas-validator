@@ -67,6 +67,7 @@ class Date extends AbstractValidator
             $options = iterator_to_array($options);
         } elseif (! is_array($options)) {
             $options        = func_get_args();
+            $temp           = [];
             $temp['format'] = array_shift($options);
             $options        = $temp;
         }
@@ -152,22 +153,23 @@ class Date extends AbstractValidator
             return DateTime::createFromImmutable($param);
         }
 
-        $type = gettype($param);
-        switch ($type) {
-            case 'string':
-                return $this->convertString($param, $addErrors);
-            case 'integer':
-                return $this->convertInteger($param);
-            case 'double':
-                return $this->convertDouble($param);
-            case 'array':
-                return $this->convertArray($param, $addErrors);
-        }
+        return match (gettype($param)) {
+            'string' => $this->convertString($param, $addErrors),
+            'integer' => $this->convertInteger($param),
+            'double' => $this->convertDouble($param),
+            'array' => $this->convertArray($param),
+            default => $this->addInvalidTypeError($addErrors),
+        };
+    }
 
+    /**
+     * @return false
+     */
+    private function addInvalidTypeError(bool $addErrors)
+    {
         if ($addErrors) {
             $this->error(self::INVALID);
         }
-
         return false;
     }
 
