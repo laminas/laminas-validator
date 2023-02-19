@@ -108,13 +108,9 @@ final class AbstractDbTest extends TestCase
         $adapterSecond = $this->createStub(Adapter::class);
 
         $this->validator->setAdapter($adapterFirst);
-
-        self::assertObjectHasAttribute('adapter', $this->validator);
         self::assertEquals($adapterFirst, $this->validator->getAdapter());
 
         $this->validator->setDbAdapter($adapterSecond);
-
-        self::assertObjectHasAttribute('adapter', $this->validator);
         self::assertEquals($adapterSecond, $this->validator->getAdapter());
     }
 }
