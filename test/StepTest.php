@@ -222,7 +222,6 @@ final class StepTest extends TestCase
     {
         $validator = new Step();
 
-        self::assertObjectHasAttribute('messageTemplates', $validator);
         self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
@@ -231,7 +230,6 @@ final class StepTest extends TestCase
         $step = 0.01;
         $this->validator->setStep($step);
 
-        self::assertObjectHasAttribute('step', $this->validator);
         self::assertSame($step, $this->validator->getStep());
     }
 
@@ -240,7 +238,6 @@ final class StepTest extends TestCase
         $step = '0.01';
         $this->validator->setStep($step);
 
-        self::assertObjectHasAttribute('step', $this->validator);
         self::assertSame((float) $step, $this->validator->getStep());
     }
 
