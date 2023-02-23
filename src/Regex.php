@@ -117,10 +117,13 @@ class Regex extends AbstractValidator
             return false;
         }
 
+        if (is_int($value) || is_float($value)) {
+            $value = (string) $value;
+        }
+
         $this->setValue($value);
 
         ErrorHandler::start();
-        /** @psalm-suppress PossiblyInvalidArgument */
         $status = preg_match($this->pattern, $value);
         ErrorHandler::stop();
         if (false === $status) {
