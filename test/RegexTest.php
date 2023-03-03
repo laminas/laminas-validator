@@ -213,24 +213,27 @@ final class RegexTest extends TestCase
     /**
      * @dataProvider numericDataProvider
      */
-    public function testNumbers(int|float $input, bool $expected): void
+    public function testNumbers(string $pattern, int|float $input, bool $expected): void
     {
-        $validator = new Regex('/^(-?\d+(?:\.\d+)?+)$/');
+        $validator = new Regex($pattern);
 
         self::assertSame($expected, $validator->isValid($input));
     }
 
     /**
-     * @psalm-return array<array-key, array{0: int|float, 1: bool}>
+     * @psalm-return array<array-key, array{0: string, 1: int|float, 2: bool}>
      */
-    public function numericDataProvider(): array
+    public static function numericDataProvider(): array
     {
         return [
-            [12345, true],
-            [PHP_INT_MAX, true],
-            [-123, true],
-            [0.0099, true],
-            [-100.50, true],
+            ['/^(-?\d+(?:\.\d+)?+)$/', 12345, true],
+            ['/^(-?\d+(?:\.\d+)?+)$/', PHP_INT_MAX, true],
+            ['/^(-?\d+(?:\.\d+)?+)$/', -123, true],
+            ['/^(-?\d+(?:\.\d+)?+)$/', 0.0099, true],
+            ['/^(-?\d+(?:\.\d+)?+)$/', -100.50, true],
+            ['/^\d+$/', 100, true],
+            ['/^\d+$/', -100, false],
+            ['/^\d+$/', 123.45, false],
         ];
     }
 }
