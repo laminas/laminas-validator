@@ -12,6 +12,8 @@ use ReflectionProperty;
 use function array_keys;
 use function implode;
 
+use const PHP_INT_MAX;
+
 /**
  * @group Laminas_Validator
  * @covers \Laminas\Validator\Regex
@@ -206,5 +208,32 @@ final class RegexTest extends TestCase
         $r->setValue($validator, $pattern);
 
         self::assertFalse($validator->isValid('test'));
+    }
+
+    /**
+     * @dataProvider numericDataProvider
+     */
+    public function testNumbers(string $pattern, int|float $input, bool $expected): void
+    {
+        $validator = new Regex($pattern);
+
+        self::assertSame($expected, $validator->isValid($input));
+    }
+
+    /**
+     * @psalm-return array<array-key, array{0: string, 1: int|float, 2: bool}>
+     */
+    public static function numericDataProvider(): array
+    {
+        return [
+            ['/^(-?\d+(?:\.\d+)?+)$/', 12345, true],
+            ['/^(-?\d+(?:\.\d+)?+)$/', PHP_INT_MAX, true],
+            ['/^(-?\d+(?:\.\d+)?+)$/', -123, true],
+            ['/^(-?\d+(?:\.\d+)?+)$/', 0.0099, true],
+            ['/^(-?\d+(?:\.\d+)?+)$/', -100.50, true],
+            ['/^\d+$/', 100, true],
+            ['/^\d+$/', -100, false],
+            ['/^\d+$/', 123.45, false],
+        ];
     }
 }

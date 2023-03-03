@@ -107,7 +107,7 @@ class Regex extends AbstractValidator
     /**
      * Returns true if and only if $value matches against the pattern option
      *
-     * @param  string $value
+     * @param  string|numeric $value
      * @return bool
      */
     public function isValid($value)
@@ -115,6 +115,10 @@ class Regex extends AbstractValidator
         if (! is_string($value) && ! is_int($value) && ! is_float($value)) {
             $this->error(self::INVALID);
             return false;
+        }
+
+        if (is_int($value) || is_float($value)) {
+            $value = (string) $value;
         }
 
         $this->setValue($value);
