@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\BusinessIdentifierCode;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-/** @covers \Laminas\Validator\BusinessIdentifierCode */
 final class BusinessIdentifierCodeTest extends TestCase
 {
     /** @psalm-return array<string, array{0: string}> */
-    public function successProvider(): array
+    public static function successProvider(): array
     {
         return [
             // UPPERCASE
@@ -39,9 +39,7 @@ final class BusinessIdentifierCodeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider successProvider
-     */
+    #[DataProvider('successProvider')]
     public function testValidateSuccess(string $code): void
     {
         $validator = new BusinessIdentifierCode();
@@ -50,7 +48,7 @@ final class BusinessIdentifierCodeTest extends TestCase
     }
 
     /** @psalm-return array<string, array{0: mixed}> */
-    public function notAStringProvider(): array
+    public static function notAStringProvider(): array
     {
         return [
             'number' => [123],
@@ -59,9 +57,7 @@ final class BusinessIdentifierCodeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider notAStringProvider
-     */
+    #[DataProvider('notAStringProvider')]
     public function testNotAStringFailure(mixed $code): void
     {
         $validator = new BusinessIdentifierCode();
@@ -75,7 +71,7 @@ final class BusinessIdentifierCodeTest extends TestCase
     }
 
     /** @psalm-return array<string, array{0: string}> */
-    public function notBicFormatProvider(): array
+    public static function notBicFormatProvider(): array
     {
         return [
             'too short'                    => ['SHORT'],
@@ -84,9 +80,7 @@ final class BusinessIdentifierCodeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider notBicFormatProvider
-     */
+    #[DataProvider('notBicFormatProvider')]
     public function testNotBicFormatFailure(string $code): void
     {
         $validator = new BusinessIdentifierCode();
@@ -97,7 +91,7 @@ final class BusinessIdentifierCodeTest extends TestCase
     }
 
     /** @psalm-return array<string, array{0: string}> */
-    public function notSwiftCountryCodeProvider(): array
+    public static function notSwiftCountryCodeProvider(): array
     {
         return [
             'AA is not a assigned code'                     => ['DEUTAAFF'],
@@ -105,9 +99,7 @@ final class BusinessIdentifierCodeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider notSwiftCountryCodeProvider
-     */
+    #[DataProvider('notSwiftCountryCodeProvider')]
     public function testNotSwiftCountryCodeFailure(string $code): void
     {
         $validator = new BusinessIdentifierCode();

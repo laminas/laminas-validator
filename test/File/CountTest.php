@@ -6,24 +6,21 @@ namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File\Count;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\UploadedFileInterface;
 use ReflectionClass;
 
 use function basename;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\File\Count
- */
 final class CountTest extends TestCase
 {
     /**
      * Ensures that the validator follows expected behavior
      *
-     * @dataProvider basicDataProvider
      * @param array|int $options
      */
+    #[DataProvider('basicDataProvider')]
     public function testBasic($options, bool $expected1, bool $expected2, bool $expected3, bool $expected4): void
     {
         $validator = new Count($options);
@@ -55,7 +52,7 @@ final class CountTest extends TestCase
      *     4: bool
      * }>
      */
-    public function basicDataProvider(): array
+    public static function basicDataProvider(): array
     {
         return [
             // phpcs:disable
@@ -146,7 +143,7 @@ final class CountTest extends TestCase
     /**
      * @psalm-return array<string, array{0: mixed}>
      */
-    public function invalidMinMaxValues(): array
+    public static function invalidMinMaxValues(): array
     {
         return [
             'null'           => [null],
@@ -158,9 +155,7 @@ final class CountTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidMinMaxValues
-     */
+    #[DataProvider('invalidMinMaxValues')]
     public function testSettingMaxWithInvalidArgumentRaisesException(mixed $max): void
     {
         $validator = new Count(['min' => 1000, 'max' => 10000]);
@@ -182,9 +177,7 @@ final class CountTest extends TestCase
         self::assertSame($minValue, $validator->getMin());
     }
 
-    /**
-     * @dataProvider invalidMinMaxValues
-     */
+    #[DataProvider('invalidMinMaxValues')]
     public function testSettingMinWithInvalidArgumentRaisesException(mixed $min): void
     {
         $validator = new Count(['min' => 1000, 'max' => 10000]);

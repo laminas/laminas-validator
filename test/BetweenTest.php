@@ -7,15 +7,12 @@ namespace LaminasTest\Validator;
 use ArrayObject;
 use Laminas\Validator\Between;
 use Laminas\Validator\Exception\InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
 use function implode;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\Between
- */
 final class BetweenTest extends TestCase
 {
     /**
@@ -27,7 +24,7 @@ final class BetweenTest extends TestCase
      *     value: int|float|string
      * }>
      */
-    public function providerBasic(): array
+    public static function providerBasic(): array
     {
         return [
             'inclusive-int-valid-floor'              => [
@@ -183,10 +180,10 @@ final class BetweenTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
-     * @dataProvider providerBasic
      * @param int|float|string $min
      * @param int|float|string $max
      */
+    #[DataProvider('providerBasic')]
     public function testBasic($min, $max, bool $inclusive, bool $expected, mixed $value): void
     {
         $validator = new Between(['min' => $min, 'max' => $max, 'inclusive' => $inclusive]);
@@ -266,10 +263,7 @@ final class BetweenTest extends TestCase
         self::assertSame(array_keys($messageVariables), $validator->getMessageVariables());
     }
 
-    /**
-     * @covers \Laminas\Validator\Between::__construct()
-     * @dataProvider constructBetweenValidatorInvalidDataProvider
-     */
+    #[DataProvider('constructBetweenValidatorInvalidDataProvider')]
     public function testMissingMinOrMax(array $args): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -283,7 +277,7 @@ final class BetweenTest extends TestCase
      *     0: array<string, mixed>
      * }>
      */
-    public function constructBetweenValidatorInvalidDataProvider(): array
+    public static function constructBetweenValidatorInvalidDataProvider(): array
     {
         return [
             'only-min'      => [['min' => 1]],

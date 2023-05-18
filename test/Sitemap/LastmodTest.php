@@ -10,10 +10,6 @@ use stdClass;
 
 use function current;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\Sitemap\Lastmod
- */
 final class LastmodTest extends TestCase
 {
     private Lastmod $validator;

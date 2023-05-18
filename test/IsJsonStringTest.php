@@ -7,6 +7,7 @@ namespace LaminasTest\Validator;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\IsJsonString;
 use Laminas\Validator\ValidatorPluginManager;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function json_encode;
@@ -21,7 +22,7 @@ class IsJsonStringTest extends TestCase
      *     3: IsJsonString::ERROR_*|null,
      * }>
      */
-    public function allowProvider(): array
+    public static function allowProvider(): array
     {
         // phpcs:disable Generic.Files.LineLength
         return [
@@ -46,8 +47,8 @@ class IsJsonStringTest extends TestCase
     /**
      * @param int-mask-of<IsJsonString::ALLOW_*> $allowed
      * @param IsJsonString::ERROR_*|null $expectedErrorKey
-     * @dataProvider allowProvider
      */
+    #[DataProvider('allowProvider')]
     public function testBasicBehaviour(int $allowed, string $input, bool $expect, string|null $expectedErrorKey): void
     {
         $validator = new IsJsonString();
@@ -60,7 +61,7 @@ class IsJsonStringTest extends TestCase
     }
 
     /** @return list<array{0: mixed}> */
-    public function provideThingsThatAreNotStrings(): array
+    public static function provideThingsThatAreNotStrings(): array
     {
         return [
             [true],
@@ -76,7 +77,7 @@ class IsJsonStringTest extends TestCase
         ];
     }
 
-    /** @dataProvider provideThingsThatAreNotStrings */
+    #[DataProvider('provideThingsThatAreNotStrings')]
     public function testThatNonStringsAreInvalid(mixed $input): void
     {
         $validator = new IsJsonString();
@@ -101,14 +102,14 @@ class IsJsonStringTest extends TestCase
     }
 
     /** @return array<array-key, array{0: string}> */
-    public function pluginManagerNameProvider(): array
+    public static function pluginManagerNameProvider(): array
     {
         return [
             [IsJsonString::class],
         ];
     }
 
-    /** @dataProvider pluginManagerNameProvider */
+    #[DataProvider('pluginManagerNameProvider')]
     public function testThatTheValidatorCanBeRetrievedFromThePluginManagerWithDefaultConfiguration(string $name): void
     {
         $pluginManager = new ValidatorPluginManager(new ServiceManager());
@@ -117,7 +118,7 @@ class IsJsonStringTest extends TestCase
     }
 
     /** @return array<string, array{0: string}> */
-    public function invalidStringProvider(): array
+    public static function invalidStringProvider(): array
     {
         return [
             'Empty String'     => [''],
@@ -127,7 +128,7 @@ class IsJsonStringTest extends TestCase
         ];
     }
 
-    /** @dataProvider invalidStringProvider */
+    #[DataProvider('invalidStringProvider')]
     public function testInvalidStrings(string $input): void
     {
         $validator = new IsJsonString();

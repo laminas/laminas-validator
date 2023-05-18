@@ -6,6 +6,8 @@ namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File\Crc32;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function array_merge;
@@ -15,10 +17,6 @@ use function is_array;
 
 use const UPLOAD_ERR_NO_FILE;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\File\Crc32
- */
 final class Crc32Test extends TestCase
 {
     /**
@@ -35,7 +33,7 @@ final class Crc32Test extends TestCase
      *     3: string
      * }>
      */
-    public function basicBehaviorDataProvider(): array
+    public static function basicBehaviorDataProvider(): array
     {
         $testFile     = __DIR__ . '/_files/picture.jpg';
         $pictureTests = [
@@ -78,10 +76,10 @@ final class Crc32Test extends TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param string|string[] $options
      * @param string|array $isValidParam
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testBasic($options, $isValidParam, bool $expected, string $messageKey): void
     {
         $validator = new Crc32($options);
@@ -96,10 +94,10 @@ final class Crc32Test extends TestCase
     /**
      * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param string|string[] $options
      * @param string|array $isValidParam
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testLegacy($options, $isValidParam, bool $expected, string $messageKey): void
     {
         if (! is_array($isValidParam)) {
@@ -209,9 +207,7 @@ final class Crc32Test extends TestCase
         );
     }
 
-    /**
-     * @group Laminas-11258
-     */
+    #[Group('Laminas-11258')]
     public function testLaminas11258(): void
     {
         $validator = new Crc32('3f8d07e2');

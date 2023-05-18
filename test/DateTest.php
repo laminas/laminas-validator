@@ -7,6 +7,8 @@ namespace LaminasTest\Validator;
 use DateTime;
 use DateTimeImmutable;
 use Laminas\Validator\Date;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -14,10 +16,6 @@ use function array_keys;
 use function date_get_last_errors;
 use function var_export;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\Date
- */
 final class DateTest extends TestCase
 {
     private Date $validator;
@@ -48,7 +46,7 @@ final class DateTest extends TestCase
      *     3: bool
      * }>
      */
-    public function datesDataProvider(): array
+    public static function datesDataProvider(): array
     {
         return [
             // date                     format             isValid   isValid Strict
@@ -110,9 +108,9 @@ final class DateTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
-     * @dataProvider datesDataProvider
      * @param string|numeric|DateTime|object|array|null $input
      */
+    #[DataProvider('datesDataProvider')]
     public function testBasic($input, ?string $format, bool $result): void
     {
         $this->validator->setFormat($format);
@@ -122,9 +120,9 @@ final class DateTest extends TestCase
     }
 
     /**
-     * @dataProvider datesDataProvider
      * @param string|numeric|DateTime|object|array|null $input
      */
+    #[DataProvider('datesDataProvider')]
     public function testBasicStrictMode($input, ?string $format, bool $result, bool $resultStrict): void
     {
         $this->validator->setStrict(true);
@@ -149,9 +147,8 @@ final class DateTest extends TestCase
 
     /**
      * Ensures that the validator can handle different manual dateformats
-     *
-     * @group Laminas-2003
      */
+    #[Group('Laminas-2003')]
     public function testUseManualFormat(): void
     {
         self::assertTrue(

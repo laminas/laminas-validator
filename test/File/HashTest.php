@@ -6,6 +6,8 @@ namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File\Hash;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
@@ -17,12 +19,6 @@ use function sprintf;
 
 use const UPLOAD_ERR_NO_FILE;
 
-/**
- * Hash testbed
- *
- * @group Laminas_Validator
- * @covers \Laminas\Validator\File\Hash
- */
 final class HashTest extends TestCase
 {
     /**
@@ -39,7 +35,7 @@ final class HashTest extends TestCase
      *     3: string
      * }>
      */
-    public function basicBehaviorDataProvider(): array
+    public static function basicBehaviorDataProvider(): array
     {
         $testFile     = __DIR__ . '/_files/picture.jpg';
         $pictureTests = [
@@ -106,10 +102,10 @@ final class HashTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param string|array $options
      * @param string|array $isValidParam
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testBasic($options, $isValidParam, bool $expected, string $messageKey): void
     {
         $validator = new Hash($options);
@@ -124,10 +120,10 @@ final class HashTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param string|array $options
      * @param string|array $isValidParam
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testLegacy($options, $isValidParam, bool $expected, string $messageKey): void
     {
         if (! is_array($isValidParam)) {
@@ -144,7 +140,7 @@ final class HashTest extends TestCase
     }
 
     /** @psalm-return array<array{string|string[], array<numeric, string>}> */
-    public function hashProvider(): array
+    public static function hashProvider(): array
     {
         return [
             ['12345', ['12345' => 'crc32']],
@@ -155,10 +151,10 @@ final class HashTest extends TestCase
     /**
      * Ensures that getHash() returns expected value
      *
-     * @dataProvider hashProvider
      * @param string|string[] $hash
      * @psalm-param array<numeric, string> $expected
      */
+    #[DataProvider('hashProvider')]
     public function testGetHash($hash, array $expected): void
     {
         $validator = new Hash($hash);
@@ -169,10 +165,10 @@ final class HashTest extends TestCase
     /**
      * Ensures that setHash() returns expected value
      *
-     * @dataProvider hashProvider
      * @param string|string[] $hash
      * @psalm-param array<numeric, string> $expected
      */
+    #[DataProvider('hashProvider')]
     public function testSetHash($hash, array $expected): void
     {
         $validator = new Hash('12333');
@@ -199,9 +195,7 @@ final class HashTest extends TestCase
         );
     }
 
-    /**
-     * @group Laminas-11258
-     */
+    #[Group('Laminas-11258')]
     public function testLaminas11258(): void
     {
         $validator = new Hash('3f8d07e2');
@@ -233,7 +227,7 @@ final class HashTest extends TestCase
     /**
      * @psalm-return array<string, array{0: mixed}>
      */
-    public function invalidHashTypes(): array
+    public static function invalidHashTypes(): array
     {
         return [
             'null'       => [null],
@@ -247,9 +241,7 @@ final class HashTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidHashTypes
-     */
+    #[DataProvider('invalidHashTypes')]
     public function testAddHashRaisesExceptionForInvalidType(mixed $value): void
     {
         $validator = new Hash('12345');
@@ -294,9 +286,7 @@ final class HashTest extends TestCase
         self::assertSame($algorithm, $options['algorithm']);
     }
 
-    /**
-     * @dataProvider invalidHashTypes
-     */
+    #[DataProvider('invalidHashTypes')]
     public function testInvalidHashProvidedInArrayFormat(mixed $hash): void
     {
         $validator = new Hash('12345');

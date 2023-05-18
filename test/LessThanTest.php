@@ -5,22 +5,19 @@ declare(strict_types=1);
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\LessThan;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\LessThan
- */
 final class LessThanTest extends TestCase
 {
     /**
      * Ensures that the validator follows expected behavior
      *
-     * @dataProvider basicDataProvider
      * @param int|string $input
      */
+    #[DataProvider('basicDataProvider')]
     public function testBasic(array $options, $input, bool $expected): void
     {
         $validator = new LessThan(...$options);
@@ -35,7 +32,7 @@ final class LessThanTest extends TestCase
      *     2: bool
      * }>
      */
-    public function basicDataProvider(): array
+    public static function basicDataProvider(): array
     {
         return [
             // phpcs:disable

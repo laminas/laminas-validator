@@ -11,6 +11,8 @@ use Laminas\Validator\NotEmpty;
 use Laminas\Validator\Timezone;
 use Laminas\Validator\ValidatorChain;
 use Laminas\Validator\ValidatorInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -20,10 +22,6 @@ use function serialize;
 use function strstr;
 use function unserialize;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\ValidatorChain
- */
 final class ValidatorChainTest extends TestCase
 {
     private ValidatorChain $validator;
@@ -125,10 +123,8 @@ final class ValidatorChainTest extends TestCase
         self::assertArrayHasKey('isEmpty', $messages);
     }
 
-    /**
-     * @group 6386
-     * @group 6496
-     */
+    #[Group('6386')]
+    #[Group('6496')]
     public function testValidatorsAreExecutedAccordingToPriority(): void
     {
         $this->validator
@@ -142,10 +138,8 @@ final class ValidatorChainTest extends TestCase
         self::assertArrayHasKey('error', $messages);
     }
 
-    /**
-     * @group 6386
-     * @group 6496
-     */
+    #[Group('6386')]
+    #[Group('6496')]
     public function testPrependValidatorsAreExecutedAccordingToPriority(): void
     {
         $this->validator
@@ -159,10 +153,8 @@ final class ValidatorChainTest extends TestCase
         self::assertArrayHasKey('error', $messages);
     }
 
-    /**
-     * @group 6386
-     * @group 6496
-     */
+    #[Group('6386')]
+    #[Group('6496')]
     public function testMergeValidatorChains(): void
     {
         $mergedValidatorChain = new ValidatorChain();
@@ -175,10 +167,8 @@ final class ValidatorChainTest extends TestCase
         self::assertCount(2, $this->validator->getValidators());
     }
 
-    /**
-     * @group 6386
-     * @group 6496
-     */
+    #[Group('6386')]
+    #[Group('6496')]
     public function testValidatorChainIsCloneable(): void
     {
         $this->validator->attach(new NotEmpty());
@@ -204,9 +194,8 @@ final class ValidatorChainTest extends TestCase
 
     /**
      * Handle file not found errors
-     *
-     * @group  Laminas-2724
      */
+    #[Group('Laminas-2724')]
     public function handleNotFoundError(int $errnum, string $errstr): void
     {
         if (strstr($errstr, 'No such file')) {
@@ -247,9 +236,7 @@ final class ValidatorChainTest extends TestCase
         return $validator;
     }
 
-    /**
-     * @group Laminas-412
-     */
+    #[Group('Laminas-412')]
     public function testCanAttachMultipleValidatorsOfTheSameTypeAsDiscreteInstances(): void
     {
         $this->validator->attachByName('Callback', [
@@ -298,7 +285,7 @@ final class ValidatorChainTest extends TestCase
     /**
      * @psalm-return array<string, array{0: string}>
      */
-    public function breakChainFlags(): array
+    public static function breakChainFlags(): array
     {
         return [
             'underscores'    => ['break_chain_on_failure'],
@@ -308,9 +295,8 @@ final class ValidatorChainTest extends TestCase
 
     /**
      * @see https://github.com/zfcampus/zf-apigility-admin/issues/89
-     *
-     * @dataProvider breakChainFlags
      */
+    #[DataProvider('breakChainFlags')]
     public function testAttachByNameAllowsSpecifyingBreakChainOnFailureFlagViaOptions(string $option): void
     {
         $this->validator->attachByName('GreaterThan', [

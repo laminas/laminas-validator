@@ -6,14 +6,12 @@ namespace LaminasTest\Validator;
 
 use ArrayObject;
 use Laminas\Validator\Bitwise;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class BitwiseTest extends TestCase
 {
-    /**
-     * @covers \Laminas\Validator\Bitwise::__construct()
-     * @dataProvider constructDataProvider
-     */
+    #[DataProvider('constructDataProvider')]
     public function testConstruct(array $args, array $options): void
     {
         $validator = new Bitwise($args);
@@ -23,10 +21,7 @@ final class BitwiseTest extends TestCase
         self::assertSame($options['strict'], $validator->getStrict());
     }
 
-    /**
-     * @covers \Laminas\Validator\Bitwise::__construct()
-     * @dataProvider constructDataProvider
-     */
+    #[DataProvider('constructDataProvider')]
     public function testConstructWithTraversableOptions(array $args, array $options): void
     {
         $validator = new Bitwise(
@@ -44,7 +39,7 @@ final class BitwiseTest extends TestCase
      *     1: array<string, mixed>
      * }>
      */
-    public function constructDataProvider(): array
+    public static function constructDataProvider(): array
     {
         return [
             [
@@ -66,9 +61,6 @@ final class BitwiseTest extends TestCase
         ];
     }
 
-    /**
-     * @covers \Laminas\Validator\Bitwise::isvalid()
-     */
     public function testBitwiseAndNotStrict(): void
     {
         $controlSum = 0x7; // (0x1 | 0x2 | 0x4) === 0x7
@@ -93,9 +85,6 @@ final class BitwiseTest extends TestCase
         self::assertTrue($validator->isValid(0x1 | 0x8));
     }
 
-    /**
-     * @covers \Laminas\Validator\Bitwise::isvalid()
-     */
     public function testBitwiseAndStrict(): void
     {
         $controlSum = 0x7; // (0x1 | 0x2 | 0x4) === 0x7
@@ -131,7 +120,7 @@ final class BitwiseTest extends TestCase
      *     2: array<string, string>
      * }>
      */
-    public function bitwiseXorProvider(): array
+    public static function bitwiseXorProvider(): array
     {
         return [
             [0x2, true, []],
@@ -146,10 +135,7 @@ final class BitwiseTest extends TestCase
         ];
     }
 
-    /**
-     * @covers \Laminas\Validator\Bitwise::isvalid()
-     * @dataProvider bitwiseXorProvider
-     */
+    #[DataProvider('bitwiseXorProvider')]
     public function testBitwiseXor(int $value, bool $expected, array $expectedMessages): void
     {
         $controlSum = 0x5; // (0x1 | 0x4) === 0x5
@@ -179,9 +165,6 @@ final class BitwiseTest extends TestCase
          */
     }
 
-    /**
-     * @covers \Laminas\Validator\Bitwise::setOperator()
-     */
     public function testSetOperator(): void
     {
         $validator = new Bitwise();
@@ -195,9 +178,6 @@ final class BitwiseTest extends TestCase
         self::assertSame(Bitwise::OP_XOR, $validator->getOperator());
     }
 
-    /**
-     * @covers \Laminas\Validator\Bitwise::setStrict()
-     */
     public function testSetStrict(): void
     {
         $validator = new Bitwise();

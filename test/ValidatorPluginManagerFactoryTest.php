@@ -10,9 +10,9 @@ use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
 use Laminas\Validator\ValidatorPluginManagerFactory;
 use LaminasTest\Validator\TestAsset\InMemoryContainer;
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
-/** @covers \Laminas\Validator\ValidatorPluginManagerFactory */
 final class ValidatorPluginManagerFactoryTest extends TestCase
 {
     public function testFactoryReturnsPluginManager(): void
@@ -23,9 +23,7 @@ final class ValidatorPluginManagerFactoryTest extends TestCase
         self::assertInstanceOf(ValidatorPluginManager::class, $validators);
     }
 
-    /**
-     * @depends testFactoryReturnsPluginManager
-     */
+    #[Depends('testFactoryReturnsPluginManager')]
     public function testFactoryConfiguresPluginManagerUnderContainerInterop(): void
     {
         $validator = $this->createMock(ValidatorInterface::class);
@@ -40,9 +38,7 @@ final class ValidatorPluginManagerFactoryTest extends TestCase
         self::assertSame($validator, $validators->get('test'));
     }
 
-    /**
-     * @depends testFactoryReturnsPluginManager
-     */
+    #[Depends('testFactoryReturnsPluginManager')]
     public function testFactoryConfiguresPluginManagerUnderServiceManagerV2(): void
     {
         $container = $this->createMock(ServiceLocatorInterface::class);

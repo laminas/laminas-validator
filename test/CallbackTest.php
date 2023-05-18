@@ -12,10 +12,6 @@ use ReflectionProperty;
 use function array_keys;
 use function func_get_args;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\Callback
- */
 final class CallbackTest extends TestCase
 {
     /**

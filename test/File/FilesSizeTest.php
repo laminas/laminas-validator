@@ -6,6 +6,7 @@ namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File\FilesSize;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function basename;
@@ -14,10 +15,6 @@ use function filesize;
 
 use const UPLOAD_ERR_NO_FILE;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\File\FilesSize
- */
 final class FilesSizeTest extends TestCase
 {
     public bool $multipleOptionsDetected;
@@ -32,9 +29,9 @@ final class FilesSizeTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
-     * @dataProvider basicDataProvider
      * @param array|int $options
      */
+    #[DataProvider('basicDataProvider')]
     public function testBasic($options, bool $expected1, bool $expected2, bool $expected3): void
     {
         $validator = new FilesSize(...$options);
@@ -61,7 +58,7 @@ final class FilesSizeTest extends TestCase
      *     3: bool,
      * }>
      */
-    public function basicDataProvider(): array
+    public static function basicDataProvider(): array
     {
         return [
             // phpcs:disable

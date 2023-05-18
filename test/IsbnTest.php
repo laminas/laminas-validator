@@ -6,14 +6,12 @@ namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Isbn;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\Isbn
- */
 final class IsbnTest extends TestCase
 {
     /**
@@ -22,7 +20,7 @@ final class IsbnTest extends TestCase
      *     1: bool
      * }>
      */
-    public function basicProvider(): array
+    public static function basicProvider(): array
     {
         return [
             'Brave New World by Aldous Huxley - True'                       => ['0060929871', true],
@@ -40,9 +38,8 @@ final class IsbnTest extends TestCase
 
     /**
      * Ensures that the validator follows expected behavior
-     *
-     * @dataProvider basicProvider
      */
+    #[DataProvider('basicProvider')]
     public function testBasic(string $value, bool $expected): void
     {
         $validator = new Isbn();
@@ -209,9 +206,7 @@ final class IsbnTest extends TestCase
         self::assertTrue($validator->isValid('978 0 555023 40 2'));
     }
 
-    /**
-     * @group Laminas-9605
-     */
+    #[Group('Laminas-9605')]
     public function testInvalidTypeGiven(): void
     {
         $validator = new Isbn();

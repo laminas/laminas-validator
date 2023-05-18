@@ -9,23 +9,19 @@ use Laminas\Validator\Barcode;
 use Laminas\Validator\Barcode\AdapterInterface;
 use Laminas\Validator\Barcode\Ean13;
 use Laminas\Validator\Exception\InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
 use function extension_loaded;
 
-/**
- * \Laminas\Barcode
- *
- * @group Laminas_Validator
- * @covers \Laminas\Validator\Barcode
- */
 final class BarcodeTest extends TestCase
 {
     /**
      * @psalm-return array<string, array{0: null|array, 1: string}>
      */
-    public function provideBarcodeConstructor(): array
+    public static function provideBarcodeConstructor(): array
     {
         return [
             'null'        => [null, Barcode\Ean13::class],
@@ -33,9 +29,7 @@ final class BarcodeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideBarcodeConstructor
-     */
+    #[DataProvider('provideBarcodeConstructor')]
     public function testBarcodeConstructor(?array $options, string $expectedInstance): void
     {
         $barcode = new Barcode($options);
@@ -474,9 +468,7 @@ final class BarcodeTest extends TestCase
         self::assertTrue($barcode->isValid('0234567'));
     }
 
-    /**
-     * @group Laminas-10116
-     */
+    #[Group('Laminas-10116')]
     public function testArrayLengthMessage(): void
     {
         $barcode = new Barcode('ean8');
@@ -489,9 +481,7 @@ final class BarcodeTest extends TestCase
         self::assertStringContainsString('length of 7/8 characters', $message['barcodeInvalidLength']);
     }
 
-    /**
-     * @group Laminas-8673
-     */
+    #[Group('Laminas-8673')]
     public function testCODABAR(): void
     {
         $barcode = new Barcode('codabar');
@@ -505,9 +495,7 @@ final class BarcodeTest extends TestCase
         self::assertFalse($barcode->isValid('*123A'));
     }
 
-    /**
-     * @group Laminas-11532
-     */
+    #[Group('Laminas-11532')]
     public function testIssnWithMod0(): void
     {
         $barcode = new Barcode('issn');
@@ -515,9 +503,7 @@ final class BarcodeTest extends TestCase
         self::assertTrue($barcode->isValid('18710360'));
     }
 
-    /**
-     * @group Laminas-8674
-     */
+    #[Group('Laminas-8674')]
     public function testCODE128(): void
     {
         if (! extension_loaded('iconv')) {
@@ -538,9 +524,8 @@ final class BarcodeTest extends TestCase
 
     /**
      * Test if EAN-13 contains only numeric characters
-     *
-     * @group Laminas-3297
      */
+    #[Group('Laminas-3297')]
     public function testEan13ContainsOnlyNumeric(): void
     {
         $barcode = new Barcode('ean13');

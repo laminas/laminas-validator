@@ -13,7 +13,6 @@ use Psr\Http\Message\UploadedFileInterface;
 use function basename;
 use function mime_content_type;
 
-/** @covers \Laminas\Validator\File\FileInformationTrait */
 final class FileInformationTraitTest extends TestCase
 {
     /** @var StreamInterface&MockObject */

@@ -9,16 +9,13 @@ use DateTime;
 use DateTimeImmutable;
 use DateTimeZone;
 use Laminas\Validator\DateStep;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 
 use function array_keys;
 use function date;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\DateStep
- */
 final class DateStepTest extends TestCase
 {
     /**
@@ -31,7 +28,7 @@ final class DateStepTest extends TestCase
      *     4: bool
      * }>
      */
-    public function stepTestsDataProvider(): array
+    public static function stepTestsDataProvider(): array
     {
         return [
             //    interval format            baseValue               value                  isValid
@@ -92,9 +89,7 @@ final class DateStepTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider stepTestsDataProvider
-     */
+    #[DataProvider('stepTestsDataProvider')]
     public function testDateStepValidation(
         string $interval,
         string $format,
@@ -179,7 +174,7 @@ final class DateStepTest extends TestCase
      * @return array[]
      * @psalm-return array<array{0: string}>
      */
-    public function moscowWinterTimeDataProvider(): array
+    public static function moscowWinterTimeDataProvider(): array
     {
         // dates before during and after Moscow's wintertime
         return [
@@ -190,9 +185,7 @@ final class DateStepTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider moscowWinterTimeDataProvider
-     */
+    #[DataProvider('moscowWinterTimeDataProvider')]
     public function testMoscowWinterTime(string $dateToValidate): void
     {
         $validator = new DateStep([

@@ -12,10 +12,6 @@ use Laminas\Validator\IsInstanceOf;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
-/**
- * @covers \Laminas\Validator\IsInstanceOf
- * @group Laminas_Validator
- */
 final class IsInstanceOfTest extends TestCase
 {
     /**

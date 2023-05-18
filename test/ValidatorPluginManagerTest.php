@@ -13,6 +13,7 @@ use Laminas\Validator\Explode;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
+use LaminasTest\Validator\TestAsset\InMemoryContainer;
 use LaminasTest\Validator\TestAsset\Translator;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
@@ -20,10 +21,6 @@ use Psr\Container\ContainerInterface;
 use function assert;
 use function sprintf;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\ValidatorPluginManager
- */
 final class ValidatorPluginManagerTest extends TestCase
 {
     private ValidatorPluginManager $validators;
@@ -101,10 +98,11 @@ final class ValidatorPluginManagerTest extends TestCase
 
     public function testLoadingInvalidValidatorRaisesException(): void
     {
-        $this->validators->setInvokableClass('test', static::class);
+        $this->validators->setInvokableClass('test', InMemoryContainer::class);
 
         try {
             $this->validators->get('test');
+            self::fail('An exception should have been thrown');
         } catch (InvalidServiceException | RuntimeException $e) {
             self::assertStringContainsString(ValidatorInterface::class, $e->getMessage());
         } catch (Exception $e) {

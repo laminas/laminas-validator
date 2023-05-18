@@ -6,6 +6,7 @@ namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception;
 use Laminas\Validator\IsCountable;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use SplQueue;
 use stdClass;
@@ -14,13 +15,12 @@ use function json_encode;
 
 use const JSON_THROW_ON_ERROR;
 
-/** @covers \Laminas\Validator\IsCountable */
 final class IsCountableTest extends TestCase
 {
     /**
      * @psalm-return array<string, array{0: array<string, mixed>}>
      */
-    public function conflictingOptionsProvider(): array
+    public static function conflictingOptionsProvider(): array
     {
         return [
             'count-min' => [['count' => 10, 'min' => 1]],
@@ -28,9 +28,7 @@ final class IsCountableTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider conflictingOptionsProvider
-     */
+    #[DataProvider('conflictingOptionsProvider')]
     public function testConstructorRaisesExceptionWhenProvidedConflictingOptions(array $options): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
@@ -42,7 +40,7 @@ final class IsCountableTest extends TestCase
     /**
      * @psalm-return array<string, array{0: array<string, mixed>, 1: array<string, mixed>}>
      */
-    public function conflictingSecondaryOptionsProvider(): array
+    public static function conflictingSecondaryOptionsProvider(): array
     {
         return [
             'count-min' => [['count' => 10], ['min' => 1]],
@@ -50,9 +48,7 @@ final class IsCountableTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider conflictingSecondaryOptionsProvider
-     */
+    #[DataProvider('conflictingSecondaryOptionsProvider')]
     public function testSetOptionsRaisesExceptionWhenProvidedOptionConflictingWithCurrentSettings(
         array $originalOptions,
         array $secondaryOptions

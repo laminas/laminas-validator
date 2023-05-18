@@ -2712,6 +2712,9 @@
       <code>null</code>
       <code>null</code>
     </NullArgument>
+    <PossiblyUnusedMethod>
+      <code>invalidOptionsArguments</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/BarcodeTest.php">
     <ArgumentTypeCoercion>
@@ -2729,6 +2732,9 @@
       <code><![CDATA[['065100004327']]]></code>
       <code><![CDATA[['065100004327']]]></code>
     </InvalidCast>
+    <PossiblyUnusedMethod>
+      <code>provideBarcodeConstructor</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/BetweenTest.php">
     <InvalidArgument>
@@ -2740,6 +2746,10 @@
     <PossiblyInvalidArgument>
       <code>$args</code>
     </PossiblyInvalidArgument>
+    <PossiblyUnusedMethod>
+      <code>constructBetweenValidatorInvalidDataProvider</code>
+      <code>providerBasic</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/BitwiseTest.php">
     <InvalidArgument>
@@ -2751,6 +2761,18 @@
       <code>0x1</code>
       <code>0x1</code>
     </InvalidArgument>
+    <PossiblyUnusedMethod>
+      <code>bitwiseXorProvider</code>
+      <code>constructDataProvider</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/BusinessIdentifierCodeTest.php">
+    <PossiblyUnusedMethod>
+      <code>notAStringProvider</code>
+      <code>notBicFormatProvider</code>
+      <code>notSwiftCountryCodeProvider</code>
+      <code>successProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/CallbackTest.php">
     <MissingClosureParamType>
@@ -2778,6 +2800,15 @@
     <InvalidCast>
       <code><![CDATA[['something']]]></code>
     </InvalidCast>
+    <PossiblyUnusedMethod>
+      <code>basicValues</code>
+      <code>jcbValues</code>
+      <code>mastercardValues</code>
+      <code>mirValues</code>
+      <code>optionsValues</code>
+      <code>serviceValues</code>
+      <code>visaValues</code>
+    </PossiblyUnusedMethod>
     <PossiblyUnusedReturnValue>
       <code>false</code>
     </PossiblyUnusedReturnValue>
@@ -2801,13 +2832,30 @@
     <PossiblyUndefinedArrayOffset>
       <code><![CDATA[$_SERVER['REQUEST_TIME']]]></code>
     </PossiblyUndefinedArrayOffset>
+    <PossiblyUnusedMethod>
+      <code>fakeValuesDataProvider</code>
+      <code>timeoutValuesDataProvider</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/DateStepTest.php">
+    <PossiblyUnusedMethod>
+      <code>moscowWinterTimeDataProvider</code>
+      <code>stepTestsDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/DateTest.php">
+    <PossiblyUnusedMethod>
+      <code>datesDataProvider</code>
+    </PossiblyUnusedMethod>
     <UnusedParam>
       <code>$result</code>
     </UnusedParam>
   </file>
   <file src="test/Db/NoRecordExistsTest.php">
+    <DeprecatedMethod>
+      <code>addMethods</code>
+      <code>addMethods</code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA['users']]></code>
       <code><![CDATA['users']]></code>
@@ -2823,6 +2871,10 @@
     </MissingTemplateParam>
   </file>
   <file src="test/Db/RecordExistsTest.php">
+    <DeprecatedMethod>
+      <code>addMethods</code>
+      <code>addMethods</code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA['users']]></code>
       <code><![CDATA['users']]></code>
@@ -2852,6 +2904,9 @@
     <InvalidCast>
       <code><![CDATA[[1 => 1]]]></code>
     </InvalidCast>
+    <PossiblyUnusedMethod>
+      <code>basicDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/EmailAddressTest.php">
     <InvalidArgument>
@@ -2871,7 +2926,10 @@
       <code>null</code>
     </NullArgument>
     <PossiblyUnusedMethod>
+      <code>emailAddressesForMxChecks</code>
       <code>errorHandler</code>
+      <code>invalidEmailAddresses</code>
+      <code>validEmailAddresses</code>
     </PossiblyUnusedMethod>
     <RedundantConditionGivenDocblockType>
       <code>assertIsArray</code>
@@ -2892,17 +2950,27 @@
       <code>$c</code>
       <code>$v</code>
     </MissingClosureParamType>
+    <PossiblyUnusedMethod>
+      <code>getExpectedData</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/File/CountTest.php">
     <MixedArgument>
       <code>$max</code>
       <code>$min</code>
     </MixedArgument>
+    <PossiblyUnusedMethod>
+      <code>basicDataProvider</code>
+      <code>invalidMinMaxValues</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/File/Crc32Test.php">
     <MixedArgument>
       <code><![CDATA[$isValidParam['tmp_name']]]></code>
     </MixedArgument>
+    <PossiblyUnusedMethod>
+      <code>basicBehaviorDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/File/ExcludeExtensionTest.php">
     <InvalidReturnStatement>
@@ -2925,11 +2993,21 @@
     <MixedArgument>
       <code><![CDATA[$isValidParam['tmp_name']]]></code>
     </MixedArgument>
+    <PossiblyUnusedMethod>
+      <code>basicBehaviorDataProvider</code>
+      <code>getExtensionProvider</code>
+      <code>setExtensionProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/File/ExcludeMimeTypeTest.php">
     <MixedArgument>
       <code><![CDATA[$isValidParam['tmp_name']]]></code>
     </MixedArgument>
+    <PossiblyUnusedMethod>
+      <code>basicBehaviorDataProvider</code>
+      <code>getMimeTypeProvider</code>
+      <code>setMimeTypeProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/File/ExistsTest.php">
     <ArgumentTypeCoercion>
@@ -2941,6 +3019,12 @@
     <PossiblyNullArgument>
       <code>$value</code>
     </PossiblyNullArgument>
+    <PossiblyUnusedMethod>
+      <code>basicBehaviorDataProvider</code>
+      <code>getDirectoryProvider</code>
+      <code>invalidDirectoryArguments</code>
+      <code>setDirectoryProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/File/ExtensionTest.php">
     <InvalidReturnStatement>
@@ -2963,11 +3047,19 @@
     <MixedArgument>
       <code><![CDATA[$isValidParam['tmp_name']]]></code>
     </MixedArgument>
+    <PossiblyUnusedMethod>
+      <code>basicBehaviorDataProvider</code>
+      <code>getExtensionProvider</code>
+      <code>setExtensionProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/File/FilesSizeTest.php">
     <MixedArgument>
       <code>$options</code>
     </MixedArgument>
+    <PossiblyUnusedMethod>
+      <code>basicDataProvider</code>
+    </PossiblyUnusedMethod>
     <PossiblyUnusedProperty>
       <code>$multipleOptionsDetected</code>
     </PossiblyUnusedProperty>
@@ -2983,6 +3075,11 @@
     <MixedAssignment>
       <code>$options</code>
     </MixedAssignment>
+    <PossiblyUnusedMethod>
+      <code>basicBehaviorDataProvider</code>
+      <code>hashProvider</code>
+      <code>invalidHashTypes</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/File/ImageSizeTest.php">
     <InvalidArgument>
@@ -2991,6 +3088,10 @@
     <MixedArgument>
       <code><![CDATA[$isValidParam['tmp_name']]]></code>
     </MixedArgument>
+    <PossiblyUnusedMethod>
+      <code>basicBehaviorDataProvider</code>
+      <code>imageMaxProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/File/IsCompressedTest.php">
     <PossiblyInvalidArgument>
@@ -3000,6 +3101,11 @@
       <code>$options</code>
       <code>$options</code>
     </PossiblyNullArgument>
+    <PossiblyUnusedMethod>
+      <code>basicBehaviorDataProvider</code>
+      <code>getMimeTypeProvider</code>
+      <code>setMimeTypeProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/File/IsImageTest.php">
     <PossiblyInvalidArgument>
@@ -3009,6 +3115,11 @@
       <code>$options</code>
       <code>$options</code>
     </PossiblyNullArgument>
+    <PossiblyUnusedMethod>
+      <code>basicBehaviorDataProvider</code>
+      <code>getMimeTypeProvider</code>
+      <code>setMimeTypeProvider</code>
+    </PossiblyUnusedMethod>
     <RedundantCondition>
       <code>is_array($isValidParam)</code>
     </RedundantCondition>
@@ -3017,6 +3128,9 @@
     <MixedArgument>
       <code><![CDATA[$isValidParam['tmp_name']]]></code>
     </MixedArgument>
+    <PossiblyUnusedMethod>
+      <code>basicBehaviorDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/File/MimeTypeTest.php">
     <ArgumentTypeCoercion>
@@ -3040,6 +3154,12 @@
     <PossiblyNullArgument>
       <code>$type</code>
     </PossiblyNullArgument>
+    <PossiblyUnusedMethod>
+      <code>basicBehaviorDataProvider</code>
+      <code>getMimeTypeProvider</code>
+      <code>invalidMimeTypeTypes</code>
+      <code>setMimeTypeProvider</code>
+    </PossiblyUnusedMethod>
     <RedundantConditionGivenDocblockType>
       <code>is_array($isValidParam)</code>
     </RedundantConditionGivenDocblockType>
@@ -3054,6 +3174,12 @@
     <PossiblyNullArgument>
       <code>$value</code>
     </PossiblyNullArgument>
+    <PossiblyUnusedMethod>
+      <code>basicBehaviorDataProvider</code>
+      <code>getDirectoryProvider</code>
+      <code>invalidDirectoryArguments</code>
+      <code>setDirectoryProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/File/Sha1Test.php">
     <MixedArgument>
@@ -3062,6 +3188,10 @@
     <MixedArgumentTypeCoercion>
       <code>$isValidParam</code>
     </MixedArgumentTypeCoercion>
+    <PossiblyUnusedMethod>
+      <code>basicBehaviorDataProvider</code>
+      <code>getHashProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/File/SizeTest.php">
     <MixedArgument>
@@ -3069,11 +3199,24 @@
       <code>$value</code>
       <code>$value</code>
     </MixedArgument>
+    <PossiblyUnusedMethod>
+      <code>basicBehaviorDataProvider</code>
+      <code>invalidMinMaxValues</code>
+      <code>setMaxProvider</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/File/UploadFileTest.php">
+    <PossiblyUnusedMethod>
+      <code>uploadErrorsTestDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/File/UploadTest.php">
     <NullArgument>
       <code>null</code>
     </NullArgument>
+    <PossiblyUnusedMethod>
+      <code>invalidPsr7UploadedFiles</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/File/WordCountTest.php">
     <MixedArgument>
@@ -3081,6 +3224,17 @@
       <code>$value</code>
       <code>$value</code>
     </MixedArgument>
+    <PossiblyUnusedMethod>
+      <code>basicBehaviorDataProvider</code>
+      <code>invalidMinMaxValues</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/GPSPointTest.php">
+    <PossiblyUnusedMethod>
+      <code>basicDataProvider</code>
+      <code>boundariesProvider</code>
+      <code>errorMessageTestValues</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/GreaterThanTest.php">
     <InvalidArgument>
@@ -3095,9 +3249,11 @@
     <MixedArgument>
       <code>$options</code>
     </MixedArgument>
-    <PossiblyInvalidArgument>
-      <code>testBasic</code>
-    </PossiblyInvalidArgument>
+    <PossiblyUnusedMethod>
+      <code>basicDataProvider</code>
+      <code>correctInclusiveMessageDataProvider</code>
+      <code>correctNotInclusiveMessageDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/HexTest.php">
     <InvalidArgument>
@@ -3109,6 +3265,9 @@
     <PossiblyInvalidArgument>
       <code>$input</code>
     </PossiblyInvalidArgument>
+    <PossiblyUnusedMethod>
+      <code>basicDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/HostnameTest.php">
     <InvalidArgument>
@@ -3140,11 +3299,53 @@
       <code>$code</code>
       <code>$message</code>
     </PossiblyUndefinedVariable>
+    <PossiblyUnusedMethod>
+      <code>basicDataProvider</code>
+      <code>combinationDataProvider</code>
+      <code>dashesDataProvider</code>
+      <code>differentIconvEncodingDataProvider</code>
+      <code>domainsWithUnderscores</code>
+      <code>idnMatchingDataProvider</code>
+      <code>idnNoMatchingDataProvider</code>
+      <code>idnilDataProvider</code>
+      <code>idnsiProvider</code>
+      <code>invalidLatinSpecialCharsProvider</code>
+      <code>invalidTLDHostnames</code>
+      <code>numberNamesDataProvider</code>
+      <code>punyCodeDecodingDataProvider</code>
+      <code>tldMatchingDataProvider</code>
+      <code>tldNoMatchingDataProvider</code>
+      <code>trailingDotDataProvider</code>
+      <code>uriDataProvider</code>
+      <code>validTLDHostnames</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/IbanTest.php">
+    <PossiblyUnusedMethod>
+      <code>ibanDataProvider</code>
+      <code>invalidValues</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/IdenticalTest.php">
     <MixedArgument>
       <code>$context</code>
     </MixedArgument>
+    <PossiblyUnusedMethod>
+      <code>invalidContextProvider</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/InArrayTest.php">
+    <PossiblyUnusedMethod>
+      <code>nonStrictValidationSet</code>
+      <code>strictValidationSet</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/IpTest.php">
+    <PossiblyUnusedMethod>
+      <code>iPvFutureAddressesProvider</code>
+      <code>invalidIpV4Addresses</code>
+      <code>ipvFutureProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/IsCountableTest.php">
     <InvalidArgument>
@@ -3154,6 +3355,10 @@
       <code>$options</code>
       <code>$originalOptions</code>
     </PossiblyInvalidArgument>
+    <PossiblyUnusedMethod>
+      <code>conflictingOptionsProvider</code>
+      <code>conflictingSecondaryOptionsProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/IsInstanceOfTest.php">
     <InvalidArgument>
@@ -3166,6 +3371,14 @@
       <code>TestCase::class</code>
     </InvalidArgument>
   </file>
+  <file src="test/IsJsonStringTest.php">
+    <PossiblyUnusedMethod>
+      <code>allowProvider</code>
+      <code>invalidStringProvider</code>
+      <code>pluginManagerNameProvider</code>
+      <code>provideThingsThatAreNotStrings</code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="test/IsbnTest.php">
     <InvalidArgument>
       <code>(float) 1.2345</code>
@@ -3174,6 +3387,9 @@
     <InvalidCast>
       <code><![CDATA[(object) 'Test']]></code>
     </InvalidCast>
+    <PossiblyUnusedMethod>
+      <code>basicProvider</code>
+    </PossiblyUnusedMethod>
     <RedundantCast>
       <code>(float) 1.2345</code>
     </RedundantCast>
@@ -3190,9 +3406,9 @@
     <MixedArgument>
       <code>$options</code>
     </MixedArgument>
-    <PossiblyInvalidArgument>
-      <code>testBasic</code>
-    </PossiblyInvalidArgument>
+    <PossiblyUnusedMethod>
+      <code>basicDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/MessageTest.php">
     <InaccessibleProperty>
@@ -3214,6 +3430,28 @@
       <code><![CDATA['boolean']]></code>
       <code>true</code>
     </InvalidArgument>
+    <PossiblyUnusedMethod>
+      <code>arrayConfigNotationProvider</code>
+      <code>arrayConfigNotationWithoutKeyProvider</code>
+      <code>arrayConstantNotationProvider</code>
+      <code>arrayOnlyProvider</code>
+      <code>basicProvider</code>
+      <code>booleanProvider</code>
+      <code>configObjectProvider</code>
+      <code>constructorWithTypeArrayProvider</code>
+      <code>duplicateStringSettingProvider</code>
+      <code>floatOnlyProvider</code>
+      <code>integerOnlyProvider</code>
+      <code>multiConstantNotationProvider</code>
+      <code>nullOnlyProvider</code>
+      <code>onlyAllProvider</code>
+      <code>phpOnlyProvider</code>
+      <code>singleStringNotationProvider</code>
+      <code>spaceOnlyProvider</code>
+      <code>stringNotationProvider</code>
+      <code>stringOnlyProvider</code>
+      <code>zeroOnlyProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/RegexTest.php">
     <InvalidArgument>
@@ -3226,6 +3464,11 @@
       <code>$options</code>
       <code>$options</code>
     </MixedArgument>
+    <PossiblyUnusedMethod>
+      <code>basicDataProvider</code>
+      <code>invalidConstructorArgumentsProvider</code>
+      <code>specialCharValidationProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/Sitemap/ChangefreqTest.php">
     <InvalidArgument>
@@ -3250,6 +3493,9 @@
     <PossiblyInvalidCast>
       <code>$value</code>
     </PossiblyInvalidCast>
+    <PossiblyUnusedMethod>
+      <code>invalidLocs</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/Sitemap/PriorityTest.php">
     <PossiblyInvalidArgument>
@@ -3268,11 +3514,22 @@
     <NullArgument>
       <code>null</code>
     </NullArgument>
+    <PossiblyUnusedMethod>
+      <code>invalidParameterizedData</code>
+      <code>parameterizedData</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/StepTest.php">
     <InvalidArgument>
       <code>$baseValue</code>
     </InvalidArgument>
+    <PossiblyUnusedMethod>
+      <code>decimalHundredthStepValues</code>
+      <code>decimalStepSubstractionBugValues</code>
+      <code>decimalStepValues</code>
+      <code>decimalValues</code>
+      <code>valuesToValidate</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/StringLengthTest.php">
     <InvalidArgument>
@@ -3284,6 +3541,9 @@
     <MixedArgument>
       <code>$options</code>
     </MixedArgument>
+    <PossiblyUnusedMethod>
+      <code>basicDataProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/TimezoneTest.php">
     <InvalidArgument>
@@ -3295,6 +3555,19 @@
     <MixedArgument>
       <code>$value</code>
     </MixedArgument>
+    <PossiblyUnusedMethod>
+      <code>abbreviationProvider</code>
+      <code>getInvalidTypes</code>
+      <code>locationAndAbbreviationProvider</code>
+      <code>locationProvider</code>
+      <code>wrongTypesProvider</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/UndisclosedPasswordTest.php">
+    <PossiblyUnusedMethod>
+      <code>goodPasswordProvider</code>
+      <code>seenPasswordProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/UriTest.php">
     <InvalidArgument>
@@ -3306,6 +3579,16 @@
     <MixedArgument>
       <code>$value</code>
     </MixedArgument>
+    <PossiblyUnusedMethod>
+      <code>allowOptionsDataProvider</code>
+      <code>invalidValueTypes</code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/UuidTest.php">
+    <PossiblyUnusedMethod>
+      <code>invalidUuidProvider</code>
+      <code>validUuidProvider</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/ValidatorChainTest.php">
     <InvalidArgument>
@@ -3316,6 +3599,7 @@
       <code>$value</code>
     </MissingClosureParamType>
     <PossiblyUnusedMethod>
+      <code>breakChainFlags</code>
       <code>handleNotFoundError</code>
     </PossiblyUnusedMethod>
     <UndefinedThisPropertyAssignment>

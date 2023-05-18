@@ -6,22 +6,20 @@ namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Iban as IbanValidator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
 use function array_merge;
 use function implode;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\Iban
- */
 final class IbanTest extends TestCase
 {
     /**
      * @psalm-return array<array-key, array{0: string, 1: bool}>
      */
-    public function ibanDataProvider(): array
+    public static function ibanDataProvider(): array
     {
         return [
             ['AD1200012030200359100100', true],
@@ -99,9 +97,8 @@ final class IbanTest extends TestCase
 
     /**
      * Ensures that the validator follows expected behavior
-     *
-     * @dataProvider ibanDataProvider
      */
+    #[DataProvider('ibanDataProvider')]
     public function testBasic(string $iban, bool $expected): void
     {
         $validator = new IbanValidator();
@@ -160,9 +157,7 @@ final class IbanTest extends TestCase
         self::assertFalse($validator->isValid('US611904300234573201'));
     }
 
-    /**
-     * @group Laminas-10556
-     */
+    #[Group('Laminas-10556')]
     public function testIbanDetectionWithoutCountryCode(): void
     {
         $validator = new IbanValidator();
@@ -197,7 +192,7 @@ final class IbanTest extends TestCase
     /**
      * @psalm-return array<string, array{0: mixed}>
      */
-    public function invalidValues(): array
+    public static function invalidValues(): array
     {
         return [
             'null'       => [null],
@@ -212,9 +207,7 @@ final class IbanTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidValues
-     */
+    #[DataProvider('invalidValues')]
     public function testIsValidReturnsFalseForNonStringValue(mixed $value): void
     {
         $validator = new IbanValidator();

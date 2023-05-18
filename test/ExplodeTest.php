@@ -11,15 +11,13 @@ use Laminas\Validator\Explode;
 use Laminas\Validator\InArray;
 use Laminas\Validator\Regex;
 use Laminas\Validator\ValidatorInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
 use function array_keys;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\Explode
- */
 final class ExplodeTest extends TestCase
 {
     public function testRaisesExceptionWhenValidatorIsMissing(): void
@@ -43,7 +41,7 @@ final class ExplodeTest extends TestCase
      *     6: bool
      * }>
      */
-    public function getExpectedData(): array
+    public static function getExpectedData(): array
     {
         return [
             //    value              delim break  N  valid  messages                   expects
@@ -67,9 +65,7 @@ final class ExplodeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider getExpectedData
-     */
+    #[DataProvider('getExpectedData')]
     public function testExpectedBehavior(
         mixed $value,
         ?string $delimiter,
@@ -164,9 +160,7 @@ final class ExplodeTest extends TestCase
         $validator->setValidator('inarray');
     }
 
-    /**
-     * @group Laminas-5796
-     */
+    #[Group('Laminas-5796')]
     public function testGetMessagesMultipleInvalid(): void
     {
         $validator = new Explode([

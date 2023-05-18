@@ -9,6 +9,7 @@ use Laminas\Session\Container;
 use Laminas\Session\Storage\ArrayStorage;
 use Laminas\Validator\Csrf;
 use LaminasTest\Validator\TestAsset\SessionManager;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 
@@ -19,12 +20,6 @@ use function str_replace;
 use function strtr;
 use function uniqid;
 
-/**
- * Laminas\Csrf
- *
- * @group Laminas_Validator
- * @covers \Laminas\Validator\Csrf
- */
 final class CsrfTest extends TestCase
 {
     private Csrf $validator;
@@ -107,7 +102,7 @@ final class CsrfTest extends TestCase
      * @return (int|null|string)[][]
      * @psalm-return array<array-key, array{0: null|int|string, 1: null|int}>
      */
-    public function timeoutValuesDataProvider(): array
+    public static function timeoutValuesDataProvider(): array
     {
         return [
             //    timeout  expected
@@ -119,9 +114,9 @@ final class CsrfTest extends TestCase
     }
 
     /**
-     * @dataProvider timeoutValuesDataProvider
      * @param null|int|string $timeout
      */
+    #[DataProvider('timeoutValuesDataProvider')]
     public function testTimeoutIsMutable($timeout, ?int $expected): void
     {
         $this->validator->setTimeout($timeout);
@@ -306,7 +301,7 @@ final class CsrfTest extends TestCase
      * @return string[][]
      * @psalm-return array<array-key, array{0: string}>
      */
-    public function fakeValuesDataProvider(): array
+    public static function fakeValuesDataProvider(): array
     {
         return [
             [''],
@@ -320,9 +315,7 @@ final class CsrfTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider fakeValuesDataProvider
-     */
+    #[DataProvider('fakeValuesDataProvider')]
     public function testWithFakeValues(string $value): void
     {
         $validator = new Csrf();

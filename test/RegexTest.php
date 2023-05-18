@@ -6,23 +6,19 @@ namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Regex;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
 use function array_keys;
 use function implode;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\Regex
- */
 final class RegexTest extends TestCase
 {
     /**
      * Ensures that the validator follows expected behavior
-     *
-     * @dataProvider basicDataProvider
      */
+    #[DataProvider('basicDataProvider')]
     public function testBasic(array $options, string $input, bool $expected): void
     {
         $validator = new Regex(...$options);
@@ -37,7 +33,7 @@ final class RegexTest extends TestCase
      *     2: bool
      * }>
      */
-    public function basicDataProvider(): array
+    public static function basicDataProvider(): array
     {
         return [
             // phpcs:disable
@@ -103,8 +99,8 @@ final class RegexTest extends TestCase
 
     /**
      * @Laminas-11863
-     * @dataProvider specialCharValidationProvider
      */
+    #[DataProvider('specialCharValidationProvider')]
     public function testSpecialCharValidation(bool $expected, string $input): void
     {
         $validator = new Regex('/^[[:alpha:]\']+$/iu');
@@ -123,7 +119,7 @@ final class RegexTest extends TestCase
      *
      * @psalm-return array<array-key, array{0: bool, 1: string}>
      */
-    public function specialCharValidationProvider(): array
+    public static function specialCharValidationProvider(): array
     {
         return [
             [true, 'test'],
@@ -164,7 +160,7 @@ final class RegexTest extends TestCase
     /**
      * @psalm-return array<string, array{0: mixed}>
      */
-    public function invalidConstructorArgumentsProvider(): array
+    public static function invalidConstructorArgumentsProvider(): array
     {
         return [
             'true'       => [true],
@@ -177,9 +173,7 @@ final class RegexTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidConstructorArgumentsProvider
-     */
+    #[DataProvider('invalidConstructorArgumentsProvider')]
     public function testConstructorRaisesExceptionWhenProvidedInvalidArguments(mixed $options): void
     {
         $this->expectException(InvalidArgumentException::class);

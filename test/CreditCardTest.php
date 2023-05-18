@@ -8,15 +8,13 @@ use ArrayObject;
 use Laminas\Validator\CreditCard;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use LaminasTest\Validator\TestAsset\CreditCardValidatorExtension;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
 use function current;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\CreditCard
- */
 final class CreditCardTest extends TestCase
 {
     /**
@@ -35,9 +33,8 @@ final class CreditCardTest extends TestCase
 
     /**
      * Ensures that the validator follows expected behavior
-     *
-     * @dataProvider basicValues
      */
+    #[DataProvider('basicValues')]
     public function testBasic(string $input, bool $expected): void
     {
         $validator = new CreditCard();
@@ -113,9 +110,8 @@ final class CreditCardTest extends TestCase
 
     /**
      * Test specific provider
-     *
-     * @dataProvider visaValues
      */
+    #[DataProvider('visaValues')]
     public function testProvider(string $input, bool $expected): void
     {
         $validator = new CreditCard(CreditCard::VISA);
@@ -149,9 +145,8 @@ final class CreditCardTest extends TestCase
 
     /**
      * Test service class with invalid validation
-     *
-     * @dataProvider serviceValues
      */
+    #[DataProvider('serviceValues')]
     public function testServiceClass(string $input, bool $expected): void
     {
         $validator = new CreditCard();
@@ -179,9 +174,8 @@ final class CreditCardTest extends TestCase
 
     /**
      * Test non string input
-     *
-     * @dataProvider optionsValues
      */
+    #[DataProvider('optionsValues')]
     public function testConstructionWithOptions(string $input, bool $expected): void
     {
         $validator = new CreditCard(
@@ -199,7 +193,7 @@ final class CreditCardTest extends TestCase
      *
      * @psalm-return array<array-key, array{0: string, 1: bool}>
      */
-    public function jcbValues(): array
+    public static function jcbValues(): array
     {
         return [
             ['3566003566003566', true],
@@ -217,12 +211,12 @@ final class CreditCardTest extends TestCase
     /**
      * Test JCB number validity
      *
-     * @dataProvider jcbValues
      * @param string $input
      * @param bool   $expected
-     * @group 6278
-     * @group 6927
      */
+    #[DataProvider('jcbValues')]
+    #[Group('6278')]
+    #[Group('6927')]
     public function testJcbCard($input, $expected): void
     {
         $validator = new CreditCard(['type' => CreditCard::JCB]);
@@ -235,7 +229,7 @@ final class CreditCardTest extends TestCase
      *
      * @psalm-return array<array-key, array{0: string, 1: bool}>
      */
-    public function mastercardValues(): array
+    public static function mastercardValues(): array
     {
         return [
             ['4111111111111111', false],
@@ -256,10 +250,10 @@ final class CreditCardTest extends TestCase
     /**
      * Test mastercard number validity
      *
-     * @dataProvider mastercardValues
      * @param string $input
      * @param bool   $expected
      */
+    #[DataProvider('mastercardValues')]
     public function testMastercardCard($input, $expected): void
     {
         $validator = new CreditCard(['type' => CreditCard::MASTERCARD]);
@@ -272,7 +266,7 @@ final class CreditCardTest extends TestCase
      *
      * @psalm-return array<array-key, array{0: string, 1: bool}>
      */
-    public function mirValues(): array
+    public static function mirValues(): array
     {
         return [
             ['3011111111111000', false],
@@ -294,10 +288,10 @@ final class CreditCardTest extends TestCase
     /**
      * Test mir card number validity
      *
-     * @dataProvider mirValues
      * @param string $input
      * @param bool   $expected
      */
+    #[DataProvider('mirValues')]
     public function testMirCard($input, $expected): void
     {
         $validator = new CreditCard(['type' => CreditCard::MIR]);
@@ -359,9 +353,7 @@ final class CreditCardTest extends TestCase
         self::assertSame([self::class, 'staticCallback'], $validator->getService());
     }
 
-    /**
-     * @group Laminas-9477
-     */
+    #[Group('Laminas-9477')]
     public function testMultiInstitute(): void
     {
         $validator = new CreditCard(['type' => CreditCard::MASTERCARD]);

@@ -7,15 +7,13 @@ namespace LaminasTest\Validator;
 use Laminas\Stdlib\Parameters;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Identical;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
 use function array_keys;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\Identical
- */
 final class IdenticalTest extends TestCase
 {
     private Identical $validator;
@@ -85,9 +83,7 @@ final class IdenticalTest extends TestCase
         self::assertTrue($this->validator->isValid('foo'));
     }
 
-    /**
-     * @group Laminas-6953
-     */
+    #[Group('Laminas-6953')]
     public function testValidatingAgainstEmptyToken(): void
     {
         $this->validator->setToken('');
@@ -95,9 +91,7 @@ final class IdenticalTest extends TestCase
         self::assertTrue($this->validator->isValid(''));
     }
 
-    /**
-     * @group Laminas-7128
-     */
+    #[Group('Laminas-7128')]
     public function testValidatingAgainstNonStrings(): void
     {
         $this->validator->setToken(true);
@@ -276,9 +270,7 @@ final class IdenticalTest extends TestCase
         ));
     }
 
-    /**
-     * @dataProvider invalidContextProvider
-     */
+    #[DataProvider('invalidContextProvider')]
     public function testIsValidThrowsExceptionOnInvalidContext(mixed $context): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -289,7 +281,7 @@ final class IdenticalTest extends TestCase
     /**
      * @return mixed[][]
      */
-    public function invalidContextProvider(): array
+    public static function invalidContextProvider(): array
     {
         return [
             [false],

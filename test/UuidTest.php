@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Uuid;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
 /**
  * Uuid test cases based on https://github.com/beberlei/assert/blob/master/tests/Assert/Tests/AssertTest.php
- *
- * @covers \Laminas\Validator\Uuid
  */
 final class UuidTest extends TestCase
 {
@@ -24,9 +23,7 @@ final class UuidTest extends TestCase
         $this->validator = new Uuid();
     }
 
-    /**
-     * @dataProvider validUuidProvider
-     */
+    #[DataProvider('validUuidProvider')]
     public function testValidUuid(string $uuid): void
     {
         self::assertTrue($this->validator->isValid($uuid));
@@ -36,9 +33,7 @@ final class UuidTest extends TestCase
         self::assertCount(0, $messages);
     }
 
-    /**
-     * @dataProvider invalidUuidProvider
-     */
+    #[DataProvider('invalidUuidProvider')]
     public function testInvalidUuid(mixed $uuid, string $expectedMessageKey): void
     {
         self::assertFalse($this->validator->isValid($uuid));
@@ -53,7 +48,7 @@ final class UuidTest extends TestCase
     /**
      * @psalm-return array<string, array{string}>
      */
-    public function validUuidProvider(): array
+    public static function validUuidProvider(): array
     {
         return [
             'zero-fill' => ['00000000-0000-0000-0000-000000000000'],
@@ -69,7 +64,7 @@ final class UuidTest extends TestCase
     /**
      * @psalm-return array<string, array{string|int|stdClass, string}>
      */
-    public function invalidUuidProvider(): array
+    public static function invalidUuidProvider(): array
     {
         return [
             'invalid-characters' => ['laminas6f8cb0-c57d-11e1-9b21-0800200c9a66', Uuid::INVALID],

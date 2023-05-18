@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\GpsPoint;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\GpsPoint
- */
 final class GPSPointTest extends TestCase
 {
     private GpsPoint $validator;
@@ -22,17 +19,14 @@ final class GPSPointTest extends TestCase
         $this->validator = new GpsPoint();
     }
 
-    /**
-     * @dataProvider basicDataProvider
-     * @covers \Laminas\Validator\GPSPoint::isValid
-     */
+    #[DataProvider('basicDataProvider')]
     public function testBasic(string $gpsPoint): void
     {
         self::assertTrue($this->validator->isValid($gpsPoint));
     }
 
     /** @psalm-return array<array-key, array{0: string, 1: bool}> */
-    public function boundariesProvider(): array
+    public static function boundariesProvider(): array
     {
         return [
             ['181.8897,-77.0089', false],
@@ -42,19 +36,13 @@ final class GPSPointTest extends TestCase
         ];
     }
 
-    /**
-     * @covers \Laminas\Validator\GPSPoint::isValid
-     * @dataProvider boundariesProvider
-     */
+    #[DataProvider('boundariesProvider')]
     public function testBoundariesAreRespected(string $value, bool $expected): void
     {
         self::assertSame($expected, $this->validator->isValid($value));
     }
 
-    /**
-     * @covers \Laminas\Validator\GPSPoint::isValid
-     * @dataProvider errorMessageTestValues
-     */
+    #[DataProvider('errorMessageTestValues')]
     public function testErrorsSetOnOccur(string $value, string $messageKey, string $messageValue): void
     {
         self::assertFalse($this->validator->isValid($value));
@@ -68,7 +56,7 @@ final class GPSPointTest extends TestCase
     /**
      * @psalm-return array<array-key, array{0: string}>
      */
-    public function basicDataProvider(): array
+    public static function basicDataProvider(): array
     {
         return [
             ['38° 53\' 23" N, 77° 00\' 32" W'],
@@ -82,7 +70,7 @@ final class GPSPointTest extends TestCase
     /**
      * @psalm-return array<array-key, array{0: string, 1: string, 2: string}>
      */
-    public function errorMessageTestValues(): array
+    public static function errorMessageTestValues(): array
     {
         return [
             ['63 47 24.691 N, 18 2 54.363 W', GpsPoint::OUT_OF_BOUNDS, '63 47 24.691 N'],

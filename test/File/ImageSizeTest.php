@@ -6,6 +6,8 @@ namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File\ImageSize;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function array_merge;
@@ -15,10 +17,6 @@ use function is_array;
 
 use const UPLOAD_ERR_NO_FILE;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\File\ImageSize
- */
 final class ImageSizeTest extends TestCase
 {
     /**
@@ -35,7 +33,7 @@ final class ImageSizeTest extends TestCase
      *     3: string|string[]
      * }>
      */
-    public function basicBehaviorDataProvider(): array
+    public static function basicBehaviorDataProvider(): array
     {
         $testFile     = __DIR__ . '/_files/picture.jpg';
         $pictureTests = [
@@ -131,10 +129,10 @@ final class ImageSizeTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param string|array $isValidParam
      * @param string|string[] $messageKeys
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testBasic(array $options, $isValidParam, bool $expected, $messageKeys): void
     {
         $validator = new ImageSize($options);
@@ -155,10 +153,10 @@ final class ImageSizeTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param string|array $isValidParam
      * @param string|string[] $messageKeys
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testLegacy(array $options, $isValidParam, bool $expected, $messageKeys): void
     {
         if (! is_array($isValidParam)) {
@@ -246,7 +244,7 @@ final class ImageSizeTest extends TestCase
     }
 
     /** @psalm-return array<array{array<string, int>, array<string, int>}> */
-    public function imageMaxProvider(): array
+    public static function imageMaxProvider(): array
     {
         return [
             [['maxWidth' => 100, 'maxHeight' => 100], ['maxWidth' => 100, 'maxHeight' => 100]],
@@ -259,10 +257,10 @@ final class ImageSizeTest extends TestCase
     /**
      * Ensures that setImageMax() returns expected value
      *
-     * @dataProvider imageMaxProvider
      * @param array<string, int> $imageMax
      * @param array<string, int> $expected
      */
+    #[DataProvider('imageMaxProvider')]
     public function testSetImageMax(array $imageMax, array $expected): void
     {
         $validator = new ImageSize([
@@ -343,9 +341,7 @@ final class ImageSizeTest extends TestCase
         $validator->setImageHeight(['minHeight' => 20000, 'maxHeight' => 200]);
     }
 
-    /**
-     * @group Laminas-11258
-     */
+    #[Group('Laminas-11258')]
     public function testLaminas11258(): void
     {
         $validator = new ImageSize([
