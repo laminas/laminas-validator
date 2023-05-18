@@ -9,6 +9,7 @@ use Laminas\Validator\Digits;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
 use Laminas\Validator\ValidatorPluginManagerFactory;
+use LaminasTest\Validator\TestAsset\InMemoryContainer;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
@@ -17,10 +18,8 @@ final class ValidatorPluginManagerFactoryTest extends TestCase
 {
     public function testFactoryReturnsPluginManager(): void
     {
-        $container = $this->createMock(ContainerInterface::class);
-        $factory   = new ValidatorPluginManagerFactory();
-
-        $validators = $factory($container, ValidatorPluginManagerFactory::class);
+        $factory    = new ValidatorPluginManagerFactory();
+        $validators = $factory(new InMemoryContainer(), ValidatorPluginManagerFactory::class);
 
         self::assertInstanceOf(ValidatorPluginManager::class, $validators);
     }
@@ -30,11 +29,10 @@ final class ValidatorPluginManagerFactoryTest extends TestCase
      */
     public function testFactoryConfiguresPluginManagerUnderContainerInterop(): void
     {
-        $container = $this->createMock(ContainerInterface::class);
         $validator = $this->createMock(ValidatorInterface::class);
 
         $factory    = new ValidatorPluginManagerFactory();
-        $validators = $factory($container, ValidatorPluginManagerFactory::class, [
+        $validators = $factory(new InMemoryContainer(), ValidatorPluginManagerFactory::class, [
             'services' => [
                 'test' => $validator,
             ],
@@ -72,28 +70,13 @@ final class ValidatorPluginManagerFactoryTest extends TestCase
                     'test' => Digits::class,
                 ],
                 'factories' => [
-                    'test-too' => static fn($container): ValidatorInterface => $validator,
+                    'test-too' => static fn(): ValidatorInterface => $validator,
                 ],
             ],
         ];
 
-        $container = $this->createMock(ServiceLocatorInterface::class);
-
-        $container
-            ->expects(self::exactly(3))
-            ->method('has')
-            ->withConsecutive(
-                ['ServiceListener'],
-                ['config'],
-                ['MvcTranslator'], // necessary due to default initializers
-            )
-            ->willReturn(false, true, false);
-
-        $container
-            ->expects(self::once())
-            ->method('get')
-            ->with('config')
-            ->willReturn($config);
+        $container = new InMemoryContainer();
+        $container->set('config', $config);
 
         $factory    = new ValidatorPluginManagerFactory();
         $validators = $factory($container, 'ValidatorManager');
@@ -130,22 +113,7 @@ final class ValidatorPluginManagerFactoryTest extends TestCase
 
     public function testDoesNotConfigureValidatorServicesWhenConfigServiceNotPresent(): void
     {
-        $container = $this->createMock(ServiceLocatorInterface::class);
-
-        $container
-            ->expects(self::exactly(2))
-            ->method('has')
-            ->withConsecutive(
-                ['ServiceListener'],
-                ['config'],
-            )
-            ->willReturn(false, false);
-
-        $container
-            ->expects(self::never())
-            ->method('get')
-            ->with('config');
-
+        $container  = new InMemoryContainer();
         $factory    = new ValidatorPluginManagerFactory();
         $validators = $factory($container, 'ValidatorManager');
 
@@ -154,23 +122,8 @@ final class ValidatorPluginManagerFactoryTest extends TestCase
 
     public function testDoesNotConfigureValidatorServicesWhenConfigServiceDoesNotContainValidatorsConfig(): void
     {
-        $container = $this->createMock(ServiceLocatorInterface::class);
-
-        $container
-            ->expects(self::exactly(2))
-            ->method('has')
-            ->withConsecutive(
-                ['ServiceListener'],
-                ['config'],
-            )
-            ->willReturn(false, true);
-
-        $container
-            ->expects(self::once())
-            ->method('get')
-            ->with('config')
-            ->willReturn(['foo' => 'bar']);
-
+        $container = new InMemoryContainer();
+        $container->set('config', ['foo' => 'bar']);
         $factory    = new ValidatorPluginManagerFactory();
         $validators = $factory($container, 'ValidatorManager');
 
