@@ -4,29 +4,31 @@
          bootstrap="./vendor/autoload.php"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTestsThatDoNotTestAnything="true"
+         displayDetailsOnIncompleteTests="true"
+         displayDetailsOnSkippedTests="true"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnTestsThatTriggerErrors="true"
+         displayDetailsOnTestsThatTriggerNotices="true"
+         displayDetailsOnTestsThatTriggerWarnings="true"
          failOnWarning="true"
-         colors="true">
+         failOnDeprecation="true"
+         failOnNotice="true"
+         colors="true"
+         cacheDirectory=".phpunit.cache"
+>
     <testsuites>
         <testsuite name="laminas-validator Test Suite">
             <directory>./test/</directory>
         </testsuite>
     </testsuites>
-
-    <groups>
-        <exclude>
-            <group>disable</group>
-        </exclude>
-    </groups>
-
-    <coverage processUncoveredFiles="true">
-        <include>
-            <directory suffix=".php">./src</directory>
-        </include>
-    </coverage>
-
     <php>
         <ini name="date.timezone" value="UTC"/>
         <ini name="xdebug.max_nesting_level" value="3000"/>
-        <env name="TESTS_LAMINAS_VALIDATOR_ONLINE_ENABLED" value="true" />
+        <env name="TESTS_LAMINAS_VALIDATOR_ONLINE_ENABLED" value="true"/>
     </php>
+    <source>
+        <include>
+            <directory suffix=".php">./src</directory>
+        </include>
+    </source>
 </phpunit>
