@@ -27,13 +27,6 @@
     <php>
         <ini name="date.timezone" value="UTC"/>
         <ini name="xdebug.max_nesting_level" value="3000"/>
-
-        <!-- OB_ENABLED should be enabled for some tests to check if all
-             functionality works as expected. Such tests include those for
-             Laminas\Soap and Laminas\Session, which require that headers not be sent
-             in order to work. -->
-        <env name="TESTS_LAMINAS_OB_ENABLED" value="false" />
-
-        <env name="TESTS_LAMINAS_VALIDATOR_ONLINE_ENABLED" value="false" />
+        <env name="TESTS_LAMINAS_VALIDATOR_ONLINE_ENABLED" value="true" />
     </php>
 </phpunit>

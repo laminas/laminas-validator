@@ -8,7 +8,6 @@ use Laminas\Validator\EmailAddress;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Hostname;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_SkippedTestError;
 
 use function array_key_exists;
 use function array_keys;
@@ -350,40 +349,44 @@ final class EmailAddressTest extends TestCase
         }
     }
 
+    /** @return array<string, array{0: string, 1: bool}> */
+    public static function emailAddressesForMxChecks(): array
+    {
+        return [
+            'Bob.Jones@php.net'                => ['Bob.Jones@php.net', true],
+            'Bob.Jones@zend.com'               => ['Bob.Jones@zend.com', true],
+            'Bob.Jones@bad.example.com'        => ['Bob.Jones@bad.example.com', false],
+            'Bob.Jones@anotherbad.example.com' => ['Bob.Jones@anotherbad.example.com', false],
+        ];
+    }
+
     /**
      * Ensures that the validator follows expected behavior for checking MX records
+     *
+     * @dataProvider emailAddressesForMxChecks
      */
-    public function testMXRecords(): void
+    public function testMXRecords(string $emailAddress, bool $expect): void
     {
         $this->skipIfOnlineTestsDisabled();
 
-        $validator = new EmailAddress(Hostname::ALLOW_DNS, true);
+        $validator = new EmailAddress([
+            'allow'      => Hostname::ALLOW_DNS,
+            'useMxCheck' => true,
+        ]);
 
         // Are MX checks supported by this system?
         if (! $validator->isMxSupported()) {
             self::markTestSkipped('Testing MX records is not supported with this configuration');
         }
 
-        $valuesExpected = [
-            [true, ['Bob.Jones@zend.com', 'Bob.Jones@php.net']],
-            [false, ['Bob.Jones@bad.example.com', 'Bob.Jones@anotherbad.example.com']],
-        ];
-
-        foreach ($valuesExpected as $element) {
-            foreach ($element[1] as $input) {
-                self::assertSame($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
-            }
-        }
+        self::assertSame($expect, $validator->isValid($emailAddress), implode("\n", $validator->getMessages()));
 
         // Try a check via setting the option via a method
         unset($validator);
+
         $validator = new EmailAddress();
         $validator->useMxCheck(true);
-        foreach ($valuesExpected as $element) {
-            foreach ($element[1] as $input) {
-                self::assertSame($element[0], $validator->isValid($input), implode("\n", $validator->getMessages()));
-            }
-        }
+        self::assertSame($expect, $validator->isValid($emailAddress), implode("\n", $validator->getMessages()));
     }
 
     /**
@@ -396,7 +399,10 @@ final class EmailAddressTest extends TestCase
     {
         $this->skipIfOnlineTestsDisabled();
 
-        $validator = new EmailAddress(Hostname::ALLOW_DNS, true);
+        $validator = new EmailAddress([
+            'allow'      => Hostname::ALLOW_DNS,
+            'useMxCheck' => true,
+        ]);
 
         // Are MX checks supported by this system?
         if (! $validator->isMxSupported()) {
@@ -404,15 +410,15 @@ final class EmailAddressTest extends TestCase
         }
 
         $email = 'good@www.getlaminas.org';
-        $host  = preg_replace('/.*@/', null, $email);
+        $host  = preg_replace('/.*@/', '', $email);
 
         //Assert that email host contains no MX records.
         self::assertFalse(checkdnsrr($host, 'MX'), 'Email host contains MX records');
 
-        //Asert that email host contains at least one A record.
+        //Assert that email host contains at least one A record.
         self::assertTrue(checkdnsrr($host, 'A'), 'Email host contains no A records');
 
-        //Assert that validtor falls back to A record.
+        //Assert that validator falls back to A record.
         self::assertTrue($validator->isValid($email), implode("\n", $validator->getMessages()));
     }
 
@@ -572,6 +578,7 @@ final class EmailAddressTest extends TestCase
         self::assertFalse($options['useMxCheck']);
 
         try {
+            /** @psalm-suppress TooManyArguments */
             $validator = new EmailAddress(Hostname::ALLOW_ALL, true, new Hostname(Hostname::ALLOW_ALL));
             $options   = $validator->getOptions();
 
@@ -931,9 +938,6 @@ final class EmailAddressTest extends TestCase
         self::assertFalse($validator->isReserved('223.255.255.255'));
     }
 
-    /**
-     * @throws PHPUnit_Framework_SkippedTestError
-     */
     private function skipIfOnlineTestsDisabled(): void
     {
         if (! getenv('TESTS_LAMINAS_VALIDATOR_ONLINE_ENABLED')) {
