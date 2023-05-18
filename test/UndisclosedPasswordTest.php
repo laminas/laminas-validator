@@ -13,6 +13,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 use ReflectionClass;
 use stdClass;
 
@@ -34,6 +35,9 @@ final class UndisclosedPasswordTest extends TestCase
     /** @var ResponseInterface&MockObject */
     private ResponseInterface $httpResponse;
 
+    /** @var StreamInterface&MockObject */
+    private StreamInterface $httpStream;
+
     private UndisclosedPassword $validator;
 
     /** {@inheritDoc} */
@@ -44,6 +48,7 @@ final class UndisclosedPasswordTest extends TestCase
         $this->httpClient   = $this->createMock(ClientInterface::class);
         $this->httpRequest  = $this->createMock(RequestFactoryInterface::class);
         $this->httpResponse = $this->createMock(ResponseInterface::class);
+        $this->httpStream   = $this->createMock(StreamInterface::class);
 
         $this->validator = new UndisclosedPassword($this->httpClient, $this->httpRequest);
     }
@@ -114,11 +119,12 @@ final class UndisclosedPasswordTest extends TestCase
      */
     public function testStrongUnseenPasswordsPassValidation(string $password): void
     {
-        $this->httpResponse
+        $this->httpStream
             ->expects(self::once())
-            ->method('getBody')
+            ->method('__toString')
             ->willReturnCallback(function (): string {
                 $hash = sha1('laminas-validator');
+
 
                 return sprintf(
                     '%s:%d',
@@ -129,6 +135,11 @@ final class UndisclosedPasswordTest extends TestCase
                     random_int(0, 100000)
                 );
             });
+
+        $this->httpResponse
+            ->expects(self::once())
+            ->method('getBody')
+            ->willReturn($this->httpStream);
 
         $this->httpClient
             ->expects(self::once())
@@ -148,9 +159,9 @@ final class UndisclosedPasswordTest extends TestCase
      */
     public function testBreachedPasswordsDoNotPassValidation(string $password): void
     {
-        $this->httpResponse
+        $this->httpStream
             ->expects(self::once())
-            ->method('getBody')
+            ->method('__toString')
             ->willReturnCallback(function () use ($password): string {
                 $hash = sha1($password);
 
@@ -163,6 +174,11 @@ final class UndisclosedPasswordTest extends TestCase
                     random_int(0, 100000)
                 );
             });
+
+        $this->httpResponse
+            ->expects(self::once())
+            ->method('getBody')
+            ->willReturn($this->httpStream);
 
         $this->httpClient
             ->expects(self::once())
