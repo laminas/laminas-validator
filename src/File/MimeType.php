@@ -2,6 +2,7 @@
 
 namespace Laminas\Validator\File;
 
+use finfo;
 use Laminas\Stdlib\ArrayUtils;
 use Laminas\Stdlib\ErrorHandler;
 use Laminas\Validator\AbstractValidator;
@@ -65,7 +66,7 @@ class MimeType extends AbstractValidator
     /**
      * Finfo object to use
      *
-     * @var resource
+     * @var finfo|null
      */
     protected $finfo;
 
