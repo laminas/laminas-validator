@@ -793,7 +793,7 @@ final class EmailAddressTest extends TestCase
             'BoB@aol.com',
             'bobjones@nist.gov',
             "B.O'Callaghan@usmc.mil",
-            'bob+jones@nic.us',
+            'bob+jones@php.net',
             'bob+jones@dailymail.co.uk',
             'bob@teaparty.uk.com',
             'bob@thelongestdomainnameintheworldandthensomeandthensomemoreandmore.com',
