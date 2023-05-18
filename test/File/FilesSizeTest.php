@@ -56,9 +56,9 @@ final class FilesSizeTest extends TestCase
     /**
      * @psalm-return array<string, array{
      *     0: array,
-     *     1: bool
-     *     2: bool
-     *     3: bool
+     *     1: bool,
+     *     2: bool,
+     *     3: bool,
      * }>
      */
     public function basicDataProvider(): array

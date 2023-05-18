@@ -120,12 +120,15 @@ final class UndisclosedPasswordTest extends TestCase
             ->willReturnCallback(function (): string {
                 $hash = sha1('laminas-validator');
 
+                $constant = $this->getConstant(
+                    'HIBP_K_ANONYMITY_HASH_RANGE_LENGTH',
+                    UndisclosedPassword::class
+                );
+                self::assertIsInt($constant);
+
                 return sprintf(
                     '%s:%d',
-                    strtoupper(substr($hash, $this->getConstant(
-                        'HIBP_K_ANONYMITY_HASH_RANGE_LENGTH',
-                        UndisclosedPassword::class
-                    ))),
+                    strtoupper(substr($hash, $constant)),
                     random_int(0, 100000)
                 );
             });
@@ -154,12 +157,16 @@ final class UndisclosedPasswordTest extends TestCase
             ->willReturnCallback(function () use ($password): string {
                 $hash = sha1($password);
 
+                $constant = $this->getConstant(
+                    'HIBP_K_ANONYMITY_HASH_RANGE_LENGTH',
+                    UndisclosedPassword::class
+                );
+
+                self::assertIsInt($constant);
+
                 return sprintf(
                     '%s:%d',
-                    strtoupper(substr($hash, $this->getConstant(
-                        'HIBP_K_ANONYMITY_HASH_RANGE_LENGTH',
-                        UndisclosedPassword::class
-                    ))),
+                    strtoupper(substr($hash, $constant)),
                     random_int(0, 100000)
                 );
             });
