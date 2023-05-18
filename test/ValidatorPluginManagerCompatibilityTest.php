@@ -17,7 +17,7 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
 {
     use CommonPluginManagerTrait;
 
-    protected function getPluginManager(): ValidatorPluginManager
+    protected static function getPluginManager(): ValidatorPluginManager
     {
         return new ValidatorPluginManager(new ServiceManager());
     }
@@ -40,8 +40,7 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
         $pluginManager     = $this->getPluginManager();
         $isV2PluginManager = method_exists($pluginManager, 'validatePlugin');
 
-        $r = new ReflectionProperty($pluginManager, 'aliases');
-        $r->setAccessible(true);
+        $r       = new ReflectionProperty($pluginManager, 'aliases');
         $aliases = $r->getValue($pluginManager);
 
         foreach ($aliases as $alias => $target) {

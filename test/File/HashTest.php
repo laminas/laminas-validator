@@ -288,8 +288,7 @@ final class HashTest extends TestCase
         $algorithm = 'md5';
         $validator = new Hash('12345', $algorithm);
 
-        $r = new ReflectionProperty($validator, 'options');
-        $r->setAccessible(true);
+        $r       = new ReflectionProperty($validator, 'options');
         $options = $r->getValue($validator);
 
         self::assertSame($algorithm, $options['algorithm']);

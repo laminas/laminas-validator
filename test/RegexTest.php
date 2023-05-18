@@ -202,7 +202,6 @@ final class RegexTest extends TestCase
         $pattern   = '/';
 
         $r = new ReflectionProperty($validator, 'pattern');
-        $r->setAccessible(true);
         $r->setValue($validator, $pattern);
 
         self::assertFalse($validator->isValid('test'));

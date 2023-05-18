@@ -202,12 +202,8 @@ final class CountTest extends TestCase
         $fileArray = ['name' => $filename];
 
         $reflection = new ReflectionClass($validator);
-
-        $method = $reflection->getMethod('throwError');
-        $method->setAccessible(true);
-
-        $property = $reflection->getProperty('value');
-        $property->setAccessible(true);
+        $method     = $reflection->getMethod('throwError');
+        $property   = $reflection->getProperty('value');
 
         $result = $method->invoke($validator, $fileArray, Count::TOO_FEW);
 
@@ -220,14 +216,9 @@ final class CountTest extends TestCase
         $validator  = new Count(['min' => 1000, 'max' => 10000]);
         $filename   = 'test.txt';
         $reflection = new ReflectionClass($validator);
-
-        $method = $reflection->getMethod('throwError');
-        $method->setAccessible(true);
-
-        $property = $reflection->getProperty('value');
-        $property->setAccessible(true);
-
-        $result = $method->invoke($validator, $filename, Count::TOO_FEW);
+        $method     = $reflection->getMethod('throwError');
+        $property   = $reflection->getProperty('value');
+        $result     = $method->invoke($validator, $filename, Count::TOO_FEW);
 
         self::assertFalse($result);
         self::assertSame($filename, $property->getValue($validator));

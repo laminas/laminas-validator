@@ -256,7 +256,6 @@ final class StepTest extends TestCase
         $validator = new Step();
 
         $r = new ReflectionMethod($validator, 'fmod');
-        $r->setAccessible(true);
 
         self::assertSame(1.0, $r->invoke($validator, 0, 0));
     }

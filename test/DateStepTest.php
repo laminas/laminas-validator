@@ -258,7 +258,6 @@ final class DateStepTest extends TestCase
         ]);
 
         $r = new ReflectionMethod($validator, 'convertString');
-        $r->setAccessible(true);
 
         $invalidValue = '20-20-20';
 

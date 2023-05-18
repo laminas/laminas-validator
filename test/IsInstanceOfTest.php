@@ -66,7 +66,6 @@ final class IsInstanceOfTest extends TestCase
         $reflection = new ReflectionClass($validator);
 
         $property = $reflection->getProperty('messageTemplates');
-        $property->setAccessible(true);
 
         self::assertSame(
             $property->getValue($validator),
@@ -80,7 +79,6 @@ final class IsInstanceOfTest extends TestCase
         $reflection = new ReflectionClass($validator);
 
         $property = $reflection->getProperty('messageVariables');
-        $property->setAccessible(true);
 
         self::assertSame(
             $property->getValue($validator),

@@ -311,7 +311,6 @@ final class MimeTypeTest extends TestCase
         $validator->setMagicFile([]);
 
         $r = new ReflectionProperty($validator, 'options');
-        $r->setAccessible(true);
 
         $options = $r->getValue($validator);
 

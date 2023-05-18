@@ -252,7 +252,6 @@ final class AbstractValidatorTest extends TestCase
     public function testMessageCreationWithNestedArrayValueDoesNotRaiseNotice(): void
     {
         $r = new ReflectionMethod($this->validator, 'createMessage');
-        $r->setAccessible(true);
 
         $message = $r->invoke($this->validator, 'fooMessage', ['foo' => ['bar' => 'baz']]);
 

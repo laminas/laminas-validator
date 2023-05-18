@@ -290,7 +290,6 @@ final class CsrfTest extends TestCase
     public function testCanValidateHasheWithoutId(): void
     {
         $method = new ReflectionMethod($this->validator::class, 'getTokenFromHash');
-        $method->setAccessible(true);
 
         $hash      = $this->validator->getHash();
         $bareToken = $method->invoke($this->validator, $hash);

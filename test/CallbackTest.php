@@ -149,7 +149,6 @@ final class CallbackTest extends TestCase
         $validator = new Callback();
 
         $r = new ReflectionProperty($validator, 'options');
-        $r->setAccessible(true);
 
         $options             = $r->getValue($validator);
         $options['callback'] = [];
