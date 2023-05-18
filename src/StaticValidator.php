@@ -62,9 +62,7 @@ class StaticValidator
             );
         }
 
-        $plugins = static::getPluginManager();
-
-        /** @var ValidatorInterface $validator */
+        $plugins   = static::getPluginManager();
         $validator = $plugins->get($classBaseName, $options);
 
         return $validator->isValid($value);

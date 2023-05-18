@@ -4,7 +4,6 @@ namespace Laminas\Validator;
 
 use Laminas\I18n\Validator as I18nValidator;
 use Laminas\ServiceManager\AbstractPluginManager;
-use Laminas\ServiceManager\ConfigInterface;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 use Laminas\ServiceManager\ServiceManager;
@@ -47,12 +46,8 @@ use function method_exists;
 use function sprintf;
 
 /**
- * @link ConfigInterface
- * @link ServiceManager
- *
  * @psalm-import-type ServiceManagerConfiguration from ServiceManager
- * @template InstanceType of ValidatorInterface
- * @extends AbstractPluginManager<InstanceType>
+ * @extends AbstractPluginManager<ValidatorInterface>
  */
 class ValidatorPluginManager extends AbstractPluginManager
 {
@@ -544,7 +539,7 @@ class ValidatorPluginManager extends AbstractPluginManager
     /**
      * Default instance type
      *
-     * @var string
+     * @inheritDoc
      */
     protected $instanceOf = ValidatorInterface::class;
 
@@ -567,12 +562,8 @@ class ValidatorPluginManager extends AbstractPluginManager
     }
 
     /**
-     * Validate plugin instance
-     *
-     * {@inheritDoc}
-     *
      * @param mixed $instance
-     * @psalm-assert InstanceType $instance
+     * @psalm-assert ValidatorInterface $instance
      */
     public function validate($instance)
     {
@@ -580,7 +571,7 @@ class ValidatorPluginManager extends AbstractPluginManager
             throw new InvalidServiceException(sprintf(
                 '%s expects only to create instances of %s; %s is invalid',
                 static::class,
-                $this->instanceOf,
+                (string) $this->instanceOf,
                 get_debug_type($instance)
             ));
         }

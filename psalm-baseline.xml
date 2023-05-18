@@ -2657,9 +2657,6 @@
       <code>get</code>
       <code>has</code>
     </MixedMethodCall>
-    <NonInvariantDocblockPropertyType>
-      <code>$instanceOf</code>
-    </NonInvariantDocblockPropertyType>
     <PossiblyUnusedMethod>
       <code>validatePlugin</code>
     </PossiblyUnusedMethod>
