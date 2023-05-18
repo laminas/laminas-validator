@@ -51,7 +51,6 @@ use function sprintf;
  * @link ServiceManager
  *
  * @psalm-import-type ServiceManagerConfiguration from ServiceManager
- * @psalm-import-type FactoriesConfigurationType from ConfigInterface
  * @template InstanceType of ValidatorInterface
  * @extends AbstractPluginManager<InstanceType>
  */
@@ -60,7 +59,7 @@ class ValidatorPluginManager extends AbstractPluginManager
     /**
      * Default set of aliases
      *
-     * @var array<array-key, string>
+     * @inheritDoc
      * @psalm-suppress UndefinedClass
      */
     protected $aliases = [
@@ -368,7 +367,7 @@ class ValidatorPluginManager extends AbstractPluginManager
     /**
      * Default set of factories
      *
-     * @var FactoriesConfigurationType
+     * @inheritDoc
      */
     protected $factories = [
         I18nValidator\Alnum::class       => InvokableFactory::class,

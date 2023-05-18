@@ -1,4 +1,6 @@
-<?php // phpcs:disable SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedMethod
+<?php
+
+declare(strict_types=1);
 
 namespace LaminasTest\Validator;
 
@@ -10,6 +12,8 @@ use Laminas\Validator\ValidatorPluginManager;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
+use function assert;
+use function is_string;
 use function method_exists;
 use function strpos;
 
@@ -32,18 +36,21 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
         return ValidatorInterface::class;
     }
 
-    /**
-     * @psalm-return iterable<string, array{0: string, 1: string}>
-     */
-    public function aliasProvider(): iterable
+    /** @return array<string, array{0: string, 1: string}> */
+    public static function aliasProvider(): array
     {
-        $pluginManager     = $this->getPluginManager();
+        $out               = [];
+        $pluginManager     = self::getPluginManager();
         $isV2PluginManager = method_exists($pluginManager, 'validatePlugin');
 
         $r       = new ReflectionProperty($pluginManager, 'aliases');
         $aliases = $r->getValue($pluginManager);
+        self::assertIsArray($aliases);
 
         foreach ($aliases as $alias => $target) {
+            assert(is_string($target));
+            assert(is_string($alias));
+
             // Skipping due to required options
             if (strpos($target, '\\Barcode')) {
                 continue;
@@ -84,15 +91,9 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
                 continue;
             }
 
-            yield $alias => [$alias, $target];
+            $out[$alias] = [$alias, $target];
         }
-    }
 
-    /**
-     * Provided only for compatibility with the lowest integration tests from Laminas\ServiceManager (v2)
-     */
-    private function setExpectedException(string $exceptionClassName): void
-    {
-        $this->expectException($exceptionClassName);
+        return $out;
     }
 }
