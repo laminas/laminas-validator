@@ -113,7 +113,7 @@ final class DateTest extends TestCase
      * @dataProvider datesDataProvider
      * @param string|numeric|DateTime|object|array|null $input
      */
-    public function testBasic($input, ?string $format, bool $result, bool $resultStrict): void
+    public function testBasic($input, ?string $format, bool $result): void
     {
         $this->validator->setFormat($format);
 

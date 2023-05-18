@@ -219,6 +219,7 @@ final class IbanTest extends TestCase
     {
         $validator = new IbanValidator();
 
-        self::assertFalse($validator->isValid([]));
+        /** @psalm-suppress MixedArgument */
+        self::assertFalse($validator->isValid($value));
     }
 }

@@ -47,6 +47,9 @@
     <MixedPropertyTypeCoercion>
       <code><![CDATA[$this->abstractOptions]]></code>
     </MixedPropertyTypeCoercion>
+    <PossiblyUnusedParam>
+      <code>$messageKey</code>
+    </PossiblyUnusedParam>
     <UndefinedThisPropertyAssignment>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
@@ -117,6 +120,9 @@
     <PossiblyInvalidArgument>
       <code>$options</code>
     </PossiblyInvalidArgument>
+    <PossiblyUnusedMethod>
+      <code>getChecksum</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Barcode/AbstractAdapter.php">
     <DocblockTypeContradiction>
@@ -159,6 +165,12 @@
     <PossiblyInvalidCast>
       <code>$characters</code>
     </PossiblyInvalidCast>
+    <PossiblyUnusedMethod>
+      <code>code25</code>
+      <code>gtin</code>
+      <code>identcode</code>
+      <code>postnet</code>
+    </PossiblyUnusedMethod>
     <RedundantCastGivenDocblockType>
       <code>(bool) $check</code>
     </RedundantCastGivenDocblockType>
@@ -171,6 +183,9 @@
     <PossiblyInvalidArgument>
       <code>$chars</code>
     </PossiblyInvalidArgument>
+    <UnusedClass>
+      <code>Codabar</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Code128.php">
     <DocblockTypeContradiction>
@@ -529,6 +544,9 @@
     <UndefinedFunction>
       <code><![CDATA['code128']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Code128</code>
+    </UnusedClass>
     <UnusedVariable>
       <code>$read</code>
       <code>$read</code>
@@ -549,6 +567,9 @@
     <UndefinedFunction>
       <code><![CDATA['code25']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Code25</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Code25interleaved.php">
     <InvalidArgument>
@@ -558,6 +579,9 @@
     <UndefinedFunction>
       <code><![CDATA['code25']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Code25interleaved</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Code39.php">
     <InvalidArgument>
@@ -574,6 +598,14 @@
     <UndefinedFunction>
       <code><![CDATA['code39']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Code39</code>
+    </UnusedClass>
+  </file>
+  <file src="src/Barcode/Code39ext.php">
+    <UnusedClass>
+      <code>Code39ext</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Code93.php">
     <InvalidArgument>
@@ -598,6 +630,14 @@
     <UndefinedFunction>
       <code><![CDATA['code93']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Code93</code>
+    </UnusedClass>
+  </file>
+  <file src="src/Barcode/Code93ext.php">
+    <UnusedClass>
+      <code>Code93ext</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Ean12.php">
     <InvalidArgument>
@@ -606,11 +646,17 @@
     <UndefinedFunction>
       <code><![CDATA['gtin']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Ean12</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Ean13.php">
     <InvalidArgument>
       <code><![CDATA['0123456789']]></code>
     </InvalidArgument>
+    <PossiblyUnusedMethod>
+      <code>__construct</code>
+    </PossiblyUnusedMethod>
     <UndefinedFunction>
       <code><![CDATA['gtin']]></code>
     </UndefinedFunction>
@@ -622,6 +668,9 @@
     <UndefinedFunction>
       <code><![CDATA['gtin']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Ean14</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Ean18.php">
     <InvalidArgument>
@@ -630,16 +679,25 @@
     <UndefinedFunction>
       <code><![CDATA['gtin']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Ean18</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Ean2.php">
     <InvalidArgument>
       <code><![CDATA['0123456789']]></code>
     </InvalidArgument>
+    <UnusedClass>
+      <code>Ean2</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Ean5.php">
     <InvalidArgument>
       <code><![CDATA['0123456789']]></code>
     </InvalidArgument>
+    <UnusedClass>
+      <code>Ean5</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Ean8.php">
     <InvalidArgument>
@@ -648,6 +706,9 @@
     <UndefinedFunction>
       <code><![CDATA['gtin']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Ean8</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Gtin12.php">
     <InvalidArgument>
@@ -656,6 +717,9 @@
     <UndefinedFunction>
       <code><![CDATA['gtin']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Gtin12</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Gtin13.php">
     <InvalidArgument>
@@ -664,6 +728,9 @@
     <UndefinedFunction>
       <code><![CDATA['gtin']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Gtin13</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Gtin14.php">
     <InvalidArgument>
@@ -672,6 +739,9 @@
     <UndefinedFunction>
       <code><![CDATA['gtin']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Gtin14</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Identcode.php">
     <InvalidArgument>
@@ -680,11 +750,17 @@
     <UndefinedFunction>
       <code><![CDATA['identcode']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Identcode</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Intelligentmail.php">
     <InvalidArgument>
       <code><![CDATA['0123456789']]></code>
     </InvalidArgument>
+    <UnusedClass>
+      <code>Intelligentmail</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Issn.php">
     <InvalidArgument>
@@ -698,6 +774,9 @@
       <code><![CDATA['gtin']]></code>
       <code><![CDATA['issn']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Issn</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Itf14.php">
     <InvalidArgument>
@@ -706,6 +785,9 @@
     <UndefinedFunction>
       <code><![CDATA['gtin']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Itf14</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Leitcode.php">
     <InvalidArgument>
@@ -714,6 +796,9 @@
     <UndefinedFunction>
       <code><![CDATA['identcode']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Leitcode</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Planet.php">
     <InvalidArgument>
@@ -722,6 +807,9 @@
     <UndefinedFunction>
       <code><![CDATA['postnet']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Planet</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Postnet.php">
     <InvalidArgument>
@@ -730,6 +818,9 @@
     <UndefinedFunction>
       <code><![CDATA['postnet']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Postnet</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Royalmail.php">
     <InvalidArgument>
@@ -738,6 +829,9 @@
     <UndefinedFunction>
       <code><![CDATA['royalmail']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Royalmail</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Sscc.php">
     <InvalidArgument>
@@ -746,6 +840,9 @@
     <UndefinedFunction>
       <code><![CDATA['gtin']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Sscc</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Upca.php">
     <InvalidArgument>
@@ -754,6 +851,9 @@
     <UndefinedFunction>
       <code><![CDATA['gtin']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Upca</code>
+    </UnusedClass>
   </file>
   <file src="src/Barcode/Upce.php">
     <InvalidArgument>
@@ -762,6 +862,9 @@
     <UndefinedFunction>
       <code><![CDATA['gtin']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>Upce</code>
+    </UnusedClass>
   </file>
   <file src="src/Between.php">
     <MixedInferredReturnType>
@@ -770,6 +873,11 @@
     <MixedReturnStatement>
       <code><![CDATA[$this->options['inclusive']]]></code>
     </MixedReturnStatement>
+    <PossiblyUnusedMethod>
+      <code>setInclusive</code>
+      <code>setMax</code>
+      <code>setMin</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="src/Bitwise.php">
     <DocblockTypeContradiction>
@@ -872,6 +980,9 @@
     <PossiblyUndefinedVariable>
       <code>$temp</code>
     </PossiblyUndefinedVariable>
+    <PossiblyUnusedReturnValue>
+      <code>CreditCard</code>
+    </PossiblyUnusedReturnValue>
     <UndefinedAttributeClass>
       <code>SensitiveParameter</code>
     </UndefinedAttributeClass>
@@ -954,6 +1065,9 @@
       <code>$value</code>
       <code>$value</code>
     </MoreSpecificImplementedParamType>
+    <PossiblyUnusedMethod>
+      <code>setStep</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>$step</code>
       <code>$timezone</code>
@@ -1027,6 +1141,12 @@
     <PossiblyUndefinedVariable>
       <code>$temp</code>
     </PossiblyUndefinedVariable>
+    <PossiblyUnusedMethod>
+      <code>getExclude</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedReturnValue>
+      <code>self</code>
+    </PossiblyUnusedReturnValue>
     <PropertyNotSetInConstructor>
       <code>$schema</code>
       <code>AbstractDb</code>
@@ -1128,6 +1248,11 @@
     <PossiblyUndefinedVariable>
       <code>$temp</code>
     </PossiblyUndefinedVariable>
+    <PossiblyUnusedMethod>
+      <code>idnToUtf8</code>
+      <code>setAllow</code>
+      <code>useDeepMxCheck</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>$hostname</code>
       <code>$localPart</code>
@@ -1145,6 +1270,16 @@
       <code><![CDATA[false === UConverter::transcode($localPart, 'UTF-8', 'UTF-8')]]></code>
     </TypeDoesNotContainType>
   </file>
+  <file src="src/Exception/BadMethodCallException.php">
+    <UnusedClass>
+      <code>BadMethodCallException</code>
+    </UnusedClass>
+  </file>
+  <file src="src/Exception/ExtensionNotLoadedException.php">
+    <UnusedClass>
+      <code>ExtensionNotLoadedException</code>
+    </UnusedClass>
+  </file>
   <file src="src/Explode.php">
     <DocblockTypeContradiction>
       <code>[$value]</code>
@@ -1155,6 +1290,10 @@
     <MixedAssignment>
       <code>$value</code>
     </MixedAssignment>
+    <PossiblyUnusedMethod>
+      <code>setBreakOnFirstFailure</code>
+      <code>setValueDelimiter</code>
+    </PossiblyUnusedMethod>
     <PropertyTypeCoercion>
       <code><![CDATA[$this->abstractOptions]]></code>
     </PropertyTypeCoercion>
@@ -1377,6 +1516,10 @@
     <PossiblyInvalidArgument>
       <code>$options</code>
     </PossiblyInvalidArgument>
+    <PossiblyUnusedMethod>
+      <code>setAllowNonExistentFile</code>
+      <code>setCase</code>
+    </PossiblyUnusedMethod>
     <RedundantCastGivenDocblockType>
       <code>(bool) $case</code>
       <code>(bool) $flag</code>
@@ -1470,6 +1613,9 @@
       <code>$file</code>
       <code>$file</code>
     </PossiblyInvalidCast>
+    <PossiblyUnusedReturnValue>
+      <code>false</code>
+    </PossiblyUnusedReturnValue>
     <PropertyNotSetInConstructor>
       <code>FilesSize</code>
     </PropertyNotSetInConstructor>
@@ -1552,6 +1698,12 @@
       <code>$options</code>
       <code>$options</code>
     </PossiblyInvalidArgument>
+    <PossiblyUnusedMethod>
+      <code>setMaxHeight</code>
+      <code>setMaxWidth</code>
+      <code>setMinHeight</code>
+      <code>setMinWidth</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>$height</code>
       <code>$width</code>
@@ -2012,6 +2164,10 @@
     <PossiblyUndefinedVariable>
       <code>$temp</code>
     </PossiblyUndefinedVariable>
+    <PossiblyUnusedMethod>
+      <code>setAllow</code>
+      <code>setIpValidator</code>
+    </PossiblyUnusedMethod>
     <RedundantCastGivenDocblockType>
       <code>(bool) $useIdnCheck</code>
       <code>(bool) $useTldCheck</code>
@@ -2109,6 +2265,14 @@
     <MoreSpecificImplementedParamType>
       <code>$value</code>
     </MoreSpecificImplementedParamType>
+    <PossiblyUnusedReturnValue>
+      <code>$this</code>
+    </PossiblyUnusedReturnValue>
+    <UnusedMethod>
+      <code>setCount</code>
+      <code>setMax</code>
+      <code>setMin</code>
+    </UnusedMethod>
   </file>
   <file src="src/IsInstanceOf.php">
     <MixedAssignment>
@@ -2117,6 +2281,9 @@
     <PossiblyInvalidArgument>
       <code>$options</code>
     </PossiblyInvalidArgument>
+    <PossiblyUnusedMethod>
+      <code>setClassName</code>
+    </PossiblyUnusedMethod>
     <PropertyNotSetInConstructor>
       <code>$className</code>
     </PropertyNotSetInConstructor>
@@ -2166,9 +2333,15 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Module.php">
+    <PossiblyUnusedParam>
+      <code>$moduleManager</code>
+    </PossiblyUnusedParam>
     <UndefinedDocblockClass>
       <code>ModuleManager</code>
     </UndefinedDocblockClass>
+    <UnusedClass>
+      <code>Module</code>
+    </UnusedClass>
   </file>
   <file src="src/NotEmpty.php">
     <MixedAssignment>
@@ -2319,6 +2492,9 @@
     <PossiblyUndefinedVariable>
       <code>$temp</code>
     </PossiblyUndefinedVariable>
+    <PossiblyUnusedMethod>
+      <code>setStringWrapper</code>
+    </PossiblyUnusedMethod>
     <RedundantCastGivenDocblockType>
       <code>(int) $length</code>
       <code>(int) $max</code>
@@ -2364,6 +2540,12 @@
     <RedundantConditionGivenDocblockType>
       <code>gettype($type)</code>
     </RedundantConditionGivenDocblockType>
+  </file>
+  <file src="src/Translator/TranslatorAwareInterface.php">
+    <PossiblyUnusedReturnValue>
+      <code>TranslatorAwareInterface</code>
+      <code>self</code>
+    </PossiblyUnusedReturnValue>
   </file>
   <file src="src/UndisclosedPassword.php">
     <UndefinedAttributeClass>
@@ -2447,6 +2629,11 @@
     <MixedPropertyTypeCoercion>
       <code>new PriorityQueue()</code>
     </MixedPropertyTypeCoercion>
+    <PossiblyUnusedMethod>
+      <code>addByName</code>
+      <code>addValidator</code>
+      <code>count</code>
+    </PossiblyUnusedMethod>
     <TooManyArguments>
       <code>isValid</code>
     </TooManyArguments>
@@ -2473,6 +2660,12 @@
     <NonInvariantDocblockPropertyType>
       <code>$instanceOf</code>
     </NonInvariantDocblockPropertyType>
+    <PossiblyUnusedMethod>
+      <code>validatePlugin</code>
+    </PossiblyUnusedMethod>
+    <PossiblyUnusedProperty>
+      <code>$shareByDefault</code>
+    </PossiblyUnusedProperty>
     <RedundantCondition>
       <code><![CDATA[$container === $this && method_exists($container, 'getServiceLocator')]]></code>
     </RedundantCondition>
@@ -2500,12 +2693,14 @@
       <code>$container</code>
     </ParamNameMismatch>
   </file>
+  <file src="src/ValidatorProviderInterface.php">
+    <UnusedClass>
+      <code>ValidatorProviderInterface</code>
+    </UnusedClass>
+  </file>
   <file src="test/AbstractValidatorTest.php">
     <InvalidArgument>
       <code>$options</code>
-      <code><![CDATA[[$this, 'errorHandlerIgnore']]]></code>
-      <code><![CDATA[[$this, 'errorHandlerIgnore']]]></code>
-      <code><![CDATA[[$this, 'errorHandlerIgnore']]]></code>
     </InvalidArgument>
     <MixedArgument>
       <code>$message</code>
@@ -2571,6 +2766,9 @@
     <MixedAssignment>
       <code>$options</code>
     </MixedAssignment>
+    <PossiblyUnusedMethod>
+      <code>optionsCallback</code>
+    </PossiblyUnusedMethod>
   </file>
   <file src="test/CreditCardTest.php">
     <InvalidArgument>
@@ -2580,6 +2778,9 @@
     <InvalidCast>
       <code><![CDATA[['something']]]></code>
     </InvalidCast>
+    <PossiblyUnusedReturnValue>
+      <code>false</code>
+    </PossiblyUnusedReturnValue>
   </file>
   <file src="test/CsrfTest.php">
     <InvalidArgument>
@@ -2600,6 +2801,11 @@
     <PossiblyUndefinedArrayOffset>
       <code><![CDATA[$_SERVER['REQUEST_TIME']]]></code>
     </PossiblyUndefinedArrayOffset>
+  </file>
+  <file src="test/DateTest.php">
+    <UnusedParam>
+      <code>$result</code>
+    </UnusedParam>
   </file>
   <file src="test/Db/NoRecordExistsTest.php">
     <InvalidArgument>
@@ -2664,9 +2870,19 @@
     <NullArgument>
       <code>null</code>
     </NullArgument>
+    <PossiblyUnusedMethod>
+      <code>errorHandler</code>
+    </PossiblyUnusedMethod>
     <RedundantConditionGivenDocblockType>
       <code>assertIsArray</code>
     </RedundantConditionGivenDocblockType>
+    <UnusedParam>
+      <code>$errno</code>
+      <code>$errstr</code>
+    </UnusedParam>
+    <UnusedPsalmSuppress>
+      <code>TooManyArguments</code>
+    </UnusedPsalmSuppress>
   </file>
   <file src="test/ExplodeTest.php">
     <InvalidArgument>
@@ -2752,6 +2968,9 @@
     <MixedArgument>
       <code>$options</code>
     </MixedArgument>
+    <PossiblyUnusedProperty>
+      <code>$multipleOptionsDetected</code>
+    </PossiblyUnusedProperty>
   </file>
   <file src="test/File/HashTest.php">
     <MixedArgument>
@@ -2921,14 +3140,6 @@
       <code>$code</code>
       <code>$message</code>
     </PossiblyUndefinedVariable>
-  </file>
-  <file src="test/IbanTest.php">
-    <InvalidArgument>
-      <code>[]</code>
-    </InvalidArgument>
-    <InvalidCast>
-      <code>[]</code>
-    </InvalidCast>
   </file>
   <file src="test/IdenticalTest.php">
     <MixedArgument>
@@ -3104,6 +3315,9 @@
       <code>$value</code>
       <code>$value</code>
     </MissingClosureParamType>
+    <PossiblyUnusedMethod>
+      <code>handleNotFoundError</code>
+    </PossiblyUnusedMethod>
     <UndefinedThisPropertyAssignment>
       <code><![CDATA[$this->error]]></code>
     </UndefinedThisPropertyAssignment>
@@ -3111,21 +3325,33 @@
       <code>$value</code>
       <code>$value</code>
     </UnusedClosureParam>
+    <UnusedParam>
+      <code>$errnum</code>
+    </UnusedParam>
   </file>
   <file src="test/_files/MyBarcode1.php">
     <UndefinedFunction>
       <code><![CDATA['invalid']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>MyBarcode1</code>
+    </UnusedClass>
   </file>
   <file src="test/_files/MyBarcode2.php">
     <UndefinedFunction>
       <code><![CDATA['_mod10']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>MyBarcode2</code>
+    </UnusedClass>
   </file>
   <file src="test/_files/MyBarcode3.php">
     <UndefinedFunction>
       <code><![CDATA['_mod10']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>MyBarcode3</code>
+    </UnusedClass>
   </file>
   <file src="test/_files/MyBarcode4.php">
     <InvalidArgument>
@@ -3134,5 +3360,13 @@
     <UndefinedFunction>
       <code><![CDATA['_mod10']]></code>
     </UndefinedFunction>
+    <UnusedClass>
+      <code>MyBarcode4</code>
+    </UnusedClass>
+  </file>
+  <file src="test/_files/MyBarcode5.php">
+    <UnusedClass>
+      <code>MyBarcode5</code>
+    </UnusedClass>
   </file>
 </files>

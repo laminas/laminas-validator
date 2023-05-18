@@ -17,8 +17,6 @@ use stdClass;
 
 use function extension_loaded;
 use function reset;
-use function restore_error_handler;
-use function set_error_handler;
 use function sprintf;
 use function var_export;
 
@@ -29,11 +27,6 @@ use function var_export;
 final class AbstractValidatorTest extends TestCase
 {
     private AbstractValidator $validator;
-
-    /**
-     * Whether an error occurred
-     */
-    private bool $errorOccurred = false;
 
     protected function setUp(): void
     {
@@ -56,12 +49,7 @@ final class AbstractValidatorTest extends TestCase
 
     public function testCanSetTranslator(): void
     {
-        $this->testTranslatorNullByDefault();
-
-        set_error_handler([$this, 'errorHandlerIgnore']);
         $translator = new Translator();
-        restore_error_handler();
-
         $this->validator->setTranslator($translator);
 
         self::assertSame($translator, $this->validator->getTranslator());
@@ -70,10 +58,7 @@ final class AbstractValidatorTest extends TestCase
     public function testCanSetTranslatorToNull(): void
     {
         $this->testCanSetTranslator();
-
-        set_error_handler([$this, 'errorHandlerIgnore']);
         $this->validator->setTranslator(null);
-        restore_error_handler();
 
         self::assertNull($this->validator->getTranslator());
     }
@@ -151,7 +136,6 @@ final class AbstractValidatorTest extends TestCase
 
     public function testTranslatorEnabledPerDefault(): void
     {
-        set_error_handler([$this, 'errorHandlerIgnore']);
         $translator = new Translator();
         $this->validator->setTranslator($translator);
 
@@ -304,19 +288,6 @@ final class AbstractValidatorTest extends TestCase
         self::assertCount(2, $validator->getMessages());
         self::assertArrayHasKey(EmailAddress::INVALID_HOSTNAME, $validator->getMessages());
         self::assertArrayHasKey(Hostname::LOCAL_NAME_NOT_ALLOWED, $validator->getMessages());
-    }
-
-    /**
-     * Ignores a raised PHP error when in effect, but throws a flag to indicate an error occurred
-     */
-    public function errorHandlerIgnore(
-        int $errno,
-        string $errstr,
-        string $errfile,
-        int $errline,
-        array $errcontext
-    ): void {
-        $this->errorOccurred = true;
     }
 
     public function testRetrievingUnknownOptionRaisesException(): void

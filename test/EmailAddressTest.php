@@ -22,19 +22,12 @@ use function preg_replace;
 use function set_error_handler;
 use function sprintf;
 use function str_repeat;
-use function strstr;
 
 use const E_USER_NOTICE;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\EmailAddress
- */
 final class EmailAddressTest extends TestCase
 {
     private EmailAddress $validator;
-
-    private bool $multipleOptionsDetected;
 
     protected function setUp(): void
     {
@@ -691,9 +684,6 @@ final class EmailAddressTest extends TestCase
 
     public function errorHandler(int $errno, string $errstr): void
     {
-        if (strstr($errstr, 'deprecated')) {
-            $this->multipleOptionsDetected = true;
-        }
     }
 
     /**

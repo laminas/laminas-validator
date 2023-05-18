@@ -8,18 +8,8 @@ use ArrayObject;
 use Laminas\Validator\Bitwise;
 use PHPUnit\Framework\TestCase;
 
-/** @covers \Laminas\Validator\Bitwise */
 final class BitwiseTest extends TestCase
 {
-    private Bitwise $validator;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->validator = new Bitwise();
-    }
-
     /**
      * @covers \Laminas\Validator\Bitwise::__construct()
      * @dataProvider constructDataProvider
@@ -37,7 +27,7 @@ final class BitwiseTest extends TestCase
      * @covers \Laminas\Validator\Bitwise::__construct()
      * @dataProvider constructDataProvider
      */
-    public function testConstructWithTravesableOptions(array $args, array $options): void
+    public function testConstructWithTraversableOptions(array $args, array $options): void
     {
         $validator = new Bitwise(
             new ArrayObject($args)

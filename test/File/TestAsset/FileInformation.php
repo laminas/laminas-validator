@@ -16,10 +16,10 @@ final class FileInformation
     /**
      * Returns array if the procedure is identified
      *
-     * @param  string|array|object $value    Filename to check
-     * @param  null|array          $file     File data (when using legacy Laminas_File_Transfer API)
-     * @param  bool                $hasType  Return with filetype (optional)
-     * @param  bool                $basename Return with basename - is calculated from location path (optional)
+     * @param  string|array|object $value       Filename to check
+     * @param  null|array          $file        File data (when using legacy Laminas_File_Transfer API)
+     * @param  bool                $hasType     Return with filetype (optional)
+     * @param  bool                $hasBasename Return with basename - is calculated from location path (optional)
      */
     public function checkFileInformation(
         $value,

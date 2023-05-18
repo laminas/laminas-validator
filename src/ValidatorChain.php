@@ -50,7 +50,6 @@ class ValidatorChain implements Countable, IteratorAggregate, ValidatorInterface
      */
     public function __construct()
     {
-        /** @psalm-suppress InvalidPropertyAssignmentValue */
         $this->validators = new PriorityQueue();
     }
 
