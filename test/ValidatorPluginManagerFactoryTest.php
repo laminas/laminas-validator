@@ -11,7 +11,6 @@ use Laminas\Validator\ValidatorPluginManager;
 use Laminas\Validator\ValidatorPluginManagerFactory;
 use LaminasTest\Validator\TestAsset\InMemoryContainer;
 use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerInterface;
 
 /** @covers \Laminas\Validator\ValidatorPluginManagerFactory */
 final class ValidatorPluginManagerFactoryTest extends TestCase
