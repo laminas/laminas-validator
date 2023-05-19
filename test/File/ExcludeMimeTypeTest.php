@@ -6,18 +6,13 @@ namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File\ExcludeMimeType;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function basename;
 
 use const UPLOAD_ERR_NO_FILE;
 
-/**
- * ExcludeMimeType testbed
- *
- * @group Laminas_Validator
- * @covers \Laminas\Validator\File\ExcludeMimeType
- */
 final class ExcludeMimeTypeTest extends TestCase
 {
     /**
@@ -34,7 +29,7 @@ final class ExcludeMimeTypeTest extends TestCase
      *     3: array<string, string>
      * }>
      */
-    public function basicBehaviorDataProvider(): array
+    public static function basicBehaviorDataProvider(): array
     {
         $testFile   = __DIR__ . '/_files/picture.jpg';
         $fileUpload = [
@@ -62,9 +57,9 @@ final class ExcludeMimeTypeTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param string|string[] $options
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testBasic($options, array $isValidParam, bool $expected, array $messages): void
     {
         $validator = new ExcludeMimeType($options);
@@ -77,9 +72,9 @@ final class ExcludeMimeTypeTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param string|string[] $options
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testLegacy($options, array $isValidParam, bool $expected): void
     {
         $validator = new ExcludeMimeType($options);
@@ -89,7 +84,7 @@ final class ExcludeMimeTypeTest extends TestCase
     }
 
     /** @psalm-return array<array{string|string[], string|string[], bool}> */
-    public function getMimeTypeProvider(): array
+    public static function getMimeTypeProvider(): array
     {
         return [
             ['image/gif', 'image/gif', false],
@@ -101,10 +96,10 @@ final class ExcludeMimeTypeTest extends TestCase
     /**
      * Ensures that getMimeType() returns expected value
      *
-     * @dataProvider getMimeTypeProvider
      * @param string|string[] $mimeType
      * @param string|string[] $expected
      */
+    #[DataProvider('getMimeTypeProvider')]
     public function testGetMimeType($mimeType, $expected, bool $asArray): void
     {
         $validator = new ExcludeMimeType($mimeType);
@@ -113,7 +108,7 @@ final class ExcludeMimeTypeTest extends TestCase
     }
 
     /** @psalm-return array<array{string|string[], string, string[]}> */
-    public function setMimeTypeProvider(): array
+    public static function setMimeTypeProvider(): array
     {
         return [
             ['image/jpeg', 'image/jpeg', ['image/jpeg']],
@@ -125,10 +120,10 @@ final class ExcludeMimeTypeTest extends TestCase
     /**
      * Ensures that setMimeType() returns expected value
      *
-     * @dataProvider setMimeTypeProvider
      * @param string|string[] $mimeType
      * @param string[] $expectedAsArray
      */
+    #[DataProvider('setMimeTypeProvider')]
     public function testSetMimeType($mimeType, string $expected, array $expectedAsArray): void
     {
         $validator = new ExcludeMimeType('image/gif');

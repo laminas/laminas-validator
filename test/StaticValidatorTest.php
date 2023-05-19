@@ -15,16 +15,14 @@ use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
 use LaminasTest\Validator\TestAsset\ArrayTranslator;
 use LaminasTest\Validator\TestAsset\Translator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function current;
 use function extension_loaded;
 use function strlen;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\StaticValidator
- */
 final class StaticValidatorTest extends TestCase
 {
     private Alpha $validator;
@@ -161,7 +159,7 @@ final class StaticValidatorTest extends TestCase
      *     3: bool
      * }>
      */
-    public function parameterizedData(): array
+    public static function parameterizedData(): array
     {
         return [
             'valid-positive-range'   => [5, Between::class, ['min' => 1, 'max' => 10], true],
@@ -172,9 +170,9 @@ final class StaticValidatorTest extends TestCase
     }
 
     /**
-     * @dataProvider parameterizedData
      * @param class-string<ValidatorInterface> $validator
      */
+    #[DataProvider('parameterizedData')]
     public function testExecuteValidWithParameters(
         int $value,
         string $validator,
@@ -187,7 +185,7 @@ final class StaticValidatorTest extends TestCase
     /**
      * @psalm-return array<string, array{0: int, 1: class-string<ValidatorInterface>, 2: int[]}>
      */
-    public function invalidParameterizedData(): array
+    public static function invalidParameterizedData(): array
     {
         return [
             'positive-range' => [5, Between::class, [1, 10]],
@@ -196,9 +194,9 @@ final class StaticValidatorTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidParameterizedData
      * @param class-string<ValidatorInterface> $validator
      */
+    #[DataProvider('invalidParameterizedData')]
     public function testExecuteRaisesExceptionForIndexedOptionsArray(
         int $value,
         string $validator,
@@ -215,9 +213,8 @@ final class StaticValidatorTest extends TestCase
      * exist in the namespace, is() throws an exception.
      *
      * Refactored to conform with Laminas-2724.
-     *
-     * @group Laminas-2724
      */
+    #[Group('Laminas-2724')]
     public function testStaticFactoryClassNotFound(): void
     {
         $this->expectException(ServiceNotFoundException::class);

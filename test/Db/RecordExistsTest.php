@@ -16,13 +16,10 @@ use Laminas\Db\Sql\TableIdentifier;
 use Laminas\Validator\Db\RecordExists;
 use Laminas\Validator\Exception\RuntimeException;
 use LaminasTest\Validator\Db\TestAsset\TrustingSql92Platform;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\Db\RecordExists
- */
 final class RecordExistsTest extends TestCase
 {
     /**
@@ -202,9 +199,7 @@ final class RecordExistsTest extends TestCase
         self::assertFalse($validator->isValid('nosuchvalue'));
     }
 
-    /**
-     * @group Laminas-8863
-     */
+    #[Group('Laminas-8863')]
     public function testExcludeConstructor(): void
     {
         $validator = new RecordExists('users', 'field1', 'id != 1', $this->getMockHasResult());
@@ -280,9 +275,6 @@ final class RecordExistsTest extends TestCase
         self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
-    /**
-     * @testdox Laminas\Validator\Db\RecordExists::getSelect
-     */
     public function testGetSelect(): void
     {
         $validator = new RecordExists(
@@ -313,10 +305,7 @@ final class RecordExistsTest extends TestCase
         self::assertSame($parameters['where2'], 'bar');
     }
 
-    /**
-     * @cover Laminas\Validator\Db\RecordExists::getSelect
-     * @group Laminas-4521
-     */
+    #[Group('Laminas-4521')]
     public function testGetSelectWithSameValidatorTwice(): void
     {
         $validator = new RecordExists(

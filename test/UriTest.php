@@ -10,15 +10,12 @@ use Laminas\Uri\Uri as UriHandler;
 use Laminas\Validator\Exception\InvalidArgumentException as ValidatorInvalidArgumentException;
 use Laminas\Validator\Uri;
 use LaminasTest\Validator\TestAsset\CustomTraversable;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
 use function array_keys;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\Uri
- */
 final class UriTest extends TestCase
 {
     private Uri $validator;
@@ -103,7 +100,7 @@ final class UriTest extends TestCase
      *     5: bool
      * }>
      */
-    public function allowOptionsDataProvider(): array
+    public static function allowOptionsDataProvider(): array
     {
         return [
             //    allowAbsolute allowRelative isAbsolute isRelative isValid expects
@@ -119,9 +116,7 @@ final class UriTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider allowOptionsDataProvider
-     */
+    #[DataProvider('allowOptionsDataProvider')]
     public function testUriHandlerBehaviorWithAllowSettings(
         bool $allowAbsolute,
         bool $allowRelative,
@@ -230,7 +225,7 @@ final class UriTest extends TestCase
     /**
      * @psalm-return array<string, array{0: mixed}>
      */
-    public function invalidValueTypes(): array
+    public static function invalidValueTypes(): array
     {
         return [
             'null'       => [null],
@@ -245,9 +240,7 @@ final class UriTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidValueTypes
-     */
+    #[DataProvider('invalidValueTypes')]
     public function testIsValidReturnsFalseWhenProvidedUnsupportedType(mixed $value): void
     {
         self::assertFalse($this->validator->isValid($value));

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\File\IsCompressed;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function basename;
@@ -18,12 +20,6 @@ use function is_array;
 use const FILEINFO_MIME_TYPE;
 use const PHP_VERSION_ID;
 
-/**
- * IsCompressed testbed
- *
- * @group Laminas_Validator
- * @covers \Laminas\Validator\File\IsCompressed
- */
 final class IsCompressedTest extends TestCase
 {
     protected function getMagicMime(): string
@@ -44,7 +40,7 @@ final class IsCompressedTest extends TestCase
      *     2: bool
      * }>
      */
-    public function basicBehaviorDataProvider(): array
+    public static function basicBehaviorDataProvider(): array
     {
         $testFile = __DIR__ . '/_files/test.zip';
 
@@ -113,10 +109,10 @@ final class IsCompressedTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param null|string|string[] $options
      * @psalm-param array<string, string|int> $isValidParam
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testBasic($options, array $isValidParam, bool $expected): void
     {
         $this->skipIfNoFileInfoExtension();
@@ -131,10 +127,10 @@ final class IsCompressedTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param null|string|string[] $options
      * @psalm-param array<string, string|int> $isValidParam
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testLegacy($options, array $isValidParam, bool $expected): void
     {
         $this->skipIfNoFileInfoExtension();
@@ -147,7 +143,7 @@ final class IsCompressedTest extends TestCase
     }
 
     /** @psalm-return array<array{string|string[], string|string[], bool}> */
-    public function getMimeTypeProvider(): array
+    public static function getMimeTypeProvider(): array
     {
         return [
             ['image/gif', 'image/gif', false],
@@ -159,10 +155,10 @@ final class IsCompressedTest extends TestCase
     /**
      * Ensures that getMimeType() returns expected value
      *
-     * @dataProvider getMimeTypeProvider
      * @param string|string[] $mimeType
      * @param string|string[] $expected
      */
+    #[DataProvider('getMimeTypeProvider')]
     public function testGetMimeType($mimeType, $expected, bool $asArray): void
     {
         $validator = new IsCompressed($mimeType);
@@ -171,7 +167,7 @@ final class IsCompressedTest extends TestCase
     }
 
     /** @psalm-return array<array{string|string[], string, string[]}> */
-    public function setMimeTypeProvider(): array
+    public static function setMimeTypeProvider(): array
     {
         return [
             ['image/jpeg', 'image/jpeg', ['image/jpeg']],
@@ -183,10 +179,10 @@ final class IsCompressedTest extends TestCase
     /**
      * Ensures that setMimeType() returns expected value
      *
-     * @dataProvider setMimeTypeProvider
      * @param string|string[] $mimeType
      * @param string[] $expectedAsArray
      */
+    #[DataProvider('setMimeTypeProvider')]
     public function testSetMimeType($mimeType, string $expected, array $expectedAsArray): void
     {
         $validator = new IsCompressed('image/gif');
@@ -284,9 +280,7 @@ final class IsCompressedTest extends TestCase
         self::assertNotEmpty($validator->getMimeType());
     }
 
-    /**
-     * @group Laminas-11258
-     */
+    #[Group('Laminas-11258')]
     public function testLaminas11258(): void
     {
         $validator = new IsCompressed();

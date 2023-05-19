@@ -6,16 +6,14 @@ namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\RuntimeException;
 use Laminas\Validator\InArray;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
 
 use const PHP_MAJOR_VERSION;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\InArray
- */
 final class InArrayTest extends TestCase
 {
     private InArray $validator;
@@ -34,7 +32,7 @@ final class InArrayTest extends TestCase
     /**
      * @return array<string,array{0:list<mixed>,1:mixed,2:mixed}>
      */
-    public function nonStrictValidationSet(): array
+    public static function nonStrictValidationSet(): array
     {
         return [
             'strings'             => [
@@ -63,7 +61,7 @@ final class InArrayTest extends TestCase
     /**
      * @return array<string,array{0:list<mixed>,1:mixed,2:mixed}>
      */
-    public function strictValidationSet(): array
+    public static function strictValidationSet(): array
     {
         return [
             'strings'             => [
@@ -147,9 +145,7 @@ final class InArrayTest extends TestCase
         self::assertSame([1, 'a', 2.3], $this->validator->getHaystack());
     }
 
-    /**
-     * @group Laminas-337
-     */
+    #[Group('Laminas-337')]
     public function testSettingNewStrictMode(): void
     {
         $validator = new InArray(
@@ -443,8 +439,8 @@ final class InArrayTest extends TestCase
      * @link https://github.com/laminas/laminas-validator/issues/81
      *
      * @param list<mixed> $haystack
-     * @dataProvider strictValidationSet
      */
+    #[DataProvider('strictValidationSet')]
     public function testBooleanStrictEnforcesStrictMode(array $haystack, mixed $valid, mixed $invalid): void
     {
         $validator = new InArray([
@@ -460,8 +456,8 @@ final class InArrayTest extends TestCase
      * @link https://github.com/laminas/laminas-validator/issues/81
      *
      * @param list<mixed> $haystack
-     * @dataProvider nonStrictValidationSet
      */
+    #[DataProvider('nonStrictValidationSet')]
     public function testBooleanNotStrictEnforcesNonStrictMode(array $haystack, mixed $valid, mixed $invalid): void
     {
         $validator = new InArray([

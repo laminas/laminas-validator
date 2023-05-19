@@ -6,14 +6,13 @@ namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Ip;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\Ip
- */
 final class IpTest extends TestCase
 {
     private Ip $validator;
@@ -114,7 +113,7 @@ final class IpTest extends TestCase
      *     1: bool
      * }>
      */
-    public function ipvFutureProvider(): array
+    public static function ipvFutureProvider(): array
     {
         return [
             'IPvFuture: Version 1 disallowed'  => ['v1.A', true],
@@ -127,10 +126,9 @@ final class IpTest extends TestCase
 
     /**
      * Versions 4 and 6 are not allowed in IPvFuture
-     *
-     * @depends testOnlyIpvfuture
-     * @dataProvider ipvFutureProvider
      */
+    #[DataProvider('ipvFutureProvider')]
+    #[Depends('testOnlyIpvfuture')]
     public function testVersionsAllowedIpvfuture(string $ip, bool $expected): void
     {
         $this->options['allowipvfuture'] = true;
@@ -157,10 +155,8 @@ final class IpTest extends TestCase
         self::assertFalse($this->validator->isValid('192.168.0.2 adfs'));
     }
 
-    /**
-     * @group Laminas-2694
-     * @group Laminas-8253
-     */
+    #[Group('Laminas-2694')]
+    #[Group('Laminas-8253')]
     public function testIPv6addresses(): void
     {
         $ips = [
@@ -261,9 +257,7 @@ final class IpTest extends TestCase
         self::assertFalse($this->validator->isValid("::C0A8:2\n"));
     }
 
-    /**
-     * @group Laminas-10621
-     */
+    #[Group('Laminas-10621')]
     public function testIPv4AddressNotations(): void
     {
         $ips = [
@@ -299,9 +293,7 @@ final class IpTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider iPvFutureAddressesProvider
-     */
+    #[DataProvider('iPvFutureAddressesProvider')]
     public function testIPvFutureAddresses(string $ip, bool $expected): void
     {
         $this->options['allowipvfuture'] = true;
@@ -314,7 +306,7 @@ final class IpTest extends TestCase
     /**
      * @psalm-return array<array-key, array{0: string, 1: bool}>
      */
-    public function iPvFutureAddressesProvider(): array
+    public static function iPvFutureAddressesProvider(): array
     {
         return [
             ["[v1.09azAZ-._~!$&'()*+,;=:]:80", false],
@@ -381,7 +373,7 @@ final class IpTest extends TestCase
     /**
      * @psalm-return array<string, array{0: string}>
      */
-    public function invalidIpV4Addresses(): array
+    public static function invalidIpV4Addresses(): array
     {
         return [
             'all-numeric'          => ['111111111111'],
@@ -394,9 +386,7 @@ final class IpTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidIpV4Addresses
-     */
+    #[DataProvider('invalidIpV4Addresses')]
     public function testIpV4ValidationShouldFailForIpV4AddressesMissingQuartets(string $address): void
     {
         self::assertFalse($this->validator->isValid($address));

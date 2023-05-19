@@ -6,6 +6,8 @@ namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File\Size;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function basename;
@@ -14,10 +16,6 @@ use function is_array;
 
 use const UPLOAD_ERR_NO_FILE;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\File\Size
- */
 final class SizeTest extends TestCase
 {
     /**
@@ -33,7 +31,7 @@ final class SizeTest extends TestCase
      *     2: bool
      * }>
      */
-    public function basicBehaviorDataProvider(): array
+    public static function basicBehaviorDataProvider(): array
     {
         $testFile = __DIR__ . '/_files/testsize.mo';
         $testData = [
@@ -67,10 +65,10 @@ final class SizeTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param int|array $options
      * @param string|array $isValidParam
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testBasic($options, $isValidParam, bool $expected): void
     {
         $validator = new Size($options);
@@ -81,10 +79,10 @@ final class SizeTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param int|array $options
      * @param string|array $isValidParam
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testLegacy($options, $isValidParam, bool $expected): void
     {
         if (! is_array($isValidParam)) {
@@ -160,7 +158,7 @@ final class SizeTest extends TestCase
     }
 
     /** @psalm-return array<array{string|int, string}> */
-    public function setMaxProvider(): array
+    public static function setMaxProvider(): array
     {
         return [
             [1_000_000, '976.56kB'],
@@ -179,9 +177,9 @@ final class SizeTest extends TestCase
     /**
      * Ensures that setMax() returns expected value
      *
-     * @dataProvider setMaxProvider
      * @param string|int $max
      */
+    #[DataProvider('setMaxProvider')]
     public function testSetMax($max, string $expected): void
     {
         $validator = new Size(['max' => 0, 'useByteString' => true]);
@@ -215,9 +213,7 @@ final class SizeTest extends TestCase
         self::assertStringContainsString('794', current($messages));
     }
 
-    /**
-     * @group Laminas-11258
-     */
+    #[Group('Laminas-11258')]
     public function testLaminas11258(): void
     {
         $validator = new Size(['min' => 1, 'max' => 10000]);
@@ -249,7 +245,7 @@ final class SizeTest extends TestCase
     /**
      * @psalm-return array<string, array{0: mixed}>
      */
-    public function invalidMinMaxValues(): array
+    public static function invalidMinMaxValues(): array
     {
         return [
             'null'   => [null],
@@ -260,9 +256,7 @@ final class SizeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidMinMaxValues
-     */
+    #[DataProvider('invalidMinMaxValues')]
     public function testSetMinWithInvalidArgument(mixed $value): void
     {
         $validator = new Size(['min' => 0, 'max' => 2000]);
@@ -273,9 +267,7 @@ final class SizeTest extends TestCase
         $validator->setMin($value);
     }
 
-    /**
-     * @dataProvider invalidMinMaxValues
-     */
+    #[DataProvider('invalidMinMaxValues')]
     public function testSetMaxWithInvalidArgument(mixed $value): void
     {
         $validator = new Size(['min' => 0, 'max' => 2000]);

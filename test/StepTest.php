@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Step;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 
-/** @covers \Laminas\Validator\Step */
 final class StepTest extends TestCase
 {
     private Step $validator;
@@ -26,7 +26,7 @@ final class StepTest extends TestCase
     /**
      * @psalm-return array<string, array{0: float|int|string, 1: bool}>
      */
-    public function valuesToValidate(): array
+    public static function valuesToValidate(): array
     {
         return [
             'float'              => [1.00, true],
@@ -44,9 +44,8 @@ final class StepTest extends TestCase
 
     /**
      * Ensures that the validator follows expected behavior
-     *
-     * @dataProvider valuesToValidate
      */
+    #[DataProvider('valuesToValidate')]
     public function testBasic(mixed $value, bool $expected): void
     {
         // By default, baseValue == 0 and step == 1
@@ -59,7 +58,7 @@ final class StepTest extends TestCase
     /**
      * @psalm-return array<string, array{0: float|string, 1: bool}>
      */
-    public function decimalValues(): array
+    public static function decimalValues(): array
     {
         return [
             'between-step'        => [1.1, false],
@@ -73,9 +72,7 @@ final class StepTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider decimalValues
-     */
+    #[DataProvider('decimalValues')]
     public function testDecimalBaseValue(mixed $value, bool $expected): void
     {
         $validator = new Step([
@@ -89,7 +86,7 @@ final class StepTest extends TestCase
     /**
      * @psalm-return array<string, array{0: float|string, 1: bool}>
      */
-    public function decimalStepValues(): array
+    public static function decimalStepValues(): array
     {
         return [
             'between-0.1'        => [0.1, false],
@@ -112,9 +109,7 @@ final class StepTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider decimalStepValues
-     */
+    #[DataProvider('decimalStepValues')]
     public function testDecimalStep(mixed $value, bool $expected): void
     {
         $validator = new Step([
@@ -128,7 +123,7 @@ final class StepTest extends TestCase
     /**
      * @psalm-return array<string, array{0: int, 1: float, 2: bool}>
      */
-    public function decimalStepSubstractionBugValues(): array
+    public static function decimalStepSubstractionBugValues(): array
     {
         return [
             'base-value-20' => [20, 20.06, true],
@@ -137,9 +132,7 @@ final class StepTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider decimalStepSubstractionBugValues
-     */
+    #[DataProvider('decimalStepSubstractionBugValues')]
     public function testDecimalStepSubstractionBug(int $baseValue, float $value, bool $expected): void
     {
         $validator = new Step([
@@ -153,7 +146,7 @@ final class StepTest extends TestCase
     /**
      * @psalm-return array<string, array{0: float, 1: bool}>
      */
-    public function decimalHundredthStepValues(): array
+    public static function decimalHundredthStepValues(): array
     {
         return [
             'first-step'       => [0.01, true],
@@ -177,9 +170,7 @@ final class StepTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider decimalHundredthStepValues
-     */
+    #[DataProvider('decimalHundredthStepValues')]
     public function testdecimalHundredthStep(float $value, bool $expected): void
     {
         $validator = new Step([
@@ -256,7 +247,6 @@ final class StepTest extends TestCase
         $validator = new Step();
 
         $r = new ReflectionMethod($validator, 'fmod');
-        $r->setAccessible(true);
 
         self::assertSame(1.0, $r->invoke($validator, 0, 0));
     }

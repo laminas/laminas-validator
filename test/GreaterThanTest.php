@@ -5,22 +5,19 @@ declare(strict_types=1);
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\GreaterThan;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\GreaterThan
- */
 final class GreaterThanTest extends TestCase
 {
     /**
      * Ensures that the validator follows expected behavior
      *
-     * @dataProvider basicDataProvider
      * @param int|string $input
      */
+    #[DataProvider('basicDataProvider')]
     public function testBasic(array $options, $input, bool $expected): void
     {
         $validator = new GreaterThan(...$options);
@@ -35,7 +32,7 @@ final class GreaterThanTest extends TestCase
      *     2: bool
      * }>
      */
-    public function basicDataProvider(): array
+    public static function basicDataProvider(): array
     {
         return [
             // phpcs:disable
@@ -155,9 +152,7 @@ final class GreaterThanTest extends TestCase
         self::assertSame(array_keys($messageVariables), $validator->getMessageVariables());
     }
 
-    /**
-     * @dataProvider correctInclusiveMessageDataProvider
-     */
+    #[DataProvider('correctInclusiveMessageDataProvider')]
     public function testCorrectInclusiveMessageReturn(float $input): void
     {
         $validator = new GreaterThan(10);
@@ -172,7 +167,7 @@ final class GreaterThanTest extends TestCase
      * @psalm-return array{0: array{0: 0}, '0.5': array{0: float}, 5: array{0: 5}, 10: array{0: 10}}
      * @return (float|int)[][]
      */
-    public function correctInclusiveMessageDataProvider(): array
+    public static function correctInclusiveMessageDataProvider(): array
     {
         return [
             '0'   => [0],
@@ -182,9 +177,7 @@ final class GreaterThanTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider correctNotInclusiveMessageDataProvider
-     */
+    #[DataProvider('correctNotInclusiveMessageDataProvider')]
     public function testCorrectNotInclusiveMessageReturn(float $input): void
     {
         $validator = new GreaterThan(['min' => 10, 'inclusive' => true]);
@@ -199,7 +192,7 @@ final class GreaterThanTest extends TestCase
      * @psalm-return array{0: array{0: 0}, '0.5': array{0: float}, 5: array{0: 5}, 9: array{0: 9}}
      * @return (float|int)[][]
      */
-    public function correctNotInclusiveMessageDataProvider(): array
+    public static function correctNotInclusiveMessageDataProvider(): array
     {
         return [
             '0'   => [0],

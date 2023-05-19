@@ -6,6 +6,8 @@ namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File\WordCount;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function basename;
@@ -14,10 +16,6 @@ use function is_array;
 
 use const UPLOAD_ERR_NO_FILE;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\File\WordCount
- */
 final class WordCountTest extends TestCase
 {
     /**
@@ -33,7 +31,7 @@ final class WordCountTest extends TestCase
      *     2: bool
      * }>
      */
-    public function basicBehaviorDataProvider(): array
+    public static function basicBehaviorDataProvider(): array
     {
         $testFile = __DIR__ . '/_files/wordcount.txt';
         $testData = [
@@ -62,10 +60,10 @@ final class WordCountTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param int|array $options
      * @param string|array $isValidParam
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testBasic($options, $isValidParam, bool $expected): void
     {
         $validator = new WordCount($options);
@@ -76,10 +74,10 @@ final class WordCountTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param int|array $options
      * @param string|array $isValidParam
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testLegacy($options, $isValidParam, bool $expected): void
     {
         if (! is_array($isValidParam)) {
@@ -151,9 +149,7 @@ final class WordCountTest extends TestCase
         self::assertSame(1_000_000, $validator->getMax());
     }
 
-    /**
-     * @group Laminas-11258
-     */
+    #[Group('Laminas-11258')]
     public function testLaminas11258(): void
     {
         $validator = new WordCount(['min' => 1, 'max' => 10000]);
@@ -196,7 +192,7 @@ final class WordCountTest extends TestCase
     /**
      * @psalm-return array<string, array{0: mixed}>
      */
-    public function invalidMinMaxValues(): array
+    public static function invalidMinMaxValues(): array
     {
         return [
             'null'               => [null],
@@ -208,9 +204,7 @@ final class WordCountTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidMinMaxValues
-     */
+    #[DataProvider('invalidMinMaxValues')]
     public function testSettingMinValueRaisesExceptionForInvalidType(mixed $value): void
     {
         $validator = new WordCount(['min' => 1000, 'max' => 10000]);
@@ -232,9 +226,7 @@ final class WordCountTest extends TestCase
         self::assertSame($maxValue, $validator->getMax());
     }
 
-    /**
-     * @dataProvider invalidMinMaxValues
-     */
+    #[DataProvider('invalidMinMaxValues')]
     public function testSettingMaxValueRaisesExceptionForInvalidType(mixed $value): void
     {
         $validator = new WordCount(['min' => 1000, 'max' => 10000]);

@@ -15,10 +15,6 @@ use Laminas\Validator\Exception\RuntimeException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\Db\NoRecordExists
- */
 final class NoRecordExistsTest extends TestCase
 {
     /**

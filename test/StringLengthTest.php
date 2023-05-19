@@ -6,15 +6,12 @@ namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\StringLength;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
 use function ini_set;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\StringLength
- */
 final class StringLengthTest extends TestCase
 {
     private StringLength $validator;
@@ -31,9 +28,8 @@ final class StringLengthTest extends TestCase
 
     /**
      * Ensures that the validator follows expected behavior
-     *
-     * @dataProvider basicDataProvider
      */
+    #[DataProvider('basicDataProvider')]
     public function testBasic(array $options, bool $expected, string $input): void
     {
         ini_set('default_charset', 'UTF-8');
@@ -46,7 +42,7 @@ final class StringLengthTest extends TestCase
     /**
      * @psalm-return array<string, array{0: array, 1: bool, 2: string}>
      */
-    public function basicDataProvider(): array
+    public static function basicDataProvider(): array
     {
         return [
             // phpcs:disable

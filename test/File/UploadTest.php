@@ -6,15 +6,14 @@ namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File\Upload;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\UploadedFileInterface;
 
 use function current;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\File\Upload
- */
 final class UploadTest extends TestCase
 {
     /**
@@ -139,156 +138,59 @@ final class UploadTest extends TestCase
 
     /**
      * @psalm-return iterable<string, array{
-     *     0: array<string, UploadedFileInterface>,
+     *     0: int,
      *     1: string,
      *     2: string
      * }>
      */
-    public function invalidPsr7UploadedFiles(): iterable
+    public static function invalidPsr7UploadedFiles(): iterable
     {
-        $uploads = [];
-
-        $upload = $this->createMock(UploadedFileInterface::class);
-        $upload
-            ->expects(self::any())
-            ->method('getClientFilename')
-            ->willReturn('test2');
-
-        $upload
-            ->expects(self::once())
-            ->method('getError')
-            ->willReturn(1);
-
-        yield 'size' => [['test2' => $upload], 'test2', 'fileUploadErrorIniSize'];
-
-        $uploads['test2'] = $upload;
-
-        $upload = $this->createMock(UploadedFileInterface::class);
-        $upload
-            ->expects(self::any())
-            ->method('getClientFilename')
-            ->willReturn('test3');
-
-        $upload
-            ->expects(self::once())
-            ->method('getError')
-            ->willReturn(2);
-
-        yield 'form-size' => [['test3' => $upload], 'test3', 'fileUploadErrorFormSize'];
-
-        $uploads['test3'] = $upload;
-
-        $upload = $this->createMock(UploadedFileInterface::class);
-        $upload
-            ->expects(self::any())
-            ->method('getClientFilename')
-            ->willReturn('test4');
-
-        $upload
-            ->expects(self::once())
-            ->method('getError')
-            ->willReturn(3);
-
-        yield 'partial' => [['test4' => $upload], 'test4', 'fileUploadErrorPartial'];
-
-        $uploads['test4'] = $upload;
-
-        $upload = $this->createMock(UploadedFileInterface::class);
-        $upload
-            ->expects(self::any())
-            ->method('getClientFilename')
-            ->willReturn('test5');
-
-        $upload
-            ->expects(self::once())
-            ->method('getError')
-            ->willReturn(4);
-
-        yield 'no-file' => [['test5' => $upload], 'test5', 'fileUploadErrorNoFile'];
-
-        $uploads['test5'] = $upload;
-
-        $upload = $this->createMock(UploadedFileInterface::class);
-        $upload
-            ->expects(self::any())
-            ->method('getClientFilename')
-            ->willReturn('test6');
-
-        $upload
-            ->expects(self::once())
-            ->method('getError')
-            ->willReturn(5);
-
-        yield 'unknown' => [['test6' => $upload], 'test6', 'fileUploadErrorUnknown'];
-
-        $uploads['test6'] = $upload;
-
-        $upload = $this->createMock(UploadedFileInterface::class);
-        $upload
-            ->expects(self::any())
-            ->method('getClientFilename')
-            ->willReturn('test7');
-
-        $upload
-            ->expects(self::once())
-            ->method('getError')
-            ->willReturn(6);
-
-        yield 'no-tmp-dir' => [['test7' => $upload], 'test7', 'fileUploadErrorNoTmpDir'];
-
-        $uploads['test7'] = $upload;
-
-        $upload = $this->createMock(UploadedFileInterface::class);
-        $upload
-            ->expects(self::any())
-            ->method('getClientFilename')
-            ->willReturn('test8');
-
-        $upload
-            ->expects(self::once())
-            ->method('getError')
-            ->willReturn(7);
-
-        yield 'cannot write' => [['test8' => $upload], 'test8', 'fileUploadErrorCantWrite'];
-
-        $uploads['test8'] = $upload;
-
-        $upload = $this->createMock(UploadedFileInterface::class);
-        $upload
-            ->expects(self::any())
-            ->method('getClientFilename')
-            ->willReturn('test9');
-
-        $upload
-            ->expects(self::once())
-            ->method('getError')
-            ->willReturn(8);
-
-        yield 'extension' => [['test9' => $upload], 'test9', 'fileUploadErrorExtension'];
-
-        $uploads['test9'] = $upload;
-
-        yield 'not-found' => [$uploads, 'test000', 'fileUploadErrorFileNotFound'];
+        yield 'size' => [1, 'test2', 'fileUploadErrorIniSize'];
+        yield 'form-size' => [2, 'test3', 'fileUploadErrorFormSize'];
+        yield 'partial' => [3, 'test4', 'fileUploadErrorPartial'];
+        yield 'no-file' => [4, 'test5', 'fileUploadErrorNoFile'];
+        yield 'unknown' => [5, 'test6', 'fileUploadErrorUnknown'];
+        yield 'no-tmp-dir' => [6, 'test7', 'fileUploadErrorNoTmpDir'];
+        yield 'cannot write' => [7, 'test8', 'fileUploadErrorCantWrite'];
+        yield 'extension' => [8, 'test9', 'fileUploadErrorExtension'];
     }
 
     /**
      * Validate invalid PSR-7 file uploads
      *
      * Not testing lookup by temp file name since PSR does not expose it.
-     *
-     * @dataProvider invalidPsr7UploadedFiles
-     * @param UploadedFileInterface[] $files
-     * @param string $fileName
-     * @param string $expectedErrorKey
-     * @return void
      */
-    public function testRaisesExpectedErrorsForInvalidPsr7UploadedFileInput($files, $fileName, $expectedErrorKey)
-    {
+    #[DataProvider('invalidPsr7UploadedFiles')]
+    public function testRaisesExpectedErrorsForInvalidPsr7UploadedFileInput(
+        int $errorCode,
+        string $fileName,
+        string $expectedErrorKey
+    ): void {
+        $upload = $this->createMock(UploadedFileInterface::class);
+        $upload
+            ->expects(self::any())
+            ->method('getClientFilename')
+            ->willReturn($fileName);
+
+        $upload
+            ->expects(self::once())
+            ->method('getError')
+            ->willReturn($errorCode);
+
         $validator = new Upload();
-        $validator->setFiles($files);
+        $validator->setFiles([$fileName => $upload]);
 
         self::assertFalse($validator->isValid($fileName));
         self::assertArrayHasKey($expectedErrorKey, $validator->getMessages());
+    }
+
+    public function testFileNotFound(): void
+    {
+        $validator = new Upload();
+        $validator->setFiles([]);
+
+        self::assertFalse($validator->isValid('notThere'));
+        self::assertArrayHasKey('fileUploadErrorFileNotFound', $validator->getMessages());
     }
 
     public function testCanValidateCorrectlyFormedPsr7UploadedFiles(): void
@@ -395,9 +297,7 @@ final class UploadTest extends TestCase
         return $validator;
     }
 
-    /**
-     * @depends testGetFilesReturnsArtifactsFromPsr7UploadedFiles
-     */
+    #[Depends('testGetFilesReturnsArtifactsFromPsr7UploadedFiles')]
     public function testGetFilesRaisesExceptionWhenPsr7UploadedFilesArrayDoesNotContainGivenFilename(
         Upload $validator
     ): void {
@@ -469,9 +369,7 @@ final class UploadTest extends TestCase
         self::assertSame($psrFiles, $validator->getFiles());
     }
 
-    /**
-     * @group Laminas-10738
-     */
+    #[Group('Laminas-10738')]
     public function testGetFilesReturnsEmptyArrayWhenFilesSuperglobalIsNull(): void
     {
         $_FILES    = null;
@@ -481,9 +379,7 @@ final class UploadTest extends TestCase
         self::assertSame([], $validator->getFiles());
     }
 
-    /**
-     * @group Laminas-10738
-     */
+    #[Group('Laminas-10738')]
     public function testGetFilesReturnsEmptyArrayAfterSetFilesIsCalledWithNull(): void
     {
         $validator = new Upload();
@@ -492,9 +388,7 @@ final class UploadTest extends TestCase
         self::assertSame([], $validator->getFiles());
     }
 
-    /**
-     * @group Laminas-11258
-     */
+    #[Group('Laminas-11258')]
     public function testLaminas11258(): void
     {
         $validator = new Upload();
@@ -504,9 +398,7 @@ final class UploadTest extends TestCase
         self::assertStringContainsString("nofile.mo'", current($validator->getMessages()));
     }
 
-    /**
-     * @group Laminas-12128
-     */
+    #[Group('Laminas-12128')]
     public function testErrorMessage(): void
     {
         $_FILES = [

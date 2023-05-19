@@ -9,12 +9,9 @@ use Laminas\Db\Adapter\AdapterAwareInterface;
 use Laminas\Db\Sql\Select;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use LaminasTest\Validator\Db\TestAsset\ConcreteDbValidator;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\Db\AbstractDb
- */
 final class AbstractDbTest extends TestCase
 {
     private ConcreteDbValidator $validator;
@@ -91,17 +88,13 @@ final class AbstractDbTest extends TestCase
         self::assertSame($field, $this->validator->getField());
     }
 
-    /**
-     * @group #46
-     */
+    #[Group('#46')]
     public function testImplementationsAreDbAdapterAware(): void
     {
         self::assertInstanceOf(AdapterAwareInterface::class, $this->validator);
     }
 
-    /**
-     * @group #46
-     */
+    #[Group('#46')]
     public function testSetAdapterIsEquivalentToSetDbAdapter(): void
     {
         $adapterFirst  = $this->createStub(Adapter::class);

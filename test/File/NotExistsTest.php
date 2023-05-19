@@ -6,6 +6,8 @@ namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File\NotExists;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function basename;
@@ -13,12 +15,6 @@ use function current;
 use function dirname;
 use function is_array;
 
-/**
- * NotExists testbed
- *
- * @group Laminas_Validator
- * @covers \Laminas\Validator\File\NotExists
- */
 final class NotExistsTest extends TestCase
 {
     /**
@@ -34,7 +30,7 @@ final class NotExistsTest extends TestCase
      *     2: bool
      * }>
      */
-    public function basicBehaviorDataProvider(): array
+    public static function basicBehaviorDataProvider(): array
     {
         $testFile   = __DIR__ . '/_files/testsize.mo';
         $baseDir    = dirname($testFile);
@@ -60,9 +56,9 @@ final class NotExistsTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param string|array<string, mixed> $isValidParam
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testBasic(string $options, $isValidParam, bool $expected): void
     {
         $validator = new NotExists($options);
@@ -73,9 +69,9 @@ final class NotExistsTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param string|array<string, mixed> $isValidParam
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testLegacy(string $options, $isValidParam, bool $expected): void
     {
         if (! is_array($isValidParam)) {
@@ -88,7 +84,7 @@ final class NotExistsTest extends TestCase
     }
 
     /** @psalm-return array<array{string|string[], string|string[], bool}> */
-    public function getDirectoryProvider(): array
+    public static function getDirectoryProvider(): array
     {
         return [
             ['C:/temp', 'C:/temp', false],
@@ -100,10 +96,10 @@ final class NotExistsTest extends TestCase
     /**
      * Ensures that getDirectory() returns expected value
      *
-     * @dataProvider getDirectoryProvider
      * @param string|string[] $directory
      * @param string|string[] $expected
      */
+    #[DataProvider('getDirectoryProvider')]
     public function testGetDirectory($directory, $expected, bool $asArray): void
     {
         $validator = new NotExists($directory);
@@ -112,7 +108,7 @@ final class NotExistsTest extends TestCase
     }
 
     /** @psalm-return array<array{string|string[], string, string[]}> */
-    public function setDirectoryProvider(): array
+    public static function setDirectoryProvider(): array
     {
         return [
             ['gif', 'gif', ['gif']],
@@ -124,10 +120,10 @@ final class NotExistsTest extends TestCase
     /**
      * Ensures that setDirectory() returns expected value
      *
-     * @dataProvider setDirectoryProvider
      * @param string|string[] $directory
      * @param string[] $expectedAsArray
      */
+    #[DataProvider('setDirectoryProvider')]
     public function testSetDirectory($directory, string $expected, array $expectedAsArray): void
     {
         $validator = new NotExists('temp');
@@ -164,9 +160,7 @@ final class NotExistsTest extends TestCase
         self::assertSame(['temp', 'gif', 'jpg', 'to', 'zip', 'ti'], $validator->getDirectory(true));
     }
 
-    /**
-     * @group Laminas-11258
-     */
+    #[Group('Laminas-11258')]
     public function testLaminas11258(): void
     {
         $validator = new NotExists();
@@ -190,7 +184,7 @@ final class NotExistsTest extends TestCase
     /**
      * @psalm-return array<string, array{scalar|object|null}>
      */
-    public function invalidDirectoryArguments(): array
+    public static function invalidDirectoryArguments(): array
     {
         return [
             'null'       => [null],
@@ -205,9 +199,9 @@ final class NotExistsTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidDirectoryArguments
      * @psalm-param scalar|object|null $value
      */
+    #[DataProvider('invalidDirectoryArguments')]
     public function testAddingDirectoryUsingInvalidTypeRaisesException($value): void
     {
         $validator = new NotExists();

@@ -11,29 +11,20 @@ use Laminas\Validator\Hostname;
 use LaminasTest\Validator\TestAsset\ArrayTranslator;
 use LaminasTest\Validator\TestAsset\ConcreteValidator;
 use LaminasTest\Validator\TestAsset\Translator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 use stdClass;
 
 use function extension_loaded;
 use function reset;
-use function restore_error_handler;
-use function set_error_handler;
 use function sprintf;
 use function var_export;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\AbstractValidator
- */
 final class AbstractValidatorTest extends TestCase
 {
     private AbstractValidator $validator;
-
-    /**
-     * Whether an error occurred
-     */
-    private bool $errorOccurred = false;
 
     protected function setUp(): void
     {
@@ -56,12 +47,7 @@ final class AbstractValidatorTest extends TestCase
 
     public function testCanSetTranslator(): void
     {
-        $this->testTranslatorNullByDefault();
-
-        set_error_handler([$this, 'errorHandlerIgnore']);
         $translator = new Translator();
-        restore_error_handler();
-
         $this->validator->setTranslator($translator);
 
         self::assertSame($translator, $this->validator->getTranslator());
@@ -70,10 +56,7 @@ final class AbstractValidatorTest extends TestCase
     public function testCanSetTranslatorToNull(): void
     {
         $this->testCanSetTranslator();
-
-        set_error_handler([$this, 'errorHandlerIgnore']);
         $this->validator->setTranslator(null);
-        restore_error_handler();
 
         self::assertNull($this->validator->getTranslator());
     }
@@ -137,9 +120,7 @@ final class AbstractValidatorTest extends TestCase
         self::assertStringContainsString('******', $message);
     }
 
-    /**
-     * @group Laminas-4463
-     */
+    #[Group('Laminas-4463')]
     public function testDoesNotFailOnObjectInput(): void
     {
         self::assertFalse($this->validator->isValid(new stdClass()));
@@ -151,7 +132,6 @@ final class AbstractValidatorTest extends TestCase
 
     public function testTranslatorEnabledPerDefault(): void
     {
-        set_error_handler([$this, 'errorHandlerIgnore']);
         $translator = new Translator();
         $this->validator->setTranslator($translator);
 
@@ -252,7 +232,6 @@ final class AbstractValidatorTest extends TestCase
     public function testMessageCreationWithNestedArrayValueDoesNotRaiseNotice(): void
     {
         $r = new ReflectionMethod($this->validator, 'createMessage');
-        $r->setAccessible(true);
 
         $message = $r->invoke($this->validator, 'fooMessage', ['foo' => ['bar' => 'baz']]);
 
@@ -307,19 +286,6 @@ final class AbstractValidatorTest extends TestCase
         self::assertArrayHasKey(Hostname::LOCAL_NAME_NOT_ALLOWED, $validator->getMessages());
     }
 
-    /**
-     * Ignores a raised PHP error when in effect, but throws a flag to indicate an error occurred
-     */
-    public function errorHandlerIgnore(
-        int $errno,
-        string $errstr,
-        string $errfile,
-        int $errline,
-        array $errcontext
-    ): void {
-        $this->errorOccurred = true;
-    }
-
     public function testRetrievingUnknownOptionRaisesException(): void
     {
         $option = 'foo';
@@ -333,7 +299,7 @@ final class AbstractValidatorTest extends TestCase
     /**
      * @psalm-return array<string, array{scalar|object|null}>
      */
-    public function invalidOptionsArguments(): array
+    public static function invalidOptionsArguments(): array
     {
         return [
             'null'       => [null],
@@ -349,9 +315,9 @@ final class AbstractValidatorTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidOptionsArguments
      * @psalm-param scalar|object|null $options
      */
+    #[DataProvider('invalidOptionsArguments')]
     public function testSettingOptionsWithNonTraversableRaisesException($options): void
     {
         $this->expectException(InvalidArgumentException::class);

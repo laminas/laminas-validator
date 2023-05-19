@@ -4,64 +4,25 @@ namespace Laminas\Validator;
 
 use Laminas\I18n\Validator as I18nValidator;
 use Laminas\ServiceManager\AbstractPluginManager;
-use Laminas\ServiceManager\ConfigInterface;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 use Laminas\ServiceManager\ServiceManager;
 use Psr\Container\ContainerInterface;
-use Zend\I18n\Validator\Alnum;
-use Zend\I18n\Validator\Alpha;
-use Zend\I18n\Validator\DateTime;
-use Zend\I18n\Validator\IsFloat;
-use Zend\I18n\Validator\IsInt;
-use Zend\I18n\Validator\PhoneNumber;
-use Zend\I18n\Validator\PostCode;
-use Zend\Validator\Db\NoRecordExists;
-use Zend\Validator\Db\RecordExists;
-use Zend\Validator\File\Count;
-use Zend\Validator\File\Crc32;
-use Zend\Validator\File\ExcludeExtension;
-use Zend\Validator\File\ExcludeMimeType;
-use Zend\Validator\File\Exists;
-use Zend\Validator\File\Extension;
-use Zend\Validator\File\FilesSize;
-use Zend\Validator\File\Hash;
-use Zend\Validator\File\ImageSize;
-use Zend\Validator\File\IsCompressed;
-use Zend\Validator\File\IsImage;
-use Zend\Validator\File\Md5;
-use Zend\Validator\File\MimeType;
-use Zend\Validator\File\NotExists;
-use Zend\Validator\File\Sha1;
-use Zend\Validator\File\Size;
-use Zend\Validator\File\Upload;
-use Zend\Validator\File\UploadFile;
-use Zend\Validator\File\WordCount;
-use Zend\Validator\Sitemap\Changefreq;
-use Zend\Validator\Sitemap\Lastmod;
-use Zend\Validator\Sitemap\Loc;
-use Zend\Validator\Sitemap\Priority;
 
 use function get_debug_type;
 use function method_exists;
 use function sprintf;
 
 /**
- * @link ConfigInterface
- * @link ServiceManager
- *
  * @psalm-import-type ServiceManagerConfiguration from ServiceManager
- * @psalm-import-type FactoriesConfigurationType from ConfigInterface
- * @template InstanceType of ValidatorInterface
- * @extends AbstractPluginManager<InstanceType>
+ * @extends AbstractPluginManager<ValidatorInterface>
  */
 class ValidatorPluginManager extends AbstractPluginManager
 {
     /**
      * Default set of aliases
      *
-     * @var array<array-key, string>
-     * @psalm-suppress UndefinedClass
+     * @inheritDoc
      */
     protected $aliases = [
         'alnum'                  => I18nValidator\Alnum::class,
@@ -239,67 +200,67 @@ class ValidatorPluginManager extends AbstractPluginManager
         'Uuid'                   => Uuid::class,
 
         // Legacy Zend Framework aliases
-        Alnum::class                        => I18nValidator\Alnum::class,
-        Alpha::class                        => I18nValidator\Alpha::class,
-        \Zend\Validator\Barcode::class      => Barcode::class,
-        \Zend\Validator\Between::class      => Between::class,
-        \Zend\Validator\Bitwise::class      => Bitwise::class,
-        \Zend\Validator\Callback::class     => Callback::class,
-        \Zend\Validator\CreditCard::class   => CreditCard::class,
-        \Zend\Validator\Csrf::class         => Csrf::class,
-        \Zend\Validator\DateStep::class     => DateStep::class,
-        \Zend\Validator\Date::class         => Date::class,
-        DateTime::class                     => I18nValidator\DateTime::class,
-        NoRecordExists::class               => Db\NoRecordExists::class,
-        RecordExists::class                 => Db\RecordExists::class,
-        \Zend\Validator\Digits::class       => Digits::class,
-        \Zend\Validator\EmailAddress::class => EmailAddress::class,
-        \Zend\Validator\Explode::class      => Explode::class,
-        Count::class                        => File\Count::class,
-        Crc32::class                        => File\Crc32::class,
-        ExcludeExtension::class             => File\ExcludeExtension::class,
-        ExcludeMimeType::class              => File\ExcludeMimeType::class,
-        Exists::class                       => File\Exists::class,
-        Extension::class                    => File\Extension::class,
-        FilesSize::class                    => File\FilesSize::class,
-        Hash::class                         => File\Hash::class,
-        ImageSize::class                    => File\ImageSize::class,
-        IsCompressed::class                 => File\IsCompressed::class,
-        IsImage::class                      => File\IsImage::class,
-        Md5::class                          => File\Md5::class,
-        MimeType::class                     => File\MimeType::class,
-        NotExists::class                    => File\NotExists::class,
-        Sha1::class                         => File\Sha1::class,
-        Size::class                         => File\Size::class,
-        Upload::class                       => File\Upload::class,
-        UploadFile::class                   => File\UploadFile::class,
-        WordCount::class                    => File\WordCount::class,
-        IsFloat::class                      => I18nValidator\IsFloat::class,
-        \Zend\Validator\GpsPoint::class     => GpsPoint::class,
-        \Zend\Validator\GreaterThan::class  => GreaterThan::class,
-        \Zend\Validator\Hex::class          => Hex::class,
-        \Zend\Validator\Hostname::class     => Hostname::class,
-        \Zend\Validator\Iban::class         => Iban::class,
-        \Zend\Validator\Identical::class    => Identical::class,
-        \Zend\Validator\InArray::class      => InArray::class,
-        IsInt::class                        => I18nValidator\IsInt::class,
-        \Zend\Validator\Ip::class           => Ip::class,
-        \Zend\Validator\Isbn::class         => Isbn::class,
-        \Zend\Validator\IsInstanceOf::class => IsInstanceOf::class,
-        \Zend\Validator\LessThan::class     => LessThan::class,
-        \Zend\Validator\NotEmpty::class     => NotEmpty::class,
-        PhoneNumber::class                  => I18nValidator\PhoneNumber::class,
-        PostCode::class                     => I18nValidator\PostCode::class,
-        \Zend\Validator\Regex::class        => Regex::class,
-        Changefreq::class                   => Sitemap\Changefreq::class,
-        Lastmod::class                      => Sitemap\Lastmod::class,
-        Loc::class                          => Sitemap\Loc::class,
-        Priority::class                     => Sitemap\Priority::class,
-        \Zend\Validator\StringLength::class => StringLength::class,
-        \Zend\Validator\Step::class         => Step::class,
-        \Zend\Validator\Timezone::class     => Timezone::class,
-        \Zend\Validator\Uri::class          => Uri::class,
-        \Zend\Validator\Uuid::class         => Uuid::class,
+        'Zend\I18nValidator\Alnum'             => I18nValidator\Alnum::class,
+        'Zend\I18n\Validator\Alpha'            => I18nValidator\Alpha::class,
+        'Zend\Validator\Barcode'               => Barcode::class,
+        'Zend\Validator\Between'               => Between::class,
+        'Zend\Validator\Bitwise'               => Bitwise::class,
+        'Zend\Validator\Callback'              => Callback::class,
+        'Zend\Validator\CreditCard'            => CreditCard::class,
+        'Zend\Validator\Csrf'                  => Csrf::class,
+        'Zend\Validator\DateStep'              => DateStep::class,
+        'Zend\Validator\Date'                  => Date::class,
+        'Zend\I18n\Validator\DateTime'         => I18nValidator\DateTime::class,
+        'Zend\Validator\Db\NoRecordExists'     => Db\NoRecordExists::class,
+        'Zend\Validator\Db\RecordExists'       => Db\RecordExists::class,
+        'Zend\Validator\Digits'                => Digits::class,
+        'Zend\Validator\EmailAddress'          => EmailAddress::class,
+        'Zend\Validator\Explode'               => Explode::class,
+        'Zend\Validator\File\Count'            => File\Count::class,
+        'Zend\Validator\File\Crc32'            => File\Crc32::class,
+        'Zend\Validator\File\ExcludeExtension' => File\ExcludeExtension::class,
+        'Zend\Validator\File\ExcludeMimeType'  => File\ExcludeMimeType::class,
+        'Zend\Validator\File\Exists'           => File\Exists::class,
+        'Zend\Validator\File\Extension'        => File\Extension::class,
+        'Zend\Validator\File\FilesSize'        => File\FilesSize::class,
+        'Zend\Validator\File\Hash'             => File\Hash::class,
+        'Zend\Validator\File\ImageSize'        => File\ImageSize::class,
+        'Zend\Validator\File\IsCompressed'     => File\IsCompressed::class,
+        'Zend\Validator\File\IsImage'          => File\IsImage::class,
+        'Zend\Validator\File\Md5'              => File\Md5::class,
+        'Zend\Validator\File\MimeType'         => File\MimeType::class,
+        'Zend\Validator\File\NotExists'        => File\NotExists::class,
+        'Zend\Validator\File\Sha1'             => File\Sha1::class,
+        'Zend\Validator\File\Size'             => File\Size::class,
+        'Zend\Validator\File\Upload'           => File\Upload::class,
+        'Zend\Validator\File\UploadFile'       => File\UploadFile::class,
+        'Zend\Validator\File\WordCount'        => File\WordCount::class,
+        'Zend\I18n\Validator\IsFloatIsFloat'   => I18nValidator\IsFloat::class,
+        'Zend\Validator\GpsPoint'              => GpsPoint::class,
+        'Zend\Validator\GreaterThan'           => GreaterThan::class,
+        'Zend\Validator\Hex'                   => Hex::class,
+        'Zend\Validator\Hostname'              => Hostname::class,
+        'Zend\Validator\Iban'                  => Iban::class,
+        'Zend\Validator\Identical'             => Identical::class,
+        'Zend\Validator\InArray'               => InArray::class,
+        'Zend\I18n\Validator\IsInt'            => I18nValidator\IsInt::class,
+        'Zend\Validator\Ip'                    => Ip::class,
+        'Zend\Validator\Isbn'                  => Isbn::class,
+        'Zend\Validator\IsInstanceOf'          => IsInstanceOf::class,
+        'Zend\Validator\LessThan'              => LessThan::class,
+        'Zend\Validator\NotEmpty'              => NotEmpty::class,
+        'Zend\I18n\Validator\PhoneNumber'      => I18nValidator\PhoneNumber::class,
+        'Zend\I18n\Validator\PostCode'         => I18nValidator\PostCode::class,
+        'Zend\Validator\Regex'                 => Regex::class,
+        'Zend\Validator\Sitemap\Changefreq'    => Sitemap\Changefreq::class,
+        'Zend\Validator\Sitemap\Lastmod'       => Sitemap\Lastmod::class,
+        'Zend\Validator\Sitemap\Loc'           => Sitemap\Loc::class,
+        'Zend\Validator\Sitemap\Priority'      => Sitemap\Priority::class,
+        'Zend\Validator\StringLength'          => StringLength::class,
+        'Zend\Validator\Step'                  => Step::class,
+        'Zend\Validator\Timezone'              => Timezone::class,
+        'Zend\Validator\Uri'                   => Uri::class,
+        'Zend\Validator\Uuid'                  => Uuid::class,
 
         // v2 normalized FQCNs
         'zendvalidatorbarcode'              => Barcode::class,
@@ -368,7 +329,7 @@ class ValidatorPluginManager extends AbstractPluginManager
     /**
      * Default set of factories
      *
-     * @var FactoriesConfigurationType
+     * @inheritDoc
      */
     protected $factories = [
         I18nValidator\Alnum::class       => InvokableFactory::class,
@@ -545,7 +506,7 @@ class ValidatorPluginManager extends AbstractPluginManager
     /**
      * Default instance type
      *
-     * @var string
+     * @inheritDoc
      */
     protected $instanceOf = ValidatorInterface::class;
 
@@ -568,12 +529,8 @@ class ValidatorPluginManager extends AbstractPluginManager
     }
 
     /**
-     * Validate plugin instance
-     *
-     * {@inheritDoc}
-     *
      * @param mixed $instance
-     * @psalm-assert InstanceType $instance
+     * @psalm-assert ValidatorInterface $instance
      */
     public function validate($instance)
     {
@@ -581,7 +538,7 @@ class ValidatorPluginManager extends AbstractPluginManager
             throw new InvalidServiceException(sprintf(
                 '%s expects only to create instances of %s; %s is invalid',
                 static::class,
-                $this->instanceOf,
+                (string) $this->instanceOf,
                 get_debug_type($instance)
             ));
         }

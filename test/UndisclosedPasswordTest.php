@@ -7,6 +7,8 @@ namespace LaminasTest\Validator;
 use Exception;
 use Laminas\Validator\UndisclosedPassword;
 use LaminasTest\Validator\TestAsset\HttpClientException;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -22,7 +24,6 @@ use function sprintf;
 use function strtoupper;
 use function substr;
 
-/** @covers \Laminas\Validator\UndisclosedPassword */
 final class UndisclosedPasswordTest extends TestCase
 {
     /** @var ClientInterface&MockObject */
@@ -65,7 +66,7 @@ final class UndisclosedPasswordTest extends TestCase
      *
      * @psalm-return array<array{string}>
      */
-    public function goodPasswordProvider(): array
+    public static function goodPasswordProvider(): array
     {
         return [
             ['ABi$B47es.Pfg3n9PjPi'],
@@ -80,7 +81,7 @@ final class UndisclosedPasswordTest extends TestCase
      *
      * @psalm-return array<array{string}>
      */
-    public function seenPasswordProvider(): array
+    public static function seenPasswordProvider(): array
     {
         return [
             ['123456'],
@@ -94,8 +95,6 @@ final class UndisclosedPasswordTest extends TestCase
     /**
      * Testing that we reject invalid password types
      *
-     * @covers \Laminas\Validator\UndisclosedPassword
-     * @covers \Laminas\Validator\AbstractValidator
      * @todo Can be replaced by a \TypeError being thrown in PHP 7.0 or up
      */
     public function testValidationFailsForInvalidInput(): void
@@ -108,10 +107,8 @@ final class UndisclosedPasswordTest extends TestCase
     /**
      * Test that a given password was not found in the HIBP
      * API service.
-     *
-     * @covers \Laminas\Validator\UndisclosedPassword
-     * @dataProvider goodPasswordProvider
      */
+    #[DataProvider('goodPasswordProvider')]
     public function testStrongUnseenPasswordsPassValidation(string $password): void
     {
         $this->httpResponse
@@ -120,12 +117,15 @@ final class UndisclosedPasswordTest extends TestCase
             ->willReturnCallback(function (): string {
                 $hash = sha1('laminas-validator');
 
+                $constant = $this->getConstant(
+                    'HIBP_K_ANONYMITY_HASH_RANGE_LENGTH',
+                    UndisclosedPassword::class
+                );
+                self::assertIsInt($constant);
+
                 return sprintf(
                     '%s:%d',
-                    strtoupper(substr($hash, $this->getConstant(
-                        'HIBP_K_ANONYMITY_HASH_RANGE_LENGTH',
-                        UndisclosedPassword::class
-                    ))),
+                    strtoupper(substr($hash, $constant)),
                     random_int(0, 100000)
                 );
             });
@@ -141,11 +141,8 @@ final class UndisclosedPasswordTest extends TestCase
     /**
      * Test that a given password was already seen in the HIBP
      * AP service.
-     *
-     * @dataProvider seenPasswordProvider
-     * @covers \Laminas\Validator\UndisclosedPassword
-     * @covers \Laminas\Validator\AbstractValidator
      */
+    #[DataProvider('seenPasswordProvider')]
     public function testBreachedPasswordsDoNotPassValidation(string $password): void
     {
         $this->httpResponse
@@ -154,12 +151,16 @@ final class UndisclosedPasswordTest extends TestCase
             ->willReturnCallback(function () use ($password): string {
                 $hash = sha1($password);
 
+                $constant = $this->getConstant(
+                    'HIBP_K_ANONYMITY_HASH_RANGE_LENGTH',
+                    UndisclosedPassword::class
+                );
+
+                self::assertIsInt($constant);
+
                 return sprintf(
                     '%s:%d',
-                    strtoupper(substr($hash, $this->getConstant(
-                        'HIBP_K_ANONYMITY_HASH_RANGE_LENGTH',
-                        UndisclosedPassword::class
-                    ))),
+                    strtoupper(substr($hash, $constant)),
                     random_int(0, 100000)
                 );
             });
@@ -175,11 +176,9 @@ final class UndisclosedPasswordTest extends TestCase
     /**
      * Testing we are setting error messages when a password was found
      * in the breach database.
-     *
-     * @depends testBreachedPasswordsDoNotPassValidation
-     * @dataProvider seenPasswordProvider
-     * @covers \Laminas\Validator\UndisclosedPassword
      */
+    #[DataProvider('seenPasswordProvider')]
+    #[Depends('testBreachedPasswordsDoNotPassValidation')]
     public function testBreachedPasswordReturnErrorMessages(string $password): void
     {
         $this->httpClient
@@ -206,11 +205,9 @@ final class UndisclosedPasswordTest extends TestCase
     /**
      * Testing that we capture any failures when trying to connect with
      * the HIBP web service.
-     *
-     * @depends testBreachedPasswordsDoNotPassValidation
-     * @dataProvider seenPasswordProvider
-     * @covers \Laminas\Validator\UndisclosedPassword
      */
+    #[DataProvider('seenPasswordProvider')]
+    #[Depends('testBreachedPasswordsDoNotPassValidation')]
     public function testValidationDegradesGracefullyWhenNoConnectionCanBeMade(string $password): void
     {
         $clientException = $this->createMock(HttpClientException::class);

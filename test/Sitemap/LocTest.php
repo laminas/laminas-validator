@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace LaminasTest\Validator\Sitemap;
 
 use Laminas\Validator\Sitemap\Loc;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
 use function current;
 
-/** @covers \Laminas\Validator\Sitemap\Loc */
 final class LocTest extends TestCase
 {
     private Loc $validator;
@@ -60,9 +60,8 @@ final class LocTest extends TestCase
      * Tests invalid locations
      *
      * @todo A change in the URI API has led to most of these now validating
-     * @dataProvider invalidLocs
-     * @psalm-suppress UnevaluatedCode
      */
+    #[DataProvider('invalidLocs')]
     public function testInvalidLocs(string $url): void
     {
         self::markTestIncomplete('Test must be reworked');

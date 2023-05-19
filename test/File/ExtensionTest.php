@@ -6,6 +6,8 @@ namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File\Extension;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function array_merge;
@@ -15,10 +17,6 @@ use function is_array;
 
 use const UPLOAD_ERR_NO_FILE;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\File\Extension
- */
 final class ExtensionTest extends TestCase
 {
     /**
@@ -35,7 +33,7 @@ final class ExtensionTest extends TestCase
      *     3: string
      * }>
      */
-    public function basicBehaviorDataProvider(): array
+    public static function basicBehaviorDataProvider(): array
     {
         $testFile     = __DIR__ . '/_files/testsize.mo';
         $pictureTests = [
@@ -74,10 +72,10 @@ final class ExtensionTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param string|string[] $options,
      * @param string|array $isValidParam
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testBasic($options, $isValidParam, bool $expected, string $messageKey): void
     {
         $validator = new Extension($options);
@@ -92,10 +90,10 @@ final class ExtensionTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param string|string[] $options,
      * @param string|array $isValidParam
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testLegacy($options, $isValidParam, bool $expected, string $messageKey): void
     {
         if (! is_array($isValidParam)) {
@@ -130,7 +128,7 @@ final class ExtensionTest extends TestCase
     }
 
     /** @psalm-return array<array{string|string[], string[]}> */
-    public function getExtensionProvider(): array
+    public static function getExtensionProvider(): array
     {
         return [
             ['mo', ['mo']],
@@ -141,10 +139,10 @@ final class ExtensionTest extends TestCase
     /**
      * Ensures that getExtension() returns expected value
      *
-     * @dataProvider getExtensionProvider
      * @param string|string[] $extension
      * @param string[] $expected
      */
+    #[DataProvider('getExtensionProvider')]
     public function testGetExtension($extension, array $expected): void
     {
         $validator = new Extension($extension);
@@ -153,7 +151,7 @@ final class ExtensionTest extends TestCase
     }
 
     /** @psalm-return array<array{string|string[], string[]}> */
-    public function setExtensionProvider(): array
+    public static function setExtensionProvider(): array
     {
         return [
             ['gif', ['gif']],
@@ -165,10 +163,10 @@ final class ExtensionTest extends TestCase
     /**
      * Ensures that setExtension() returns expected value
      *
-     * @dataProvider setExtensionProvider
      * @param string|string[] $extension
      * @param string[] $expected
      */
+    #[DataProvider('setExtensionProvider')]
     public function testSetExtension($extension, array $expected): void
     {
         $validator = new Extension('mo');
@@ -200,9 +198,7 @@ final class ExtensionTest extends TestCase
         self::assertSame(['mo', 'gif', 'jpg', 'to', 'zip', 'ti'], $validator->getExtension());
     }
 
-    /**
-     * @group Laminas-11258
-     */
+    #[Group('Laminas-11258')]
     public function testLaminas11258(): void
     {
         $validator = new Extension('gif');

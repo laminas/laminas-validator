@@ -7,6 +7,8 @@ namespace LaminasTest\Validator\File;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Exception\InvalidMagicMimeFileException;
 use Laminas\Validator\File\MimeType;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
@@ -18,12 +20,6 @@ use function is_array;
 
 use const UPLOAD_ERR_NO_FILE;
 
-/**
- * MimeType testbed
- *
- * @group Laminas_Validator
- * @covers \Laminas\Validator\File\MimeType
- */
 final class MimeTypeTest extends TestCase
 {
     /**
@@ -39,7 +35,7 @@ final class MimeTypeTest extends TestCase
      *     2: bool
      * }>
      */
-    public function basicBehaviorDataProvider(): array
+    public static function basicBehaviorDataProvider(): array
     {
         $testFile   = __DIR__ . '/_files/picture.jpg';
         $fileUpload = [
@@ -68,10 +64,10 @@ final class MimeTypeTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param string|string[] $options
      * @param array $isValidParam
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testBasic($options, $isValidParam, bool $expected): void
     {
         $validator = new MimeType($options);
@@ -83,10 +79,10 @@ final class MimeTypeTest extends TestCase
     /**
      * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param string|string[] $options
      * @param array $isValidParam
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testLegacy($options, $isValidParam, bool $expected): void
     {
         if (is_array($isValidParam)) {
@@ -98,7 +94,7 @@ final class MimeTypeTest extends TestCase
     }
 
     /** @psalm-return array<array{string|string[], string|string[], bool}> */
-    public function getMimeTypeProvider(): array
+    public static function getMimeTypeProvider(): array
     {
         return [
             ['image/gif', 'image/gif', false],
@@ -110,10 +106,10 @@ final class MimeTypeTest extends TestCase
     /**
      * Ensures that getMimeType() returns expected value
      *
-     * @dataProvider getMimeTypeProvider
      * @param string|string[] $mimeType
      * @param string|string[] $expected
      */
+    #[DataProvider('getMimeTypeProvider')]
     public function testGetMimeType($mimeType, $expected, bool $asArray): void
     {
         $validator = new MimeType($mimeType);
@@ -122,7 +118,7 @@ final class MimeTypeTest extends TestCase
     }
 
     /** @psalm-return array<array{string|string[], string, string[]}> */
-    public function setMimeTypeProvider(): array
+    public static function setMimeTypeProvider(): array
     {
         return [
             ['image/jpeg', 'image/jpeg', ['image/jpeg']],
@@ -134,10 +130,10 @@ final class MimeTypeTest extends TestCase
     /**
      * Ensures that setMimeType() returns expected value
      *
-     * @dataProvider setMimeTypeProvider
      * @param string|string[] $mimeType
      * @param string[] $expectedAsArray
      */
+    #[DataProvider('setMimeTypeProvider')]
     public function testSetMimeType($mimeType, string $expected, array $expectedAsArray): void
     {
         $validator = new MimeType('image/gif');
@@ -219,9 +215,7 @@ final class MimeTypeTest extends TestCase
         self::assertSame('image/gif,image/jpg', $validator->getMimeType());
     }
 
-    /**
-     * @group Laminas-11258
-     */
+    #[Group('Laminas-11258')]
     public function testLaminas11258(): void
     {
         $validator = new MimeType([
@@ -257,9 +251,7 @@ final class MimeTypeTest extends TestCase
         }
     }
 
-    /**
-     * @group Laminas-10461
-     */
+    #[Group('Laminas-10461')]
     public function testDisablingMagicFileByConstructor(): void
     {
         $files = [
@@ -311,7 +303,6 @@ final class MimeTypeTest extends TestCase
         $validator->setMagicFile([]);
 
         $r = new ReflectionProperty($validator, 'options');
-        $r->setAccessible(true);
 
         $options = $r->getValue($validator);
 
@@ -321,7 +312,7 @@ final class MimeTypeTest extends TestCase
     /**
      * @psalm-return array<string, array{scalar|object|null}>
      */
-    public function invalidMimeTypeTypes(): array
+    public static function invalidMimeTypeTypes(): array
     {
         return [
             'null'       => [null],
@@ -336,9 +327,9 @@ final class MimeTypeTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidMimeTypeTypes
      * @psalm-param scalar|object|null $type
      */
+    #[DataProvider('invalidMimeTypeTypes')]
     public function testAddingMimeTypeWithInvalidTypeRaisesException($type): void
     {
         $validator = new MimeType();

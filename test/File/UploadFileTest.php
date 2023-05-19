@@ -6,19 +6,18 @@ namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File\UploadFile;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\UploadedFileInterface;
 
 use function current;
+use function is_int;
 use function sprintf;
 
 use const UPLOAD_ERR_NO_FILE;
 use const UPLOAD_ERR_OK;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\File\UploadFile
- */
 final class UploadFileTest extends TestCase
 {
     private UploadFile $validator;
@@ -32,11 +31,11 @@ final class UploadFileTest extends TestCase
 
     /**
      * @psalm-return array<string, array{
-     *     0: UploadedFileInterface|array<string, mixed>,
+     *     0: int|array<string, mixed>,
      *     1: string
      * }>
      */
-    public function uploadErrorsTestDataProvider(): array
+    public static function uploadErrorsTestDataProvider(): array
     {
         $data         = [];
         $errorTypes   = [
@@ -79,17 +78,7 @@ final class UploadFileTest extends TestCase
 
             $name = sprintf('PSR-7 - %s', $errorType);
 
-            $upload = $this->createMock(UploadedFileInterface::class);
-            $upload
-                ->expects(self::never())
-                ->method('getClientFilename');
-
-            $upload
-                ->expects(self::once())
-                ->method('getError')
-                ->willReturn($errorCode);
-
-            $data[$name] = [$upload, $errorType];
+            $data[$name] = [$errorCode, $errorType];
         }
 
         return $data;
@@ -97,12 +86,21 @@ final class UploadFileTest extends TestCase
 
     /**
      * Ensures that the validator follows expected behavior
-     *
-     * @dataProvider uploadErrorsTestDataProvider
-     * @param array|UploadedFileInterface $fileInfo
      */
-    public function testBasic($fileInfo, string $messageKey): void
+    #[DataProvider('uploadErrorsTestDataProvider')]
+    public function testBasic(array|int $fileInfo, string $messageKey): void
     {
+        if (is_int($fileInfo)) {
+            $errorCode = $fileInfo;
+            $fileInfo  = $this->createMock(UploadedFileInterface::class);
+            $fileInfo->expects(self::never())
+                ->method('getClientFilename');
+
+            $fileInfo->expects(self::once())
+                ->method('getError')
+                ->willReturn($errorCode);
+        }
+
         self::assertFalse($this->validator->isValid($fileInfo));
         self::assertArrayHasKey($messageKey, $this->validator->getMessages());
     }
@@ -115,9 +113,7 @@ final class UploadFileTest extends TestCase
         $this->validator->isValid(['foo', 'bar']);
     }
 
-    /**
-     * @group Laminas-11258
-     */
+    #[Group('Laminas-11258')]
     public function testLaminas11258(): void
     {
         self::assertFalse($this->validator->isValid(__DIR__ . '/_files/nofile.mo'));

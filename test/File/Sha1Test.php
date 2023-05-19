@@ -6,6 +6,8 @@ namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File\Sha1;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function array_merge;
@@ -15,12 +17,6 @@ use function is_array;
 
 use const UPLOAD_ERR_NO_FILE;
 
-/**
- * Sha1 testbed
- *
- * @group Laminas_Validator
- * @covers \Laminas\Validator\File\Sha1
- */
 final class Sha1Test extends TestCase
 {
     /**
@@ -37,7 +33,7 @@ final class Sha1Test extends TestCase
      *     3: string
      * }>
      */
-    public function basicBehaviorDataProvider(): array
+    public static function basicBehaviorDataProvider(): array
     {
         $testFile     = __DIR__ . '/_files/picture.jpg';
         $pictureTests = [
@@ -83,10 +79,10 @@ final class Sha1Test extends TestCase
     /**
      * Ensures that the validator follows expected behavior
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param string|string[] $options
      * @param string|array $isValidParam
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testBasic($options, $isValidParam, bool $expected, string $messageKey): void
     {
         $validator = new Sha1($options);
@@ -101,10 +97,10 @@ final class Sha1Test extends TestCase
     /**
      * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
      *
-     * @dataProvider basicBehaviorDataProvider
      * @param string|string[] $options
      * @param string|array $isValidParam
      */
+    #[DataProvider('basicBehaviorDataProvider')]
     public function testLegacy($options, $isValidParam, bool $expected, string $messageKey): void
     {
         if (! is_array($isValidParam)) {
@@ -121,7 +117,7 @@ final class Sha1Test extends TestCase
     }
 
     /** @psalm-return array<array{string|list<string>, array<numeric, string>}> */
-    public function getHashProvider(): array
+    public static function getHashProvider(): array
     {
         return [
             ['12333', ['12333' => 'sha1']],
@@ -132,10 +128,10 @@ final class Sha1Test extends TestCase
     /**
      * Ensures that getSha1() returns expected value
      *
-     * @dataProvider getHashProvider
      * @psalm-param string|list<string> $hash
      * @psalm-param array<numeric, string> $expected
      */
+    #[DataProvider('getHashProvider')]
     public function testGetSha1($hash, array $expected): void
     {
         $validator = new Sha1($hash);
@@ -146,10 +142,10 @@ final class Sha1Test extends TestCase
     /**
      * Ensures that getHash() returns expected value
      *
-     * @dataProvider getHashProvider
      * @psalm-param string|list<string> $hash
      * @psalm-param array<numeric, string> $expected
      */
+    #[DataProvider('getHashProvider')]
     public function testGetHash($hash, array $expected): void
     {
         $validator = new Sha1($hash);
@@ -160,10 +156,10 @@ final class Sha1Test extends TestCase
     /**
      * Ensures that setSha1() returns expected value
      *
-     * @dataProvider getHashProvider
      * @psalm-param string|list<string> $hash
      * @psalm-param array<numeric, string> $expected
      */
+    #[DataProvider('getHashProvider')]
     public function testSetSha1($hash, array $expected): void
     {
         $validator = new Sha1('12345');
@@ -175,10 +171,10 @@ final class Sha1Test extends TestCase
     /**
      * Ensures that setHash() returns expected value
      *
-     * @dataProvider getHashProvider
      * @psalm-param string|list<string> $hash
      * @psalm-param array<numeric, string> $expected
      */
+    #[DataProvider('getHashProvider')]
     public function testSetHash($hash, array $expected): void
     {
         $validator = new Sha1('12345');
@@ -223,9 +219,7 @@ final class Sha1Test extends TestCase
         );
     }
 
-    /**
-     * @group Laminas-11258
-     */
+    #[Group('Laminas-11258')]
     public function testLaminas11258(): void
     {
         $validator = new Sha1('12345');

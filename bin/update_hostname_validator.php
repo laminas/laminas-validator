@@ -185,7 +185,6 @@ function getPunycodeDecoder()
     $hostnameValidator = new Hostname();
     $reflection        = new ReflectionClass(get_class($hostnameValidator));
     $decodePunyCode    = $reflection->getMethod('decodePunycode');
-    $decodePunyCode->setAccessible(true);
 
     return function ($encode) use ($hostnameValidator, $decodePunyCode) {
         if (strpos($encode, 'xn--') === 0) {

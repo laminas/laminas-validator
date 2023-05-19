@@ -10,10 +10,6 @@ use stdClass;
 
 use function current;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\Sitemap\Changefreq
- */
 final class ChangefreqTest extends TestCase
 {
     private Changefreq $validator;

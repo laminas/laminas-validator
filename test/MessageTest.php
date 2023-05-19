@@ -6,14 +6,13 @@ namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\StringLength;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
 use function current;
 
-/**
- * @group Laminas_Validator
- */
+#[Group('Laminas_Validator')]
 final class MessageTest extends TestCase
 {
     private StringLength $validator;

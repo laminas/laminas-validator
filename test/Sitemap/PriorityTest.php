@@ -10,10 +10,6 @@ use stdClass;
 
 use function current;
 
-/**
- * @group Laminas_Validator
- * @covers \Laminas\Validator\Sitemap\Priority
- */
 final class PriorityTest extends TestCase
 {
     private Priority $validator;
