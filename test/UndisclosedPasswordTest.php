@@ -15,6 +15,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 use ReflectionClass;
 use stdClass;
 
@@ -26,16 +27,11 @@ use function substr;
 
 final class UndisclosedPasswordTest extends TestCase
 {
-    /** @var ClientInterface&MockObject */
-    private ClientInterface $httpClient;
-
-    /** @var RequestFactoryInterface&MockObject */
-    private RequestFactoryInterface $httpRequest;
-
-    /** @var ResponseInterface&MockObject */
-    private ResponseInterface $httpResponse;
-
+    private ClientInterface&MockObject $httpClient;
+    private RequestFactoryInterface&MockObject $httpRequest;
+    private ResponseInterface&MockObject $httpResponse;
     private UndisclosedPassword $validator;
+    private StreamInterface&MockObject $stream;
 
     /** {@inheritDoc} */
     protected function setUp(): void
@@ -45,8 +41,8 @@ final class UndisclosedPasswordTest extends TestCase
         $this->httpClient   = $this->createMock(ClientInterface::class);
         $this->httpRequest  = $this->createMock(RequestFactoryInterface::class);
         $this->httpResponse = $this->createMock(ResponseInterface::class);
-
-        $this->validator = new UndisclosedPassword($this->httpClient, $this->httpRequest);
+        $this->validator    = new UndisclosedPassword($this->httpClient, $this->httpRequest);
+        $this->stream       = $this->createMock(StreamInterface::class);
     }
 
     /**
@@ -114,7 +110,7 @@ final class UndisclosedPasswordTest extends TestCase
         $this->httpResponse
             ->expects(self::once())
             ->method('getBody')
-            ->willReturnCallback(function (): string {
+            ->willReturnCallback(function (): StreamInterface {
                 $hash = sha1('laminas-validator');
 
                 $constant = $this->getConstant(
@@ -123,11 +119,14 @@ final class UndisclosedPasswordTest extends TestCase
                 );
                 self::assertIsInt($constant);
 
-                return sprintf(
-                    '%s:%d',
-                    strtoupper(substr($hash, $constant)),
-                    random_int(0, 100000)
-                );
+                $this->stream->method('__toString')
+                    ->willReturn(sprintf(
+                        '%s:%d',
+                        strtoupper(substr($hash, $constant)),
+                        random_int(0, 100000)
+                    ));
+
+                return $this->stream;
             });
 
         $this->httpClient
@@ -148,7 +147,7 @@ final class UndisclosedPasswordTest extends TestCase
         $this->httpResponse
             ->expects(self::once())
             ->method('getBody')
-            ->willReturnCallback(function () use ($password): string {
+            ->willReturnCallback(function () use ($password): StreamInterface {
                 $hash = sha1($password);
 
                 $constant = $this->getConstant(
@@ -158,11 +157,14 @@ final class UndisclosedPasswordTest extends TestCase
 
                 self::assertIsInt($constant);
 
-                return sprintf(
-                    '%s:%d',
-                    strtoupper(substr($hash, $constant)),
-                    random_int(0, 100000)
-                );
+                $this->stream->method('__toString')
+                    ->willReturn(sprintf(
+                        '%s:%d',
+                        strtoupper(substr($hash, $constant)),
+                        random_int(0, 100000)
+                    ));
+
+                return $this->stream;
             });
 
         $this->httpClient
