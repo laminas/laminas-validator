@@ -10,10 +10,17 @@ jobs:
   update-hostnames:
     runs-on: ubuntu-latest
     steps:
+      - name: Get default branch
+        id: default-branch
+        shell: bash
+        run: |
+          echo "branch-name::$(gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name')" >> $GITHUB_OUTPUT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: HEAD
+          ref: ${{ steps.default-branch.outputs.branch-name }}
           fetch-depth: 1
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
