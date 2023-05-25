@@ -14,7 +14,7 @@ jobs:
         id: default-branch
         shell: bash
         run: |
-          echo "branch-name::$(gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name')" >> $GITHUB_OUTPUT
+          echo "branch-name=$(gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name')" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Checkout
@@ -35,7 +35,7 @@ jobs:
         run: |
           set -e
           php -f bin/update_hostname_validator.php
-          [ ! -n "$(git status --porcelain -- src/Hostname.php)" ] || echo "changed::true" >> $GITHUB_OUTPUT
+          [ ! -n "$(git status --porcelain -- src/Hostname.php)" ] || echo "changed=true" >> $GITHUB_OUTPUT
       - name: Create or update PR
         if: steps.update-hostnames.outputs.changed == 'true'
         shell: bash
