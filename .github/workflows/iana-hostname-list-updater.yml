@@ -54,7 +54,7 @@ jobs:
           
           PR_STATE=$(gh pr view --json state --jq ".state" "${USE_BRANCH_NAME}" 2>/dev/null || echo "NONE")
           
-          if [[ "$PR_STATE" -eq "OPEN"]]
+          if [[ "$PR_STATE" == "OPEN" ]]
           then
             echo "PR for branch ${USE_BRANCH_NAME} already opened. Nothing left to do."
             exit 0
