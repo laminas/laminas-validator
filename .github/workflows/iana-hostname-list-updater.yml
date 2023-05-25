@@ -36,7 +36,7 @@ jobs:
           set -e
           php -f bin/update_hostname_validator.php
           [ ! -n "$(git status --porcelain -- src/Hostname.php)" ] || echo "changed=true" >> $GITHUB_OUTPUT
-      - name: Create or update PR
+      - name: Configure git
         if: steps.update-hostnames.outputs.changed == 'true'
         shell: bash
         run: |
@@ -45,10 +45,19 @@ jobs:
           echo "$SIGNING_SECRET_KEY" > gpg -q --import
           git config --local user.email "$GIT_AUTHOR_EMAIL"
           git config --local user.name "$GIT_AUTHOR_NAME"
+        env:
+          GIT_AUTHOR_EMAIL: ${{ secrets.GIT_AUTHOR_EMAIL }}
+          GIT_AUTHOR_NAME: ${{ secrets.GIT_AUTHOR_NAME }}
+          SIGNING_SECRET_KEY: ${{ secrets.SIGNING_SECRET_KEY }}
+      - name: Create or update PR
+        if: steps.update-hostnames.outputs.changed == 'true'
+        shell: bash
+        run: |
+          set -e
           
           git checkout -b "${USE_BRANCH_NAME}"
           git add -- src/Hostname.php
-          git commit -s -m "Update TLD list for hostname validator"
+          git commit -s -S -m "Update TLD list for hostname validator"
           
           git push --force origin "${USE_BRANCH_NAME}"
           
@@ -66,6 +75,3 @@ jobs:
         env:
           USE_BRANCH_NAME: iana-tld-list-update
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GIT_AUTHOR_EMAIL: ${{ secrets.GIT_AUTHOR_EMAIL }}
-          GIT_AUTHOR_NAME: ${{ secrets.GIT_AUTHOR_NAME }}
-          SIGNING_SECRET_KEY: ${{ secrets.SIGNING_SECRET_KEY }}
