@@ -42,9 +42,19 @@ jobs:
         run: |
           set -e
           
-          echo "$SIGNING_SECRET_KEY" > gpg -q --import
+          SIGNING_KEY_ID=$(echo "$SIGNING_SECRET_KEY" | gpg --import -q --import-options import-show --with-colons | awk -F: '$1=="sec" {print $5; exit}')
+          if [ -z "$SIGNING_KEY_ID" ]
+          then
+            echo "GPG signing key not found in SIGNING_SECRET_KEY"
+            exit 1
+          fi
+
+          echo "Using gpg key $SIGNING_KEY_ID"
+          
           git config --local user.email "$GIT_AUTHOR_EMAIL"
           git config --local user.name "$GIT_AUTHOR_NAME"
+          git config --local user.signingkey "$SIGNING_KEY_ID"
+          git config --local commit.gpgsign true
         env:
           GIT_AUTHOR_EMAIL: ${{ secrets.GIT_AUTHOR_EMAIL }}
           GIT_AUTHOR_NAME: ${{ secrets.GIT_AUTHOR_NAME }}
