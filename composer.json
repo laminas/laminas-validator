@@ -40,7 +40,6 @@
         "laminas/laminas-coding-standard": "^2.5",
         "laminas/laminas-db": "^2.18",
         "laminas/laminas-filter": "^2.32",
-        "laminas/laminas-http": "^2.18",
         "laminas/laminas-i18n": "^2.23",
         "laminas/laminas-session": "^2.16",
         "laminas/laminas-uri": "^2.10.0",
@@ -48,7 +47,7 @@
         "psalm/plugin-phpunit": "^0.18.4",
         "psr/http-client": "^1.0.2",
         "psr/http-factory": "^1.0.2",
-        "vimeo/psalm": "^5.11"
+        "vimeo/psalm": "^5.12"
     },
     "suggest": {
         "laminas/laminas-db": "Laminas\\Db component, required by the (No)RecordExists validator",
