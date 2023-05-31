@@ -164,11 +164,14 @@ class Step extends AbstractValidator
 
     /**
      * @param  float $float
-     * @return int
      */
-    private function getPrecision($float)
+    private function getPrecision($float): int
     {
-        $segment = substr($float, strpos($float, '.') + 1);
+        $position = strpos((string) $float, '.');
+        $segment  = $position === false
+            ? null
+            : substr((string) $float, $position + 1);
+
         return $segment ? strlen($segment) : 0;
     }
 }
