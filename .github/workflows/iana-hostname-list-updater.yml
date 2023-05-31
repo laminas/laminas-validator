@@ -14,7 +14,9 @@ jobs:
         id: default-branch
         shell: bash
         run: |
-          echo "branch-name=$(gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name')" >> $GITHUB_OUTPUT
+          set -e
+
+          echo "branch-name=$(gh repo view "$GITHUB_REPOSITORY" --json defaultBranchRef --jq '.defaultBranchRef.name')" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Checkout
@@ -71,7 +73,7 @@ jobs:
           
           git push --force origin "${USE_BRANCH_NAME}"
           
-          PR_STATE=$(gh pr view --json state --jq ".state" "${USE_BRANCH_NAME}" 2>/dev/null || echo "NONE")
+          PR_STATE=$(gh pr view --repo "$GITHUB_REPOSITORY" --json state --jq ".state" "${USE_BRANCH_NAME}" 2>/dev/null || echo "NONE")
           
           if [[ "$PR_STATE" == "OPEN" ]]
           then
@@ -79,7 +81,8 @@ jobs:
             exit 0
           fi
           
-          gh pr create --title "Update IANA TLDs for Hostname validator" \
+          gh pr create --repo "$GITHUB_REPOSITORY" \
+              --title "Update IANA TLDs for Hostname validator" \
               --body "Automated update of TLDs from IANA list available at https://data.iana.org/TLD/tlds-alpha-by-domain.txt" \
               --label "Enhancement"
         env:
