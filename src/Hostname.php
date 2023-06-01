@@ -89,7 +89,7 @@ class Hostname extends AbstractValidator
 
     /**
      * Array of valid top-level-domains
-     * IanaVersion 2022072400
+     * IanaVersion 2023060100
      *
      * @see ftp://data.iana.org/TLD/tlds-alpha-by-domain.txt  List of all TLDs by domain
      * @see http://www.iana.org/domains/root/db/ Official list of supported TLDs
@@ -115,7 +115,6 @@ class Hostname extends AbstractValidator
         'aco',
         'actor',
         'ad',
-        'adac',
         'ads',
         'adult',
         'ae',
@@ -274,7 +273,6 @@ class Hostname extends AbstractValidator
         'brussels',
         'bs',
         'bt',
-        'bugatti',
         'build',
         'builders',
         'business',
@@ -294,7 +292,6 @@ class Hostname extends AbstractValidator
         'cam',
         'camera',
         'camp',
-        'cancerresearch',
         'canon',
         'capetown',
         'capital',
@@ -809,7 +806,6 @@ class Hostname extends AbstractValidator
         'limited',
         'limo',
         'lincoln',
-        'linde',
         'link',
         'lipsy',
         'live',
@@ -821,7 +817,6 @@ class Hostname extends AbstractValidator
         'loans',
         'locker',
         'locus',
-        'loft',
         'lol',
         'london',
         'lotte',
@@ -841,7 +836,6 @@ class Hostname extends AbstractValidator
         'lv',
         'ly',
         'ma',
-        'macys',
         'madrid',
         'maif',
         'maison',
@@ -1158,7 +1152,6 @@ class Hostname extends AbstractValidator
         'select',
         'sener',
         'services',
-        'ses',
         'seven',
         'sew',
         'sex',
@@ -1485,7 +1478,6 @@ class Hostname extends AbstractValidator
         'укр',
         '香港',
         '亚马逊',
-        '诺基亚',
         '食品',
         '飞利浦',
         '台湾',
