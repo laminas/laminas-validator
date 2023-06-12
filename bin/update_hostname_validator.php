@@ -20,34 +20,15 @@ if (! is_writable(LAMINAS_HOSTNAME_VALIDATOR_FILE)) {
 }
 
 /** @psalm-var list<string> $newFileContent */
-$newFileContent   = [];    // new file content
-$insertDone       = false; // becomes 'true' when we find start of $validTlds declaration
-$insertFinish     = false; // becomes 'true' when we find end of $validTlds declaration
-$checkOnly        = isset($argv[1]) ? $argv[1] === '--check-only' : false;
-$response         = getOfficialTLDs();
-$ianaVersion      = getVersionFromString('Version', strtok($response, "\n"));
-$validatorVersion = getVersionFromString('IanaVersion', file_get_contents(LAMINAS_HOSTNAME_VALIDATOR_FILE));
+$newFileContent = [];    // new file content
+$insertDone     = false; // becomes 'true' when we find start of $validTlds declaration
+$insertFinish   = false; // becomes 'true' when we find end of $validTlds declaration
+$checkOnly      = isset($argv[1]) ? $argv[1] === '--check-only' : false;
+$response       = getOfficialTLDs();
 
-if ($checkOnly && $ianaVersion > $validatorVersion) {
-    printf(
-        'TLDs must be updated, please run `php bin/update_hostname_validator.php` and push your changes%s',
-        PHP_EOL
-    );
-    exit(1);
-}
+$currentFileContent = file(LAMINAS_HOSTNAME_VALIDATOR_FILE);
 
-if ($checkOnly) {
-    printf('TLDs are up-to-date%s', PHP_EOL);
-    exit(0);
-}
-
-foreach (file(LAMINAS_HOSTNAME_VALIDATOR_FILE) as $line) {
-    // Replace old version number with new one
-    if (preg_match('/\*\s+IanaVersion\s+\d+/', $line, $matches)) {
-        $newFileContent[] = sprintf("     * IanaVersion %s\n", $ianaVersion);
-        continue;
-    }
-
+foreach ($currentFileContent as $line) {
     if ($insertDone === $insertFinish) {
         // Outside of $validTlds definition; keep line as-is
         $newFileContent[] = $line;
@@ -84,6 +65,19 @@ if (! $insertFinish) {
     exit(1);
 }
 
+if ($currentFileContent === $newFileContent) {
+    printf('Nothing to do. Validator has no TLD changes.%s', PHP_EOL);
+    exit(0);
+}
+
+if ($checkOnly) {
+    printf(
+        'TLDs must be updated, please run `php bin/update_hostname_validator.php` and push your changes%s',
+        PHP_EOL
+    );
+    exit(1);
+}
+
 if (false === @file_put_contents(LAMINAS_HOSTNAME_VALIDATOR_FILE, $newFileContent)) {
     printf('Error: cannot write info file "%s"%s', LAMINAS_HOSTNAME_VALIDATOR_FILE, PHP_EOL);
     exit(1);
@@ -107,25 +101,6 @@ function getOfficialTLDs(): string
 
         exit(1);
     }
-}
-
-/**
- * Extract the first match of a string like
- * "Version 2015072300" from the given string
- *
- * @param string $prefix
- * @param string $string
- * @return string
- * @throws Exception
- */
-function getVersionFromString($prefix, $string)
-{
-    $matches = [];
-    if (! preg_match(sprintf('/%s\s+((\d+)?)/', $prefix), $string, $matches)) {
-        throw new Exception('Error: cannot get last update date');
-    }
-
-    return $matches[1];
 }
 
 /**

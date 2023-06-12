@@ -89,7 +89,6 @@ class Hostname extends AbstractValidator
 
     /**
      * Array of valid top-level-domains
-     * IanaVersion 2023060100
      *
      * @see ftp://data.iana.org/TLD/tlds-alpha-by-domain.txt  List of all TLDs by domain
      * @see http://www.iana.org/domains/root/db/ Official list of supported TLDs
@@ -99,7 +98,6 @@ class Hostname extends AbstractValidator
     protected $validTlds = [
         'aaa',
         'aarp',
-        'abarth',
         'abb',
         'abbott',
         'abbvie',
@@ -134,7 +132,6 @@ class Hostname extends AbstractValidator
         'airtel',
         'akdn',
         'al',
-        'alfaromeo',
         'alibaba',
         'alipay',
         'allfinanz',
@@ -508,7 +505,6 @@ class Hostname extends AbstractValidator
         'ferrari',
         'ferrero',
         'fi',
-        'fiat',
         'fidelity',
         'fido',
         'film',
@@ -775,7 +771,6 @@ class Hostname extends AbstractValidator
         'lamborghini',
         'lamer',
         'lancaster',
-        'lancia',
         'land',
         'landrover',
         'lanxess',
@@ -849,7 +844,6 @@ class Hostname extends AbstractValidator
         'markets',
         'marriott',
         'marshalls',
-        'maserati',
         'mattel',
         'mba',
         'mc',
