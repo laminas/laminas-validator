@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.12.0@f90118cdeacd0088e7215e64c0c99ceca819e176">
+<files psalm-version="5.13.0@a0a9c27630bcf8301ee78cb06741d2907d8c9fef">
   <file src="bin/update_hostname_validator.php">
     <MissingClosureParamType>
       <code>$domain</code>
@@ -983,9 +983,6 @@
     <PossiblyUnusedReturnValue>
       <code>CreditCard</code>
     </PossiblyUnusedReturnValue>
-    <UndefinedAttributeClass>
-      <code>SensitiveParameter</code>
-    </UndefinedAttributeClass>
   </file>
   <file src="src/Csrf.php">
     <DocblockTypeContradiction>
@@ -1676,8 +1673,6 @@
       <code><![CDATA[$options['maxHeight']]]></code>
       <code><![CDATA[$options['maxWidth']]]></code>
       <code><![CDATA[$options['minHeight']]]></code>
-      <code><![CDATA[$this->height]]></code>
-      <code><![CDATA[$this->width]]></code>
     </MixedAssignment>
     <MixedInferredReturnType>
       <code>int</code>
@@ -2539,17 +2534,6 @@
       <code>TranslatorAwareInterface</code>
       <code>self</code>
     </PossiblyUnusedReturnValue>
-  </file>
-  <file src="src/UndisclosedPassword.php">
-    <UndefinedAttributeClass>
-      <code>SensitiveParameter</code>
-      <code>SensitiveParameter</code>
-      <code>SensitiveParameter</code>
-      <code>SensitiveParameter</code>
-      <code>SensitiveParameter</code>
-      <code>SensitiveParameter</code>
-      <code>SensitiveParameter</code>
-    </UndefinedAttributeClass>
   </file>
   <file src="src/Uri.php">
     <DocblockTypeContradiction>
