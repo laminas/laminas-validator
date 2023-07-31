@@ -1257,7 +1257,6 @@ class Hostname extends AbstractValidator
         'tiaa',
         'tickets',
         'tienda',
-        'tiffany',
         'tips',
         'tires',
         'tirol',
