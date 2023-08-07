@@ -899,7 +899,6 @@ class Hostname extends AbstractValidator
         'mu',
         'museum',
         'music',
-        'mutual',
         'mv',
         'mw',
         'mx',
