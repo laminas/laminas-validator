@@ -939,7 +939,6 @@ class Hostname extends AbstractValidator
         'nl',
         'no',
         'nokia',
-        'northwesternmutual',
         'norton',
         'now',
         'nowruz',
