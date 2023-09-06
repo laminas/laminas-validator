@@ -158,25 +158,32 @@ final class RegexTest extends TestCase
     }
 
     /**
-     * @psalm-return array<string, array{0: mixed}>
+     * @psalm-return array<string, array{0: mixed, 1: non-empty-string}>
      */
     public static function invalidConstructorArgumentsProvider(): array
     {
         return [
-            'true'       => [true],
-            'false'      => [false],
-            'zero'       => [0],
-            'int'        => [1],
-            'zero-float' => [0.0],
-            'float'      => [1.0],
-            'object'     => [(object) []],
+            'true'                     => [true, 'Invalid options provided to constructor'],
+            'false'                    => [false, 'Invalid options provided to constructor'],
+            'zero'                     => [0, 'Invalid options provided to constructor'],
+            'int'                      => [1, 'Invalid options provided to constructor'],
+            'zero-float'               => [0.0, 'Invalid options provided to constructor'],
+            'float'                    => [1.0, 'Invalid options provided to constructor'],
+            'object'                   => [(object) [], 'Invalid options provided to constructor'],
+            'empty-string'             => ['', 'Internal error parsing the pattern'],
+            'missing-pattern-key'      => [[], "Missing option 'pattern'"],
+            'pattern-key-not-string'   => [['pattern' => false], "Missing option 'pattern'"],
+            'pattern-key-empty-string' => [['pattern' => ''], "Missing option 'pattern'"],
         ];
     }
 
     #[DataProvider('invalidConstructorArgumentsProvider')]
-    public function testConstructorRaisesExceptionWhenProvidedInvalidArguments(mixed $options): void
-    {
+    public function testConstructorRaisesExceptionWhenProvidedInvalidArguments(
+        mixed $options,
+        string $expectedMessage,
+    ): void {
         $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage($expectedMessage);
 
         new Regex($options);
     }
