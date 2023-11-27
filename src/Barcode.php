@@ -2,7 +2,7 @@
 
 namespace Laminas\Validator;
 
-use Traversable;
+use ArrayAccess;
 
 use function array_key_exists;
 use function class_exists;
@@ -50,7 +50,7 @@ class Barcode extends AbstractValidator
     /**
      * Constructor for barcodes
      *
-     * @param array|string $options Options to use
+     * @param iterable<string, mixed>|null|string $options Options to use
      */
     public function __construct($options = null)
     {
@@ -62,7 +62,7 @@ class Barcode extends AbstractValidator
             if (array_key_exists('options', $options)) {
                 $options['options'] = ['options' => $options['options']];
             }
-        } elseif ($options instanceof Traversable) {
+        } elseif ($options instanceof ArrayAccess) {
             if (property_exists($options, 'options')) {
                 $options['options'] = ['options' => $options['options']];
             }

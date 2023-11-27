@@ -107,7 +107,7 @@ class Regex extends AbstractValidator
     /**
      * Returns true if and only if $value matches against the pattern option
      *
-     * @param  string $value
+     * @param  mixed $value
      * @return bool
      */
     public function isValid($value)
@@ -120,7 +120,7 @@ class Regex extends AbstractValidator
         $this->setValue($value);
 
         ErrorHandler::start();
-        $status = preg_match($this->pattern, $value);
+        $status = preg_match($this->pattern, (string) $value);
         ErrorHandler::stop();
         if (false === $status) {
             $this->error(self::ERROROUS);
