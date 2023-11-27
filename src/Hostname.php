@@ -1331,7 +1331,6 @@ class Hostname extends AbstractValidator
         'vlaanderen',
         'vn',
         'vodka',
-        'volkswagen',
         'volvo',
         'vote',
         'voting',
