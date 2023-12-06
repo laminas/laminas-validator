@@ -4,6 +4,7 @@ namespace Laminas\Validator;
 
 use Laminas\Stdlib\ArrayUtils;
 use Laminas\Validator\Barcode\AdapterInterface;
+use Laminas\Validator\Exception\InvalidArgumentException;
 use Traversable;
 
 use function assert;
@@ -57,7 +58,7 @@ class Barcode extends AbstractValidator
     /**
      * Constructor for barcodes
      *
-     * @param iterable<string, mixed>|null|string $options Options to use
+     * @param iterable<string, mixed>|null|string|AdapterInterface $options Options to use
      */
     public function __construct($options = null)
     {
@@ -69,8 +70,16 @@ class Barcode extends AbstractValidator
             $options = [];
         }
 
-        if (is_string($options)) {
+        if (is_string($options) || $options instanceof AdapterInterface) {
             $options = ['adapter' => $options];
+        }
+
+        if (! is_array($options)) {
+            throw new InvalidArgumentException(sprintf(
+                'Options should be an array, a string representing the name of an adapter, or an adapter instance. '
+                . 'Received "%s"',
+                get_debug_type($options),
+            ));
         }
 
         parent::__construct($options);
@@ -95,10 +104,10 @@ class Barcode extends AbstractValidator
     /**
      * Sets a new barcode adapter
      *
-     * @param  string|Barcode\AbstractAdapter $adapter Barcode adapter to use
+     * @param  string|AdapterInterface $adapter Barcode adapter to use
      * @param  array  $options Options for this adapter
      * @return $this
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function setAdapter($adapter, $options = null)
     {
@@ -107,14 +116,14 @@ class Barcode extends AbstractValidator
             $adapter = 'Laminas\\Validator\\Barcode\\' . $adapter;
 
             if (! class_exists($adapter)) {
-                throw new Exception\InvalidArgumentException('Barcode adapter matching "' . $adapter . '" not found');
+                throw new InvalidArgumentException('Barcode adapter matching "' . $adapter . '" not found');
             }
 
             $adapter = new $adapter($options);
         }
 
         if (! $adapter instanceof Barcode\AdapterInterface) {
-            throw new Exception\InvalidArgumentException(
+            throw new InvalidArgumentException(
                 sprintf(
                     'Adapter %s does not implement Laminas\\Validator\\Barcode\\AdapterInterface',
                     get_debug_type($adapter)
