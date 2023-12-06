@@ -6,7 +6,6 @@ use Laminas\Stdlib\ArrayUtils;
 use Laminas\Validator\Barcode\AdapterInterface;
 use Traversable;
 
-use function array_key_exists;
 use function assert;
 use function class_exists;
 use function get_debug_type;
@@ -72,10 +71,6 @@ class Barcode extends AbstractValidator
 
         if (is_string($options)) {
             $options = ['adapter' => $options];
-        }
-
-        if (array_key_exists('options', $options)) {
-            $options['options'] = ['options' => $options['options']];
         }
 
         parent::__construct($options);
