@@ -35,7 +35,7 @@ class Step extends AbstractValidator
     /**
      * Set default options for this instance
      *
-     * @param array $options
+     * @param iterable<string, mixed> $options
      */
     public function __construct($options = [])
     {

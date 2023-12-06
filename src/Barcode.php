@@ -2,14 +2,15 @@
 
 namespace Laminas\Validator;
 
+use Laminas\Stdlib\ArrayUtils;
+use Laminas\Validator\Barcode\AdapterInterface;
 use Traversable;
 
-use function array_key_exists;
+use function assert;
 use function class_exists;
 use function get_debug_type;
 use function is_array;
 use function is_string;
-use function property_exists;
 use function sprintf;
 use function strtolower;
 use function substr;
@@ -38,8 +39,14 @@ class Barcode extends AbstractValidator
     protected $messageVariables = [
         'length' => ['options' => 'length'],
     ];
-
-    /** @var array<string, mixed> */
+    /**
+     * @var array{
+     *     adapter: null|AdapterInterface,
+     *     options: null|array<string, mixed>,
+     *     length: null|int|array,
+     *     useChecksum: null|bool,
+     * }
+     */
     protected $options = [
         'adapter'     => null, // Barcode adapter Laminas\Validator\Barcode\AbstractAdapter
         'options'     => null, // Options for this adapter
@@ -50,23 +57,19 @@ class Barcode extends AbstractValidator
     /**
      * Constructor for barcodes
      *
-     * @param array|string $options Options to use
+     * @param iterable<string, mixed>|null|string $options Options to use
      */
     public function __construct($options = null)
     {
+        if ($options instanceof Traversable) {
+            $options = ArrayUtils::iteratorToArray($options);
+        }
+
         if ($options === null) {
             $options = [];
         }
 
-        if (is_array($options)) {
-            if (array_key_exists('options', $options)) {
-                $options['options'] = ['options' => $options['options']];
-            }
-        } elseif ($options instanceof Traversable) {
-            if (property_exists($options, 'options')) {
-                $options['options'] = ['options' => $options['options']];
-            }
-        } else {
+        if (is_string($options)) {
             $options = ['adapter' => $options];
         }
 
@@ -76,13 +79,15 @@ class Barcode extends AbstractValidator
     /**
      * Returns the set adapter
      *
-     * @return Barcode\AbstractAdapter
+     * @return AdapterInterface
      */
     public function getAdapter()
     {
         if (! $this->options['adapter'] instanceof Barcode\AdapterInterface) {
             $this->setAdapter('Ean13');
         }
+
+        assert($this->options['adapter'] instanceof Barcode\AdapterInterface);
 
         return $this->options['adapter'];
     }
@@ -125,7 +130,7 @@ class Barcode extends AbstractValidator
     /**
      * Returns the checksum option
      *
-     * @return string
+     * @return string|null
      */
     public function getChecksum()
     {
@@ -136,7 +141,7 @@ class Barcode extends AbstractValidator
      * Sets if checksum should be validated, if no value is given the actual setting is returned
      *
      * @param null|bool $checksum
-     * @return Barcode\AbstractAdapter|bool
+     * @return AdapterInterface|bool
      */
     public function useChecksum($checksum = null)
     {

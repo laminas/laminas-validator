@@ -195,14 +195,14 @@ final class UriTest extends TestCase
     public function testUriHandlerStringInvalidClassThrowsException(): void
     {
         $this->expectException(ValidatorInvalidArgumentException::class);
-
+        /** @psalm-suppress InvalidArgument */
         $this->validator->setUriHandler(stdClass::class);
     }
 
     public function testUriHandlerInvalidTypeThrowsException(): void
     {
         $this->expectException(ValidatorInvalidArgumentException::class);
-
+        /** @psalm-suppress InvalidArgument */
         $this->validator->setUriHandler(new stdClass());
     }
 
@@ -210,7 +210,7 @@ final class UriTest extends TestCase
     {
         $this->expectException(ValidatorInvalidArgumentException::class);
         $this->expectExceptionMessage('Expecting a subclass name or instance of Laminas\Uri\Uri as $uriHandler');
-
+        /** @psalm-suppress InvalidArgument */
         new Uri(stdClass::class, false, false);
     }
 

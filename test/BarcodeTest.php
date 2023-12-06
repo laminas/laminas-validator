@@ -19,7 +19,7 @@ use function extension_loaded;
 final class BarcodeTest extends TestCase
 {
     /**
-     * @psalm-return array<string, array{0: null|array, 1: string}>
+     * @psalm-return array<string, array{0: null|array, 1: class-string}>
      */
     public static function provideBarcodeConstructor(): array
     {
@@ -29,6 +29,10 @@ final class BarcodeTest extends TestCase
         ];
     }
 
+    /**
+     * @param array<string, mixed>|null $options
+     * @param class-string $expectedInstance
+     */
     #[DataProvider('provideBarcodeConstructor')]
     public function testBarcodeConstructor(?array $options, string $expectedInstance): void
     {
@@ -174,7 +178,6 @@ final class BarcodeTest extends TestCase
 
     public function testTraversableConstructAdapter(): void
     {
-        /** @psalm-suppress InvalidArgument we do use ArrayObject on purpose: checks compatibility with older config */
         $barcode = new Barcode(new ArrayObject(['adapter' => 'Ean13', 'options' => 'unknown', 'useChecksum' => false]));
 
         self::assertTrue($barcode->isValid('0075678164125'));
