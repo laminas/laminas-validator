@@ -41,6 +41,20 @@ final class BarcodeTest extends TestCase
         self::assertInstanceOf($expectedInstance, $barcode->getAdapter());
     }
 
+    public function testThatAnAdapterInstanceCanBeProvidedToTheConstructor(): void
+    {
+        $validator = new Barcode(new Barcode\Upca());
+        self::assertTrue($validator->isValid('065100004327'));
+    }
+
+    public function testExceptionThrownForInvalidOptionsInConstructorArguments(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Options should be an array, a string');
+        /** @psalm-suppress ArgumentTypeCoercion */
+        new Barcode((object) ['foo']);
+    }
+
     public function testNoneExisting(): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -547,7 +561,7 @@ final class BarcodeTest extends TestCase
                 Barcode::INVALID_LENGTH,
                 Barcode::INVALID,
             ],
-            array_keys($validator->getMessageTemplates())
+            array_keys($validator->getMessageTemplates()),
         );
         self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
