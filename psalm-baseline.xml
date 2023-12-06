@@ -86,6 +86,7 @@
   </file>
   <file src="src/Barcode.php">
     <DocblockTypeContradiction>
+      <code>is_array($options)</code>
       <code>is_string($value)</code>
     </DocblockTypeContradiction>
     <MixedAssignment>
@@ -346,11 +347,6 @@
   <file src="src/Barcode/Sscc.php">
     <UnusedClass>
       <code>Sscc</code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Upca.php">
-    <UnusedClass>
-      <code>Upca</code>
     </UnusedClass>
   </file>
   <file src="src/Barcode/Upce.php">
