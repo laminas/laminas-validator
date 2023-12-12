@@ -33,8 +33,9 @@ use function is_numeric;
  *     count?: int|null,
  *     min?: int|null,
  *     max?: int|null,
- * }
- * @property Options $options Required to stop Psalm getting confused about the declaration on AbstractValidator
+ * }&array<string, mixed>
+ * @property Options&array<string, mixed> $options Required to stop Psalm getting confused about the declaration
+ *                                                 on AbstractValidator
  */
 class IsCountable extends AbstractValidator
 {
@@ -96,6 +97,10 @@ class IsCountable extends AbstractValidator
         if (isset($options['max'])) {
             $this->setMax($options['max']);
         }
+
+        unset($options['count'], $options['min'], $options['max']);
+
+        parent::setOptions($options);
 
         return $this;
     }
