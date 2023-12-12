@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.16.0@2897ba636551a8cb61601cc26f6ccfbba6c36591">
+<files psalm-version="5.17.0@c620f6e80d0abfca532b00bda366062aaedf6e5d">
   <file src="bin/update_hostname_validator.php">
     <MissingClosureParamType>
       <code>$domain</code>
@@ -1682,22 +1682,6 @@
       <code>$options</code>
     </MixedArgumentTypeCoercion>
   </file>
-  <file src="src/IsCountable.php">
-    <MixedArgumentTypeCoercion>
-      <code>$options</code>
-    </MixedArgumentTypeCoercion>
-    <MoreSpecificImplementedParamType>
-      <code>$value</code>
-    </MoreSpecificImplementedParamType>
-    <PossiblyUnusedReturnValue>
-      <code>$this</code>
-    </PossiblyUnusedReturnValue>
-    <UnusedMethod>
-      <code>setCount</code>
-      <code>setMax</code>
-      <code>setMin</code>
-    </UnusedMethod>
-  </file>
   <file src="src/IsInstanceOf.php">
     <MixedAssignment>
       <code><![CDATA[$tmpOptions['className']]]></code>
@@ -2690,12 +2674,8 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/IsCountableTest.php">
-    <InvalidArgument>
-      <code>new stdClass()</code>
-    </InvalidArgument>
     <PossiblyInvalidArgument>
       <code>$options</code>
-      <code>$originalOptions</code>
     </PossiblyInvalidArgument>
     <PossiblyUnusedMethod>
       <code>conflictingOptionsProvider</code>

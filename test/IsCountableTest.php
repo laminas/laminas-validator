@@ -15,6 +15,7 @@ use function json_encode;
 
 use const JSON_THROW_ON_ERROR;
 
+/** @psalm-import-type OptionsArgument from IsCountable */
 final class IsCountableTest extends TestCase
 {
     /**
@@ -38,7 +39,7 @@ final class IsCountableTest extends TestCase
     }
 
     /**
-     * @psalm-return array<string, array{0: array<string, mixed>, 1: array<string, mixed>}>
+     * @psalm-return array<string, array{0: OptionsArgument, 1: OptionsArgument}>
      */
     public static function conflictingSecondaryOptionsProvider(): array
     {
@@ -48,6 +49,10 @@ final class IsCountableTest extends TestCase
         ];
     }
 
+    /**
+     * @param OptionsArgument $originalOptions
+     * @param OptionsArgument $secondaryOptions
+     */
     #[DataProvider('conflictingSecondaryOptionsProvider')]
     public function testSetOptionsRaisesExceptionWhenProvidedOptionConflictingWithCurrentSettings(
         array $originalOptions,
