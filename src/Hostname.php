@@ -1113,7 +1113,6 @@ class Hostname extends AbstractValidator
         'sbi',
         'sbs',
         'sc',
-        'sca',
         'scb',
         'schaeffler',
         'schmidt',
