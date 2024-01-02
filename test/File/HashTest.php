@@ -139,7 +139,7 @@ final class HashTest extends TestCase
         }
     }
 
-    /** @psalm-return array<array{string|string[], array<numeric, string>}> */
+    /** @psalm-return array<array{0: numeric-string|list<numeric-string>, 1: array<int, string>}> */
     public static function hashProvider(): array
     {
         return [
@@ -151,8 +151,8 @@ final class HashTest extends TestCase
     /**
      * Ensures that getHash() returns expected value
      *
-     * @param string|string[] $hash
-     * @psalm-param array<numeric, string> $expected
+     * @param numeric-string|list<numeric-string> $hash
+     * @psalm-param array<int, string> $expected
      */
     #[DataProvider('hashProvider')]
     public function testGetHash($hash, array $expected): void
@@ -165,8 +165,8 @@ final class HashTest extends TestCase
     /**
      * Ensures that setHash() returns expected value
      *
-     * @param string|string[] $hash
-     * @psalm-param array<numeric, string> $expected
+     * @param numeric-string|list<numeric-string> $hash
+     * @psalm-param array<int, string> $expected
      */
     #[DataProvider('hashProvider')]
     public function testSetHash($hash, array $expected): void
