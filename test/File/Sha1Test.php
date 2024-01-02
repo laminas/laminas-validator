@@ -116,20 +116,26 @@ final class Sha1Test extends TestCase
         }
     }
 
-    /** @psalm-return array<array{string|list<string>, array<numeric, string>}> */
+    /** @return list<array{0: numeric-string|list<numeric-string>, 1: array<int, string>}> */
     public static function getHashProvider(): array
     {
         return [
-            ['12333', ['12333' => 'sha1']],
-            [['12345', '12333', '12344'], ['12345' => 'sha1', '12333' => 'sha1', '12344' => 'sha1']],
+            [
+                '12333',
+                [12333 => 'sha1'],
+            ],
+            [
+                ['12345', '12333', '12344'],
+                [12345 => 'sha1', 12333 => 'sha1', 12344 => 'sha1'],
+            ],
         ];
     }
 
     /**
      * Ensures that getSha1() returns expected value
      *
-     * @psalm-param string|list<string> $hash
-     * @psalm-param array<numeric, string> $expected
+     * @psalm-param numeric-string|list<numeric-string> $hash
+     * @psalm-param array<int, string> $expected
      */
     #[DataProvider('getHashProvider')]
     public function testGetSha1($hash, array $expected): void
@@ -142,8 +148,8 @@ final class Sha1Test extends TestCase
     /**
      * Ensures that getHash() returns expected value
      *
-     * @psalm-param string|list<string> $hash
-     * @psalm-param array<numeric, string> $expected
+     * @psalm-param numeric-string|list<numeric-string> $hash
+     * @psalm-param array<int, string> $expected
      */
     #[DataProvider('getHashProvider')]
     public function testGetHash($hash, array $expected): void
@@ -156,8 +162,8 @@ final class Sha1Test extends TestCase
     /**
      * Ensures that setSha1() returns expected value
      *
-     * @psalm-param string|list<string> $hash
-     * @psalm-param array<numeric, string> $expected
+     * @psalm-param numeric-string|list<numeric-string> $hash
+     * @psalm-param array<int, string> $expected
      */
     #[DataProvider('getHashProvider')]
     public function testSetSha1($hash, array $expected): void
@@ -171,8 +177,8 @@ final class Sha1Test extends TestCase
     /**
      * Ensures that setHash() returns expected value
      *
-     * @psalm-param string|list<string> $hash
-     * @psalm-param array<numeric, string> $expected
+     * @psalm-param numeric-string|list<numeric-string> $hash
+     * @psalm-param array<int, string> $expected
      */
     #[DataProvider('getHashProvider')]
     public function testSetHash($hash, array $expected): void
