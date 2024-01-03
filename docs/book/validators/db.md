@@ -4,8 +4,11 @@
 a means to test whether a record exists in a given table of a database, with a
 given value.
 
-<!-- markdownlint-disable-next-line MD001 -->
-> ### Installation requirements
+> ## Deprecated
+>
+> `laminas-db` has been marked as security only [since July 2022](https://github.com/laminas/technical-steering-committee/blob/main/meetings/minutes/2022-02-07-TSC-Minutes.md), as such, these validators have been deprecated for removal in version 3.0 of `laminas-validator`
+
+> ## Installation requirements
 >
 > `Laminas\Validator\Db\NoRecordExists` and `Laminas\Validator\Db\RecordExists`
 > depends on the laminas-db component, so be sure to have it installed before

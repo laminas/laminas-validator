@@ -26,4 +26,13 @@
     <stubs>
         <file name=".psr-container.php.stub" preloadClasses="true" />
     </stubs>
+
+    <issueHandlers>
+        <DeprecatedClass>
+            <errorLevel type="suppress">
+                <directory name="src/Db" />
+                <directory name="test/Db" />
+            </errorLevel>
+        </DeprecatedClass>
+    </issueHandlers>
 </psalm>

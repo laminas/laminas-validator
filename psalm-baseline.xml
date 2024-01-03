@@ -1990,6 +1990,20 @@
     </TooManyArguments>
   </file>
   <file src="src/ValidatorPluginManager.php">
+    <DeprecatedClass>
+      <code>Db\NoRecordExists::class</code>
+      <code>Db\NoRecordExists::class</code>
+      <code>Db\NoRecordExists::class</code>
+      <code>Db\NoRecordExists::class</code>
+      <code>Db\NoRecordExists::class</code>
+      <code>Db\NoRecordExists::class</code>
+      <code>Db\RecordExists::class</code>
+      <code>Db\RecordExists::class</code>
+      <code>Db\RecordExists::class</code>
+      <code>Db\RecordExists::class</code>
+      <code>Db\RecordExists::class</code>
+      <code>Db\RecordExists::class</code>
+    </DeprecatedClass>
     <DeprecatedMethod>
       <code>getServiceLocator</code>
       <code>getServiceLocator</code>
