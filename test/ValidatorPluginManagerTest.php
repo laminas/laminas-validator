@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Validator;
 
 use Exception;
+use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\AbstractValidator;
@@ -58,20 +59,53 @@ final class ValidatorPluginManagerTest extends TestCase
         self::assertEquals($translator, $validator->getTranslator());
     }
 
+    public function testAllowsInjectingTranslatorInterface(): void
+    {
+        $translator = $this->createMock(Translator::class);
+
+        $container = $this->createMock(ContainerInterface::class);
+
+        $container
+            ->expects(self::exactly(2))
+            ->method('has')
+            ->willReturnMap(
+                [
+                    ['MvcTranslator', false],
+                    [TranslatorInterface::class, true],
+                ]
+            );
+
+        $container
+            ->expects(self::once())
+            ->method('get')
+            ->with(TranslatorInterface::class)
+            ->willReturn($translator);
+
+        $validators = new ValidatorPluginManager($container);
+
+        $validator = $validators->get(NotEmpty::class);
+
+        self::assertInstanceOf(AbstractValidator::class, $validator);
+        self::assertEquals($translator, $validator->getTranslator());
+    }
+
     public function testNoTranslatorInjectedWhenTranslatorIsNotPresent(): void
     {
         $container = $this->createMock(ContainerInterface::class);
 
         $container
-            ->expects(self::once())
+            ->expects(self::exactly(2))
             ->method('has')
-            ->with('MvcTranslator')
-            ->willReturn(false);
+            ->willReturnMap(
+                [
+                    ['MvcTranslator', false],
+                    [TranslatorInterface::class, false],
+                ]
+            );
 
         $container
             ->expects(self::never())
-            ->method('get')
-            ->with('MvcTranslator');
+            ->method('get');
 
         $validators = new ValidatorPluginManager($container);
 
