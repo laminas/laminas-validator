@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace LaminasTest\Validator;
 
 use Exception;
-use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\RuntimeException;
 use Laminas\Validator\Explode;
 use Laminas\Validator\NotEmpty;
+use Laminas\Validator\Translator\TranslatorInterface;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
 use LaminasTest\Validator\TestAsset\InMemoryContainer;
