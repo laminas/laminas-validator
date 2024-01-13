@@ -71,7 +71,7 @@ final class ValidatorPluginManagerTest extends TestCase
             ->willReturnMap(
                 [
                     ['MvcTranslator', false],
-                    [TranslatorInterface::class, true],
+                    [\Laminas\I18n\Translator\TranslatorInterface::class, true],
                 ]
             );
 
