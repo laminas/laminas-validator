@@ -685,4 +685,9 @@ final class HostnameTest extends TestCase
     {
         self::assertFalse($this->validator->isValid('.com'));
     }
+
+    public function testHostnameWithPunyEncodedDomainPart(): void
+    {
+        self::assertFalse($this->validator->isValid('xn--k.dk'));
+    }
 }

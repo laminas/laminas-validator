@@ -2212,6 +2212,10 @@ class Hostname extends AbstractValidator
 
         for ($indexe = $separator ? $separator + 1 : 0; $indexe < $lengthe; ++$lengthd) {
             for ($oldIndex = $index, $pos = 1, $key = 36; 1; $key += 36) {
+                if (! isset($encoded[$indexe])) {
+                    break 2;
+                }
+
                 $hex   = ord($encoded[$indexe++]);
                 $digit = $hex - 48 < 10 ? $hex - 22
                        : ($hex - 65 < 26 ? $hex - 65
