@@ -2,6 +2,7 @@
 
 namespace Laminas\Validator;
 
+use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\I18n\Validator as I18nValidator;
 use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
@@ -592,7 +593,7 @@ class ValidatorPluginManager extends AbstractPluginManager
         if ($validator instanceof Translator\TranslatorAwareInterface && $container instanceof ContainerInterface) {
             if ($container->has('MvcTranslator')) {
                 $validator->setTranslator($container->get('MvcTranslator'));
-            } elseif ($container->has(Translator\TranslatorInterface::class)) {
+            } elseif ($container->has(TranslatorInterface::class)) {
                 $validator->setTranslator($container->get(Translator\TranslatorInterface::class));
             }
         }
