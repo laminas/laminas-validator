@@ -9,6 +9,7 @@ use function finfo_file;
 use function finfo_open;
 use function in_array;
 use function is_readable;
+use function is_string;
 
 use const FILEINFO_MIME_TYPE;
 
@@ -23,7 +24,7 @@ class ExcludeMimeType extends MimeType
     public const NOT_DETECTED = 'fileExcludeMimeTypeNotDetected';
     public const NOT_READABLE = 'fileExcludeMimeTypeNotReadable';
 
-    /** @var array Error message templates */
+    /** @inheritDoc */
     protected $messageTemplates = [
         self::FALSE_TYPE   => "File has an incorrect mimetype of '%type%'",
         self::NOT_DETECTED => 'The mimetype could not be detected from the file',
@@ -53,7 +54,7 @@ class ExcludeMimeType extends MimeType
 
         $mimefile = $this->getMagicFile();
         if (class_exists('finfo', false)) {
-            if (! $this->isMagicFileDisabled() && (! empty($mimefile) && empty($this->finfo))) {
+            if (! $this->isMagicFileDisabled() && (is_string($mimefile) && empty($this->finfo))) {
                 $this->finfo = finfo_open(FILEINFO_MIME_TYPE, $mimefile);
             }
 
@@ -67,11 +68,11 @@ class ExcludeMimeType extends MimeType
             }
         }
 
-        if (empty($this->type) && $this->getHeaderCheck()) {
+        if (! is_string($this->type) && $this->getHeaderCheck()) {
             $this->type = $fileInfo['filetype'];
         }
 
-        if (empty($this->type)) {
+        if (! is_string($this->type)) {
             $this->error(self::NOT_DETECTED);
             return false;
         }

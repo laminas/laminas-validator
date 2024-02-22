@@ -908,7 +908,8 @@ final class EmailAddressTest extends TestCase
 
     private function skipIfOnlineTestsDisabled(): void
     {
-        if (! getenv('TESTS_LAMINAS_VALIDATOR_ONLINE_ENABLED')) {
+        $enabled = getenv('TESTS_LAMINAS_VALIDATOR_ONLINE_ENABLED');
+        if ($enabled === false || $enabled === '') {
             self::markTestSkipped('Testing MX records has been disabled');
         }
     }

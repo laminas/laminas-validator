@@ -198,7 +198,7 @@ final class ValidatorChainTest extends TestCase
     #[Group('Laminas-2724')]
     public function handleNotFoundError(int $errnum, string $errstr): void
     {
-        if (strstr($errstr, 'No such file')) {
+        if (strstr($errstr, 'No such file') !== false) {
             $this->error = true;
         }
     }

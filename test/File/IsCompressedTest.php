@@ -179,11 +179,11 @@ final class IsCompressedTest extends TestCase
     /**
      * Ensures that setMimeType() returns expected value
      *
-     * @param string|string[] $mimeType
-     * @param string[] $expectedAsArray
+     * @param string|list<string> $mimeType
+     * @param list<string> $expectedAsArray
      */
     #[DataProvider('setMimeTypeProvider')]
-    public function testSetMimeType($mimeType, string $expected, array $expectedAsArray): void
+    public function testSetMimeType(string|array $mimeType, string $expected, array $expectedAsArray): void
     {
         $validator = new IsCompressed('image/gif');
         $validator->setMimeType($mimeType);
