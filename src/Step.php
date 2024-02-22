@@ -163,7 +163,7 @@ class Step extends AbstractValidator
     }
 
     /**
-     * @param  float $float
+     * @param float $float
      */
     private function getPrecision($float): int
     {
@@ -172,6 +172,6 @@ class Step extends AbstractValidator
             ? null
             : substr((string) $float, $position + 1);
 
-        return $segment ? strlen($segment) : 0;
+        return $segment !== null ? strlen($segment) : 0;
     }
 }

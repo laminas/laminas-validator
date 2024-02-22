@@ -2206,7 +2206,7 @@ class Hostname extends AbstractValidator
         $index = 0;
         $char  = 0x80;
 
-        for ($indexe = $separator ? $separator + 1 : 0; $indexe < $lengthe; ++$lengthd) {
+        for ($indexe = $separator !== false ? $separator + 1 : 0; $indexe < $lengthe; ++$lengthd) {
             for ($oldIndex = $index, $pos = 1, $key = 36; 1; $key += 36) {
                 if (! isset($encoded[$indexe])) {
                     break 2;

@@ -52,42 +52,42 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
             assert(is_string($alias));
 
             // Skipping due to required options
-            if (strpos($target, '\\Barcode')) {
+            if (strpos($target, '\\Barcode') !== false) {
                 continue;
             }
 
             // Skipping due to required options
-            if (strpos($target, '\\Between')) {
+            if (strpos($target, '\\Between') !== false) {
                 continue;
             }
 
             // Skipping on v2 releases of service manager
-            if ($isV2PluginManager && strpos($target, '\\BusinessIdentifierCode')) {
+            if ($isV2PluginManager && strpos($target, '\\BusinessIdentifierCode') !== false) {
                 continue;
             }
 
             // Skipping due to required options
-            if (strpos($target, '\\Db\\')) {
+            if (strpos($target, '\\Db\\') !== false) {
                 continue;
             }
 
             // Skipping due to required options
-            if (strpos($target, '\\File\\ExcludeExtension')) {
+            if (strpos($target, '\\File\\ExcludeExtension') !== false) {
                 continue;
             }
 
             // Skipping due to required options
-            if (strpos($target, '\\File\\Extension')) {
+            if (strpos($target, '\\File\\Extension') !== false) {
                 continue;
             }
 
             // Skipping due to required options
-            if (strpos($target, '\\File\\FilesSize')) {
+            if (strpos($target, '\\File\\FilesSize') !== false) {
                 continue;
             }
 
             // Skipping due to required options
-            if (strpos($target, '\\Regex')) {
+            if (strpos($target, '\\Regex') !== false) {
                 continue;
             }
 

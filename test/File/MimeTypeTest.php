@@ -130,11 +130,11 @@ final class MimeTypeTest extends TestCase
     /**
      * Ensures that setMimeType() returns expected value
      *
-     * @param string|string[] $mimeType
-     * @param string[] $expectedAsArray
+     * @param string|list<string> $mimeType
+     * @param list<string> $expectedAsArray
      */
     #[DataProvider('setMimeTypeProvider')]
-    public function testSetMimeType($mimeType, string $expected, array $expectedAsArray): void
+    public function testSetMimeType(string|array $mimeType, string $expected, array $expectedAsArray): void
     {
         $validator = new MimeType('image/gif');
         $validator->setMimeType($mimeType);
@@ -179,7 +179,7 @@ final class MimeTypeTest extends TestCase
         $validator = new MimeType('image/gif');
         $magic     = getenv('magic');
 
-        if (! empty($magic)) {
+        if ($magic !== false && $magic !== '') {
             $mimetype = $validator->getMagicFile();
 
             self::assertSame($magic, $mimetype);
@@ -234,7 +234,7 @@ final class MimeTypeTest extends TestCase
         $validator = new MimeType('image/gif');
         $magic     = getenv('magic');
 
-        if (! empty($magic)) {
+        if ($magic !== false && $magic !== '') {
             $mimetype = $validator->getMagicFile();
 
             self::assertSame($magic, $mimetype);
@@ -244,7 +244,7 @@ final class MimeTypeTest extends TestCase
 
         self::assertTrue($validator->isMagicFileDisabled());
 
-        if (! empty($magic)) {
+        if ($magic !== false && $magic !== '') {
             $mimetype = $validator->getMagicFile();
 
             self::assertSame($magic, $mimetype);
@@ -306,6 +306,7 @@ final class MimeTypeTest extends TestCase
 
         $options = $r->getValue($validator);
 
+        self::assertIsArray($options);
         self::assertNull($options['magicFile']);
     }
 
@@ -337,6 +338,7 @@ final class MimeTypeTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid options to validator provided');
 
+        /** @psalm-suppress ArgumentTypeCoercion, PossiblyNullArgument */
         $validator->addMimeType($type);
     }
 
@@ -349,6 +351,7 @@ final class MimeTypeTest extends TestCase
             'gif'       => 'text',
         ];
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         $validator->addMimeType($mimeTypeArray);
 
         self::assertSame('image/gif,text', $validator->getMimeType());

@@ -273,16 +273,18 @@ final class CsrfTest extends TestCase
         $hash = $this->validator->getHash();
 
         self::assertTrue($this->validator->isValid($hash));
+        $requestTime = $_SERVER['REQUEST_TIME'] ?? null;
+        self::assertIsNumeric($requestTime);
 
         $this->sessionManager->getStorage()->setMetadata(
             $this->validator->getSession()->getName(),
-            ['EXPIRE' => $_SERVER['REQUEST_TIME'] - 18600]
+            ['EXPIRE' => $requestTime - 18600]
         );
 
         self::assertFalse($this->validator->isValid($hash));
     }
 
-    public function testCanValidateHasheWithoutId(): void
+    public function testCanValidateHashWithoutId(): void
     {
         $method = new ReflectionMethod($this->validator::class, 'getTokenFromHash');
 

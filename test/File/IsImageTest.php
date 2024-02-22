@@ -108,7 +108,7 @@ final class IsImageTest extends TestCase
         self::assertSame($expected, $validator->getMimeType($asArray));
     }
 
-    /** @psalm-return array<array{string|string[], string, string[]}> */
+    /** @psalm-return array<array{string|list<string>, string, list<string>}> */
     public static function setMimeTypeProvider(): array
     {
         return [
@@ -121,11 +121,11 @@ final class IsImageTest extends TestCase
     /**
      * Ensures that setMimeType() returns expected value
      *
-     * @param string|string[] $mimeType
-     * @param string[] $expectedAsArray
+     * @param string|list<string> $mimeType
+     * @param list<string> $expectedAsArray
      */
     #[DataProvider('setMimeTypeProvider')]
-    public function testSetMimeType($mimeType, string $expected, array $expectedAsArray): void
+    public function testSetMimeType(string|array $mimeType, string $expected, array $expectedAsArray): void
     {
         $validator = new IsImage('image/gif');
         $validator->setMimeType($mimeType);

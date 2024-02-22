@@ -120,7 +120,7 @@ abstract class AbstractAdapter implements AdapterInterface
     public function hasValidChecksum($value)
     {
         $checksum = $this->getChecksum();
-        if (! empty($checksum)) {
+        if ($checksum !== null) {
             if (method_exists($this, $checksum)) {
                 return $this->$checksum($value);
             }
