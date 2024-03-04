@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2cc264495ab76793afffd274df9275af",
+    "content-hash": "5f73d88253962716a874b988bd12a274",
     "packages": [
         {
             "name": "laminas/laminas-servicemanager",
