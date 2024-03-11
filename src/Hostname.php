@@ -607,7 +607,6 @@ class Hostname extends AbstractValidator
         'gs',
         'gt',
         'gu',
-        'guardian',
         'gucci',
         'guge',
         'guide',
