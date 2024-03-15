@@ -2,6 +2,8 @@
 
 namespace Laminas\Validator\File;
 
+use Psr\Http\Message\UploadedFileInterface;
+
 use function array_merge;
 use function class_exists;
 use function explode;
