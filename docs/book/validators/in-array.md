@@ -13,11 +13,11 @@ The following options are supported for `Laminas\Validator\InArray`:
 - `strict`: Three modes of comparison are offered owing to an often overlooked,
   and potentially dangerous security issue when validating string input from
   user input.
-  - `InArray::COMPARE_STRICT`: This is a normal `in_array()` strict comparison
+    - `InArray::COMPARE_STRICT`: This is a normal `in_array()` strict comparison
     that checks value and type.
-  - `InArray::COMPARE_NOT_STRICT`: This is a normal `in_array()` non-strict
+    - `InArray::COMPARE_NOT_STRICT`: This is a normal `in_array()` non-strict
     comparison that checks value only, but not type.
-  - `InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILTY`: This
+    - `InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILTY`: This
     operates in essentially the same way as `InArray::COMPARE_NOT_STRICT`,
     but ensures that strings are not cast to integer during comparison,
     preventing `0 == 'foo43'` types of false positives.
