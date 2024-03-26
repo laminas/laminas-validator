@@ -22,6 +22,7 @@
       <code><![CDATA[$this]]></code>
       <code><![CDATA[$this]]></code>
       <code><![CDATA[$this]]></code>
+      <code><![CDATA[$this]]></code>
     </LessSpecificReturnStatement>
     <MixedArgumentTypeCoercion>
       <code><![CDATA[$value]]></code>
@@ -51,7 +52,6 @@
       <code><![CDATA[$messageKey]]></code>
     </PossiblyUnusedParam>
     <UndefinedThisPropertyAssignment>
-      <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
@@ -2652,6 +2652,11 @@
       <code><![CDATA[iPvFutureAddressesProvider]]></code>
       <code><![CDATA[invalidIpV4Addresses]]></code>
       <code><![CDATA[ipvFutureProvider]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/IsArrayTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[invalidValueProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/IsCountableTest.php">
