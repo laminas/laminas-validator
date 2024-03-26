@@ -43,7 +43,7 @@
         "laminas/laminas-i18n": "^2.24.1",
         "laminas/laminas-session": "^2.17",
         "laminas/laminas-uri": "^2.11.0",
-        "phpunit/phpunit": "^10.5.2",
+        "phpunit/phpunit": "^11.0.0",
         "psalm/plugin-phpunit": "^0.18.4",
         "psr/http-client": "^1.0.3",
         "psr/http-factory": "^1.0.2",
