@@ -20,6 +20,7 @@ The following validators come with the laminas-validator distribution.
 - [Identical](validators/identical.md)
 - [InArray](validators/in-array.md)
 - [Ip](validators/ip.md)
+- [IsArray](validators/is-array.md)
 - [Isbn](validators/isbn.md)
 - [IsCountable](validators/is-countable.md)
 - [IsInstanceOf](validators/isinstanceof.md)
