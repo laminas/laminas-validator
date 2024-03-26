@@ -307,6 +307,12 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../is-array/" class="subnavigation__link">IsArray</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../isbn/" class="subnavigation__link">Isbn</a>
     </li>
 
@@ -672,15 +678,17 @@ within an array. It is also able to validate multidimensional arrays.</p>
   defaults to <code>false</code>.</li>
 <li><code>strict</code>: Three modes of comparison are offered owing to an often overlooked,
   and potentially dangerous security issue when validating string input from
-  user input.</li>
+  user input.<ul>
 <li><code>InArray::COMPARE_STRICT</code>: This is a normal <code>in_array()</code> strict comparison
-    that checks value and type.</li>
+that checks value and type.</li>
 <li><code>InArray::COMPARE_NOT_STRICT</code>: This is a normal <code>in_array()</code> non-strict
-    comparison that checks value only, but not type.</li>
+comparison that checks value only, but not type.</li>
 <li><code>InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILTY</code>: This
-    operates in essentially the same way as <code>InArray::COMPARE_NOT_STRICT</code>,
-    but ensures that strings are not cast to integer during comparison,
-    preventing <code>0 == 'foo43'</code> types of false positives.</li>
+operates in essentially the same way as <code>InArray::COMPARE_NOT_STRICT</code>,
+but ensures that strings are not cast to integer during comparison,
+preventing <code>0 == 'foo43'</code> types of false positives.</li>
+</ul>
+</li>
 </ul>
 <blockquote>
 <h3 id="use-non-strict-carefully">Use non-strict carefully</h3>
@@ -1028,6 +1036,12 @@ your haystack, then you must wrap the <code>haystack</code> key.</p>
                 
     <li class="subnavigation__list-item ">
         <a href="../ip/" class="subnavigation__link">Ip</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../is-array/" class="subnavigation__link">IsArray</a>
     </li>
 
             

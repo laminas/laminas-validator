@@ -307,6 +307,12 @@
             
                 
     <li class="subnavigation__list-item ">
+        <a href="../is-array/" class="subnavigation__link">IsArray</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
         <a href="../isbn/" class="subnavigation__link">Isbn</a>
     </li>
 
@@ -874,14 +880,16 @@ this is often necessary when dealing with proprietary barcode types. To write
 your own barcode validator, you need the following information.</p>
 <ul>
 <li><code>Length</code>: The length your barcode must have. It can have one of the following
-  values:</li>
+  values:<ul>
 <li><code>Integer</code>: A value greater 0, which means that the barcode must have this
-    length.</li>
+length.</li>
 <li><code>-1</code>: There is no limitation for the length of this barcode.</li>
 <li><code>"even"</code>: The length of this barcode must have a even amount of digits.</li>
 <li><code>"odd"</code>: The length of this barcode must have a odd amount of digits.</li>
 <li><code>array</code>: An array of integer values. The length of this barcode must have
   one of the set array values.</li>
+</ul>
+</li>
 <li><code>Characters</code>: A string which contains all allowed characters for this barcode.
   Also the integer value 128 is allowed, which means the first 128 characters of
   the ASCII table.</li>
@@ -1152,6 +1160,12 @@ if ($valid-&gt;isValid($input)) {
                 
     <li class="subnavigation__list-item ">
         <a href="../ip/" class="subnavigation__link">Ip</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../is-array/" class="subnavigation__link">IsArray</a>
     </li>
 
             
