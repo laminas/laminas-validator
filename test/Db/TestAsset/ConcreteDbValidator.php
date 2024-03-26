@@ -17,11 +17,10 @@ final class ConcreteDbValidator extends AbstractDb
         'barMessage' => '%value% was wrong',
     ];
 
-    /**
-     * @param mixed $value
-     * @return bool
-     */
-    public function isValid($value)
+    /** @var array<never, never> */
+    protected $options = [];
+
+    public function isValid(mixed $value): bool
     {
         $this->setValue($value);
         $this->error(self::FOO_MESSAGE);
