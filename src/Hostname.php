@@ -182,7 +182,6 @@ class Hostname extends AbstractValidator
         'author',
         'auto',
         'autos',
-        'avianca',
         'aw',
         'aws',
         'ax',
