@@ -1047,16 +1047,16 @@
         },
         {
             "name": "laminas/laminas-db",
-            "version": "2.19.0",
+            "version": "2.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-db.git",
-                "reference": "5d8c89d767d4dac7b710c8c6d967f3780f7a5f6a"
+                "reference": "207b9ee70a8b518913c1fad688d7a64fe89a8b91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-db/zipball/5d8c89d767d4dac7b710c8c6d967f3780f7a5f6a",
-                "reference": "5d8c89d767d4dac7b710c8c6d967f3780f7a5f6a",
+                "url": "https://api.github.com/repos/laminas/laminas-db/zipball/207b9ee70a8b518913c1fad688d7a64fe89a8b91",
+                "reference": "207b9ee70a8b518913c1fad688d7a64fe89a8b91",
                 "shasum": ""
             },
             "require": {
@@ -1114,7 +1114,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2024-02-01T18:53:10+00:00"
+            "time": "2024-04-02T01:04:56+00:00"
         },
         {
             "name": "laminas/laminas-escaper",
@@ -1248,16 +1248,16 @@
         },
         {
             "name": "laminas/laminas-filter",
-            "version": "2.34.0",
+            "version": "2.35.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-filter.git",
-                "reference": "008923542683d853109af5c71b7e9099de76c3e6"
+                "reference": "a03ad6a4976df7e6f6026ce8b2d1e9c53f6a99c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-filter/zipball/008923542683d853109af5c71b7e9099de76c3e6",
-                "reference": "008923542683d853109af5c71b7e9099de76c3e6",
+                "url": "https://api.github.com/repos/laminas/laminas-filter/zipball/a03ad6a4976df7e6f6026ce8b2d1e9c53f6a99c4",
+                "reference": "a03ad6a4976df7e6f6026ce8b2d1e9c53f6a99c4",
                 "shasum": ""
             },
             "require": {
@@ -1273,13 +1273,13 @@
             "require-dev": {
                 "laminas/laminas-coding-standard": "~2.5.0",
                 "laminas/laminas-crypt": "^3.11",
-                "laminas/laminas-i18n": "^2.25.0",
+                "laminas/laminas-i18n": "^2.26.0",
                 "laminas/laminas-uri": "^2.11",
                 "pear/archive_tar": "^1.4.14",
-                "phpunit/phpunit": "^10.5.5",
-                "psalm/plugin-phpunit": "^0.18.4",
+                "phpunit/phpunit": "^10.5.11",
+                "psalm/plugin-phpunit": "^0.19.0",
                 "psr/http-factory": "^1.0.2",
-                "vimeo/psalm": "^5.18.0"
+                "vimeo/psalm": "^5.22.2"
             },
             "suggest": {
                 "laminas/laminas-crypt": "Laminas\\Crypt component, for encryption filters",
@@ -1323,7 +1323,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2024-01-04T11:47:08+00:00"
+            "time": "2024-04-04T09:13:02+00:00"
         },
         {
             "name": "laminas/laminas-i18n",
@@ -2366,16 +2366,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.5.16",
+            "version": "10.5.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "18f8d4a5f52b61fdd9370aaae3167daa0eeb69cd"
+                "reference": "c1f736a473d21957ead7e94fcc029f571895abf5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/18f8d4a5f52b61fdd9370aaae3167daa0eeb69cd",
-                "reference": "18f8d4a5f52b61fdd9370aaae3167daa0eeb69cd",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c1f736a473d21957ead7e94fcc029f571895abf5",
+                "reference": "c1f736a473d21957ead7e94fcc029f571895abf5",
                 "shasum": ""
             },
             "require": {
@@ -2447,7 +2447,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.16"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.17"
             },
             "funding": [
                 {
@@ -2463,7 +2463,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-03-28T10:08:10+00:00"
+            "time": "2024-04-05T04:39:01+00:00"
         },
         {
             "name": "psalm/plugin-phpunit",
@@ -3804,16 +3804,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v6.4.4",
+            "version": "v6.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "0d9e4eb5ad413075624378f474c4167ea202de78"
+                "reference": "a2708a5da5c87d1d0d52937bdeac625df659e11f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/0d9e4eb5ad413075624378f474c4167ea202de78",
-                "reference": "0d9e4eb5ad413075624378f474c4167ea202de78",
+                "url": "https://api.github.com/repos/symfony/console/zipball/a2708a5da5c87d1d0d52937bdeac625df659e11f",
+                "reference": "a2708a5da5c87d1d0d52937bdeac625df659e11f",
                 "shasum": ""
             },
             "require": {
@@ -3878,7 +3878,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v6.4.4"
+                "source": "https://github.com/symfony/console/tree/v6.4.6"
             },
             "funding": [
                 {
@@ -3894,7 +3894,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-02-22T20:27:10+00:00"
+            "time": "2024-03-29T19:07:53+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -3965,16 +3965,16 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v6.4.3",
+            "version": "v6.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "7f3b1755eb49297a0827a7575d5d2b2fd11cc9fb"
+                "reference": "9919b5509ada52cc7f66f9a35c86a4a29955c9d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/7f3b1755eb49297a0827a7575d5d2b2fd11cc9fb",
-                "reference": "7f3b1755eb49297a0827a7575d5d2b2fd11cc9fb",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/9919b5509ada52cc7f66f9a35c86a4a29955c9d3",
+                "reference": "9919b5509ada52cc7f66f9a35c86a4a29955c9d3",
                 "shasum": ""
             },
             "require": {
@@ -4008,7 +4008,7 @@
             "description": "Provides basic utilities for the filesystem",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/filesystem/tree/v6.4.3"
+                "source": "https://github.com/symfony/filesystem/tree/v6.4.6"
             },
             "funding": [
                 {
@@ -4024,7 +4024,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-23T14:51:35+00:00"
+            "time": "2024-03-21T19:36:20+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -4346,16 +4346,16 @@
         },
         {
             "name": "symfony/service-contracts",
-            "version": "v3.4.1",
+            "version": "v3.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/service-contracts.git",
-                "reference": "fe07cbc8d837f60caf7018068e350cc5163681a0"
+                "reference": "11bbf19a0fb7b36345861e85c5768844c552906e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/fe07cbc8d837f60caf7018068e350cc5163681a0",
-                "reference": "fe07cbc8d837f60caf7018068e350cc5163681a0",
+                "url": "https://api.github.com/repos/symfony/service-contracts/zipball/11bbf19a0fb7b36345861e85c5768844c552906e",
+                "reference": "11bbf19a0fb7b36345861e85c5768844c552906e",
                 "shasum": ""
             },
             "require": {
@@ -4408,7 +4408,7 @@
                 "standards"
             ],
             "support": {
-                "source": "https://github.com/symfony/service-contracts/tree/v3.4.1"
+                "source": "https://github.com/symfony/service-contracts/tree/v3.4.2"
             },
             "funding": [
                 {
@@ -4424,7 +4424,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-12-26T14:02:43+00:00"
+            "time": "2023-12-19T21:51:00+00:00"
         },
         {
             "name": "symfony/string",
