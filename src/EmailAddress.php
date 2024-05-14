@@ -454,7 +454,7 @@ class EmailAddress extends AbstractValidator
                 $reserved = false;
             }
 
-            if (! is_string($hostname) || ! trim($hostname)) {
+            if (trim($hostname) === '') {
                 continue;
             }
 
