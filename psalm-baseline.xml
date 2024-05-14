@@ -402,22 +402,23 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Callback.php">
-    <MixedArgument>
-      <code><![CDATA[$options]]></code>
-      <code><![CDATA[$options]]></code>
-    </MixedArgument>
     <MixedAssignment>
       <code><![CDATA[$args[]]]></code>
       <code><![CDATA[$args[]]]></code>
-      <code><![CDATA[$callback]]></code>
-      <code><![CDATA[$options]]></code>
     </MixedAssignment>
-    <MixedFunctionCall>
-      <code><![CDATA[call_user_func_array($callback, $args)]]></code>
-    </MixedFunctionCall>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
+    <MixedInferredReturnType>
+      <code><![CDATA[array<array-key, mixed>]]></code>
+      <code><![CDATA[callable|null]]></code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement>
+      <code><![CDATA[$this->options['callback'] ?? null]]></code>
+      <code><![CDATA[$this->options['callback'] ?? null]]></code>
+      <code><![CDATA[$this->options['callbackOptions'] ?? []]]></code>
+      <code><![CDATA[$this->options['callbackOptions'] ?? []]]></code>
+    </MixedReturnStatement>
+    <RedundantCastGivenDocblockType>
+      <code><![CDATA[(array) $options]]></code>
+    </RedundantCastGivenDocblockType>
     <RiskyTruthyFalsyComparison>
       <code><![CDATA[empty($context)]]></code>
       <code><![CDATA[empty($context)]]></code>
@@ -2128,12 +2129,6 @@
       <code><![CDATA[$v]]></code>
       <code><![CDATA[$v]]></code>
     </MissingClosureParamType>
-    <MixedArrayAssignment>
-      <code><![CDATA[$options['callback']]]></code>
-    </MixedArrayAssignment>
-    <MixedAssignment>
-      <code><![CDATA[$options]]></code>
-    </MixedAssignment>
     <PossiblyUnusedMethod>
       <code><![CDATA[optionsCallback]]></code>
     </PossiblyUnusedMethod>
