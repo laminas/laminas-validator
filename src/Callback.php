@@ -149,11 +149,14 @@ class Callback extends AbstractValidator
                 $this->error(self::INVALID_VALUE);
                 return false;
             }
-        } catch (Exception $error) {
+        } catch (Exception $exception) {
+            /**
+             * Intentionally excluding catchable \Error as they are indicative of a bug and should not be suppressed
+             */
             $this->error(self::INVALID_CALLBACK);
 
             if ($this->options['throwExceptions'] === true) {
-                throw $error;
+                throw $exception;
             }
 
             return false;

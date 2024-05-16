@@ -411,10 +411,8 @@
       <code><![CDATA[callable|null]]></code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
-      <code><![CDATA[$this->options['callback'] ?? null]]></code>
-      <code><![CDATA[$this->options['callback'] ?? null]]></code>
-      <code><![CDATA[$this->options['callbackOptions'] ?? []]]></code>
-      <code><![CDATA[$this->options['callbackOptions'] ?? []]]></code>
+      <code><![CDATA[$this->options['callback']]]></code>
+      <code><![CDATA[$this->options['callbackOptions']]]></code>
     </MixedReturnStatement>
     <RedundantCastGivenDocblockType>
       <code><![CDATA[(array) $options]]></code>
