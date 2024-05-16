@@ -10,6 +10,7 @@ The following options are supported for `Laminas\Validator\Callback`:
 - `callback`: Sets the callback which will be called for the validation.
 - `callbackOptions`: Sets the additional options which will be given to the validator
   and/or callback.
+- `throwExceptions`: When true, [allows exceptions thrown inside of callbacks to propagate](#exceptions-within-callbacks).
 
 ## Basic usage
 
