@@ -19,7 +19,8 @@ use function is_callable;
  *     callback: callable,
  *     callbackOptions?: array<array-key, mixed>,
  *     throwExceptions?: bool,
- * }&array<string, mixed>
+ *     ...<string, mixed>
+ * }
  */
 class Callback extends AbstractValidator
 {
