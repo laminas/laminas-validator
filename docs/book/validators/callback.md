@@ -204,7 +204,7 @@ which can be used is not limited.
 
 ## Exceptions within Callbacks
 
-By default, the callback validator will catch any `Throwable` thrown inside the callback and return false.
+By default, the callback validator will catch any `Exception` thrown inside the callback and return false.
 The error message will indicate callback failure as opposed to invalid input.
 
 There is a third option `throwExceptions` that when `true` will re-throw exceptions that occur inside the callback.

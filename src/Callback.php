@@ -2,8 +2,8 @@
 
 namespace Laminas\Validator;
 
+use Exception;
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Throwable;
 
 use function array_merge;
 use function call_user_func_array;
@@ -144,7 +144,7 @@ class Callback extends AbstractValidator
                 $this->error(self::INVALID_VALUE);
                 return false;
             }
-        } catch (Throwable $error) {
+        } catch (Exception $error) {
             $this->error(self::INVALID_CALLBACK);
 
             if ($this->options['throwExceptions'] === true) {
