@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator;
 
+use Exception;
 use Laminas\Validator\Callback;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use ReflectionProperty;
+use Throwable;
 
 use function array_keys;
 use function func_get_args;
@@ -27,7 +28,7 @@ final class CallbackTest extends TestCase
     public function testStaticCallback(): void
     {
         $valid = new Callback(
-            [self::class, 'staticCallback']
+            [self::class, 'staticCallback'],
         );
 
         self::assertTrue($valid->isValid('test'));
@@ -36,7 +37,7 @@ final class CallbackTest extends TestCase
     public function testSettingDefaultOptionsAfterwards(): void
     {
         $valid = new Callback([$this, 'objectCallback']);
-        $valid->setCallbackOptions('options');
+        $valid->setCallbackOptions(['options']);
 
         self::assertSame(['options'], $valid->getCallbackOptions());
         self::assertTrue($valid->isValid('test'));
@@ -44,7 +45,7 @@ final class CallbackTest extends TestCase
 
     public function testSettingDefaultOptions(): void
     {
-        $valid = new Callback(['callback' => [$this, 'objectCallback'], 'callbackOptions' => 'options']);
+        $valid = new Callback(['callback' => [$this, 'objectCallback'], 'callbackOptions' => ['options']]);
 
         self::assertSame(['options'], $valid->getCallbackOptions());
         self::assertTrue($valid->isValid('test'));
@@ -64,15 +65,26 @@ final class CallbackTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid callback given');
 
-        $valid->setCallback('invalidcallback');
+        /** @psalm-suppress UndefinedFunction */
+        $valid->setCallback('invalidCallback');
     }
 
-    public function testAddingValueOptions(): void
+    public function testCallbackOptionsAreReceived(): void
     {
-        $valid = new Callback(['callback' => [$this, 'optionsCallback'], 'callbackOptions' => 'options']);
+        $valid = new Callback(['callback' => [$this, 'optionsCallback'], 'callbackOptions' => ['options']]);
 
         self::assertSame(['options'], $valid->getCallbackOptions());
         self::assertTrue($valid->isValid('test', 'something'));
+    }
+
+    public function optionsCallback(): bool
+    {
+        $args = func_get_args();
+
+        self::assertContains('something', $args);
+        self::assertContains('options', $args);
+
+        return true;
     }
 
     public function testEqualsMessageTemplates(): void
@@ -84,7 +96,7 @@ final class CallbackTest extends TestCase
                 Callback::INVALID_VALUE,
                 Callback::INVALID_CALLBACK,
             ],
-            array_keys($validator->getMessageTemplates())
+            array_keys($validator->getMessageTemplates()),
         );
         self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
@@ -105,7 +117,7 @@ final class CallbackTest extends TestCase
         $options   = ['baz' => 'bat'];
         $validator = new Callback(
             static fn($v, $c, $baz): bool => ($value === $v)
-            && ($context === $c) && ($options['baz'] === $baz)
+            && ($context === $c) && ($options['baz'] === $baz),
         );
         $validator->setCallbackOptions($options);
 
@@ -128,32 +140,42 @@ final class CallbackTest extends TestCase
         return true;
     }
 
-    /**
-     * @psalm-return list<mixed>
-     */
-    public function optionsCallback(): array
-    {
-        $args = func_get_args();
-
-        self::assertContains('something', $args);
-
-        return $args;
-    }
-
     public function testIsValidRaisesExceptionWhenNoCallbackPresent(): void
     {
         $validator = new Callback();
-
-        $r = new ReflectionProperty($validator, 'options');
-
-        $options             = $r->getValue($validator);
-        $options['callback'] = [];
-
-        $r->setValue($validator, $options);
-
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('No callback given');
 
         $validator->isValid('test');
+    }
+
+    public function testThatExceptionsRaisedInsideTheCallbackAreCaught(): void
+    {
+        $validator = new Callback();
+        $exception = new Exception('Foo');
+        $validator->setCallback(static function () use ($exception): never {
+            throw $exception;
+        });
+
+        self::assertFalse($validator->isValid('whatever'));
+        self::assertArrayHasKey(Callback::INVALID_CALLBACK, $validator->getMessages());
+    }
+
+    public function testThatCallbackExceptionsCanBeAllowedToPropagate(): void
+    {
+        $validator = new Callback();
+        $exception = new Exception('Callback Exception');
+        $validator->setCallback(static function () use ($exception): never {
+            throw $exception;
+        });
+
+        try {
+            $validator->isValid('whatever');
+            self::fail('An exception should have been thrown');
+        } catch (Throwable $error) {
+            self::assertSame('Callback Exception', $exception->getMessage());
+        }
+
+        self::assertArrayHasKey(Callback::INVALID_CALLBACK, $validator->getMessages());
     }
 }

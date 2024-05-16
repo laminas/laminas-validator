@@ -10,6 +10,7 @@ The following options are supported for `Laminas\Validator\Callback`:
 - `callback`: Sets the callback which will be called for the validation.
 - `callbackOptions`: Sets the additional options which will be given to the validator
   and/or callback.
+- `throwExceptions`: When true, [allows exceptions thrown inside of callbacks to propagate](#exceptions-within-callbacks).
 
 ## Basic usage
 
@@ -201,3 +202,31 @@ When making the call to the callback, the value to be validated will always be
 passed as the first argument to the callback followed by all other values given
 to `isValid()`; all other options will follow it. The amount and type of options
 which can be used is not limited.
+
+## Exceptions within Callbacks
+
+By default, the callback validator will catch any `Exception` thrown inside the callback and return false.
+The error message will indicate callback failure as opposed to invalid input.
+
+There is a third option `throwExceptions` that when `true` will re-throw exceptions that occur inside the callback.
+
+This is primarily useful in a development environment when you are testing callbacks and need to catch and verify exceptions thrown by your own application.
+
+For example:
+
+```php
+$callback = static function (mixed $value): bool {
+    if ($value === true) {
+        return true;
+    }
+    
+    throw new ApplicationException('Bad news');
+}
+
+$validator = new Laminas\Validator\Callback([
+    'callback' => $callback,
+    'throwExceptions' => true,
+]);
+
+$validator->isValid('Nope'); // An exception is thrown
+```
