@@ -214,8 +214,6 @@ This is primarily useful in a development environment when you are testing callb
 For example:
 
 ```php
-use Laminas\Validator\Callback;
-
 $callback = static function (mixed $value): bool {
     if ($value === true) {
         return true;
@@ -224,7 +222,7 @@ $callback = static function (mixed $value): bool {
     throw new ApplicationException('Bad news');
 }
 
-$validator = new Callback([
+$validator = new Laminas\Validator\Callback([
     'callback' => $callback,
     'throwExceptions' => true,
 ]);
