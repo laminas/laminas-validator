@@ -10,11 +10,16 @@ use function call_user_func_array;
 use function is_callable;
 
 /**
- * @psalm-type Options = array{
- *     callback?: callable|null,
+ * @psalm-type OptionsProperty = array{
+ *     callback: callable|null,
+ *     callbackOptions: array<array-key, mixed>,
+ *     throwExceptions: bool,
+ * }
+ * @psalm-type OptionsArgument = array{
+ *     callback: callable,
  *     callbackOptions?: array<array-key, mixed>,
  *     throwExceptions?: bool,
- * }
+ * }&array<string, mixed>
  */
 class Callback extends AbstractValidator
 {
@@ -41,7 +46,7 @@ class Callback extends AbstractValidator
     /**
      * Default options to set for the validator
      *
-     * @var Options
+     * @var OptionsProperty
      */
     protected $options = [
         'callback'        => null, // Callback in a call_user_func format, string || array
@@ -49,7 +54,7 @@ class Callback extends AbstractValidator
         'throwExceptions' => false, // Whether to throw exceptions raised within the callback or not
     ];
 
-    /** @param Options|callable $options */
+    /** @param OptionsArgument|callable $options */
     public function __construct($options = null)
     {
         if (is_callable($options)) {
@@ -66,7 +71,7 @@ class Callback extends AbstractValidator
      */
     public function getCallback()
     {
-        return $this->options['callback'] ?? null;
+        return $this->options['callback'];
     }
 
     /**
@@ -93,7 +98,7 @@ class Callback extends AbstractValidator
      */
     public function getCallbackOptions()
     {
-        return $this->options['callbackOptions'] ?? [];
+        return $this->options['callbackOptions'];
     }
 
     /**
