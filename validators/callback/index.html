@@ -623,6 +623,10 @@
                         <a href="#adding-options" class="toc__link nav-link">Adding options</a>
                     </li>
                 
+                    <li class="toc__entry">
+                        <a href="#exceptions-within-callbacks" class="toc__link nav-link">Exceptions within Callbacks</a>
+                    </li>
+                
             </ul>
         </div>
     
@@ -680,6 +684,7 @@ validate a given value.</p>
 <li><code>callback</code>: Sets the callback which will be called for the validation.</li>
 <li><code>callbackOptions</code>: Sets the additional options which will be given to the validator
   and/or callback.</li>
+<li><code>throwExceptions</code>: When true, <a href="#exceptions-within-callbacks">allows exceptions thrown inside of callbacks to propagate</a>.</li>
 </ul>
 <h2 id="basic-usage">Basic usage</h2>
 <p>The simplest use case is to pass a function as a callback. Consider the
@@ -821,6 +826,26 @@ if ($valid-&gt;isValid($input, $context)) {
 passed as the first argument to the callback followed by all other values given
 to <code>isValid()</code>; all other options will follow it. The amount and type of options
 which can be used is not limited.</p>
+<h2 id="exceptions-within-callbacks">Exceptions within Callbacks</h2>
+<p>By default, the callback validator will catch any <code>Exception</code> thrown inside the callback and return false.
+The error message will indicate callback failure as opposed to invalid input.</p>
+<p>There is a third option <code>throwExceptions</code> that when <code>true</code> will re-throw exceptions that occur inside the callback.</p>
+<p>This is primarily useful in a development environment when you are testing callbacks and need to catch and verify exceptions thrown by your own application.</p>
+<p>For example:</p>
+<pre class="highlight"><code class="language-php">$callback = static function (mixed $value): bool {
+    if ($value === true) {
+        return true;
+    }
+
+    throw new ApplicationException('Bad news');
+}
+
+$validator = new Laminas\Validator\Callback([
+    'callback' =&gt; $callback,
+    'throwExceptions' =&gt; true,
+]);
+
+$validator-&gt;isValid('Nope'); // An exception is thrown</code></pre>
 
 
 
