@@ -6,7 +6,7 @@ namespace Laminas\Validator\Translator;
 
 use Laminas\I18n\Translator\TranslatorInterface as I18nTranslatorInterface;
 
-class DummyTranslator implements I18nTranslatorInterface
+final class DummyTranslator implements I18nTranslatorInterface
 {
     /** @inheritDoc */
     public function translate($message, $textDomain = 'default', $locale = null)

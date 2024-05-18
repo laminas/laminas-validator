@@ -9,6 +9,8 @@ use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\Validator\Translator\Translator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use ReflectionException;
+use ReflectionProperty;
 
 class TranslatorTest extends TestCase
 {
@@ -34,8 +36,13 @@ class TranslatorTest extends TestCase
         $this->assertInstanceOf(TranslatorInterface::class, $this->translator);
     }
 
+    /**
+     * @throws ReflectionException
+     */
     public function testCanRetrieveComposedTranslator(): void
     {
-        $this->assertSame($this->i18nTranslator, $this->translator->getTranslator());
+        $prop = new ReflectionProperty($this->translator, 'translator');
+
+        $this->assertSame($this->i18nTranslator, $prop->getValue($this->translator));
     }
 }

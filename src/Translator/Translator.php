@@ -7,20 +7,12 @@ namespace Laminas\Validator\Translator;
 use Laminas\I18n\Translator\TranslatorInterface as I18nTranslatorInterface;
 use Laminas\Validator\Translator\TranslatorInterface as ValidatorTranslatorInterface;
 
-class Translator implements
+final class Translator implements
     I18nTranslatorInterface,
     ValidatorTranslatorInterface
 {
     public function __construct(protected I18nTranslatorInterface $translator)
     {
-    }
-
-    /**
-     * @return I18nTranslatorInterface
-     */
-    public function getTranslator()
-    {
-        return $this->translator;
     }
 
     /**

@@ -19,6 +19,7 @@ use Laminas\Validator\Translator\TranslatorFactory;
 use Locale;
 use PHPUnit\Framework\Constraint\IsInstanceOf;
 use PHPUnit\Framework\TestCase;
+use ReflectionProperty;
 
 use function extension_loaded;
 
@@ -46,7 +47,9 @@ class TranslatorFactoryTest extends TestCase
         $test    = $factory($container, TranslatorInterface::class);
 
         $this->assertInstanceOf(Translator::class, $test);
-        $this->assertSame($translator, $test->getTranslator());
+
+        $prop = new ReflectionProperty($test, 'translator');
+        $this->assertSame($translator, $prop->getValue($test));
     }
 
     /** @psalm-return array<string, array{0: class-string}> */
@@ -84,7 +87,9 @@ class TranslatorFactoryTest extends TestCase
         $test    = $factory($container, TranslatorInterface::class);
 
         $this->assertInstanceOf(Translator::class, $test);
-        $this->assertInstanceOf($expected, $test->getTranslator());
+
+        $prop = new ReflectionProperty($test, 'translator');
+        $this->assertInstanceOf($expected, $prop->getValue($test));
     }
 
     /**
@@ -117,7 +122,9 @@ class TranslatorFactoryTest extends TestCase
         $test    = $factory($container, TranslatorInterface::class);
 
         $this->assertInstanceOf(Translator::class, $test);
-        $this->assertInstanceOf($expected, $test->getTranslator());
+
+        $prop = new ReflectionProperty($test, 'translator');
+        $this->assertInstanceOf($expected, $prop->getValue($test));
     }
 
     public function testFactoryReturnsMvcDecoratorDecoratingDummyTranslatorWhenTranslatorConfigIsFalse(): void
@@ -145,7 +152,9 @@ class TranslatorFactoryTest extends TestCase
         $test    = $factory($container, TranslatorInterface::class);
 
         $this->assertInstanceOf(Translator::class, $test);
-        $this->assertInstanceOf(DummyTranslator::class, $test->getTranslator());
+
+        $prop = new ReflectionProperty($test, 'translator');
+        $this->assertInstanceOf(DummyTranslator::class, $prop->getValue($test));
     }
 
     /**
@@ -178,7 +187,9 @@ class TranslatorFactoryTest extends TestCase
         $test    = $factory($container, TranslatorInterface::class);
 
         $this->assertInstanceOf(Translator::class, $test);
-        $this->assertInstanceOf($expected, $test->getTranslator());
+
+        $prop = new ReflectionProperty($test, 'translator');
+        $this->assertInstanceOf($expected, $prop->getValue($test));
     }
 
     /** @psalm-return array<string, array{0: array<string, mixed>, 1: class-string}> */
@@ -232,7 +243,9 @@ class TranslatorFactoryTest extends TestCase
         $test    = $factory($container, TranslatorInterface::class);
 
         $this->assertInstanceOf(Translator::class, $test);
-        $this->assertInstanceOf($expected, $test->getTranslator());
+
+        $prop = new ReflectionProperty($test, 'translator');
+        $this->assertInstanceOf($expected, $prop->getValue($test));
     }
 
     /**
@@ -288,7 +301,9 @@ class TranslatorFactoryTest extends TestCase
 
         $this->assertInstanceOf(Translator::class, $test);
 
-        $decorated = $test->getTranslator();
+        $prop      = new ReflectionProperty($test, 'translator');
+        $decorated = $prop->getValue($test);
+
         $this->assertInstanceOf(I18nTranslator::class, $decorated);
         $locale = $config['locale'] ?? null;
         self::assertIsString($locale);
@@ -339,7 +354,9 @@ class TranslatorFactoryTest extends TestCase
 
         $this->assertInstanceOf(Translator::class, $test);
 
-        $decorated = $test->getTranslator();
+        $prop      = new ReflectionProperty($test, 'translator');
+        $decorated = $prop->getValue($test);
+
         $this->assertInstanceOf(I18nTranslator::class, $decorated);
         $this->assertEquals($config['locale'], $decorated->getLocale());
         $this->assertTrue($decorated->isEventManagerEnabled());
