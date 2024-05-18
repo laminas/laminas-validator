@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\Translator;
 
-// phpcs:disable WebimpressCodingStandard.PHP.CorrectClassNameCase
-
 use Laminas\I18n\Translator\LoaderPluginManager;
 use Laminas\I18n\Translator\Translator as I18nTranslator;
 use Laminas\I18n\Translator\TranslatorInterface;

@@ -17,7 +17,6 @@ final class DummyTranslator implements I18nTranslatorInterface
     /** @inheritDoc */
     public function translatePlural($singular, $plural, $number, $textDomain = 'default', $locale = null)
     {
-        // phpcs:disable SlevomatCodingStandard.Operators.DisallowEqualOperators
-        return $number == 1 ? $singular : $plural;
+        return (int) $number === 1 ? $singular : $plural;
     }
 }
