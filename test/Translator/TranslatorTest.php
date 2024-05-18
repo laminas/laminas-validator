@@ -9,15 +9,13 @@ use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\Validator\Translator\Translator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use ReflectionException;
-use ReflectionProperty;
 
 class TranslatorTest extends TestCase
 {
     /** @var Translator */
     protected $translator;
 
-    /** @var TranslatorInterface|MockObject */
+    /** @var TranslatorInterface&MockObject */
     protected $i18nTranslator;
 
     public function setUp(): void
@@ -26,23 +24,55 @@ class TranslatorTest extends TestCase
         $this->translator     = new Translator($this->i18nTranslator);
     }
 
-    public function testIsAnI18nTranslator(): void
+    public function testTranslate(): void
     {
-        $this->assertInstanceOf(TranslatorInterface::class, $this->translator);
+        $message    = 'This is the message';
+        $textDomain = 'default';
+        $locale     = 'en_US';
+
+        $this->i18nTranslator->expects($this->once())
+            ->method('translate')
+            ->with($message, $textDomain, $locale)
+            ->willReturn($message);
+
+        $this->assertEquals(
+            $message,
+            $this->translator->translate(
+                $message,
+                $textDomain,
+                $locale
+            )
+        );
     }
 
-    public function testIsAValidatorTranslator(): void
+    public function testTranslatePlural(): void
     {
-        $this->assertInstanceOf(TranslatorInterface::class, $this->translator);
-    }
+        $singular   = 'singular';
+        $plural     = 'plural';
+        $number     = 2;
+        $textDomain = 'default';
+        $locale     = 'en_US';
 
-    /**
-     * @throws ReflectionException
-     */
-    public function testCanRetrieveComposedTranslator(): void
-    {
-        $prop = new ReflectionProperty($this->translator, 'translator');
+        $this->i18nTranslator->expects($this->once())
+            ->method('translatePlural')
+            ->with(
+                $singular,
+                $plural,
+                $number,
+                $textDomain,
+                $locale
+            )
+            ->willReturn($singular);
 
-        $this->assertSame($this->i18nTranslator, $prop->getValue($this->translator));
+        $this->assertEquals(
+            $singular,
+            $this->translator->translatePlural(
+                $singular,
+                $plural,
+                $number,
+                $textDomain,
+                $locale
+            )
+        );
     }
 }
