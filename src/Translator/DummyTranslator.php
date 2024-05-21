@@ -6,6 +6,9 @@ namespace Laminas\Validator\Translator;
 
 use Laminas\I18n\Translator\TranslatorInterface as I18nTranslatorInterface;
 
+/**
+ * @internal
+ */
 final class DummyTranslator implements I18nTranslatorInterface
 {
     /** @inheritDoc */
