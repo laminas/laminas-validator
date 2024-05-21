@@ -11,7 +11,7 @@ final class Translator implements
     I18nTranslatorInterface,
     ValidatorTranslatorInterface
 {
-    public function __construct(protected I18nTranslatorInterface $translator)
+    public function __construct(private readonly I18nTranslatorInterface $translator)
     {
     }
 
