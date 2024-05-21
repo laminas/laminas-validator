@@ -44,7 +44,7 @@ class TranslatorFactoryTest extends TestCase
         self::assertInstanceOf(ContainerInterface::class, $container);
 
         $factory = new TranslatorFactory();
-        $test    = $factory($container, TranslatorInterface::class);
+        $test    = $factory($container);
 
         $this->assertInstanceOf(Translator::class, $test);
 
@@ -84,7 +84,7 @@ class TranslatorFactoryTest extends TestCase
         self::assertInstanceOf(ContainerInterface::class, $container);
 
         $factory = new TranslatorFactory();
-        $test    = $factory($container, TranslatorInterface::class);
+        $test    = $factory($container);
 
         $this->assertInstanceOf(Translator::class, $test);
 
@@ -119,7 +119,7 @@ class TranslatorFactoryTest extends TestCase
         self::assertInstanceOf(ContainerInterface::class, $container);
 
         $factory = new TranslatorFactory();
-        $test    = $factory($container, TranslatorInterface::class);
+        $test    = $factory($container);
 
         $this->assertInstanceOf(Translator::class, $test);
 
@@ -149,7 +149,7 @@ class TranslatorFactoryTest extends TestCase
         self::assertInstanceOf(ContainerInterface::class, $container);
 
         $factory = new TranslatorFactory();
-        $test    = $factory($container, TranslatorInterface::class);
+        $test    = $factory($container);
 
         $this->assertInstanceOf(Translator::class, $test);
 
@@ -184,7 +184,7 @@ class TranslatorFactoryTest extends TestCase
         self::assertInstanceOf(ContainerInterface::class, $container);
 
         $factory = new TranslatorFactory();
-        $test    = $factory($container, TranslatorInterface::class);
+        $test    = $factory($container);
 
         $this->assertInstanceOf(Translator::class, $test);
 
@@ -240,7 +240,7 @@ class TranslatorFactoryTest extends TestCase
         self::assertInstanceOf(ContainerInterface::class, $container);
 
         $factory = new TranslatorFactory();
-        $test    = $factory($container, TranslatorInterface::class);
+        $test    = $factory($container);
 
         $this->assertInstanceOf(Translator::class, $test);
 
@@ -297,7 +297,7 @@ class TranslatorFactoryTest extends TestCase
         self::assertInstanceOf(ContainerInterface::class, $container);
 
         $factory = new TranslatorFactory();
-        $test    = $factory($container, TranslatorInterface::class);
+        $test    = $factory($container);
 
         $this->assertInstanceOf(Translator::class, $test);
 
@@ -350,7 +350,7 @@ class TranslatorFactoryTest extends TestCase
         self::assertInstanceOf(ContainerInterface::class, $container);
 
         $factory = new TranslatorFactory();
-        $test    = $factory($container, TranslatorInterface::class);
+        $test    = $factory($container);
 
         $this->assertInstanceOf(Translator::class, $test);
 
