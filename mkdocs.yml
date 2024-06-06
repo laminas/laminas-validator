@@ -5,66 +5,65 @@ nav:
     - v2:
         - Introduction: v2/intro.md
         - Installation: v2/installation.md
-        - Reference:
-            - "Validator Chains": v2/validator-chains.md
-            - "Writing Validators": v2/writing-validators.md
-            - "Validation Messages": v2/messages.md
-            - "Standard Validation Classes": v2/set.md
-            - Validators:
-                - Barcode: v2/validators/barcode.md
-                - Between: v2/validators/between.md
-                - BIC: v2/validators/bic.md
-                - Callback: v2/validators/callback.md
-                - CreditCard: v2/validators/credit-card.md
-                - Csrf: v2/validators/csrf.md
-                - Date: v2/validators/date.md
-                - "Db\\RecordExists and Db\\NoRecordExists": v2/validators/db.md
-                - Digits: v2/validators/digits.md
-                - EmailAddress: v2/validators/email-address.md
-                - Explode: v2/validators/explode.md
-                - GreaterThan: v2/validators/greater-than.md
-                - Hex: v2/validators/hex.md
-                - Hostname: v2/validators/hostname.md
-                - Iban: v2/validators/iban.md
-                - Identical: v2/validators/identical.md
-                - InArray: v2/validators/in-array.md
-                - Ip: v2/validators/ip.md
-                - IsArray: v2/validators/is-array.md
-                - Isbn: v2/validators/isbn.md
-                - IsCountable: v2/validators/is-countable.md
-                - IsInstanceOf: v2/validators/isinstanceof.md
-                - IsJsonString: v2/validators/is-json-string.md
-                - LessThan: v2/validators/less-than.md
-                - NotEmpty: v2/validators/not-empty.md
-                - Regex: v2/validators/regex.md
-                - Sitemap: v2/validators/sitemap.md
-                - Step: v2/validators/step.md
-                - StringLength: v2/validators/string-length.md
-                - Timezone: v2/validators/timezone.md
-                - UndisclosedPassword: v2/validators/undisclosed-password.md
-                - Uri: v2/validators/uri.md
-                - Uuid: v2/validators/uuid.md
-            - "File Validators":
-                - Introduction: v2/validators/file/intro.md
-                - Count: v2/validators/file/count.md
-                - Crc32: v2/validators/file/crc32.md
-                - ExcludeExtension: v2/validators/file/exclude-extension.md
-                - ExcludeMimeType: v2/validators/file/exclude-mime-type.md
-                - Exists: v2/validators/file/exists.md
-                - Extension: v2/validators/file/extension.md
-                - FilesSize: v2/validators/file/files-size.md
-                - Hash: v2/validators/file/hash.md
-                - ImageSize: v2/validators/file/image-size.md
-                - IsCompressed: v2/validators/file/is-compressed.md
-                - IsImage: v2/validators/file/is-image.md
-                - Md5: v2/validators/file/md5.md
-                - MimeType: v2/validators/file/mime-type.md
-                - NotExists: v2/validators/file/not-exists.md
-                - Sha1: v2/validators/file/sha1.md
-                - Size: v2/validators/file/size.md
-                - Upload: v2/validators/file/upload.md
-                - UploadFile: v2/validators/file/upload-file.md
-                - WordCount: v2/validators/file/word-count.md
+        - "Validator Chains": v2/validator-chains.md
+        - "Writing Validators": v2/writing-validators.md
+        - "Validation Messages": v2/messages.md
+        - "Standard Validation Classes": v2/set.md
+        - Validators:
+            - Barcode: v2/validators/barcode.md
+            - Between: v2/validators/between.md
+            - BIC: v2/validators/bic.md
+            - Callback: v2/validators/callback.md
+            - CreditCard: v2/validators/credit-card.md
+            - Csrf: v2/validators/csrf.md
+            - Date: v2/validators/date.md
+            - "Db\\RecordExists and Db\\NoRecordExists": v2/validators/db.md
+            - Digits: v2/validators/digits.md
+            - EmailAddress: v2/validators/email-address.md
+            - Explode: v2/validators/explode.md
+            - GreaterThan: v2/validators/greater-than.md
+            - Hex: v2/validators/hex.md
+            - Hostname: v2/validators/hostname.md
+            - Iban: v2/validators/iban.md
+            - Identical: v2/validators/identical.md
+            - InArray: v2/validators/in-array.md
+            - Ip: v2/validators/ip.md
+            - IsArray: v2/validators/is-array.md
+            - Isbn: v2/validators/isbn.md
+            - IsCountable: v2/validators/is-countable.md
+            - IsInstanceOf: v2/validators/isinstanceof.md
+            - IsJsonString: v2/validators/is-json-string.md
+            - LessThan: v2/validators/less-than.md
+            - NotEmpty: v2/validators/not-empty.md
+            - Regex: v2/validators/regex.md
+            - Sitemap: v2/validators/sitemap.md
+            - Step: v2/validators/step.md
+            - StringLength: v2/validators/string-length.md
+            - Timezone: v2/validators/timezone.md
+            - UndisclosedPassword: v2/validators/undisclosed-password.md
+            - Uri: v2/validators/uri.md
+            - Uuid: v2/validators/uuid.md
+        - "File Validators":
+            - Introduction: v2/validators/file/intro.md
+            - Count: v2/validators/file/count.md
+            - Crc32: v2/validators/file/crc32.md
+            - ExcludeExtension: v2/validators/file/exclude-extension.md
+            - ExcludeMimeType: v2/validators/file/exclude-mime-type.md
+            - Exists: v2/validators/file/exists.md
+            - Extension: v2/validators/file/extension.md
+            - FilesSize: v2/validators/file/files-size.md
+            - Hash: v2/validators/file/hash.md
+            - ImageSize: v2/validators/file/image-size.md
+            - IsCompressed: v2/validators/file/is-compressed.md
+            - IsImage: v2/validators/file/is-image.md
+            - Md5: v2/validators/file/md5.md
+            - MimeType: v2/validators/file/mime-type.md
+            - NotExists: v2/validators/file/not-exists.md
+            - Sha1: v2/validators/file/sha1.md
+            - Size: v2/validators/file/size.md
+            - Upload: v2/validators/file/upload.md
+            - UploadFile: v2/validators/file/upload-file.md
+            - WordCount: v2/validators/file/word-count.md
 site_name: laminas-validator
 site_description: "Validation classes for a wide range of domains, and the ability to chain validators to create complex validation criteria."
 repo_url: 'https://github.com/laminas/laminas-validator'
