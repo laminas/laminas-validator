@@ -1,4 +1,4 @@
-**This is only a placeholder.**
+# This Is Only a Placeholder
 
 The content of this page can be found under:
 
