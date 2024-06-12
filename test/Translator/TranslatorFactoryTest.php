@@ -106,7 +106,6 @@ class TranslatorFactoryTest extends TestCase
             ->willReturnMap(
                 [
                     [TranslatorInterface::class, false],
-                    ['Zend\I18n\Translator\TranslatorInterface', false],
                     ['config', true],
                 ]
             );
@@ -136,7 +135,6 @@ class TranslatorFactoryTest extends TestCase
             ->willReturnMap(
                 [
                     [TranslatorInterface::class, false],
-                    ['Zend\I18n\Translator\TranslatorInterface', false],
                     ['config', true],
                 ]
             );
@@ -171,7 +169,6 @@ class TranslatorFactoryTest extends TestCase
             ->willReturnMap(
                 [
                     [TranslatorInterface::class, false],
-                    ['Zend\I18n\Translator\TranslatorInterface', false],
                     ['config', true],
                 ]
             );
@@ -227,7 +224,6 @@ class TranslatorFactoryTest extends TestCase
             ->willReturnMap(
                 [
                     [TranslatorInterface::class, false],
-                    ['Zend\I18n\Translator\TranslatorInterface', false],
                     ['config', true],
                 ]
             );
@@ -279,7 +275,6 @@ class TranslatorFactoryTest extends TestCase
             ->willReturnMap(
                 [
                     [TranslatorInterface::class, false],
-                    ['Zend\I18n\Translator\TranslatorInterface', false],
                     ['config', true],
                     ['TranslatorPluginManager', false],
                 ]
@@ -328,7 +323,6 @@ class TranslatorFactoryTest extends TestCase
             ->willReturnMap(
                 [
                     [TranslatorInterface::class, false],
-                    ['Zend\I18n\Translator\TranslatorInterface', false],
                     ['config', true],
                     ['TranslatorPluginManager', true],
                 ]
