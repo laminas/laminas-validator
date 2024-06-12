@@ -8,6 +8,7 @@ use Countable;
 use Laminas\Stdlib\ArrayUtils;
 use Traversable;
 
+use function array_is_list;
 use function array_search;
 use function array_shift;
 use function count;
@@ -106,12 +107,18 @@ class NotEmpty extends AbstractValidator
             $options = $temp;
         }
 
-        if (! isset($options['type'])) {
-            if (($type = $this->calculateTypeValue($options)) !== 0) {
-                $options['type'] = $type;
-            } else {
-                $options['type'] = $this->defaultType;
+        /**
+         * Handles the case where $options is a list of type integers or type names
+         */
+        if (! isset($options['type']) && array_is_list($options)) {
+            $type = $this->calculateTypeValue($options);
+            if ($type !== 0) {
+                $options = ['type' => $type];
             }
+        }
+
+        if (! isset($options['type'])) {
+            $options['type'] = $this->calculateTypeValue($this->defaultType);
         }
 
         parent::__construct($options);
