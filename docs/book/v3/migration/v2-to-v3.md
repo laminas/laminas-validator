@@ -8,6 +8,12 @@ All aliases that referenced the equivalent, legacy "Zend" validators have been  
 
 You will need to either update your codebase to use known aliases such as `Laminas\Validator\NotEmpty::class`, or re-implement the aliases in your configuration.
 
+## Changes to Individual Validators
+
+### Digits
+
+This validator no longer uses the Digits filter from `laminas/laminas-filter`, so its static filter property has been removed. This change is unlikely to cause any problems unless for some reason you have extended this class.
+
 ## Removed Features
 
 ### `Laminas\Db` Validators
