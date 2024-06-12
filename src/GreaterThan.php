@@ -10,6 +10,7 @@ use function array_shift;
 use function func_get_args;
 use function is_array;
 
+/** @final */
 class GreaterThan extends AbstractValidator
 {
     public const NOT_GREATER           = 'notGreaterThan';

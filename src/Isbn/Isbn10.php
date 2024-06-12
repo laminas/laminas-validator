@@ -2,6 +2,7 @@
 
 namespace Laminas\Validator\Isbn;
 
+/** @final */
 class Isbn10
 {
     /**

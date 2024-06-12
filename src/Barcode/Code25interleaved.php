@@ -2,6 +2,7 @@
 
 namespace Laminas\Validator\Barcode;
 
+/** @final */
 class Code25interleaved extends AbstractAdapter
 {
     /**

@@ -17,6 +17,8 @@ use function substr;
 
 /**
  * Validates IBAN Numbers (International Bank Account Numbers)
+ *
+ * @final
  */
 class Iban extends AbstractValidator
 {

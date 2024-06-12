@@ -7,6 +7,7 @@ use function str_split;
 use function strlen;
 use function substr;
 
+/** @final */
 class Issn extends AbstractAdapter
 {
     /**

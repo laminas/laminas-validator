@@ -12,6 +12,8 @@ use function is_string;
  *
  * @link       http://www.sitemaps.org/protocol.php Sitemaps XML format
  * @see        Laminas\Uri\Uri
+ *
+ * @final
  */
 class Loc extends AbstractValidator
 {

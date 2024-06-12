@@ -17,6 +17,8 @@ use const FILEINFO_MIME_TYPE;
 
 /**
  * Validator for the mime type of a file
+ *
+ * @final
  */
 class ExcludeMimeType extends MimeType
 {

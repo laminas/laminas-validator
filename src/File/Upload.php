@@ -17,6 +17,8 @@ use function is_uploaded_file;
 
 /**
  * Validator for the maximum size of a file up to a max of 2GB
+ *
+ * @final
  */
 class Upload extends AbstractValidator
 {

@@ -2,6 +2,7 @@
 
 namespace Laminas\Validator;
 
+/** @final */
 class ConfigProvider
 {
     /**

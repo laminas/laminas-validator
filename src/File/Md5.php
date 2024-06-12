@@ -9,6 +9,8 @@ use function is_readable;
 
 /**
  * Validator for the md5 hash of given files
+ *
+ * @final
  */
 class Md5 extends Hash
 {

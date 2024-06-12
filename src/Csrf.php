@@ -16,6 +16,7 @@ use function str_replace;
 use function strtolower;
 use function strtr;
 
+/** @final */
 class Csrf extends AbstractValidator
 {
     /**

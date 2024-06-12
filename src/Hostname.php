@@ -46,6 +46,7 @@ use function substr;
  *    useTldCheck?: bool,
  *    ipValidator?: null|ValidatorInterface,
  * }
+ * @final
  */
 class Hostname extends AbstractValidator
 {

@@ -18,6 +18,8 @@ use function str_word_count;
 
 /**
  * Validator for counting all words in a file
+ *
+ * @final
  */
 class WordCount extends AbstractValidator
 {

@@ -10,6 +10,8 @@ use function is_numeric;
  * Validates whether a given value is valid as a sitemap <priority> value
  *
  * @link       http://www.sitemaps.org/protocol.php Sitemaps XML format
+ *
+ * @final
  */
 class Priority extends AbstractValidator
 {

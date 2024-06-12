@@ -10,6 +10,7 @@ use function chr;
 use function is_string;
 use function ord;
 
+/** @final */
 class Code128 extends AbstractAdapter
 {
     /**

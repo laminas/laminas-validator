@@ -20,6 +20,7 @@ use function is_string;
 use function method_exists;
 use function preg_match;
 
+/** @final */
 class NotEmpty extends AbstractValidator
 {
     public const BOOLEAN       = 0b000000000001;

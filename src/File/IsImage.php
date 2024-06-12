@@ -7,6 +7,8 @@ use Traversable;
 
 /**
  * Validator which checks if the file is an image
+ *
+ * @final
  */
 class IsImage extends MimeType
 {

@@ -12,6 +12,8 @@ use function preg_match;
  * Validates whether a given value is valid as a sitemap <lastmod> value
  *
  * @link       http://www.sitemaps.org/protocol.php Sitemaps XML format
+ *
+ * @final
  */
 class Lastmod extends AbstractValidator
 {

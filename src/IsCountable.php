@@ -36,6 +36,7 @@ use function is_numeric;
  * }&array<string, mixed>
  * @property Options&array<string, mixed> $options Required to stop Psalm getting confused about the declaration
  *                                                 on AbstractValidator
+ * @final
  */
 class IsCountable extends AbstractValidator
 {

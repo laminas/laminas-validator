@@ -14,6 +14,8 @@ use function is_array;
  * @link ServiceManager
  *
  * @psalm-import-type ServiceManagerConfiguration from ServiceManager
+ *
+ * @final
  */
 class ValidatorPluginManagerFactory implements FactoryInterface
 {
