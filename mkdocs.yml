@@ -17,7 +17,6 @@ nav:
             - CreditCard: v3/validators/credit-card.md
             - Csrf: v3/validators/csrf.md
             - Date: v3/validators/date.md
-            - "Db\\RecordExists and Db\\NoRecordExists": v3/validators/db.md
             - Digits: v3/validators/digits.md
             - EmailAddress: v3/validators/email-address.md
             - Explode: v3/validators/explode.md
@@ -155,7 +154,7 @@ plugins:
             validators/credit-card.md: v3/validators/credit-card.md
             validators/csrf.md: v3/validators/csrf.md
             validators/date.md: v3/validators/date.md
-            validators/db.md: v3/validators/db.md
+            validators/db.md: v2/validators/db.md
             validators/digits.md: v3/validators/digits.md
             validators/email-address.md: v3/validators/email-address.md
             validators/explode.md: v3/validators/explode.md

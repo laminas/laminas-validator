@@ -38,7 +38,6 @@
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "^2.5",
-        "laminas/laminas-db": "^2.20",
         "laminas/laminas-filter": "^2.35.2",
         "laminas/laminas-i18n": "^2.26.0",
         "laminas/laminas-session": "^2.20",
@@ -50,7 +49,6 @@
         "vimeo/psalm": "^5.24.0"
     },
     "suggest": {
-        "laminas/laminas-db": "Laminas\\Db component, required by the (No)RecordExists validator",
         "laminas/laminas-filter": "Laminas\\Filter component, required by the Digits validator",
         "laminas/laminas-i18n": "Laminas\\I18n component to allow translation of validation error messages",
         "laminas/laminas-i18n-resources": "Translations of validator messages",
