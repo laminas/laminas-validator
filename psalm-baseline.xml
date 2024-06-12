@@ -1907,6 +1907,11 @@
       <code><![CDATA[gettype($type)]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
+  <file src="src/Translator/DummyTranslator.php">
+    <RedundantCastGivenDocblockType>
+      <code><![CDATA[(int) $number]]></code>
+    </RedundantCastGivenDocblockType>
+  </file>
   <file src="src/Translator/TranslatorAwareInterface.php">
     <PossiblyUnusedReturnValue>
       <code><![CDATA[TranslatorAwareInterface]]></code>
@@ -2004,10 +2009,6 @@
       <code><![CDATA[$configOrContainerInstance]]></code>
       <code><![CDATA[$container->get('MvcTranslator')]]></code>
     </MixedArgument>
-    <MixedMethodCall>
-      <code><![CDATA[get]]></code>
-      <code><![CDATA[has]]></code>
-    </MixedMethodCall>
     <PossiblyUnusedMethod>
       <code><![CDATA[validatePlugin]]></code>
     </PossiblyUnusedMethod>
@@ -2018,7 +2019,6 @@
       <code><![CDATA[$container === $this && method_exists($container, 'getServiceLocator')]]></code>
     </RedundantCondition>
     <RedundantConditionGivenDocblockType>
-      <code><![CDATA[$container]]></code>
       <code><![CDATA[$container->getServiceLocator()]]></code>
     </RedundantConditionGivenDocblockType>
   </file>

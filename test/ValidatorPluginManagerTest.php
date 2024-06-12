@@ -11,6 +11,7 @@ use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\RuntimeException;
 use Laminas\Validator\Explode;
 use Laminas\Validator\NotEmpty;
+use Laminas\Validator\Translator\TranslatorInterface;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
 use LaminasTest\Validator\TestAsset\InMemoryContainer;
@@ -58,20 +59,53 @@ final class ValidatorPluginManagerTest extends TestCase
         self::assertEquals($translator, $validator->getTranslator());
     }
 
+    public function testAllowsInjectingTranslatorInterface(): void
+    {
+        $translator = $this->createMock(Translator::class);
+
+        $container = $this->createMock(ContainerInterface::class);
+
+        $container
+            ->expects(self::exactly(2))
+            ->method('has')
+            ->willReturnMap(
+                [
+                    ['MvcTranslator', false],
+                    [\Laminas\I18n\Translator\TranslatorInterface::class, true],
+                ]
+            );
+
+        $container
+            ->expects(self::once())
+            ->method('get')
+            ->with(TranslatorInterface::class)
+            ->willReturn($translator);
+
+        $validators = new ValidatorPluginManager($container);
+
+        $validator = $validators->get(NotEmpty::class);
+
+        self::assertInstanceOf(AbstractValidator::class, $validator);
+        self::assertEquals($translator, $validator->getTranslator());
+    }
+
     public function testNoTranslatorInjectedWhenTranslatorIsNotPresent(): void
     {
         $container = $this->createMock(ContainerInterface::class);
 
         $container
-            ->expects(self::once())
+            ->expects(self::exactly(2))
             ->method('has')
-            ->with('MvcTranslator')
-            ->willReturn(false);
+            ->willReturnMap(
+                [
+                    ['MvcTranslator', false],
+                    [TranslatorInterface::class, false],
+                ]
+            );
 
         $container
             ->expects(self::never())
-            ->method('get')
-            ->with('MvcTranslator');
+            ->method('get');
 
         $validators = new ValidatorPluginManager($container);
 
