@@ -236,7 +236,10 @@ class CreditCard extends AbstractValidator
     /**
      * Options for this validator
      *
-     * @var array
+     * @var array{
+     *     service: callable|null,
+     *     type: list<string>,
+     * }
      */
     protected $options = [
         'service' => null, // Service callback for additional validation
@@ -290,7 +293,7 @@ class CreditCard extends AbstractValidator
     /**
      * Sets CCIs which are accepted by validation
      *
-     * @param  string|array $type Type to allow for validation
+     * @param  string|list<string> $type Type to allow for validation
      * @return CreditCard Provides a fluid interface
      */
     public function setType($type)
@@ -302,7 +305,7 @@ class CreditCard extends AbstractValidator
     /**
      * Adds a CCI to be accepted by validation
      *
-     * @param  string|array $type Type to allow for validation
+     * @param  string|list<string> $type Type to allow for validation
      * @return $this Provides a fluid interface
      */
     public function addType($type)

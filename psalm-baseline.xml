@@ -130,7 +130,12 @@
     <NullableReturnStatement>
       <code><![CDATA[$this->options['useChecksum']]]></code>
     </NullableReturnStatement>
-    <PossiblyInvalidCast/>
+    <PossiblyInvalidArgument>
+      <code><![CDATA[$characters]]></code>
+    </PossiblyInvalidArgument>
+    <PossiblyInvalidCast>
+      <code><![CDATA[$characters]]></code>
+    </PossiblyInvalidCast>
     <PossiblyUnusedMethod>
       <code><![CDATA[code25]]></code>
       <code><![CDATA[gtin]]></code>
@@ -424,26 +429,19 @@
       <code><![CDATA[$this->cardLength[$type]]]></code>
       <code><![CDATA[$this->options['type']]]></code>
       <code><![CDATA[$this->options['type']]]></code>
-      <code><![CDATA[$typ]]></code>
       <code><![CDATA[$value]]></code>
     </MixedArgument>
     <MixedArrayAssignment>
       <code><![CDATA[$this->options['type'][]]]></code>
     </MixedArrayAssignment>
-    <MixedArrayOffset>
-      <code><![CDATA[$this->cardLength[$type]]]></code>
-      <code><![CDATA[$this->cardType[$type]]]></code>
-    </MixedArrayOffset>
     <MixedAssignment>
       <code><![CDATA[$prefix]]></code>
       <code><![CDATA[$temp['service']]]></code>
       <code><![CDATA[$temp['type']]]></code>
-      <code><![CDATA[$typ]]></code>
-      <code><![CDATA[$type]]></code>
     </MixedAssignment>
     <MixedInferredReturnType>
-      <code><![CDATA[array]]></code>
       <code><![CDATA[callable]]></code>
+      <code><![CDATA[list<string>]]></code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$this->options['service']]]></code>
@@ -451,7 +449,6 @@
     </MixedReturnStatement>
     <PossiblyInvalidArgument>
       <code><![CDATA[$options]]></code>
-      <code><![CDATA[$this->getType()]]></code>
     </PossiblyInvalidArgument>
     <PossiblyUndefinedVariable>
       <code><![CDATA[$temp]]></code>
@@ -1909,7 +1906,6 @@
   </file>
   <file src="test/BarcodeTest.php">
     <InvalidArgument>
-      <code><![CDATA[123]]></code>
       <code><![CDATA[123]]></code>
       <code><![CDATA[06510000.4327]]></code>
       <code><![CDATA[106510000.4327]]></code>
