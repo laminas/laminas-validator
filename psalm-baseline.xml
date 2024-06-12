@@ -130,12 +130,7 @@
     <NullableReturnStatement>
       <code><![CDATA[$this->options['useChecksum']]]></code>
     </NullableReturnStatement>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$characters]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyInvalidCast>
-      <code><![CDATA[$characters]]></code>
-    </PossiblyInvalidCast>
+    <PossiblyInvalidCast/>
     <PossiblyUnusedMethod>
       <code><![CDATA[code25]]></code>
       <code><![CDATA[gtin]]></code>
@@ -1106,8 +1101,6 @@
       <code><![CDATA[$options['magicFile']]]></code>
       <code><![CDATA[$options['mimeType']]]></code>
       <code><![CDATA[$this->type]]></code>
-      <code><![CDATA[$this->type]]></code>
-      <code><![CDATA[$this->type]]></code>
       <code><![CDATA[static::FALSE_TYPE]]></code>
       <code><![CDATA[static::NOT_DETECTED]]></code>
       <code><![CDATA[static::NOT_READABLE]]></code>
@@ -1193,27 +1186,10 @@
       <code><![CDATA[! is_string($min) && ! is_numeric($min)]]></code>
       <code><![CDATA[is_string($options)]]></code>
     </DocblockTypeContradiction>
-    <InvalidArgument>
-      <code><![CDATA[$size]]></code>
-      <code><![CDATA[$size]]></code>
-    </InvalidArgument>
     <InvalidArrayOffset>
       <code><![CDATA[$sizes[$i]]]></code>
     </InvalidArrayOffset>
-    <InvalidOperand>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </InvalidOperand>
     <InvalidPropertyAssignmentValue>
-      <code><![CDATA[$size]]></code>
-      <code><![CDATA[$size]]></code>
-      <code><![CDATA[$size]]></code>
       <code><![CDATA[$this->toByteString($size)]]></code>
       <code><![CDATA[$this->toByteString($size)]]></code>
     </InvalidPropertyAssignmentValue>
@@ -1397,8 +1373,6 @@
       <code><![CDATA[$matches[2][0]]]></code>
     </InvalidOperand>
     <MixedArgument>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
     </MixedArgument>
   </file>
@@ -1637,7 +1611,7 @@
       <code><![CDATA[$type]]></code>
     </PossiblyNullArgument>
     <RedundantCondition>
-      <code><![CDATA[is_object($value) && method_exists($value, '__toString')]]></code>
+      <code><![CDATA[is_object($value) && method_exists($value, '__toString') && (string) $value === '']]></code>
     </RedundantCondition>
   </file>
   <file src="src/Regex.php">
@@ -1681,9 +1655,6 @@
     </MoreSpecificImplementedParamType>
   </file>
   <file src="src/StaticValidator.php">
-    <RedundantCondition>
-      <code><![CDATA[method_exists($plugins, 'configure')]]></code>
-    </RedundantCondition>
     <UndefinedMethod>
       <code><![CDATA[setShareByDefault]]></code>
     </UndefinedMethod>
@@ -1890,9 +1861,6 @@
     <PossiblyUnusedProperty>
       <code><![CDATA[$shareByDefault]]></code>
     </PossiblyUnusedProperty>
-    <RedundantCondition>
-      <code><![CDATA[$container === $this && method_exists($container, 'getServiceLocator')]]></code>
-    </RedundantCondition>
     <RedundantConditionGivenDocblockType>
       <code><![CDATA[$container->getServiceLocator()]]></code>
     </RedundantConditionGivenDocblockType>
