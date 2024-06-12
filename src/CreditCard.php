@@ -280,7 +280,7 @@ class CreditCard extends AbstractValidator
     /**
      * Returns a list of accepted CCIs
      *
-     * @return array
+     * @return list<string>
      */
     public function getType()
     {
@@ -428,7 +428,7 @@ class CreditCard extends AbstractValidator
         if (! empty($service)) {
             try {
                 $callback = new Callback($service);
-                $callback->setOptions($this->getType());
+                $callback->setCallbackOptions($this->getType());
                 if (! $callback->isValid($value)) {
                     $this->error(self::SERVICE, $value);
                     return false;
