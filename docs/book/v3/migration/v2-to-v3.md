@@ -1,6 +1,10 @@
 # Migration from Version 2 to 3
 
-## Changed Behaviour
+## Changed Behaviour & Signature Changes
+
+### Final Classes
+
+In order to reduce maintenance burden and to help users to favour [composition over inheritance](https://en.wikipedia.org/wiki/Composition_over_inheritance), all classes, where possible have been marked as final.
 
 ### Validator Plugin Manager
 
