@@ -1,4 +1,10 @@
-<?php // phpcs:disable Generic.Files.LineLength.TooLong
+<?php
+
+/**
+ * phpcs:disable Generic.Files.LineLength
+ */
+
+declare(strict_types=1);
 
 namespace Laminas\Validator;
 
