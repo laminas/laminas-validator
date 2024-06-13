@@ -2,11 +2,10 @@
 
 namespace Laminas\Validator;
 
-use Laminas\Filter\Digits as DigitsFilter;
-
 use function is_float;
 use function is_int;
 use function is_string;
+use function preg_replace;
 
 /** @final */
 class Digits extends AbstractValidator
@@ -16,16 +15,9 @@ class Digits extends AbstractValidator
     public const INVALID      = 'digitsInvalid';
 
     /**
-     * Digits filter used for validation
-     *
-     * @var DigitsFilter|null
-     */
-    protected static $filter;
-
-    /**
      * Validation failure message template definitions
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $messageTemplates = [
         self::NOT_DIGITS   => 'The input must contain only digits',
@@ -35,11 +27,8 @@ class Digits extends AbstractValidator
 
     /**
      * Returns true if and only if $value only contains digit characters
-     *
-     * @param  mixed $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if (! is_string($value) && ! is_int($value) && ! is_float($value)) {
             $this->error(self::INVALID);
@@ -53,11 +42,9 @@ class Digits extends AbstractValidator
             return false;
         }
 
-        if (null === static::$filter) {
-            static::$filter = new DigitsFilter();
-        }
+        $digits = preg_replace('/[^0-9]/', '', (string) $value);
 
-        if ($this->getValue() !== static::$filter->filter($this->getValue())) {
+        if ($value !== $digits) {
             $this->error(self::NOT_DIGITS);
             return false;
         }
