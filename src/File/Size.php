@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\File;
 
-use Laminas\Stdlib\ErrorHandler;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception;
 use Traversable;
@@ -18,7 +17,6 @@ use function is_numeric;
 use function is_readable;
 use function is_string;
 use function round;
-use function sprintf;
 use function strtoupper;
 use function substr;
 use function trim;
@@ -246,16 +244,14 @@ class Size extends AbstractValidator
 
         $this->setValue($fileInfo['filename']);
 
+        $path = $fileInfo['file'] ?? null;
         // Is file readable ?
-        if (empty($fileInfo['file']) || false === is_readable($fileInfo['file'])) {
+        if (! is_string($path) || false === is_readable($path)) {
             $this->error(self::NOT_FOUND);
             return false;
         }
 
-        // limited to 4GB files
-        ErrorHandler::start();
-        $size = (int) sprintf('%u', filesize($fileInfo['file']));
-        ErrorHandler::stop();
+        $size       = filesize($path);
         $this->size = $size;
 
         // Check to see if it's smaller than min size

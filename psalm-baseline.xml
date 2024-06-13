@@ -1191,8 +1191,6 @@
       <code><![CDATA[$this->toByteString($size)]]></code>
     </InvalidPropertyAssignmentValue>
     <MixedArgument>
-      <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$fileInfo['file']]]></code>
       <code><![CDATA[$max]]></code>
       <code><![CDATA[$min]]></code>
     </MixedArgument>
