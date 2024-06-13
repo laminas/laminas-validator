@@ -21,9 +21,8 @@ use const SORT_NUMERIC;
 /**
  * @psalm-type QueueElement = array{instance: ValidatorInterface, breakChainOnFailure: bool}
  * @implements IteratorAggregate<array-key, QueueElement>
- * @final
  */
-class ValidatorChain implements Countable, IteratorAggregate, ValidatorInterface
+final class ValidatorChain implements Countable, IteratorAggregate, ValidatorInterface
 {
     /**
      * Default priority at which validators are added

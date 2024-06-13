@@ -28,7 +28,7 @@ use const UPLOAD_ERR_PARTIAL;
  *
  * @final
  */
-class UploadFile extends AbstractValidator
+final class UploadFile extends AbstractValidator
 {
     /**
      * @const string Error constants

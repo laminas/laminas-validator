@@ -6,8 +6,7 @@ namespace Laminas\Validator\Barcode;
 
 use function strlen;
 
-/** @final */
-class Ean8 extends AbstractAdapter
+final class Ean8 extends AbstractAdapter
 {
     /**
      * Constructor for this barcode adapter

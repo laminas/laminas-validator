@@ -54,7 +54,7 @@ use function substr;
  * }
  * @final
  */
-class Hostname extends AbstractValidator
+final class Hostname extends AbstractValidator
 {
     public const CANNOT_DECODE_PUNYCODE  = 'hostnameCannotDecodePunycode';
     public const INVALID                 = 'hostnameInvalid';

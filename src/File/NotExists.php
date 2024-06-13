@@ -13,7 +13,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * @final
  */
-class NotExists extends Exists
+final class NotExists extends Exists
 {
     use FileInformationTrait;
 

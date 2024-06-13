@@ -21,7 +21,7 @@ use function is_readable;
  *
  * @final
  */
-class ImageSize extends AbstractValidator
+final class ImageSize extends AbstractValidator
 {
     use FileInformationTrait;
 

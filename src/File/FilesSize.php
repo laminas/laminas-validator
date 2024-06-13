@@ -25,7 +25,7 @@ use function is_string;
  *
  * @final
  */
-class FilesSize extends Size
+final class FilesSize extends Size
 {
     /**
      * @const string Error constants

@@ -12,7 +12,7 @@ use Traversable;
  *
  * @final
  */
-class IsImage extends MimeType
+final class IsImage extends MimeType
 {
     /**
      * @const string Error constants

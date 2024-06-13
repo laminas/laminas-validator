@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\Barcode;
 
-/** @final */
-class Ean18 extends AbstractAdapter
+final class Ean18 extends AbstractAdapter
 {
     /**
      * Constructor for this barcode adapter

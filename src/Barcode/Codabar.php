@@ -7,8 +7,7 @@ namespace Laminas\Validator\Barcode;
 use function strpbrk;
 use function substr;
 
-/** @final */
-class Codabar extends AbstractAdapter
+final class Codabar extends AbstractAdapter
 {
     /**
      * Constructor for this barcode adapter

@@ -12,7 +12,7 @@ use Traversable;
  *
  * @final
  */
-class IsCompressed extends MimeType
+final class IsCompressed extends MimeType
 {
     /**
      * @const string Error constants

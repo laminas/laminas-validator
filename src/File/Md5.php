@@ -14,7 +14,7 @@ use function is_readable;
  *
  * @final
  */
-class Md5 extends Hash
+final class Md5 extends Hash
 {
     use FileInformationTrait;
 

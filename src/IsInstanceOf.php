@@ -12,8 +12,7 @@ use function func_get_args;
 use function is_array;
 use function iterator_to_array;
 
-/** @final */
-class IsInstanceOf extends AbstractValidator
+final class IsInstanceOf extends AbstractValidator
 {
     public const NOT_INSTANCE_OF = 'notInstanceOf';
 

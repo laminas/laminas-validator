@@ -40,7 +40,7 @@ use function is_numeric;
  *                                                 on AbstractValidator
  * @final
  */
-class IsCountable extends AbstractValidator
+final class IsCountable extends AbstractValidator
 {
     public const NOT_COUNTABLE = 'notCountable';
     public const NOT_EQUALS    = 'notEquals';

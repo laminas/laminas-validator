@@ -14,7 +14,7 @@ use function is_readable;
  *
  * @final
  */
-class Sha1 extends Hash
+final class Sha1 extends Hash
 {
     use FileInformationTrait;
 
