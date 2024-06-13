@@ -13,6 +13,7 @@ use function is_int;
 use function is_string;
 use function preg_match;
 
+/** @final */
 class Regex extends AbstractValidator
 {
     public const INVALID   = 'regexInvalid';

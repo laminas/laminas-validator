@@ -23,6 +23,8 @@ use const UPLOAD_ERR_PARTIAL;
 
 /**
  * Validator for the maximum size of a file up to a max of 2GB
+ *
+ * @final
  */
 class UploadFile extends AbstractValidator
 {

@@ -4,6 +4,7 @@ namespace Laminas\Validator\Barcode;
 
 use function strlen;
 
+/** @final */
 class Upce extends AbstractAdapter
 {
     /**

@@ -7,6 +7,8 @@ use Traversable;
 
 /**
  * Validator which checks if the file already exists in the directory
+ *
+ * @final
  */
 class IsCompressed extends MimeType
 {

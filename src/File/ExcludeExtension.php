@@ -10,6 +10,8 @@ use function substr;
 
 /**
  * Validator for the excluding file extensions
+ *
+ * @final
  */
 class ExcludeExtension extends Extension
 {

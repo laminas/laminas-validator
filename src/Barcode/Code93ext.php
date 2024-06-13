@@ -2,6 +2,7 @@
 
 namespace Laminas\Validator\Barcode;
 
+/** @final */
 class Code93ext extends AbstractAdapter
 {
     /**

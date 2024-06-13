@@ -9,6 +9,8 @@ use function is_readable;
 
 /**
  * Validator for the sha1 hash of given files
+ *
+ * @final
  */
 class Sha1 extends Hash
 {

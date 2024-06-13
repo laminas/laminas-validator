@@ -196,7 +196,7 @@ class MimeType extends AbstractValidator
      * @throws Exception\RuntimeException When finfo can not read the magicfile.
      * @throws Exception\InvalidArgumentException
      * @throws Exception\InvalidMagicMimeFileException
-     * @return $this Provides fluid interface
+     * @return self Provides fluid interface
      */
     public function setMagicFile($file)
     {
@@ -266,7 +266,7 @@ class MimeType extends AbstractValidator
      * Note that this is unsafe and therefor the default value is false
      *
      * @param  bool $headerCheck
-     * @return $this Provides fluid interface
+     * @return self Provides fluid interface
      */
     public function enableHeaderCheck($headerCheck = true)
     {
@@ -296,7 +296,7 @@ class MimeType extends AbstractValidator
      * Sets the mimetypes
      *
      * @param  string|list<string> $mimetype The mimetypes to validate
-     * @return $this Provides a fluent interface
+     * @return self Provides a fluent interface
      */
     public function setMimeType($mimetype)
     {
@@ -310,7 +310,7 @@ class MimeType extends AbstractValidator
      *
      * @param  string|list<string> $mimetype The mimetypes to add for validation
      * @throws Exception\InvalidArgumentException
-     * @return $this Provides a fluent interface
+     * @return self Provides a fluent interface
      */
     public function addMimeType($mimetype)
     {

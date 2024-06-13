@@ -31,6 +31,7 @@ use function str_starts_with;
 
 use const PHP_INT_MAX;
 
+/** @final */
 class DateStep extends Date
 {
     /**

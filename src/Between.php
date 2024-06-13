@@ -14,6 +14,7 @@ use function is_string;
 
 use const PHP_INT_MAX;
 
+/** @final */
 class Between extends AbstractValidator
 {
     public const NOT_BETWEEN        = 'notBetween';

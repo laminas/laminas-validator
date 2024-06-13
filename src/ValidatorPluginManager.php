@@ -17,6 +17,7 @@ use function sprintf;
 /**
  * @psalm-import-type ServiceManagerConfiguration from ServiceManager
  * @extends AbstractPluginManager<ValidatorInterface>
+ * @final
  */
 class ValidatorPluginManager extends AbstractPluginManager
 {

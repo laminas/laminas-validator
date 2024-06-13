@@ -2,6 +2,7 @@
 
 namespace Laminas\Validator\Barcode;
 
+/** @final */
 class Itf14 extends AbstractAdapter
 {
     /**

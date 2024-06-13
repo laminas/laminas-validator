@@ -13,6 +13,7 @@ use function sprintf;
 
 /**
  * @psalm-import-type ValidatorSpecification from ValidatorInterface
+ * @final
  */
 class Explode extends AbstractValidator implements ValidatorPluginManagerAwareInterface
 {

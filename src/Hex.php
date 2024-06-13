@@ -6,6 +6,7 @@ use function ctype_xdigit;
 use function is_int;
 use function is_string;
 
+/** @final */
 class Hex extends AbstractValidator
 {
     public const INVALID = 'hexInvalid';

@@ -16,6 +16,8 @@ use function is_readable;
 
 /**
  * Validator for the image size of an image file
+ *
+ * @final
  */
 class ImageSize extends AbstractValidator
 {

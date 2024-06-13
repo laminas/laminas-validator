@@ -7,6 +7,7 @@ use function is_int;
 use function is_string;
 use function preg_replace;
 
+/** @final */
 class Digits extends AbstractValidator
 {
     public const NOT_DIGITS   = 'notDigits';

@@ -28,6 +28,7 @@ use function trim;
 
 use const INTL_IDNA_VARIANT_UTS46;
 
+/** @final */
 class EmailAddress extends AbstractValidator
 {
     public const INVALID            = 'emailAddressInvalid';

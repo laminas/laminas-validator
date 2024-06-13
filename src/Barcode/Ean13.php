@@ -2,6 +2,7 @@
 
 namespace Laminas\Validator\Barcode;
 
+/** @final */
 class Ean13 extends AbstractAdapter
 {
     /**
