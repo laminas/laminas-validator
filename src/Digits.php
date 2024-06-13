@@ -8,6 +8,7 @@ use function is_float;
 use function is_int;
 use function is_string;
 
+/** @final */
 class Digits extends AbstractValidator
 {
     public const NOT_DIGITS   = 'notDigits';

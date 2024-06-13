@@ -8,6 +8,8 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Validator which checks if the destination file does not exist
+ *
+ * @final
  */
 class NotExists extends Exists
 {

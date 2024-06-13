@@ -2,6 +2,7 @@
 
 namespace Laminas\Validator\Barcode;
 
+/** @final */
 class Gtin14 extends AbstractAdapter
 {
     /**

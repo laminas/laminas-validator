@@ -16,14 +16,6 @@
     </MixedArgument>
   </file>
   <file src="src/AbstractValidator.php">
-    <LessSpecificReturnStatement>
-      <code><![CDATA[$this]]></code>
-      <code><![CDATA[$this]]></code>
-      <code><![CDATA[$this]]></code>
-      <code><![CDATA[$this]]></code>
-      <code><![CDATA[$this]]></code>
-      <code><![CDATA[$this]]></code>
-    </LessSpecificReturnStatement>
     <MixedArgumentTypeCoercion>
       <code><![CDATA[$value]]></code>
     </MixedArgumentTypeCoercion>
@@ -367,15 +359,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="src/Bitwise.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[self::OP_AND === $this->operator]]></code>
-      <code><![CDATA[self::OP_AND === $this->operator]]></code>
-      <code><![CDATA[self::OP_XOR === $this->operator]]></code>
-      <code><![CDATA[self::OP_XOR === $this->operator]]></code>
-    </DocblockTypeContradiction>
-    <InvalidPropertyAssignmentValue>
-      <code><![CDATA[$operator]]></code>
-    </InvalidPropertyAssignmentValue>
     <MixedAssignment>
       <code><![CDATA[$temp['control']]]></code>
       <code><![CDATA[$temp['operator']]]></code>
@@ -474,6 +457,9 @@
       <code><![CDATA[is_array($options)]]></code>
       <code><![CDATA[null === $this->session]]></code>
     </DocblockTypeContradiction>
+    <ImpureByReferenceAssignment>
+      <code><![CDATA[$session->tokenList]]></code>
+    </ImpureByReferenceAssignment>
     <MixedArgument>
       <code><![CDATA[$key]]></code>
       <code><![CDATA[$session->tokenList[$tokenId]]]></code>
@@ -1657,9 +1643,6 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Ip.php">
-    <LessSpecificImplementedReturnType>
-      <code><![CDATA[AbstractValidator]]></code>
-    </LessSpecificImplementedReturnType>
     <MixedArgument>
       <code><![CDATA[$regex]]></code>
       <code><![CDATA[$regex]]></code>
@@ -1803,25 +1786,14 @@
     <DocblockTypeContradiction>
       <code><![CDATA[is_array($options)]]></code>
     </DocblockTypeContradiction>
-    <InvalidArgument>
-      <code><![CDATA[$value]]></code>
-    </InvalidArgument>
     <MixedArgument>
-      <code><![CDATA[$this->baseValue]]></code>
-      <code><![CDATA[$this->step]]></code>
+      <code><![CDATA[$options['baseValue']]]></code>
+      <code><![CDATA[$options['step']]]></code>
     </MixedArgument>
     <MixedAssignment>
       <code><![CDATA[$temp['baseValue']]]></code>
       <code><![CDATA[$temp['step']]]></code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[string]]></code>
-      <code><![CDATA[string]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->baseValue]]></code>
-      <code><![CDATA[$this->step]]></code>
-    </MixedReturnStatement>
     <PossiblyInvalidArgument>
       <code><![CDATA[$options]]></code>
     </PossiblyInvalidArgument>

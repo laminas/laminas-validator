@@ -9,6 +9,7 @@ use function func_get_args;
 use function is_array;
 use function iterator_to_array;
 
+/** @final */
 class Bitwise extends AbstractValidator
 {
     public const OP_AND = 'and';
@@ -43,7 +44,7 @@ class Bitwise extends AbstractValidator
         'control' => 'control',
     ];
 
-    /** @var null|int */
+    /** @var null|string */
     protected $operator;
 
     /** @var bool */
@@ -96,7 +97,7 @@ class Bitwise extends AbstractValidator
     /**
      * Returns the operator parameter.
      *
-     * @return null|int
+     * @return null|string
      */
     public function getOperator()
     {

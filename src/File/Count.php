@@ -21,6 +21,8 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Validator for counting all given files
+ *
+ * @final
  */
 class Count extends AbstractValidator
 {

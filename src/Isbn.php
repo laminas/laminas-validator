@@ -11,6 +11,7 @@ use function str_replace;
 use function strlen;
 use function substr;
 
+/** @final */
 class Isbn extends AbstractValidator
 {
     public const AUTO    = 'auto';

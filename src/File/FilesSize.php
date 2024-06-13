@@ -20,6 +20,8 @@ use function is_string;
 
 /**
  * Validator for the size of all files which will be validated in sum
+ *
+ * @final
  */
 class FilesSize extends Size
 {

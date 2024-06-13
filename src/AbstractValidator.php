@@ -153,7 +153,7 @@ abstract class AbstractValidator implements
      * Sets one or multiple options
      *
      * @param  array<string, mixed>|Traversable<string, mixed> $options Options to set
-     * @return $this Provides fluid interface
+     * @return self Provides fluid interface
      * @throws Exception\InvalidArgumentException If $options is not an array or Traversable.
      */
     public function setOptions($options = [])

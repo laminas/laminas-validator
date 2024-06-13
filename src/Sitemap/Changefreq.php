@@ -11,6 +11,8 @@ use function is_string;
  * Validates whether a given value is valid as a sitemap <changefreq> value
  *
  * @link       http://www.sitemaps.org/protocol.php Sitemaps XML format
+ *
+ * @final
  */
 class Changefreq extends AbstractValidator
 {

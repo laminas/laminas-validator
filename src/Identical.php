@@ -15,6 +15,7 @@ use function key;
 use function sprintf;
 use function var_export;
 
+/** @final */
 class Identical extends AbstractValidator
 {
     /**

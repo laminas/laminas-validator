@@ -5,6 +5,7 @@ namespace Laminas\Validator\Barcode;
 use function strpbrk;
 use function substr;
 
+/** @final */
 class Codabar extends AbstractAdapter
 {
     /**

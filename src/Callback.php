@@ -21,6 +21,7 @@ use function is_callable;
  *     throwExceptions?: bool,
  *     ...<string, mixed>
  * }
+ * @final
  */
 class Callback extends AbstractValidator
 {

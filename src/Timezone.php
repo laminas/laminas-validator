@@ -13,6 +13,7 @@ use function is_int;
 use function is_string;
 use function sprintf;
 
+/** @final */
 class Timezone extends AbstractValidator
 {
     public const INVALID                       = 'invalidTimezone';
