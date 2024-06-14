@@ -85,6 +85,7 @@ nav:
             - GreaterThan: v2/validators/greater-than.md
             - Hex: v2/validators/hex.md
             - Hostname: v2/validators/hostname.md
+            - HostWithPublicIPv4Address: v2/validators/host-with-public-ipv4-address.md
             - Iban: v2/validators/iban.md
             - Identical: v2/validators/identical.md
             - InArray: v2/validators/in-array.md
