@@ -74,6 +74,7 @@
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
+      <code><![CDATA[$this->options]]></code>
     </UndefinedThisPropertyAssignment>
   </file>
   <file src="src/Barcode.php">
@@ -2535,6 +2536,12 @@
   <file src="test/HexTest.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[basicDataProvider]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/HostWithPublicIPv4AddressTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[releasedReservedIpProvider]]></code>
+      <code><![CDATA[reservedIpProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/HostnameTest.php">
