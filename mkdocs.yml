@@ -2,6 +2,67 @@ docs_dir: docs/book
 site_dir: docs/html
 nav:
     - Home: index.md
+    - v3:
+        - Introduction: v3/intro.md
+        - Installation: v3/installation.md
+        - "Validator Chains": v3/validator-chains.md
+        - "Writing Validators": v3/writing-validators.md
+        - "Validation Messages": v3/messages.md
+        - "Standard Validation Classes": v3/set.md
+        - Validators:
+            - Barcode: v3/validators/barcode.md
+            - Between: v3/validators/between.md
+            - BIC: v3/validators/bic.md
+            - Callback: v3/validators/callback.md
+            - CreditCard: v3/validators/credit-card.md
+            - Csrf: v3/validators/csrf.md
+            - Date: v3/validators/date.md
+            - Digits: v3/validators/digits.md
+            - EmailAddress: v3/validators/email-address.md
+            - Explode: v3/validators/explode.md
+            - GreaterThan: v3/validators/greater-than.md
+            - Hex: v3/validators/hex.md
+            - Hostname: v3/validators/hostname.md
+            - Iban: v3/validators/iban.md
+            - Identical: v3/validators/identical.md
+            - InArray: v3/validators/in-array.md
+            - Ip: v3/validators/ip.md
+            - IsArray: v3/validators/is-array.md
+            - Isbn: v3/validators/isbn.md
+            - IsCountable: v3/validators/is-countable.md
+            - IsInstanceOf: v3/validators/isinstanceof.md
+            - IsJsonString: v3/validators/is-json-string.md
+            - LessThan: v3/validators/less-than.md
+            - NotEmpty: v3/validators/not-empty.md
+            - Regex: v3/validators/regex.md
+            - Sitemap: v3/validators/sitemap.md
+            - Step: v3/validators/step.md
+            - StringLength: v3/validators/string-length.md
+            - Timezone: v3/validators/timezone.md
+            - UndisclosedPassword: v3/validators/undisclosed-password.md
+            - Uri: v3/validators/uri.md
+            - Uuid: v3/validators/uuid.md
+        - "File Validators":
+            - Introduction: v3/validators/file/intro.md
+            - Count: v3/validators/file/count.md
+            - Crc32: v3/validators/file/crc32.md
+            - ExcludeExtension: v3/validators/file/exclude-extension.md
+            - ExcludeMimeType: v3/validators/file/exclude-mime-type.md
+            - Exists: v3/validators/file/exists.md
+            - Extension: v3/validators/file/extension.md
+            - FilesSize: v3/validators/file/files-size.md
+            - Hash: v3/validators/file/hash.md
+            - ImageSize: v3/validators/file/image-size.md
+            - IsCompressed: v3/validators/file/is-compressed.md
+            - IsImage: v3/validators/file/is-image.md
+            - Md5: v3/validators/file/md5.md
+            - MimeType: v3/validators/file/mime-type.md
+            - NotExists: v3/validators/file/not-exists.md
+            - Sha1: v3/validators/file/sha1.md
+            - Size: v3/validators/file/size.md
+            - Upload: v3/validators/file/upload.md
+            - UploadFile: v3/validators/file/upload-file.md
+            - WordCount: v3/validators/file/word-count.md
     - v2:
         - Introduction: v2/intro.md
         - Installation: v2/installation.md
@@ -73,69 +134,70 @@ extra:
     installation:
         config_provider_class: 'Laminas\Validator\ConfigProvider'
         module_class: 'Laminas\Validator\Module'
-    current_version: v2
+    current_version: v3
     versions:
+        - v3
         - v2
 
 plugins:
     - redirects:
         redirect_maps:
-            intro.md: v2/intro.md
-            installation.md: v2/installation.md
-            validator-chains.md: v2/validator-chains.md
-            writing-validators.md: v2/writing-validators.md
-            messages.md: v2/messages.md
-            set.md: v2/set.md
-            validators/barcode.md: v2/validators/barcode.md
-            validators/between.md: v2/validators/between.md
-            validators/bic.md: v2/validators/bic.md
-            validators/callback.md: v2/validators/callback.md
-            validators/credit-card.md: v2/validators/credit-card.md
-            validators/csrf.md: v2/validators/csrf.md
-            validators/date.md: v2/validators/date.md
+            intro.md: v3/intro.md
+            installation.md: v3/installation.md
+            validator-chains.md: v3/validator-chains.md
+            writing-validators.md: v3/writing-validators.md
+            messages.md: v3/messages.md
+            set.md: v3/set.md
+            validators/barcode.md: v3/validators/barcode.md
+            validators/between.md: v3/validators/between.md
+            validators/bic.md: v3/validators/bic.md
+            validators/callback.md: v3/validators/callback.md
+            validators/credit-card.md: v3/validators/credit-card.md
+            validators/csrf.md: v3/validators/csrf.md
+            validators/date.md: v3/validators/date.md
             validators/db.md: v2/validators/db.md
-            validators/digits.md: v2/validators/digits.md
-            validators/email-address.md: v2/validators/email-address.md
-            validators/explode.md: v2/validators/explode.md
-            validators/greater-than.md: v2/validators/greater-than.md
-            validators/hex.md: v2/validators/hex.md
-            validators/hostname.md: v2/validators/hostname.md
-            validators/iban.md: v2/validators/iban.md
-            validators/identical.md: v2/validators/identical.md
-            validators/in-array.md: v2/validators/in-array.md
-            validators/ip.md: v2/validators/ip.md
-            validators/is-array.md: v2/validators/is-array.md
-            validators/isbn.md: v2/validators/isbn.md
-            validators/is-countable.md: v2/validators/is-countable.md
-            validators/isinstanceof.md: v2/validators/isinstanceof.md
-            validators/is-json-string.md: v2/validators/is-json-string.md
-            validators/less-than.md: v2/validators/less-than.md
-            validators/not-empty.md: v2/validators/not-empty.md
-            validators/regex.md: v2/validators/regex.md
-            validators/sitemap.md: v2/validators/sitemap.md
-            validators/step.md: v2/validators/step.md
-            validators/string-length.md: v2/validators/string-length.md
-            validators/timezone.md: v2/validators/timezone.md
-            validators/undisclosed-password.md: v2/validators/undisclosed-password.md
-            validators/uri.md: v2/validators/uri.md
-            validators/uuid.md: v2/validators/uuid.md
-            validators/file/intro.md: v2/validators/file/intro.md
-            validators/file/count.md: v2/validators/file/count.md
-            validators/file/crc32.md: v2/validators/file/crc32.md
-            validators/file/exclude-extension.md: v2/validators/file/exclude-extension.md
-            validators/file/exclude-mime-type.md: v2/validators/file/exclude-mime-type.md
-            validators/file/exists.md: v2/validators/file/exists.md
-            validators/file/extension.md: v2/validators/file/extension.md
-            validators/file/files-size.md: v2/validators/file/files-size.md
-            validators/file/hash.md: v2/validators/file/hash.md
-            validators/file/image-size.md: v2/validators/file/image-size.md
-            validators/file/is-compressed.md: v2/validators/file/is-compressed.md
-            validators/file/is-image.md: v2/validators/file/is-image.md
-            validators/file/md5.md: v2/validators/file/md5.md
-            validators/file/mime-type.md: v2/validators/file/mime-type.md
-            validators/file/not-exists.md: v2/validators/file/not-exists.md
-            validators/file/sha1.md: v2/validators/file/sha1.md
-            validators/file/size.md: v2/validators/file/size.md
-            validators/file/upload.md: v2/validators/file/upload.md
-            validators/file/upload-file.md: v2/validators/file/upload-file.md
-            validators/file/word-count.md: v2/validators/file/word-count.md
+            validators/digits.md: v3/validators/digits.md
+            validators/email-address.md: v3/validators/email-address.md
+            validators/explode.md: v3/validators/explode.md
+            validators/greater-than.md: v3/validators/greater-than.md
+            validators/hex.md: v3/validators/hex.md
+            validators/hostname.md: v3/validators/hostname.md
+            validators/iban.md: v3/validators/iban.md
+            validators/identical.md: v3/validators/identical.md
+            validators/in-array.md: v3/validators/in-array.md
+            validators/ip.md: v3/validators/ip.md
+            validators/is-array.md: v3/validators/is-array.md
+            validators/isbn.md: v3/validators/isbn.md
+            validators/is-countable.md: v3/validators/is-countable.md
+            validators/isinstanceof.md: v3/validators/isinstanceof.md
+            validators/is-json-string.md: v3/validators/is-json-string.md
+            validators/less-than.md: v3/validators/less-than.md
+            validators/not-empty.md: v3/validators/not-empty.md
+            validators/regex.md: v3/validators/regex.md
+            validators/sitemap.md: v3/validators/sitemap.md
+            validators/step.md: v3/validators/step.md
+            validators/string-length.md: v3/validators/string-length.md
+            validators/timezone.md: v3/validators/timezone.md
+            validators/undisclosed-password.md: v3/validators/undisclosed-password.md
+            validators/uri.md: v3/validators/uri.md
+            validators/uuid.md: v3/validators/uuid.md
+            validators/file/intro.md: v3/validators/file/intro.md
+            validators/file/count.md: v3/validators/file/count.md
+            validators/file/crc32.md: v3/validators/file/crc32.md
+            validators/file/exclude-extension.md: v3/validators/file/exclude-extension.md
+            validators/file/exclude-mime-type.md: v3/validators/file/exclude-mime-type.md
+            validators/file/exists.md: v3/validators/file/exists.md
+            validators/file/extension.md: v3/validators/file/extension.md
+            validators/file/files-size.md: v3/validators/file/files-size.md
+            validators/file/hash.md: v3/validators/file/hash.md
+            validators/file/image-size.md: v3/validators/file/image-size.md
+            validators/file/is-compressed.md: v3/validators/file/is-compressed.md
+            validators/file/is-image.md: v3/validators/file/is-image.md
+            validators/file/md5.md: v3/validators/file/md5.md
+            validators/file/mime-type.md: v3/validators/file/mime-type.md
+            validators/file/not-exists.md: v3/validators/file/not-exists.md
+            validators/file/sha1.md: v3/validators/file/sha1.md
+            validators/file/size.md: v3/validators/file/size.md
+            validators/file/upload.md: v3/validators/file/upload.md
+            validators/file/upload-file.md: v3/validators/file/upload-file.md
+            validators/file/word-count.md: v3/validators/file/word-count.md

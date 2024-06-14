@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 /** @final */
@@ -28,9 +30,6 @@ class ConfigProvider
             'aliases'   => [
                 Translator\TranslatorInterface::class => Translator\Translator::class,
                 'ValidatorManager'                    => ValidatorPluginManager::class,
-
-                // Legacy Zend Framework aliases
-                'Zend\Validator\ValidatorPluginManager' => ValidatorPluginManager::class,
             ],
             'factories' => [
                 Translator\Translator::class  => Translator\TranslatorFactory::class,

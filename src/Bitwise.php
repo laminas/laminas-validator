@@ -1,4 +1,6 @@
-<?php // phpcs:disable WebimpressCodingStandard.Formatting.Reference.UnexpectedSpace
+<?php
+
+declare(strict_types=1);
 
 namespace Laminas\Validator;
 
