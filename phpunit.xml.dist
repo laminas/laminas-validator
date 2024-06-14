@@ -24,7 +24,6 @@
     <php>
         <ini name="date.timezone" value="UTC"/>
         <ini name="xdebug.max_nesting_level" value="3000"/>
-        <env name="TESTS_LAMINAS_VALIDATOR_ONLINE_ENABLED" value="true"/>
     </php>
     <source>
         <include>
