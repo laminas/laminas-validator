@@ -280,67 +280,15 @@ class EmailAddress extends AbstractValidator
     }
 
     /**
-     * Returns if the given host is reserved
-     *
-     * The following addresses are seen as reserved
-     * '0.0.0.0/8', '10.0.0.0/8', '127.0.0.0/8'
-     * '100.64.0.0/10'
-     * '172.16.0.0/12'
-     * '198.18.0.0/15'
-     * '169.254.0.0/16', '192.168.0.0/16'
-     * '192.0.2.0/24', '192.88.99.0/24', '198.51.100.0/24', '203.0.113.0/24'
-     * '224.0.0.0/4', '240.0.0.0/4'
-     *
-     * @see http://en.wikipedia.org/wiki/Reserved_IP_addresses
-     *
-     * As of RFC5753 (JAN 2010), the following blocks are no longer reserved:
-     *   - 128.0.0.0/16
-     *   - 191.255.0.0/16
-     *   - 223.255.255.0/24
-     * @see http://tools.ietf.org/html/rfc5735#page-6
-     *
-     * As of RFC6598 (APR 2012), the following blocks are now reserved:
-     *   - 100.64.0.0/10
-     * @see http://tools.ietf.org/html/rfc6598#section-7
+     * Returns whether the given host is a reserved IP, or a hostname that resolves to a reserved IP
      *
      * @param string $host
      * @return bool Returns false when minimal one of the given addresses is not reserved
      */
     protected function isReserved($host)
     {
-        if (! preg_match('/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $host)) {
-            $host = gethostbynamel($host);
-        } else {
-            $host = [$host];
-        }
-
-        if (! is_array($host) || $host === []) {
-            return false;
-        }
-
-        foreach ($host as $server) {
-            // @codingStandardsIgnoreStart
-            // Search for 0.0.0.0/8, 10.0.0.0/8, 127.0.0.0/8
-            if (!preg_match('/^(0|10|127)(\.([0-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-5]))){3}$/', $server) &&
-                // Search for 100.64.0.0/10
-                !preg_match('/^100\.(6[0-4]|[7-9][0-9]|1[0-1][0-9]|12[0-7])(\.([0-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-5]))){2}$/', $server) &&
-                // Search for 172.16.0.0/12
-                !preg_match('/^172\.(1[6-9]|2[0-9]|3[0-1])(\.([0-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-5]))){2}$/', $server) &&
-                // Search for 198.18.0.0/15
-                !preg_match('/^198\.(1[8-9])(\.([0-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-5]))){2}$/', $server) &&
-                // Search for 169.254.0.0/16, 192.168.0.0/16
-                !preg_match('/^(169\.254|192\.168)(\.([0-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-5]))){2}$/', $server) &&
-                // Search for 192.0.2.0/24, 192.88.99.0/24, 198.51.100.0/24, 203.0.113.0/24
-                !preg_match('/^(192\.0\.2|192\.88\.99|198\.51\.100|203\.0\.113)\.([0-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-5]))$/', $server) &&
-                // Search for 224.0.0.0/4, 240.0.0.0/4
-                !preg_match('/^(2(2[4-9]|[3-4][0-9]|5[0-5]))(\.([0-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-5]))){3}$/', $server)
-            ) {
-                return false;
-            }
-            // @codingStandardsIgnoreEnd
-        }
-
-        return true;
+        $validator = new HostWithPublicIPv4Address();
+        return ! $validator->isValid($host);
     }
 
     /**

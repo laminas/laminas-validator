@@ -8,6 +8,7 @@ use Laminas\Validator\EmailAddress;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Hostname;
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
@@ -17,7 +18,6 @@ use function checkdnsrr;
 use function count;
 use function current;
 use function extension_loaded;
-use function getenv;
 use function implode;
 use function next;
 use function preg_replace;
@@ -259,8 +259,8 @@ final class EmailAddressTest extends TestCase
             sprintf(
                 '%s failed validation: %s',
                 $value,
-                implode("\n", $this->validator->getMessages())
-            )
+                implode("\n", $this->validator->getMessages()),
+            ),
         );
     }
 
@@ -359,8 +359,6 @@ final class EmailAddressTest extends TestCase
     #[DataProvider('emailAddressesForMxChecks')]
     public function testMXRecords(string $emailAddress, bool $expect): void
     {
-        $this->skipIfOnlineTestsDisabled();
-
         $validator = new EmailAddress([
             'allow'      => Hostname::ALLOW_DNS,
             'useMxCheck' => true,
@@ -389,8 +387,6 @@ final class EmailAddressTest extends TestCase
      */
     public function testNoMxRecordARecordFallback(): void
     {
-        $this->skipIfOnlineTestsDisabled();
-
         $validator = new EmailAddress([
             'allow'      => Hostname::ALLOW_DNS,
             'useMxCheck' => true,
@@ -700,13 +696,8 @@ final class EmailAddressTest extends TestCase
         self::assertIsBool($validator->isMxSupported());
     }
 
-    /**
-     * Test getMXRecord
-     */
     public function testGetMXRecord(): void
     {
-        $this->skipIfOnlineTestsDisabled();
-
         $validator = new EmailAddress(['useMxCheck' => true, 'allow' => Hostname::ALLOW_ALL]);
 
         if (! $validator->isMxSupported()) {
@@ -734,7 +725,7 @@ final class EmailAddressTest extends TestCase
                 EmailAddress::INVALID_LOCAL_PART,
                 EmailAddress::LENGTH_EXCEEDED,
             ],
-            array_keys($this->validator->getMessageTemplates())
+            array_keys($this->validator->getMessageTemplates()),
         );
         self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
@@ -753,8 +744,6 @@ final class EmailAddressTest extends TestCase
     #[Group('Laminas-130')]
     public function testUseMxCheckBasicValid(): void
     {
-        $this->skipIfOnlineTestsDisabled();
-
         $validator = new EmailAddress([
             'useMxCheck'     => true,
             'useDeepMxCheck' => true,
@@ -823,95 +812,23 @@ final class EmailAddressTest extends TestCase
         }
     }
 
-    #[Group('Laminas-12349')]
-    public function testReservedIpRangeValidation(): void
+    public function testRootAtLocalhostIsValid(): void
     {
-        $validator = new TestAsset\EmailValidatorWithExposedIsReserved();
-
-        // 0.0.0.0/8
-        self::assertTrue($validator->isReserved('0.0.0.0'));
-        self::assertTrue($validator->isReserved('0.255.255.255'));
-
-        // 10.0.0.0/8
-        self::assertTrue($validator->isReserved('10.0.0.0'));
-        self::assertTrue($validator->isReserved('10.255.255.255'));
-
-        // 127.0.0.0/8
-        self::assertTrue($validator->isReserved('127.0.0.0'));
-        self::assertTrue($validator->isReserved('127.255.255.255'));
-
-        // 100.64.0.0/10
-        self::assertTrue($validator->isReserved('100.64.0.0'));
-        self::assertTrue($validator->isReserved('100.127.255.255'));
-
-        // 172.16.0.0/12
-        self::assertTrue($validator->isReserved('172.16.0.0'));
-        self::assertTrue($validator->isReserved('172.31.255.255'));
-
-        // 198.18.0.0./15
-        self::assertTrue($validator->isReserved('198.18.0.0'));
-        self::assertTrue($validator->isReserved('198.19.255.255'));
-
-        // 169.254.0.0/16
-        self::assertTrue($validator->isReserved('169.254.0.0'));
-        self::assertTrue($validator->isReserved('169.254.255.255'));
-
-        // 192.168.0.0/16
-        self::assertTrue($validator->isReserved('192.168.0.0'));
-        self::assertTrue($validator->isReserved('192.168.255.25'));
-
-        // 192.0.2.0/24
-        self::assertTrue($validator->isReserved('192.0.2.0'));
-        self::assertTrue($validator->isReserved('192.0.2.255'));
-
-        // 192.88.99.0/24
-        self::assertTrue($validator->isReserved('192.88.99.0'));
-        self::assertTrue($validator->isReserved('192.88.99.255'));
-
-        // 198.51.100.0/24
-        self::assertTrue($validator->isReserved('198.51.100.0'));
-        self::assertTrue($validator->isReserved('198.51.100.255'));
-
-        // 203.0.113.0/24
-        self::assertTrue($validator->isReserved('203.0.113.0'));
-        self::assertTrue($validator->isReserved('203.0.113.255'));
-
-        // 224.0.0.0/4
-        self::assertTrue($validator->isReserved('224.0.0.0'));
-        self::assertTrue($validator->isReserved('239.255.255.255'));
-
-        // 240.0.0.0/4
-        self::assertTrue($validator->isReserved('240.0.0.0'));
-        self::assertTrue($validator->isReserved('255.255.255.254'));
-
-        // 255.255.255.255/32
-        self::assertTrue($validator->isReserved('255.255.55.255'));
+        $validator = new EmailAddress([
+            'allow' => Hostname::ALLOW_ALL,
+        ]);
+        self::assertTrue($validator->isValid('root@localhost'));
     }
 
-    #[Group('Laminas-12349')]
-    public function testIpRangeValidationOnRangesNoLongerMarkedAsReserved(): void
+    #[Depends('testRootAtLocalhostIsValid')]
+    public function testRootAtLocalhostIsNotValidWhenDeepMxChecksAreActive(): void
     {
-        $validator = new TestAsset\EmailValidatorWithExposedIsReserved();
-
-        // 128.0.0.0/16
-        self::assertFalse($validator->isReserved('128.0.0.0'));
-        self::assertFalse($validator->isReserved('128.0.255.255'));
-
-        // 191.255.0.0/16
-        self::assertFalse($validator->isReserved('191.255.0.0'));
-        self::assertFalse($validator->isReserved('191.255.255.255'));
-
-        // 223.255.255.0/24
-        self::assertFalse($validator->isReserved('223.255.255.0'));
-        self::assertFalse($validator->isReserved('223.255.255.255'));
-    }
-
-    private function skipIfOnlineTestsDisabled(): void
-    {
-        $enabled = getenv('TESTS_LAMINAS_VALIDATOR_ONLINE_ENABLED');
-        if ($enabled === false || $enabled === '') {
-            self::markTestSkipped('Testing MX records has been disabled');
-        }
+        $validator = new EmailAddress([
+            'allow'          => Hostname::ALLOW_ALL,
+            'useMxCheck'     => true,
+            'useDeepMxCheck' => true,
+        ]);
+        self::assertFalse($validator->isValid('root@localhost'));
     }
 
     public function testCanSetDomainCheckFlag(): void
