@@ -149,9 +149,21 @@ class HostWithPublicIPv4AddressTest extends TestCase
         self::assertTrue($validator->isValid($ip));
     }
 
-    public function testAHostnameThatResolvesToPublicIPv4AddressIsValid(): void
+    public static function hostnameProvider(): array
+    {
+        return [
+            ['example.com'],
+            ['google.com'],
+            ['gmail.com'],
+            ['hotmail.com'],
+            ['getlaminas.org'],
+        ];
+    }
+
+    #[DataProvider('hostnameProvider')]
+    public function testAHostnameThatResolvesToPublicIPv4AddressIsValid(string $hostname): void
     {
         $validator = new HostWithPublicIPv4Address();
-        self::assertTrue($validator->isValid('example.com'));
+        self::assertTrue($validator->isValid($hostname));
     }
 }

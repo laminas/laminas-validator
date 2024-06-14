@@ -2540,6 +2540,7 @@
   </file>
   <file src="test/HostWithPublicIPv4AddressTest.php">
     <PossiblyUnusedMethod>
+      <code><![CDATA[hostnameProvider]]></code>
       <code><![CDATA[releasedReservedIpProvider]]></code>
       <code><![CDATA[reservedIpProvider]]></code>
     </PossiblyUnusedMethod>

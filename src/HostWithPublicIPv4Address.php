@@ -4,14 +4,60 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use function explode;
+use function filter_var;
 use function get_debug_type;
 use function gethostbynamel;
+use function ip2long;
 use function is_array;
 use function is_string;
-use function preg_match;
+use function pow;
+
+use const FILTER_FLAG_GLOBAL_RANGE;
+use const FILTER_FLAG_IPV4;
+use const FILTER_FLAG_NO_PRIV_RANGE;
+use const FILTER_FLAG_NO_RES_RANGE;
+use const FILTER_VALIDATE_IP;
+use const PHP_VERSION_ID;
 
 final class HostWithPublicIPv4Address extends AbstractValidator
 {
+    /**
+     * Reserved CIDRs are extracted from IANA with additions from Wikipedia
+     *
+     * @link https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml
+     * @link https://en.wikipedia.org/wiki/Reserved_IP_addresses
+     */
+    private const RESERVED_CIDR = [
+        '0.0.0.0/8',
+        '0.0.0.0/32',
+        '10.0.0.0/8',
+        '100.64.0.0/10',
+        '127.0.0.0/8',
+        '169.254.0.0/16',
+        '172.16.0.0/12',
+        '192.0.0.0/24',
+        '192.0.0.0/29',
+        '192.0.0.8/32',
+        '192.0.0.9/32',
+        '192.0.0.10/32',
+        '192.0.0.170/32',
+        '192.0.0.171/32',
+        '192.0.2.0/24',
+        '192.31.196.0/24',
+        '192.52.193.0/24',
+        '192.88.99.0/24',
+        '192.168.0.0/16',
+        '192.175.48.0/24',
+        '198.18.0.0/15',
+        '198.51.100.0/24',
+        '203.0.113.0/24',
+        '224.0.0.0/4', // Wikipedia
+        '233.252.0.0/24', // Wikipedia
+        '240.0.0.0/4',
+        '255.255.255.255/32',
+    ];
+
     public const ERROR_NOT_STRING            = 'hostnameNotString';
     public const ERROR_HOSTNAME_NOT_RESOLVED = 'hostnameNotResolved';
     public const ERROR_PRIVATE_IP_FOUND      = 'privateIpAddressFound';
@@ -43,7 +89,7 @@ final class HostWithPublicIPv4Address extends AbstractValidator
 
         $this->value = $value;
 
-        if (! preg_match('/^([0-9]{1,3}\.){3}[0-9]{1,3}$/', $value)) {
+        if (filter_var($value, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) === false) {
             $addressList = gethostbynamel($value);
         } else {
             $addressList = [$value];
@@ -57,30 +103,27 @@ final class HostWithPublicIPv4Address extends AbstractValidator
 
         $privateAddressWasFound = false;
 
-        // phpcs:disable Generic.Files.LineLength
+        $filterFlags = FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE;
+        if (PHP_VERSION_ID >= 80200) {
+            /**
+             * @psalm-var int $filterFlags
+             * @psalm-suppress UndefinedConstant
+             */
+            $filterFlags |= FILTER_FLAG_GLOBAL_RANGE;
+        }
+
         foreach ($addressList as $server) {
-            // Search for 0.0.0.0/8, 10.0.0.0/8, 127.0.0.0/8
-            if (
-                preg_match('/^(0|10|127)(\.([0-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-5]))){3}$/', $server)
-                ||
-                // Search for 100.64.0.0/10
-                preg_match('/^100\.(6[0-4]|[7-9][0-9]|1[0-1][0-9]|12[0-7])(\.([0-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-5]))){2}$/', $server)
-                ||
-                // Search for 172.16.0.0/12
-                preg_match('/^172\.(1[6-9]|2[0-9]|3[0-1])(\.([0-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-5]))){2}$/', $server)
-                ||
-                // Search for 198.18.0.0/15
-                preg_match('/^198\.(1[8-9])(\.([0-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-5]))){2}$/', $server)
-                ||
-                // Search for 169.254.0.0/16, 192.168.0.0/16
-                preg_match('/^(169\.254|192\.168)(\.([0-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-5]))){2}$/', $server)
-                ||
-                // Search for 192.0.2.0/24, 192.88.99.0/24, 198.51.100.0/24, 203.0.113.0/24
-                preg_match('/^(192\.0\.2|192\.88\.99|198\.51\.100|203\.0\.113)\.([0-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-5]))$/', $server)
-                ||
-                // Search for 224.0.0.0/4, 240.0.0.0/4
-                preg_match('/^(2(2[4-9]|[3-4][0-9]|5[0-5]))(\.([0-9]|[1-9][0-9]|1([0-9][0-9])|2([0-4][0-9]|5[0-5]))){3}$/', $server)
-            ) {
+            /**
+             * Initially test with PHP's built-in filter_var features as this will be quicker than checking
+             * presence with a CIDR
+             */
+            if (filter_var($server, FILTER_VALIDATE_IP, $filterFlags) === false) {
+                $privateAddressWasFound = true;
+
+                break;
+            }
+
+            if ($this->inReservedCidr($server)) {
                 $privateAddressWasFound = true;
 
                 break;
@@ -94,5 +137,22 @@ final class HostWithPublicIPv4Address extends AbstractValidator
         }
 
         return true;
+    }
+
+    private function inReservedCidr(string $ip): bool
+    {
+        foreach (self::RESERVED_CIDR as $cidr) {
+            $cidr    = explode('/', $cidr);
+            $startIp = ip2long($cidr[0]);
+            $endIp   = ip2long($cidr[0]) + pow(2, 32 - (int) $cidr[1]) - 1;
+
+            $int = ip2long($ip);
+
+            if ($int >= $startIp && $int <= $endIp) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
