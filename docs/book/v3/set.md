@@ -15,6 +15,7 @@ The following validators come with the laminas-validator distribution.
 - [GreaterThan](validators/greater-than.md)
 - [Hex](validators/hex.md)
 - [Hostname](validators/hostname.md)
+- [HostWithPublicIPv4Address](validators/host-with-public-ipv4-address.md)
 - [Iban](validators/iban.md)
 - [Identical](validators/identical.md)
 - [InArray](validators/in-array.md)

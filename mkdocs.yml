@@ -23,6 +23,7 @@ nav:
             - GreaterThan: v3/validators/greater-than.md
             - Hex: v3/validators/hex.md
             - Hostname: v3/validators/hostname.md
+            - HostWithPublicIPv4Address: v3/validators/host-with-public-ipv4-address.md
             - Iban: v3/validators/iban.md
             - Identical: v3/validators/identical.md
             - InArray: v3/validators/in-array.md
