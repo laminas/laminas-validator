@@ -16,14 +16,6 @@ use function is_array;
  */
 final class ValidatorPluginManagerFactory
 {
-    /**
-     * {@inheritDoc}
-     *
-     * @param string $name
-     * @param ServiceManagerConfiguration|null $options
-     * @return ValidatorPluginManager
-     * @psalm-suppress MoreSpecificImplementedParamType
-     */
     public function __invoke(ContainerInterface $container): ValidatorPluginManager
     {
         // If this is in a laminas-mvc application, the ServiceListener will inject

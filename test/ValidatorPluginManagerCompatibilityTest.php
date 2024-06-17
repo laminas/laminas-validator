@@ -11,7 +11,6 @@ use Laminas\Validator\Barcode;
 use Laminas\Validator\Bitwise;
 use Laminas\Validator\Callback;
 use Laminas\Validator\DateComparison;
-use Laminas\Validator\Exception\RuntimeException;
 use Laminas\Validator\Explode;
 use Laminas\Validator\File\ExcludeExtension;
 use Laminas\Validator\File\Extension;
@@ -22,7 +21,7 @@ use Laminas\Validator\Regex;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
 use PHPUnit\Framework\TestCase;
-use ReflectionProperty;
+use ReflectionClass;
 
 use function assert;
 use function in_array;
@@ -57,11 +56,6 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
         return new ValidatorPluginManager(new ServiceManager(), $config);
     }
 
-    protected function getV2InvalidPluginException(): string
-    {
-        return RuntimeException::class;
-    }
-
     protected function getInstanceOf(): string
     {
         return ValidatorInterface::class;
@@ -70,14 +64,14 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
     /** @return array<string, array{0: string, 1: string}> */
     public static function aliasProvider(): array
     {
-        $out           = [];
-        $pluginManager = self::getPluginManager();
+        $class  = new ReflectionClass(ValidatorPluginManager::class);
+        $config = $class->getConstant('DEFAULT_CONFIGURATION');
+        self::assertIsArray($config);
+        self::assertIsArray($config['aliases'] ?? null);
 
-        $r       = new ReflectionProperty($pluginManager, 'aliases');
-        $aliases = $r->getValue($pluginManager);
-        self::assertIsArray($aliases);
+        $out = [];
 
-        foreach ($aliases as $alias => $target) {
+        foreach ($config['aliases'] as $alias => $target) {
             assert(is_string($target));
             assert(is_string($alias));
 
