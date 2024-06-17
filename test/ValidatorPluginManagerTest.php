@@ -6,6 +6,7 @@ namespace LaminasTest\Validator;
 
 use Exception;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
+use Laminas\ServiceManager\Factory\InvokableFactory;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
@@ -92,27 +93,15 @@ final class ValidatorPluginManagerTest extends TestCase
 
     public function testNoTranslatorInjectedWhenTranslatorIsNotPresent(): void
     {
-        $container = $this->createMock(ContainerInterface::class);
-
-        $container
-            ->expects(self::exactly(2))
-            ->method('has')
-            ->willReturnMap(
-                [
-                    ['MvcTranslator', false],
-                    [TranslatorInterface::class, false],
-                ],
-            );
-
-        $container
-            ->expects(self::never())
-            ->method('get');
+        $container = new ServiceManager();
+        self::assertFalse($container->has('MvcTranslator'));
+        self::assertFalse($container->has(TranslatorInterface::class));
 
         $validators = new ValidatorPluginManager($container);
 
         $validator = $validators->get(NotEmpty::class);
 
-        self::assertInstanceOf(AbstractValidator::class, $validator);
+        self::assertInstanceOf(NotEmpty::class, $validator);
         self::assertNull($validator->getTranslator());
     }
 
@@ -133,10 +122,20 @@ final class ValidatorPluginManagerTest extends TestCase
 
     public function testLoadingInvalidValidatorRaisesException(): void
     {
-        $this->validators->setInvokableClass('test', InMemoryContainer::class);
+        $pluginManager = new ValidatorPluginManager(
+            new ServiceManager(),
+            [
+                'factories' => [
+                    InMemoryContainer::class => InvokableFactory::class,
+                ],
+                'aliases'   => [
+                    'test' => InMemoryContainer::class,
+                ],
+            ],
+        );
 
         try {
-            $this->validators->get('test');
+            $pluginManager->get('test');
             self::fail('An exception should have been thrown');
         } catch (InvalidServiceException | RuntimeException $e) {
             self::assertStringContainsString(ValidatorInterface::class, $e->getMessage());

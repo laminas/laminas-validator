@@ -23,39 +23,6 @@ final class ValidatorPluginManagerFactoryTest extends TestCase
         self::assertInstanceOf(ValidatorPluginManager::class, $validators);
     }
 
-    #[Depends('testFactoryReturnsPluginManager')]
-    public function testFactoryConfiguresPluginManagerUnderContainerInterop(): void
-    {
-        $validator = $this->createMock(ValidatorInterface::class);
-
-        $factory    = new ValidatorPluginManagerFactory();
-        $validators = $factory(new InMemoryContainer(), ValidatorPluginManagerFactory::class, [
-            'services' => [
-                'test' => $validator,
-            ],
-        ]);
-
-        self::assertSame($validator, $validators->get('test'));
-    }
-
-    #[Depends('testFactoryReturnsPluginManager')]
-    public function testFactoryConfiguresPluginManagerUnderServiceManagerV2(): void
-    {
-        $container = $this->createMock(ServiceLocatorInterface::class);
-        $validator = $this->createMock(ValidatorInterface::class);
-
-        $factory = new ValidatorPluginManagerFactory();
-        $factory->setCreationOptions([
-            'services' => [
-                'test' => $validator,
-            ],
-        ]);
-
-        $validators = $factory->createService($container);
-
-        self::assertSame($validator, $validators->get('test'));
-    }
-
     public function testConfiguresValidatorServicesWhenFound(): void
     {
         $validator = $this->createMock(ValidatorInterface::class);

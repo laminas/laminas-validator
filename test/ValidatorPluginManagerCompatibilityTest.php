@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator;
 
+use Laminas\ServiceManager\AbstractSingleInstancePluginManager;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\ServiceManager\Test\CommonPluginManagerTrait;
 use Laminas\Validator\Barcode;
@@ -27,6 +28,7 @@ use function assert;
 use function in_array;
 use function is_string;
 
+/** @psalm-import-type ServiceManagerConfiguration from ServiceManager */
 final class ValidatorPluginManagerCompatibilityTest extends TestCase
 {
     use CommonPluginManagerTrait;
@@ -45,9 +47,14 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
         IsInstanceOf::class,
     ];
 
-    protected static function getPluginManager(): ValidatorPluginManager
+    /**
+     * Returns the plugin manager to test
+     *
+     * @param ServiceManagerConfiguration $config
+     */
+    protected static function getPluginManager(array $config = []): AbstractSingleInstancePluginManager
     {
-        return new ValidatorPluginManager(new ServiceManager());
+        return new ValidatorPluginManager(new ServiceManager(), $config);
     }
 
     protected function getV2InvalidPluginException(): string
