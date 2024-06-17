@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace LaminasTest\Validator;
 
 use InvalidArgumentException;
-use Laminas\I18n\Validator\Alpha;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Between;
 use Laminas\Validator\StaticValidator;
+use Laminas\Validator\StringLength;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
 use LaminasTest\Validator\TestAsset\ArrayTranslator;
@@ -25,7 +25,7 @@ use function strlen;
 
 final class StaticValidatorTest extends TestCase
 {
-    private Alpha $validator;
+    private StringLength $validator;
 
     /**
      * Creates a new validation object for each test method
@@ -36,7 +36,7 @@ final class StaticValidatorTest extends TestCase
 
         AbstractValidator::setDefaultTranslator(null);
         StaticValidator::setPluginManager(null);
-        $this->validator = new Alpha();
+        $this->validator = new StringLength();
     }
 
     protected function tearDown(): void
@@ -93,12 +93,13 @@ final class StaticValidatorTest extends TestCase
 
         $this->validator->setTranslator($translator);
 
+        /** @psalm-suppress InvalidArgument */
         self::assertFalse($this->validator->isValid(123));
 
         $messages = $this->validator->getMessages();
 
-        self::assertArrayHasKey(Alpha::INVALID, $messages);
-        self::assertSame('This is...', $messages[Alpha::INVALID]);
+        self::assertArrayHasKey(StringLength::INVALID, $messages);
+        self::assertSame('This is...', $messages[StringLength::INVALID]);
     }
 
     public function testSetGetMessageLengthLimitation(): void

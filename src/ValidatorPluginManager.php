@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Laminas\Validator;
 
 use Laminas\I18n\Translator\TranslatorInterface;
-use Laminas\I18n\Validator as I18nValidator;
 use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\Factory\InvokableFactory;
@@ -28,10 +27,6 @@ final class ValidatorPluginManager extends AbstractPluginManager
      * @inheritDoc
      */
     protected $aliases = [
-        'alnum'                  => I18nValidator\Alnum::class,
-        'Alnum'                  => I18nValidator\Alnum::class,
-        'alpha'                  => I18nValidator\Alpha::class,
-        'Alpha'                  => I18nValidator\Alpha::class,
         'barcode'                => Barcode::class,
         'Barcode'                => Barcode::class,
         'between'                => Between::class,
@@ -54,9 +49,6 @@ final class ValidatorPluginManager extends AbstractPluginManager
         'datestep'               => DateStep::class,
         'dateStep'               => DateStep::class,
         'DateStep'               => DateStep::class,
-        'datetime'               => I18nValidator\DateTime::class,
-        'dateTime'               => I18nValidator\DateTime::class,
-        'DateTime'               => I18nValidator\DateTime::class,
         'digits'                 => Digits::class,
         'Digits'                 => Digits::class,
         'emailaddress'           => EmailAddress::class,
@@ -121,8 +113,6 @@ final class ValidatorPluginManager extends AbstractPluginManager
         'filewordcount'          => File\WordCount::class,
         'fileWordCount'          => File\WordCount::class,
         'FileWordCount'          => File\WordCount::class,
-        'float'                  => I18nValidator\IsFloat::class,
-        'Float'                  => I18nValidator\IsFloat::class,
         'gpspoint'               => GpsPoint::class,
         'gpsPoint'               => GpsPoint::class,
         'GpsPoint'               => GpsPoint::class,
@@ -140,8 +130,6 @@ final class ValidatorPluginManager extends AbstractPluginManager
         'inarray'                => InArray::class,
         'inArray'                => InArray::class,
         'InArray'                => InArray::class,
-        'int'                    => I18nValidator\IsInt::class,
-        'Int'                    => I18nValidator\IsInt::class,
         'ip'                     => Ip::class,
         'Ip'                     => Ip::class,
         'IsArray'                => IsArray::class,
@@ -150,27 +138,15 @@ final class ValidatorPluginManager extends AbstractPluginManager
         'isCountable'            => IsCountable::class,
         'IsCountable'            => IsCountable::class,
         'iscountable'            => IsCountable::class,
-        'isfloat'                => I18nValidator\IsFloat::class,
-        'isFloat'                => I18nValidator\IsFloat::class,
-        'IsFloat'                => I18nValidator\IsFloat::class,
         'isinstanceof'           => IsInstanceOf::class,
         'isInstanceOf'           => IsInstanceOf::class,
         'IsInstanceOf'           => IsInstanceOf::class,
-        'isint'                  => I18nValidator\IsInt::class,
-        'isInt'                  => I18nValidator\IsInt::class,
-        'IsInt'                  => I18nValidator\IsInt::class,
         'lessthan'               => LessThan::class,
         'lessThan'               => LessThan::class,
         'LessThan'               => LessThan::class,
         'notempty'               => NotEmpty::class,
         'notEmpty'               => NotEmpty::class,
         'NotEmpty'               => NotEmpty::class,
-        'phonenumber'            => I18nValidator\PhoneNumber::class,
-        'phoneNumber'            => I18nValidator\PhoneNumber::class,
-        'PhoneNumber'            => I18nValidator\PhoneNumber::class,
-        'postcode'               => I18nValidator\PostCode::class,
-        'postCode'               => I18nValidator\PostCode::class,
-        'PostCode'               => I18nValidator\PostCode::class,
         'regex'                  => Regex::class,
         'Regex'                  => Regex::class,
         'sitemapchangefreq'      => Sitemap\Changefreq::class,
@@ -204,8 +180,6 @@ final class ValidatorPluginManager extends AbstractPluginManager
      * @inheritDoc
      */
     protected $factories = [
-        I18nValidator\Alnum::class       => InvokableFactory::class,
-        I18nValidator\Alpha::class       => InvokableFactory::class,
         Barcode::class                   => InvokableFactory::class,
         Between::class                   => InvokableFactory::class,
         Bitwise::class                   => InvokableFactory::class,
@@ -215,7 +189,6 @@ final class ValidatorPluginManager extends AbstractPluginManager
         Csrf::class                      => InvokableFactory::class,
         DateStep::class                  => InvokableFactory::class,
         Date::class                      => InvokableFactory::class,
-        I18nValidator\DateTime::class    => InvokableFactory::class,
         Digits::class                    => InvokableFactory::class,
         EmailAddress::class              => InvokableFactory::class,
         Explode::class                   => InvokableFactory::class,
@@ -238,7 +211,6 @@ final class ValidatorPluginManager extends AbstractPluginManager
         File\Upload::class               => InvokableFactory::class,
         File\UploadFile::class           => InvokableFactory::class,
         File\WordCount::class            => InvokableFactory::class,
-        I18nValidator\IsFloat::class     => InvokableFactory::class,
         GpsPoint::class                  => InvokableFactory::class,
         GreaterThan::class               => InvokableFactory::class,
         Hex::class                       => InvokableFactory::class,
@@ -247,7 +219,6 @@ final class ValidatorPluginManager extends AbstractPluginManager
         Iban::class                      => InvokableFactory::class,
         Identical::class                 => InvokableFactory::class,
         InArray::class                   => InvokableFactory::class,
-        I18nValidator\IsInt::class       => InvokableFactory::class,
         Ip::class                        => InvokableFactory::class,
         IsArray::class                   => InvokableFactory::class,
         Isbn::class                      => InvokableFactory::class,
@@ -256,8 +227,6 @@ final class ValidatorPluginManager extends AbstractPluginManager
         IsJsonString::class              => InvokableFactory::class,
         LessThan::class                  => InvokableFactory::class,
         NotEmpty::class                  => InvokableFactory::class,
-        I18nValidator\PhoneNumber::class => InvokableFactory::class,
-        I18nValidator\PostCode::class    => InvokableFactory::class,
         Regex::class                     => InvokableFactory::class,
         Sitemap\Changefreq::class        => InvokableFactory::class,
         Sitemap\Lastmod::class           => InvokableFactory::class,
