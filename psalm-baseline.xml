@@ -1955,6 +1955,11 @@
   </file>
   <file src="src/ValidatorPluginManager.php">
     <DeprecatedClass>
+      <code><![CDATA[Csrf::class]]></code>
+      <code><![CDATA[Csrf::class]]></code>
+      <code><![CDATA[Csrf::class]]></code>
+      <code><![CDATA[Csrf::class]]></code>
+      <code><![CDATA[Csrf::class]]></code>
       <code><![CDATA[Db\NoRecordExists::class]]></code>
       <code><![CDATA[Db\NoRecordExists::class]]></code>
       <code><![CDATA[Db\NoRecordExists::class]]></code>
