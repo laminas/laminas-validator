@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use Exception;
@@ -24,7 +26,6 @@ use function str_starts_with;
 use function strlen;
 use function strtoupper;
 
-/** @final */
 class CreditCard extends AbstractValidator
 {
     /**
@@ -235,7 +236,10 @@ class CreditCard extends AbstractValidator
     /**
      * Options for this validator
      *
-     * @var array
+     * @var array{
+     *     service: callable|null,
+     *     type: list<string>,
+     * }
      */
     protected $options = [
         'service' => null, // Service callback for additional validation
@@ -279,7 +283,7 @@ class CreditCard extends AbstractValidator
     /**
      * Returns a list of accepted CCIs
      *
-     * @return array
+     * @return list<string>
      */
     public function getType()
     {
@@ -289,7 +293,7 @@ class CreditCard extends AbstractValidator
     /**
      * Sets CCIs which are accepted by validation
      *
-     * @param  string|array $type Type to allow for validation
+     * @param  string|list<string> $type Type to allow for validation
      * @return CreditCard Provides a fluid interface
      */
     public function setType($type)
@@ -301,7 +305,7 @@ class CreditCard extends AbstractValidator
     /**
      * Adds a CCI to be accepted by validation
      *
-     * @param  string|array $type Type to allow for validation
+     * @param  string|list<string> $type Type to allow for validation
      * @return $this Provides a fluid interface
      */
     public function addType($type)
@@ -427,7 +431,7 @@ class CreditCard extends AbstractValidator
         if (! empty($service)) {
             try {
                 $callback = new Callback($service);
-                $callback->setOptions($this->getType());
+                $callback->setCallbackOptions($this->getType());
                 if (! $callback->isValid($value)) {
                     $this->error(self::SERVICE, $value);
                     return false;

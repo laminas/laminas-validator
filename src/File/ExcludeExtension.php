@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\File;
 
 use function in_array;
@@ -10,10 +12,8 @@ use function substr;
 
 /**
  * Validator for the excluding file extensions
- *
- * @final
  */
-class ExcludeExtension extends Extension
+final class ExcludeExtension extends Extension
 {
     use FileInformationTrait;
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use Laminas\Session\Container as SessionContainer;
@@ -16,8 +18,7 @@ use function str_replace;
 use function strtolower;
 use function strtr;
 
-/** @final */
-class Csrf extends AbstractValidator
+final class Csrf extends AbstractValidator
 {
     /**
      * Error codes

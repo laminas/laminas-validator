@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Isbn;
 
-/** @final */
-class Isbn13
+final class Isbn13
 {
     /**
      * @param string $value

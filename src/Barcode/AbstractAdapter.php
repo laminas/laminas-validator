@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Barcode;
 
 use function chr;
@@ -83,7 +85,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * Checks for allowed characters within the barcode
      *
-     * @param  string $value The barcode to check for allowed characters
+     * @param string $value The barcode to check for allowed characters
      * @return bool
      */
     public function hasValidCharacters($value)

@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\File;
 
-use Laminas\Stdlib\ErrorHandler;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception;
 use Traversable;
 
 use function array_shift;
+use function assert;
 use function filesize;
 use function func_get_args;
 use function func_num_args;
@@ -15,7 +17,6 @@ use function is_numeric;
 use function is_readable;
 use function is_string;
 use function round;
-use function sprintf;
 use function strtoupper;
 use function substr;
 use function trim;
@@ -243,16 +244,14 @@ class Size extends AbstractValidator
 
         $this->setValue($fileInfo['filename']);
 
+        $path = $fileInfo['file'] ?? null;
         // Is file readable ?
-        if (empty($fileInfo['file']) || false === is_readable($fileInfo['file'])) {
+        if (! is_string($path) || false === is_readable($path)) {
             $this->error(self::NOT_FOUND);
             return false;
         }
 
-        // limited to 4GB files
-        ErrorHandler::start();
-        $size = sprintf('%u', filesize($fileInfo['file']));
-        ErrorHandler::stop();
+        $size       = filesize($path);
         $this->size = $size;
 
         // Check to see if it's smaller than min size
@@ -292,11 +291,8 @@ class Size extends AbstractValidator
 
     /**
      * Returns the formatted size
-     *
-     * @param  int $size
-     * @return string
      */
-    protected function toByteString($size)
+    protected function toByteString(int $size): string
     {
         $sizes = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         for ($i = 0; $size >= 1024 && $i < 9; $i++) {
@@ -324,6 +320,8 @@ class Size extends AbstractValidator
         if (! is_numeric($value)) {
             $value = trim(substr($value, 0, -1));
         }
+
+        assert(is_numeric($value));
 
         switch (strtoupper($type)) {
             case 'Y':

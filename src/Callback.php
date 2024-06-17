@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use Exception;
@@ -21,9 +23,8 @@ use function is_callable;
  *     throwExceptions?: bool,
  *     ...<string, mixed>
  * }
- * @final
  */
-class Callback extends AbstractValidator
+final class Callback extends AbstractValidator
 {
     /**
      * Invalid callback

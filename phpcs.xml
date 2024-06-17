@@ -24,8 +24,4 @@
         <exclude-pattern>src/BusinessIdentifierCode.php</exclude-pattern>
         <exclude-pattern>test/HostnameTest.php</exclude-pattern>
     </rule>
-
-    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing">
-        <exclude-pattern>src/</exclude-pattern>
-    </rule>
 </ruleset>

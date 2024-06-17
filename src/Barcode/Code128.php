@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Barcode;
 
 use Laminas\Stdlib\StringUtils;
@@ -10,8 +12,7 @@ use function chr;
 use function is_string;
 use function ord;
 
-/** @final */
-class Code128 extends AbstractAdapter
+final class Code128 extends AbstractAdapter
 {
     /**
      * The used string wrapper used for basic UTF-8 string functions

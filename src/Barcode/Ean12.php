@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Barcode;
 
-/** @final */
-class Ean12 extends AbstractAdapter
+final class Ean12 extends AbstractAdapter
 {
     /**
      * Constructor for this barcode adapter

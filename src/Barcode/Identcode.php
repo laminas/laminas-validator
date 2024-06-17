@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Barcode;
 
-/** @final */
-class Identcode extends AbstractAdapter
+final class Identcode extends AbstractAdapter
 {
     /**
      * Allowed barcode lengths

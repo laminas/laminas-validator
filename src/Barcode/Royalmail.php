@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Barcode;
 
 use function array_intersect;
@@ -9,8 +11,7 @@ use function str_split;
 use function strlen;
 use function substr;
 
-/** @final */
-class Royalmail extends AbstractAdapter
+final class Royalmail extends AbstractAdapter
 {
     /** @var array<array-key, int> */
     protected $rows = [
