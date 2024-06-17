@@ -900,7 +900,6 @@ class Hostname extends AbstractValidator
         'nab',
         'nagoya',
         'name',
-        'natura',
         'navy',
         'nba',
         'nc',
