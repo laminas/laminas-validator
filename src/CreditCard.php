@@ -26,7 +26,6 @@ use function str_starts_with;
 use function strlen;
 use function strtoupper;
 
-/** @final */
 class CreditCard extends AbstractValidator
 {
     /**

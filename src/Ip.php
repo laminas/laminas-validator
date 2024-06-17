@@ -19,8 +19,7 @@ use function strrpos;
 use function substr;
 use function substr_count;
 
-/** @final */
-class Ip extends AbstractValidator
+final class Ip extends AbstractValidator
 {
     public const INVALID        = 'ipInvalid';
     public const NOT_IP_ADDRESS = 'notIpAddress';

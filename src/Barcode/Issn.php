@@ -9,8 +9,7 @@ use function str_split;
 use function strlen;
 use function substr;
 
-/** @final */
-class Issn extends AbstractAdapter
+final class Issn extends AbstractAdapter
 {
     /**
      * Constructor for this barcode adapter

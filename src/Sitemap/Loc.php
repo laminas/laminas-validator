@@ -14,10 +14,8 @@ use function is_string;
  *
  * @link       http://www.sitemaps.org/protocol.php Sitemaps XML format
  * @see        Laminas\Uri\Uri
- *
- * @final
  */
-class Loc extends AbstractValidator
+final class Loc extends AbstractValidator
 {
     /**
      * Validation key for not valid

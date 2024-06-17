@@ -22,7 +22,7 @@ use function is_uploaded_file;
  *
  * @final
  */
-class Upload extends AbstractValidator
+final class Upload extends AbstractValidator
 {
     /**
      * @const string Error constants

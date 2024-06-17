@@ -11,10 +11,8 @@ use function is_readable;
 
 /**
  * Validator for the crc32 hash of given files
- *
- * @final
  */
-class Crc32 extends Hash
+final class Crc32 extends Hash
 {
     use FileInformationTrait;
 

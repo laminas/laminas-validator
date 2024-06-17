@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
-/** @final */
-class ConfigProvider
+final class ConfigProvider
 {
     /**
      * Return configuration for this component.

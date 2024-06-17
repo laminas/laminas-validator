@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\Barcode;
 
-/** @final */
-class Sscc extends AbstractAdapter
+final class Sscc extends AbstractAdapter
 {
     /**
      * Constructor for this barcode adapter

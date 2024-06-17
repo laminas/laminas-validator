@@ -11,6 +11,7 @@ use function basename;
 use function is_array;
 use function is_string;
 
+/* @internal */
 trait FileInformationTrait
 {
     /**

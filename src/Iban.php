@@ -22,7 +22,7 @@ use function substr;
  *
  * @final
  */
-class Iban extends AbstractValidator
+final class Iban extends AbstractValidator
 {
     public const NOTSUPPORTED     = 'ibanNotSupported';
     public const SEPANOTSUPPORTED = 'ibanSepaNotSupported';

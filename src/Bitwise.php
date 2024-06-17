@@ -11,8 +11,7 @@ use function func_get_args;
 use function is_array;
 use function iterator_to_array;
 
-/** @final */
-class Bitwise extends AbstractValidator
+final class Bitwise extends AbstractValidator
 {
     public const OP_AND = 'and';
     public const OP_XOR = 'xor';

@@ -19,8 +19,7 @@ use function is_string;
 use function iterator_to_array;
 use function sprintf;
 
-/** @final */
-class Uri extends AbstractValidator
+final class Uri extends AbstractValidator
 {
     public const INVALID = 'uriInvalid';
     public const NOT_URI = 'notUri';

@@ -12,10 +12,8 @@ use function substr;
 
 /**
  * Validator for the excluding file extensions
- *
- * @final
  */
-class ExcludeExtension extends Extension
+final class ExcludeExtension extends Extension
 {
     use FileInformationTrait;
 

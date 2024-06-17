@@ -9,8 +9,7 @@ use function is_string;
 use function preg_match;
 use function strtoupper;
 
-/** @final */
-class BusinessIdentifierCode extends AbstractValidator
+final class BusinessIdentifierCode extends AbstractValidator
 {
     public const INVALID           = 'valueNotBic';
     public const NOT_STRING        = 'valueNotString';

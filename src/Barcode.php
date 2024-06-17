@@ -19,8 +19,7 @@ use function strtolower;
 use function substr;
 use function ucfirst;
 
-/** @final */
-class Barcode extends AbstractValidator
+final class Barcode extends AbstractValidator
 {
     public const INVALID        = 'barcodeInvalid';
     public const FAILED         = 'barcodeFailed';
