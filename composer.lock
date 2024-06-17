@@ -1242,16 +1242,16 @@
         },
         {
             "name": "laminas/laminas-filter",
-            "version": "2.35.2",
+            "version": "2.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-filter.git",
-                "reference": "3e821b33a787253d56046f9258174a22de1bd267"
+                "reference": "307afc21ada0648e84cdcf9e14cd84bd43ee9d13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-filter/zipball/3e821b33a787253d56046f9258174a22de1bd267",
-                "reference": "3e821b33a787253d56046f9258174a22de1bd267",
+                "url": "https://api.github.com/repos/laminas/laminas-filter/zipball/307afc21ada0648e84cdcf9e14cd84bd43ee9d13",
+                "reference": "307afc21ada0648e84cdcf9e14cd84bd43ee9d13",
                 "shasum": ""
             },
             "require": {
@@ -1269,11 +1269,11 @@
                 "laminas/laminas-crypt": "^3.11",
                 "laminas/laminas-i18n": "^2.26.0",
                 "laminas/laminas-uri": "^2.11",
-                "pear/archive_tar": "^1.4.14",
-                "phpunit/phpunit": "^10.5.11",
+                "pear/archive_tar": "^1.5.0",
+                "phpunit/phpunit": "^10.5.20",
                 "psalm/plugin-phpunit": "^0.19.0",
-                "psr/http-factory": "^1.0.2",
-                "vimeo/psalm": "^5.22.2"
+                "psr/http-factory": "^1.1.0",
+                "vimeo/psalm": "^5.24.0"
             },
             "suggest": {
                 "laminas/laminas-crypt": "Laminas\\Crypt component, for encryption filters",
@@ -1317,7 +1317,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2024-04-11T08:13:56+00:00"
+            "time": "2024-06-13T10:31:36+00:00"
         },
         {
             "name": "laminas/laminas-i18n",
@@ -1546,16 +1546,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.11.1",
+            "version": "1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "7284c22080590fb39f2ffa3e9057f10a4ddd0e0c"
+                "reference": "3a6b9a42cd8f8771bd4295d13e1423fa7f3d942c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/7284c22080590fb39f2ffa3e9057f10a4ddd0e0c",
-                "reference": "7284c22080590fb39f2ffa3e9057f10a4ddd0e0c",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/3a6b9a42cd8f8771bd4295d13e1423fa7f3d942c",
+                "reference": "3a6b9a42cd8f8771bd4295d13e1423fa7f3d942c",
                 "shasum": ""
             },
             "require": {
@@ -1563,11 +1563,12 @@
             },
             "conflict": {
                 "doctrine/collections": "<1.6.8",
-                "doctrine/common": "<2.13.3 || >=3,<3.2.2"
+                "doctrine/common": "<2.13.3 || >=3 <3.2.2"
             },
             "require-dev": {
                 "doctrine/collections": "^1.6.8",
                 "doctrine/common": "^2.13.3 || ^3.2.2",
+                "phpspec/prophecy": "^1.10",
                 "phpunit/phpunit": "^7.5.20 || ^8.5.23 || ^9.5.13"
             },
             "type": "library",
@@ -1593,7 +1594,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.11.1"
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.12.0"
             },
             "funding": [
                 {
@@ -1601,7 +1602,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-03-08T13:26:56+00:00"
+            "time": "2024-06-12T14:39:25+00:00"
         },
         {
             "name": "netresearch/jsonmapper",
@@ -2360,16 +2361,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.5.20",
+            "version": "10.5.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "547d314dc24ec1e177720d45c6263fb226cc2ae3"
+                "reference": "ac837816fa52078f7a5e17ed774f256a72a51af6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/547d314dc24ec1e177720d45c6263fb226cc2ae3",
-                "reference": "547d314dc24ec1e177720d45c6263fb226cc2ae3",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ac837816fa52078f7a5e17ed774f256a72a51af6",
+                "reference": "ac837816fa52078f7a5e17ed774f256a72a51af6",
                 "shasum": ""
             },
             "require": {
@@ -2441,7 +2442,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.20"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.21"
             },
             "funding": [
                 {
@@ -2457,7 +2458,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-04-24T06:32:35+00:00"
+            "time": "2024-06-15T09:13:15+00:00"
         },
         {
             "name": "psalm/plugin-phpunit",
