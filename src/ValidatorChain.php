@@ -105,7 +105,7 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorInt
     public function plugin($name, ?array $options = null)
     {
         $plugins = $this->getPluginManager();
-        return $plugins->get($name, $options);
+        return $plugins->build($name, $options);
     }
 
     /**
