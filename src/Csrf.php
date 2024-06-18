@@ -18,7 +18,7 @@ use function strtr;
 
 /**
  * @deprecated This validator will be removed in version 3.0 of this component. A replacement is available in
- *             version 2.21.0 of the laminas-session component.
+ *             version 2.21.0 of the laminas-session component: https://docs.laminas.dev/laminas-session/
  *
  * @final
  */
