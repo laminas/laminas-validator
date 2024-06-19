@@ -91,6 +91,11 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
                 continue;
             }
 
+            // Skipping due to required options
+            if (strpos($target, '\\LessThan') !== false) {
+                continue;
+            }
+
             $out[$alias] = [$alias, $target];
         }
 

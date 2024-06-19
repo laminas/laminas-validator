@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.24.0@462c80e31c34e58cc4f750c656be3927e80e550e">
+<files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
   <file src="bin/update_hostname_validator.php">
     <MissingClosureParamType>
       <code><![CDATA[$domain]]></code>
@@ -44,7 +44,6 @@
       <code><![CDATA[$messageKey]]></code>
     </PossiblyUnusedParam>
     <UndefinedThisPropertyAssignment>
-      <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
@@ -1496,24 +1495,6 @@
       <code><![CDATA[$this->options['type']]]></code>
     </MixedReturnStatement>
   </file>
-  <file src="src/LessThan.php">
-    <MixedArgument>
-      <code><![CDATA[$options['inclusive']]]></code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code><![CDATA[$temp['inclusive']]]></code>
-      <code><![CDATA[$temp['max']]]></code>
-    </MixedAssignment>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$temp]]></code>
-    </PossiblyUndefinedVariable>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$inclusive]]></code>
-    </PropertyNotSetInConstructor>
-  </file>
   <file src="src/Module.php">
     <PossiblyUnusedParam>
       <code><![CDATA[$moduleManager]]></code>
@@ -2340,19 +2321,9 @@
     </RedundantCast>
   </file>
   <file src="test/LessThanTest.php">
-    <InvalidArgument>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-    </InvalidArgument>
-    <MixedArgument>
-      <code><![CDATA[$options]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicDataProvider]]></code>
+      <code><![CDATA[invalidValueProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/MessageTest.php">

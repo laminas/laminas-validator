@@ -4,144 +4,85 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
-use Laminas\Stdlib\ArrayUtils;
-use Traversable;
-
 use function array_key_exists;
-use function array_shift;
-use function func_get_args;
-use function is_array;
+use function is_numeric;
 
+/**
+ * @psalm-type OptionsArgument = array{
+ *     max: numeric,
+ *     inclusive?: bool,
+ *     ...<string, mixed>,
+ * }
+ */
 final class LessThan extends AbstractValidator
 {
     public const NOT_LESS           = 'notLessThan';
     public const NOT_LESS_INCLUSIVE = 'notLessThanInclusive';
-
+    public const NOT_NUMERIC        = 'notNumeric';
     /**
      * Validation failure message template definitions
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::NOT_LESS           => "The input is not less than '%max%'",
         self::NOT_LESS_INCLUSIVE => "The input is not less or equal than '%max%'",
+        self::NOT_NUMERIC        => "Expected a numeric value",
     ];
 
     /**
      * Additional variables available for validation failure messages
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $messageVariables = [
+    protected array $messageVariables = [
         'max' => 'max',
     ];
 
     /**
      * Maximum value
-     *
-     * @var mixed
      */
-    protected $max;
+    protected float $max;
 
     /**
      * Whether to do inclusive comparisons, allowing equivalence to max
      *
      * If false, then strict comparisons are done, and the value may equal
      * the max option
-     *
-     * @var bool
      */
-    protected $inclusive;
+    private bool $inclusive;
 
     /**
      * Sets validator options
      *
-     * @param  array|Traversable $options
+     * @param OptionsArgument $options
      * @throws Exception\InvalidArgumentException
      */
-    public function __construct($options = null)
+    public function __construct(array $options)
     {
-        if ($options instanceof Traversable) {
-            $options = ArrayUtils::iteratorToArray($options);
-        }
-        if (! is_array($options)) {
-            $options     = func_get_args();
-            $temp['max'] = array_shift($options);
-
-            if (! empty($options)) {
-                $temp['inclusive'] = array_shift($options);
-            }
-
-            $options = $temp;
-        }
-
         if (! array_key_exists('max', $options)) {
             throw new Exception\InvalidArgumentException("Missing option 'max'");
         }
 
-        if (! array_key_exists('inclusive', $options)) {
-            $options['inclusive'] = false;
-        }
-
-        $this->setMax($options['max'])
-             ->setInclusive($options['inclusive']);
+        $this->max       = (float) $options['max'];
+        $this->inclusive = $options['inclusive'] ?? false;
 
         parent::__construct($options);
     }
 
     /**
-     * Returns the max option
-     *
-     * @return mixed
-     */
-    public function getMax()
-    {
-        return $this->max;
-    }
-
-    /**
-     * Sets the max option
-     *
-     * @return $this Provides a fluent interface
-     */
-    public function setMax(mixed $max)
-    {
-        $this->max = $max;
-        return $this;
-    }
-
-    /**
-     * Returns the inclusive option
-     *
-     * @return bool
-     */
-    public function getInclusive()
-    {
-        return $this->inclusive;
-    }
-
-    /**
-     * Sets the inclusive option
-     *
-     * @param  bool $inclusive
-     * @return $this Provides a fluent interface
-     */
-    public function setInclusive($inclusive)
-    {
-        $this->inclusive = $inclusive;
-        return $this;
-    }
-
-    /**
      * Returns true if and only if $value is less than max option, inclusively
      * when the inclusive option is true
-     *
-     * @param  mixed $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         $this->setValue($value);
+
+        if (! is_numeric($value)) {
+            $this->error(self::NOT_NUMERIC);
+
+            return false;
+        }
 
         if ($this->inclusive) {
             if ($value > $this->max) {
