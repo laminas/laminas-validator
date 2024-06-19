@@ -70,7 +70,6 @@
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
     </UndefinedThisPropertyAssignment>
   </file>
   <file src="src/Barcode.php">
@@ -440,52 +439,6 @@
     <PossiblyUnusedReturnValue>
       <code><![CDATA[CreditCard]]></code>
     </PossiblyUnusedReturnValue>
-  </file>
-  <file src="src/Csrf.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_array($options)]]></code>
-      <code><![CDATA[null === $this->session]]></code>
-    </DocblockTypeContradiction>
-    <ImpureByReferenceAssignment>
-      <code><![CDATA[$session->tokenList]]></code>
-    </ImpureByReferenceAssignment>
-    <MixedArgument>
-      <code><![CDATA[$key]]></code>
-      <code><![CDATA[$session->tokenList[$tokenId]]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$options]]></code>
-    </MixedArgumentTypeCoercion>
-    <MixedArrayAssignment>
-      <code><![CDATA[$session->tokenList[$tokenId]]]></code>
-    </MixedArrayAssignment>
-    <MixedAssignment>
-      <code><![CDATA[$key]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[null|string]]></code>
-      <code><![CDATA[string]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$session->hash]]></code>
-      <code><![CDATA[$this->hash]]></code>
-    </MixedReturnStatement>
-    <PossiblyNullArrayOffset>
-      <code><![CDATA[$session->tokenList]]></code>
-    </PossiblyNullArrayOffset>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$session]]></code>
-    </PropertyNotSetInConstructor>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(int) $ttl]]></code>
-      <code><![CDATA[(string) $name]]></code>
-      <code><![CDATA[(string) $salt]]></code>
-    </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Date.php">
     <MixedArgumentTypeCoercion>
@@ -1752,11 +1705,6 @@
     </TooManyArguments>
   </file>
   <file src="src/ValidatorPluginManager.php">
-    <DeprecatedClass>
-      <code><![CDATA[Csrf::class]]></code>
-      <code><![CDATA[Csrf::class]]></code>
-      <code><![CDATA[Csrf::class]]></code>
-    </DeprecatedClass>
     <DeprecatedMethod>
       <code><![CDATA[getServiceLocator]]></code>
       <code><![CDATA[getServiceLocator]]></code>
@@ -1905,18 +1853,6 @@
     <PossiblyUnusedReturnValue>
       <code><![CDATA[false]]></code>
     </PossiblyUnusedReturnValue>
-  </file>
-  <file src="test/CsrfTest.php">
-    <MixedAssignment>
-      <code><![CDATA[$bareToken]]></code>
-    </MixedAssignment>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$timeout]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[fakeValuesDataProvider]]></code>
-      <code><![CDATA[timeoutValuesDataProvider]]></code>
-    </PossiblyUnusedMethod>
   </file>
   <file src="test/DateStepTest.php">
     <PossiblyUnusedMethod>
