@@ -1454,15 +1454,6 @@
       <code><![CDATA[(bool) $recursive]]></code>
     </RedundantCastGivenDocblockType>
   </file>
-  <file src="src/Ip.php">
-    <MixedArgument>
-      <code><![CDATA[$regex]]></code>
-      <code><![CDATA[$regex]]></code>
-    </MixedArgument>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$options]]></code>
-    </MixedArgumentTypeCoercion>
-  </file>
   <file src="src/IsInstanceOf.php">
     <MixedAssignment>
       <code><![CDATA[$tmpOptions['className']]]></code>
