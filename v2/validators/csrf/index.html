@@ -639,6 +639,12 @@
     
 
     <h1 id="csrf-validator">CSRF Validator</h1>
+<div class="admonition caution">
+<p class="admonition-title">Deprecated</p>
+<p>
+This validator is deprecated in favour of the drop-in replacement validator shipped in version 2.21.0 of <a href="https://docs.laminas.dev/laminas-session/"><code>laminas-session</code></a>.
+The validator here will be removed in version 3.0 of <code>laminas-validator</code>.</p>
+</div>
 <p><code>Laminas\Validator\Csrf</code> provides the ability to both generate and validate CSRF tokens.
 This allows you to validate if a form submission originated from the same site, by confirming the value of the CSRF field in the submitted form is the same as the one contained in the original form.</p>
 <p><a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery">Cross-Site Request Forgery (CSRF)</a> is a security vector in which an unauthorized request is accepted by a server on behalf of another user; it is essentially an exploit of the trust a site places on a user's browser.</p>
