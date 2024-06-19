@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\File;
 
 use Laminas\Validator\AbstractValidator;
@@ -21,10 +23,8 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Validator for counting all given files
- *
- * @final
  */
-class Count extends AbstractValidator
+final class Count extends AbstractValidator
 {
     /**#@+
      *

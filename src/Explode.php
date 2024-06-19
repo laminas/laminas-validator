@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use Laminas\ServiceManager\ServiceManager;
@@ -15,7 +17,7 @@ use function sprintf;
  * @psalm-import-type ValidatorSpecification from ValidatorInterface
  * @final
  */
-class Explode extends AbstractValidator implements ValidatorPluginManagerAwareInterface
+final class Explode extends AbstractValidator implements ValidatorPluginManagerAwareInterface
 {
     public const INVALID = 'explodeInvalid';
 

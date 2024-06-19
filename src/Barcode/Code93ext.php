@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Barcode;
 
-/** @final */
-class Code93ext extends AbstractAdapter
+final class Code93ext extends AbstractAdapter
 {
     /**
      * Constructor for this barcode adapter

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use Traversable;
@@ -15,8 +17,7 @@ use function strlen;
 use function strpos;
 use function substr;
 
-/** @final */
-class Step extends AbstractValidator
+final class Step extends AbstractValidator
 {
     public const INVALID  = 'typeInvalid';
     public const NOT_STEP = 'stepInvalid';

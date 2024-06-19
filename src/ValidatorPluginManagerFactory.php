@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use Laminas\ServiceManager\Config;
@@ -14,10 +16,8 @@ use function is_array;
  * @link ServiceManager
  *
  * @psalm-import-type ServiceManagerConfiguration from ServiceManager
- *
- * @final
  */
-class ValidatorPluginManagerFactory implements FactoryInterface
+final class ValidatorPluginManagerFactory implements FactoryInterface
 {
     /**
      * laminas-servicemanager v2 support for invocation options.

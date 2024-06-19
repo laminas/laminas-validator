@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\File;
 
 use function array_keys;
@@ -12,7 +14,7 @@ use function is_readable;
  *
  * @final
  */
-class Sha1 extends Hash
+final class Sha1 extends Hash
 {
     use FileInformationTrait;
 

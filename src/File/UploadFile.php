@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\File;
 
 use Laminas\Validator\AbstractValidator;
@@ -26,7 +28,7 @@ use const UPLOAD_ERR_PARTIAL;
  *
  * @final
  */
-class UploadFile extends AbstractValidator
+final class UploadFile extends AbstractValidator
 {
     /**
      * @const string Error constants

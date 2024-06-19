@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use Laminas\Stdlib\StringUtils;
@@ -13,8 +15,7 @@ use function is_array;
 use function is_string;
 use function max;
 
-/** @final */
-class StringLength extends AbstractValidator
+final class StringLength extends AbstractValidator
 {
     public const INVALID   = 'stringLengthInvalid';
     public const TOO_SHORT = 'stringLengthTooShort';

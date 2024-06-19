@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\File;
 
 use Laminas\Validator\Exception;
@@ -9,6 +11,7 @@ use function basename;
 use function is_array;
 use function is_string;
 
+/* @internal */
 trait FileInformationTrait
 {
     /**

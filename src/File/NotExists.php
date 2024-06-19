@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\File;
 
 use function file_exists;
@@ -11,7 +13,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * @final
  */
-class NotExists extends Exists
+final class NotExists extends Exists
 {
     use FileInformationTrait;
 

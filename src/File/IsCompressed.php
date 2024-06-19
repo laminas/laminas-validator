@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\File;
 
 use Laminas\Stdlib\ArrayUtils;
@@ -10,7 +12,7 @@ use Traversable;
  *
  * @final
  */
-class IsCompressed extends MimeType
+final class IsCompressed extends MimeType
 {
     /**
      * @const string Error constants

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use function in_array;
@@ -11,8 +13,7 @@ use function str_replace;
 use function strlen;
 use function substr;
 
-/** @final */
-class Isbn extends AbstractValidator
+final class Isbn extends AbstractValidator
 {
     public const AUTO    = 'auto';
     public const ISBN10  = '10';

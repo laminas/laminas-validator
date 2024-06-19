@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\File;
 
 use Laminas\Stdlib\ErrorHandler;
@@ -19,7 +21,7 @@ use function is_readable;
  *
  * @final
  */
-class ImageSize extends AbstractValidator
+final class ImageSize extends AbstractValidator
 {
     use FileInformationTrait;
 

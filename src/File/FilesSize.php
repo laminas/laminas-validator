@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\File;
 
 use Laminas\Stdlib\ArrayUtils;
@@ -23,7 +25,7 @@ use function is_string;
  *
  * @final
  */
-class FilesSize extends Size
+final class FilesSize extends Size
 {
     /**
      * @const string Error constants

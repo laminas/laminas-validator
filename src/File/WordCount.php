@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\File;
 
 use Laminas\Validator\AbstractValidator;
@@ -18,10 +20,8 @@ use function str_word_count;
 
 /**
  * Validator for counting all words in a file
- *
- * @final
  */
-class WordCount extends AbstractValidator
+final class WordCount extends AbstractValidator
 {
     use FileInformationTrait;
 

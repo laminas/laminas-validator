@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use function ctype_xdigit;
 use function is_int;
 use function is_string;
 
-/** @final */
-class Hex extends AbstractValidator
+final class Hex extends AbstractValidator
 {
     public const INVALID = 'hexInvalid';
     public const NOT_HEX = 'notHex';

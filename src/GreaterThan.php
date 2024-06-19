@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use Laminas\Stdlib\ArrayUtils;
@@ -10,8 +12,7 @@ use function array_shift;
 use function func_get_args;
 use function is_array;
 
-/** @final */
-class GreaterThan extends AbstractValidator
+final class GreaterThan extends AbstractValidator
 {
     public const NOT_GREATER           = 'notGreaterThan';
     public const NOT_GREATER_INCLUSIVE = 'notGreaterThanInclusive';

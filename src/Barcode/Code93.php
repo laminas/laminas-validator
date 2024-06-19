@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Barcode;
 
 use function array_search;
@@ -7,8 +9,7 @@ use function count;
 use function str_split;
 use function substr;
 
-/** @final */
-class Code93 extends AbstractAdapter
+final class Code93 extends AbstractAdapter
 {
     /**
      * Note that the characters !"§& are only synonyms

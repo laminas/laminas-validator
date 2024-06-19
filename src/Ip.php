@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use Traversable;
@@ -17,8 +19,7 @@ use function strrpos;
 use function substr;
 use function substr_count;
 
-/** @final */
-class Ip extends AbstractValidator
+final class Ip extends AbstractValidator
 {
     public const INVALID        = 'ipInvalid';
     public const NOT_IP_ADDRESS = 'notIpAddress';

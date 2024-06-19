@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use RecursiveArrayIterator;
@@ -11,8 +13,7 @@ use function is_float;
 use function is_int;
 use function is_string;
 
-/** @final */
-class InArray extends AbstractValidator
+final class InArray extends AbstractValidator
 {
     public const NOT_IN_ARRAY = 'notInArray';
 

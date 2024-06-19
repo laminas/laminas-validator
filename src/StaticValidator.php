@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use Laminas\ServiceManager\ServiceManager;
@@ -7,8 +9,7 @@ use Laminas\ServiceManager\ServiceManager;
 use function array_values;
 use function method_exists;
 
-/** @final */
-class StaticValidator
+final class StaticValidator
 {
     /** @var ValidatorPluginManager|null */
     protected static $plugins;

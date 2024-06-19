@@ -71,10 +71,6 @@
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
     </UndefinedThisPropertyAssignment>
   </file>
   <file src="src/Barcode.php">
@@ -417,26 +413,19 @@
       <code><![CDATA[$this->cardLength[$type]]]></code>
       <code><![CDATA[$this->options['type']]]></code>
       <code><![CDATA[$this->options['type']]]></code>
-      <code><![CDATA[$typ]]></code>
       <code><![CDATA[$value]]></code>
     </MixedArgument>
     <MixedArrayAssignment>
       <code><![CDATA[$this->options['type'][]]]></code>
     </MixedArrayAssignment>
-    <MixedArrayOffset>
-      <code><![CDATA[$this->cardLength[$type]]]></code>
-      <code><![CDATA[$this->cardType[$type]]]></code>
-    </MixedArrayOffset>
     <MixedAssignment>
       <code><![CDATA[$prefix]]></code>
       <code><![CDATA[$temp['service']]]></code>
       <code><![CDATA[$temp['type']]]></code>
-      <code><![CDATA[$typ]]></code>
-      <code><![CDATA[$type]]></code>
     </MixedAssignment>
     <MixedInferredReturnType>
-      <code><![CDATA[array]]></code>
       <code><![CDATA[callable]]></code>
+      <code><![CDATA[list<string>]]></code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$this->options['service']]]></code>
@@ -444,7 +433,6 @@
     </MixedReturnStatement>
     <PossiblyInvalidArgument>
       <code><![CDATA[$options]]></code>
-      <code><![CDATA[$this->getType()]]></code>
     </PossiblyInvalidArgument>
     <PossiblyUndefinedVariable>
       <code><![CDATA[$temp]]></code>
@@ -540,113 +528,6 @@
     <TypeDoesNotContainType>
       <code><![CDATA[$baseDate instanceof DateTimeImmutable]]></code>
     </TypeDoesNotContainType>
-  </file>
-  <file src="src/Db/AbstractDb.php">
-    <LessSpecificReturnStatement>
-      <code><![CDATA[$this]]></code>
-      <code><![CDATA[$this]]></code>
-      <code><![CDATA[$this]]></code>
-      <code><![CDATA[$this]]></code>
-      <code><![CDATA[$this]]></code>
-    </LessSpecificReturnStatement>
-    <MixedArgument>
-      <code><![CDATA[$options['adapter']]]></code>
-      <code><![CDATA[$options['exclude']]]></code>
-      <code><![CDATA[$options['field']]]></code>
-      <code><![CDATA[$options['schema']]]></code>
-      <code><![CDATA[$options['table']]]></code>
-      <code><![CDATA[$this->exclude]]></code>
-      <code><![CDATA[$this->exclude['field']]]></code>
-      <code><![CDATA[$this->exclude['value']]]></code>
-    </MixedArgument>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$options]]></code>
-    </MixedArgumentTypeCoercion>
-    <MixedAssignment>
-      <code><![CDATA[$firstArgument]]></code>
-      <code><![CDATA[$temp['adapter']]]></code>
-      <code><![CDATA[$temp['exclude']]]></code>
-      <code><![CDATA[$temp['field']]]></code>
-      <code><![CDATA[$temp['table']]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[array]]></code>
-      <code><![CDATA[string|array]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$result->current()]]></code>
-      <code><![CDATA[$this->exclude]]></code>
-    </MixedReturnStatement>
-    <NullArgument>
-      <code><![CDATA[null]]></code>
-    </NullArgument>
-    <PossiblyNullArgument>
-      <code><![CDATA[$options]]></code>
-      <code><![CDATA[$options]]></code>
-      <code><![CDATA[$options]]></code>
-      <code><![CDATA[$options]]></code>
-      <code><![CDATA[$options]]></code>
-      <code><![CDATA[$options]]></code>
-      <code><![CDATA[$options]]></code>
-      <code><![CDATA[$options['adapter']]]></code>
-      <code><![CDATA[$options['exclude']]]></code>
-      <code><![CDATA[$options['field']]]></code>
-      <code><![CDATA[$options['schema']]]></code>
-      <code><![CDATA[$options['table']]]></code>
-    </PossiblyNullArgument>
-    <PossiblyNullPropertyAssignmentValue>
-      <code><![CDATA[null]]></code>
-      <code><![CDATA[null]]></code>
-      <code><![CDATA[null]]></code>
-      <code><![CDATA[null]]></code>
-    </PossiblyNullPropertyAssignmentValue>
-    <PossiblyNullReference>
-      <code><![CDATA[$parameters]]></code>
-    </PossiblyNullReference>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$temp]]></code>
-    </PossiblyUndefinedVariable>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[getExclude]]></code>
-    </PossiblyUnusedMethod>
-    <PossiblyUnusedReturnValue>
-      <code><![CDATA[self]]></code>
-    </PossiblyUnusedReturnValue>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$schema]]></code>
-      <code><![CDATA[AbstractDb]]></code>
-    </PropertyNotSetInConstructor>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(string) $field]]></code>
-      <code><![CDATA[(string) $table]]></code>
-    </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[$this->select instanceof Select]]></code>
-    </RedundantConditionGivenDocblockType>
-  </file>
-  <file src="src/Db/NoRecordExists.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[null === $this->adapter]]></code>
-    </DocblockTypeContradiction>
-    <MixedArgument>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[NoRecordExists]]></code>
-      <code><![CDATA[NoRecordExists]]></code>
-    </PropertyNotSetInConstructor>
-  </file>
-  <file src="src/Db/RecordExists.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[null === $this->adapter]]></code>
-    </DocblockTypeContradiction>
-    <MixedArgument>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[RecordExists]]></code>
-      <code><![CDATA[RecordExists]]></code>
-    </PropertyNotSetInConstructor>
   </file>
   <file src="src/EmailAddress.php">
     <DocblockTypeContradiction>
@@ -1204,8 +1085,6 @@
       <code><![CDATA[$options['magicFile']]]></code>
       <code><![CDATA[$options['mimeType']]]></code>
       <code><![CDATA[$this->type]]></code>
-      <code><![CDATA[$this->type]]></code>
-      <code><![CDATA[$this->type]]></code>
       <code><![CDATA[static::FALSE_TYPE]]></code>
       <code><![CDATA[static::NOT_DETECTED]]></code>
       <code><![CDATA[static::NOT_READABLE]]></code>
@@ -1291,33 +1170,14 @@
       <code><![CDATA[! is_string($min) && ! is_numeric($min)]]></code>
       <code><![CDATA[is_string($options)]]></code>
     </DocblockTypeContradiction>
-    <InvalidArgument>
-      <code><![CDATA[$size]]></code>
-      <code><![CDATA[$size]]></code>
-    </InvalidArgument>
     <InvalidArrayOffset>
       <code><![CDATA[$sizes[$i]]]></code>
     </InvalidArrayOffset>
-    <InvalidOperand>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </InvalidOperand>
     <InvalidPropertyAssignmentValue>
-      <code><![CDATA[$size]]></code>
-      <code><![CDATA[$size]]></code>
-      <code><![CDATA[$size]]></code>
       <code><![CDATA[$this->toByteString($size)]]></code>
       <code><![CDATA[$this->toByteString($size)]]></code>
     </InvalidPropertyAssignmentValue>
     <MixedArgument>
-      <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$fileInfo['file']]]></code>
       <code><![CDATA[$max]]></code>
       <code><![CDATA[$min]]></code>
     </MixedArgument>
@@ -1495,8 +1355,6 @@
       <code><![CDATA[$matches[2][0]]]></code>
     </InvalidOperand>
     <MixedArgument>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
     </MixedArgument>
   </file>
@@ -1732,7 +1590,7 @@
       <code><![CDATA[$type]]></code>
     </PossiblyNullArgument>
     <RedundantCondition>
-      <code><![CDATA[is_object($value) && method_exists($value, '__toString')]]></code>
+      <code><![CDATA[is_object($value) && method_exists($value, '__toString') && (string) $value === '']]></code>
     </RedundantCondition>
   </file>
   <file src="src/Regex.php">
@@ -1762,23 +1620,12 @@
       <code><![CDATA[$value]]></code>
     </MoreSpecificImplementedParamType>
   </file>
-  <file src="src/Sitemap/Loc.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_string($value)]]></code>
-    </DocblockTypeContradiction>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-  </file>
   <file src="src/Sitemap/Priority.php">
     <MoreSpecificImplementedParamType>
       <code><![CDATA[$value]]></code>
     </MoreSpecificImplementedParamType>
   </file>
   <file src="src/StaticValidator.php">
-    <RedundantCondition>
-      <code><![CDATA[method_exists($plugins, 'configure')]]></code>
-    </RedundantCondition>
     <UndefinedMethod>
       <code><![CDATA[setShareByDefault]]></code>
     </UndefinedMethod>
@@ -1891,55 +1738,6 @@
       <code><![CDATA[self]]></code>
     </PossiblyUnusedReturnValue>
   </file>
-  <file src="src/Uri.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_array($options)]]></code>
-      <code><![CDATA[is_string($value)]]></code>
-    </DocblockTypeContradiction>
-    <InvalidCatch>
-      <code><![CDATA[try {
-            $uriHandler->parse($value);
-            if ($uriHandler->isValid()) {
-                // It will either be a valid absolute or relative URI
-                if (
-                    ($this->allowRelative && $this->allowAbsolute)
-                    || ($this->allowAbsolute && $uriHandler->isAbsolute())
-                    || ($this->allowRelative && $uriHandler->isValidRelative())
-                ) {
-                    return true;
-                }
-            }
-        } catch (UriException) {
-            // Error parsing URI, it must be invalid
-        }]]></code>
-    </InvalidCatch>
-    <MixedArgument>
-      <code><![CDATA[$options['allowAbsolute']]]></code>
-      <code><![CDATA[$options['allowRelative']]]></code>
-      <code><![CDATA[$options['uriHandler']]]></code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code><![CDATA[$temp['allowAbsolute']]]></code>
-      <code><![CDATA[$temp['allowRelative']]]></code>
-      <code><![CDATA[$temp['uriHandler']]]></code>
-    </MixedAssignment>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$temp]]></code>
-    </PossiblyUndefinedVariable>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(bool) $allowAbsolute]]></code>
-      <code><![CDATA[(bool) $allowRelative]]></code>
-    </RedundantCastGivenDocblockType>
-    <UnsafeInstantiation>
-      <code><![CDATA[new $this->uriHandler()]]></code>
-    </UnsafeInstantiation>
-  </file>
   <file src="src/ValidatorChain.php">
     <MixedPropertyTypeCoercion>
       <code><![CDATA[new PriorityQueue()]]></code>
@@ -1958,20 +1756,6 @@
       <code><![CDATA[Csrf::class]]></code>
       <code><![CDATA[Csrf::class]]></code>
       <code><![CDATA[Csrf::class]]></code>
-      <code><![CDATA[Csrf::class]]></code>
-      <code><![CDATA[Csrf::class]]></code>
-      <code><![CDATA[Db\NoRecordExists::class]]></code>
-      <code><![CDATA[Db\NoRecordExists::class]]></code>
-      <code><![CDATA[Db\NoRecordExists::class]]></code>
-      <code><![CDATA[Db\NoRecordExists::class]]></code>
-      <code><![CDATA[Db\NoRecordExists::class]]></code>
-      <code><![CDATA[Db\NoRecordExists::class]]></code>
-      <code><![CDATA[Db\RecordExists::class]]></code>
-      <code><![CDATA[Db\RecordExists::class]]></code>
-      <code><![CDATA[Db\RecordExists::class]]></code>
-      <code><![CDATA[Db\RecordExists::class]]></code>
-      <code><![CDATA[Db\RecordExists::class]]></code>
-      <code><![CDATA[Db\RecordExists::class]]></code>
     </DeprecatedClass>
     <DeprecatedMethod>
       <code><![CDATA[getServiceLocator]]></code>
@@ -1993,9 +1777,6 @@
     <PossiblyUnusedProperty>
       <code><![CDATA[$shareByDefault]]></code>
     </PossiblyUnusedProperty>
-    <RedundantCondition>
-      <code><![CDATA[$container === $this && method_exists($container, 'getServiceLocator')]]></code>
-    </RedundantCondition>
     <RedundantConditionGivenDocblockType>
       <code><![CDATA[$container->getServiceLocator()]]></code>
     </RedundantConditionGivenDocblockType>
@@ -2044,7 +1825,6 @@
   </file>
   <file src="test/BarcodeTest.php">
     <InvalidArgument>
-      <code><![CDATA[123]]></code>
       <code><![CDATA[123]]></code>
       <code><![CDATA[06510000.4327]]></code>
       <code><![CDATA[106510000.4327]]></code>
@@ -2151,52 +1931,6 @@
     <UnusedParam>
       <code><![CDATA[$result]]></code>
     </UnusedParam>
-  </file>
-  <file src="test/Db/NoRecordExistsTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[addMethods]]></code>
-      <code><![CDATA[addMethods]]></code>
-    </DeprecatedMethod>
-    <InvalidArgument>
-      <code><![CDATA['users']]></code>
-      <code><![CDATA['users']]></code>
-      <code><![CDATA['users']]></code>
-      <code><![CDATA['users']]></code>
-      <code><![CDATA['users']]></code>
-      <code><![CDATA['users']]></code>
-      <code><![CDATA['users']]></code>
-      <code><![CDATA['users']]></code>
-    </InvalidArgument>
-    <MissingTemplateParam>
-      <code><![CDATA[class extends ArrayObject {]]></code>
-    </MissingTemplateParam>
-  </file>
-  <file src="test/Db/RecordExistsTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[addMethods]]></code>
-      <code><![CDATA[addMethods]]></code>
-    </DeprecatedMethod>
-    <InvalidArgument>
-      <code><![CDATA['users']]></code>
-      <code><![CDATA['users']]></code>
-      <code><![CDATA['users']]></code>
-      <code><![CDATA['users']]></code>
-    </InvalidArgument>
-    <MissingTemplateParam>
-      <code><![CDATA[class extends ArrayObject {]]></code>
-    </MissingTemplateParam>
-    <PossiblyNullArrayAccess>
-      <code><![CDATA[$parameters['where1']]]></code>
-    </PossiblyNullArrayAccess>
-    <PossiblyNullReference>
-      <code><![CDATA[$parameters]]></code>
-    </PossiblyNullReference>
-  </file>
-  <file src="test/Db/TestAsset/ConcreteDbValidator.php">
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[ConcreteDbValidator]]></code>
-      <code><![CDATA[ConcreteDbValidator]]></code>
-    </PropertyNotSetInConstructor>
   </file>
   <file src="test/DigitsTest.php">
     <PossiblyUnusedMethod>
@@ -2756,14 +2490,9 @@
     </PossiblyInvalidCast>
   </file>
   <file src="test/Sitemap/LocTest.php">
-    <InvalidArgument>
-      <code><![CDATA[$value]]></code>
-    </InvalidArgument>
-    <PossiblyInvalidCast>
-      <code><![CDATA[$value]]></code>
-    </PossiblyInvalidCast>
     <PossiblyUnusedMethod>
       <code><![CDATA[invalidLocs]]></code>
+      <code><![CDATA[validLocs]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/Sitemap/PriorityTest.php">
@@ -2839,13 +2568,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/UriTest.php">
-    <InvalidArgument>
-      <code><![CDATA[$uriMock]]></code>
-      <code><![CDATA[new stdClass()]]></code>
-    </InvalidArgument>
-    <MixedArgument>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[allowOptionsDataProvider]]></code>
       <code><![CDATA[invalidValueTypes]]></code>

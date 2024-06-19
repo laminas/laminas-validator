@@ -1,4 +1,10 @@
-<?php // phpcs:disable PSR12.Files.FileHeader.IncorrectOrder
+<?php
+
+/**
+ * phpcs:disable PSR12.Files.FileHeader
+ */
+
+declare(strict_types=1);
 
 namespace Laminas\Validator\Hostname;
 

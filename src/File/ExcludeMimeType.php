@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\File;
 
 use Psr\Http\Message\UploadedFileInterface;
@@ -17,10 +19,8 @@ use const FILEINFO_MIME_TYPE;
 
 /**
  * Validator for the mime type of a file
- *
- * @final
  */
-class ExcludeMimeType extends MimeType
+final class ExcludeMimeType extends MimeType
 {
     use FileInformationTrait;
 

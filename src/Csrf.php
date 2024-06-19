@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use Laminas\Session\Container as SessionContainer;
@@ -19,10 +21,8 @@ use function strtr;
 /**
  * @deprecated This validator will be removed in version 3.0 of this component. A replacement is available in
  *             version 2.21.0 of the laminas-session component: https://docs.laminas.dev/laminas-session/
- *
- * @final
  */
-class Csrf extends AbstractValidator
+final class Csrf extends AbstractValidator
 {
     /**
      * Error codes
