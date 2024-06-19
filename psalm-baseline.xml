@@ -1752,6 +1752,11 @@
     </TooManyArguments>
   </file>
   <file src="src/ValidatorPluginManager.php">
+    <DeprecatedClass>
+      <code><![CDATA[Csrf::class]]></code>
+      <code><![CDATA[Csrf::class]]></code>
+      <code><![CDATA[Csrf::class]]></code>
+    </DeprecatedClass>
     <DeprecatedMethod>
       <code><![CDATA[getServiceLocator]]></code>
       <code><![CDATA[getServiceLocator]]></code>

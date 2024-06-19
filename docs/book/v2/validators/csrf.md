@@ -1,5 +1,9 @@
 # CSRF Validator
 
+CAUTION: **Deprecated**
+This validator is deprecated in favour of the drop-in replacement validator shipped in version 2.21.0 of [`laminas-session`](https://docs.laminas.dev/laminas-session/).
+The validator here will be removed in version 3.0 of `laminas-validator`.
+
 `Laminas\Validator\Csrf` provides the ability to both generate and validate CSRF tokens.
 This allows you to validate if a form submission originated from the same site, by confirming the value of the CSRF field in the submitted form is the same as the one contained in the original form.
 
