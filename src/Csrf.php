@@ -16,7 +16,12 @@ use function str_replace;
 use function strtolower;
 use function strtr;
 
-/** @final */
+/**
+ * @deprecated This validator will be removed in version 3.0 of this component. A replacement is available in
+ *             version 2.21.0 of the laminas-session component: https://docs.laminas.dev/laminas-session/
+ *
+ * @final
+ */
 class Csrf extends AbstractValidator
 {
     /**

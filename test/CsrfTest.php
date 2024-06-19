@@ -20,6 +20,11 @@ use function str_replace;
 use function strtr;
 use function uniqid;
 
+/**
+ * @deprecated
+ *
+ * @psalm-suppress DeprecatedClass
+ */
 final class CsrfTest extends TestCase
 {
     private Csrf $validator;
