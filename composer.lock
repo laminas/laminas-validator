@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "22047dfceb20a25acd17db3b830e22a3",
+    "content-hash": "75ff361798e13f2b1b1afb69d10b4fba",
     "packages": [
         {
             "name": "laminas/laminas-servicemanager",
@@ -1040,74 +1040,6 @@
             "time": "2023-01-05T15:53:40+00:00"
         },
         {
-            "name": "laminas/laminas-eventmanager",
-            "version": "3.13.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laminas/laminas-eventmanager.git",
-                "reference": "ce5ba8bde378fca5cb0cd514f01823637215b2f3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-eventmanager/zipball/ce5ba8bde378fca5cb0cd514f01823637215b2f3",
-                "reference": "ce5ba8bde378fca5cb0cd514f01823637215b2f3",
-                "shasum": ""
-            },
-            "require": {
-                "php": "~8.1.0 || ~8.2.0 || ~8.3.0"
-            },
-            "conflict": {
-                "container-interop/container-interop": "<1.2",
-                "zendframework/zend-eventmanager": "*"
-            },
-            "require-dev": {
-                "laminas/laminas-coding-standard": "~2.5.0",
-                "laminas/laminas-stdlib": "^3.18",
-                "phpbench/phpbench": "^1.2.15",
-                "phpunit/phpunit": "^10.5.5",
-                "psalm/plugin-phpunit": "^0.18.4",
-                "psr/container": "^1.1.2 || ^2.0.2",
-                "vimeo/psalm": "^5.18"
-            },
-            "suggest": {
-                "laminas/laminas-stdlib": "^2.7.3 || ^3.0, to use the FilterChain feature",
-                "psr/container": "^1.1.2 || ^2.0.2, to use the lazy listeners feature"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Laminas\\EventManager\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "Trigger and listen to events within a PHP application",
-            "homepage": "https://laminas.dev",
-            "keywords": [
-                "event",
-                "eventmanager",
-                "events",
-                "laminas"
-            ],
-            "support": {
-                "chat": "https://laminas.dev/chat",
-                "docs": "https://docs.laminas.dev/laminas-eventmanager/",
-                "forum": "https://discourse.laminas.dev",
-                "issues": "https://github.com/laminas/laminas-eventmanager/issues",
-                "rss": "https://github.com/laminas/laminas-eventmanager/releases.atom",
-                "source": "https://github.com/laminas/laminas-eventmanager"
-            },
-            "funding": [
-                {
-                    "url": "https://funding.communitybridge.org/projects/laminas-project",
-                    "type": "community_bridge"
-                }
-            ],
-            "time": "2024-01-03T17:43:50+00:00"
-        },
-        {
             "name": "laminas/laminas-i18n",
             "version": "2.26.0",
             "source": {
@@ -1191,88 +1123,6 @@
                 }
             ],
             "time": "2024-01-04T13:49:00+00:00"
-        },
-        {
-            "name": "laminas/laminas-session",
-            "version": "2.20.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laminas/laminas-session.git",
-                "reference": "16876aa20a6688d06291a972f7e1eb0b74b05d51"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-session/zipball/16876aa20a6688d06291a972f7e1eb0b74b05d51",
-                "reference": "16876aa20a6688d06291a972f7e1eb0b74b05d51",
-                "shasum": ""
-            },
-            "require": {
-                "laminas/laminas-eventmanager": "^3.12",
-                "laminas/laminas-servicemanager": "^3.22",
-                "laminas/laminas-stdlib": "^3.18",
-                "php": "~8.1.0 || ~8.2.0 || ~8.3.0"
-            },
-            "conflict": {
-                "zendframework/zend-session": "*"
-            },
-            "require-dev": {
-                "ext-xdebug": "*",
-                "laminas/laminas-cache": "^3.12.1",
-                "laminas/laminas-cache-storage-adapter-memory": "^2.3",
-                "laminas/laminas-coding-standard": "~2.5.0",
-                "laminas/laminas-db": "^2.19.0",
-                "laminas/laminas-http": "^2.19",
-                "laminas/laminas-validator": "^2.49.0",
-                "mongodb/mongodb": "~1.17.0",
-                "phpunit/phpunit": "^9.6.17",
-                "psalm/plugin-phpunit": "^0.18.4",
-                "vimeo/psalm": "^5.22.2"
-            },
-            "suggest": {
-                "laminas/laminas-cache": "Laminas\\Cache component",
-                "laminas/laminas-db": "Laminas\\Db component",
-                "laminas/laminas-http": "Laminas\\Http component",
-                "laminas/laminas-servicemanager": "Laminas\\ServiceManager component",
-                "laminas/laminas-validator": "Laminas\\Validator component",
-                "mongodb/mongodb": "If you want to use the MongoDB session save handler"
-            },
-            "type": "library",
-            "extra": {
-                "laminas": {
-                    "component": "Laminas\\Session",
-                    "config-provider": "Laminas\\Session\\ConfigProvider"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Laminas\\Session\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "Object-oriented interface to PHP sessions and storage",
-            "homepage": "https://laminas.dev",
-            "keywords": [
-                "laminas",
-                "session"
-            ],
-            "support": {
-                "chat": "https://laminas.dev/chat",
-                "docs": "https://docs.laminas.dev/laminas-session/",
-                "forum": "https://discourse.laminas.dev",
-                "issues": "https://github.com/laminas/laminas-session/issues",
-                "rss": "https://github.com/laminas/laminas-session/releases.atom",
-                "source": "https://github.com/laminas/laminas-session"
-            },
-            "funding": [
-                {
-                    "url": "https://funding.communitybridge.org/projects/laminas-project",
-                    "type": "community_bridge"
-                }
-            ],
-            "time": "2024-03-08T11:02:36+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -2091,16 +1941,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.5.21",
+            "version": "10.5.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "ac837816fa52078f7a5e17ed774f256a72a51af6"
+                "reference": "8afb89b399b17c2ce2618015bdc9f81a117c5ee1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ac837816fa52078f7a5e17ed774f256a72a51af6",
-                "reference": "ac837816fa52078f7a5e17ed774f256a72a51af6",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/8afb89b399b17c2ce2618015bdc9f81a117c5ee1",
+                "reference": "8afb89b399b17c2ce2618015bdc9f81a117c5ee1",
                 "shasum": ""
             },
             "require": {
@@ -2172,7 +2022,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.21"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.22"
             },
             "funding": [
                 {
@@ -2188,7 +2038,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-06-15T09:13:15+00:00"
+            "time": "2024-06-19T05:29:34+00:00"
         },
         {
             "name": "psalm/plugin-phpunit",

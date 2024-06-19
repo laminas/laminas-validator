@@ -15,7 +15,6 @@ nav:
             - BIC: v3/validators/bic.md
             - Callback: v3/validators/callback.md
             - CreditCard: v3/validators/credit-card.md
-            - Csrf: v3/validators/csrf.md
             - Date: v3/validators/date.md
             - Digits: v3/validators/digits.md
             - EmailAddress: v3/validators/email-address.md
@@ -154,7 +153,7 @@ plugins:
             validators/bic.md: v3/validators/bic.md
             validators/callback.md: v3/validators/callback.md
             validators/credit-card.md: v3/validators/credit-card.md
-            validators/csrf.md: v3/validators/csrf.md
+            validators/csrf.md: v2/validators/csrf.md
             validators/date.md: v3/validators/date.md
             validators/db.md: v2/validators/db.md
             validators/digits.md: v3/validators/digits.md
