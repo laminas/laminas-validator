@@ -16,20 +16,17 @@ final class Hex extends AbstractValidator
     /**
      * Validation failure message template definitions
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::INVALID => 'Invalid type given. String expected',
         self::NOT_HEX => 'The input contains non-hexadecimal characters',
     ];
 
     /**
      * Returns true if and only if $value contains only hexadecimal digit characters
-     *
-     * @param  mixed $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if (! is_string($value) && ! is_int($value)) {
             $this->error(self::INVALID);
