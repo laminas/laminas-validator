@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.24.0@462c80e31c34e58cc4f750c656be3927e80e550e">
+<files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
   <file src="bin/update_hostname_validator.php">
     <MissingClosureParamType>
       <code><![CDATA[$domain]]></code>
@@ -1955,6 +1955,11 @@
   </file>
   <file src="src/ValidatorPluginManager.php">
     <DeprecatedClass>
+      <code><![CDATA[Between::class]]></code>
+      <code><![CDATA[Between::class]]></code>
+      <code><![CDATA[Between::class]]></code>
+      <code><![CDATA[Between::class]]></code>
+      <code><![CDATA[Between::class]]></code>
       <code><![CDATA[Csrf::class]]></code>
       <code><![CDATA[Csrf::class]]></code>
       <code><![CDATA[Csrf::class]]></code>
@@ -1972,6 +1977,18 @@
       <code><![CDATA[Db\RecordExists::class]]></code>
       <code><![CDATA[Db\RecordExists::class]]></code>
       <code><![CDATA[Db\RecordExists::class]]></code>
+      <code><![CDATA[GreaterThan::class]]></code>
+      <code><![CDATA[GreaterThan::class]]></code>
+      <code><![CDATA[GreaterThan::class]]></code>
+      <code><![CDATA[GreaterThan::class]]></code>
+      <code><![CDATA[GreaterThan::class]]></code>
+      <code><![CDATA[GreaterThan::class]]></code>
+      <code><![CDATA[LessThan::class]]></code>
+      <code><![CDATA[LessThan::class]]></code>
+      <code><![CDATA[LessThan::class]]></code>
+      <code><![CDATA[LessThan::class]]></code>
+      <code><![CDATA[LessThan::class]]></code>
+      <code><![CDATA[LessThan::class]]></code>
     </DeprecatedClass>
     <DeprecatedMethod>
       <code><![CDATA[getServiceLocator]]></code>
@@ -2060,6 +2077,24 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/BetweenTest.php">
+    <DeprecatedClass>
+      <code><![CDATA[Between::NOT_BETWEEN]]></code>
+      <code><![CDATA[Between::NOT_BETWEEN_STRICT]]></code>
+      <code><![CDATA[Between::VALUE_NOT_NUMERIC]]></code>
+      <code><![CDATA[Between::VALUE_NOT_STRING]]></code>
+      <code><![CDATA[new Between($args)]]></code>
+      <code><![CDATA[new Between($options)]]></code>
+      <code><![CDATA[new Between(1, 10, false)]]></code>
+      <code><![CDATA[new Between(['min' => $min, 'max' => $max, 'inclusive' => $inclusive])]]></code>
+      <code><![CDATA[new Between(['min' => 'a', 'max' => 'z'])]]></code>
+      <code><![CDATA[new Between(['min' => 1, 'max' => 10])]]></code>
+      <code><![CDATA[new Between(['min' => 1, 'max' => 10])]]></code>
+      <code><![CDATA[new Between(['min' => 1, 'max' => 10])]]></code>
+      <code><![CDATA[new Between(['min' => 1, 'max' => 10])]]></code>
+      <code><![CDATA[new Between(['min' => 1, 'max' => 10])]]></code>
+      <code><![CDATA[new Between(['min' => 1, 'max' => 10])]]></code>
+      <code><![CDATA[new Between(['min' => 1, 'max' => 10])]]></code>
+    </DeprecatedClass>
     <InvalidArgument>
       <code><![CDATA[1]]></code>
     </InvalidArgument>
@@ -2520,6 +2555,19 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/GreaterThanTest.php">
+    <DeprecatedClass>
+      <code><![CDATA[GreaterThan::NOT_GREATER]]></code>
+      <code><![CDATA[GreaterThan::NOT_GREATER_INCLUSIVE]]></code>
+      <code><![CDATA[new GreaterThan(...$options)]]></code>
+      <code><![CDATA[new GreaterThan(1)]]></code>
+      <code><![CDATA[new GreaterThan(1)]]></code>
+      <code><![CDATA[new GreaterThan(10)]]></code>
+      <code><![CDATA[new GreaterThan(10)]]></code>
+      <code><![CDATA[new GreaterThan(10)]]></code>
+      <code><![CDATA[new GreaterThan(10)]]></code>
+      <code><![CDATA[new GreaterThan(10, true)]]></code>
+      <code><![CDATA[new GreaterThan(['min' => 10, 'inclusive' => true])]]></code>
+    </DeprecatedClass>
     <InvalidArgument>
       <code><![CDATA[1]]></code>
       <code><![CDATA[1]]></code>
@@ -2670,6 +2718,17 @@
     </RedundantCast>
   </file>
   <file src="test/LessThanTest.php">
+    <DeprecatedClass>
+      <code><![CDATA[LessThan::NOT_LESS]]></code>
+      <code><![CDATA[LessThan::NOT_LESS_INCLUSIVE]]></code>
+      <code><![CDATA[new LessThan(...$options)]]></code>
+      <code><![CDATA[new LessThan(10)]]></code>
+      <code><![CDATA[new LessThan(10)]]></code>
+      <code><![CDATA[new LessThan(10)]]></code>
+      <code><![CDATA[new LessThan(10)]]></code>
+      <code><![CDATA[new LessThan(10)]]></code>
+      <code><![CDATA[new LessThan(10, true)]]></code>
+    </DeprecatedClass>
     <InvalidArgument>
       <code><![CDATA[10]]></code>
       <code><![CDATA[10]]></code>
@@ -2777,6 +2836,15 @@
     </PossiblyInvalidCast>
   </file>
   <file src="test/StaticValidatorTest.php">
+    <DeprecatedClass>
+      <code><![CDATA[Between::class]]></code>
+      <code><![CDATA[Between::class]]></code>
+      <code><![CDATA[Between::class]]></code>
+      <code><![CDATA[Between::class]]></code>
+      <code><![CDATA[Between::class]]></code>
+      <code><![CDATA[Between::class]]></code>
+      <code><![CDATA[new Between(1, 10)]]></code>
+    </DeprecatedClass>
     <InvalidArgument>
       <code><![CDATA[1]]></code>
     </InvalidArgument>
@@ -2858,6 +2926,12 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/ValidatorChainTest.php">
+    <DeprecatedClass>
+      <code><![CDATA[GreaterThan::class]]></code>
+      <code><![CDATA[new Between(1, 5)]]></code>
+      <code><![CDATA[new Between(['min' => 10, 'max' => 20])]]></code>
+      <code><![CDATA[new Between(['min' => 10, 'max' => 20])]]></code>
+    </DeprecatedClass>
     <InvalidArgument>
       <code><![CDATA[1]]></code>
     </InvalidArgument>

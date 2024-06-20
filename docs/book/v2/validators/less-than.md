@@ -1,5 +1,9 @@
 # LessThan Validator
 
+CAUTION: **Deprecated**
+This validator is deprecated in favour of the [NumberComparison validator](number-comparison.md) and the [DateComparison validator](date-comparison.md) for validation of dates.
+This validator will be removed in version 3.0.
+
 `Laminas\Validator\LessThan` allows you to validate if a given value is less than a
 maximum value.
 
