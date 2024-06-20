@@ -8,6 +8,7 @@ The following validators come with the laminas-validator distribution.
 - [CreditCard](validators/credit-card.md)
 - [CSRF (Cross-site request forgery](validators/csrf.md)
 - [Date](validators/date.md)
+- [DateComparison](validators/date-comparison.md)
 - [RecordExists and NoRecordExists (database)](validators/db.md)
 - [Digits](validators/digits.md)
 - [EmailAddress](validators/email-address.md)

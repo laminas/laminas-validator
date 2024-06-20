@@ -17,6 +17,7 @@ nav:
             - CreditCard: v2/validators/credit-card.md
             - Csrf: v2/validators/csrf.md
             - Date: v2/validators/date.md
+            - DateComparison: v2/validators/date-comparison.md
             - "Db\\RecordExists and Db\\NoRecordExists": v2/validators/db.md
             - Digits: v2/validators/digits.md
             - EmailAddress: v2/validators/email-address.md

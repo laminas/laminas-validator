@@ -346,6 +346,7 @@ class ValidatorPluginManager extends AbstractPluginManager
         Csrf::class                      => InvokableFactory::class,
         DateStep::class                  => InvokableFactory::class,
         Date::class                      => InvokableFactory::class,
+        DateComparison::class            => InvokableFactory::class,
         I18nValidator\DateTime::class    => InvokableFactory::class,
         Db\NoRecordExists::class         => InvokableFactory::class,
         Db\RecordExists::class           => InvokableFactory::class,
