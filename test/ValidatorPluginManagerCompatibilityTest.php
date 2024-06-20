@@ -6,6 +6,7 @@ namespace LaminasTest\Validator;
 
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\ServiceManager\Test\CommonPluginManagerTrait;
+use Laminas\Validator\Bitwise;
 use Laminas\Validator\Exception\RuntimeException;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
@@ -88,6 +89,11 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
 
             // Skipping due to required options
             if (strpos($target, '\\Regex') !== false) {
+                continue;
+            }
+
+            // Skipping due to required options
+            if ($target === Bitwise::class) {
                 continue;
             }
 
