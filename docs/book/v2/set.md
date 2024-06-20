@@ -28,6 +28,7 @@ The following validators come with the laminas-validator distribution.
 - [IsInstanceOf](validators/isinstanceof.md)
 - [LessThan](validators/less-than.md)
 - [NotEmpty](validators/not-empty.md)
+- [NumberComparison](validators/number-comparison.md)
 - [Regex](validators/regex.md)
 - [Sitemap](validators/sitemap.md)
 - [Step](validators/step.md)

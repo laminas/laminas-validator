@@ -37,6 +37,7 @@ nav:
             - IsJsonString: v2/validators/is-json-string.md
             - LessThan: v2/validators/less-than.md
             - NotEmpty: v2/validators/not-empty.md
+            - NumberComparison: v2/validators/number-comparison.md
             - Regex: v2/validators/regex.md
             - Sitemap: v2/validators/sitemap.md
             - Step: v2/validators/step.md

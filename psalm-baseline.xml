@@ -1854,6 +1854,14 @@
       <code><![CDATA[is_object($value) && method_exists($value, '__toString')]]></code>
     </RedundantCondition>
   </file>
+  <file src="src/NumberComparison.php">
+    <MixedAssignment>
+      <code><![CDATA[$inclusive]]></code>
+      <code><![CDATA[$max]]></code>
+      <code><![CDATA[$max]]></code>
+      <code><![CDATA[$min]]></code>
+    </MixedAssignment>
+  </file>
   <file src="src/Regex.php">
     <DeprecatedConstant>
       <code><![CDATA[self::ERROROUS]]></code>
@@ -3016,6 +3024,11 @@
       <code><![CDATA[stringNotationProvider]]></code>
       <code><![CDATA[stringOnlyProvider]]></code>
       <code><![CDATA[zeroOnlyProvider]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/NumberComparisonTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[basicTestDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/RegexTest.php">
