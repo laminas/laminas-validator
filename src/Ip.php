@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
-use Traversable;
-
 use function bindec;
 use function hexdec;
 use function ip2long;
@@ -19,57 +17,65 @@ use function strrpos;
 use function substr;
 use function substr_count;
 
+/**
+ * @psalm-type OptionsArgument = array{
+ *     allowipv4?: bool,
+ *     allowipv6?: bool,
+ *     allowipvfuture?: bool,
+ *     allowliteral?: bool,
+ *     ...<string, mixed>,
+ * }
+ * @psalm-type Options = array{
+ *      allowipv4: bool,
+ *      allowipv6: bool,
+ *      allowipvfuture: bool,
+ *      allowliteral: bool,
+ *  }
+ */
 final class Ip extends AbstractValidator
 {
     public const INVALID        = 'ipInvalid';
     public const NOT_IP_ADDRESS = 'notIpAddress';
 
-    /** @var array */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::INVALID        => 'Invalid type given. String expected',
         self::NOT_IP_ADDRESS => 'The input does not appear to be a valid IP address',
     ];
 
-    /**
-     * Internal options
-     *
-     * @var array
-     */
-    protected $options = [
+    /** @var Options */
+    protected array $options = [
         'allowipv4'      => true, // Enable IPv4 Validation
         'allowipv6'      => true, // Enable IPv6 Validation
         'allowipvfuture' => false, // Enable IPvFuture Validation
         'allowliteral'   => true, // Enable IPs in literal format (only IPv6 and IPvFuture)
     ];
 
-    /**
-     * Sets the options for this validator
-     *
-     * @param array|Traversable $options
-     * @throws Exception\InvalidArgumentException If there is any kind of IP allowed or $options is not an array
-     *                                            or Traversable.
-     * @return AbstractValidator
-     */
-    public function setOptions($options = [])
+    /** @param OptionsArgument $options */
+    public function __construct(array $options = [])
     {
-        parent::setOptions($options);
+        $this->options['allowipv4']      = $options['allowipv4'] ?? true;
+        $this->options['allowipv6']      = $options['allowipv6'] ?? true;
+        $this->options['allowipvfuture'] = $options['allowipvfuture'] ?? false;
+        $this->options['allowliteral']   = $options['allowliteral'] ?? true;
 
-        if (! $this->options['allowipv4'] && ! $this->options['allowipv6'] && ! $this->options['allowipvfuture']) {
+        if (
+            $this->options['allowipv4'] === false
+            && $this->options['allowipv6'] === false
+            && $this->options['allowipvfuture'] === false
+        ) {
             throw new Exception\InvalidArgumentException('Nothing to validate. Check your options');
         }
 
-        return $this;
+        parent::__construct($options);
     }
 
     /**
      * Returns true if and only if $value is a valid IP address
-     *
-     * @param  mixed $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
-        if (! is_string($value)) {
+        if (! is_string($value) || $value === '') {
             $this->error(self::INVALID);
             return false;
         }
@@ -79,34 +85,28 @@ final class Ip extends AbstractValidator
         if ($this->options['allowipv4'] && $this->validateIPv4($value)) {
             return true;
         } else {
-            if ((bool) $this->options['allowliteral']) {
-                static $regex = '/^\[(.*)\]$/';
-                if ((bool) preg_match($regex, $value, $matches)) {
+            if ($this->options['allowliteral']) {
+                if (preg_match('/^\[(.*)\]$/', $value, $matches)) {
                     $value = $matches[1];
                 }
             }
 
-            $isValidV6Address = $this->validateIPv6($value);
-            $isValidV6Address = $isValidV6Address !== false && $isValidV6Address !== 0;
-
             if (
-                ($this->options['allowipv6'] && $isValidV6Address) ||
+                ($this->options['allowipv6'] && $this->validateIPv6($value)) ||
                 ($this->options['allowipvfuture'] && $this->validateIPvFuture($value))
             ) {
                 return true;
             }
         }
+
         $this->error(self::NOT_IP_ADDRESS);
         return false;
     }
 
     /**
      * Validates an IPv4 address
-     *
-     * @param string $value
-     * @return bool
      */
-    protected function validateIPv4($value)
+    private function validateIPv4(string $value): bool
     {
         if (preg_match('/^([01]{8}\.){3}[01]{8}\z/i', $value)) {
             // binary format  00000000.00000000.00000000.00000000
@@ -132,11 +132,8 @@ final class Ip extends AbstractValidator
 
     /**
      * Validates an IPv6 address
-     *
-     * @param string $value Value to check against
-     * @return bool|int True when $value is a valid ipv6 address False otherwise
      */
-    protected function validateIPv6($value)
+    private function validateIPv6(string $value): bool
     {
         if (strlen($value) < 3) {
             return $value === '::';
@@ -152,17 +149,17 @@ final class Ip extends AbstractValidator
         }
 
         if (! str_contains($value, '::')) {
-            return preg_match('/\A(?:[a-f0-9]{1,4}:){7}[a-f0-9]{1,4}\z/i', $value);
+            return (bool) preg_match('/\A(?:[a-f0-9]{1,4}:){7}[a-f0-9]{1,4}\z/i', $value);
         }
 
         $colonCount = substr_count($value, ':');
         if ($colonCount < 8) {
-            return preg_match('/\A(?::|(?:[a-f0-9]{1,4}:)+):(?:(?:[a-f0-9]{1,4}:)*[a-f0-9]{1,4})?\z/i', $value);
+            return (bool) preg_match('/\A(?::|(?:[a-f0-9]{1,4}:)+):(?:(?:[a-f0-9]{1,4}:)*[a-f0-9]{1,4})?\z/i', $value);
         }
 
         // special case with ending or starting double colon
         if ($colonCount === 8) {
-            return preg_match('/\A(?:::)?(?:[a-f0-9]{1,4}:){6}[a-f0-9]{1,4}(?:::)?\z/i', $value);
+            return (bool) preg_match('/\A(?:::)?(?:[a-f0-9]{1,4}:){6}[a-f0-9]{1,4}(?:::)?\z/i', $value);
         }
 
         return false;
@@ -172,12 +169,8 @@ final class Ip extends AbstractValidator
      * Validates an IPvFuture address.
      *
      * IPvFuture is loosely defined in the Section 3.2.2 of RFC 3986
-     *
-     * @param  string $value Value to check against
-     * @return bool True when $value is a valid IPvFuture address
-     *                 False otherwise
      */
-    protected function validateIPvFuture($value)
+    private function validateIPvFuture(string $value): bool
     {
         /*
          * ABNF:
@@ -186,7 +179,7 @@ final class Ip extends AbstractValidator
          * sub-delims    = "!" / "$" / "&" / "'" / "(" / ")" / "*" / "+" / ","
          *               / ";" / "="
          */
-        static $regex = '/^v([[:xdigit:]]+)\.[[:alnum:]\-\._~!\$&\'\(\)\*\+,;=:]+$/';
+        $regex = '/^v([[:xdigit:]]+)\.[[:alnum:]\-\._~!\$&\'\(\)\*\+,;=:]+$/';
 
         $result = (bool) preg_match($regex, $value, $matches);
 
