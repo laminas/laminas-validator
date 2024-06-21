@@ -4,32 +4,29 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
-use Laminas\Stdlib\ArrayUtils;
-use Laminas\Stdlib\ErrorHandler;
-use Traversable;
+use Laminas\Validator\Exception\InvalidArgumentException;
 
-use function array_key_exists;
-use function is_array;
-use function is_float;
-use function is_int;
 use function is_string;
 use function preg_match;
 
+/**
+ * @psalm-type OptionsArgument = array{
+ *     pattern: non-empty-string,
+ * }
+ */
 final class Regex extends AbstractValidator
 {
     public const INVALID   = 'regexInvalid';
     public const NOT_MATCH = 'regexNotMatch';
-    public const ERROROUS  = 'regexErrorous';
 
-    /** @var array */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::INVALID   => 'Invalid type given. String, integer or float expected',
         self::NOT_MATCH => "The input does not match against pattern '%pattern%'",
-        self::ERROROUS  => "There was an internal error while using the pattern '%pattern%'",
     ];
 
-    /** @var array */
-    protected $messageVariables = [
+    /** @var array<string, string> */
+    protected array $messageVariables = [
         'pattern' => 'pattern',
     ];
 
@@ -38,98 +35,48 @@ final class Regex extends AbstractValidator
      *
      * @var non-empty-string
      */
-    protected $pattern;
+    protected string $pattern;
 
     /**
      * Sets validator options
      *
-     * @param  non-empty-string|array|Traversable $pattern
-     * @throws Exception\InvalidArgumentException On missing 'pattern' parameter.
+     * @param non-empty-string|OptionsArgument $options
      */
-    public function __construct($pattern)
+    public function __construct(string|array $options)
     {
-        if (is_string($pattern)) {
-            $this->setPattern($pattern);
-            parent::__construct([]);
-            return;
+        $pattern = is_string($options) ? $options : $options['pattern'] ?? null;
+        /** @psalm-suppress DocblockTypeContradiction The user may still supply an empty string */
+        if (! is_string($pattern) || $pattern === '') {
+            throw new InvalidArgumentException('A regex pattern is required');
         }
 
-        if ($pattern instanceof Traversable) {
-            $pattern = ArrayUtils::iteratorToArray($pattern);
-        }
-
-        if (! is_array($pattern)) {
-            throw new Exception\InvalidArgumentException('Invalid options provided to constructor');
-        }
-
-        if (! array_key_exists('pattern', $pattern) || ! is_string($pattern['pattern']) || $pattern['pattern'] === '') {
-            throw new Exception\InvalidArgumentException("Missing option 'pattern'");
-        }
-
-        $this->setPattern($pattern['pattern']);
-        unset($pattern['pattern']);
-        parent::__construct($pattern);
-    }
-
-    /**
-     * Returns the pattern option
-     *
-     * @return non-empty-string|null
-     */
-    public function getPattern()
-    {
-        return $this->pattern;
-    }
-
-    /**
-     * Sets the pattern option
-     *
-     * @param non-empty-string $pattern
-     * @throws Exception\InvalidArgumentException If there is a fatal error in pattern matching.
-     * @return $this Provides a fluent interface
-     */
-    public function setPattern($pattern)
-    {
-        ErrorHandler::start();
-        $this->pattern = (string) $pattern;
-        $status        = preg_match($this->pattern, 'Test');
-        $error         = ErrorHandler::stop();
-
-        if (false === $status) {
-            throw new Exception\InvalidArgumentException(
-                "Internal error parsing the pattern '{$this->pattern}'",
-                0,
-                $error
+        $status = preg_match($pattern, 'Test');
+        if ($status === false) {
+            throw new InvalidArgumentException(
+                "Internal error parsing the pattern '{$pattern}'",
             );
         }
 
-        return $this;
+        $this->pattern = $pattern;
+
+        parent::__construct();
     }
 
     /**
      * Returns true if and only if $value matches against the pattern option
-     *
-     * @param  mixed $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
-        if (! is_string($value) && ! is_int($value) && ! is_float($value)) {
+        if (! is_string($value)) {
             $this->error(self::INVALID);
             return false;
         }
 
         $this->setValue($value);
 
-        ErrorHandler::start();
-        $status = preg_match($this->pattern, (string) $value);
-        ErrorHandler::stop();
-        if (false === $status) {
-            $this->error(self::ERROROUS);
-            return false;
-        }
+        $status = preg_match($this->pattern, $value);
 
-        if (! $status) {
+        if ((bool) $status === false) {
             $this->error(self::NOT_MATCH);
             return false;
         }

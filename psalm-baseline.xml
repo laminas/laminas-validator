@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
+<files psalm-version="5.24.0@462c80e31c34e58cc4f750c656be3927e80e550e">
   <file src="bin/update_hostname_validator.php">
     <MissingClosureParamType>
       <code><![CDATA[$domain]]></code>
@@ -1537,17 +1537,6 @@
       <code><![CDATA[is_object($value) && method_exists($value, '__toString') && (string) $value === '']]></code>
     </RedundantCondition>
   </file>
-  <file src="src/Regex.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_array($pattern)]]></code>
-    </DocblockTypeContradiction>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$pattern]]></code>
-    </PossiblyInvalidArgument>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(string) $pattern]]></code>
-    </RedundantCastGivenDocblockType>
-  </file>
   <file src="src/Sitemap/Changefreq.php">
     <DocblockTypeContradiction>
       <code><![CDATA[is_string($value)]]></code>
@@ -2390,10 +2379,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/RegexTest.php">
-    <MixedArgument>
-      <code><![CDATA[$options]]></code>
-      <code><![CDATA[$options]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicDataProvider]]></code>
       <code><![CDATA[invalidConstructorArgumentsProvider]]></code>
