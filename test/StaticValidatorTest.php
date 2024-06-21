@@ -93,7 +93,6 @@ final class StaticValidatorTest extends TestCase
 
         $this->validator->setTranslator($translator);
 
-        /** @psalm-suppress InvalidArgument */
         self::assertFalse($this->validator->isValid(123));
 
         $messages = $this->validator->getMessages();

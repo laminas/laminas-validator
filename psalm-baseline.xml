@@ -1593,48 +1593,6 @@
       <code><![CDATA[$temp]]></code>
     </PossiblyUndefinedVariable>
   </file>
-  <file src="src/StringLength.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_string($value)]]></code>
-    </DocblockTypeContradiction>
-    <MixedAssignment>
-      <code><![CDATA[$temp['encoding']]]></code>
-      <code><![CDATA[$temp['max']]]></code>
-      <code><![CDATA[$temp['min']]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[int]]></code>
-      <code><![CDATA[int]]></code>
-      <code><![CDATA[int|null]]></code>
-      <code><![CDATA[string]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->options['encoding']]]></code>
-      <code><![CDATA[$this->options['length']]]></code>
-      <code><![CDATA[$this->options['max']]]></code>
-      <code><![CDATA[$this->options['min']]]></code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <PossiblyFalseArgument>
-      <code><![CDATA[$this->getStringWrapper()->strlen($value)]]></code>
-    </PossiblyFalseArgument>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$temp]]></code>
-    </PossiblyUndefinedVariable>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[setStringWrapper]]></code>
-    </PossiblyUnusedMethod>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(int) $length]]></code>
-      <code><![CDATA[(int) $max]]></code>
-      <code><![CDATA[(int) $min]]></code>
-    </RedundantCastGivenDocblockType>
-  </file>
   <file src="src/Timezone.php">
     <DocblockTypeContradiction>
       <code><![CDATA[is_string($type)]]></code>
@@ -2347,17 +2305,17 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/MessageTest.php">
-    <InaccessibleProperty>
-      <code><![CDATA[$this->validator->value]]></code>
-    </InaccessibleProperty>
     <RedundantConditionGivenDocblockType>
       <code><![CDATA[assertIsArray]]></code>
     </RedundantConditionGivenDocblockType>
     <UndefinedMagicPropertyFetch>
-      <code><![CDATA[$this->validator->max]]></code>
-      <code><![CDATA[$this->validator->min]]></code>
       <code><![CDATA[$this->validator->unknownProperty]]></code>
     </UndefinedMagicPropertyFetch>
+    <UndefinedThisPropertyFetch>
+      <code><![CDATA[$this->validator->__get('max')]]></code>
+      <code><![CDATA[$this->validator->__get('min')]]></code>
+      <code><![CDATA[$this->validator->__get('value')]]></code>
+    </UndefinedThisPropertyFetch>
   </file>
   <file src="test/NotEmptyTest.php">
     <InvalidArgument>
@@ -2457,15 +2415,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/StringLengthTest.php">
-    <InvalidArgument>
-      <code><![CDATA[[1 => 1]]]></code>
-    </InvalidArgument>
-    <InvalidCast>
-      <code><![CDATA[[1 => 1]]]></code>
-    </InvalidCast>
-    <MixedArgument>
-      <code><![CDATA[$options]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicDataProvider]]></code>
     </PossiblyUnusedMethod>
