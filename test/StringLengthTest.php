@@ -18,27 +18,37 @@ use const E_WARNING;
 
 final class StringLengthTest extends TestCase
 {
+    /**
+     * @return array<string, array{
+     *     0: int,
+     *     1: int|null,
+     *     2: string,
+     *     3: mixed,
+     *     4: bool,
+     *     5: string|null,
+     * }>
+     */
     public static function basicDataProvider(): array
     {
         return [
-            [0, null, 'utf-8', '', true, null],
-            [0, null, 'ISO-8859-16', '', true, null],
-            [1, null, 'utf-8', '', false, StringLength::TOO_SHORT],
-            [0, null, 'utf-8', 'a', true, null],
-            [0, null, 'utf-8', 'aa', true, null],
-            [1, null, 'utf-8', 'a', true, null],
-            [1, 2, 'utf-8', 'aaa', false, StringLength::TOO_LONG],
-            [2, 2, 'utf-8', '  ', true, null],
-            [2, 2, 'utf-8', 'aa', true, null],
-            [3, 3, 'utf-8', 'äöü', true, null],
-            [0, 6, 'utf-8', 'Müller', true, null],
-            [0, 6, 'utf-8', 'Müllered', false, null],
-            [0, 1, 'utf-8', 1, false, StringLength::INVALID],
-            [0, 1, 'utf-8', 0.123, false, StringLength::INVALID],
-            [0, 1, 'utf-8', ['foo'], false, StringLength::INVALID],
-            [0, 1, 'utf-8', false, false, StringLength::INVALID],
-            [0, 1, 'utf-8', null, false, StringLength::INVALID],
-            [0, 1, 'utf-8', (object) [], false, StringLength::INVALID],
+            'empty, utf-8, no-constraint'    => [0, null, 'utf-8', '', true, null],
+            'empty, iso, no-constraint'      => [0, null, 'ISO-8859-16', '', true, null],
+            'empty, min constraint'          => [1, null, 'utf-8', '', false, StringLength::TOO_SHORT],
+            'non empty, no constraint'       => [0, null, 'utf-8', 'a', true, null],
+            'non empty, no constraint - 2'   => [0, null, 'utf-8', 'aa', true, null],
+            'non empty, min constraint'      => [1, null, 'utf-8', 'a', true, null],
+            'too long'                       => [1, 2, 'utf-8', 'aaa', false, StringLength::TOO_LONG],
+            'exact whitespace'               => [2, 2, 'utf-8', '  ', true, null],
+            'exact non-empty'                => [2, 2, 'utf-8', 'aa', true, null],
+            'exact utf8'                     => [3, 3, 'utf-8', 'äöü', true, null],
+            'non empty utf8, max constraint' => [0, 6, 'utf-8', 'Müller', true, null],
+            'utf8 - too long'                => [0, 6, 'utf-8', 'Müllered', false, null],
+            'invalid arg: int'               => [0, 1, 'utf-8', 1, false, StringLength::INVALID],
+            'invalid arg: float'             => [0, 1, 'utf-8', 0.123, false, StringLength::INVALID],
+            'invalid arg: array'             => [0, 1, 'utf-8', ['foo'], false, StringLength::INVALID],
+            'invalid arg: bool'              => [0, 1, 'utf-8', false, false, StringLength::INVALID],
+            'invalid arg: null'              => [0, 1, 'utf-8', null, false, StringLength::INVALID],
+            'invalid arg: object'            => [0, 1, 'utf-8', (object) [], false, StringLength::INVALID],
         ];
     }
 
