@@ -1736,6 +1736,14 @@
     </RedundantCondition>
   </file>
   <file src="src/Regex.php">
+    <DeprecatedConstant>
+      <code><![CDATA[self::ERROROUS]]></code>
+      <code><![CDATA[self::ERROROUS]]></code>
+    </DeprecatedConstant>
+    <DeprecatedMethod>
+      <code><![CDATA[setPattern]]></code>
+      <code><![CDATA[setPattern]]></code>
+    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA[is_array($pattern)]]></code>
     </DocblockTypeContradiction>
@@ -2779,6 +2787,12 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/RegexTest.php">
+    <DeprecatedConstant>
+      <code><![CDATA[Regex::ERROROUS]]></code>
+    </DeprecatedConstant>
+    <DeprecatedMethod>
+      <code><![CDATA[getPattern]]></code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$options]]></code>
       <code><![CDATA[$options]]></code>
