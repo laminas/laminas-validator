@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator;
 
+use Generator;
 use Laminas\Validator\Uuid;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Ramsey\Uuid\Uuid as UuidGen;
 use stdClass;
 
-/**
- * Uuid test cases based on https://github.com/beberlei/assert/blob/master/tests/Assert/Tests/AssertTest.php
- */
+use function sprintf;
+
 final class UuidTest extends TestCase
 {
     private Uuid $validator;
@@ -46,23 +47,25 @@ final class UuidTest extends TestCase
     }
 
     /**
-     * @psalm-return array<string, array{string}>
+     * @psalm-return Generator<string, array{0: string}>
      */
-    public static function validUuidProvider(): array
+    public static function validUuidProvider(): Generator
     {
-        return [
-            'zero-fill' => ['00000000-0000-0000-0000-000000000000'],
-            'version-1' => ['ff6f8cb0-c57d-11e1-9b21-0800200c9a66'],
-            'version-2' => ['ff6f8cb0-c57d-21e1-9b21-0800200c9a66'],
-            'version-3' => ['ff6f8cb0-c57d-31e1-9b21-0800200c9a66'],
-            'version-4' => ['ff6f8cb0-c57d-41e1-9b21-0800200c9a66'],
-            'version-5' => ['ff6f8cb0-c57d-51e1-9b21-0800200c9a66'],
-            'uppercase' => ['FF6F8CB0-C57D-11E1-9B21-0800200C9A66'],
-        ];
+        yield 'zero-fill' => ['00000000-0000-0000-0000-000000000000'];
+
+        for ($i = 0; $i < 10; $i++) {
+            yield sprintf('v1-#%d', $i) => [UuidGen::uuid1()->toString()];
+            yield sprintf('v2-#%d', $i) => [UuidGen::uuid2(1)->toString()];
+            yield sprintf('v3-#%d', $i) => [UuidGen::uuid3(UuidGen::uuid4(), 'foo')->toString()];
+            yield sprintf('v4-#%d', $i) => [UuidGen::uuid4()->toString()];
+            yield sprintf('v5-#%d', $i) => [UuidGen::uuid5(UuidGen::uuid4(), 'foo')->toString()];
+            yield sprintf('v6-#%d', $i) => [UuidGen::uuid6()->toString()];
+            yield sprintf('v7-#%d', $i) => [UuidGen::uuid7()->toString()];
+        }
     }
 
     /**
-     * @psalm-return array<string, array{string|int|stdClass, string}>
+     * @psalm-return array<string, array{0: mixed, 1: string}>
      */
     public static function invalidUuidProvider(): array
     {
