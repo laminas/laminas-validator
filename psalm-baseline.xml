@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.24.0@462c80e31c34e58cc4f750c656be3927e80e550e">
+<files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
   <file src="bin/update_hostname_validator.php">
     <MissingClosureParamType>
       <code><![CDATA[$domain]]></code>
@@ -1736,6 +1736,14 @@
     </RedundantCondition>
   </file>
   <file src="src/Regex.php">
+    <DeprecatedConstant>
+      <code><![CDATA[self::ERROROUS]]></code>
+      <code><![CDATA[self::ERROROUS]]></code>
+    </DeprecatedConstant>
+    <DeprecatedMethod>
+      <code><![CDATA[setPattern]]></code>
+      <code><![CDATA[setPattern]]></code>
+    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA[is_array($pattern)]]></code>
     </DocblockTypeContradiction>
@@ -2729,6 +2737,12 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/RegexTest.php">
+    <DeprecatedConstant>
+      <code><![CDATA[Regex::ERROROUS]]></code>
+    </DeprecatedConstant>
+    <DeprecatedMethod>
+      <code><![CDATA[getPattern]]></code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$options]]></code>
       <code><![CDATA[$options]]></code>

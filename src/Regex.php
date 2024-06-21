@@ -18,7 +18,10 @@ class Regex extends AbstractValidator
 {
     public const INVALID   = 'regexInvalid';
     public const NOT_MATCH = 'regexNotMatch';
-    public const ERROROUS  = 'regexErrorous';
+    /**
+     * @deprecated Since 2.60.0 This error constant will be removed in v3.0
+     */
+    public const ERROROUS = 'regexErrorous';
 
     /** @var array */
     protected $messageTemplates = [
@@ -73,6 +76,8 @@ class Regex extends AbstractValidator
     /**
      * Returns the pattern option
      *
+     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
+     *
      * @return non-empty-string|null
      */
     public function getPattern()
@@ -83,9 +88,11 @@ class Regex extends AbstractValidator
     /**
      * Sets the pattern option
      *
+     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
+     *
      * @param non-empty-string $pattern
-     * @throws Exception\InvalidArgumentException If there is a fatal error in pattern matching.
      * @return $this Provides a fluent interface
+     * @throws Exception\InvalidArgumentException If there is a fatal error in pattern matching.
      */
     public function setPattern($pattern)
     {
