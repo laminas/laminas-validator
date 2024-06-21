@@ -72,6 +72,8 @@ class StringLength extends AbstractValidator
     /**
      * Returns the min option
      *
+     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
+     *
      * @return int
      */
     public function getMin()
@@ -82,9 +84,11 @@ class StringLength extends AbstractValidator
     /**
      * Sets the min option
      *
+     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
+     *
      * @param  int $min
-     * @throws Exception\InvalidArgumentException
      * @return $this Provides a fluent interface
+     * @throws Exception\InvalidArgumentException
      */
     public function setMin($min)
     {
@@ -101,6 +105,8 @@ class StringLength extends AbstractValidator
     /**
      * Returns the max option
      *
+     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
+     *
      * @return int|null
      */
     public function getMax()
@@ -111,9 +117,11 @@ class StringLength extends AbstractValidator
     /**
      * Sets the max option
      *
+     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
+     *
      * @param  int|null $max
-     * @throws Exception\InvalidArgumentException
      * @return $this Provides a fluent interface
+     * @throws Exception\InvalidArgumentException
      */
     public function setMax($max)
     {
@@ -133,6 +141,8 @@ class StringLength extends AbstractValidator
     /**
      * Get the string wrapper to detect the string length
      *
+     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
+     *
      * @return StringWrapper
      */
     public function getStringWrapper()
@@ -146,6 +156,8 @@ class StringLength extends AbstractValidator
     /**
      * Set the string wrapper to detect the string length
      *
+     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
+     *
      * @return void
      */
     public function setStringWrapper(StringWrapper $stringWrapper)
@@ -157,6 +169,8 @@ class StringLength extends AbstractValidator
     /**
      * Returns the actual encoding
      *
+     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
+     *
      * @return string
      */
     public function getEncoding()
@@ -166,6 +180,8 @@ class StringLength extends AbstractValidator
 
     /**
      * Sets a new encoding to use
+     *
+     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
      *
      * @param string $encoding
      * @return $this
@@ -181,6 +197,8 @@ class StringLength extends AbstractValidator
     /**
      * Returns the length option
      *
+     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
+     *
      * @return int
      */
     private function getLength()
@@ -190,6 +208,8 @@ class StringLength extends AbstractValidator
 
     /**
      * Sets the length option
+     *
+     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
      *
      * @param  int $length
      * @return $this Provides a fluent interface

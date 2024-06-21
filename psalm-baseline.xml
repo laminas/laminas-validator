@@ -1803,6 +1803,22 @@
     </PossiblyUndefinedVariable>
   </file>
   <file src="src/StringLength.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getEncoding]]></code>
+      <code><![CDATA[getEncoding]]></code>
+      <code><![CDATA[getLength]]></code>
+      <code><![CDATA[getLength]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getStringWrapper]]></code>
+      <code><![CDATA[setLength]]></code>
+    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA[is_string($value)]]></code>
     </DocblockTypeContradiction>
@@ -2835,6 +2851,17 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/StringLengthTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getEncoding]]></code>
+      <code><![CDATA[getEncoding]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[setEncoding]]></code>
+      <code><![CDATA[setMax]]></code>
+      <code><![CDATA[setMax]]></code>
+      <code><![CDATA[setMin]]></code>
+      <code><![CDATA[setMin]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[[1 => 1]]]></code>
     </InvalidArgument>
