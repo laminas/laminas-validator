@@ -69,6 +69,8 @@ class Callback extends AbstractValidator
     /**
      * Returns the set callback
      *
+     * @deprecated Since 2.60.0 All option setters and getters will be removed in v3.0
+     *
      * @return callable|null
      */
     public function getCallback()
@@ -78,6 +80,8 @@ class Callback extends AbstractValidator
 
     /**
      * Sets the callback
+     *
+     * @deprecated Since 2.60.0 All option setters and getters will be removed in v3.0
      *
      * @param callable $callback
      * @return $this Provides a fluent interface
@@ -96,6 +100,8 @@ class Callback extends AbstractValidator
     /**
      * Returns the set options for the callback
      *
+     * @deprecated Since 2.60.0 All option setters and getters will be removed in v3.0
+     *
      * @return array<array-key, mixed>
      */
     public function getCallbackOptions()
@@ -105,6 +111,8 @@ class Callback extends AbstractValidator
 
     /**
      * Sets options for the callback
+     *
+     * @deprecated Since 2.60.0 All option setters and getters will be removed in v3.0
      *
      * @param array<array-key, mixed> $options
      * @return $this Provides a fluent interface
