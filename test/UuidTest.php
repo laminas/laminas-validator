@@ -4,14 +4,10 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator;
 
-use Generator;
 use Laminas\Validator\Uuid;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Ramsey\Uuid\Uuid as UuidGen;
 use stdClass;
-
-use function sprintf;
 
 final class UuidTest extends TestCase
 {
@@ -47,21 +43,21 @@ final class UuidTest extends TestCase
     }
 
     /**
-     * @psalm-return Generator<string, array{0: string}>
+     * @psalm-return array<string, array{0: string}>
      */
-    public static function validUuidProvider(): Generator
+    public static function validUuidProvider(): array
     {
-        yield 'zero-fill' => ['00000000-0000-0000-0000-000000000000'];
-
-        for ($i = 0; $i < 10; $i++) {
-            yield sprintf('v1-#%d', $i) => [UuidGen::uuid1()->toString()];
-            yield sprintf('v2-#%d', $i) => [UuidGen::uuid2(1)->toString()];
-            yield sprintf('v3-#%d', $i) => [UuidGen::uuid3(UuidGen::uuid4(), 'foo')->toString()];
-            yield sprintf('v4-#%d', $i) => [UuidGen::uuid4()->toString()];
-            yield sprintf('v5-#%d', $i) => [UuidGen::uuid5(UuidGen::uuid4(), 'foo')->toString()];
-            yield sprintf('v6-#%d', $i) => [UuidGen::uuid6()->toString()];
-            yield sprintf('v7-#%d', $i) => [UuidGen::uuid7()->toString()];
-        }
+        return [
+            'zero-fill' => ['00000000-0000-0000-0000-000000000000'],
+            'version-1' => ['74f941b0-3083-11ef-9a10-ee9df49b771c'],
+            'version-2' => ['00000014-3083-21ef-bd01-ee9df49b771c'],
+            'version-3' => ['9bbcc896-cd1f-3f0c-869b-d0e039ed363d'],
+            'version-4' => ['b2e6a6ac-5efe-4f45-8210-147ff417da2e'],
+            'version-5' => ['de560e31-bef7-589b-82b6-449f06ee38db'],
+            'version-6' => ['1ef30837-4fa1-6b12-995a-ee9df49b771c'],
+            'version-7' => ['01903f85-fa15-7095-ab0a-e250c9310140'],
+            'uppercase' => ['FF6F8CB0-C57D-11E1-9B21-0800200C9A66'],
+        ];
     }
 
     /**
