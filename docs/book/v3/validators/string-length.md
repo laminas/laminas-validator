@@ -13,9 +13,9 @@ length.
 
 The following options are supported for `Laminas\Validator\StringLength`:
 
-- `encoding`: Sets the `ICONV` encoding to use with the string.
-- `min`: Sets the minimum allowed length for a string.
-- `max`: Sets the maximum allowed length for a string.
+- `encoding`: Sets the expected encoding of the input string. _(Default `'utf-8'`)_
+- `min`: Sets the minimum allowed length for a string. _(Default `0`)_
+- `max`: Sets the maximum allowed length for a string. _(Default `null`)_
 
 ## Default behaviour
 
@@ -37,17 +37,6 @@ $validator->isValid("Test"); // returns true
 $validator->isValid("Testing"); // returns false
 ```
 
-You can set the maximum allowed length after instantiation by using the
-`setMax()` method; `getMax()` retrieves the value.
-
-```php
-$validator = new Laminas\Validator\StringLength();
-$validator->setMax(6);
-
-$validator->isValid("Test"); // returns true
-$validator->isValid("Testing"); // returns false
-```
-
 ## Limiting the minimum string length
 
 To limit the minimal required string length, set the `min`
@@ -60,22 +49,11 @@ $validator->isValid("Test"); // returns false
 $validator->isValid("Testing"); // returns true
 ```
 
-You can set the value after instantiation using the `setMin()`
-method; `getMin()` retrieves the value.
-
-```php
-$validator = new Laminas\Validator\StringLength();
-$validator->setMin(5);
-
-$validator->isValid("Test"); // returns false
-$validator->isValid("Testing"); // returns true
-```
-
 ## Limiting both minimum and maximum string length
 
 Sometimes you will need to set both a minimum and a maximum string length;
 as an example, in a username input, you may want to limit the name to a maximum
-of 30 characters, but require at least three charcters:
+of 30 characters, but require at least three characters:
 
 ```php
 $validator = new Laminas\Validator\StringLength(['min' => 3, 'max' => 30]);
@@ -106,30 +84,25 @@ $validator->isValid('Testi'); // returns false
 
 ## Encoding of values
 
-Strings are always using a encoding. Even when you don't set the encoding
+Strings are always using an encoding. Even when you don't set the encoding
 explicitly, PHP uses one. When your application is using a different encoding
 than PHP itself, you should set an encoding manually.
 
-You can set an encoding at instantiation with the `encoding` option, or by using
-the `setEncoding()` method. We assume that your installation uses ISO and your
-application it set to ISO. In this case you will see the below behaviour.
+You can set an encoding at instantiation with the `encoding` option. Assuming that your installation and application uses UTF-8 encoding, you will see the below behaviour.
 
 ```php
 $validator = new Laminas\Validator\StringLength(['min' => 6]);
-$validator->isValid("Ärger"); // returns false
-
-$validator->setEncoding("UTF-8");
 $validator->isValid("Ärger"); // returns true
 
-$validator2 = new Laminas\Validator\StringLength([
-    'min' => 6,
-    'encoding' => 'UTF-8',
-]);
-$validator2->isValid("Ärger"); // returns true
+$validator = new Laminas\Validator\StringLength(['min' => 6, 'encoding' => 'ascii']);
+$validator->isValid("Ärger"); // returns false
 ```
 
 When your installation and your application are using different encodings, then
 you should always set an encoding manually.
+
+NOTE: **Default Encoding**
+By default, the expected input encoding is `UTF-8`
 
 ## Validation Messages
 
@@ -137,5 +110,5 @@ Using the setMessage() method you can set another message to be returned in case
 
 ```php
 $validator = new Laminas\Validator\StringLength(['min' => 3, 'max' => 30]);
-$validator->setMessage('Youre string is too long. You typed '%length%' chars.', Laminas\Validator\StringLength::TOO_LONG);
+$validator->setMessage('Your string is too long. You typed '%length%' chars.', Laminas\Validator\StringLength::TOO_LONG);
 ```
