@@ -69,7 +69,6 @@
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
     </UndefinedThisPropertyAssignment>
   </file>
   <file src="src/Barcode.php">
@@ -353,32 +352,6 @@
       <code><![CDATA[setMax]]></code>
       <code><![CDATA[setMin]]></code>
     </PossiblyUnusedMethod>
-  </file>
-  <file src="src/Bitwise.php">
-    <MixedAssignment>
-      <code><![CDATA[$temp['control']]]></code>
-      <code><![CDATA[$temp['operator']]]></code>
-      <code><![CDATA[$temp['strict']]]></code>
-    </MixedAssignment>
-    <MixedOperand>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedOperand>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$temp]]></code>
-    </PossiblyUndefinedVariable>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$control]]></code>
-    </PropertyNotSetInConstructor>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(bool) $strict]]></code>
-      <code><![CDATA[(int) $control]]></code>
-    </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Callback.php">
     <MixedAssignment>
@@ -1794,18 +1767,8 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/BitwiseTest.php">
-    <InvalidArgument>
-      <code><![CDATA[$control]]></code>
-      <code><![CDATA[$control]]></code>
-      <code><![CDATA[0x1]]></code>
-      <code><![CDATA[0x1]]></code>
-      <code><![CDATA[0x1]]></code>
-      <code><![CDATA[0x1]]></code>
-      <code><![CDATA[0x1]]></code>
-    </InvalidArgument>
     <PossiblyUnusedMethod>
-      <code><![CDATA[bitwiseXorProvider]]></code>
-      <code><![CDATA[constructDataProvider]]></code>
+      <code><![CDATA[basicDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/BusinessIdentifierCodeTest.php">
