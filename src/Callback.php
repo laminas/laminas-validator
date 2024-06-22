@@ -4,163 +4,120 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Closure;
 use Exception;
 use Laminas\Validator\Exception\InvalidArgumentException;
 
 use function array_merge;
-use function call_user_func_array;
+use function assert;
+use function is_array;
+use function is_bool;
 use function is_callable;
 
 /**
- * @psalm-type OptionsProperty = array{
- *     callback: callable|null,
- *     callbackOptions: array<array-key, mixed>,
- *     throwExceptions: bool,
- * }
  * @psalm-type OptionsArgument = array{
- *     callback: callable,
+ *     callback: callable(mixed...): bool,
  *     callbackOptions?: array<array-key, mixed>,
+ *     bind?: bool,
  *     throwExceptions?: bool,
- *     ...<string, mixed>
- * }
+ * }&array<string, mixed>
  */
 final class Callback extends AbstractValidator
 {
-    /**
-     * Invalid callback
-     */
     public const INVALID_CALLBACK = 'callbackInvalid';
-
-    /**
-     * Invalid value
-     */
-    public const INVALID_VALUE = 'callbackValue';
+    public const INVALID_VALUE    = 'callbackValue';
 
     /**
      * Validation failure message template definitions
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::INVALID_VALUE    => 'The input is not valid',
         self::INVALID_CALLBACK => 'An exception has been raised within the callback',
     ];
 
-    /**
-     * Default options to set for the validator
-     *
-     * @var OptionsProperty
-     */
-    protected $options = [
-        'callback'        => null, // Callback in a call_user_func format, string || array
-        'callbackOptions' => [], // Options for the callback
-        'throwExceptions' => false, // Whether to throw exceptions raised within the callback or not
-    ];
+    /** @var Closure(mixed...): bool */
+    private readonly Closure $callback;
+    private readonly bool $throwExceptions;
+    /** @var array<array-key, mixed> */
+    private readonly array $callbackOptions;
 
     /** @param OptionsArgument|callable $options */
-    public function __construct($options = null)
+    public function __construct(array|callable $options)
     {
-        if (is_callable($options)) {
+        if (! is_array($options)) {
             $options = ['callback' => $options];
         }
+
+        /** @psalm-var OptionsArgument&array<string, mixed> $options */
+
+        $callback        = $options['callback'] ?? null;
+        $callbackOptions = $options['callbackOptions'] ?? [];
+        $throw           = $options['throwExceptions'] ?? false;
+        $bind            = $options['bind'] ?? false;
+
+        if (! is_callable($callback)) {
+            throw new InvalidArgumentException('A callable must be provided');
+        }
+
+        assert(is_bool($throw));
+        assert(is_bool($bind));
+
+        /** @psalm-var Closure(mixed...):bool $callback */
+        $callback       = $bind
+            ? $callback(...)->bindTo($this)
+            : $callback(...);
+        $this->callback = $callback;
+
+        $this->throwExceptions = $throw;
+        $this->callbackOptions = $callbackOptions;
 
         parent::__construct($options);
     }
 
     /**
-     * Returns the set callback
+     * Returns true if and only if the set callback returns true for the provided $value
      *
-     * @return callable|null
+     * @param array<string, mixed> $context Additional context to provide to the callback
      */
-    public function getCallback()
-    {
-        return $this->options['callback'];
-    }
-
-    /**
-     * Sets the callback
-     *
-     * @param callable $callback
-     * @return $this Provides a fluent interface
-     * @throws InvalidArgumentException
-     */
-    public function setCallback($callback)
-    {
-        if (! is_callable($callback)) {
-            throw new InvalidArgumentException('Invalid callback given');
-        }
-
-        $this->options['callback'] = $callback;
-        return $this;
-    }
-
-    /**
-     * Returns the set options for the callback
-     *
-     * @return array<array-key, mixed>
-     */
-    public function getCallbackOptions()
-    {
-        return $this->options['callbackOptions'];
-    }
-
-    /**
-     * Sets options for the callback
-     *
-     * @param array<array-key, mixed> $options
-     * @return $this Provides a fluent interface
-     */
-    public function setCallbackOptions(mixed $options)
-    {
-        $this->options['callbackOptions'] = (array) $options;
-        return $this;
-    }
-
-    /**
-     * Returns true if and only if the set callback returns
-     * for the provided $value
-     *
-     * @param  mixed $value
-     * @param  mixed $context Additional context to provide to the callback
-     * @return bool
-     * @throws InvalidArgumentException
-     */
-    public function isValid($value, $context = null)
+    public function isValid(mixed $value, ?array $context = null): bool
     {
         $this->setValue($value);
 
-        $options  = $this->getCallbackOptions();
-        $callback = $this->getCallback();
-        if (! is_callable($callback)) {
-            throw new InvalidArgumentException('No callback given');
-        }
+        $hasContext = $context !== null && $context !== [];
 
         $args = [$value];
-        if (empty($options) && ! empty($context)) {
+        if ($this->callbackOptions === [] && $hasContext) {
             $args[] = $context;
         }
-        if (! empty($options) && empty($context)) {
-            $args = array_merge($args, $options);
+
+        if ($this->callbackOptions !== [] && ! $hasContext) {
+            $args = array_merge($args, $this->callbackOptions);
         }
-        if (! empty($options) && ! empty($context)) {
+
+        if ($this->callbackOptions !== [] && $hasContext) {
             $args[] = $context;
-            $args   = array_merge($args, $options);
+            $args   = array_merge($args, $this->callbackOptions);
         }
 
         try {
-            if (! call_user_func_array($callback, $args)) {
-                $this->error(self::INVALID_VALUE);
-                return false;
-            }
+            $result = ($this->callback)(...$args);
         } catch (Exception $exception) {
             /**
              * Intentionally excluding catchable \Error as they are indicative of a bug and should not be suppressed
              */
             $this->error(self::INVALID_CALLBACK);
 
-            if ($this->options['throwExceptions'] === true) {
+            if ($this->throwExceptions === true) {
                 throw $exception;
             }
+
+            return false;
+        }
+
+        if ($result !== true) {
+            $this->error(self::INVALID_VALUE);
 
             return false;
         }

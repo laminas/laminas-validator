@@ -352,28 +352,6 @@
       <code><![CDATA[setMin]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="src/Callback.php">
-    <MixedAssignment>
-      <code><![CDATA[$args[]]]></code>
-      <code><![CDATA[$args[]]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[array<array-key, mixed>]]></code>
-      <code><![CDATA[callable|null]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->options['callback']]]></code>
-      <code><![CDATA[$this->options['callbackOptions']]]></code>
-    </MixedReturnStatement>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(array) $options]]></code>
-    </RedundantCastGivenDocblockType>
-    <RiskyTruthyFalsyComparison>
-      <code><![CDATA[empty($context)]]></code>
-      <code><![CDATA[empty($context)]]></code>
-      <code><![CDATA[empty($context)]]></code>
-    </RiskyTruthyFalsyComparison>
-  </file>
   <file src="src/CreditCard.php">
     <InvalidOperand>
       <code><![CDATA[$value[$i]]]></code>
@@ -395,7 +373,7 @@
       <code><![CDATA[$temp['type']]]></code>
     </MixedAssignment>
     <MixedInferredReturnType>
-      <code><![CDATA[callable]]></code>
+      <code><![CDATA[callable(mixed...):bool]]></code>
       <code><![CDATA[list<string>]]></code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
@@ -1715,15 +1693,8 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/CallbackTest.php">
-    <MissingClosureParamType>
-      <code><![CDATA[$baz]]></code>
-      <code><![CDATA[$c]]></code>
-      <code><![CDATA[$c]]></code>
-      <code><![CDATA[$v]]></code>
-      <code><![CDATA[$v]]></code>
-    </MissingClosureParamType>
     <PossiblyUnusedMethod>
-      <code><![CDATA[optionsCallback]]></code>
+      <code><![CDATA[emptyContextProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/CreditCardTest.php">
@@ -2383,10 +2354,6 @@
     <InvalidArgument>
       <code><![CDATA[1]]></code>
     </InvalidArgument>
-    <MissingClosureParamType>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </MissingClosureParamType>
     <PossiblyUnusedMethod>
       <code><![CDATA[breakChainFlags]]></code>
       <code><![CDATA[handleNotFoundError]]></code>

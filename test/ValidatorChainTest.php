@@ -6,6 +6,7 @@ namespace LaminasTest\Validator;
 
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Between;
+use Laminas\Validator\Callback;
 use Laminas\Validator\GreaterThan;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\Timezone;
@@ -240,15 +241,15 @@ final class ValidatorChainTest extends TestCase
     public function testCanAttachMultipleValidatorsOfTheSameTypeAsDiscreteInstances(): void
     {
         $this->validator->attachByName('Callback', [
-            'callback' => static fn($value): bool => true,
+            'callback' => static fn(mixed $value): bool => true,
             'messages' => [
-                'callbackValue' => 'This should not be seen in the messages',
+                Callback::INVALID_VALUE => 'This should not be seen in the messages',
             ],
         ]);
         $this->validator->attachByName('Callback', [
-            'callback' => static fn($value): bool => false,
+            'callback' => static fn(mixed $value): bool => false,
             'messages' => [
-                'callbackValue' => 'Second callback trapped',
+                Callback::INVALID_VALUE => 'Second callback trapped',
             ],
         ]);
 

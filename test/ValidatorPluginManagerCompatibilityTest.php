@@ -7,6 +7,7 @@ namespace LaminasTest\Validator;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\ServiceManager\Test\CommonPluginManagerTrait;
 use Laminas\Validator\Bitwise;
+use Laminas\Validator\Callback;
 use Laminas\Validator\Exception\RuntimeException;
 use Laminas\Validator\Explode;
 use Laminas\Validator\ValidatorInterface;
@@ -100,6 +101,11 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
 
             // Skipping due to required options
             if ($target === Explode::class) {
+                continue;
+            }
+
+            // Skipping due to required options
+            if ($target === Callback::class) {
                 continue;
             }
 
