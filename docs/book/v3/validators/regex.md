@@ -1,7 +1,8 @@
 # Regex Validator
 
-This validator allows you to validate if a given string conforms a defined
-regular expression.
+This validator allows you to validate if a given string conforms a defined regular expression.
+
+It will *not* automatically cast integers or floats to string prior to evaluation - when provided a non string value, validation will fail.
 
 ## Supported options
 
@@ -11,8 +12,7 @@ The following options are supported for `Laminas\Validator\Regex`:
 
 ## Usage
 
-Validation with regular expressions allows complex validations
-without writing a custom validator.
+Validation with regular expressions allows complex validations without writing a custom validator.
 
 ```php
 $validator = new Laminas\Validator\Regex(['pattern' => '/^Test/']);
@@ -25,17 +25,3 @@ $validator->isValid("Pest"); // returns false
 The pattern uses the same syntax as `preg_match()`. For details about regular
 expressions take a look into [PHP's manual about PCRE pattern
 syntax](http://php.net/reference.pcre.pattern.syntax).
-
-## Pattern handling
-
-It is also possible to set a different pattern afterwards by using
-`setPattern()` and to get the actual set pattern with `getPattern()`.
-
-```php
-$validator = new Laminas\Validator\Regex(['pattern' => '/^Test/']);
-$validator->setPattern('ing$/');
-
-$validator->isValid("Test"); // returns false
-$validator->isValid("Testing"); // returns true
-$validator->isValid("Pest"); // returns false
-```
