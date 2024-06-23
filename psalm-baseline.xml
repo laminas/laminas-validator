@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.24.0@462c80e31c34e58cc4f750c656be3927e80e550e">
+<files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
   <file src="bin/update_hostname_validator.php">
     <MissingClosureParamType>
       <code><![CDATA[$domain]]></code>
@@ -44,7 +44,6 @@
       <code><![CDATA[$messageKey]]></code>
     </PossiblyUnusedParam>
     <UndefinedThisPropertyAssignment>
-      <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
@@ -540,28 +539,17 @@
     </UnusedClass>
   </file>
   <file src="src/Explode.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[[$value]]]></code>
-    </DocblockTypeContradiction>
-    <MixedArrayAssignment>
-      <code><![CDATA[$this->abstractOptions['messages'][]]]></code>
-    </MixedArrayAssignment>
-    <MixedAssignment>
-      <code><![CDATA[$value]]></code>
-    </MixedAssignment>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[setBreakOnFirstFailure]]></code>
-      <code><![CDATA[setValueDelimiter]]></code>
-    </PossiblyUnusedMethod>
-    <PropertyTypeCoercion>
-      <code><![CDATA[$this->abstractOptions]]></code>
-    </PropertyTypeCoercion>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(bool) $break]]></code>
-    </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[null !== $delimiter]]></code>
-    </RedundantConditionGivenDocblockType>
+    <LessSpecificReturnStatement>
+      <code><![CDATA[$this->getPluginManager()->build($name, $options)]]></code>
+    </LessSpecificReturnStatement>
+    <MixedInferredReturnType>
+      <code><![CDATA[ValidatorInterface]]></code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement>
+      <code><![CDATA[$this->getPluginManager()->build($name, $options)]]></code>
+      <code><![CDATA[$this->getPluginManager()->get($validator)]]></code>
+      <code><![CDATA[$this->getPluginManager()->get($validator)]]></code>
+    </MixedReturnStatement>
     <TooManyArguments>
       <code><![CDATA[isValid]]></code>
     </TooManyArguments>
@@ -1807,18 +1795,6 @@
     <UnusedPsalmSuppress>
       <code><![CDATA[TooManyArguments]]></code>
     </UnusedPsalmSuppress>
-  </file>
-  <file src="test/ExplodeTest.php">
-    <InvalidArgument>
-      <code><![CDATA['inarray']]></code>
-    </InvalidArgument>
-    <MissingClosureParamType>
-      <code><![CDATA[$c]]></code>
-      <code><![CDATA[$v]]></code>
-    </MissingClosureParamType>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[getExpectedData]]></code>
-    </PossiblyUnusedMethod>
   </file>
   <file src="test/File/CountTest.php">
     <MixedArgument>

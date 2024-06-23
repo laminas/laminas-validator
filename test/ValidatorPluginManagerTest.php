@@ -9,17 +9,18 @@ use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\RuntimeException;
-use Laminas\Validator\Explode;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\Translator\TranslatorInterface;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
+use Laminas\Validator\ValidatorPluginManagerAwareInterface;
 use LaminasTest\Validator\TestAsset\InMemoryContainer;
 use LaminasTest\Validator\TestAsset\Translator;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
 use function assert;
+use function is_scalar;
 use function sprintf;
 
 final class ValidatorPluginManagerTest extends TestCase
@@ -72,7 +73,7 @@ final class ValidatorPluginManagerTest extends TestCase
                 [
                     ['MvcTranslator', false],
                     [\Laminas\I18n\Translator\TranslatorInterface::class, true],
-                ]
+                ],
             );
 
         $container
@@ -100,7 +101,7 @@ final class ValidatorPluginManagerTest extends TestCase
                 [
                     ['MvcTranslator', false],
                     [TranslatorInterface::class, false],
-                ]
+                ],
             );
 
         $container
@@ -125,7 +126,7 @@ final class ValidatorPluginManagerTest extends TestCase
         } catch (Exception $e) {
             self::fail(sprintf(
                 'Unexpected exception of type "%s" when testing for invalid validator types',
-                $e::class
+                $e::class,
             ));
         }
     }
@@ -142,17 +143,49 @@ final class ValidatorPluginManagerTest extends TestCase
         } catch (Exception $e) {
             self::fail(sprintf(
                 'Unexpected exception of type "%s" when testing for invalid validator types',
-                $e::class
+                $e::class,
             ));
         }
     }
 
     public function testInjectedValidatorPluginManager(): void
     {
-        $validator = $this->validators->get(Explode::class);
+        $validator = new class implements ValidatorInterface, ValidatorPluginManagerAwareInterface
+        {
+            private ?ValidatorPluginManager $plugins = null;
 
-        assert($validator instanceof Explode);
+            public function isValid(mixed $value): bool
+            {
+                return is_scalar($value);
+            }
 
-        self::assertSame($this->validators, $validator->getValidatorPluginManager());
+            public function getMessages(): array
+            {
+                return [];
+            }
+
+            public function setValidatorPluginManager(ValidatorPluginManager $pluginManager): void
+            {
+                $this->plugins = $pluginManager;
+            }
+
+            public function getValidatorPluginManager(): ValidatorPluginManager
+            {
+                assert($this->plugins !== null);
+
+                return $this->plugins;
+            }
+        };
+
+        $plugins = new ValidatorPluginManager(new ServiceManager(), [
+            'factories' => [
+                'test' => static fn () => $validator,
+            ],
+        ]);
+
+        $retrieved = $plugins->get('test');
+        self::assertSame($validator, $retrieved);
+
+        self::assertSame($plugins, $validator->getValidatorPluginManager());
     }
 }
