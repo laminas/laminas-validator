@@ -386,6 +386,10 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Callback.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getCallback]]></code>
+      <code><![CDATA[getCallbackOptions]]></code>
+    </DeprecatedMethod>
     <MixedAssignment>
       <code><![CDATA[$args[]]]></code>
       <code><![CDATA[$args[]]]></code>
@@ -2156,6 +2160,17 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/CallbackTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getCallback]]></code>
+      <code><![CDATA[getCallbackOptions]]></code>
+      <code><![CDATA[getCallbackOptions]]></code>
+      <code><![CDATA[getCallbackOptions]]></code>
+      <code><![CDATA[setCallback]]></code>
+      <code><![CDATA[setCallback]]></code>
+      <code><![CDATA[setCallback]]></code>
+      <code><![CDATA[setCallbackOptions]]></code>
+      <code><![CDATA[setCallbackOptions]]></code>
+    </DeprecatedMethod>
     <MissingClosureParamType>
       <code><![CDATA[$baz]]></code>
       <code><![CDATA[$c]]></code>
