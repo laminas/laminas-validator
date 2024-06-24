@@ -187,7 +187,7 @@ passed as the first argument to the callback followed by all other values given
 to `isValid()`; all other options will follow it. The amount and type of options
 which can be used is not limited.
 
-## Callbacks and scope
+## Callbacks and Scope
 
 By default, callbacks are executed in their own scope and do not have access to the validator instance they are executed in.
 
