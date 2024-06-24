@@ -109,7 +109,7 @@ final class Callback extends AbstractValidator
              */
             $this->error(self::INVALID_CALLBACK);
 
-            if ($this->throwExceptions === true) {
+            if ($this->throwExceptions) {
                 throw $exception;
             }
 
