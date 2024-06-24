@@ -1879,6 +1879,9 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Timezone.php">
+    <DeprecatedMethod>
+      <code><![CDATA[calculateTypeValue]]></code>
+    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA[is_string($type)]]></code>
     </DocblockTypeContradiction>
@@ -2985,6 +2988,16 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/TimezoneTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA['abbreviation']]></code>
       <code><![CDATA['abbreviation']]></code>
