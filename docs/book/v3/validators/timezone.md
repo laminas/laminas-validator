@@ -28,10 +28,25 @@ To validate against only the location string you can set the type:
 ```php
 use Laminas\Validator\Timezone;
 
-$validator = new Timezone();
-$validator->setType(Timezone::LOCATION);
+$validator = new Timezone([
+    'type' => Timezone::LOCATION,
+]);
 
 $validator->isValid('America/Los_Angeles'); // returns true
 $validator->isValid('ewt'); // returns false
+$validator->isValid('Foobar');  // returns false
+```
+
+Similarly, to validate only abbreviations:
+
+```php
+use Laminas\Validator\Timezone;
+
+$validator = new Timezone([
+    'type' => Timezone::ABBREVIATION,
+]);
+
+$validator->isValid('America/Los_Angeles'); // returns false
+$validator->isValid('ewt'); // returns true
 $validator->isValid('Foobar');  // returns false
 ```

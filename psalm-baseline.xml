@@ -1521,42 +1521,6 @@
       <code><![CDATA[$temp]]></code>
     </PossiblyUndefinedVariable>
   </file>
-  <file src="src/Timezone.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_string($type)]]></code>
-    </DocblockTypeContradiction>
-    <InvalidOperand>
-      <code><![CDATA[array_search($value, $this->constants)]]></code>
-    </InvalidOperand>
-    <MixedAssignment>
-      <code><![CDATA[$opts['type']]]></code>
-      <code><![CDATA[$type]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedAssignment>
-    <MixedOperand>
-      <code><![CDATA[$type]]></code>
-      <code><![CDATA[$type]]></code>
-      <code><![CDATA[$type]]></code>
-      <code><![CDATA[$type]]></code>
-    </MixedOperand>
-    <PossiblyFalseOperand>
-      <code><![CDATA[array_search($value, $this->constants)]]></code>
-    </PossiblyFalseOperand>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$opts]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyNullArgument>
-      <code><![CDATA[$type]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </PossiblyNullArgument>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$opts]]></code>
-    </PossiblyUndefinedVariable>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[gettype($type)]]></code>
-    </RedundantConditionGivenDocblockType>
-  </file>
   <file src="src/Translator/DummyTranslator.php">
     <RedundantCastGivenDocblockType>
       <code><![CDATA[(int) $number]]></code>
@@ -2315,21 +2279,11 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/TimezoneTest.php">
-    <InvalidArgument>
-      <code><![CDATA['abbreviation']]></code>
-      <code><![CDATA['abbreviation']]></code>
-      <code><![CDATA['location']]></code>
-      <code><![CDATA['location']]></code>
-    </InvalidArgument>
-    <MixedArgument>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[abbreviationProvider]]></code>
       <code><![CDATA[getInvalidTypes]]></code>
       <code><![CDATA[locationAndAbbreviationProvider]]></code>
       <code><![CDATA[locationProvider]]></code>
-      <code><![CDATA[wrongTypesProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/UndisclosedPasswordTest.php">
