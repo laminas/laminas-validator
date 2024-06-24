@@ -68,104 +68,7 @@
       <code><![CDATA[$this->options]]></code>
     </UndefinedThisPropertyAssignment>
   </file>
-  <file src="src/Barcode.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getChecksum]]></code>
-      <code><![CDATA[setAdapter]]></code>
-      <code><![CDATA[useChecksum]]></code>
-      <code><![CDATA[useChecksum]]></code>
-    </DeprecatedMethod>
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_array($options)]]></code>
-      <code><![CDATA[is_string($value)]]></code>
-    </DocblockTypeContradiction>
-    <MixedAssignment>
-      <code><![CDATA[$length]]></code>
-    </MixedAssignment>
-    <MixedMethodCall>
-      <code><![CDATA[new $adapter($options)]]></code>
-    </MixedMethodCall>
-    <MixedOperand>
-      <code><![CDATA[$length]]></code>
-    </MixedOperand>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[getChecksum]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="src/Barcode/AbstractAdapter.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_string($value)]]></code>
-      <code><![CDATA[is_string($value)]]></code>
-    </DocblockTypeContradiction>
-    <InvalidNullableReturnType>
-      <code><![CDATA[useChecksum]]></code>
-    </InvalidNullableReturnType>
-    <InvalidOperand>
-      <code><![CDATA[$barcode[$i]]]></code>
-      <code><![CDATA[$barcode[$i]]]></code>
-      <code><![CDATA[$barcode[$length - $i]]]></code>
-      <code><![CDATA[$barcode[$length - $i]]]></code>
-      <code><![CDATA[$barcode[$length - $i]]]></code>
-      <code><![CDATA[$barcode[$length - $i]]]></code>
-      <code><![CDATA[$row]]></code>
-    </InvalidOperand>
-    <MixedAssignment>
-      <code><![CDATA[$value]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[bool]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->$checksum($value)]]></code>
-    </MixedReturnStatement>
-    <NullableReturnStatement>
-      <code><![CDATA[$this->options['useChecksum']]]></code>
-    </NullableReturnStatement>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$characters]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyInvalidCast>
-      <code><![CDATA[$characters]]></code>
-    </PossiblyInvalidCast>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[code25]]></code>
-      <code><![CDATA[gtin]]></code>
-      <code><![CDATA[identcode]]></code>
-      <code><![CDATA[postnet]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="src/Barcode/Codabar.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-      <code><![CDATA[parent::hasValidCharacters($value)]]></code>
-    </DeprecatedClass>
-    <PossiblyNullArgument>
-      <code><![CDATA[$chars]]></code>
-    </PossiblyNullArgument>
-    <UnusedClass>
-      <code><![CDATA[Codabar]]></code>
-    </UnusedClass>
-  </file>
   <file src="src/Barcode/Code128.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <DeprecatedMethod>
-      <code><![CDATA[getUtf8StringWrapper]]></code>
-      <code><![CDATA[getUtf8StringWrapper]]></code>
-      <code><![CDATA[getUtf8StringWrapper]]></code>
-    </DeprecatedMethod>
-    <DocblockTypeContradiction>
-      <code><![CDATA[! $this->utf8StringWrapper]]></code>
-      <code><![CDATA[$this->utf8StringWrapper]]></code>
-      <code><![CDATA[is_string($value)]]></code>
-    </DocblockTypeContradiction>
     <PossiblyFalseArgument>
       <code><![CDATA[$char]]></code>
       <code><![CDATA[$char]]></code>
@@ -179,12 +82,9 @@
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
     </PossiblyFalseArgument>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$utf8StringWrapper]]></code>
-    </PropertyNotSetInConstructor>
-    <UnusedClass>
-      <code><![CDATA[Code128]]></code>
-    </UnusedClass>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[__construct]]></code>
+    </PossiblyUnusedMethod>
     <UnusedVariable>
       <code><![CDATA[$read]]></code>
       <code><![CDATA[$read]]></code>
@@ -198,253 +98,16 @@
       <code><![CDATA[$read]]></code>
     </UnusedVariable>
   </file>
-  <file src="src/Barcode/Code25.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[Code25]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Code25interleaved.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <InvalidArgument>
-      <code><![CDATA['even']]></code>
-    </InvalidArgument>
-    <UnusedClass>
-      <code><![CDATA[Code25interleaved]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Code39.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <MixedAssignment>
-      <code><![CDATA[$count]]></code>
-      <code><![CDATA[$mod]]></code>
-    </MixedAssignment>
-    <MixedOperand>
-      <code><![CDATA[$count]]></code>
-      <code><![CDATA[$this->check[$char]]]></code>
-    </MixedOperand>
-    <UnusedClass>
-      <code><![CDATA[Code39]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Code39ext.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[Code39ext]]></code>
-    </UnusedClass>
-  </file>
   <file src="src/Barcode/Code93.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <MixedAssignment>
-      <code><![CDATA[$count]]></code>
-      <code><![CDATA[$count]]></code>
-    </MixedAssignment>
-    <MixedOperand>
-      <code><![CDATA[$count]]></code>
-      <code><![CDATA[$count]]></code>
-      <code><![CDATA[$this->check[$char]]]></code>
-      <code><![CDATA[$this->check[$char]]]></code>
-      <code><![CDATA[$this->check[$char] * $length]]></code>
-      <code><![CDATA[$this->check[$char] * $length]]></code>
-    </MixedOperand>
     <PossiblyFalseOperand>
       <code><![CDATA[$check]]></code>
-      <code><![CDATA[array_search($count % 47, $this->check)]]></code>
+      <code><![CDATA[array_search($count % 47, self::CHECK)]]></code>
     </PossiblyFalseOperand>
-    <UnusedClass>
-      <code><![CDATA[Code93]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Code93ext.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[Code93ext]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Ean12.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[Ean12]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Ean13.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[__construct]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="src/Barcode/Ean14.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[Ean14]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Ean18.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[Ean18]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Ean2.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[Ean2]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Ean5.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[Ean5]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Ean8.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-      <code><![CDATA[parent::hasValidLength($value)]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[Ean8]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Gtin12.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[Gtin12]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Gtin13.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[Gtin13]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Gtin14.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[Gtin14]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Identcode.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[Identcode]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Intelligentmail.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[Intelligentmail]]></code>
-    </UnusedClass>
   </file>
   <file src="src/Barcode/Issn.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-      <code><![CDATA[parent::hasValidCharacters($value)]]></code>
-      <code><![CDATA[parent::hasValidChecksum($value)]]></code>
-    </DeprecatedClass>
     <PossiblyInvalidOperand>
       <code><![CDATA[$token]]></code>
     </PossiblyInvalidOperand>
-    <UnusedClass>
-      <code><![CDATA[Issn]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Itf14.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[Itf14]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Leitcode.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[Leitcode]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Planet.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[Planet]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Postnet.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[Postnet]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Royalmail.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-      <code><![CDATA[parent::hasValidCharacters($value)]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[Royalmail]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Sscc.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[Sscc]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Barcode/Upca.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-  </file>
-  <file src="src/Barcode/Upce.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-      <code><![CDATA[parent::hasValidLength($value)]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[Upce]]></code>
-    </UnusedClass>
   </file>
   <file src="src/CreditCard.php">
     <InvalidOperand>
@@ -1680,48 +1343,9 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/BarcodeTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[setAdapter]]></code>
-      <code><![CDATA[setAdapter]]></code>
-      <code><![CDATA[useChecksum]]></code>
-      <code><![CDATA[useChecksum]]></code>
-      <code><![CDATA[useChecksum]]></code>
-      <code><![CDATA[useChecksum]]></code>
-      <code><![CDATA[useChecksum]]></code>
-      <code><![CDATA[useChecksum]]></code>
-    </DeprecatedMethod>
-    <InvalidArgument>
-      <code><![CDATA[123]]></code>
-      <code><![CDATA[06510000.4327]]></code>
-      <code><![CDATA[106510000.4327]]></code>
-      <code><![CDATA[['065100004327']]]></code>
-      <code><![CDATA[['065100004327']]]></code>
-    </InvalidArgument>
-    <InvalidCast>
-      <code><![CDATA[['065100004327']]]></code>
-      <code><![CDATA[['065100004327']]]></code>
-    </InvalidCast>
     <PossiblyUnusedMethod>
-      <code><![CDATA[provideBarcodeConstructor]]></code>
+      <code><![CDATA[invalidAdapterArguments]]></code>
+      <code><![CDATA[validAdapterOptions]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/BitwiseTest.php">
@@ -2372,45 +1996,5 @@
     <UnusedParam>
       <code><![CDATA[$errnum]]></code>
     </UnusedParam>
-  </file>
-  <file src="test/_files/MyBarcode1.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[MyBarcode1]]></code>
-    </UnusedClass>
-  </file>
-  <file src="test/_files/MyBarcode2.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[MyBarcode2]]></code>
-    </UnusedClass>
-  </file>
-  <file src="test/_files/MyBarcode3.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <UnusedClass>
-      <code><![CDATA[MyBarcode3]]></code>
-    </UnusedClass>
-  </file>
-  <file src="test/_files/MyBarcode4.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <InvalidArgument>
-      <code><![CDATA['odd']]></code>
-    </InvalidArgument>
-    <UnusedClass>
-      <code><![CDATA[MyBarcode4]]></code>
-    </UnusedClass>
-  </file>
-  <file src="test/_files/MyBarcode5.php">
-    <UnusedClass>
-      <code><![CDATA[MyBarcode5]]></code>
-    </UnusedClass>
   </file>
 </files>
