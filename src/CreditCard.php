@@ -237,7 +237,7 @@ class CreditCard extends AbstractValidator
      * Options for this validator
      *
      * @var array{
-     *     service: callable|null,
+     *     service: callable(mixed...):bool|null,
      *     type: list<string>,
      * }
      */
@@ -337,7 +337,7 @@ class CreditCard extends AbstractValidator
     /**
      * Returns the actual set service
      *
-     * @return callable
+     * @return callable(mixed...):bool
      */
     public function getService()
     {
@@ -430,8 +430,11 @@ class CreditCard extends AbstractValidator
         $service = $this->getService();
         if (! empty($service)) {
             try {
-                $callback = new Callback($service);
-                $callback->setCallbackOptions($this->getType());
+                $callback = new Callback([
+                    'callback'        => $service,
+                    'callbackOptions' => $this->getType(),
+                    'throwExceptions' => true,
+                ]);
                 if (! $callback->isValid($value)) {
                     $this->error(self::SERVICE, $value);
                     return false;
