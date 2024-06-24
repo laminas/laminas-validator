@@ -39,7 +39,7 @@ $explodeValidator = new Laminas\Validator\Explode([
     'validator' => [
         'name' => Laminas\Validator\InArray::class,
         'options' => [
-            'haystack' => 'a;b;c'
+            'haystack' => ['a', 'b', 'c']
         ],
     ],
     'valueDelimiter' => ';',
