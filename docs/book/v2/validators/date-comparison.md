@@ -8,7 +8,7 @@
 
 By default, comparisons are inclusive.
 
-## Supported options
+## Supported Options
 
 The following options are supported for `Laminas\Validator\DateComparison`:
 
@@ -26,7 +26,7 @@ The `min` and `max` options when set must be one of the following:
 - A date string in ISO format, `YYYY-MM-DD`, i.e. '2020-01-31'
 - A date and time string in W3C format, `YYYY-MM-DDTHH:MM:SS`, i.e. '2020-01-31T12:34:56'
 
-## Default behaviour
+## Default Behaviour
 
 Per default, this validator checks if a value is between `min` and `max` where both upper and lower bounds are considered valid.
 
@@ -43,7 +43,7 @@ $result = $valid->isValid($value);
 In the above example, the result is `true` due to the reason that the default search is inclusive of the border values.
 This means in our case that any date between '1st January 2020' to '31st December 2020' is allowed; any other valid date will return `false`.
 
-## Min and Max behaviour
+## Min and Max Behaviour
 
 In order to validate a date that is after than a lower bound, either omit the `max` option, or set it explicitly to `null`:
 
@@ -62,7 +62,7 @@ $validator = new Laminas\Validator\DateComparison(['max' => '2020-12-31']);
 $validator->isValid('2024-06-07'); // false
 ```
 
-## Validity of Date inputs
+## Validity of Date Inputs
 
 In order to compare dates correctly, the validator converts the input to a `DateTimeInterface` object, therefore, it must be possible to parse string input as a valid date.
 
