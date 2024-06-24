@@ -18,7 +18,8 @@ use function preg_match;
  * @psalm-type OptionsArgument = array{
  *     min?: string|DateTimeInterface|null,
  *     max?: string|DateTimeInterface|null,
- *     inclusive?: bool,
+ *     inclusiveMin?: bool,
+ *     inclusiveMax?: bool,
  *     inputFormat?: string|null,
  * }
  */
@@ -50,7 +51,8 @@ final class DateComparison extends AbstractValidator
 
     private readonly ?DateTimeInterface $min;
     private readonly ?DateTimeInterface $max;
-    private readonly bool $inclusive;
+    private readonly bool $inclusiveMin;
+    private readonly bool $inclusiveMax;
     private readonly ?string $inputFormat;
 
     /** Input type used in message variables */
@@ -63,10 +65,11 @@ final class DateComparison extends AbstractValidator
     {
         parent::__construct($options);
 
-        $this->min         = $this->dateInstanceBound($options['min'] ?? null);
-        $this->max         = $this->dateInstanceBound($options['max'] ?? null);
-        $this->inclusive   = $options['inclusive'] ?? true;
-        $this->inputFormat = $options['inputFormat'] ?? null;
+        $this->min          = $this->dateInstanceBound($options['min'] ?? null);
+        $this->max          = $this->dateInstanceBound($options['max'] ?? null);
+        $this->inclusiveMin = $options['inclusiveMin'] ?? true;
+        $this->inclusiveMax = $options['inclusiveMax'] ?? true;
+        $this->inputFormat  = $options['inputFormat'] ?? null;
 
         if ($this->min === null && $this->max === null) {
             throw new InvalidArgumentException(
@@ -103,25 +106,25 @@ final class DateComparison extends AbstractValidator
             return false;
         }
 
-        if ($this->min !== null && $this->inclusive && $date < $this->min) {
+        if ($this->min !== null && $this->inclusiveMin && $date < $this->min) {
             $this->error(self::ERROR_NOT_GREATER_INCLUSIVE);
 
             return false;
         }
 
-        if ($this->min !== null && ! $this->inclusive && $date <= $this->min) {
+        if ($this->min !== null && ! $this->inclusiveMin && $date <= $this->min) {
             $this->error(self::ERROR_NOT_GREATER);
 
             return false;
         }
 
-        if ($this->max !== null && $this->inclusive && $date > $this->max) {
+        if ($this->max !== null && $this->inclusiveMax && $date > $this->max) {
             $this->error(self::ERROR_NOT_LESS_INCLUSIVE);
 
             return false;
         }
 
-        if ($this->max !== null && ! $this->inclusive && $date >= $this->max) {
+        if ($this->max !== null && ! $this->inclusiveMax && $date >= $this->max) {
             $this->error(self::ERROR_NOT_LESS);
 
             return false;

@@ -12,9 +12,10 @@ By default, comparisons are inclusive.
 
 The following options are supported for `Laminas\Validator\DateComparison`:
 
-- `inclusive` _(boolean)_: Defines if the validation is inclusive of the lower and upper bounds, or exclusive. It defaults to `true`.
 - `max` _(string|DateTimeInterface)_: Sets the upper bound for the input.
 - `min` _(string|DateTimeInterface)_: Sets the lower bound for the input.
+- `inclusiveMin` _(boolean)_: Defines if the validation is inclusive of the lower bound, or exclusive. It defaults to `true`.
+- `inclusiveMax` _(boolean)_: Defines if the validation is inclusive of the upper bound, or exclusive. It defaults to `true`.
 - `inputFormat` _(string)_: Defines the expected date format if required.
 
 ## Min and Max Date Options
