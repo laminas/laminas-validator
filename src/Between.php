@@ -14,7 +14,11 @@ use function is_string;
 
 use const PHP_INT_MAX;
 
-/** @final */
+/**
+ * @deprecated Since 2.60.0 - This validator has been superseded by the NumberComparison and DateComparison validators
+ *
+ * @final
+ */
 class Between extends AbstractValidator
 {
     public const NOT_BETWEEN        = 'notBetween';

@@ -10,7 +10,11 @@ use function array_shift;
 use function func_get_args;
 use function is_array;
 
-/** @final */
+/**
+ * @deprecated Since 2.60.0 - This validator has been superseded by the NumberComparison and DateComparison validators
+ *
+ * @final
+ */
 class LessThan extends AbstractValidator
 {
     public const NOT_LESS           = 'notLessThan';
