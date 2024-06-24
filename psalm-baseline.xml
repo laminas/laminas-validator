@@ -733,6 +733,12 @@
     </UnusedClass>
   </file>
   <file src="src/Explode.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getValidator]]></code>
+      <code><![CDATA[getValidatorPluginManager]]></code>
+      <code><![CDATA[getValueDelimiter]]></code>
+      <code><![CDATA[isBreakOnFirstFailure]]></code>
+    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA[[$value]]]></code>
     </DocblockTypeContradiction>
@@ -2296,6 +2302,12 @@
     </UnusedPsalmSuppress>
   </file>
   <file src="test/ExplodeTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getValidator]]></code>
+      <code><![CDATA[setValidator]]></code>
+      <code><![CDATA[setValidator]]></code>
+      <code><![CDATA[setValidator]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA['inarray']]></code>
     </InvalidArgument>
@@ -2954,6 +2966,11 @@
     <UnusedParam>
       <code><![CDATA[$errnum]]></code>
     </UnusedParam>
+  </file>
+  <file src="test/ValidatorPluginManagerTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getValidatorPluginManager]]></code>
+    </DeprecatedMethod>
   </file>
   <file src="test/_files/MyBarcode1.php">
     <UnusedClass>
