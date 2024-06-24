@@ -8,9 +8,10 @@ array.
 The following options are supported for `Laminas\Validator\Explode`:
 
 - `valueDelimiter`: Defines the delimiter used to explode values from an array.
-  It defaults to `,`. If the given value is an array, this option isn't used.
+  It defaults to `,`.
 - `validator`: Sets the validator that will be executed on each exploded item.
-  This may be a validator instance, or a validator service name.
+  This may be a validator instance, a validator service name, or a "specification" array.
+- `validatorPluginManager`: The validator plugin manager in use in your application. If this plugin manager is not provided, a plugin manager will be created with the default configuration.
 
 ## Basic usage
 
@@ -25,24 +26,25 @@ $explodeValidator = new Laminas\Validator\Explode([
     'validator' => $inArrayValidator
 ]);
 
-$explodeValidator->isValid([1, 4, 6]);    // returns true
-$explodeValidator->isValid([1, 4, 6, 8]); // returns false
+$explodeValidator->isValid('1,4,6');    // returns true
+$explodeValidator->isValid('1,4,6,8'); // returns false
 ```
 
-## Exploding strings
+## Configuration using a validator specification
 
-To validate if every e-mail in a string is contained in a list of names:
+Instead of creating a validator instance, you can provide an array to describe the validator you wish to use for each element:
 
 ```php
-$inEmailListValidator = new Laminas\Validator\InArray([
-    'haystack' => ['joseph@test.com', 'mark@test.com', 'lucia@test.com'],
-]);
-
 $explodeValidator = new Laminas\Validator\Explode([
-    'validator' => $inEmailListValidator,
-    'valueDelimiter' => ','
+    'validator' => [
+        'name' => Laminas\Validator\InArray::class,
+        'options' => [
+            'haystack' => ['a', 'b', 'c']
+        ],
+    ],
+    'valueDelimiter' => ';',
 ]);
 
-$explodeValidator->isValid('joseph@test.com,mark@test.com'); // returns true
-$explodeValidator->isValid('lucia@test.com,maria@test.com');  // returns false
+$explodeValidator->isValid('a;b'); // returns true
+$explodeValidator->isValid('x;y;z');  // returns false
 ```
