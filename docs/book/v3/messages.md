@@ -7,15 +7,15 @@ validator could return to something different.
 
 Validation messages are defined as constant/template pairs, with the constant
 representing a translation key. Such constants are defined per-class.  Let's
-look into `Laminas\Validator\GreaterThan` for a descriptive example:
+look into `Laminas\Validator\Digits` for a descriptive example:
 
 ```php
-protected $messageTemplates = [
-    self::NOT_GREATER => "'%value%' is not greater than '%min%'",
+protected array $messageTemplates = [
+    self::NOT_DIGITS   => 'The input must contain only digits',
 ];
 ```
 
-The constant `self::NOT_GREATER` refers to the failure and is used as the
+The constant `self::NOT_DIGITS` refers to the failure and is used as the
 message key, and the message template itself is used as the value within the
 message array.
 
@@ -24,7 +24,7 @@ You can retrieve all message templates from a validator by using the
 messages a validator could return in the case of a failed validation.
 
 ```php
-$validator = new Laminas\Validator\GreaterThan();
+$validator = new Laminas\Validator\Digits();
 $messages  = $validator->getMessageTemplates();
 ```
 
@@ -32,10 +32,10 @@ Using the `setMessage()` method you can set another message to be returned in
 case of the specified failure.
 
 ```php
-use Laminas\Validator\GreaterThan;
+use Laminas\Validator\Digits;
 
-$validator = new GreaterThan();
-$validator->setMessage('Please enter a lower value', GreaterThan::NOT_GREATER);
+$validator = new Digits();
+$validator->setMessage('Please enter some numbers', Digits::NOT_DIGITS);
 ```
 
 The second parameter defines the failure which will be overridden. When you omit

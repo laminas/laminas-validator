@@ -3,7 +3,6 @@
 The following validators come with the laminas-validator distribution.
 
 - [Barcode](validators/barcode.md)
-- [Between](validators/between.md)
 - [Callback](validators/callback.md)
 - [CreditCard](validators/credit-card.md)
 - [Date](validators/date.md)
@@ -11,7 +10,6 @@ The following validators come with the laminas-validator distribution.
 - [EmailAddress](validators/email-address.md)
 - [Explode](validators/explode.md)
 - [File Validation Classes](validators/file/intro.md)
-- [GreaterThan](validators/greater-than.md)
 - [Hex](validators/hex.md)
 - [Hostname](validators/hostname.md)
 - [HostWithPublicIPv4Address](validators/host-with-public-ipv4-address.md)
@@ -23,7 +21,6 @@ The following validators come with the laminas-validator distribution.
 - [Isbn](validators/isbn.md)
 - [IsCountable](validators/is-countable.md)
 - [IsInstanceOf](validators/isinstanceof.md)
-- [LessThan](validators/less-than.md)
 - [NotEmpty](validators/not-empty.md)
 - [Regex](validators/regex.md)
 - [Sitemap](validators/sitemap.md)

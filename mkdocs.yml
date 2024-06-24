@@ -11,7 +11,6 @@ nav:
         - "Standard Validation Classes": v3/set.md
         - Validators:
             - Barcode: v3/validators/barcode.md
-            - Between: v3/validators/between.md
             - BIC: v3/validators/bic.md
             - Callback: v3/validators/callback.md
             - CreditCard: v3/validators/credit-card.md
@@ -19,7 +18,6 @@ nav:
             - Digits: v3/validators/digits.md
             - EmailAddress: v3/validators/email-address.md
             - Explode: v3/validators/explode.md
-            - GreaterThan: v3/validators/greater-than.md
             - Hex: v3/validators/hex.md
             - Hostname: v3/validators/hostname.md
             - HostWithPublicIPv4Address: v3/validators/host-with-public-ipv4-address.md
@@ -32,7 +30,6 @@ nav:
             - IsCountable: v3/validators/is-countable.md
             - IsInstanceOf: v3/validators/isinstanceof.md
             - IsJsonString: v3/validators/is-json-string.md
-            - LessThan: v3/validators/less-than.md
             - NotEmpty: v3/validators/not-empty.md
             - Regex: v3/validators/regex.md
             - Sitemap: v3/validators/sitemap.md
@@ -149,7 +146,7 @@ plugins:
             messages.md: v3/messages.md
             set.md: v3/set.md
             validators/barcode.md: v3/validators/barcode.md
-            validators/between.md: v3/validators/between.md
+            validators/between.md: v2/validators/between.md
             validators/bic.md: v3/validators/bic.md
             validators/callback.md: v3/validators/callback.md
             validators/credit-card.md: v3/validators/credit-card.md
@@ -159,7 +156,7 @@ plugins:
             validators/digits.md: v3/validators/digits.md
             validators/email-address.md: v3/validators/email-address.md
             validators/explode.md: v3/validators/explode.md
-            validators/greater-than.md: v3/validators/greater-than.md
+            validators/greater-than.md: v2/validators/greater-than.md
             validators/hex.md: v3/validators/hex.md
             validators/hostname.md: v3/validators/hostname.md
             validators/iban.md: v3/validators/iban.md
@@ -171,7 +168,7 @@ plugins:
             validators/is-countable.md: v3/validators/is-countable.md
             validators/isinstanceof.md: v3/validators/isinstanceof.md
             validators/is-json-string.md: v3/validators/is-json-string.md
-            validators/less-than.md: v3/validators/less-than.md
+            validators/less-than.md: v2/validators/less-than.md
             validators/not-empty.md: v3/validators/not-empty.md
             validators/regex.md: v3/validators/regex.md
             validators/sitemap.md: v3/validators/sitemap.md

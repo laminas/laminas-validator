@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\AbstractValidator;
-use Laminas\Validator\Between;
+use Laminas\Validator\Digits;
 use Laminas\Validator\StaticValidator;
 use Laminas\Validator\StringLength;
 use Laminas\Validator\ValidatorInterface;
@@ -107,9 +107,9 @@ final class StaticValidatorTest extends TestCase
 
         self::assertSame(5, AbstractValidator::getMessageLength());
 
-        $valid = new Between(1, 10);
+        $valid = new Digits();
 
-        self::assertFalse($valid->isValid(24));
+        self::assertFalse($valid->isValid('foo'));
 
         $message = current($valid->getMessages());
 
@@ -153,7 +153,7 @@ final class StaticValidatorTest extends TestCase
 
     /**
      * @psalm-return array<string, array{
-     *     0: int,
+     *     0: mixed,
      *     1: class-string<ValidatorInterface>,
      *     2: array<string, int>,
      *     3: bool
@@ -162,10 +162,8 @@ final class StaticValidatorTest extends TestCase
     public static function parameterizedData(): array
     {
         return [
-            'valid-positive-range'   => [5, Between::class, ['min' => 1, 'max' => 10], true],
-            'valid-negative-range'   => [-5, Between::class, ['min' => -10, 'max' => -1], true],
-            'invalid-positive-range' => [-5, Between::class, ['min' => 1, 'max' => 10], false],
-            'invalid-negative-range' => [5, Between::class, ['min' => -10, 'max' => -1], false],
+            'valid-length'   => ['foo', StringLength::class, ['min' => 1, 'max' => 10], true],
+            'invalid-length' => ['foo', StringLength::class, ['min' => 5, 'max' => 10], false],
         ];
     }
 
@@ -174,7 +172,7 @@ final class StaticValidatorTest extends TestCase
      */
     #[DataProvider('parameterizedData')]
     public function testExecuteValidWithParameters(
-        int $value,
+        mixed $value,
         string $validator,
         array $options,
         bool $expected
@@ -183,13 +181,12 @@ final class StaticValidatorTest extends TestCase
     }
 
     /**
-     * @psalm-return array<string, array{0: int, 1: class-string<ValidatorInterface>, 2: int[]}>
+     * @psalm-return array<string, array{0: mixed, 1: class-string<ValidatorInterface>, 2: int[]}>
      */
     public static function invalidParameterizedData(): array
     {
         return [
-            'positive-range' => [5, Between::class, [1, 10]],
-            'negative-range' => [-5, Between::class, [-10, -1]],
+            'invalid-options' => ['foo', StringLength::class, [5, 10]],
         ];
     }
 
@@ -198,7 +195,7 @@ final class StaticValidatorTest extends TestCase
      */
     #[DataProvider('invalidParameterizedData')]
     public function testExecuteRaisesExceptionForIndexedOptionsArray(
-        int $value,
+        mixed $value,
         string $validator,
         array $options
     ): void {
