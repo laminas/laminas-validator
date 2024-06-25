@@ -71,9 +71,10 @@ class NumberComparisonTest extends TestCase
         string|null $errorKey,
     ): void {
         $validator = new NumberComparison([
-            'min'       => $min,
-            'max'       => $max,
-            'inclusive' => $inclusive,
+            'min'          => $min,
+            'max'          => $max,
+            'inclusiveMin' => $inclusive,
+            'inclusiveMax' => $inclusive,
         ]);
 
         self::assertSame($expect, $validator->isValid($input));

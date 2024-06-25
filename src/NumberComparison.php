@@ -12,7 +12,8 @@ use function is_numeric;
  * @psalm-type OptionsArgument = array{
  *     min?: numeric|null,
  *     max?: numeric|null,
- *     inclusive?: bool,
+ *     inclusiveMin?: bool,
+ *     inclusiveMax?: bool,
  *     ...<string, mixed>
  * }
  * @psalm-type Options = array{
@@ -46,9 +47,10 @@ final class NumberComparison extends AbstractValidator
 
     /** @var Options */
     protected array $options = [
-        'min'       => null,
-        'max'       => null,
-        'inclusive' => true,
+        'min'          => null,
+        'max'          => null,
+        'inclusiveMin' => true,
+        'inclusiveMax' => true,
     ];
 
     /** @param OptionsArgument $options */
@@ -71,9 +73,10 @@ final class NumberComparison extends AbstractValidator
             );
         }
 
-        $this->options['min']       = $min;
-        $this->options['max']       = $max;
-        $this->options['inclusive'] = $options['inclusive'] ?? true;
+        $this->options['min']          = $min;
+        $this->options['max']          = $max;
+        $this->options['inclusiveMin'] = $options['inclusiveMin'] ?? true;
+        $this->options['inclusiveMax'] = $options['inclusiveMax'] ?? true;
     }
 
     public function isValid(mixed $value): bool
@@ -86,29 +89,30 @@ final class NumberComparison extends AbstractValidator
 
         $this->setValue($value);
 
-        $min       = $this->options['min'];
-        $max       = $this->options['max'];
-        $inclusive = $this->options['inclusive'];
+        $min          = $this->options['min'];
+        $max          = $this->options['max'];
+        $inclusiveMin = $this->options['inclusiveMin'];
+        $inclusiveMax = $this->options['inclusiveMax'];
 
-        if ($min !== null && $inclusive && $value < $min) {
+        if ($min !== null && $inclusiveMin && $value < $min) {
             $this->error(self::ERROR_NOT_GREATER_INCLUSIVE);
 
             return false;
         }
 
-        if ($min !== null && ! $inclusive && $value <= $min) {
+        if ($min !== null && ! $inclusiveMin && $value <= $min) {
             $this->error(self::ERROR_NOT_GREATER);
 
             return false;
         }
 
-        if ($max !== null && $inclusive && $value > $max) {
+        if ($max !== null && $inclusiveMax && $value > $max) {
             $this->error(self::ERROR_NOT_LESS_INCLUSIVE);
 
             return false;
         }
 
-        if ($max !== null && ! $inclusive && $value >= $max) {
+        if ($max !== null && ! $inclusiveMax && $value >= $max) {
             $this->error(self::ERROR_NOT_LESS);
 
             return false;
