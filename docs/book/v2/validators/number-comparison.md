@@ -11,15 +11,18 @@ By default, comparisons are inclusive.
 CAUTION: **Only supports number validation**
 `Laminas\Validator\NumberComparison` supports only the validation of numbers. Strings or dates can not be validated with this validator.
 
-## Supported options
+## Supported Options
 
 The following options are supported for `Laminas\Validator\NumberComparison`:
 
-- `inclusive` _(boolean)_: Defines if the validation is inclusive of the lower and upper bounds, or exclusive. It defaults to `true`.
-- `max` _(numeric)_: Sets the upper bound for the input.
-- `min` _(numeric)_: Sets the lower bound for the input.
+| Option         | Data Type | Default Value | Description                                                              |
+|----------------|-----------|---------------|--------------------------------------------------------------------------|
+| `max`          | `numeric` | `null`        | Sets the upper bound for the input.                                      |
+| `min`          | `numeric` | `null`        | Sets the lower bound for the input.                                      |
+| `inclusiveMin` | `bool`    | `true`        | Defines if the validation is inclusive of the lower bound, or exclusive. |
+| `inclusiveMax` | `bool`    | `true`        | Defines if the validation is inclusive of the upper bound, or exclusive. |
 
-## Default behaviour
+## Default Behaviour
 
 Per default, this validator checks if a value is between `min` and `max` where both upper and lower bounds are considered valid.
 
@@ -33,7 +36,7 @@ $result = $valid->isValid($value);
 In the above example, the result is `true` due to the reason that the default search is inclusive of the border values.
 This means in our case that any value from '0' to '10' is allowed; values like '-1' and '11' will return `false`.
 
-## Excluding upper and lower bounds
+## Excluding Upper and Lower Bounds
 
 Sometimes it is useful to validate a value by excluding the bounds. See the following example:
 
@@ -41,11 +44,13 @@ Sometimes it is useful to validate a value by excluding the bounds. See the foll
 $valid  = new Laminas\Validator\NumberComparison([
     'min' => 0,
     'max' => 10,
-    'inclusive' => false,
+    'inclusiveMin' => false,
+    'inclusiveMax' => false,
 ]);
-$value  = 10;
-$result = $valid->isValid($value);
-// returns false
+
+$valid->isValid(10); // false
+$valid->isValid(0);  // false
+$valid->isValid(9);  // true
 ```
 
 The example above is almost identical to our first example, but we now exclude the bounds as valid values; as such, the values '0' and '10' are no longer allowed and will return `false`.
@@ -65,3 +70,6 @@ Conversely, to ensure a number is less than an upper bound, omit the `min` optio
 $validator = new Laminas\Validator\NumberComparison(['max' => 5]);
 $validator->isValid(99); // false
 ```
+
+You *must* provide one of the `min` or the `max` _(or both)_ options or an exception will be thrown.
+It doesn't make sense to compare the input to nothing for this validator.
