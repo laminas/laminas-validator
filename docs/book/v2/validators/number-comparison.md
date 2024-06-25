@@ -1,6 +1,6 @@
 # Number Comparison Validator
 
-`Laminas\Validator\NumberComparison` allows you to validate if a given value is a numeric value that is either
+`Laminas\Validator\NumberComparison` allows you to validate if a given value is a numeric value that is either:
 
 - Between a min and max value
 - Greater than a min value
@@ -9,7 +9,8 @@
 By default, comparisons are inclusive. 
 
 CAUTION: **Only supports number validation**
-`Laminas\Validator\NumberComparison` supports only the validation of numbers. Strings or dates can not be validated with this validator.
+`Laminas\Validator\NumberComparison` supports only the validation of numbers.
+Strings or dates can not be validated with this validator.
 
 ## Supported Options
 
@@ -22,7 +23,7 @@ The following options are supported for `Laminas\Validator\NumberComparison`:
 | `inclusiveMin` | `bool`    | `true`        | Defines if the validation is inclusive of the lower bound, or exclusive. |
 | `inclusiveMax` | `bool`    | `true`        | Defines if the validation is inclusive of the upper bound, or exclusive. |
 
-## Default Behaviour
+## Basic Usage
 
 Per default, this validator checks if a value is between `min` and `max` where both upper and lower bounds are considered valid.
 
@@ -34,7 +35,7 @@ $result = $valid->isValid($value);
 ```
 
 In the above example, the result is `true` due to the reason that the default search is inclusive of the border values.
-This means in our case that any value from '0' to '10' is allowed; values like '-1' and '11' will return `false`.
+This means in our case that any value from `0` to `10` is allowed; values like `-1` and `11` will return `false`.
 
 ## Excluding Upper and Lower Bounds
 
@@ -53,7 +54,7 @@ $valid->isValid(0);  // false
 $valid->isValid(9);  // true
 ```
 
-The example above is almost identical to our first example, but we now exclude the bounds as valid values; as such, the values '0' and '10' are no longer allowed and will return `false`.
+The example above is almost identical to our first example, but we now exclude the bounds as valid values; as such, the values `0` and `10` are no longer allowed and will return `false`.
 
 ## Min and Max behaviour
 
