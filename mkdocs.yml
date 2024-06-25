@@ -15,6 +15,7 @@ nav:
             - Callback: v3/validators/callback.md
             - CreditCard: v3/validators/credit-card.md
             - Date: v3/validators/date.md
+            - DateComparison: v3/validators/date-comparison.md
             - Digits: v3/validators/digits.md
             - EmailAddress: v3/validators/email-address.md
             - Explode: v3/validators/explode.md
@@ -31,6 +32,7 @@ nav:
             - IsInstanceOf: v3/validators/isinstanceof.md
             - IsJsonString: v3/validators/is-json-string.md
             - NotEmpty: v3/validators/not-empty.md
+            - NumberComparison: v3/validators/number-comparison.md
             - Regex: v3/validators/regex.md
             - Sitemap: v3/validators/sitemap.md
             - Step: v3/validators/step.md
@@ -75,6 +77,7 @@ nav:
             - CreditCard: v2/validators/credit-card.md
             - Csrf: v2/validators/csrf.md
             - Date: v2/validators/date.md
+            - DateComparison: v2/validators/date-comparison.md
             - "Db\\RecordExists and Db\\NoRecordExists": v2/validators/db.md
             - Digits: v2/validators/digits.md
             - EmailAddress: v2/validators/email-address.md
@@ -94,6 +97,7 @@ nav:
             - IsJsonString: v2/validators/is-json-string.md
             - LessThan: v2/validators/less-than.md
             - NotEmpty: v2/validators/not-empty.md
+            - NumberComparison: v2/validators/number-comparison.md
             - Regex: v2/validators/regex.md
             - Sitemap: v2/validators/sitemap.md
             - Step: v2/validators/step.md

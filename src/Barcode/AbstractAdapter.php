@@ -13,6 +13,7 @@ use function str_split;
 use function strlen;
 use function substr;
 
+/** @deprecated Since 2.60.0 In v3 adapters should implement AdapterInterface directly */
 abstract class AbstractAdapter implements AdapterInterface
 {
     /**
