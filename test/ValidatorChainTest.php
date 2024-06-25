@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\AbstractValidator;
-use Laminas\Validator\Between;
 use Laminas\Validator\Callback;
-use Laminas\Validator\GreaterThan;
+use Laminas\Validator\Digits;
 use Laminas\Validator\NotEmpty;
+use Laminas\Validator\StringLength;
 use Laminas\Validator\Timezone;
 use Laminas\Validator\ValidatorChain;
 use Laminas\Validator\ValidatorInterface;
@@ -46,7 +46,7 @@ final class ValidatorChainTest extends TestCase
     public function populateValidatorChain(): void
     {
         $this->validator->attach(new NotEmpty());
-        $this->validator->attach(new Between(1, 5));
+        $this->validator->attach(new StringLength(['min' => 1, 'max' => 5]));
     }
 
     public function testValidatorChainIsEmptyByDefault(): void
@@ -300,9 +300,8 @@ final class ValidatorChainTest extends TestCase
     #[DataProvider('breakChainFlags')]
     public function testAttachByNameAllowsSpecifyingBreakChainOnFailureFlagViaOptions(string $option): void
     {
-        $this->validator->attachByName('GreaterThan', [
+        $this->validator->attachByName('Digits', [
             $option => true,
-            'min'   => 1,
         ]);
 
         self::assertCount(1, $this->validator);
@@ -315,23 +314,23 @@ final class ValidatorChainTest extends TestCase
 
         $validator = $spec['instance'];
 
-        self::assertInstanceOf(GreaterThan::class, $validator);
+        self::assertInstanceOf(Digits::class, $validator);
         self::assertArrayHasKey('breakChainOnFailure', $spec);
         self::assertTrue($spec['breakChainOnFailure']);
     }
 
     public function testGetValidatorsReturnsAnArrayOfQueueItems(): void
     {
-        $empty   = new NotEmpty();
-        $between = new Between(['min' => 10, 'max' => 20]);
-        $expect  = [
+        $empty        = new NotEmpty();
+        $stringLength = new StringLength(['min' => 10, 'max' => 20]);
+        $expect       = [
             ['instance' => $empty, 'breakChainOnFailure' => false],
-            ['instance' => $between, 'breakChainOnFailure' => false],
+            ['instance' => $stringLength, 'breakChainOnFailure' => false],
         ];
 
         $chain = new ValidatorChain();
         $chain->attach($empty);
-        $chain->attach($between);
+        $chain->attach($stringLength);
 
         self::assertSame($expect, $chain->getValidators());
     }
@@ -339,7 +338,7 @@ final class ValidatorChainTest extends TestCase
     public function testMessagesAreASingleDimensionHash(): void
     {
         $timezone = new Timezone();
-        $between  = new Between(['min' => 10, 'max' => 20]);
+        $between  = new StringLength(['min' => 10, 'max' => 20]);
         $chain    = new ValidatorChain();
         $chain->attach($timezone);
         $chain->attach($between);

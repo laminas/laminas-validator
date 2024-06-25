@@ -66,8 +66,6 @@
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
     </UndefinedThisPropertyAssignment>
   </file>
   <file src="src/Barcode.php">
@@ -338,19 +336,6 @@
     <UnusedClass>
       <code><![CDATA[Upce]]></code>
     </UnusedClass>
-  </file>
-  <file src="src/Between.php">
-    <MixedInferredReturnType>
-      <code><![CDATA[bool]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->options['inclusive']]]></code>
-    </MixedReturnStatement>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[setInclusive]]></code>
-      <code><![CDATA[setMax]]></code>
-      <code><![CDATA[setMin]]></code>
-    </PossiblyUnusedMethod>
   </file>
   <file src="src/CreditCard.php">
     <InvalidOperand>
@@ -1250,24 +1235,6 @@
       <code><![CDATA[$value]]></code>
     </MixedArgument>
   </file>
-  <file src="src/GreaterThan.php">
-    <MixedArgument>
-      <code><![CDATA[$options['inclusive']]]></code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code><![CDATA[$temp['inclusive']]]></code>
-      <code><![CDATA[$temp['min']]]></code>
-    </MixedAssignment>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$temp]]></code>
-    </PossiblyUndefinedVariable>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$inclusive]]></code>
-    </PropertyNotSetInConstructor>
-  </file>
   <file src="src/Hostname.php">
     <DocblockTypeContradiction>
       <code><![CDATA[is_array($options)]]></code>
@@ -1425,24 +1392,6 @@
       <code><![CDATA[$this->options['separator']]]></code>
       <code><![CDATA[$this->options['type']]]></code>
     </MixedReturnStatement>
-  </file>
-  <file src="src/LessThan.php">
-    <MixedArgument>
-      <code><![CDATA[$options['inclusive']]]></code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code><![CDATA[$temp['inclusive']]]></code>
-      <code><![CDATA[$temp['max']]]></code>
-    </MixedAssignment>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$temp]]></code>
-    </PossiblyUndefinedVariable>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$inclusive]]></code>
-    </PropertyNotSetInConstructor>
   </file>
   <file src="src/Module.php">
     <PossiblyUnusedParam>
@@ -1626,21 +1575,6 @@
     </InvalidCast>
     <PossiblyUnusedMethod>
       <code><![CDATA[provideBarcodeConstructor]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/BetweenTest.php">
-    <InvalidArgument>
-      <code><![CDATA[1]]></code>
-    </InvalidArgument>
-    <MixedOperand>
-      <code><![CDATA[$value]]></code>
-    </MixedOperand>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$args]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[constructBetweenValidatorInvalidDataProvider]]></code>
-      <code><![CDATA[providerBasic]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/BitwiseTest.php">
@@ -2001,25 +1935,6 @@
       <code><![CDATA[errorMessageTestValues]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="test/GreaterThanTest.php">
-    <InvalidArgument>
-      <code><![CDATA[1]]></code>
-      <code><![CDATA[1]]></code>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-    </InvalidArgument>
-    <MixedArgument>
-      <code><![CDATA[$options]]></code>
-    </MixedArgument>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicDataProvider]]></code>
-      <code><![CDATA[correctInclusiveMessageDataProvider]]></code>
-      <code><![CDATA[correctNotInclusiveMessageDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
   <file src="test/HexTest.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[basicDataProvider]]></code>
@@ -2151,22 +2066,6 @@
       <code><![CDATA[(float) 1.2345]]></code>
     </RedundantCast>
   </file>
-  <file src="test/LessThanTest.php">
-    <InvalidArgument>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-    </InvalidArgument>
-    <MixedArgument>
-      <code><![CDATA[$options]]></code>
-    </MixedArgument>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
   <file src="test/MessageTest.php">
     <RedundantConditionGivenDocblockType>
       <code><![CDATA[assertIsArray]]></code>
@@ -2250,9 +2149,6 @@
     </PossiblyInvalidCast>
   </file>
   <file src="test/StaticValidatorTest.php">
-    <InvalidArgument>
-      <code><![CDATA[1]]></code>
-    </InvalidArgument>
     <NullArgument>
       <code><![CDATA[null]]></code>
     </NullArgument>
@@ -2305,9 +2201,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/ValidatorChainTest.php">
-    <InvalidArgument>
-      <code><![CDATA[1]]></code>
-    </InvalidArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[breakChainFlags]]></code>
       <code><![CDATA[handleNotFoundError]]></code>
