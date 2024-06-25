@@ -15,10 +15,10 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="laminas-validator">
 
-    <link rel="canonical" href="https://docs.laminas.dev/laminas-validator/v2/validators/sitemap/">
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-validator/v2/validators/number-comparison/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>Sitemap - laminas-validator - Laminas Docs</title>
+    <title>NumberComparison - laminas-validator - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -339,8 +339,8 @@
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../number-comparison/" class="subnavigation__link">NumberComparison</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">NumberComparison</a>
     </li>
 
             
@@ -351,8 +351,8 @@
 
             
                 
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Sitemap</a>
+    <li class="subnavigation__list-item ">
+        <a href="../sitemap/" class="subnavigation__link">Sitemap</a>
     </li>
 
             
@@ -597,23 +597,19 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#supported-options" class="toc__link nav-link">Supported options</a>
+                        <a href="#supported-options" class="toc__link nav-link">Supported Options</a>
                     </li>
                 
                     <li class="toc__entry">
-                        <a href="#changefreq" class="toc__link nav-link">Changefreq</a>
+                        <a href="#basic-usage" class="toc__link nav-link">Basic Usage</a>
                     </li>
                 
                     <li class="toc__entry">
-                        <a href="#sitemaplastmod" class="toc__link nav-link">Sitemap\Lastmod</a>
+                        <a href="#excluding-upper-and-lower-bounds" class="toc__link nav-link">Excluding Upper and Lower Bounds</a>
                     </li>
                 
                     <li class="toc__entry">
-                        <a href="#loc" class="toc__link nav-link">Loc</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#priority" class="toc__link nav-link">Priority</a>
+                        <a href="#min-and-max-behaviour" class="toc__link nav-link">Min and Max behaviour</a>
                     </li>
                 
             </ul>
@@ -646,7 +642,7 @@
                     
                 
 
-                <li class="breadcrumb-item active" aria-current="page">Sitemap</li>
+                <li class="breadcrumb-item active" aria-current="page">NumberComparison</li>
             
         
     </ol>
@@ -662,63 +658,88 @@
         <h2 class="chapter__headline">Validators</h2>
     
 
-    <h1 id="sitemap-validators">Sitemap Validators</h1>
-<p>The following validators conform to the
-<a href="http://www.sitemaps.org/protocol.php">Sitemap XML protocol</a>.</p>
-<h2 id="supported-options">Supported options</h2>
-<p>There are no additional supported options for any of the <code>Sitemap</code> validators.</p>
-<h2 id="changefreq">Changefreq</h2>
-<p><code>Laminas\Validator\Sitemap\Changefreq</code> validates whether a string is valid for
-using as a 'changefreq' element in a Sitemap XML document. Valid values are:
-'always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', or 'never'.</p>
-<p>Returns <code>true</code> if and only if the value is a string and is equal to one of the
-frequencies specified above.</p>
-<h2 id="sitemaplastmod">Sitemap\Lastmod</h2>
-<p><code>Laminas\Validator\Sitemap\Lastmod</code> validates whether a string is valid for using
-as a 'lastmod' element in a Sitemap XML document. The lastmod element should
-contain a W3C date string, optionally discarding information about time.</p>
-<p>Returns <code>true</code> if and only if the given value is a string and is valid according
-to the protocol.</p>
-<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Sitemap\Lastmod();
+    <h1 id="number-comparison-validator">Number Comparison Validator</h1>
+<p><code>Laminas\Validator\NumberComparison</code> allows you to validate if a given value is a numeric value that is either:</p>
+<ul>
+<li>Between a min and max value</li>
+<li>Greater than a min value</li>
+<li>Less than a max value</li>
+</ul>
+<p>By default, comparisons are inclusive. </p>
+<div class="admonition caution">
+<p class="admonition-title">Only supports number validation</p>
+<p>
+<code>Laminas\Validator\NumberComparison</code> supports only the validation of numbers.
+Strings or dates can not be validated with this validator.</p>
+</div>
+<h2 id="supported-options">Supported Options</h2>
+<p>The following options are supported for <code>Laminas\Validator\NumberComparison</code>:</p>
+<div class="table-responsive"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Data Type</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>max</code></td>
+<td><code>numeric</code></td>
+<td><code>null</code></td>
+<td>Sets the upper bound for the input.</td>
+</tr>
+<tr>
+<td><code>min</code></td>
+<td><code>numeric</code></td>
+<td><code>null</code></td>
+<td>Sets the lower bound for the input.</td>
+</tr>
+<tr>
+<td><code>inclusiveMin</code></td>
+<td><code>bool</code></td>
+<td><code>true</code></td>
+<td>Defines if the validation is inclusive of the lower bound, or exclusive.</td>
+</tr>
+<tr>
+<td><code>inclusiveMax</code></td>
+<td><code>bool</code></td>
+<td><code>true</code></td>
+<td>Defines if the validation is inclusive of the upper bound, or exclusive.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="basic-usage">Basic Usage</h2>
+<p>Per default, this validator checks if a value is between <code>min</code> and <code>max</code> where both upper and lower bounds are considered valid.</p>
+<pre class="highlight"><code class="language-php">$valid  = new Laminas\Validator\NumberComparison(['min' =&gt; 0, 'max' =&gt; 10]);
+$value  = 10;
+$result = $valid-&gt;isValid($value);
+// returns true</code></pre>
+<p>In the above example, the result is <code>true</code> due to the reason that the default search is inclusive of the border values.
+This means in our case that any value from <code>0</code> to <code>10</code> is allowed; values like <code>-1</code> and <code>11</code> will return <code>false</code>.</p>
+<h2 id="excluding-upper-and-lower-bounds">Excluding Upper and Lower Bounds</h2>
+<p>Sometimes it is useful to validate a value by excluding the bounds. See the following example:</p>
+<pre class="highlight"><code class="language-php">$valid  = new Laminas\Validator\NumberComparison([
+    'min' =&gt; 0,
+    'max' =&gt; 10,
+    'inclusiveMin' =&gt; false,
+    'inclusiveMax' =&gt; false,
+]);
 
-$validator-&gt;isValid('1999-11-11T22:23:52-02:00'); // true
-$validator-&gt;isValid('2008-05-12T00:42:52+02:00'); // true
-$validator-&gt;isValid('1999-11-11'); // true
-$validator-&gt;isValid('2008-05-12'); // true
-
-$validator-&gt;isValid('1999-11-11t22:23:52-02:00'); // false
-$validator-&gt;isValid('2008-05-12T00:42:60+02:00'); // false
-$validator-&gt;isValid('1999-13-11'); // false
-$validator-&gt;isValid('2008-05-32'); // false
-$validator-&gt;isValid('yesterday'); // false</code></pre>
-<h2 id="loc">Loc</h2>
-<p><code>Laminas\Validator\Sitemap\Loc</code> validates whether a string is valid for using as a
-'loc' element in a Sitemap XML document. This uses
-<a href="https://docs.laminas.dev/laminas-uri/usage/#validating-the-uri">Laminas\Uri\Uri::isValid()</a>
-internally.</p>
-<blockquote>
-<h3 id="installation-requirements">Installation requirements</h3>
-<p><code>Laminas\Validator\Sitemap\Loc</code> depends on the laminas-uri component, so be sure to
-have it installed before getting started:</p>
-<pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-uri</code></pre>
-</blockquote>
-<h2 id="priority">Priority</h2>
-<p><code>Laminas\Validator\Sitemap\Priority</code> validates whether a value is valid for using
-as a 'priority' element in a Sitemap XML document. The value should be a decimal
-between 0.0 and 1.0. This validator accepts both numeric values and string
-values.</p>
-<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Sitemap\Priority();
-
-$validator-&gt;isValid('0.1'); // true
-$validator-&gt;isValid('0.789'); // true
-$validator-&gt;isValid(0.8); // true
-$validator-&gt;isValid(1.0); // true
-
-$validator-&gt;isValid('1.1'); // false
-$validator-&gt;isValid('-0.4'); // false
-$validator-&gt;isValid(1.00001); // false
-$validator-&gt;isValid(0xFF); // false
-$validator-&gt;isValid('foo'); // false</code></pre>
+$valid-&gt;isValid(10); // false
+$valid-&gt;isValid(0);  // false
+$valid-&gt;isValid(9);  // true</code></pre>
+<p>The example above is almost identical to our first example, but we now exclude the bounds as valid values; as such, the values <code>0</code> and <code>10</code> are no longer allowed and will return <code>false</code>.</p>
+<h2 id="min-and-max-behaviour">Min and Max behaviour</h2>
+<p>In order to validate a number that is simply greater than a lower bound, either omit the <code>max</code> option, or set it explicitly to <code>null</code>:</p>
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\NumberComparison(['min' =&gt; 10, 'max' =&gt; null]);
+$validator-&gt;isValid(12345); // true</code></pre>
+<p>Conversely, to ensure a number is less than an upper bound, omit the <code>min</code> option or explicitly set it to <code>null</code>:</p>
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\NumberComparison(['max' =&gt; 5]);
+$validator-&gt;isValid(99); // false</code></pre>
+<p>You <em>must</em> provide one of the <code>min</code> or the <code>max</code> <em>(or both)</em> options or an exception will be thrown.
+It doesn't make sense to compare the input to nothing for this validator.</p>
 
 
 
@@ -729,10 +750,10 @@ $validator-&gt;isValid('foo'); // false</code></pre>
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../regex/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../not-empty/">
                     <small class="page-nav__label">Previous</small>
                     <i class="fa fa-chevron-left"></i>
-                    Regex
+                    NotEmpty
                 </a>
             
         </li>
@@ -740,9 +761,9 @@ $validator-&gt;isValid('foo'); // false</code></pre>
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../step/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../regex/">
                     <small class="page-nav__label">Next</small>
-                    Step
+                    Regex
                     <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -990,8 +1011,8 @@ $validator-&gt;isValid('foo'); // false</code></pre>
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../number-comparison/" class="subnavigation__link">NumberComparison</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">NumberComparison</a>
     </li>
 
             
@@ -1002,8 +1023,8 @@ $validator-&gt;isValid('foo'); // false</code></pre>
 
             
                 
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">Sitemap</a>
+    <li class="subnavigation__list-item ">
+        <a href="../sitemap/" class="subnavigation__link">Sitemap</a>
     </li>
 
             
