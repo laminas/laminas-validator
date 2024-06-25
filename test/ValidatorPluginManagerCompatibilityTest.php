@@ -8,6 +8,7 @@ use Laminas\ServiceManager\ServiceManager;
 use Laminas\ServiceManager\Test\CommonPluginManagerTrait;
 use Laminas\Validator\DateComparison;
 use Laminas\Validator\Exception\RuntimeException;
+use Laminas\Validator\NumberComparison;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
 use PHPUnit\Framework\TestCase;
@@ -94,6 +95,11 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
 
             // Skipping due to required options
             if ($target === DateComparison::class) {
+                continue;
+            }
+
+            // Skipping due to required options
+            if ($target === NumberComparison::class) {
                 continue;
             }
 
