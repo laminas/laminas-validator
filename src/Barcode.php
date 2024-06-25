@@ -89,6 +89,8 @@ class Barcode extends AbstractValidator
     /**
      * Returns the set adapter
      *
+     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
+     *
      * @return AdapterInterface
      */
     public function getAdapter()
@@ -104,6 +106,8 @@ class Barcode extends AbstractValidator
 
     /**
      * Sets a new barcode adapter
+     *
+     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
      *
      * @param  string|AdapterInterface $adapter Barcode adapter to use
      * @param  array  $options Options for this adapter
@@ -140,6 +144,8 @@ class Barcode extends AbstractValidator
     /**
      * Returns the checksum option
      *
+     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
+     *
      * @return string|null
      */
     public function getChecksum()
@@ -149,6 +155,8 @@ class Barcode extends AbstractValidator
 
     /**
      * Sets if checksum should be validated, if no value is given the actual setting is returned
+     *
+     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
      *
      * @param null|bool $checksum
      * @return AdapterInterface|bool
