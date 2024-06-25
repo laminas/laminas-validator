@@ -19,7 +19,8 @@ use function is_numeric;
  * @psalm-type Options = array{
  *     min: numeric|null,
  *     max: numeric|null,
- *     inclusive: bool,
+ *     inclusiveMin: bool,
+ *     inclusiveMax: bool,
  * }
  */
 final class NumberComparison extends AbstractValidator

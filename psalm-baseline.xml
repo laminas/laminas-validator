@@ -1855,14 +1855,6 @@
     </RedundantCondition>
   </file>
   <file src="src/NumberComparison.php">
-    <InvalidPropertyAssignmentValue>
-      <code><![CDATA[[
-        'min'          => null,
-        'max'          => null,
-        'inclusiveMin' => true,
-        'inclusiveMax' => true,
-    ]]]></code>
-    </InvalidPropertyAssignmentValue>
     <MixedAssignment>
       <code><![CDATA[$inclusiveMax]]></code>
       <code><![CDATA[$inclusiveMin]]></code>
