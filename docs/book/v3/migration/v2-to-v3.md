@@ -45,3 +45,28 @@ The deprecated "Db" validators that shipped in version 2.0 have been removed. Th
 - `Laminas\Validator\Db\AbstractDb`
 - `Laminas\Validator\Db\NoRecordExists`
 - `Laminas\Validator\Db\RecordExists`
+
+### Removal of `Between`, `LessThan` and `GreaterThan` Validators
+
+These validators could theoretically, and indeed were used to perform comparisons on `DateTime` instances, numbers and arbitrary strings.
+Whilst these validators worked well for numbers, they worked less well for other data types.
+
+In order to reduce ambiguity, these validators have been replaced by [`NumberComparison`](../validators/number-comparison.md) and [`DateComparison`](../validators/date-comparison.md).
+
+Taking `LessThan` as an example replacement target:
+
+```php
+$validator = new Laminas\Validator\LessThan([
+    'max' => 10,
+    'inclusive' => true,
+]);
+```
+
+Would become:
+
+```php
+$validator = new Laminas\Validator\NumberComparison([
+    'max' => 10,
+    'inclusiveMax' => true,
+]);
+```
