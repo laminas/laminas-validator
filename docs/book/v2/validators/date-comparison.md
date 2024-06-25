@@ -28,6 +28,9 @@ The `min` and `max` options when set must be one of the following:
 - A date string in ISO format, `YYYY-MM-DD`, i.e. '2020-01-31'
 - A date and time string in W3C format, `YYYY-MM-DDTHH:MM:SS`, i.e. '2020-01-31T12:34:56'
 
+At least one of `min`, `max` or both *must* be provided as an option or an exception will be thrown.
+It doesn't make sense to use this validator without specifying the boundaries to compare the input to.
+
 ## Default Behaviour
 
 Per default, this validator checks if a value is between `min` and `max` where both upper and lower bounds are considered valid.
