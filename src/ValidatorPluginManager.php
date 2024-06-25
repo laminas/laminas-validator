@@ -170,7 +170,6 @@ class ValidatorPluginManager extends AbstractPluginManager
         'notempty'               => NotEmpty::class,
         'notEmpty'               => NotEmpty::class,
         'NotEmpty'               => NotEmpty::class,
-        'NumberComparison'       => NumberComparison::class,
         'phonenumber'            => I18nValidator\PhoneNumber::class,
         'phoneNumber'            => I18nValidator\PhoneNumber::class,
         'PhoneNumber'            => I18nValidator\PhoneNumber::class,
