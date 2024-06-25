@@ -66,8 +66,6 @@
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
     </UndefinedThisPropertyAssignment>
   </file>
   <file src="src/Barcode.php">
@@ -447,20 +445,6 @@
     <UnusedClass>
       <code><![CDATA[Upce]]></code>
     </UnusedClass>
-  </file>
-  <file src="src/Between.php">
-    <MixedInferredReturnType>
-      <code><![CDATA[bool]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->options['inclusive']]]></code>
-    </MixedReturnStatement>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[__construct]]></code>
-      <code><![CDATA[setInclusive]]></code>
-      <code><![CDATA[setMax]]></code>
-      <code><![CDATA[setMin]]></code>
-    </PossiblyUnusedMethod>
   </file>
   <file src="src/CreditCard.php">
     <InvalidOperand>
@@ -1360,29 +1344,6 @@
       <code><![CDATA[$value]]></code>
     </MixedArgument>
   </file>
-  <file src="src/GreaterThan.php">
-    <MixedArgument>
-      <code><![CDATA[$options['inclusive']]]></code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code><![CDATA[$temp['inclusive']]]></code>
-      <code><![CDATA[$temp['min']]]></code>
-    </MixedAssignment>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$temp]]></code>
-    </PossiblyUndefinedVariable>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[__construct]]></code>
-      <code><![CDATA[getInclusive]]></code>
-      <code><![CDATA[getMin]]></code>
-    </PossiblyUnusedMethod>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$inclusive]]></code>
-    </PropertyNotSetInConstructor>
-  </file>
   <file src="src/Hostname.php">
     <DocblockTypeContradiction>
       <code><![CDATA[is_array($options)]]></code>
@@ -1540,29 +1501,6 @@
       <code><![CDATA[$this->options['separator']]]></code>
       <code><![CDATA[$this->options['type']]]></code>
     </MixedReturnStatement>
-  </file>
-  <file src="src/LessThan.php">
-    <MixedArgument>
-      <code><![CDATA[$options['inclusive']]]></code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code><![CDATA[$temp['inclusive']]]></code>
-      <code><![CDATA[$temp['max']]]></code>
-    </MixedAssignment>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$temp]]></code>
-    </PossiblyUndefinedVariable>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[__construct]]></code>
-      <code><![CDATA[getInclusive]]></code>
-      <code><![CDATA[getMax]]></code>
-    </PossiblyUnusedMethod>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$inclusive]]></code>
-    </PropertyNotSetInConstructor>
   </file>
   <file src="src/Module.php">
     <PossiblyUnusedParam>
