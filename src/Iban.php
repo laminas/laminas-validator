@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use Laminas\Stdlib\ArrayUtils;
@@ -20,7 +22,7 @@ use function substr;
  *
  * @final
  */
-class Iban extends AbstractValidator
+final class Iban extends AbstractValidator
 {
     public const NOTSUPPORTED     = 'ibanNotSupported';
     public const SEPANOTSUPPORTED = 'ibanSepaNotSupported';

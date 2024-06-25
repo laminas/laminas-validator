@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use Laminas\Stdlib\ArrayUtils;
@@ -38,7 +40,7 @@ use function is_numeric;
  *                                                 on AbstractValidator
  * @final
  */
-class IsCountable extends AbstractValidator
+final class IsCountable extends AbstractValidator
 {
     public const NOT_COUNTABLE = 'notCountable';
     public const NOT_EQUALS    = 'notEquals';

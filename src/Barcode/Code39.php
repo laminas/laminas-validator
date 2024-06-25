@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Barcode;
 
 use function str_split;
 use function substr;
 
-/** @final */
-class Code39 extends AbstractAdapter
+final class Code39 extends AbstractAdapter
 {
     /** @var array */
     protected $check = [

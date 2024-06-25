@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use ArrayAccess;
@@ -15,8 +17,7 @@ use function key;
 use function sprintf;
 use function var_export;
 
-/** @final */
-class Identical extends AbstractValidator
+final class Identical extends AbstractValidator
 {
     /**
      * Error codes

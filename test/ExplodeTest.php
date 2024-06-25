@@ -4,194 +4,146 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator;
 
-use ArrayObject;
+use Laminas\ServiceManager\Factory\InvokableFactory;
+use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\Callback;
 use Laminas\Validator\Exception\RuntimeException;
 use Laminas\Validator\Explode;
 use Laminas\Validator\InArray;
-use Laminas\Validator\Regex;
-use Laminas\Validator\ValidatorInterface;
-use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\Group;
+use Laminas\Validator\NotEmpty;
+use Laminas\Validator\ValidatorPluginManager;
 use PHPUnit\Framework\TestCase;
-use stdClass;
-
-use function array_keys;
 
 final class ExplodeTest extends TestCase
 {
     public function testRaisesExceptionWhenValidatorIsMissing(): void
     {
-        $validator = new Explode();
-
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('validator');
+        $this->expectExceptionMessage('expects a validator to be set');
 
-        $validator->isValid('foo,bar');
+        new Explode();
     }
 
-    /**
-     * @psalm-return array<array-key, array{
-     *     0: mixed,
-     *     1: null|string,
-     *     2: bool,
-     *     3: int,
-     *     4: bool,
-     *     5: string[],
-     *     6: bool
-     * }>
-     */
-    public static function getExpectedData(): array
+    public function testThatNonStringsCannotBeSplit(): void
     {
-        return [
-            //    value              delim break  N  valid  messages                   expects
-            ['foo,bar,dev,null', ',', false, 4, true, [], true],
-            ['foo,bar,dev,null', ',', true, 1, false, ['X'], false],
-            ['foo,bar,dev,null', ',', false, 4, false, ['X'], false],
-            ['foo,bar,dev,null', ';', false, 1, true, [], true],
-            ['foo;bar,dev;null', ',', false, 2, true, [], true],
-            ['foo;bar,dev;null', ',', false, 2, false, ['X'], false],
-            ['foo;bar;dev;null', ';', false, 4, true, [], true],
-            ['foo', ',', false, 1, true, [], true],
-            ['foo', ',', false, 1, false, ['X'], false],
-            ['foo', ',', true, 1, false, ['X'], false],
-            [['a', 'b'], null, false, 2, true, [], true],
-            [['a', 'b'], null, false, 2, false, ['X'], false],
-            ['foo', null, false, 1, true, [], true],
-            [1, ',', false, 1, true, [], true],
-            [null, ',', false, 1, true, [], true],
-            [new stdClass(), ',', false, 1, true, [], true],
-            [new ArrayObject(['a', 'b']), null, false, 2, true, [], true],
-        ];
+        $validator = new Explode([
+            'validator' => new NotEmpty(),
+        ]);
+
+        self::assertFalse($validator->isValid(1));
+        self::assertArrayHasKey(Explode::INVALID, $validator->getMessages());
     }
 
-    #[DataProvider('getExpectedData')]
-    public function testExpectedBehavior(
-        mixed $value,
-        ?string $delimiter,
-        bool $breakOnFirst,
-        int $numIsValidCalls,
-        bool $isValidReturn,
-        array $messages,
-        bool $expects
-    ): void {
-        $mockValidator = $this->createMock(ValidatorInterface::class);
-        $mockValidator
-            ->expects($this->exactly($numIsValidCalls))
-            ->method('isValid')
-            ->willReturn($isValidReturn);
-        $mockValidator
-            ->method('getMessages')
-            ->willReturn('X');
+    public function testNonDefaultSeparator(): void
+    {
+        $validator = new Explode([
+            'validator'      => new NotEmpty(),
+            'valueDelimiter' => ';',
+        ]);
+
+        self::assertTrue($validator->isValid('a;b;c'));
+        self::assertFalse($validator->isValid('a;;b'));
+    }
+
+    public function testValidatorOptionCanBeAValidatorSpecification(): void
+    {
+        $validator = new Explode([
+            'validator' => [
+                'name'    => InArray::class,
+                'options' => [
+                    'haystack' => ['a', 'b', 'c'],
+                ],
+            ],
+        ]);
+
+        self::assertTrue($validator->isValid('a,b,c'));
+    }
+
+    public function testInjectedPluginManagerIsUsed(): void
+    {
+        $plugins = new ValidatorPluginManager(new ServiceManager(), [
+            'factories' => [
+                InArray::class => InvokableFactory::class,
+            ],
+            'aliases'   => [
+                'foo' => InArray::class,
+            ],
+        ]);
 
         $validator = new Explode([
-            'validator'           => $mockValidator,
-            'valueDelimiter'      => $delimiter,
-            'breakOnFirstFailure' => $breakOnFirst,
+            'validator'              => [
+                'name'    => 'foo',
+                'options' => [
+                    'haystack' => ['a', 'b', 'c'],
+                ],
+            ],
+            'validatorPluginManager' => $plugins,
         ]);
 
-        self::assertSame($expects, $validator->isValid($value));
-        self::assertSame($messages, $validator->getMessages());
+        self::assertTrue($validator->isValid('a,b,c'));
     }
 
-    public function testGetMessagesReturnsDefaultValue(): void
+    public function testValidatorSpecificationWithMissingNameIsExceptional(): void
     {
-        $validator = new Explode();
-
-        self::assertSame([], $validator->getMessages());
-    }
-
-    public function testEqualsMessageTemplates(): void
-    {
-        $validator = new Explode([]);
-
-        self::assertSame(
-            [
-                Explode::INVALID,
-            ],
-            array_keys($validator->getMessageTemplates())
-        );
-        self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
-    }
-
-    public function testEqualsMessageVariables(): void
-    {
-        $validator = new Explode([]);
-
-        self::assertSame([], $validator->getOption('messageVariables'));
-        self::assertSame(array_keys([]), $validator->getMessageVariables());
-    }
-
-    public function testSetValidatorAsArray(): void
-    {
-        $validator = new Explode();
-        $validator->setValidator([
-            'name'    => 'inarray',
-            'options' => [
-                'haystack' => ['a', 'b', 'c'],
-            ],
-        ]);
-
-        /** @var InArray $inArrayValidator */
-        $inArrayValidator = $validator->getValidator();
-
-        self::assertInstanceOf(InArray::class, $inArrayValidator);
-        self::assertSame(['a', 'b', 'c'], $inArrayValidator->getHaystack());
-    }
-
-    public function testSetValidatorMissingName(): void
-    {
-        $validator = new Explode();
-
         $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Invalid validator specification');
 
         /** @psalm-suppress InvalidArgument */
-        $validator->setValidator([
-            'options' => [],
+        new Explode([
+            'validator' => [
+                'options' => ['foo'],
+            ],
         ]);
     }
 
-    public function testSetValidatorInvalidParam(): void
+    public function testValidatorOptionCanBeAKnownAlias(): void
     {
-        $validator = new Explode();
-
-        $this->expectException(RuntimeException::class);
-
-        $validator->setValidator('inarray');
+        $validator = new Explode([
+            'validator' => NotEmpty::class,
+        ]);
+        self::assertTrue($validator->isValid('a,b,c'));
     }
 
-    #[Group('Laminas-5796')]
     public function testGetMessagesMultipleInvalid(): void
     {
         $validator = new Explode([
-            'validator'           => new Regex(
-                '/^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/'
-            ),
-            'valueDelimiter'      => ',',
-            'breakOnFirstFailure' => false,
+            'validator' => new InArray([
+                'haystack' => ['a', 'b', 'c'],
+            ]),
         ]);
 
         $messages = [
-            0 => [
-                'regexNotMatch' => 'The input does not match against pattern '
-                    . "'/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/'",
-            ],
+            Explode::INVALID_ITEM => '3 items were invalid: The input was not found in the haystack',
         ];
 
-        self::assertFalse($validator->isValid('api-tools-devteam@zend.com,abc,defghij'));
+        self::assertFalse($validator->isValid('x,y,z'));
         self::assertSame($messages, $validator->getMessages());
     }
 
-    /**
-     * Assert context is passed to composed validator
-     */
-    public function testIsValidPassContext(): void
+    public function testGetMessagesWhenBreakIsTrue(): void
     {
-        $context     = 'context';
-        $contextSame = false;
-        $validator   = new Explode([
-            'validator'           => new Callback(static function ($v, $c) use ($context, &$contextSame): bool {
-                $contextSame = $context === $c;
+        $validator = new Explode([
+            'validator'           => new InArray([
+                'haystack' => ['a', 'b', 'c'],
+            ]),
+            'breakOnFirstFailure' => true,
+        ]);
+
+        $messages = [
+            Explode::INVALID_ITEM => '1 items were invalid: The input was not found in the haystack',
+        ];
+
+        self::assertFalse($validator->isValid('x,y,z'));
+        self::assertSame($messages, $validator->getMessages());
+    }
+
+    public function testContextIsPassedToComposedValidator(): void
+    {
+        $context   = ['foo' => 'bar'];
+        $validator = new Explode([
+            'validator'           => new Callback(static function (mixed $v, array $c) use ($context): bool {
+                self::assertSame($context, $c);
+
                 return true;
             }),
             'valueDelimiter'      => ',',
@@ -199,6 +151,5 @@ final class ExplodeTest extends TestCase
         ]);
 
         self::assertTrue($validator->isValid('a,b,c', $context));
-        self::assertTrue($contextSame);
     }
 }

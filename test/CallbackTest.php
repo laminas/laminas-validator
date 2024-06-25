@@ -4,156 +4,92 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator;
 
+use AssertionError;
 use Exception;
 use Laminas\Validator\Callback;
 use Laminas\Validator\Exception\InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
-use function array_keys;
-use function func_get_args;
+use function assert;
 
 final class CallbackTest extends TestCase
 {
-    /**
-     * Ensures that the validator follows expected behavior
-     */
     public function testBasic(): void
     {
-        $valid = new Callback([$this, 'objectCallback']);
-
-        self::assertTrue($valid->isValid('test'));
-    }
-
-    public function testStaticCallback(): void
-    {
-        $valid = new Callback(
-            [self::class, 'staticCallback'],
+        $validator = new Callback(
+            static fn (mixed $value): bool => $value === 'test',
         );
 
-        self::assertTrue($valid->isValid('test'));
+        self::assertTrue($validator->isValid('test'));
     }
 
-    public function testSettingDefaultOptionsAfterwards(): void
+    /** @return array<string, array{0: array<never, never>|null}> */
+    public static function emptyContextProvider(): array
     {
-        $valid = new Callback([$this, 'objectCallback']);
-        $valid->setCallbackOptions(['options']);
-
-        self::assertSame(['options'], $valid->getCallbackOptions());
-        self::assertTrue($valid->isValid('test'));
+        return [
+            'empty-array' => [[]],
+            'null'        => [null],
+        ];
     }
 
-    public function testSettingDefaultOptions(): void
+    /** @param array<string, mixed>|null $context */
+    #[DataProvider('emptyContextProvider')]
+    public function testOptionsArePassedAsSecondArgumentWhenGivenWithoutContext(?array $context): void
     {
-        $valid = new Callback(['callback' => [$this, 'objectCallback'], 'callbackOptions' => ['options']]);
+        $validator = new Callback([
+            'throwExceptions' => true,
+            'callback'        => static function (mixed $value, string $foo): bool {
+                return $value === 'test' && $foo === 'foo';
+            },
+            'callbackOptions' => ['foo' => 'foo'],
+        ]);
 
-        self::assertSame(['options'], $valid->getCallbackOptions());
-        self::assertTrue($valid->isValid('test'));
+        self::assertTrue($validator->isValid('test', $context));
     }
 
-    public function testGettingCallback(): void
+    public function testOptionsArePassedAsThirdArgumentWhenContextIsNonEmpty(): void
     {
-        $valid = new Callback([$this, 'objectCallback']);
+        $givenContext = ['baz' => 'bat'];
+        $validator    = new Callback([
+            'throwExceptions' => true,
+            'callback'        => static function (mixed $value, array $context, string $foo) use ($givenContext): bool {
+                return $value === 'test' && $foo === 'foo' && $context === $givenContext;
+            },
+            'callbackOptions' => ['foo' => 'foo'],
+        ]);
 
-        self::assertSame([$this, 'objectCallback'], $valid->getCallback());
+        self::assertTrue($validator->isValid('test', $givenContext));
+    }
+
+    public function testContextIsSecondArgumentWhenGiven(): void
+    {
+        $givenContext = ['baz' => 'bat'];
+        $validator    = new Callback([
+            'throwExceptions' => true,
+            'callback'        => static function (mixed $value, array $context) use ($givenContext): bool {
+                return $value === 'test' && $context === $givenContext;
+            },
+            'callbackOptions' => [],
+        ]);
+
+        self::assertTrue($validator->isValid('test', $givenContext));
     }
 
     public function testInvalidCallback(): void
     {
-        $valid = new Callback([$this, 'objectCallback']);
-
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Invalid callback given');
+        $this->expectExceptionMessage('A callable must be provided');
 
-        /** @psalm-suppress UndefinedFunction */
-        $valid->setCallback('invalidCallback');
+        /** @psalm-suppress InvalidArgument */
+        new Callback([$this, 'noMethodExists']);
     }
 
-    public function testCallbackOptionsAreReceived(): void
+    public function testThatExceptionsRaisedInsideTheCallbackAreCaughtByDefault(): void
     {
-        $valid = new Callback(['callback' => [$this, 'optionsCallback'], 'callbackOptions' => ['options']]);
-
-        self::assertSame(['options'], $valid->getCallbackOptions());
-        self::assertTrue($valid->isValid('test', 'something'));
-    }
-
-    public function optionsCallback(): bool
-    {
-        $args = func_get_args();
-
-        self::assertContains('something', $args);
-        self::assertContains('options', $args);
-
-        return true;
-    }
-
-    public function testEqualsMessageTemplates(): void
-    {
-        $validator = new Callback([$this, 'objectCallback']);
-
-        self::assertSame(
-            [
-                Callback::INVALID_VALUE,
-                Callback::INVALID_CALLBACK,
-            ],
-            array_keys($validator->getMessageTemplates()),
-        );
-        self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
-    }
-
-    public function testCanAcceptContextWithoutOptions(): void
-    {
-        $value     = 'bar';
-        $context   = ['foo' => 'bar', 'bar' => 'baz'];
-        $validator = new Callback(static fn($v, $c): bool => ($value === $v) && ($context === $c));
-
-        self::assertTrue($validator->isValid($value, $context));
-    }
-
-    public function testCanAcceptContextWithOptions(): void
-    {
-        $value     = 'bar';
-        $context   = ['foo' => 'bar', 'bar' => 'baz'];
-        $options   = ['baz' => 'bat'];
-        $validator = new Callback(
-            static fn($v, $c, $baz): bool => ($value === $v)
-            && ($context === $c) && ($options['baz'] === $baz),
-        );
-        $validator->setCallbackOptions($options);
-
-        self::assertTrue($validator->isValid($value, $context));
-    }
-
-    /**
-     * @return true
-     */
-    public function objectCallback(): bool
-    {
-        return true;
-    }
-
-    /**
-     * @return true
-     */
-    public static function staticCallback(): bool
-    {
-        return true;
-    }
-
-    public function testIsValidRaisesExceptionWhenNoCallbackPresent(): void
-    {
-        $validator = new Callback();
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('No callback given');
-
-        $validator->isValid('test');
-    }
-
-    public function testThatExceptionsRaisedInsideTheCallbackAreCaught(): void
-    {
-        $validator = new Callback();
         $exception = new Exception('Foo');
-        $validator->setCallback(static function () use ($exception): never {
+        $validator = new Callback(static function () use ($exception): bool {
             throw $exception;
         });
 
@@ -163,9 +99,8 @@ final class CallbackTest extends TestCase
 
     public function testThatCallbackExceptionsCanBeAllowedToPropagate(): void
     {
-        $validator = new Callback();
         $exception = new Exception('Callback Exception');
-        $validator->setCallback(static function () use ($exception): never {
+        $validator = new Callback(static function () use ($exception): bool {
             throw $exception;
         });
 
@@ -177,5 +112,56 @@ final class CallbackTest extends TestCase
         }
 
         self::assertArrayHasKey(Callback::INVALID_CALLBACK, $validator->getMessages());
+    }
+
+    public function testThatCallbacksCanBeBoundToTheValidator(): void
+    {
+        $callback = function (mixed $value): bool {
+            /** @psalm-suppress TypeDoesNotContainType Psalm is not aware this function will be bound to the validator */
+            assert($this instanceof Callback);
+
+            if ($value === 'a') {
+                $this->setMessage('Bad News 1', Callback::INVALID_VALUE);
+
+                return false;
+            }
+
+            if ($value === 'b') {
+                $this->setMessage('Bad News 2', Callback::INVALID_VALUE);
+
+                return false;
+            }
+
+            return true;
+        };
+
+        $validator = new Callback([
+            'callback' => $callback,
+            'bind'     => true,
+        ]);
+
+        self::assertFalse($validator->isValid('a'));
+        self::assertSame('Bad News 1', $validator->getMessages()[Callback::INVALID_VALUE] ?? null);
+        self::assertFalse($validator->isValid('b'));
+        self::assertSame('Bad News 2', $validator->getMessages()[Callback::INVALID_VALUE] ?? null);
+    }
+
+    public function testThatCallbacksAreNotBoundToTheValidatorByDefault(): void
+    {
+        $callback = function (mixed $value): bool {
+            /** @psalm-suppress TypeDoesNotContainType Psalm is correct here! */
+            assert($this instanceof Callback);
+
+            return $value === 'foo';
+        };
+
+        $validator = new Callback([
+            'callback'        => $callback,
+            'throwExceptions' => true,
+        ]);
+
+        $this->expectException(AssertionError::class);
+
+        $validator->isValid('foo');
     }
 }

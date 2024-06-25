@@ -66,27 +66,9 @@
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
     </UndefinedThisPropertyAssignment>
   </file>
   <file src="src/Barcode.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getChecksum]]></code>
-      <code><![CDATA[setAdapter]]></code>
-      <code><![CDATA[useChecksum]]></code>
-      <code><![CDATA[useChecksum]]></code>
-    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA[is_array($options)]]></code>
       <code><![CDATA[is_string($value)]]></code>
@@ -150,10 +132,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="src/Barcode/Codabar.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-      <code><![CDATA[parent::hasValidCharacters($value)]]></code>
-    </DeprecatedClass>
     <PossiblyNullArgument>
       <code><![CDATA[$chars]]></code>
     </PossiblyNullArgument>
@@ -162,14 +140,6 @@
     </UnusedClass>
   </file>
   <file src="src/Barcode/Code128.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-    <DeprecatedMethod>
-      <code><![CDATA[getUtf8StringWrapper]]></code>
-      <code><![CDATA[getUtf8StringWrapper]]></code>
-      <code><![CDATA[getUtf8StringWrapper]]></code>
-    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA[! $this->utf8StringWrapper]]></code>
       <code><![CDATA[$this->utf8StringWrapper]]></code>
@@ -208,17 +178,11 @@
     </UnusedVariable>
   </file>
   <file src="src/Barcode/Code25.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[Code25]]></code>
     </UnusedClass>
   </file>
   <file src="src/Barcode/Code25interleaved.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <InvalidArgument>
       <code><![CDATA['even']]></code>
     </InvalidArgument>
@@ -227,9 +191,6 @@
     </UnusedClass>
   </file>
   <file src="src/Barcode/Code39.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <MixedAssignment>
       <code><![CDATA[$count]]></code>
       <code><![CDATA[$mod]]></code>
@@ -243,17 +204,11 @@
     </UnusedClass>
   </file>
   <file src="src/Barcode/Code39ext.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[Code39ext]]></code>
     </UnusedClass>
   </file>
   <file src="src/Barcode/Code93.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <MixedAssignment>
       <code><![CDATA[$count]]></code>
       <code><![CDATA[$count]]></code>
@@ -275,116 +230,71 @@
     </UnusedClass>
   </file>
   <file src="src/Barcode/Code93ext.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[Code93ext]]></code>
     </UnusedClass>
   </file>
   <file src="src/Barcode/Ean12.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[Ean12]]></code>
     </UnusedClass>
   </file>
   <file src="src/Barcode/Ean13.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <PossiblyUnusedMethod>
       <code><![CDATA[__construct]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="src/Barcode/Ean14.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[Ean14]]></code>
     </UnusedClass>
   </file>
   <file src="src/Barcode/Ean18.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[Ean18]]></code>
     </UnusedClass>
   </file>
   <file src="src/Barcode/Ean2.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[Ean2]]></code>
     </UnusedClass>
   </file>
   <file src="src/Barcode/Ean5.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[Ean5]]></code>
     </UnusedClass>
   </file>
   <file src="src/Barcode/Ean8.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-      <code><![CDATA[parent::hasValidLength($value)]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[Ean8]]></code>
     </UnusedClass>
   </file>
   <file src="src/Barcode/Gtin12.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[Gtin12]]></code>
     </UnusedClass>
   </file>
   <file src="src/Barcode/Gtin13.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[Gtin13]]></code>
     </UnusedClass>
   </file>
   <file src="src/Barcode/Gtin14.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[Gtin14]]></code>
     </UnusedClass>
   </file>
   <file src="src/Barcode/Identcode.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[Identcode]]></code>
     </UnusedClass>
   </file>
   <file src="src/Barcode/Intelligentmail.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[Intelligentmail]]></code>
     </UnusedClass>
   </file>
   <file src="src/Barcode/Issn.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-      <code><![CDATA[parent::hasValidCharacters($value)]]></code>
-      <code><![CDATA[parent::hasValidChecksum($value)]]></code>
-    </DeprecatedClass>
     <PossiblyInvalidOperand>
       <code><![CDATA[$token]]></code>
     </PossiblyInvalidOperand>
@@ -393,132 +303,39 @@
     </UnusedClass>
   </file>
   <file src="src/Barcode/Itf14.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[Itf14]]></code>
     </UnusedClass>
   </file>
   <file src="src/Barcode/Leitcode.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[Leitcode]]></code>
     </UnusedClass>
   </file>
   <file src="src/Barcode/Planet.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[Planet]]></code>
     </UnusedClass>
   </file>
   <file src="src/Barcode/Postnet.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[Postnet]]></code>
     </UnusedClass>
   </file>
   <file src="src/Barcode/Royalmail.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-      <code><![CDATA[parent::hasValidCharacters($value)]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[Royalmail]]></code>
     </UnusedClass>
   </file>
   <file src="src/Barcode/Sscc.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[Sscc]]></code>
     </UnusedClass>
   </file>
-  <file src="src/Barcode/Upca.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
-  </file>
   <file src="src/Barcode/Upce.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-      <code><![CDATA[parent::hasValidLength($value)]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[Upce]]></code>
     </UnusedClass>
-  </file>
-  <file src="src/Between.php">
-    <MixedInferredReturnType>
-      <code><![CDATA[bool]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->options['inclusive']]]></code>
-    </MixedReturnStatement>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[setInclusive]]></code>
-      <code><![CDATA[setMax]]></code>
-      <code><![CDATA[setMin]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="src/Bitwise.php">
-    <MixedAssignment>
-      <code><![CDATA[$temp['control']]]></code>
-      <code><![CDATA[$temp['operator']]]></code>
-      <code><![CDATA[$temp['strict']]]></code>
-    </MixedAssignment>
-    <MixedOperand>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedOperand>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$temp]]></code>
-    </PossiblyUndefinedVariable>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$control]]></code>
-    </PropertyNotSetInConstructor>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(bool) $strict]]></code>
-      <code><![CDATA[(int) $control]]></code>
-    </RedundantCastGivenDocblockType>
-  </file>
-  <file src="src/Callback.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getCallback]]></code>
-      <code><![CDATA[getCallbackOptions]]></code>
-    </DeprecatedMethod>
-    <MixedAssignment>
-      <code><![CDATA[$args[]]]></code>
-      <code><![CDATA[$args[]]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[array<array-key, mixed>]]></code>
-      <code><![CDATA[callable|null]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->options['callback']]]></code>
-      <code><![CDATA[$this->options['callbackOptions']]]></code>
-    </MixedReturnStatement>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(array) $options]]></code>
-    </RedundantCastGivenDocblockType>
-    <RiskyTruthyFalsyComparison>
-      <code><![CDATA[empty($context)]]></code>
-      <code><![CDATA[empty($context)]]></code>
-      <code><![CDATA[empty($context)]]></code>
-    </RiskyTruthyFalsyComparison>
   </file>
   <file src="src/CreditCard.php">
     <InvalidOperand>
@@ -530,26 +347,19 @@
       <code><![CDATA[$this->cardLength[$type]]]></code>
       <code><![CDATA[$this->options['type']]]></code>
       <code><![CDATA[$this->options['type']]]></code>
-      <code><![CDATA[$typ]]></code>
       <code><![CDATA[$value]]></code>
     </MixedArgument>
     <MixedArrayAssignment>
       <code><![CDATA[$this->options['type'][]]]></code>
     </MixedArrayAssignment>
-    <MixedArrayOffset>
-      <code><![CDATA[$this->cardLength[$type]]]></code>
-      <code><![CDATA[$this->cardType[$type]]]></code>
-    </MixedArrayOffset>
     <MixedAssignment>
       <code><![CDATA[$prefix]]></code>
       <code><![CDATA[$temp['service']]]></code>
       <code><![CDATA[$temp['type']]]></code>
-      <code><![CDATA[$typ]]></code>
-      <code><![CDATA[$type]]></code>
     </MixedAssignment>
     <MixedInferredReturnType>
-      <code><![CDATA[array]]></code>
-      <code><![CDATA[callable]]></code>
+      <code><![CDATA[callable(mixed...):bool]]></code>
+      <code><![CDATA[list<string>]]></code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$this->options['service']]]></code>
@@ -557,7 +367,6 @@
     </MixedReturnStatement>
     <PossiblyInvalidArgument>
       <code><![CDATA[$options]]></code>
-      <code><![CDATA[$this->getType()]]></code>
     </PossiblyInvalidArgument>
     <PossiblyUndefinedVariable>
       <code><![CDATA[$temp]]></code>
@@ -565,52 +374,6 @@
     <PossiblyUnusedReturnValue>
       <code><![CDATA[CreditCard]]></code>
     </PossiblyUnusedReturnValue>
-  </file>
-  <file src="src/Csrf.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_array($options)]]></code>
-      <code><![CDATA[null === $this->session]]></code>
-    </DocblockTypeContradiction>
-    <ImpureByReferenceAssignment>
-      <code><![CDATA[$session->tokenList]]></code>
-    </ImpureByReferenceAssignment>
-    <MixedArgument>
-      <code><![CDATA[$key]]></code>
-      <code><![CDATA[$session->tokenList[$tokenId]]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$options]]></code>
-    </MixedArgumentTypeCoercion>
-    <MixedArrayAssignment>
-      <code><![CDATA[$session->tokenList[$tokenId]]]></code>
-    </MixedArrayAssignment>
-    <MixedAssignment>
-      <code><![CDATA[$key]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[null|string]]></code>
-      <code><![CDATA[string]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$session->hash]]></code>
-      <code><![CDATA[$this->hash]]></code>
-    </MixedReturnStatement>
-    <PossiblyNullArrayOffset>
-      <code><![CDATA[$session->tokenList]]></code>
-    </PossiblyNullArrayOffset>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$session]]></code>
-    </PropertyNotSetInConstructor>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(int) $ttl]]></code>
-      <code><![CDATA[(string) $name]]></code>
-      <code><![CDATA[(string) $salt]]></code>
-    </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Date.php">
     <MixedArgumentTypeCoercion>
@@ -653,113 +416,6 @@
     <TypeDoesNotContainType>
       <code><![CDATA[$baseDate instanceof DateTimeImmutable]]></code>
     </TypeDoesNotContainType>
-  </file>
-  <file src="src/Db/AbstractDb.php">
-    <LessSpecificReturnStatement>
-      <code><![CDATA[$this]]></code>
-      <code><![CDATA[$this]]></code>
-      <code><![CDATA[$this]]></code>
-      <code><![CDATA[$this]]></code>
-      <code><![CDATA[$this]]></code>
-    </LessSpecificReturnStatement>
-    <MixedArgument>
-      <code><![CDATA[$options['adapter']]]></code>
-      <code><![CDATA[$options['exclude']]]></code>
-      <code><![CDATA[$options['field']]]></code>
-      <code><![CDATA[$options['schema']]]></code>
-      <code><![CDATA[$options['table']]]></code>
-      <code><![CDATA[$this->exclude]]></code>
-      <code><![CDATA[$this->exclude['field']]]></code>
-      <code><![CDATA[$this->exclude['value']]]></code>
-    </MixedArgument>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$options]]></code>
-    </MixedArgumentTypeCoercion>
-    <MixedAssignment>
-      <code><![CDATA[$firstArgument]]></code>
-      <code><![CDATA[$temp['adapter']]]></code>
-      <code><![CDATA[$temp['exclude']]]></code>
-      <code><![CDATA[$temp['field']]]></code>
-      <code><![CDATA[$temp['table']]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[array]]></code>
-      <code><![CDATA[string|array]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$result->current()]]></code>
-      <code><![CDATA[$this->exclude]]></code>
-    </MixedReturnStatement>
-    <NullArgument>
-      <code><![CDATA[null]]></code>
-    </NullArgument>
-    <PossiblyNullArgument>
-      <code><![CDATA[$options]]></code>
-      <code><![CDATA[$options]]></code>
-      <code><![CDATA[$options]]></code>
-      <code><![CDATA[$options]]></code>
-      <code><![CDATA[$options]]></code>
-      <code><![CDATA[$options]]></code>
-      <code><![CDATA[$options]]></code>
-      <code><![CDATA[$options['adapter']]]></code>
-      <code><![CDATA[$options['exclude']]]></code>
-      <code><![CDATA[$options['field']]]></code>
-      <code><![CDATA[$options['schema']]]></code>
-      <code><![CDATA[$options['table']]]></code>
-    </PossiblyNullArgument>
-    <PossiblyNullPropertyAssignmentValue>
-      <code><![CDATA[null]]></code>
-      <code><![CDATA[null]]></code>
-      <code><![CDATA[null]]></code>
-      <code><![CDATA[null]]></code>
-    </PossiblyNullPropertyAssignmentValue>
-    <PossiblyNullReference>
-      <code><![CDATA[$parameters]]></code>
-    </PossiblyNullReference>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$temp]]></code>
-    </PossiblyUndefinedVariable>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[getExclude]]></code>
-    </PossiblyUnusedMethod>
-    <PossiblyUnusedReturnValue>
-      <code><![CDATA[self]]></code>
-    </PossiblyUnusedReturnValue>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$schema]]></code>
-      <code><![CDATA[AbstractDb]]></code>
-    </PropertyNotSetInConstructor>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(string) $field]]></code>
-      <code><![CDATA[(string) $table]]></code>
-    </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[$this->select instanceof Select]]></code>
-    </RedundantConditionGivenDocblockType>
-  </file>
-  <file src="src/Db/NoRecordExists.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[null === $this->adapter]]></code>
-    </DocblockTypeContradiction>
-    <MixedArgument>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[NoRecordExists]]></code>
-      <code><![CDATA[NoRecordExists]]></code>
-    </PropertyNotSetInConstructor>
-  </file>
-  <file src="src/Db/RecordExists.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[null === $this->adapter]]></code>
-    </DocblockTypeContradiction>
-    <MixedArgument>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[RecordExists]]></code>
-      <code><![CDATA[RecordExists]]></code>
-    </PropertyNotSetInConstructor>
   </file>
   <file src="src/EmailAddress.php">
     <DocblockTypeContradiction>
@@ -846,34 +502,17 @@
     </UnusedClass>
   </file>
   <file src="src/Explode.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getValidator]]></code>
-      <code><![CDATA[getValidatorPluginManager]]></code>
-      <code><![CDATA[getValueDelimiter]]></code>
-      <code><![CDATA[isBreakOnFirstFailure]]></code>
-    </DeprecatedMethod>
-    <DocblockTypeContradiction>
-      <code><![CDATA[[$value]]]></code>
-    </DocblockTypeContradiction>
-    <MixedArrayAssignment>
-      <code><![CDATA[$this->abstractOptions['messages'][]]]></code>
-    </MixedArrayAssignment>
-    <MixedAssignment>
-      <code><![CDATA[$value]]></code>
-    </MixedAssignment>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[setBreakOnFirstFailure]]></code>
-      <code><![CDATA[setValueDelimiter]]></code>
-    </PossiblyUnusedMethod>
-    <PropertyTypeCoercion>
-      <code><![CDATA[$this->abstractOptions]]></code>
-    </PropertyTypeCoercion>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(bool) $break]]></code>
-    </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[null !== $delimiter]]></code>
-    </RedundantConditionGivenDocblockType>
+    <LessSpecificReturnStatement>
+      <code><![CDATA[$this->getPluginManager()->build($name, $options)]]></code>
+    </LessSpecificReturnStatement>
+    <MixedInferredReturnType>
+      <code><![CDATA[ValidatorInterface]]></code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement>
+      <code><![CDATA[$this->getPluginManager()->build($name, $options)]]></code>
+      <code><![CDATA[$this->getPluginManager()->get($validator)]]></code>
+      <code><![CDATA[$this->getPluginManager()->get($validator)]]></code>
+    </MixedReturnStatement>
     <TooManyArguments>
       <code><![CDATA[isValid]]></code>
     </TooManyArguments>
@@ -1323,8 +962,6 @@
       <code><![CDATA[$options['magicFile']]]></code>
       <code><![CDATA[$options['mimeType']]]></code>
       <code><![CDATA[$this->type]]></code>
-      <code><![CDATA[$this->type]]></code>
-      <code><![CDATA[$this->type]]></code>
       <code><![CDATA[static::FALSE_TYPE]]></code>
       <code><![CDATA[static::NOT_DETECTED]]></code>
       <code><![CDATA[static::NOT_READABLE]]></code>
@@ -1410,33 +1047,14 @@
       <code><![CDATA[! is_string($min) && ! is_numeric($min)]]></code>
       <code><![CDATA[is_string($options)]]></code>
     </DocblockTypeContradiction>
-    <InvalidArgument>
-      <code><![CDATA[$size]]></code>
-      <code><![CDATA[$size]]></code>
-    </InvalidArgument>
     <InvalidArrayOffset>
       <code><![CDATA[$sizes[$i]]]></code>
     </InvalidArrayOffset>
-    <InvalidOperand>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </InvalidOperand>
     <InvalidPropertyAssignmentValue>
-      <code><![CDATA[$size]]></code>
-      <code><![CDATA[$size]]></code>
-      <code><![CDATA[$size]]></code>
       <code><![CDATA[$this->toByteString($size)]]></code>
       <code><![CDATA[$this->toByteString($size)]]></code>
     </InvalidPropertyAssignmentValue>
     <MixedArgument>
-      <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$fileInfo['file']]]></code>
       <code><![CDATA[$max]]></code>
       <code><![CDATA[$min]]></code>
     </MixedArgument>
@@ -1615,27 +1233,7 @@
     </InvalidOperand>
     <MixedArgument>
       <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
     </MixedArgument>
-  </file>
-  <file src="src/GreaterThan.php">
-    <MixedArgument>
-      <code><![CDATA[$options['inclusive']]]></code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code><![CDATA[$temp['inclusive']]]></code>
-      <code><![CDATA[$temp['min']]]></code>
-    </MixedAssignment>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$temp]]></code>
-    </PossiblyUndefinedVariable>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$inclusive]]></code>
-    </PropertyNotSetInConstructor>
   </file>
   <file src="src/Hostname.php">
     <DocblockTypeContradiction>
@@ -1762,15 +1360,6 @@
       <code><![CDATA[(bool) $recursive]]></code>
     </RedundantCastGivenDocblockType>
   </file>
-  <file src="src/Ip.php">
-    <MixedArgument>
-      <code><![CDATA[$regex]]></code>
-      <code><![CDATA[$regex]]></code>
-    </MixedArgument>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$options]]></code>
-    </MixedArgumentTypeCoercion>
-  </file>
   <file src="src/IsInstanceOf.php">
     <MixedAssignment>
       <code><![CDATA[$tmpOptions['className']]]></code>
@@ -1804,24 +1393,6 @@
       <code><![CDATA[$this->options['type']]]></code>
     </MixedReturnStatement>
   </file>
-  <file src="src/LessThan.php">
-    <MixedArgument>
-      <code><![CDATA[$options['inclusive']]]></code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code><![CDATA[$temp['inclusive']]]></code>
-      <code><![CDATA[$temp['max']]]></code>
-    </MixedAssignment>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$temp]]></code>
-    </PossiblyUndefinedVariable>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$inclusive]]></code>
-    </PropertyNotSetInConstructor>
-  </file>
   <file src="src/Module.php">
     <PossiblyUnusedParam>
       <code><![CDATA[$moduleManager]]></code>
@@ -1851,36 +1422,8 @@
       <code><![CDATA[$type]]></code>
     </PossiblyNullArgument>
     <RedundantCondition>
-      <code><![CDATA[is_object($value) && method_exists($value, '__toString')]]></code>
+      <code><![CDATA[is_object($value) && method_exists($value, '__toString') && (string) $value === '']]></code>
     </RedundantCondition>
-  </file>
-  <file src="src/NumberComparison.php">
-    <MixedAssignment>
-      <code><![CDATA[$inclusiveMax]]></code>
-      <code><![CDATA[$inclusiveMin]]></code>
-      <code><![CDATA[$max]]></code>
-      <code><![CDATA[$max]]></code>
-      <code><![CDATA[$min]]></code>
-    </MixedAssignment>
-  </file>
-  <file src="src/Regex.php">
-    <DeprecatedConstant>
-      <code><![CDATA[self::ERROROUS]]></code>
-      <code><![CDATA[self::ERROROUS]]></code>
-    </DeprecatedConstant>
-    <DeprecatedMethod>
-      <code><![CDATA[setPattern]]></code>
-      <code><![CDATA[setPattern]]></code>
-    </DeprecatedMethod>
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_array($pattern)]]></code>
-    </DocblockTypeContradiction>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$pattern]]></code>
-    </PossiblyInvalidArgument>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(string) $pattern]]></code>
-    </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Sitemap/Changefreq.php">
     <DocblockTypeContradiction>
@@ -1898,23 +1441,12 @@
       <code><![CDATA[$value]]></code>
     </MoreSpecificImplementedParamType>
   </file>
-  <file src="src/Sitemap/Loc.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_string($value)]]></code>
-    </DocblockTypeContradiction>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-  </file>
   <file src="src/Sitemap/Priority.php">
     <MoreSpecificImplementedParamType>
       <code><![CDATA[$value]]></code>
     </MoreSpecificImplementedParamType>
   </file>
   <file src="src/StaticValidator.php">
-    <RedundantCondition>
-      <code><![CDATA[method_exists($plugins, 'configure')]]></code>
-    </RedundantCondition>
     <UndefinedMethod>
       <code><![CDATA[setShareByDefault]]></code>
     </UndefinedMethod>
@@ -1938,103 +1470,6 @@
       <code><![CDATA[$temp]]></code>
     </PossiblyUndefinedVariable>
   </file>
-  <file src="src/StringLength.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getEncoding]]></code>
-      <code><![CDATA[getEncoding]]></code>
-      <code><![CDATA[getLength]]></code>
-      <code><![CDATA[getLength]]></code>
-      <code><![CDATA[getMax]]></code>
-      <code><![CDATA[getMax]]></code>
-      <code><![CDATA[getMax]]></code>
-      <code><![CDATA[getMax]]></code>
-      <code><![CDATA[getMax]]></code>
-      <code><![CDATA[getMin]]></code>
-      <code><![CDATA[getMin]]></code>
-      <code><![CDATA[getMin]]></code>
-      <code><![CDATA[getStringWrapper]]></code>
-      <code><![CDATA[setLength]]></code>
-    </DeprecatedMethod>
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_string($value)]]></code>
-    </DocblockTypeContradiction>
-    <MixedAssignment>
-      <code><![CDATA[$temp['encoding']]]></code>
-      <code><![CDATA[$temp['max']]]></code>
-      <code><![CDATA[$temp['min']]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[int]]></code>
-      <code><![CDATA[int]]></code>
-      <code><![CDATA[int|null]]></code>
-      <code><![CDATA[string]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->options['encoding']]]></code>
-      <code><![CDATA[$this->options['length']]]></code>
-      <code><![CDATA[$this->options['max']]]></code>
-      <code><![CDATA[$this->options['min']]]></code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <PossiblyFalseArgument>
-      <code><![CDATA[$this->getStringWrapper()->strlen($value)]]></code>
-    </PossiblyFalseArgument>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$temp]]></code>
-    </PossiblyUndefinedVariable>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[setStringWrapper]]></code>
-    </PossiblyUnusedMethod>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(int) $length]]></code>
-      <code><![CDATA[(int) $max]]></code>
-      <code><![CDATA[(int) $min]]></code>
-    </RedundantCastGivenDocblockType>
-  </file>
-  <file src="src/Timezone.php">
-    <DeprecatedMethod>
-      <code><![CDATA[calculateTypeValue]]></code>
-    </DeprecatedMethod>
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_string($type)]]></code>
-    </DocblockTypeContradiction>
-    <InvalidOperand>
-      <code><![CDATA[array_search($value, $this->constants)]]></code>
-    </InvalidOperand>
-    <MixedAssignment>
-      <code><![CDATA[$opts['type']]]></code>
-      <code><![CDATA[$type]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedAssignment>
-    <MixedOperand>
-      <code><![CDATA[$type]]></code>
-      <code><![CDATA[$type]]></code>
-      <code><![CDATA[$type]]></code>
-      <code><![CDATA[$type]]></code>
-    </MixedOperand>
-    <PossiblyFalseOperand>
-      <code><![CDATA[array_search($value, $this->constants)]]></code>
-    </PossiblyFalseOperand>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$opts]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyNullArgument>
-      <code><![CDATA[$type]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </PossiblyNullArgument>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$opts]]></code>
-    </PossiblyUndefinedVariable>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[gettype($type)]]></code>
-    </RedundantConditionGivenDocblockType>
-  </file>
   <file src="src/Translator/DummyTranslator.php">
     <RedundantCastGivenDocblockType>
       <code><![CDATA[(int) $number]]></code>
@@ -2045,55 +1480,6 @@
       <code><![CDATA[TranslatorAwareInterface]]></code>
       <code><![CDATA[self]]></code>
     </PossiblyUnusedReturnValue>
-  </file>
-  <file src="src/Uri.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_array($options)]]></code>
-      <code><![CDATA[is_string($value)]]></code>
-    </DocblockTypeContradiction>
-    <InvalidCatch>
-      <code><![CDATA[try {
-            $uriHandler->parse($value);
-            if ($uriHandler->isValid()) {
-                // It will either be a valid absolute or relative URI
-                if (
-                    ($this->allowRelative && $this->allowAbsolute)
-                    || ($this->allowAbsolute && $uriHandler->isAbsolute())
-                    || ($this->allowRelative && $uriHandler->isValidRelative())
-                ) {
-                    return true;
-                }
-            }
-        } catch (UriException) {
-            // Error parsing URI, it must be invalid
-        }]]></code>
-    </InvalidCatch>
-    <MixedArgument>
-      <code><![CDATA[$options['allowAbsolute']]]></code>
-      <code><![CDATA[$options['allowRelative']]]></code>
-      <code><![CDATA[$options['uriHandler']]]></code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code><![CDATA[$temp['allowAbsolute']]]></code>
-      <code><![CDATA[$temp['allowRelative']]]></code>
-      <code><![CDATA[$temp['uriHandler']]]></code>
-    </MixedAssignment>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$temp]]></code>
-    </PossiblyUndefinedVariable>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(bool) $allowAbsolute]]></code>
-      <code><![CDATA[(bool) $allowRelative]]></code>
-    </RedundantCastGivenDocblockType>
-    <UnsafeInstantiation>
-      <code><![CDATA[new $this->uriHandler()]]></code>
-    </UnsafeInstantiation>
   </file>
   <file src="src/ValidatorChain.php">
     <MixedPropertyTypeCoercion>
@@ -2109,42 +1495,6 @@
     </TooManyArguments>
   </file>
   <file src="src/ValidatorPluginManager.php">
-    <DeprecatedClass>
-      <code><![CDATA[Between::class]]></code>
-      <code><![CDATA[Between::class]]></code>
-      <code><![CDATA[Between::class]]></code>
-      <code><![CDATA[Between::class]]></code>
-      <code><![CDATA[Between::class]]></code>
-      <code><![CDATA[Csrf::class]]></code>
-      <code><![CDATA[Csrf::class]]></code>
-      <code><![CDATA[Csrf::class]]></code>
-      <code><![CDATA[Csrf::class]]></code>
-      <code><![CDATA[Csrf::class]]></code>
-      <code><![CDATA[Db\NoRecordExists::class]]></code>
-      <code><![CDATA[Db\NoRecordExists::class]]></code>
-      <code><![CDATA[Db\NoRecordExists::class]]></code>
-      <code><![CDATA[Db\NoRecordExists::class]]></code>
-      <code><![CDATA[Db\NoRecordExists::class]]></code>
-      <code><![CDATA[Db\NoRecordExists::class]]></code>
-      <code><![CDATA[Db\RecordExists::class]]></code>
-      <code><![CDATA[Db\RecordExists::class]]></code>
-      <code><![CDATA[Db\RecordExists::class]]></code>
-      <code><![CDATA[Db\RecordExists::class]]></code>
-      <code><![CDATA[Db\RecordExists::class]]></code>
-      <code><![CDATA[Db\RecordExists::class]]></code>
-      <code><![CDATA[GreaterThan::class]]></code>
-      <code><![CDATA[GreaterThan::class]]></code>
-      <code><![CDATA[GreaterThan::class]]></code>
-      <code><![CDATA[GreaterThan::class]]></code>
-      <code><![CDATA[GreaterThan::class]]></code>
-      <code><![CDATA[GreaterThan::class]]></code>
-      <code><![CDATA[LessThan::class]]></code>
-      <code><![CDATA[LessThan::class]]></code>
-      <code><![CDATA[LessThan::class]]></code>
-      <code><![CDATA[LessThan::class]]></code>
-      <code><![CDATA[LessThan::class]]></code>
-      <code><![CDATA[LessThan::class]]></code>
-    </DeprecatedClass>
     <DeprecatedMethod>
       <code><![CDATA[getServiceLocator]]></code>
       <code><![CDATA[getServiceLocator]]></code>
@@ -2165,9 +1515,6 @@
     <PossiblyUnusedProperty>
       <code><![CDATA[$shareByDefault]]></code>
     </PossiblyUnusedProperty>
-    <RedundantCondition>
-      <code><![CDATA[$container === $this && method_exists($container, 'getServiceLocator')]]></code>
-    </RedundantCondition>
     <RedundantConditionGivenDocblockType>
       <code><![CDATA[$container->getServiceLocator()]]></code>
     </RedundantConditionGivenDocblockType>
@@ -2215,37 +1562,7 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/BarcodeTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[getAdapter]]></code>
-      <code><![CDATA[setAdapter]]></code>
-      <code><![CDATA[setAdapter]]></code>
-      <code><![CDATA[useChecksum]]></code>
-      <code><![CDATA[useChecksum]]></code>
-      <code><![CDATA[useChecksum]]></code>
-      <code><![CDATA[useChecksum]]></code>
-      <code><![CDATA[useChecksum]]></code>
-      <code><![CDATA[useChecksum]]></code>
-    </DeprecatedMethod>
     <InvalidArgument>
-      <code><![CDATA[123]]></code>
       <code><![CDATA[123]]></code>
       <code><![CDATA[06510000.4327]]></code>
       <code><![CDATA[106510000.4327]]></code>
@@ -2260,86 +1577,9 @@
       <code><![CDATA[provideBarcodeConstructor]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="test/BetweenTest.php">
-    <DeprecatedClass>
-      <code><![CDATA[Between::NOT_BETWEEN]]></code>
-      <code><![CDATA[Between::NOT_BETWEEN_STRICT]]></code>
-      <code><![CDATA[Between::VALUE_NOT_NUMERIC]]></code>
-      <code><![CDATA[Between::VALUE_NOT_STRING]]></code>
-      <code><![CDATA[new Between($args)]]></code>
-      <code><![CDATA[new Between($options)]]></code>
-      <code><![CDATA[new Between(1, 10, false)]]></code>
-      <code><![CDATA[new Between(['min' => $min, 'max' => $max, 'inclusive' => $inclusive])]]></code>
-      <code><![CDATA[new Between(['min' => 'a', 'max' => 'z'])]]></code>
-      <code><![CDATA[new Between(['min' => 1, 'max' => 10])]]></code>
-      <code><![CDATA[new Between(['min' => 1, 'max' => 10])]]></code>
-      <code><![CDATA[new Between(['min' => 1, 'max' => 10])]]></code>
-      <code><![CDATA[new Between(['min' => 1, 'max' => 10])]]></code>
-      <code><![CDATA[new Between(['min' => 1, 'max' => 10])]]></code>
-      <code><![CDATA[new Between(['min' => 1, 'max' => 10])]]></code>
-      <code><![CDATA[new Between(['min' => 1, 'max' => 10])]]></code>
-    </DeprecatedClass>
-    <InvalidArgument>
-      <code><![CDATA[1]]></code>
-    </InvalidArgument>
-    <MixedOperand>
-      <code><![CDATA[$value]]></code>
-    </MixedOperand>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$args]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[constructBetweenValidatorInvalidDataProvider]]></code>
-      <code><![CDATA[providerBasic]]></code>
-    </PossiblyUnusedMethod>
-  </file>
   <file src="test/BitwiseTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getControl]]></code>
-      <code><![CDATA[getControl]]></code>
-      <code><![CDATA[getControl]]></code>
-      <code><![CDATA[getControl]]></code>
-      <code><![CDATA[getControl]]></code>
-      <code><![CDATA[getOperator]]></code>
-      <code><![CDATA[getOperator]]></code>
-      <code><![CDATA[getOperator]]></code>
-      <code><![CDATA[getOperator]]></code>
-      <code><![CDATA[getOperator]]></code>
-      <code><![CDATA[getOperator]]></code>
-      <code><![CDATA[getStrict]]></code>
-      <code><![CDATA[getStrict]]></code>
-      <code><![CDATA[getStrict]]></code>
-      <code><![CDATA[getStrict]]></code>
-      <code><![CDATA[getStrict]]></code>
-      <code><![CDATA[getStrict]]></code>
-      <code><![CDATA[getStrict]]></code>
-      <code><![CDATA[getStrict]]></code>
-      <code><![CDATA[getStrict]]></code>
-      <code><![CDATA[setControl]]></code>
-      <code><![CDATA[setControl]]></code>
-      <code><![CDATA[setControl]]></code>
-      <code><![CDATA[setControl]]></code>
-      <code><![CDATA[setOperator]]></code>
-      <code><![CDATA[setOperator]]></code>
-      <code><![CDATA[setOperator]]></code>
-      <code><![CDATA[setOperator]]></code>
-      <code><![CDATA[setOperator]]></code>
-      <code><![CDATA[setStrict]]></code>
-      <code><![CDATA[setStrict]]></code>
-      <code><![CDATA[setStrict]]></code>
-    </DeprecatedMethod>
-    <InvalidArgument>
-      <code><![CDATA[$control]]></code>
-      <code><![CDATA[$control]]></code>
-      <code><![CDATA[0x1]]></code>
-      <code><![CDATA[0x1]]></code>
-      <code><![CDATA[0x1]]></code>
-      <code><![CDATA[0x1]]></code>
-      <code><![CDATA[0x1]]></code>
-    </InvalidArgument>
     <PossiblyUnusedMethod>
-      <code><![CDATA[bitwiseXorProvider]]></code>
-      <code><![CDATA[constructDataProvider]]></code>
+      <code><![CDATA[basicDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/BusinessIdentifierCodeTest.php">
@@ -2351,26 +1591,8 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/CallbackTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getCallback]]></code>
-      <code><![CDATA[getCallbackOptions]]></code>
-      <code><![CDATA[getCallbackOptions]]></code>
-      <code><![CDATA[getCallbackOptions]]></code>
-      <code><![CDATA[setCallback]]></code>
-      <code><![CDATA[setCallback]]></code>
-      <code><![CDATA[setCallback]]></code>
-      <code><![CDATA[setCallbackOptions]]></code>
-      <code><![CDATA[setCallbackOptions]]></code>
-    </DeprecatedMethod>
-    <MissingClosureParamType>
-      <code><![CDATA[$baz]]></code>
-      <code><![CDATA[$c]]></code>
-      <code><![CDATA[$c]]></code>
-      <code><![CDATA[$v]]></code>
-      <code><![CDATA[$v]]></code>
-    </MissingClosureParamType>
     <PossiblyUnusedMethod>
-      <code><![CDATA[optionsCallback]]></code>
+      <code><![CDATA[emptyContextProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/CreditCardTest.php">
@@ -2390,23 +1612,6 @@
       <code><![CDATA[false]]></code>
     </PossiblyUnusedReturnValue>
   </file>
-  <file src="test/CsrfTest.php">
-    <MixedAssignment>
-      <code><![CDATA[$bareToken]]></code>
-    </MixedAssignment>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$timeout]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[fakeValuesDataProvider]]></code>
-      <code><![CDATA[timeoutValuesDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/DateComparisonTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
   <file src="test/DateStepTest.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[moscowWinterTimeDataProvider]]></code>
@@ -2420,52 +1625,6 @@
     <UnusedParam>
       <code><![CDATA[$result]]></code>
     </UnusedParam>
-  </file>
-  <file src="test/Db/NoRecordExistsTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[addMethods]]></code>
-      <code><![CDATA[addMethods]]></code>
-    </DeprecatedMethod>
-    <InvalidArgument>
-      <code><![CDATA['users']]></code>
-      <code><![CDATA['users']]></code>
-      <code><![CDATA['users']]></code>
-      <code><![CDATA['users']]></code>
-      <code><![CDATA['users']]></code>
-      <code><![CDATA['users']]></code>
-      <code><![CDATA['users']]></code>
-      <code><![CDATA['users']]></code>
-    </InvalidArgument>
-    <MissingTemplateParam>
-      <code><![CDATA[class extends ArrayObject {]]></code>
-    </MissingTemplateParam>
-  </file>
-  <file src="test/Db/RecordExistsTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[addMethods]]></code>
-      <code><![CDATA[addMethods]]></code>
-    </DeprecatedMethod>
-    <InvalidArgument>
-      <code><![CDATA['users']]></code>
-      <code><![CDATA['users']]></code>
-      <code><![CDATA['users']]></code>
-      <code><![CDATA['users']]></code>
-    </InvalidArgument>
-    <MissingTemplateParam>
-      <code><![CDATA[class extends ArrayObject {]]></code>
-    </MissingTemplateParam>
-    <PossiblyNullArrayAccess>
-      <code><![CDATA[$parameters['where1']]]></code>
-    </PossiblyNullArrayAccess>
-    <PossiblyNullReference>
-      <code><![CDATA[$parameters]]></code>
-    </PossiblyNullReference>
-  </file>
-  <file src="test/Db/TestAsset/ConcreteDbValidator.php">
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[ConcreteDbValidator]]></code>
-      <code><![CDATA[ConcreteDbValidator]]></code>
-    </PropertyNotSetInConstructor>
   </file>
   <file src="test/DigitsTest.php">
     <PossiblyUnusedMethod>
@@ -2505,24 +1664,6 @@
     <UnusedPsalmSuppress>
       <code><![CDATA[TooManyArguments]]></code>
     </UnusedPsalmSuppress>
-  </file>
-  <file src="test/ExplodeTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getValidator]]></code>
-      <code><![CDATA[setValidator]]></code>
-      <code><![CDATA[setValidator]]></code>
-      <code><![CDATA[setValidator]]></code>
-    </DeprecatedMethod>
-    <InvalidArgument>
-      <code><![CDATA['inarray']]></code>
-    </InvalidArgument>
-    <MissingClosureParamType>
-      <code><![CDATA[$c]]></code>
-      <code><![CDATA[$v]]></code>
-    </MissingClosureParamType>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[getExpectedData]]></code>
-    </PossiblyUnusedMethod>
   </file>
   <file src="test/File/CountTest.php">
     <MixedArgument>
@@ -2794,38 +1935,6 @@
       <code><![CDATA[errorMessageTestValues]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="test/GreaterThanTest.php">
-    <DeprecatedClass>
-      <code><![CDATA[GreaterThan::NOT_GREATER]]></code>
-      <code><![CDATA[GreaterThan::NOT_GREATER_INCLUSIVE]]></code>
-      <code><![CDATA[new GreaterThan(...$options)]]></code>
-      <code><![CDATA[new GreaterThan(1)]]></code>
-      <code><![CDATA[new GreaterThan(1)]]></code>
-      <code><![CDATA[new GreaterThan(10)]]></code>
-      <code><![CDATA[new GreaterThan(10)]]></code>
-      <code><![CDATA[new GreaterThan(10)]]></code>
-      <code><![CDATA[new GreaterThan(10)]]></code>
-      <code><![CDATA[new GreaterThan(10, true)]]></code>
-      <code><![CDATA[new GreaterThan(['min' => 10, 'inclusive' => true])]]></code>
-    </DeprecatedClass>
-    <InvalidArgument>
-      <code><![CDATA[1]]></code>
-      <code><![CDATA[1]]></code>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-    </InvalidArgument>
-    <MixedArgument>
-      <code><![CDATA[$options]]></code>
-    </MixedArgument>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicDataProvider]]></code>
-      <code><![CDATA[correctInclusiveMessageDataProvider]]></code>
-      <code><![CDATA[correctNotInclusiveMessageDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
   <file src="test/HexTest.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[basicDataProvider]]></code>
@@ -2957,45 +2066,18 @@
       <code><![CDATA[(float) 1.2345]]></code>
     </RedundantCast>
   </file>
-  <file src="test/LessThanTest.php">
-    <DeprecatedClass>
-      <code><![CDATA[LessThan::NOT_LESS]]></code>
-      <code><![CDATA[LessThan::NOT_LESS_INCLUSIVE]]></code>
-      <code><![CDATA[new LessThan(...$options)]]></code>
-      <code><![CDATA[new LessThan(10)]]></code>
-      <code><![CDATA[new LessThan(10)]]></code>
-      <code><![CDATA[new LessThan(10)]]></code>
-      <code><![CDATA[new LessThan(10)]]></code>
-      <code><![CDATA[new LessThan(10)]]></code>
-      <code><![CDATA[new LessThan(10, true)]]></code>
-    </DeprecatedClass>
-    <InvalidArgument>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-      <code><![CDATA[10]]></code>
-    </InvalidArgument>
-    <MixedArgument>
-      <code><![CDATA[$options]]></code>
-    </MixedArgument>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
   <file src="test/MessageTest.php">
-    <InaccessibleProperty>
-      <code><![CDATA[$this->validator->value]]></code>
-    </InaccessibleProperty>
     <RedundantConditionGivenDocblockType>
       <code><![CDATA[assertIsArray]]></code>
     </RedundantConditionGivenDocblockType>
     <UndefinedMagicPropertyFetch>
-      <code><![CDATA[$this->validator->max]]></code>
-      <code><![CDATA[$this->validator->min]]></code>
       <code><![CDATA[$this->validator->unknownProperty]]></code>
     </UndefinedMagicPropertyFetch>
+    <UndefinedThisPropertyFetch>
+      <code><![CDATA[$this->validator->__get('max')]]></code>
+      <code><![CDATA[$this->validator->__get('min')]]></code>
+      <code><![CDATA[$this->validator->__get('value')]]></code>
+    </UndefinedThisPropertyFetch>
   </file>
   <file src="test/NotEmptyTest.php">
     <InvalidArgument>
@@ -3027,22 +2109,7 @@
       <code><![CDATA[zeroOnlyProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="test/NumberComparisonTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicTestDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
   <file src="test/RegexTest.php">
-    <DeprecatedConstant>
-      <code><![CDATA[Regex::ERROROUS]]></code>
-    </DeprecatedConstant>
-    <DeprecatedMethod>
-      <code><![CDATA[getPattern]]></code>
-    </DeprecatedMethod>
-    <MixedArgument>
-      <code><![CDATA[$options]]></code>
-      <code><![CDATA[$options]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicDataProvider]]></code>
       <code><![CDATA[invalidConstructorArgumentsProvider]]></code>
@@ -3066,14 +2133,9 @@
     </PossiblyInvalidCast>
   </file>
   <file src="test/Sitemap/LocTest.php">
-    <InvalidArgument>
-      <code><![CDATA[$value]]></code>
-    </InvalidArgument>
-    <PossiblyInvalidCast>
-      <code><![CDATA[$value]]></code>
-    </PossiblyInvalidCast>
     <PossiblyUnusedMethod>
       <code><![CDATA[invalidLocs]]></code>
+      <code><![CDATA[validLocs]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/Sitemap/PriorityTest.php">
@@ -3087,18 +2149,6 @@
     </PossiblyInvalidCast>
   </file>
   <file src="test/StaticValidatorTest.php">
-    <DeprecatedClass>
-      <code><![CDATA[Between::class]]></code>
-      <code><![CDATA[Between::class]]></code>
-      <code><![CDATA[Between::class]]></code>
-      <code><![CDATA[Between::class]]></code>
-      <code><![CDATA[Between::class]]></code>
-      <code><![CDATA[Between::class]]></code>
-      <code><![CDATA[new Between(1, 10)]]></code>
-    </DeprecatedClass>
-    <InvalidArgument>
-      <code><![CDATA[1]]></code>
-    </InvalidArgument>
     <NullArgument>
       <code><![CDATA[null]]></code>
     </NullArgument>
@@ -3120,56 +2170,16 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/StringLengthTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getEncoding]]></code>
-      <code><![CDATA[getEncoding]]></code>
-      <code><![CDATA[getMax]]></code>
-      <code><![CDATA[getMin]]></code>
-      <code><![CDATA[setEncoding]]></code>
-      <code><![CDATA[setMax]]></code>
-      <code><![CDATA[setMax]]></code>
-      <code><![CDATA[setMin]]></code>
-      <code><![CDATA[setMin]]></code>
-    </DeprecatedMethod>
-    <InvalidArgument>
-      <code><![CDATA[[1 => 1]]]></code>
-    </InvalidArgument>
-    <InvalidCast>
-      <code><![CDATA[[1 => 1]]]></code>
-    </InvalidCast>
-    <MixedArgument>
-      <code><![CDATA[$options]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/TimezoneTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[setType]]></code>
-      <code><![CDATA[setType]]></code>
-      <code><![CDATA[setType]]></code>
-      <code><![CDATA[setType]]></code>
-      <code><![CDATA[setType]]></code>
-      <code><![CDATA[setType]]></code>
-      <code><![CDATA[setType]]></code>
-      <code><![CDATA[setType]]></code>
-    </DeprecatedMethod>
-    <InvalidArgument>
-      <code><![CDATA['abbreviation']]></code>
-      <code><![CDATA['abbreviation']]></code>
-      <code><![CDATA['location']]></code>
-      <code><![CDATA['location']]></code>
-    </InvalidArgument>
-    <MixedArgument>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[abbreviationProvider]]></code>
       <code><![CDATA[getInvalidTypes]]></code>
       <code><![CDATA[locationAndAbbreviationProvider]]></code>
       <code><![CDATA[locationProvider]]></code>
-      <code><![CDATA[wrongTypesProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/UndisclosedPasswordTest.php">
@@ -3179,13 +2189,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/UriTest.php">
-    <InvalidArgument>
-      <code><![CDATA[$uriMock]]></code>
-      <code><![CDATA[new stdClass()]]></code>
-    </InvalidArgument>
-    <MixedArgument>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[allowOptionsDataProvider]]></code>
       <code><![CDATA[invalidValueTypes]]></code>
@@ -3198,19 +2201,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/ValidatorChainTest.php">
-    <DeprecatedClass>
-      <code><![CDATA[GreaterThan::class]]></code>
-      <code><![CDATA[new Between(1, 5)]]></code>
-      <code><![CDATA[new Between(['min' => 10, 'max' => 20])]]></code>
-      <code><![CDATA[new Between(['min' => 10, 'max' => 20])]]></code>
-    </DeprecatedClass>
-    <InvalidArgument>
-      <code><![CDATA[1]]></code>
-    </InvalidArgument>
-    <MissingClosureParamType>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </MissingClosureParamType>
     <PossiblyUnusedMethod>
       <code><![CDATA[breakChainFlags]]></code>
       <code><![CDATA[handleNotFoundError]]></code>
@@ -3226,39 +2216,22 @@
       <code><![CDATA[$errnum]]></code>
     </UnusedParam>
   </file>
-  <file src="test/ValidatorPluginManagerTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getValidatorPluginManager]]></code>
-    </DeprecatedMethod>
-  </file>
   <file src="test/_files/MyBarcode1.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[MyBarcode1]]></code>
     </UnusedClass>
   </file>
   <file src="test/_files/MyBarcode2.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[MyBarcode2]]></code>
     </UnusedClass>
   </file>
   <file src="test/_files/MyBarcode3.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <UnusedClass>
       <code><![CDATA[MyBarcode3]]></code>
     </UnusedClass>
   </file>
   <file src="test/_files/MyBarcode4.php">
-    <DeprecatedClass>
-      <code><![CDATA[AbstractAdapter]]></code>
-    </DeprecatedClass>
     <InvalidArgument>
       <code><![CDATA['odd']]></code>
     </InvalidArgument>

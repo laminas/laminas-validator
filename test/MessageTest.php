@@ -21,7 +21,7 @@ final class MessageTest extends TestCase
     {
         parent::setUp();
 
-        $this->validator = new StringLength(4, 8);
+        $this->validator = new StringLength(['min' => 4, 'max' => 8]);
     }
 
     /**
@@ -221,9 +221,9 @@ final class MessageTest extends TestCase
 
         self::assertSame('Your value is too long', current($messages));
 
-        self::assertSame($inputInvalid, $this->validator->value);
-        self::assertSame(8, $this->validator->max);
-        self::assertSame(4, $this->validator->min);
+        self::assertSame($inputInvalid, $this->validator->__get('value'));
+        self::assertSame(8, $this->validator->__get('max'));
+        self::assertSame(4, $this->validator->__get('min'));
     }
 
     /**
@@ -291,9 +291,9 @@ final class MessageTest extends TestCase
     public function testEqualsMessageVariables(): void
     {
         $messageVariables = [
-            'min'    => ['options' => 'min'],
-            'max'    => ['options' => 'max'],
-            'length' => ['options' => 'length'],
+            'min'    => 'min',
+            'max'    => 'max',
+            'length' => 'length',
         ];
 
         self::assertSame($messageVariables, $this->validator->getOption('messageVariables'));

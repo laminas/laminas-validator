@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Barcode;
 
-/** @final */
-class Code25interleaved extends AbstractAdapter
+final class Code25interleaved extends AbstractAdapter
 {
     /**
      * Constructor

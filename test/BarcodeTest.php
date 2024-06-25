@@ -112,7 +112,7 @@ final class BarcodeTest extends TestCase
         require_once __DIR__ . '/_files/MyBarcode1.php';
         $barcode = new Barcode('MyBarcode1');
 
-        self::assertFalse($barcode->getAdapter()->hasValidCharacters(123));
+        self::assertFalse($barcode->getAdapter()->hasValidCharacters('123'));
     }
 
     public function testAscii128CharacterAdapter(): void

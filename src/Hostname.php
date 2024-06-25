@@ -1,4 +1,10 @@
-<?php // phpcs:disable Generic.Files.LineLength.TooLong
+<?php
+
+/**
+ * phpcs:disable Generic.Files.LineLength
+ */
+
+declare(strict_types=1);
 
 namespace Laminas\Validator;
 
@@ -48,7 +54,7 @@ use function substr;
  * }
  * @final
  */
-class Hostname extends AbstractValidator
+final class Hostname extends AbstractValidator
 {
     public const CANNOT_DECODE_PUNYCODE  = 'hostnameCannotDecodePunycode';
     public const INVALID                 = 'hostnameInvalid';

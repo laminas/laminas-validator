@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\File;
 
 use Laminas\Validator\AbstractValidator;
@@ -20,7 +22,7 @@ use function is_uploaded_file;
  *
  * @final
  */
-class Upload extends AbstractValidator
+final class Upload extends AbstractValidator
 {
     /**
      * @const string Error constants

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use Traversable;
@@ -28,8 +30,7 @@ use function trim;
 
 use const INTL_IDNA_VARIANT_UTS46;
 
-/** @final */
-class EmailAddress extends AbstractValidator
+final class EmailAddress extends AbstractValidator
 {
     public const INVALID            = 'emailAddressInvalid';
     public const INVALID_FORMAT     = 'emailAddressInvalidFormat';
