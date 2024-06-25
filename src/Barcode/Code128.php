@@ -359,6 +359,8 @@ class Code128 extends AbstractAdapter
     }
 
     /**
+     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
+     *
      * @return void
      */
     public function setUtf8StringWrapper(StringWrapperInterface $utf8StringWrapper)
@@ -373,6 +375,8 @@ class Code128 extends AbstractAdapter
 
     /**
      * Get the string wrapper supporting UTF-8 character encoding
+     *
+     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
      *
      * @return StringWrapperInterface
      */
