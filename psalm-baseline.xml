@@ -2393,6 +2393,11 @@
       <code><![CDATA[timeoutValuesDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
+  <file src="test/DateComparisonTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[basicDataProvider]]></code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="test/DateStepTest.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[moscowWinterTimeDataProvider]]></code>
