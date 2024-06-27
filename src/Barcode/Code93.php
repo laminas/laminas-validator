@@ -9,14 +9,12 @@ use function count;
 use function str_split;
 use function substr;
 
-final class Code93 extends AbstractAdapter
+final class Code93 implements AdapterInterface
 {
     /**
      * Note that the characters !"§& are only synonyms
-     *
-     * @var array
      */
-    protected $check = [
+    private const CHECK = [
         '0' => 0,
         '1' => 1,
         '2' => 2,
@@ -66,24 +64,12 @@ final class Code93 extends AbstractAdapter
         '&' => 46,
     ];
 
-    /**
-     * Constructor for this barcode adapter
-     */
-    public function __construct()
-    {
-        $this->setLength(-1);
-        $this->setCharacters('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ -.$/+%');
-        $this->setChecksum('code93');
-        $this->useChecksum(false);
-    }
+    private const ALPHABET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ -.$/+%';
 
     /**
      * Validates the checksum (Modulo CK)
-     *
-     * @param  string $value The barcode to validate
-     * @return bool
      */
-    protected function code93($value)
+    private static function checkCode93(string $value): bool
     {
         $checksum = substr($value, -2, 2);
         $value    = str_split(substr($value, 0, -2));
@@ -94,11 +80,11 @@ final class Code93 extends AbstractAdapter
                 $length = 20;
             }
 
-            $count += $this->check[$char] * $length;
+            $count += self::CHECK[$char] * $length;
             --$length;
         }
 
-        $check   = array_search($count % 47, $this->check);
+        $check   = array_search($count % 47, self::CHECK);
         $value[] = $check;
         $count   = 0;
         $length  = count($value) % 15;
@@ -107,15 +93,35 @@ final class Code93 extends AbstractAdapter
                 $length = 15;
             }
 
-            $count += $this->check[$char] * $length;
+            $count += self::CHECK[$char] * $length;
             --$length;
         }
-        $check .= array_search($count % 47, $this->check);
+        $check .= array_search($count % 47, self::CHECK);
 
         if ($check === $checksum) {
             return true;
         }
 
         return false;
+    }
+
+    public function hasValidLength(string $value): bool
+    {
+        return true;
+    }
+
+    public function hasValidCharacters(string $value): bool
+    {
+        return Util::stringMatchesAlphabet($value, self::ALPHABET);
+    }
+
+    public function hasValidChecksum(string $value): bool
+    {
+        return self::checkCode93($value);
+    }
+
+    public function getLength(): int
+    {
+        return -1;
     }
 }

@@ -3,7 +3,7 @@
 `Laminas\Validator\Barcode` allows you to check if a given value can be represented
 as a barcode.
 
-## Supported barcodes
+## Supported Barcodes
 
 `Laminas\Validator\Barcode` supports multiple barcode standards and can be extended
 with proprietary barcode implementations. The following barcode standards are
@@ -249,17 +249,12 @@ characters and supports only digits. When the barcode is 8 chars long it
 includes a checksum which is calculated with modulo 10. It is commonly used with
 small products where a UPCA barcode would not fit.
 
-## Supported options
+## Supported Options
 
 The following options are supported for `Laminas\Validator\Barcode`:
 
-- `adapter`: Sets the barcode adapter which will be used. Supported are all
-  above noted adapters. When using a self defined adapter, then you have to set
-  the complete class name.
-- `checksum`: `TRUE` when the barcode should contain a checksum. The default
-  value depends on the used adapter. Note that some adapters don't allow to set
-  this option.
-- `options`: Defines optional options for a self written adapters.
+- `adapter`: Sets the barcode adapter which will be used. All the adapters listed above are supported and the option accepts either a FQCN, an adapter instance or a short string such as 'Upca' or 'Gtin13' that corresponds to the class name. Short strings should be avoided in favour of FQCN's.
+- `checksum`: `false` Checksum validation is *off* by default. If you are validating barcodes that are capable of validating a checksum, you should explicitly enable this option by setting it to `true`
 
 ## Basic usage
 
@@ -267,29 +262,27 @@ To validate if a given string is a barcode you must know its type. See the
 following example for an EAN13 barcode:
 
 ```php
-$valid = new Laminas\Validator\Barcode('EAN13');
-if ($valid->isValid($input)) {
+$validator = new Laminas\Validator\Barcode([
+    'adapter' => Laminas\Validator\Barcode\Ean13::class,
+]);
+if ($validator->isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
 }
 ```
 
-## Optional checksum
+## Optional Checksum
 
-Some barcodes can be provided with an optional checksum. These barcodes would be
-valid even without checksum. Still, when you provide a checksum, then you should
-also validate it. By default, these barcode types perform no checksum
-validation. By using the `checksum` option you can define if the checksum will
-be validated or ignored.
+Checksum validation of barcodes, for those types that support it, is optional. If you are validating a barcode type that supports checksum validation, you should enable the feature to ensure that input is valid.
 
 ```php
 $valid = new Laminas\Validator\Barcode([
-    'adapter'  => 'EAN13',
-    'checksum' => false,
+    'adapter' => Laminas\Validator\Barcode\Ean13::class,
+    'checksum' => true,
 ]);
 if ($valid->isValid($input)) {
-    // input appears to be valid
+    // A valid EAN13 barcode, and checksum validation succeeded
 } else {
     // input is invalid
 }
@@ -298,12 +291,12 @@ if ($valid->isValid($input)) {
 > ### Reduced security by disabling checksum validation
 >
 > By switching off checksum validation you will also reduce the security of the
-> used barcodes. Additionally you should note that you can also turn off the
+> used barcodes. Additionally, you should note that you can also turn off the
 > checksum validation for those barcode types which must contain a checksum
 > value. Barcodes which would not be valid could then be returned as valid even
 > if they are not.
 
-## Writing custom adapters
+## Writing Custom Adapters
 
 You may write custom barcode validators for usage with `Laminas\Validator\Barcode`;
 this is often necessary when dealing with proprietary barcode types. To write
@@ -316,41 +309,50 @@ your own barcode validator, you need the following information.
     - `-1`: There is no limitation for the length of this barcode.
     - `"even"`: The length of this barcode must have a even amount of digits.
     - `"odd"`: The length of this barcode must have a odd amount of digits.
-    - `array`: An array of integer values. The length of this barcode must have
+    - `array`: A list of integer values. The length of this barcode must have
   one of the set array values.
-- `Characters`: A string which contains all allowed characters for this barcode.
-  Also the integer value 128 is allowed, which means the first 128 characters of
-  the ASCII table.
-- `Checksum`: A string which will be used as callback for a method which does
-  the checksum validation.
+- `Characters`: An alphabet of characters that can be used in your type of barcode 
+- `Checksum`: A method that calculates and verifies a checksum if appropriate
 
-Your custom barcode validator must extend `Laminas\Validator\Barcode\AbstractAdapter`
-or implement `Laminas\Validator\Barcode\AdapterInterface`.
+Your custom barcode validator must implement `Laminas\Validator\Barcode\AdapterInterface`.
 
-As an example, let's create a validator that expects an even number of
-characters that include all digits and the letters 'ABCDE', and which requires a
-checksum.
+As an example, let's create a barcode validation adapter that expects an even number of characters that includes only digits, and which requires a checksum.
 
 ```php
 namespace My\Barcode;
 
 use Laminas\Validator\Barcode;
-use Laminas\Validator\Barcode\AbstractAdapter;
+use Laminas\Validator\Barcode\AdapterInterface;use function ctype_digit;
 
-class MyBar extends AbstractAdapter
+final class CustomBarcodeAdapter implements AdapterInterface
 {
-    protected $length     = 'even';
-    protected $characters = '0123456789ABCDE';
-    protected $checksum   = 'mod66';
-
-    protected function mod66($barcode)
+    public function hasValidLength(string $value): bool
     {
-        // do some validations and return a boolean
+        return strlen($value) % 2 === 0;
+    }
+
+    public function hasValidCharacters(string $value): bool
+    {
+        return ctype_digit($value);
+    }
+
+    public function hasValidChecksum(string $value): bool
+    {
+        // do some validation and return a boolean
+        return true;
+    }
+
+    public function getLength(): string
+    {
+        return 'even';
     }
 }
 
-$valid = Barcode(MyBar::class);
-if ($valid->isValid($input)) {
+$validator = new Barcode([
+    'adapter' => CustomBarcodeAdapter::class,
+]);
+
+if ($validator->isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
