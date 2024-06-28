@@ -58,9 +58,9 @@ class CreditCard extends AbstractValidator
     /**
      * Validation failure message template definitions
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::CHECKSUM       => 'The input seems to contain an invalid checksum',
         self::CONTENT        => 'The input must contain only digits',
         self::INVALID        => 'Invalid type given. String expected',
@@ -361,28 +361,22 @@ class CreditCard extends AbstractValidator
         return $this;
     }
 
-    // The following rule is buggy for parameters attributes
-    // phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing.NoSpaceBetweenTypeHintAndParameter
-
     /**
      * Returns true if and only if $value follows the Luhn algorithm (mod-10 checksum)
-     *
-     * @param  mixed $value
-     * @return bool
      */
     public function isValid(
         #[SensitiveParameter]
-        $value
-    ) {
+        mixed $value
+    ): bool {
         $this->setValue($value);
 
         if (! is_string($value)) {
-            $this->error(self::INVALID, $value);
+            $this->error(self::INVALID);
             return false;
         }
 
         if (! ctype_digit($value)) {
-            $this->error(self::CONTENT, $value);
+            $this->error(self::CONTENT);
             return false;
         }
 
@@ -403,12 +397,12 @@ class CreditCard extends AbstractValidator
         }
 
         if ($foundp === false) {
-            $this->error(self::PREFIX, $value);
+            $this->error(self::PREFIX);
             return false;
         }
 
         if ($foundl === false) {
-            $this->error(self::LENGTH, $value);
+            $this->error(self::LENGTH);
             return false;
         }
 
@@ -436,17 +430,15 @@ class CreditCard extends AbstractValidator
                     'throwExceptions' => true,
                 ]);
                 if (! $callback->isValid($value)) {
-                    $this->error(self::SERVICE, $value);
+                    $this->error(self::SERVICE);
                     return false;
                 }
             } catch (Exception) {
-                $this->error(self::SERVICEFAILURE, $value);
+                $this->error(self::SERVICEFAILURE);
                 return false;
             }
         }
 
         return true;
     }
-
-    // phpcs:enable SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing.NoSpaceBetweenTypeHintAndParameter
 }

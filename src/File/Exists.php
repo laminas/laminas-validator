@@ -31,8 +31,8 @@ class Exists extends AbstractValidator
      */
     public const DOES_NOT_EXIST = 'fileExistsDoesNotExist';
 
-    /** @var array Error message templates */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::DOES_NOT_EXIST => 'File does not exist',
     ];
 
@@ -45,8 +45,8 @@ class Exists extends AbstractValidator
         'directory' => null, // internal list of directories
     ];
 
-    /** @var array Error message template variables */
-    protected $messageVariables = [
+    /** @var array<string, string|array> */
+    protected array $messageVariables = [
         'directory' => ['options' => 'directory'],
     ];
 
@@ -145,9 +145,8 @@ class Exists extends AbstractValidator
      *
      * @param  string|array $value Real file to check for existence
      * @param  array        $file  File data from \Laminas\File\Transfer\Transfer (optional)
-     * @return bool
      */
-    public function isValid($value, $file = null)
+    public function isValid(mixed $value, $file = null): bool
     {
         $fileInfo = $this->getFileInfo($value, $file, false, true);
 

@@ -34,14 +34,14 @@ final class Count extends AbstractValidator
     public const TOO_FEW  = 'fileCountTooFew';
     /**#@-*/
 
-    /** @var array Error message templates */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::TOO_MANY => "Too many files, maximum '%max%' are allowed but '%count%' are given",
         self::TOO_FEW  => "Too few files, minimum '%min%' are expected but '%count%' are given",
     ];
 
-    /** @var array Error message template variables */
-    protected $messageVariables = [
+    /** @var array<string, string|array> */
+    protected array $messageVariables = [
         'min'   => ['options' => 'min'],
         'max'   => ['options' => 'max'],
         'count' => 'count',
@@ -211,9 +211,8 @@ final class Count extends AbstractValidator
      *
      * @param  string|array|UploadedFileInterface $value Filenames to check for count
      * @param  array                              $file  File data from \Laminas\File\Transfer\Transfer
-     * @return bool
      */
-    public function isValid($value, $file = null)
+    public function isValid(mixed $value, $file = null): bool
     {
         if ($this->isUploadedFilterInterface($value)) {
             $this->addFile($value);

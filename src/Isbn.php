@@ -24,15 +24,15 @@ final class Isbn extends AbstractValidator
     /**
      * Validation failure message template definitions.
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::INVALID => 'Invalid type given. String or integer expected',
         self::NO_ISBN => 'The input is not a valid ISBN number',
     ];
 
     /** @var array<string, mixed> */
-    protected $options = [
+    protected array $options = [
         'type'      => self::AUTO, // Allowed type
         'separator' => '', // Separator character
     ];
@@ -92,11 +92,8 @@ final class Isbn extends AbstractValidator
 
     /**
      * Returns true if and only if $value is a valid ISBN.
-     *
-     * @param  mixed $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if (! is_string($value) && ! is_int($value)) {
             $this->error(self::INVALID);

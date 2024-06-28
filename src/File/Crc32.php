@@ -23,8 +23,8 @@ final class Crc32 extends Hash
     public const NOT_DETECTED   = 'fileCrc32NotDetected';
     public const NOT_FOUND      = 'fileCrc32NotFound';
 
-    /** @var array Error message templates */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::DOES_NOT_MATCH => 'File does not match the given crc32 hashes',
         self::NOT_DETECTED   => 'A crc32 hash could not be evaluated for the given file',
         self::NOT_FOUND      => 'File is not readable or does not exist',
@@ -79,9 +79,8 @@ final class Crc32 extends Hash
      *
      * @param  string|array $value Filename to check for hash
      * @param  array        $file  File data from \Laminas\File\Transfer\Transfer (optional)
-     * @return bool
      */
-    public function isValid($value, $file = null)
+    public function isValid(mixed $value, $file = null): bool
     {
         $fileInfo = $this->getFileInfo($value, $file);
 

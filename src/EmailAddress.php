@@ -45,7 +45,7 @@ final class EmailAddress extends AbstractValidator
     // phpcs:disable Generic.Files.LineLength.TooLong
 
     /** @var array<string, string> */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::INVALID            => "Invalid type given. String expected",
         self::INVALID_FORMAT     => "The input is not a valid email address. Use the basic format local-part@hostname",
         self::INVALID_HOSTNAME   => "'%hostname%' is not a valid hostname for the email address",
@@ -59,8 +59,8 @@ final class EmailAddress extends AbstractValidator
 
     // phpcs:enable
 
-    /** @var array */
-    protected $messageVariables = [
+    /** @var array<string, string> */
+    protected array $messageVariables = [
         'hostname'  => 'hostname',
         'localPart' => 'localPart',
     ];
@@ -486,9 +486,8 @@ final class EmailAddress extends AbstractValidator
      * @link   http://www.columbia.edu/kermit/ascii.html US-ASCII characters
      *
      * @param  string $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if (! is_string($value)) {
             $this->error(self::INVALID);

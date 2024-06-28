@@ -22,8 +22,6 @@ use function is_string;
 
 /**
  * Validator for the size of all files which will be validated in sum
- *
- * @final
  */
 final class FilesSize extends Size
 {
@@ -34,8 +32,8 @@ final class FilesSize extends Size
     public const TOO_SMALL    = 'fileFilesSizeTooSmall';
     public const NOT_READABLE = 'fileFilesSizeNotReadable';
 
-    /** @var array Error message templates */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::TOO_BIG      => "All files in sum should have a maximum size of '%max%' but '%size%' were detected",
         self::TOO_SMALL    => "All files in sum should have a minimum size of '%min%' but '%size%' were detected",
         self::NOT_READABLE => 'One or more files can not be read',
@@ -88,9 +86,8 @@ final class FilesSize extends Size
      *
      * @param  string|array $value Real file to check for size
      * @param  array        $file  File data from \Laminas\File\Transfer\Transfer
-     * @return bool
      */
-    public function isValid($value, $file = null)
+    public function isValid(mixed $value, $file = null): bool
     {
         if (is_string($value)) {
             $value = [$value];

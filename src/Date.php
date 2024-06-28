@@ -37,16 +37,16 @@ class Date extends AbstractValidator
     /**
      * Validation failure message template definitions
      *
-     * @var string[]
+     * @var array<string, string>
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::INVALID      => 'Invalid type given. String, integer, array or DateTime expected',
         self::INVALID_DATE => 'The input does not appear to be a valid date',
         self::FALSEFORMAT  => "The input does not fit the date format '%format%'",
     ];
 
-    /** @var string[] */
-    protected $messageVariables = [
+    /** @var array<string, string> */
+    protected array $messageVariables = [
         'format' => 'format',
     ];
 
@@ -115,9 +115,8 @@ class Date extends AbstractValidator
      * Returns true if $value is a DateTimeInterface instance or can be converted into one.
      *
      * @param  string|numeric|array|DateTimeInterface $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         $this->setValue($value);
 

@@ -73,8 +73,8 @@ final class NotEmpty extends AbstractValidator
         self::BOOLEAN,
     ];
 
-    /** @var array */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::IS_EMPTY => "Value is required and can't be empty",
         self::INVALID  => 'Invalid type given. String, integer, float, boolean or array expected',
     ];
@@ -188,11 +188,8 @@ final class NotEmpty extends AbstractValidator
 
     /**
      * Returns true if and only if $value is not an empty value.
-     *
-     * @param  mixed $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if (
             $value !== null

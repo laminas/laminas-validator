@@ -37,7 +37,7 @@ final class Lastmod extends AbstractValidator
      *
      * @var array<string, string>
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::NOT_VALID => 'The input is not a valid sitemap lastmod',
         self::INVALID   => 'Invalid type given. String expected',
     ];
@@ -48,9 +48,8 @@ final class Lastmod extends AbstractValidator
      * @link http://www.sitemaps.org/protocol.php#lastmoddef <lastmod>
      *
      * @param  string  $value  value to validate
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if (! is_string($value)) {
             $this->error(self::INVALID);

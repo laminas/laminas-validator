@@ -19,8 +19,6 @@ use function substr;
 
 /**
  * Validates IBAN Numbers (International Bank Account Numbers)
- *
- * @final
  */
 final class Iban extends AbstractValidator
 {
@@ -34,7 +32,7 @@ final class Iban extends AbstractValidator
      *
      * @var array<string, string>
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::NOTSUPPORTED     => 'Unknown country within the IBAN',
         self::SEPANOTSUPPORTED => 'Countries outside the Single Euro Payments Area (SEPA) are not supported',
         self::FALSEFORMAT      => 'The input has a false IBAN format',
@@ -56,11 +54,9 @@ final class Iban extends AbstractValidator
     protected $allowNonSepa = true;
 
     /**
-     * The SEPA country codes
-     *
-     * @var string[] ISO 3166-1 codes
+     * SEPA ISO 3166-1country codes
      */
-    protected static $sepaCountries = [
+    private const SEPA_COUNTRIES = [
         'AT',
         'BE',
         'BG',
@@ -102,10 +98,8 @@ final class Iban extends AbstractValidator
 
     /**
      * IBAN regexes by country code
-     *
-     * @var array
      */
-    protected static $ibanRegex = [
+    private const IBAN_REGEX = [
         'AD' => 'AD[0-9]{2}[0-9]{4}[0-9]{4}[A-Z0-9]{12}',
         'AE' => 'AE[0-9]{2}[0-9]{3}[0-9]{16}',
         'AL' => 'AL[0-9]{2}[0-9]{8}[A-Z0-9]{16}',
@@ -218,7 +212,7 @@ final class Iban extends AbstractValidator
         if ($countryCode !== null) {
             $countryCode = (string) $countryCode;
 
-            if (! isset(static::$ibanRegex[$countryCode])) {
+            if (! isset(self::IBAN_REGEX[$countryCode])) {
                 throw new Exception\InvalidArgumentException(
                     "Country code '{$countryCode}' invalid by ISO 3166-1 or not supported"
                 );
@@ -253,11 +247,8 @@ final class Iban extends AbstractValidator
 
     /**
      * Returns true if $value is a valid IBAN
-     *
-     * @param  string $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if (! is_string($value)) {
             $this->error(self::FALSEFORMAT);
@@ -272,19 +263,19 @@ final class Iban extends AbstractValidator
             $countryCode = substr($value, 0, 2);
         }
 
-        if (! array_key_exists($countryCode, static::$ibanRegex)) {
+        if (! array_key_exists($countryCode, self::IBAN_REGEX)) {
             $this->setValue($countryCode);
             $this->error(self::NOTSUPPORTED);
             return false;
         }
 
-        if (! $this->allowNonSepa && ! in_array($countryCode, static::$sepaCountries)) {
+        if (! $this->allowNonSepa && ! in_array($countryCode, self::SEPA_COUNTRIES)) {
             $this->setValue($countryCode);
             $this->error(self::SEPANOTSUPPORTED);
             return false;
         }
 
-        if (! preg_match('/^' . static::$ibanRegex[$countryCode] . '$/', $value)) {
+        if (! preg_match('/^' . self::IBAN_REGEX[$countryCode] . '$/', $value)) {
             $this->error(self::FALSEFORMAT);
             return false;
         }

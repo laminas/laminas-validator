@@ -25,8 +25,6 @@ use const UPLOAD_ERR_PARTIAL;
 
 /**
  * Validator for the maximum size of a file up to a max of 2GB
- *
- * @final
  */
 final class UploadFile extends AbstractValidator
 {
@@ -44,8 +42,8 @@ final class UploadFile extends AbstractValidator
     public const FILE_NOT_FOUND = 'fileUploadFileErrorFileNotFound';
     public const UNKNOWN        = 'fileUploadFileErrorUnknown';
 
-    /** @var array Error message templates */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::INI_SIZE       => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
         self::FORM_SIZE      => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was '
             . 'specified in the HTML form',
@@ -63,10 +61,9 @@ final class UploadFile extends AbstractValidator
      * Returns true if and only if the file was uploaded without errors
      *
      * @param  string|array|UploadedFileInterface $value File to check for upload errors
-     * @return bool
      * @throws Exception\InvalidArgumentException
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if (is_array($value)) {
             if (! isset($value['tmp_name']) || ! isset($value['name']) || ! isset($value['error'])) {

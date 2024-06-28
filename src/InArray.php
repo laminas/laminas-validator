@@ -37,7 +37,7 @@ final class InArray extends AbstractValidator
     public const COMPARE_NOT_STRICT = -1;
 
     /** @var array<string, string> */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::NOT_IN_ARRAY => 'The input was not found in the haystack',
     ];
 
@@ -167,9 +167,8 @@ final class InArray extends AbstractValidator
      *
      * @param mixed $value
      * See {@link http://php.net/manual/function.in-array.php#104501}
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         // we create a copy of the haystack in case we need to modify it
         $haystack = $this->getHaystack();

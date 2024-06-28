@@ -38,7 +38,6 @@ use function is_numeric;
  * }&array<string, mixed>
  * @property Options&array<string, mixed> $options Required to stop Psalm getting confused about the declaration
  *                                                 on AbstractValidator
- * @final
  */
 final class IsCountable extends AbstractValidator
 {
@@ -52,7 +51,7 @@ final class IsCountable extends AbstractValidator
      *
      * @var array<string, string>
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::NOT_COUNTABLE => 'The input must be an array or an instance of \\Countable',
         self::NOT_EQUALS    => "The input count must equal '%count%'",
         self::GREATER_THAN  => "The input count must be less than '%max%', inclusively",
@@ -64,7 +63,7 @@ final class IsCountable extends AbstractValidator
      *
      * @var array<string, array{options: string}>
      */
-    protected $messageVariables = [
+    protected array $messageVariables = [
         'count' => ['options' => 'count'],
         'min'   => ['options' => 'min'],
         'max'   => ['options' => 'max'],
@@ -110,11 +109,8 @@ final class IsCountable extends AbstractValidator
 
     /**
      * Returns true if and only if $value is countable (and the count validates against optional values).
-     *
-     * @param mixed $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if (! is_countable($value)) {
             $this->error(self::NOT_COUNTABLE);

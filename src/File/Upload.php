@@ -19,8 +19,6 @@ use function is_uploaded_file;
 
 /**
  * Validator for the maximum size of a file up to a max of 2GB
- *
- * @final
  */
 final class Upload extends AbstractValidator
 {
@@ -39,7 +37,7 @@ final class Upload extends AbstractValidator
     public const UNKNOWN        = 'fileUploadErrorUnknown';
 
     /** @var array<string, string> Error message templates */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::INI_SIZE       => "File '%value%' exceeds upload_max_filesize directive in php.ini",
         self::FORM_SIZE      => "File '%value%' exceeds the MAX_FILE_SIZE directive that was "
             . 'specified in the HTML form',
@@ -151,9 +149,8 @@ final class Upload extends AbstractValidator
      * @param  string $value Single file to check for upload errors, when giving null the $_FILES array
      *                       from initialization will be used
      * @param  mixed  $file
-     * @return bool
      */
-    public function isValid($value, $file = null)
+    public function isValid(mixed $value, $file = null): bool
     {
         $files = [];
         $this->setValue($value);

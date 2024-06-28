@@ -19,26 +19,17 @@ use function var_export;
 
 final class Identical extends AbstractValidator
 {
-    /**
-     * Error codes
-     *
-     * @const string
-     */
     public const NOT_SAME      = 'notSame';
     public const MISSING_TOKEN = 'missingToken';
 
-    /**
-     * Error messages
-     *
-     * @var array
-     */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::NOT_SAME      => 'The two given tokens do not match',
         self::MISSING_TOKEN => 'No token was provided to match against',
     ];
 
-    /** @var array */
-    protected $messageVariables = [
+    /** @var array<string, string> */
+    protected array $messageVariables = [
         'token' => 'tokenString',
     ];
 
@@ -156,12 +147,10 @@ final class Identical extends AbstractValidator
      * Returns true if and only if a token has been set and the provided value
      * matches that token.
      *
-     * @param  mixed $value
      * @param  null|array|ArrayAccess $context
      * @throws Exception\InvalidArgumentException If context is not array or ArrayObject.
-     * @return bool
      */
-    public function isValid($value, $context = null)
+    public function isValid(mixed $value, $context = null): bool
     {
         $this->setValue($value);
 

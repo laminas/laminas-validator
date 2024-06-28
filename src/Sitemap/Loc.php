@@ -31,7 +31,7 @@ final class Loc extends AbstractValidator
      *
      * @var array<string, string>
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::NOT_VALID => 'The input is not a valid sitemap location',
         self::INVALID   => 'Invalid type given. String expected',
         self::TOO_LONG  => 'Sitemap URIs cannot be greater than 2048 characters',
