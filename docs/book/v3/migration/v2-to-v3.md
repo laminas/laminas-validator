@@ -43,6 +43,31 @@ In the 2.x series, _most_ validators accepted a range of constructor arguments, 
 
 Generally speaking, validators now only accept associative arrays with improved documentation of exactly which options are available.
 
+### `Laminas\Validator\Barcode`
+
+The following methods have been removed:
+
+- `getAdapter`
+- `setAdapter`
+- `getChecksum`
+- `useChecksum`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of documented options.
+- The `adapter` option can now be a FQCN - previously it had to be an instance, or an unqualified class name.
+
+#### Significant Changes to Adapters
+
+Inheritance has changed for all the shipped barcode adapters. None of the adapters extend from the **now removed** `AbstractAdapter` and instead, all adapters implement the methods expected by `Laminas\Validator\Barcode\AdapterInterface`. The interface itself now only specifies 4 methods:
+
+- `hasValidLength`
+- `hasValidCharacters`
+- `hasValidChecksum`
+- `getLength`
+
+The documentation on [writing custom adapters](../validators/barcode.md#writing-custom-adapters) has been updated to reflect these changes.
+
 ### `Laminas\Validator\Bitwise`
 
 The following methods have been removed:
