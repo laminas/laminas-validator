@@ -30,6 +30,16 @@ use function trim;
 
 use const INTL_IDNA_VARIANT_UTS46;
 
+/**
+ * @psalm-type Options = array{
+ *     useMxCheck?: bool,
+ *     useDeepMxCheck?: bool,
+ *     useDomainCheck?: bool,
+ *     allow?: int-mask-of<Hostname::ALLOW_*>,
+ *     strict?: bool,
+ *     hostnameValidator?: Hostname|null,
+ * }
+ */
 final class EmailAddress extends AbstractValidator
 {
     public const INVALID            = 'emailAddressInvalid';
@@ -81,7 +91,7 @@ final class EmailAddress extends AbstractValidator
     /**
      * Internal options array
      *
-     * @var array<string, mixed>
+     * @var Options
      */
     protected $options = [
         'useMxCheck'        => false,
@@ -158,7 +168,7 @@ final class EmailAddress extends AbstractValidator
     public function getHostnameValidator()
     {
         if (! isset($this->options['hostnameValidator'])) {
-            $this->options['hostnameValidator'] = new Hostname($this->getAllow());
+            $this->options['hostnameValidator'] = new Hostname(['allow' => $this->getAllow()]);
         }
 
         return $this->options['hostnameValidator'];
@@ -178,7 +188,7 @@ final class EmailAddress extends AbstractValidator
     /**
      * Returns the allow option of the attached hostname validator
      *
-     * @return int
+     * @return int-mask-of<Hostname::ALLOW_*>
      */
     public function getAllow()
     {
@@ -188,7 +198,7 @@ final class EmailAddress extends AbstractValidator
     /**
      * Sets the allow option of the hostname validator to use
      *
-     * @param int $allow
+     * @param int-mask-of<Hostname::ALLOW_*> $allow
      * @return $this Provides a fluent interface
      */
     public function setAllow($allow)

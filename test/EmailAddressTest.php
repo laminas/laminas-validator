@@ -413,10 +413,12 @@ final class EmailAddressTest extends TestCase
      */
     public function testHostnameSettings(): void
     {
-        $validator = new EmailAddress();
+        $validator = new EmailAddress([
+            'hostnameValidator' => new Hostname([
+                'useIdnCheck' => false,
+            ]),
+        ]);
 
-        // Check no IDN matching
-        $validator->getHostnameValidator()->useIdnCheck(false);
         $valuesExpected = [
             [false, ['name@b�rger.de', 'name@h�llo.de', 'name@h�llo.se']],
         ];
@@ -428,7 +430,11 @@ final class EmailAddressTest extends TestCase
         }
 
         // Check no TLD matching
-        $validator->getHostnameValidator()->useTldCheck(false);
+        $validator      = new EmailAddress([
+            'hostnameValidator' => new Hostname([
+                'useTldCheck' => false,
+            ]),
+        ]);
         $valuesExpected = [
             [true, ['name@domain.xx', 'name@domain.zz', 'name@domain.madeup']],
         ];
@@ -551,7 +557,7 @@ final class EmailAddressTest extends TestCase
 
         try {
             /** @psalm-suppress TooManyArguments */
-            $validator = new EmailAddress(Hostname::ALLOW_ALL, true, new Hostname(Hostname::ALLOW_ALL));
+            $validator = new EmailAddress(Hostname::ALLOW_ALL, true, new Hostname(['allow' => Hostname::ALLOW_ALL]));
             $options   = $validator->getOptions();
 
             self::assertSame(Hostname::ALLOW_ALL, $options['allow']);
@@ -573,7 +579,7 @@ final class EmailAddressTest extends TestCase
         self::assertSame('TestMessage', $messages[EmailAddress::INVALID]);
 
         $oldHostname = $this->validator->getHostnameValidator();
-        $this->validator->setOptions(['hostnameValidator' => new Hostname(Hostname::ALLOW_ALL)]);
+        $this->validator->setOptions(['hostnameValidator' => new Hostname(['allow' => Hostname::ALLOW_ALL])]);
         $hostname = $this->validator->getHostnameValidator();
 
         self::assertNotSame($oldHostname, $hostname);

@@ -176,9 +176,6 @@
       <code><![CDATA['']]></code>
       <code><![CDATA[is_string($value)]]></code>
     </DocblockTypeContradiction>
-    <InvalidArgument>
-      <code><![CDATA[$this->getAllow()]]></code>
-    </InvalidArgument>
     <LessSpecificImplementedReturnType>
       <code><![CDATA[AbstractValidator]]></code>
     </LessSpecificImplementedReturnType>
@@ -198,7 +195,7 @@
       <code><![CDATA[bool]]></code>
       <code><![CDATA[bool]]></code>
       <code><![CDATA[bool]]></code>
-      <code><![CDATA[int]]></code>
+      <code><![CDATA[int-mask-of<Hostname::ALLOW_*>]]></code>
     </MixedInferredReturnType>
     <MixedMethodCall>
       <code><![CDATA[setAllow]]></code>
@@ -987,59 +984,12 @@
     </MixedArgument>
   </file>
   <file src="src/Hostname.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_array($options)]]></code>
-      <code><![CDATA[is_string($value)]]></code>
-    </DocblockTypeContradiction>
     <MixedArgument>
       <code><![CDATA[$regexChar]]></code>
-      <code><![CDATA[$regexKey]]></code>
     </MixedArgument>
     <MixedAssignment>
-      <code><![CDATA[$partRegexChars]]></code>
       <code><![CDATA[$regexChar]]></code>
-      <code><![CDATA[$regexChars]]></code>
-      <code><![CDATA[$regexKey]]></code>
-      <code><![CDATA[$temp['allow']]]></code>
-      <code><![CDATA[$temp['ipValidator']]]></code>
-      <code><![CDATA[$temp['useIdnCheck']]]></code>
-      <code><![CDATA[$temp['useTldCheck']]]></code>
     </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[Ip]]></code>
-      <code><![CDATA[bool]]></code>
-      <code><![CDATA[bool]]></code>
-      <code><![CDATA[int]]></code>
-    </MixedInferredReturnType>
-    <MixedOperand>
-      <code><![CDATA[$regexChars]]></code>
-    </MixedOperand>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->options['allow']]]></code>
-      <code><![CDATA[$this->options['ipValidator']]]></code>
-      <code><![CDATA[$this->options['useIdnCheck']]]></code>
-      <code><![CDATA[$this->options['useTldCheck']]]></code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$temp]]></code>
-    </PossiblyUndefinedVariable>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[setAllow]]></code>
-      <code><![CDATA[setIpValidator]]></code>
-    </PossiblyUnusedMethod>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(bool) $useIdnCheck]]></code>
-      <code><![CDATA[(bool) $useTldCheck]]></code>
-    </RedundantCastGivenDocblockType>
-    <UnresolvableInclude>
-      <code><![CDATA[include __DIR__ . '/' . $this->validIdns[$this->tld]]]></code>
-    </UnresolvableInclude>
   </file>
   <file src="src/Iban.php">
     <MixedArgument>
@@ -1305,8 +1255,6 @@
   </file>
   <file src="test/EmailAddressTest.php">
     <InvalidArgument>
-      <code><![CDATA[Hostname::ALLOW_ALL]]></code>
-      <code><![CDATA[Hostname::ALLOW_ALL]]></code>
       <code><![CDATA[Hostname::ALLOW_ALL]]></code>
       <code><![CDATA[Hostname::ALLOW_ALL]]></code>
       <code><![CDATA[Hostname::ALLOW_ALL]]></code>
@@ -1617,25 +1565,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/HostnameTest.php">
-    <InvalidArgument>
-      <code><![CDATA[$option]]></code>
-      <code><![CDATA[$option]]></code>
-      <code><![CDATA[$option]]></code>
-      <code><![CDATA[$option]]></code>
-      <code><![CDATA[Hostname::ALLOW_ALL]]></code>
-      <code><![CDATA[Hostname::ALLOW_ALL]]></code>
-      <code><![CDATA[Hostname::ALLOW_ALL]]></code>
-      <code><![CDATA[Hostname::ALLOW_ALL]]></code>
-      <code><![CDATA[Hostname::ALLOW_ALL]]></code>
-      <code><![CDATA[Hostname::ALLOW_DNS]]></code>
-      <code><![CDATA[Hostname::ALLOW_DNS]]></code>
-      <code><![CDATA[Hostname::ALLOW_DNS]]></code>
-      <code><![CDATA[Hostname::ALLOW_URI]]></code>
-      <code><![CDATA[[1 => 1]]]></code>
-    </InvalidArgument>
-    <InvalidCast>
-      <code><![CDATA[[1 => 1]]]></code>
-    </InvalidCast>
     <MixedArrayOffset>
       <code><![CDATA[$translations[$code]]]></code>
     </MixedArrayOffset>

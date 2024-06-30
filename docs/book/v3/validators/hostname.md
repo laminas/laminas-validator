@@ -13,8 +13,7 @@ The following options are supported for `Laminas\Validator\Hostname`:
   [See below](#validating-different-types-of-hostnames) for details.
 - `idn`: Defines if IDN domains are allowed or not. This option defaults to
   `true`.
-- `ip`: Allows defining a custom IP validator. This option defaults to a new
-  instance of `Laminas\Validator\Ip`.
+- `ipValidator`: Allows defining an [IP validator](ip.md) with custom configuration
 - `tld`: Defines if TLDs are validated. This option defaults to `true`.
 
 ## Basic usage
@@ -63,7 +62,7 @@ To check for IP addresses only, you can use the example below:
 ```php
 use Laminas\Validator\Hostname;
 
-$validator = new Hostname(Hostname::ALLOW_IP);
+$validator = new Hostname(['allow' => Hostname::ALLOW_IP]);
 
 if ($validator->isValid($hostname)) {
     // hostname appears to be valid
@@ -82,7 +81,9 @@ Local hostnames:
 ```php
 use Laminas\Validator\Hostname;
 
-$validator = new Hostname(Hostname::ALLOW_DNS | Hostname::ALLOW_IP);
+$validator = new Hostname([
+    'allow' => Hostname::ALLOW_DNS | Hostname::ALLOW_IP,
+]);
 ```
 
 ## Validating International Domains Names
@@ -104,7 +105,7 @@ You can disable IDN validation by passing a second parameter to the
 ```php
 $validator = new Laminas\Validator\Hostname([
     'allow' => Laminas\Validator\Hostname::ALLOW_DNS,
-    'useIdnCheck'   => false,
+    'useIdnCheck' => false,
 ]);
 ```
 
