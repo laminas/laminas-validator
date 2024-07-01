@@ -178,4 +178,24 @@ final class CallbackTest extends TestCase
 
         self::assertArrayHasKey(Callback::INVALID_CALLBACK, $validator->getMessages());
     }
+
+    public function testThatCallbacksCanBeBoundToTheValidatorInstance(): void
+    {
+        $closure = function (): bool {
+            /** @var Callback $this */
+            $this->setMessage('Custom Error Message', Callback::INVALID_VALUE);
+
+            return false;
+        };
+
+        $validator = new Callback([
+            'callback' => $closure,
+            'bind'     => true,
+        ]);
+
+        self::assertFalse($validator->isValid('anything'));
+        $messages = $validator->getMessages();
+        self::assertArrayHasKey(Callback::INVALID_VALUE, $messages);
+        self::assertSame('Custom Error Message', $messages[Callback::INVALID_VALUE]);
+    }
 }
