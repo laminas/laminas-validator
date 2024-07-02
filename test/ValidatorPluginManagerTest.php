@@ -7,10 +7,10 @@ namespace LaminasTest\Validator;
 use Exception;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\ServiceManager;
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\RuntimeException;
 use Laminas\Validator\NotEmpty;
-use Laminas\Validator\Translator\TranslatorInterface;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
 use Laminas\Validator\ValidatorPluginManagerAwareInterface;
@@ -62,7 +62,7 @@ final class ValidatorPluginManagerTest extends TestCase
 
     public function testAllowsInjectingTranslatorInterface(): void
     {
-        $translator = $this->createMock(Translator::class);
+        $translator = $this->createMock(TranslatorInterface::class);
 
         $container = $this->createMock(ContainerInterface::class);
 
@@ -72,7 +72,7 @@ final class ValidatorPluginManagerTest extends TestCase
             ->willReturnMap(
                 [
                     ['MvcTranslator', false],
-                    [\Laminas\I18n\Translator\TranslatorInterface::class, true],
+                    [TranslatorInterface::class, true],
                 ],
             );
 

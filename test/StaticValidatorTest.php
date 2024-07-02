@@ -13,14 +13,12 @@ use Laminas\Validator\StaticValidator;
 use Laminas\Validator\StringLength;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
-use LaminasTest\Validator\TestAsset\ArrayTranslator;
 use LaminasTest\Validator\TestAsset\Translator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function current;
-use function extension_loaded;
 use function strlen;
 
 final class StaticValidatorTest extends TestCase
@@ -49,7 +47,7 @@ final class StaticValidatorTest extends TestCase
 
     public function testCanSetGlobalDefaultTranslator(): void
     {
-        $translator = new Translator();
+        $translator = new Translator([]);
         AbstractValidator::setDefaultTranslator($translator);
 
         self::assertSame($translator, AbstractValidator::getDefaultTranslator());
@@ -65,7 +63,7 @@ final class StaticValidatorTest extends TestCase
     public function testLocalTranslatorPreferredOverGlobalTranslator(): void
     {
         $this->testCanSetGlobalDefaultTranslator();
-        $translator = new Translator();
+        $translator = new Translator([]);
         $this->validator->setTranslator($translator);
 
         self::assertNotSame(AbstractValidator::getDefaultTranslator(), $this->validator->getTranslator());
@@ -73,23 +71,15 @@ final class StaticValidatorTest extends TestCase
 
     public function testMaximumErrorMessageLength(): void
     {
-        if (! extension_loaded('intl')) {
-            self::markTestSkipped('ext/intl not enabled');
-        }
-
         self::assertSame(-1, AbstractValidator::getMessageLength());
 
         AbstractValidator::setMessageLength(10);
 
         self::assertSame(10, AbstractValidator::getMessageLength());
 
-        $loader               = new ArrayTranslator();
-        $loader->translations = [
+        $translator = new Translator([
             'Invalid type given. String expected' => 'This is the translated message for %value%',
-        ];
-        $translator           = new Translator();
-        $translator->getPluginManager()->setService('default', $loader);
-        $translator->addTranslationFile('default', null);
+        ]);
 
         $this->validator->setTranslator($translator);
 
@@ -118,7 +108,7 @@ final class StaticValidatorTest extends TestCase
 
     public function testSetGetDefaultTranslator(): void
     {
-        $translator = new Translator();
+        $translator = new Translator([]);
         AbstractValidator::setDefaultTranslator($translator);
 
         self::assertSame($translator, AbstractValidator::getDefaultTranslator());

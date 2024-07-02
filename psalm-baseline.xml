@@ -1251,17 +1251,6 @@
       <code><![CDATA[$temp]]></code>
     </PossiblyUndefinedVariable>
   </file>
-  <file src="src/Translator/DummyTranslator.php">
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(int) $number]]></code>
-    </RedundantCastGivenDocblockType>
-  </file>
-  <file src="src/Translator/TranslatorAwareInterface.php">
-    <PossiblyUnusedReturnValue>
-      <code><![CDATA[TranslatorAwareInterface]]></code>
-      <code><![CDATA[self]]></code>
-    </PossiblyUnusedReturnValue>
-  </file>
   <file src="src/ValidatorChain.php">
     <MixedPropertyTypeCoercion>
       <code><![CDATA[new PriorityQueue()]]></code>
@@ -1334,10 +1323,6 @@
     <MixedAssignment>
       <code><![CDATA[$message]]></code>
     </MixedAssignment>
-    <NullArgument>
-      <code><![CDATA[null]]></code>
-      <code><![CDATA[null]]></code>
-    </NullArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[invalidOptionsArguments]]></code>
     </PossiblyUnusedMethod>
@@ -1421,9 +1406,6 @@
     <InvalidCast>
       <code><![CDATA[[1 => 1]]]></code>
     </InvalidCast>
-    <NullArgument>
-      <code><![CDATA[null]]></code>
-    </NullArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[emailAddressesForMxChecks]]></code>
       <code><![CDATA[errorHandler]]></code>
@@ -1746,9 +1728,6 @@
     <MixedArrayOffset>
       <code><![CDATA[$translations[$code]]]></code>
     </MixedArrayOffset>
-    <NullArgument>
-      <code><![CDATA[null]]></code>
-    </NullArgument>
     <PossiblyUndefinedVariable>
       <code><![CDATA[$code]]></code>
       <code><![CDATA[$message]]></code>
@@ -1930,9 +1909,6 @@
     </PossiblyInvalidCast>
   </file>
   <file src="test/StaticValidatorTest.php">
-    <NullArgument>
-      <code><![CDATA[null]]></code>
-    </NullArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[invalidParameterizedData]]></code>
       <code><![CDATA[parameterizedData]]></code>

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Hostname;
-use LaminasTest\Validator\TestAsset\ArrayTranslator;
 use LaminasTest\Validator\TestAsset\Translator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -13,7 +12,6 @@ use PHPUnit\Framework\TestCase;
 
 use function array_key_exists;
 use function array_keys;
-use function extension_loaded;
 use function implode;
 use function ini_get;
 use function ini_set;
@@ -310,18 +308,10 @@ final class HostnameTest extends TestCase
     #[Group('Laminas-6676')]
     public function testValidatorMessagesShouldBeTranslated(): void
     {
-        if (! extension_loaded('intl')) {
-            self::markTestSkipped('ext/intl not enabled');
-        }
-
-        $translations         = [
-            'hostnameInvalidLocalName' => 'The input does not appear to be a valid local network name',
+        $translations = [
+            Hostname::INVALID_LOCAL_NAME => 'The input does not appear to be a valid local network name',
         ];
-        $loader               = new ArrayTranslator();
-        $loader->translations = $translations;
-        $translator           = new Translator();
-        $translator->getPluginManager()->setService('default', $loader);
-        $translator->addTranslationFile('default', null);
+        $translator   = new Translator($translations);
         $this->validator->setTranslator($translator);
 
         $this->validator->isValid('0.239,512.777');
