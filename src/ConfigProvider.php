@@ -27,11 +27,9 @@ final class ConfigProvider
     {
         return [
             'aliases'   => [
-                Translator\TranslatorInterface::class => Translator\Translator::class,
-                'ValidatorManager'                    => ValidatorPluginManager::class,
+                'ValidatorManager' => ValidatorPluginManager::class,
             ],
             'factories' => [
-                Translator\Translator::class  => Translator\TranslatorFactory::class,
                 ValidatorPluginManager::class => ValidatorPluginManagerFactory::class,
             ],
         ];

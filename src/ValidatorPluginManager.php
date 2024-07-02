@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
-use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 use Laminas\ServiceManager\ServiceManager;
+use Laminas\Translator\TranslatorInterface;
 use Psr\Container\ContainerInterface;
 
 use function get_debug_type;
@@ -340,7 +340,7 @@ final class ValidatorPluginManager extends AbstractPluginManager
         }
 
         if ($container->has(TranslatorInterface::class)) {
-            $validator->setTranslator($container->get(Translator\TranslatorInterface::class));
+            $validator->setTranslator($container->get(TranslatorInterface::class));
         }
     }
 
