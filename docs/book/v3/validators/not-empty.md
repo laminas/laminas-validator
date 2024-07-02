@@ -64,17 +64,14 @@ constants, or you can provide a textual string. See the following examples:
 use Laminas\Validator\NotEmpty;
 
 // Returns false on 0
-$validator = new NotEmpty(NotEmpty::INTEGER);
+$validator = new NotEmpty(['type' => NotEmpty::INTEGER]);
 
 // Returns false on 0 or '0'
-$validator = new NotEmpty( NotEmpty::INTEGER | NotEmpty::ZERO);
+$validator = new NotEmpty(['type' => NotEmpty::INTEGER | NotEmpty::ZERO]);
 
 // Returns false on 0 or '0'
-$validator = new NotEmpty([ NotEmpty::INTEGER, NotEmpty::ZERO ]);
+$validator = new NotEmpty(['type' => [ NotEmpty::INTEGER, NotEmpty::ZERO ]]);
 
 // Returns false on 0 or '0'
-$validator = new NotEmpty(['integer', 'zero']);
+$validator = new NotEmpty(['type' => ['integer', 'zero']]);
 ```
-
-You can also provide an instance of `Traversable` to set the desired types. To
-set types after instantiation, use the `setType()` method.
