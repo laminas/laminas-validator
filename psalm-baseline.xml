@@ -1638,6 +1638,18 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/Hostname.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getAllow]]></code>
+      <code><![CDATA[getAllow]]></code>
+      <code><![CDATA[getAllow]]></code>
+      <code><![CDATA[getAllow]]></code>
+      <code><![CDATA[getAllow]]></code>
+      <code><![CDATA[getAllow]]></code>
+      <code><![CDATA[getIdnCheck]]></code>
+      <code><![CDATA[getIpValidator]]></code>
+      <code><![CDATA[getIpValidator]]></code>
+      <code><![CDATA[getTldCheck]]></code>
+    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA[is_array($options)]]></code>
       <code><![CDATA[is_string($value)]]></code>
@@ -2473,6 +2485,10 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/EmailAddressTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[useIdnCheck]]></code>
+      <code><![CDATA[useTldCheck]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[Hostname::ALLOW_ALL]]></code>
       <code><![CDATA[Hostname::ALLOW_ALL]]></code>
@@ -2839,6 +2855,11 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/HostnameTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getAllow]]></code>
+      <code><![CDATA[useIdnCheck]]></code>
+      <code><![CDATA[useTldCheck]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[$option]]></code>
       <code><![CDATA[$option]]></code>
