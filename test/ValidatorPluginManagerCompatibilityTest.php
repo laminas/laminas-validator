@@ -11,6 +11,7 @@ use Laminas\Validator\Callback;
 use Laminas\Validator\DateComparison;
 use Laminas\Validator\Exception\RuntimeException;
 use Laminas\Validator\Explode;
+use Laminas\Validator\IsInstanceOf;
 use Laminas\Validator\NumberComparison;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
@@ -118,6 +119,11 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
 
             // Skipping due to required options
             if ($target === NumberComparison::class) {
+                continue;
+            }
+
+            // Skipping due to required options
+            if ($target === IsInstanceOf::class) {
                 continue;
             }
 

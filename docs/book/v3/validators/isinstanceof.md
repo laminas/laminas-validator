@@ -14,26 +14,9 @@ The following options are supported for `Laminas\Validator\IsInstanceOf`:
 
 ```php
 $validator = new Laminas\Validator\IsInstanceOf([
-    'className' => 'Laminas\Validator\Digits'
+    'className' => Laminas\Validator\Digits::class,
 ]);
 $object = new Laminas\Validator\Digits();
-
-if ($validator->isValid($object)) {
-    // $object is an instance of Laminas\Validator\Digits
-} else {
-    // false. You can use $validator->getMessages() to retrieve error messages
-}
-```
-
-If a string argument is passed to the constructor of
-`Laminas\Validator\IsInstanceOf`, then that value will be used as the class name:
-
-```php
-use Laminas\Validator\Digits;
-use Laminas\Validator\IsInstanceOf;
-
-$validator = new IsInstanceOf(Digits::class);
-$object = new Digits();
 
 if ($validator->isValid($object)) {
     // $object is an instance of Laminas\Validator\Digits
