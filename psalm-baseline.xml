@@ -1132,20 +1132,6 @@
       <code><![CDATA[(bool) $recursive]]></code>
     </RedundantCastGivenDocblockType>
   </file>
-  <file src="src/IsInstanceOf.php">
-    <MixedAssignment>
-      <code><![CDATA[$tmpOptions['className']]]></code>
-    </MixedAssignment>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[setClassName]]></code>
-    </PossiblyUnusedMethod>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$className]]></code>
-    </PropertyNotSetInConstructor>
-  </file>
   <file src="src/IsJsonString.php">
     <InvalidArgument>
       <code><![CDATA[$this->maxDepth]]></code>
@@ -1814,17 +1800,6 @@
       <code><![CDATA[conflictingOptionsProvider]]></code>
       <code><![CDATA[conflictingSecondaryOptionsProvider]]></code>
     </PossiblyUnusedMethod>
-  </file>
-  <file src="test/IsInstanceOfTest.php">
-    <InvalidArgument>
-      <code><![CDATA[DateTime::class]]></code>
-      <code><![CDATA[DateTime::class]]></code>
-      <code><![CDATA[DateTime::class]]></code>
-      <code><![CDATA[DateTime::class]]></code>
-      <code><![CDATA[DateTime::class]]></code>
-      <code><![CDATA[Exception::class]]></code>
-      <code><![CDATA[TestCase::class]]></code>
-    </InvalidArgument>
   </file>
   <file src="test/IsJsonStringTest.php">
     <PossiblyUnusedMethod>
