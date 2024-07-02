@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
-use Traversable;
-
-use function array_shift;
 use function floor;
-use function func_get_args;
-use function is_array;
 use function is_numeric;
-use function iterator_to_array;
 use function round;
 use function strlen;
 use function strpos;
 use function substr;
 
+/**
+ * @psalm-type OptionsArgument = array{
+ *     baseValue?: numeric,
+ *     step?: numeric,
+ * }
+ */
 final class Step extends AbstractValidator
 {
     public const INVALID  = 'typeInvalid';
@@ -28,87 +28,34 @@ final class Step extends AbstractValidator
         self::NOT_STEP => 'The input is not a valid step',
     ];
 
-    /** @var numeric */
-    protected $baseValue = 0;
-
-    /** @var numeric */
-    protected $step = 1;
+    private readonly float $baseValue;
+    private readonly float $step;
 
     /**
      * Set default options for this instance
      *
-     * @param iterable<string, mixed> $options
+     * @param OptionsArgument $options
      */
-    public function __construct($options = [])
+    public function __construct(array $options = [])
     {
-        if ($options instanceof Traversable) {
-            $options = iterator_to_array($options);
-        } elseif (! is_array($options)) {
-            $options           = func_get_args();
-            $temp['baseValue'] = array_shift($options);
-            if (! empty($options)) {
-                $temp['step'] = array_shift($options);
-            }
+        $base = $options['baseValue'] ?? null;
+        $step = $options['step'] ?? null;
 
-            $options = $temp;
-        }
+        $this->baseValue = is_numeric($base)
+            ? (float) $base
+            : 0.0;
 
-        if (isset($options['baseValue'])) {
-            $this->setBaseValue($options['baseValue']);
-        }
-        if (isset($options['step'])) {
-            $this->setStep($options['step']);
-        }
+        $this->step = is_numeric($step)
+            ? (float) $step
+            : 1.0;
+
+        unset($options['baseValue'], $options['step']);
 
         parent::__construct($options);
     }
 
     /**
-     * Sets the base value from which the step should be computed
-     *
-     * @param numeric $baseValue
-     * @return $this
-     */
-    public function setBaseValue(mixed $baseValue)
-    {
-        $this->baseValue = $baseValue;
-        return $this;
-    }
-
-    /**
-     * Returns the base value from which the step should be computed
-     *
-     * @return numeric
-     */
-    public function getBaseValue()
-    {
-        return $this->baseValue;
-    }
-
-    /**
-     * Sets the step value
-     *
-     * @param numeric $step
-     * @return $this
-     */
-    public function setStep(mixed $step)
-    {
-        $this->step = (float) $step;
-        return $this;
-    }
-
-    /**
-     * Returns the step value
-     *
-     * @return numeric
-     */
-    public function getStep()
-    {
-        return $this->step;
-    }
-
-    /**
-     * Returns true if $value is a scalar and a valid step value
+     * Returns true if $value is numeric and a valid step value
      */
     public function isValid(mixed $value): bool
     {
@@ -119,9 +66,9 @@ final class Step extends AbstractValidator
 
         $this->setValue($value);
 
-        $substract = $this->sub($value, $this->baseValue);
+        $subtract = $this->sub((float) $value, $this->baseValue);
 
-        $fmod = $this->fmod($substract, $this->step);
+        $fmod = $this->fmod($subtract, $this->step);
 
         if ($fmod !== 0.0 && $fmod !== $this->step) {
             $this->error(self::NOT_STEP);
@@ -133,40 +80,30 @@ final class Step extends AbstractValidator
 
     /**
      * replaces the internal fmod function which give wrong results on many cases
-     *
-     * @param numeric $x
-     * @param numeric $y
-     * @return float
      */
-    protected function fmod($x, $y)
+    private function fmod(float $x, float $y): float
     {
-        if ($y === 0.0 || $y === 0) {
+        if ($y === 0.0) {
             return 1.0;
         }
 
-        //find the maximum precision from both input params to give accurate results
+        // find the maximum precision from both input params to give accurate results
         $precision = $this->getPrecision($x) + $this->getPrecision($y);
 
         return round($x - $y * floor($x / $y), $precision);
     }
 
     /**
-     * replaces the internal substraction operation which give wrong results on some cases
-     *
-     * @param numeric $x
-     * @param numeric $y
-     * @return float
+     * replaces the internal subtraction operation which give wrong results on some cases
      */
-    private function sub($x, $y)
+    private function sub(float $x, float $y): float
     {
         $precision = $this->getPrecision($x) + $this->getPrecision($y);
+
         return round($x - $y, $precision);
     }
 
-    /**
-     * @param numeric $float
-     */
-    private function getPrecision($float): int
+    private function getPrecision(float $float): int
     {
         $position = strpos((string) $float, '.');
         $segment  = $position === false

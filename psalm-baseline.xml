@@ -1188,25 +1188,6 @@
       <code><![CDATA[setShareByDefault]]></code>
     </UndefinedMethod>
   </file>
-  <file src="src/Step.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_array($options)]]></code>
-    </DocblockTypeContradiction>
-    <MixedArgument>
-      <code><![CDATA[$options['baseValue']]]></code>
-      <code><![CDATA[$options['step']]]></code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code><![CDATA[$temp['baseValue']]]></code>
-      <code><![CDATA[$temp['step']]]></code>
-    </MixedAssignment>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$temp]]></code>
-    </PossiblyUndefinedVariable>
-  </file>
   <file src="src/ValidatorChain.php">
     <MixedPropertyTypeCoercion>
       <code><![CDATA[new PriorityQueue()]]></code>
@@ -1860,12 +1841,9 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/StepTest.php">
-    <InvalidArgument>
-      <code><![CDATA[$baseValue]]></code>
-    </InvalidArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[decimalHundredthStepValues]]></code>
-      <code><![CDATA[decimalStepSubstractionBugValues]]></code>
+      <code><![CDATA[decimalStepSubtractionBugValues]]></code>
       <code><![CDATA[decimalStepValues]]></code>
       <code><![CDATA[decimalValues]]></code>
       <code><![CDATA[valuesToValidate]]></code>
