@@ -4,61 +4,47 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\Translator;
 
+use Laminas\Translator\TranslatorInterface;
+
 interface TranslatorAwareInterface
 {
     /**
      * Sets translator to use in helper
      *
-     * @param  TranslatorInterface $translator  [optional] translator.
+     * @param  TranslatorInterface|null $translator  [optional] translator.
      *             Default is null, which sets no translator.
-     * @param  string $textDomain  [optional] text domain
+     * @param  string|null $textDomain  [optional] text domain
      *             Default is null, which skips setTranslatorTextDomain
-     * @return self
      */
-    public function setTranslator(?TranslatorInterface $translator = null, $textDomain = null);
+    public function setTranslator(?TranslatorInterface $translator = null, ?string $textDomain = null): void;
 
     /**
      * Returns translator used in object
-     *
-     * @return TranslatorInterface|null
      */
-    public function getTranslator();
+    public function getTranslator(): ?TranslatorInterface;
 
     /**
      * Checks if the object has a translator
-     *
-     * @return bool
      */
-    public function hasTranslator();
+    public function hasTranslator(): bool;
 
     /**
      * Sets whether translator is enabled and should be used
-     *
-     * @param  bool $enabled [optional] whether translator should be used.
-     *                  Default is true.
-     * @return self
      */
-    public function setTranslatorEnabled($enabled = true);
+    public function setTranslatorEnabled(bool $enabled = true): void;
 
     /**
      * Returns whether translator is enabled and should be used
-     *
-     * @return bool
      */
-    public function isTranslatorEnabled();
+    public function isTranslatorEnabled(): bool;
 
     /**
      * Set translation text domain
-     *
-     * @param  string $textDomain
-     * @return TranslatorAwareInterface
      */
-    public function setTranslatorTextDomain($textDomain = 'default');
+    public function setTranslatorTextDomain(string $textDomain = 'default'): void;
 
     /**
      * Return the translation text domain
-     *
-     * @return string
      */
-    public function getTranslatorTextDomain();
+    public function getTranslatorTextDomain(): string;
 }
