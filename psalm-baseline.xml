@@ -1956,6 +1956,10 @@
     </UndefinedMethod>
   </file>
   <file src="src/Step.php">
+    <DeprecatedMethod>
+      <code><![CDATA[setBaseValue]]></code>
+      <code><![CDATA[setStep]]></code>
+    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA[is_array($options)]]></code>
     </DocblockTypeContradiction>
@@ -3180,6 +3184,18 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/StepTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getBaseValue]]></code>
+      <code><![CDATA[getBaseValue]]></code>
+      <code><![CDATA[getStep]]></code>
+      <code><![CDATA[getStep]]></code>
+      <code><![CDATA[getStep]]></code>
+      <code><![CDATA[getStep]]></code>
+      <code><![CDATA[setBaseValue]]></code>
+      <code><![CDATA[setStep]]></code>
+      <code><![CDATA[setStep]]></code>
+      <code><![CDATA[setStep]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[$baseValue]]></code>
     </InvalidArgument>

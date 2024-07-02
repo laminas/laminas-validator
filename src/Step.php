@@ -65,6 +65,8 @@ class Step extends AbstractValidator
     /**
      * Sets the base value from which the step should be computed
      *
+     * @deprecated Since 2.61.0 All option getters and setters will be removed in v3.0
+     *
      * @param numeric $baseValue
      * @return $this
      */
@@ -77,6 +79,8 @@ class Step extends AbstractValidator
     /**
      * Returns the base value from which the step should be computed
      *
+     * @deprecated Since 2.61.0 All option getters and setters will be removed in v3.0
+     *
      * @return numeric
      */
     public function getBaseValue()
@@ -86,6 +90,8 @@ class Step extends AbstractValidator
 
     /**
      * Sets the step value
+     *
+     * @deprecated Since 2.61.0 All option getters and setters will be removed in v3.0
      *
      * @param numeric $step
      * @return $this
@@ -98,6 +104,8 @@ class Step extends AbstractValidator
 
     /**
      * Returns the step value
+     *
+     * @deprecated Since 2.61.0 All option getters and setters will be removed in v3.0
      *
      * @return numeric
      */
