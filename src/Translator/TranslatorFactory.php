@@ -19,6 +19,9 @@ use function is_array;
 /**
  * Overrides the translator factory from the i18n component in order to
  * replace it with the bridge class from this namespace.
+ *
+ * @deprecated Since 2.61.0 All custom translation classes will be removed in v3.0 and validators will only accept
+ *              and use an instance of \Laminas\Translator\TranslatorInterface
  */
 final class TranslatorFactory
 {

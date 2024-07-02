@@ -16,6 +16,23 @@
     </MixedArgument>
   </file>
   <file src="src/AbstractValidator.php">
+    <DeprecatedInterface>
+      <code><![CDATA[?Translator\TranslatorInterface]]></code>
+      <code><![CDATA[?Translator\TranslatorInterface]]></code>
+      <code><![CDATA[AbstractOptions&array<string, mixed>]]></code>
+      <code><![CDATA[Translator\TranslatorInterface]]></code>
+      <code><![CDATA[Translator\TranslatorInterface|null]]></code>
+      <code><![CDATA[Translator\TranslatorInterface|null]]></code>
+      <code><![CDATA[protected $abstractOptions = [
+        'messages'             => [], // Array of validation failure messages
+        'messageTemplates'     => [], // Array of validation failure message templates
+        'messageVariables'     => [], // Array of additional variables available for validation failure messages
+        'translator'           => null, // Translation object to used -> Translator\TranslatorInterface
+        'translatorTextDomain' => null, // Translation text domain
+        'translatorEnabled'    => true, // Is translation enabled?
+        'valueObscured'        => false, // Flag indicating whether value should be obfuscated in error messages
+    ];]]></code>
+    </DeprecatedInterface>
     <MixedArgumentTypeCoercion>
       <code><![CDATA[$value]]></code>
     </MixedArgumentTypeCoercion>
@@ -519,6 +536,13 @@
       <code><![CDATA[empty($context)]]></code>
       <code><![CDATA[empty($context)]]></code>
     </RiskyTruthyFalsyComparison>
+  </file>
+  <file src="src/ConfigProvider.php">
+    <DeprecatedClass>
+      <code><![CDATA[Translator\Translator::class]]></code>
+      <code><![CDATA[Translator\Translator::class]]></code>
+      <code><![CDATA[Translator\TranslatorFactory::class]]></code>
+    </DeprecatedClass>
   </file>
   <file src="src/CreditCard.php">
     <InvalidOperand>
@@ -2052,11 +2076,34 @@
       <code><![CDATA[(int) $number]]></code>
     </RedundantCastGivenDocblockType>
   </file>
+  <file src="src/Translator/Translator.php">
+    <DeprecatedInterface>
+      <code><![CDATA[Translator]]></code>
+    </DeprecatedInterface>
+  </file>
   <file src="src/Translator/TranslatorAwareInterface.php">
+    <DeprecatedInterface>
+      <code><![CDATA[TranslatorInterface]]></code>
+      <code><![CDATA[TranslatorInterface|null]]></code>
+    </DeprecatedInterface>
     <PossiblyUnusedReturnValue>
       <code><![CDATA[TranslatorAwareInterface]]></code>
       <code><![CDATA[self]]></code>
     </PossiblyUnusedReturnValue>
+  </file>
+  <file src="src/Translator/TranslatorFactory.php">
+    <DeprecatedClass>
+      <code><![CDATA[?Translator]]></code>
+      <code><![CDATA[Translator]]></code>
+      <code><![CDATA[Translator]]></code>
+      <code><![CDATA[new DummyTranslator()]]></code>
+      <code><![CDATA[new DummyTranslator()]]></code>
+      <code><![CDATA[new Translator($container->get(TranslatorInterface::class))]]></code>
+      <code><![CDATA[new Translator($i18nTranslator)]]></code>
+      <code><![CDATA[new Translator(new DummyTranslator())]]></code>
+      <code><![CDATA[new Translator(new DummyTranslator())]]></code>
+      <code><![CDATA[new Translator(new I18nTranslator())]]></code>
+    </DeprecatedClass>
   </file>
   <file src="src/Uri.php">
     <DocblockTypeContradiction>
@@ -3196,6 +3243,35 @@
       <code><![CDATA[locationProvider]]></code>
       <code><![CDATA[wrongTypesProvider]]></code>
     </PossiblyUnusedMethod>
+  </file>
+  <file src="test/Translator/TranslatorFactoryTest.php">
+    <DeprecatedClass>
+      <code><![CDATA[DummyTranslator::class]]></code>
+      <code><![CDATA[DummyTranslator::class]]></code>
+      <code><![CDATA[DummyTranslator::class]]></code>
+      <code><![CDATA[Translator::class]]></code>
+      <code><![CDATA[Translator::class]]></code>
+      <code><![CDATA[Translator::class]]></code>
+      <code><![CDATA[Translator::class]]></code>
+      <code><![CDATA[Translator::class]]></code>
+      <code><![CDATA[Translator::class]]></code>
+      <code><![CDATA[Translator::class]]></code>
+      <code><![CDATA[Translator::class]]></code>
+      <code><![CDATA[new TranslatorFactory()]]></code>
+      <code><![CDATA[new TranslatorFactory()]]></code>
+      <code><![CDATA[new TranslatorFactory()]]></code>
+      <code><![CDATA[new TranslatorFactory()]]></code>
+      <code><![CDATA[new TranslatorFactory()]]></code>
+      <code><![CDATA[new TranslatorFactory()]]></code>
+      <code><![CDATA[new TranslatorFactory()]]></code>
+      <code><![CDATA[new TranslatorFactory()]]></code>
+    </DeprecatedClass>
+  </file>
+  <file src="test/Translator/TranslatorTest.php">
+    <DeprecatedClass>
+      <code><![CDATA[Translator]]></code>
+      <code><![CDATA[new Translator($this->i18nTranslator)]]></code>
+    </DeprecatedClass>
   </file>
   <file src="test/UndisclosedPasswordTest.php">
     <PossiblyUnusedMethod>
