@@ -246,7 +246,7 @@ final class ValidatorPluginManager extends AbstractSingleInstancePluginManager
 
         if ($container->has('MvcTranslator')) {
             $translator = $container->get('MvcTranslator');
-            assert($translator instanceof Translator\TranslatorInterface);
+            assert($translator instanceof TranslatorInterface);
             $validator->setTranslator($translator);
 
             return;
