@@ -2952,6 +2952,10 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/IsInstanceOfTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getClassName]]></code>
+      <code><![CDATA[getClassName]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[DateTime::class]]></code>
       <code><![CDATA[DateTime::class]]></code>
