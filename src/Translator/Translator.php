@@ -7,6 +7,10 @@ namespace Laminas\Validator\Translator;
 use Laminas\I18n\Translator\TranslatorInterface as I18nTranslatorInterface;
 use Laminas\Validator\Translator\TranslatorInterface as ValidatorTranslatorInterface;
 
+/**
+ * @deprecated Since 2.61.0 All custom translation classes will be removed in v3.0 and validators will only accept
+ *             and use an instance of \Laminas\Translator\TranslatorInterface
+ */
 final class Translator implements
     I18nTranslatorInterface,
     ValidatorTranslatorInterface
