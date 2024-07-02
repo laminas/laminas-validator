@@ -11,8 +11,6 @@ use function is_readable;
 
 /**
  * Validator for the sha1 hash of given files
- *
- * @final
  */
 final class Sha1 extends Hash
 {
@@ -25,8 +23,8 @@ final class Sha1 extends Hash
     public const NOT_DETECTED   = 'fileSha1NotDetected';
     public const NOT_FOUND      = 'fileSha1NotFound';
 
-    /** @var array Error message templates */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::DOES_NOT_MATCH => 'File does not match the given sha1 hashes',
         self::NOT_DETECTED   => 'A sha1 hash could not be evaluated for the given file',
         self::NOT_FOUND      => 'File is not readable or does not exist',
@@ -81,9 +79,8 @@ final class Sha1 extends Hash
      *
      * @param (int|string)[]|string $value Filename to check for hash
      * @param array                 $file  File data from \Laminas\File\Transfer\Transfer (optional)
-     * @return bool
      */
-    public function isValid($value, $file = null)
+    public function isValid(mixed $value, $file = null): bool
     {
         $fileInfo = $this->getFileInfo($value, $file);
 

@@ -15,8 +15,8 @@ final class BusinessIdentifierCode extends AbstractValidator
     public const NOT_STRING        = 'valueNotString';
     public const NOT_VALID_COUNTRY = 'valueNotCountry';
 
-    /** @var string[] */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::NOT_STRING        => 'Invalid type given; string expected',
         self::INVALID           => 'Invalid BIC format',
         self::NOT_VALID_COUNTRY => 'Invalid country code',
@@ -31,8 +31,6 @@ final class BusinessIdentifierCode extends AbstractValidator
      * List of all country codes defined by ISO 3166-1 alpha-2
      *
      * @see https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Current_codes
-     *
-     * @var string[]
      */
     private const ISO_COUNTRIES = [
         'AD',
@@ -291,13 +289,11 @@ final class BusinessIdentifierCode extends AbstractValidator
      * This code is the only one used by SWIFT that is not defined by ISO 3166-1 alpha-2
      *
      * @see https://en.wikipedia.org/wiki/ISO_9362
-     *
-     * @var string
      */
     private const KOSOVO_EXCEPTION = 'XK';
 
     /** {@inheritDoc} */
-    public function isValid($value): bool
+    public function isValid(mixed $value): bool
     {
         if (! is_string($value)) {
             $this->error(self::NOT_STRING);

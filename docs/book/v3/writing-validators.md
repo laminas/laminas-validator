@@ -45,11 +45,11 @@ class Float extends AbstractValidator
 {
     const FLOAT = 'float';
 
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::FLOAT => "'%value%' is not a floating point value",
     ];
 
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         $this->setValue($value);
 
@@ -101,7 +101,7 @@ class NumericBetween extends AbstractValidator
     public $minimum = 0;
     public $maximum = 100;
 
-    protected $messageVariables = [
+    protected array $messageVariables = [
         'min' => 'minimum',
         'max' => 'maximum',
     ];
@@ -112,7 +112,7 @@ class NumericBetween extends AbstractValidator
         self::MSG_MAXIMUM => "'%value%' must be no more than '%max%'",
     ];
 
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         $this->setValue($value);
 
@@ -183,7 +183,7 @@ class PasswordStrength extends AbstractValidator
         self::DIGIT  => "'%value%' must contain at least one digit character",
     ];
 
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         $this->setValue($value);
 

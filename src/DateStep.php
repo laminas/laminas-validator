@@ -46,9 +46,9 @@ final class DateStep extends Date
     /**
      * Validation failure message template definitions
      *
-     * @var string[]
+     * @var array<string, string>
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::INVALID      => 'Invalid type given. String, integer, array or DateTime expected',
         self::INVALID_DATE => 'The input does not appear to be a valid date',
         self::FALSEFORMAT  => "The input does not fit the date format '%format%'",
@@ -217,10 +217,9 @@ final class DateStep extends Date
      * Returns true if a date is within a valid step
      *
      * @param string|int|DateTimeInterface $value
-     * @return bool
      * @throws Exception\InvalidArgumentException
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if (! parent::isValid($value)) {
             return false;

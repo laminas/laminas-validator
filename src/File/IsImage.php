@@ -9,8 +9,6 @@ use Traversable;
 
 /**
  * Validator which checks if the file is an image
- *
- * @final
  */
 final class IsImage extends MimeType
 {
@@ -21,8 +19,8 @@ final class IsImage extends MimeType
     public const NOT_DETECTED = 'fileIsImageNotDetected';
     public const NOT_READABLE = 'fileIsImageNotReadable';
 
-    /** @inheritDoc */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::FALSE_TYPE   => "File is no image, '%type%' detected",
         self::NOT_DETECTED => 'The mimetype could not be detected from the file',
         self::NOT_READABLE => 'File is not readable or does not exist',

@@ -18,8 +18,6 @@ use function is_readable;
 
 /**
  * Validator for the image size of an image file
- *
- * @final
  */
 final class ImageSize extends AbstractValidator
 {
@@ -35,8 +33,8 @@ final class ImageSize extends AbstractValidator
     public const NOT_DETECTED     = 'fileImageSizeNotDetected';
     public const NOT_READABLE     = 'fileImageSizeNotReadable';
 
-    /** @var array Error message template */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::WIDTH_TOO_BIG    => "Maximum allowed width for image should be '%maxwidth%' but '%width%' detected",
         self::WIDTH_TOO_SMALL  => "Minimum expected width for image should be '%minwidth%' but '%width%' detected",
         self::HEIGHT_TOO_BIG   => "Maximum allowed height for image should be '%maxheight%' but '%height%' detected",
@@ -45,8 +43,8 @@ final class ImageSize extends AbstractValidator
         self::NOT_READABLE     => 'File is not readable or does not exist',
     ];
 
-    /** @var array Error message template variables */
-    protected $messageVariables = [
+    /** @var array<string, string|array> */
+    protected array $messageVariables = [
         'minwidth'  => ['options' => 'minWidth'],
         'maxwidth'  => ['options' => 'maxWidth'],
         'minheight' => ['options' => 'minHeight'],
@@ -331,9 +329,8 @@ final class ImageSize extends AbstractValidator
      *
      * @param  string|array $value Real file to check for image size
      * @param  array        $file  File data from \Laminas\File\Transfer\Transfer (optional)
-     * @return bool
      */
-    public function isValid($value, $file = null)
+    public function isValid(mixed $value, $file = null): bool
     {
         $fileInfo = $this->getFileInfo($value, $file);
 

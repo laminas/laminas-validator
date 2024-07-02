@@ -10,8 +10,6 @@ use const DIRECTORY_SEPARATOR;
 
 /**
  * Validator which checks if the destination file does not exist
- *
- * @final
  */
 final class NotExists extends Exists
 {
@@ -22,8 +20,8 @@ final class NotExists extends Exists
      */
     public const DOES_EXIST = 'fileNotExistsDoesExist';
 
-    /** @var array Error message templates */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::DOES_EXIST => 'File exists',
     ];
 
@@ -32,9 +30,8 @@ final class NotExists extends Exists
      *
      * @param  string|array $value Real file to check for existence
      * @param  array        $file  File data from \Laminas\File\Transfer\Transfer (optional)
-     * @return bool
      */
-    public function isValid($value, $file = null)
+    public function isValid(mixed $value, $file = null): bool
     {
         $fileInfo = $this->getFileInfo($value, $file, false, true);
 

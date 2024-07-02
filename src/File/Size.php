@@ -35,15 +35,15 @@ class Size extends AbstractValidator
     public const TOO_SMALL = 'fileSizeTooSmall';
     public const NOT_FOUND = 'fileSizeNotFound';
 
-    /** @var array Error message templates */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::TOO_BIG   => "Maximum allowed size for file is '%max%' but '%size%' detected",
         self::TOO_SMALL => "Minimum expected size for file is '%min%' but '%size%' detected",
         self::NOT_FOUND => 'File is not readable or does not exist',
     ];
 
-    /** @var array Error message template variables */
-    protected $messageVariables = [
+    /** @var array<string, string|array> */
+    protected array $messageVariables = [
         'min'  => ['options' => 'min'],
         'max'  => ['options' => 'max'],
         'size' => 'size',
@@ -236,9 +236,8 @@ class Size extends AbstractValidator
      *
      * @param  string|array $value File to check for size
      * @param  array        $file  File data from \Laminas\File\Transfer\Transfer (optional)
-     * @return bool
      */
-    public function isValid($value, $file = null)
+    public function isValid(mixed $value, $file = null): bool
     {
         $fileInfo = $this->getFileInfo($value, $file);
 

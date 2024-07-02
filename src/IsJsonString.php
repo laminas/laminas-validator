@@ -40,7 +40,7 @@ final class IsJsonString extends AbstractValidator
     public const ALLOW_ALL    = 0b0011111;
 
     /** @var array<self::ERROR_*, non-empty-string> */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::ERROR_NOT_STRING         => 'Expected a string but %type% was received',
         self::ERROR_TYPE_NOT_ALLOWED   => 'Received a JSON %type% but this type is not acceptable',
         self::ERROR_MAX_DEPTH_EXCEEDED => 'The decoded JSON payload exceeds the allowed depth of %maxDepth%',
@@ -48,7 +48,7 @@ final class IsJsonString extends AbstractValidator
     ];
 
     /** @var array<string, string> */
-    protected $messageVariables = [
+    protected array $messageVariables = [
         'type'     => 'type',
         'maxDepth' => 'maxDepth',
     ];

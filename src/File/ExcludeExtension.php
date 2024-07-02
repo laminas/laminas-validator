@@ -23,8 +23,8 @@ final class ExcludeExtension extends Extension
     public const FALSE_EXTENSION = 'fileExcludeExtensionFalse';
     public const NOT_FOUND       = 'fileExcludeExtensionNotFound';
 
-    /** @var array Error message templates */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::FALSE_EXTENSION => 'File has an incorrect extension',
         self::NOT_FOUND       => 'File is not readable or does not exist',
     ];
@@ -35,9 +35,8 @@ final class ExcludeExtension extends Extension
      *
      * @param  string|array $value Real file to check for extension
      * @param  array        $file  File data from \Laminas\File\Transfer\Transfer (optional)
-     * @return bool
      */
-    public function isValid($value, $file = null)
+    public function isValid(mixed $value, $file = null): bool
     {
         $fileInfo = $this->getFileInfo($value, $file);
 

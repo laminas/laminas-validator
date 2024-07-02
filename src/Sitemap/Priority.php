@@ -24,9 +24,9 @@ final class Priority extends AbstractValidator
     /**
      * Validation failure message template definitions
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::NOT_VALID => 'The input is not a valid sitemap priority',
         self::INVALID   => 'Invalid type given. Numeric string, integer or float expected',
     ];
@@ -37,9 +37,8 @@ final class Priority extends AbstractValidator
      * @link http://www.sitemaps.org/protocol.php#prioritydef <priority>
      *
      * @param  string  $value  value to validate
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if (! is_numeric($value)) {
             $this->error(self::INVALID);

@@ -242,11 +242,9 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorInt
      *
      * Validators are run in the order in which they were added to the chain (FIFO).
      *
-     * @param  mixed $value
      * @param  mixed $context Extra "context" to provide the validator
-     * @return bool
      */
-    public function isValid($value, $context = null)
+    public function isValid(mixed $value, $context = null): bool
     {
         $this->messages = [];
         $result         = true;

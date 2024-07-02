@@ -36,8 +36,8 @@ class Extension extends AbstractValidator
     public const FALSE_EXTENSION = 'fileExtensionFalse';
     public const NOT_FOUND       = 'fileExtensionNotFound';
 
-    /** @var array<string, string> Error message templates */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::FALSE_EXTENSION => 'File has an incorrect extension',
         self::NOT_FOUND       => 'File is not readable or does not exist',
     ];
@@ -53,8 +53,8 @@ class Extension extends AbstractValidator
         'allowNonExistentFile' => false, // Allow validation even if file does not exist
     ];
 
-    /** @var array Error message template variables */
-    protected $messageVariables = [
+    /** @var array<string, string|array> */
+    protected array $messageVariables = [
         'extension' => ['options' => 'extension'],
     ];
 
@@ -208,9 +208,8 @@ class Extension extends AbstractValidator
      *
      * @param  string|array $value Real file to check for extension
      * @param  array        $file  File data from \Laminas\File\Transfer\Transfer (optional)
-     * @return bool
      */
-    public function isValid($value, $file = null)
+    public function isValid(mixed $value, $file = null): bool
     {
         $fileInfo = $this->getFileInfo($value, $file);
 

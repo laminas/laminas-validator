@@ -37,22 +37,12 @@ use function strtoupper;
 use function substr;
 
 /**
- * Please note there are two standalone test scripts for testing IDN characters due to problems
- * with file encoding.
- *
- * The first is tests/Laminas/Validator/HostnameTestStandalone.php which is designed to be run on
- * the command line.
- *
- * The second is tests/Laminas/Validator/HostnameTestForm.php which is designed to be run via HTML
- * to allow users to test entering UTF-8 characters in a form.
- *
  * @psalm-type Options = array{
  *    allow?: int-mask-of<self::ALLOW_*>,
  *    useIdnCheck?: bool,
  *    useTldCheck?: bool,
  *    ipValidator?: null|ValidatorInterface,
  * }
- * @final
  */
 final class Hostname extends AbstractValidator
 {
@@ -68,8 +58,8 @@ final class Hostname extends AbstractValidator
     public const UNDECIPHERABLE_TLD      = 'hostnameUndecipherableTld';
     public const UNKNOWN_TLD             = 'hostnameUnknownTld';
 
-    /** @var array */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::CANNOT_DECODE_PUNYCODE  => "The input appears to be a DNS hostname but the given punycode notation cannot be decoded",
         self::INVALID                 => "Invalid type given. String expected",
         self::INVALID_DASH            => "The input appears to be a DNS hostname but contains a dash in an invalid position",
@@ -83,8 +73,8 @@ final class Hostname extends AbstractValidator
         self::UNKNOWN_TLD             => "The input appears to be a DNS hostname but cannot match TLD against known list",
     ];
 
-    /** @var array */
-    protected $messageVariables = [
+    /** @var array<string, string> */
+    protected array $messageVariables = [
         'tld' => 'tld',
     ];
 
@@ -102,7 +92,7 @@ final class Hostname extends AbstractValidator
      *
      * @var string[]
      */
-    protected $validTlds = [
+    private array $validTlds = [
         'aaa',
         'aarp',
         'abb',
@@ -1607,7 +1597,7 @@ final class Hostname extends AbstractValidator
      *
      * @var array<string, string|array<int, string>>
      */
-    protected $validIdns = [
+    private array $validIdns = [
         'AC'       => [1 => '/^[\x{002d}0-9a-zà-öø-ÿāăąćĉċčďđēėęěĝġģĥħīįĵķĺļľŀłńņňŋőœŕŗřśŝşšţťŧūŭůűųŵŷźżž]{1,63}$/iu'],
         'AR'       => [1 => '/^[\x{002d}0-9a-zà-ãç-êìíñ-õü]{1,63}$/iu'],
         'AS'       => [1 => '/^[\x{002d}0-9a-zà-öø-ÿāăąćĉċčďđēĕėęěĝğġģĥħĩīĭįıĵķĸĺļľłńņňŋōŏőœŕŗřśŝşšţťŧũūŭůűųŵŷźż]{1,63}$/iu'],
@@ -1751,7 +1741,7 @@ final class Hostname extends AbstractValidator
     ];
 
     /** @var array<string, array<int, int>> */
-    protected $idnLength = [
+    private array $idnLength = [
         'BIZ'      => [5 => 17, 11 => 15, 12 => 20],
         'CN'       => [1 => 20],
         'COM'      => [3 => 17, 5 => 20],
@@ -1936,9 +1926,8 @@ final class Hostname extends AbstractValidator
      * Returns true if and only if the $value is a valid hostname with respect to the current allow option
      *
      * @param  string $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if (! is_string($value)) {
             $this->error(self::INVALID);

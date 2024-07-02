@@ -357,9 +357,6 @@
     <MoreSpecificImplementedParamType>
       <code><![CDATA[$value]]></code>
     </MoreSpecificImplementedParamType>
-    <NonInvariantDocblockPropertyType>
-      <code><![CDATA[$messageTemplates]]></code>
-    </NonInvariantDocblockPropertyType>
     <PossiblyFalseOperand>
       <code><![CDATA[strrpos($fileInfo['filename'], '.')]]></code>
     </PossiblyFalseOperand>
@@ -1045,19 +1042,10 @@
     </UnresolvableInclude>
   </file>
   <file src="src/Iban.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_string($value)]]></code>
-    </DocblockTypeContradiction>
     <MixedArgument>
       <code><![CDATA[$options['allow_non_sepa']]]></code>
       <code><![CDATA[$options['country_code']]]></code>
     </MixedArgument>
-    <MixedOperand>
-      <code><![CDATA[static::$ibanRegex[$countryCode]]]></code>
-    </MixedOperand>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
     <PossiblyInvalidArgument>
       <code><![CDATA[$options]]></code>
     </PossiblyInvalidArgument>

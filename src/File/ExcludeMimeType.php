@@ -28,8 +28,8 @@ final class ExcludeMimeType extends MimeType
     public const NOT_DETECTED = 'fileExcludeMimeTypeNotDetected';
     public const NOT_READABLE = 'fileExcludeMimeTypeNotReadable';
 
-    /** @inheritDoc */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::FALSE_TYPE   => "File has an incorrect mimetype of '%type%'",
         self::NOT_DETECTED => 'The mimetype could not be detected from the file',
         self::NOT_READABLE => 'File is not readable or does not exist',
@@ -42,9 +42,8 @@ final class ExcludeMimeType extends MimeType
      *
      * @param  string|array|UploadedFileInterface $value Real file to check for mimetype
      * @param  array                              $file  File data from \Laminas\File\Transfer\Transfer (optional)
-     * @return bool
      */
-    public function isValid($value, $file = null)
+    public function isValid(mixed $value, $file = null): bool
     {
         $fileInfo = $this->getFileInfo($value, $file, true);
 

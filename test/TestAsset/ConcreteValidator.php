@@ -12,16 +12,12 @@ final class ConcreteValidator extends AbstractValidator
     public const BAR_MESSAGE = 'barMessage';
 
     /** @var array<string, string> */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         'fooMessage' => '%value% was passed',
         'barMessage' => '%value% was wrong',
     ];
 
-    /**
-     * @param mixed $value
-     * @return bool
-     */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         $this->setValue($value);
         $this->error(self::FOO_MESSAGE);

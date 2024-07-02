@@ -22,8 +22,8 @@ final class Step extends AbstractValidator
     public const INVALID  = 'typeInvalid';
     public const NOT_STEP = 'stepInvalid';
 
-    /** @var array */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::INVALID  => 'Invalid value given. Scalar expected',
         self::NOT_STEP => 'The input is not a valid step',
     ];
@@ -109,11 +109,8 @@ final class Step extends AbstractValidator
 
     /**
      * Returns true if $value is a scalar and a valid step value
-     *
-     * @param mixed $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if (! is_numeric($value)) {
             $this->error(self::INVALID);
