@@ -6,7 +6,9 @@ use Exception;
 use Laminas\Validator\Exception\InvalidArgumentException;
 
 use function array_merge;
+use function assert;
 use function call_user_func_array;
+use function is_bool;
 use function is_callable;
 
 /**
@@ -14,11 +16,13 @@ use function is_callable;
  *     callback: callable|null,
  *     callbackOptions: array<array-key, mixed>,
  *     throwExceptions: bool,
+ *     bind: bool,
  * }
  * @psalm-type OptionsArgument = array{
  *     callback: callable,
  *     callbackOptions?: array<array-key, mixed>,
  *     throwExceptions?: bool,
+ *     bind?: bool,
  *     ...<string, mixed>
  * }
  * @final
@@ -54,6 +58,7 @@ class Callback extends AbstractValidator
         'callback'        => null, // Callback in a call_user_func format, string || array
         'callbackOptions' => [], // Options for the callback
         'throwExceptions' => false, // Whether to throw exceptions raised within the callback or not
+        'bind'            => false, // Bind the callback to the validator instance
     ];
 
     /** @param OptionsArgument|callable $options */
@@ -61,6 +66,13 @@ class Callback extends AbstractValidator
     {
         if (is_callable($options)) {
             $options = ['callback' => $options];
+        }
+
+        $bind = $options['bind'] ?? false;
+        assert(is_bool($bind));
+        $closure = $options['callback'] ?? null;
+        if (is_callable($closure) && $bind === true) {
+            $options['callback'] = $closure(...)->bindTo($this);
         }
 
         parent::__construct($options);

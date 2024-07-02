@@ -11,6 +11,7 @@ The following options are supported for `Laminas\Validator\Callback`:
 - `callbackOptions`: Sets the additional options which will be given to the validator
   and/or callback.
 - `throwExceptions`: When true, [allows exceptions thrown inside of callbacks to propagate](#exceptions-within-callbacks).
+- `bind`: When true, the callback will be bound to the scope of the validator instance
 
 ## Basic usage
 
@@ -202,6 +203,43 @@ When making the call to the callback, the value to be validated will always be
 passed as the first argument to the callback followed by all other values given
 to `isValid()`; all other options will follow it. The amount and type of options
 which can be used is not limited.
+
+## Callbacks and Scope
+
+By default, callbacks are executed in their own scope and do not have access to the validator instance they are executed in.
+
+It is possible to bind your callback to the validator scope by setting the `bind` option to true.
+
+This is useful when you wish to provide more detailed error messages in case there are multiple potential reasons for validation failure:
+
+```php
+$validator = new Laminas\Validator\Callback([
+    'callback' => function (mixed $value): bool {
+        if ($value === 42) {
+            $this->setMessage(
+                'Sorry, the meaning of life is not acceptable',
+                 Laminas\Validator\Callback::INVALID_VALUE,
+            );
+            
+            return false;
+        }
+        
+        if ($value === 'goats') {
+            $this->setMessage(
+                'Sorry, I don’t like goats…',
+                 Laminas\Validator\Callback::INVALID_VALUE,
+            );
+            
+            return false;
+        }
+        
+        return true;
+    },
+    'bind' => true,
+]);
+```
+
+Binding only occurs when the `callback` option and the `bind` option are used in the constructor via an options array as shown above.
 
 ## Exceptions within Callbacks
 
