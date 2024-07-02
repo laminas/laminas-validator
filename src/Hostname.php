@@ -1947,10 +1947,12 @@ final class Hostname extends AbstractValidator
 
         $this->setValue($value);
         // Check input against IP address schema
+        $ipValidator = $this->getIpValidator();
+
         if (
             ((preg_match('/^[0-9.]*$/', $value) && str_contains($value, '.'))
                 || (preg_match('/^[0-9a-f:.]*$/i', $value) && str_contains($value, ':')))
-            && $this->getIpValidator()->setTranslator($this->getTranslator())->isValid($value)
+            && $ipValidator->isValid($value)
         ) {
             if (! ($this->getAllow() & self::ALLOW_IP)) {
                 $this->error(self::IP_ADDRESS_NOT_ALLOWED);
@@ -1985,7 +1987,7 @@ final class Hostname extends AbstractValidator
         // Prevent partial IP V4 addresses (ending '.')
         if (
             count($domainParts) === 4 && preg_match('/^[0-9.a-e:.]*$/i', $value)
-            && $this->getIpValidator()->setTranslator($this->getTranslator())->isValid($value)
+            && $ipValidator->isValid($value)
         ) {
             $this->error(self::INVALID_LOCAL_NAME);
         }

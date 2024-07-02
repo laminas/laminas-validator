@@ -8,19 +8,15 @@ use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\EmailAddress;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Hostname;
-use LaminasTest\Validator\TestAsset\ArrayTranslator;
 use LaminasTest\Validator\TestAsset\ConcreteValidator;
-use LaminasTest\Validator\TestAsset\Translator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 use stdClass;
 
-use function extension_loaded;
 use function reset;
 use function sprintf;
-use function var_export;
 
 final class AbstractValidatorTest extends TestCase
 {
@@ -31,59 +27,6 @@ final class AbstractValidatorTest extends TestCase
         parent::setUp();
 
         $this->validator = new ConcreteValidator();
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        AbstractValidator::setDefaultTranslator(null, 'default');
-    }
-
-    public function testTranslatorNullByDefault(): void
-    {
-        self::assertNull($this->validator->getTranslator());
-    }
-
-    public function testCanSetTranslator(): void
-    {
-        $translator = new Translator();
-        $this->validator->setTranslator($translator);
-
-        self::assertSame($translator, $this->validator->getTranslator());
-    }
-
-    public function testCanSetTranslatorToNull(): void
-    {
-        $this->testCanSetTranslator();
-        $this->validator->setTranslator(null);
-
-        self::assertNull($this->validator->getTranslator());
-    }
-
-    public function testErrorMessagesAreTranslatedWhenTranslatorPresent(): void
-    {
-        if (! extension_loaded('intl')) {
-            self::markTestSkipped('ext/intl not enabled');
-        }
-
-        $loader               = new ArrayTranslator();
-        $loader->translations = [
-            '%value% was passed' => 'This is the translated message for %value%',
-        ];
-        $translator           = new Translator();
-        $translator->getPluginManager()->setService('default', $loader);
-        $translator->addTranslationFile('default', null);
-
-        $this->validator->setTranslator($translator);
-
-        self::assertFalse($this->validator->isValid('bar'));
-
-        $messages = $this->validator->getMessages();
-
-        self::assertArrayHasKey('fooMessage', $messages);
-        self::assertStringContainsString('bar', $messages['fooMessage'], var_export($messages, true));
-        self::assertStringContainsString('This is the translated message for ', $messages['fooMessage']);
     }
 
     public function testObscureValueFlagFalseByDefault(): void
@@ -130,49 +73,6 @@ final class AbstractValidatorTest extends TestCase
         self::assertArrayHasKey('fooMessage', $messages);
     }
 
-    public function testTranslatorEnabledPerDefault(): void
-    {
-        $translator = new Translator();
-        $this->validator->setTranslator($translator);
-
-        self::assertTrue($this->validator->isTranslatorEnabled());
-    }
-
-    public function testCanDisableTranslator(): void
-    {
-        if (! extension_loaded('intl')) {
-            self::markTestSkipped('ext/intl not enabled');
-        }
-
-        $loader               = new ArrayTranslator();
-        $loader->translations = [
-            '%value% was passed' => 'This is the translated message for %value%',
-        ];
-        $translator           = new Translator();
-        $translator->getPluginManager()->setService('default', $loader);
-        $translator->addTranslationFile('default', null);
-        $this->validator->setTranslator($translator);
-
-        self::assertFalse($this->validator->isValid('bar'));
-
-        $messages = $this->validator->getMessages();
-
-        self::assertArrayHasKey('fooMessage', $messages);
-        self::assertStringContainsString('bar', $messages['fooMessage']);
-        self::assertStringContainsString('This is the translated message for ', $messages['fooMessage']);
-
-        $this->validator->setTranslatorEnabled(false);
-
-        self::assertFalse($this->validator->isTranslatorEnabled());
-        self::assertFalse($this->validator->isValid('bar'));
-
-        $messages = $this->validator->getMessages();
-
-        self::assertArrayHasKey('fooMessage', $messages);
-        self::assertStringContainsString('bar', $messages['fooMessage']);
-        self::assertStringContainsString('bar was passed', $messages['fooMessage']);
-    }
-
     public function testGetMessageTemplates(): void
     {
         $messages = $this->validator->getMessageTemplates();
@@ -194,39 +94,6 @@ final class AbstractValidatorTest extends TestCase
 
         self::assertFalse($validator('foo'));
         self::assertContains('foo was passed', $validator->getMessages());
-    }
-
-    public function testTranslatorMethods(): void
-    {
-        $translatorMock = $this->createMock(Translator::class);
-        $this->validator->setTranslator($translatorMock, 'foo');
-
-        self::assertSame($translatorMock, $this->validator->getTranslator());
-        self::assertSame('foo', $this->validator->getTranslatorTextDomain());
-        self::assertTrue($this->validator->hasTranslator());
-        self::assertTrue($this->validator->isTranslatorEnabled());
-
-        $this->validator->setTranslatorEnabled(false);
-
-        self::assertFalse($this->validator->isTranslatorEnabled());
-    }
-
-    public function testDefaultTranslatorMethods(): void
-    {
-        self::assertFalse(AbstractValidator::hasDefaultTranslator());
-        self::assertNull(AbstractValidator::getDefaultTranslator());
-        self::assertSame('default', AbstractValidator::getDefaultTranslatorTextDomain());
-
-        self::assertFalse($this->validator->hasTranslator());
-
-        $translatorMock = $this->createMock(Translator::class);
-        AbstractValidator::setDefaultTranslator($translatorMock, 'foo');
-
-        self::assertSame($translatorMock, AbstractValidator::getDefaultTranslator());
-        self::assertSame($translatorMock, $this->validator->getTranslator());
-        self::assertSame('foo', AbstractValidator::getDefaultTranslatorTextDomain());
-        self::assertSame('foo', $this->validator->getTranslatorTextDomain());
-        self::assertTrue(AbstractValidator::hasDefaultTranslator());
     }
 
     public function testMessageCreationWithNestedArrayValueDoesNotRaiseNotice(): void

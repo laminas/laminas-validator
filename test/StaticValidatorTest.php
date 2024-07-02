@@ -13,20 +13,15 @@ use Laminas\Validator\StaticValidator;
 use Laminas\Validator\StringLength;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
-use LaminasTest\Validator\TestAsset\ArrayTranslator;
-use LaminasTest\Validator\TestAsset\Translator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function current;
-use function extension_loaded;
 use function strlen;
 
 final class StaticValidatorTest extends TestCase
 {
-    private StringLength $validator;
-
     /**
      * Creates a new validation object for each test method
      */
@@ -34,48 +29,23 @@ final class StaticValidatorTest extends TestCase
     {
         parent::setUp();
 
-        AbstractValidator::setDefaultTranslator(null);
         StaticValidator::setPluginManager(null);
-        $this->validator = new StringLength();
     }
 
     protected function tearDown(): void
     {
         parent::tearDown();
 
-        AbstractValidator::setDefaultTranslator(null);
         AbstractValidator::setMessageLength(-1);
-    }
-
-    public function testCanSetGlobalDefaultTranslator(): void
-    {
-        $translator = new Translator();
-        AbstractValidator::setDefaultTranslator($translator);
-
-        self::assertSame($translator, AbstractValidator::getDefaultTranslator());
-    }
-
-    public function testGlobalDefaultTranslatorUsedWhenNoLocalTranslatorSet(): void
-    {
-        $this->testCanSetGlobalDefaultTranslator();
-
-        self::assertSame(AbstractValidator::getDefaultTranslator(), $this->validator->getTranslator());
-    }
-
-    public function testLocalTranslatorPreferredOverGlobalTranslator(): void
-    {
-        $this->testCanSetGlobalDefaultTranslator();
-        $translator = new Translator();
-        $this->validator->setTranslator($translator);
-
-        self::assertNotSame(AbstractValidator::getDefaultTranslator(), $this->validator->getTranslator());
     }
 
     public function testMaximumErrorMessageLength(): void
     {
-        if (! extension_loaded('intl')) {
-            self::markTestSkipped('ext/intl not enabled');
-        }
+        $validator = new StringLength([
+            'messages' => [
+                StringLength::INVALID => 'One, two, buckle my shoe',
+            ],
+        ]);
 
         self::assertSame(-1, AbstractValidator::getMessageLength());
 
@@ -83,22 +53,12 @@ final class StaticValidatorTest extends TestCase
 
         self::assertSame(10, AbstractValidator::getMessageLength());
 
-        $loader               = new ArrayTranslator();
-        $loader->translations = [
-            'Invalid type given. String expected' => 'This is the translated message for %value%',
-        ];
-        $translator           = new Translator();
-        $translator->getPluginManager()->setService('default', $loader);
-        $translator->addTranslationFile('default', null);
+        self::assertFalse($validator->isValid(123));
 
-        $this->validator->setTranslator($translator);
-
-        self::assertFalse($this->validator->isValid(123));
-
-        $messages = $this->validator->getMessages();
+        $messages = $validator->getMessages();
 
         self::assertArrayHasKey(StringLength::INVALID, $messages);
-        self::assertSame('This is...', $messages[StringLength::INVALID]);
+        self::assertSame('One, tw...', $messages[StringLength::INVALID]);
     }
 
     public function testSetGetMessageLengthLimitation(): void
@@ -114,14 +74,6 @@ final class StaticValidatorTest extends TestCase
         $message = current($valid->getMessages());
 
         self::assertLessThanOrEqual(5, strlen($message));
-    }
-
-    public function testSetGetDefaultTranslator(): void
-    {
-        $translator = new Translator();
-        AbstractValidator::setDefaultTranslator($translator);
-
-        self::assertSame($translator, AbstractValidator::getDefaultTranslator());
     }
 
     public function testLazyLoadsValidatorPluginManagerByDefault(): void

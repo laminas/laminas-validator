@@ -6,7 +6,7 @@ information to set your own messages, or to translate existing messages which a
 validator could return to something different.
 
 Validation messages are defined as constant/template pairs, with the constant
-representing a translation key. Such constants are defined per-class.  Let's
+representing an immutable key. Such constants are defined per-class. Let's
 look into `Laminas\Validator\Digits` for a descriptive example:
 
 ```php
@@ -41,45 +41,6 @@ $validator->setMessage('Please enter some numbers', Digits::NOT_DIGITS);
 The second parameter defines the failure which will be overridden. When you omit
 this parameter, then the given message will be set for all possible failures of
 this validator.
-
-## Using pre-translated validation messages
-
-laminas-validator is shipped with more than 45 different validators with more than
-200 failure messages. It can be a tedious task to translate all of these
-messages. For your convenience, pre-translated messages are provided in the
-[laminas/laminas-i18n-resources](https://docs.laminas.dev/laminas-i18n-resources/)
-package:
-
-```bash
-$ composer require laminas/laminas-i18n-resources
-```
-
-To translate all validation messages to German for example, attach a translator
-to `Laminas\Validator\AbstractValidator` using these resource files.
-
-```php
-use Laminas\I18n\Translator\Resources;
-use Laminas\Mvc\I18n\Translator;
-use Laminas\Validator\AbstractValidator;
-
-$translator = new Laminas\Mvc\I18n\Translator();
-$translator->addTranslationFilePattern(
-    'phpArray',
-    Resources::getBasePath(),
-    Resources::getPatternForValidator()
-);
-
-AbstractValidator::setDefaultTranslator($translator);
-```
-
-> ### Supported languages
->
-> The supported languages may not be complete. New languages will be added with
-> each release. Additionally feel free to use the existing resource files to
-> make your own translations.
->
-> You could also use these resource files to rewrite existing translations. So
-> you are not in need to create these files manually yourself.
 
 ## Limit the size of a validation message
 

@@ -5,15 +5,11 @@ declare(strict_types=1);
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Hostname;
-use LaminasTest\Validator\TestAsset\ArrayTranslator;
-use LaminasTest\Validator\TestAsset\Translator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
-use function array_key_exists;
 use function array_keys;
-use function extension_loaded;
 use function implode;
 use function ini_get;
 use function ini_set;
@@ -301,42 +297,6 @@ final class HostnameTest extends TestCase
     public function testGetAllow(): void
     {
         self::assertSame(Hostname::ALLOW_DNS, $this->validator->getAllow());
-    }
-
-    /**
-     * Test changed with Laminas-6676, as IP check is only involved when IP patterns match
-     */
-    #[Group('Laminas-2861')]
-    #[Group('Laminas-6676')]
-    public function testValidatorMessagesShouldBeTranslated(): void
-    {
-        if (! extension_loaded('intl')) {
-            self::markTestSkipped('ext/intl not enabled');
-        }
-
-        $translations         = [
-            'hostnameInvalidLocalName' => 'The input does not appear to be a valid local network name',
-        ];
-        $loader               = new ArrayTranslator();
-        $loader->translations = $translations;
-        $translator           = new Translator();
-        $translator->getPluginManager()->setService('default', $loader);
-        $translator->addTranslationFile('default', null);
-        $this->validator->setTranslator($translator);
-
-        $this->validator->isValid('0.239,512.777');
-        $messages = $this->validator->getMessages();
-        $found    = false;
-        foreach ($messages as $code => $message) {
-            if (array_key_exists($code, $translations)) {
-                $found = true;
-
-                break;
-            }
-        }
-
-        self::assertTrue($found);
-        self::assertSame($translations[$code], $message);
     }
 
     #[DataProvider('numberNamesDataProvider')]

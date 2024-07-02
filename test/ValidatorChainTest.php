@@ -39,7 +39,6 @@ final class ValidatorChainTest extends TestCase
     {
         parent::tearDown();
 
-        AbstractValidator::setDefaultTranslator(null);
         AbstractValidator::setMessageLength(-1);
     }
 

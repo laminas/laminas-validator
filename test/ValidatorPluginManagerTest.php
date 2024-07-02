@@ -7,17 +7,12 @@ namespace LaminasTest\Validator;
 use Exception;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\ServiceManager;
-use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\RuntimeException;
-use Laminas\Validator\NotEmpty;
-use Laminas\Validator\Translator\TranslatorInterface;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
 use Laminas\Validator\ValidatorPluginManagerAwareInterface;
 use LaminasTest\Validator\TestAsset\InMemoryContainer;
-use LaminasTest\Validator\TestAsset\Translator;
 use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerInterface;
 
 use function assert;
 use function is_scalar;
@@ -32,88 +27,6 @@ final class ValidatorPluginManagerTest extends TestCase
         parent::setUp();
 
         $this->validators = new ValidatorPluginManager(new ServiceManager());
-    }
-
-    public function testAllowsInjectingTranslator(): void
-    {
-        $translator = $this->createMock(Translator::class);
-
-        $container = $this->createMock(ContainerInterface::class);
-
-        $container
-            ->expects(self::once())
-            ->method('has')
-            ->with('MvcTranslator')
-            ->willReturn(true);
-
-        $container
-            ->expects(self::once())
-            ->method('get')
-            ->with('MvcTranslator')
-            ->willReturn($translator);
-
-        $validators = new ValidatorPluginManager($container);
-
-        $validator = $validators->get(NotEmpty::class);
-
-        self::assertInstanceOf(AbstractValidator::class, $validator);
-        self::assertEquals($translator, $validator->getTranslator());
-    }
-
-    public function testAllowsInjectingTranslatorInterface(): void
-    {
-        $translator = $this->createMock(Translator::class);
-
-        $container = $this->createMock(ContainerInterface::class);
-
-        $container
-            ->expects(self::exactly(2))
-            ->method('has')
-            ->willReturnMap(
-                [
-                    ['MvcTranslator', false],
-                    [\Laminas\I18n\Translator\TranslatorInterface::class, true],
-                ],
-            );
-
-        $container
-            ->expects(self::once())
-            ->method('get')
-            ->with(TranslatorInterface::class)
-            ->willReturn($translator);
-
-        $validators = new ValidatorPluginManager($container);
-
-        $validator = $validators->get(NotEmpty::class);
-
-        self::assertInstanceOf(AbstractValidator::class, $validator);
-        self::assertEquals($translator, $validator->getTranslator());
-    }
-
-    public function testNoTranslatorInjectedWhenTranslatorIsNotPresent(): void
-    {
-        $container = $this->createMock(ContainerInterface::class);
-
-        $container
-            ->expects(self::exactly(2))
-            ->method('has')
-            ->willReturnMap(
-                [
-                    ['MvcTranslator', false],
-                    [TranslatorInterface::class, false],
-                ],
-            );
-
-        $container
-            ->expects(self::never())
-            ->method('get');
-
-        $validators = new ValidatorPluginManager($container);
-
-        $validator = $validators->get(NotEmpty::class);
-
-        self::assertInstanceOf(AbstractValidator::class, $validator);
-        self::assertNull($validator->getTranslator());
     }
 
     public function testRegisteringInvalidValidatorRaisesException(): void

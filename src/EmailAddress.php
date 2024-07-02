@@ -436,20 +436,20 @@ final class EmailAddress extends AbstractValidator
      */
     protected function validateHostnamePart()
     {
-        $hostname = $this->getHostnameValidator()->setTranslator($this->getTranslator())
-                         ->isValid($this->hostname);
-        if (! $hostname) {
+        $hostname = $this->getHostnameValidator();
+        $isValid  = $hostname->isValid($this->hostname);
+        if (! $isValid) {
             $this->error(self::INVALID_HOSTNAME);
             // Get messages and errors from hostnameValidator
-            foreach ($this->getHostnameValidator()->getMessages() as $code => $message) {
+            foreach ($hostname->getMessages() as $code => $message) {
                 $this->abstractOptions['messages'][$code] = $message;
             }
         } elseif ($this->options['useMxCheck']) {
             // MX check on hostname
-            $hostname = $this->validateMXRecords();
+            $isValid = $this->validateMXRecords();
         }
 
-        return $hostname;
+        return $isValid;
     }
 
     /**

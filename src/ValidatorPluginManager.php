@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
-use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\Factory\InvokableFactory;
@@ -12,7 +11,6 @@ use Laminas\ServiceManager\ServiceManager;
 use Psr\Container\ContainerInterface;
 
 use function get_debug_type;
-use function method_exists;
 use function sprintf;
 
 /**
@@ -262,7 +260,6 @@ final class ValidatorPluginManager extends AbstractPluginManager
     {
         parent::__construct($configOrContainerInstance, $v3config);
 
-        $this->addInitializer([$this, 'injectTranslator']);
         $this->addInitializer([$this, 'injectValidatorPluginManager']);
     }
 
@@ -300,47 +297,6 @@ final class ValidatorPluginManager extends AbstractPluginManager
                 get_debug_type($plugin),
                 ValidatorInterface::class
             ), $e->getCode(), $e);
-        }
-    }
-
-    /**
-     * Inject a validator instance with the registered translator
-     *
-     * @param  ContainerInterface|object $first
-     * @param  ContainerInterface|object $second
-     * @return void
-     */
-    public function injectTranslator($first, $second)
-    {
-        if ($first instanceof ContainerInterface) {
-            $container = $first;
-            $validator = $second;
-        } else {
-            $container = $second;
-            $validator = $first;
-        }
-
-        if (! $validator instanceof Translator\TranslatorAwareInterface) {
-            return;
-        }
-
-        // V2 means we pull it from the parent container
-        if ($container === $this && method_exists($container, 'getServiceLocator') && $container->getServiceLocator()) {
-            $container = $container->getServiceLocator();
-        }
-
-        if (! $container instanceof ContainerInterface) {
-            return;
-        }
-
-        if ($container->has('MvcTranslator')) {
-            $validator->setTranslator($container->get('MvcTranslator'));
-
-            return;
-        }
-
-        if ($container->has(TranslatorInterface::class)) {
-            $validator->setTranslator($container->get(Translator\TranslatorInterface::class));
         }
     }
 
