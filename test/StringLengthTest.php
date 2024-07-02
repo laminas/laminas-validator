@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Laminas\Validator\Exception\RuntimeException;
 use Laminas\Validator\StringLength;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -82,7 +81,7 @@ final class StringLengthTest extends TestCase
         new StringLength(['min' => 10, 'max' => 5]);
     }
 
-    public function testAnExceptionIsThrownWhenStringLengthCannotBeDetected(): void
+    public function testMalformedMultiByteDataWillCauseValidationFailure(): void
     {
         /**
          * Malformed UTF-8 will likely trigger errors/warnings in `ext-intl` or `ext-mbstring`
@@ -94,13 +93,11 @@ final class StringLengthTest extends TestCase
         // phpcs:enable
 
         $malformed = chr(0xED) . chr(0xA0) . chr(0x80);
-        try {
-            (new StringLength())->isValid($malformed);
-            self::fail('No exception was thrown');
-        } catch (RuntimeException $error) {
-            self::assertSame('Failed to detect string length', $error->getMessage());
-        } finally {
-            restore_error_handler();
-        }
+
+        $validator = new StringLength();
+        self::assertFalse($validator->isValid($malformed));
+        self::assertArrayHasKey(StringLength::INVALID, $validator->getMessages());
+
+        restore_error_handler();
     }
 }
