@@ -254,15 +254,9 @@ final class MimeTypeTest extends TestCase
     #[Group('Laminas-10461')]
     public function testDisablingMagicFileByConstructor(): void
     {
-        $files = [
-            'name'      => 'picture.jpg',
-            'size'      => 200,
-            'tmp_name'  => __DIR__ . '/_files/picture.jpg',
-            'error'     => 0,
+        $validator = new MimeType([
             'magicFile' => false,
-        ];
-
-        $validator = new MimeType($files);
+        ]);
 
         self::assertFalse($validator->getMagicFile());
     }

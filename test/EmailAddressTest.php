@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator;
 
+use Generator;
 use Laminas\Validator\EmailAddress;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Hostname;
+use LaminasTest\Validator\TestAsset\Translator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\Group;
@@ -17,7 +19,6 @@ use function array_keys;
 use function checkdnsrr;
 use function count;
 use function current;
-use function extension_loaded;
 use function implode;
 use function next;
 use function preg_replace;
@@ -218,34 +219,31 @@ final class EmailAddressTest extends TestCase
     }
 
     /**
-     * @psalm-return array<string, array{0: string}>
+     * @psalm-return Generator<string, array{0: string}>
      */
-    public static function validEmailAddresses(): array
+    public static function validEmailAddresses(): Generator
     {
-        // @codingStandardsIgnoreStart
-        $return = [
-            'bob@domain.com'                                                          => ['bob@domain.com'],
-            'bob.jones@domain.co.uk'                                                  => ['bob.jones@domain.co.uk'],
-            'bob.jones.smythe@domain.co.uk'                                           => ['bob.jones.smythe@domain.co.uk'],
-            'BoB@domain.museum'                                                       => ['BoB@domain.museum'],
-            'bobjones@domain.info'                                                    => ['bobjones@domain.info'],
-            'bob+jones@domain.us'                                                     => ['bob+jones@domain.us'],
-            'bob+jones@domain.co.uk'                                                  => ['bob+jones@domain.co.uk'],
-            'bob@some.domain.uk.com'                                                  => ['bob@some.domain.uk.com'],
-            'bob@verylongdomainsupercalifragilisticexpialidociousspoonfulofsugar.com' => ['bob@verylongdomainsupercalifragilisticexpialidociousspoonfulofsugar.com'],
-            "B.O'Callaghan@domain.com"                                                => ["B.O'Callaghan@domain.com"],
+        $list = [
+            'bob@domain.com',
+            'bob.jones@domain.co.uk',
+            'bob.jones.smythe@domain.co.uk',
+            'BoB@domain.museum',
+            'bobjones@domain.info',
+            'bob+jones@domain.us',
+            'bob+jones@domain.co.uk',
+            'bob@some.domain.uk.com',
+            'bob@verylongdomainsupercalifragilisticexpialidociousspoonfulofsugar.com',
+            "B.O'Callaghan@domain.com",
+            'иван@письмо.рф',
+            'öäü@ä-umlaut.de',
+            'frédéric@domain.com',
+            'bob@тест.рф',
+            'bob@xn--e1aybc.xn--p1ai',
         ];
 
-        if (extension_loaded('intl')) {
-            $return['иван@письмо.рф']          = ['иван@письмо.рф'];
-            $return['öäü@ä-umlaut.de']         = ['öäü@ä-umlaut.de'];
-            $return['frédéric@domain.com']     = ['frédéric@domain.com'];
-            $return['bob@тест.рф']             = ['bob@тест.рф'];
-            $return['bob@xn--e1aybc.xn--p1ai'] = ['bob@xn--e1aybc.xn--p1ai'];
+        foreach ($list as $email) {
+            yield $email => [$email];
         }
-
-        return $return;
-        // @codingStandardsIgnoreEnd
     }
 
     /**
@@ -453,12 +451,8 @@ final class EmailAddressTest extends TestCase
     #[Group('Laminas-2861')]
     public function testHostnameValidatorMessagesShouldBeTranslated(): void
     {
-        if (! extension_loaded('intl')) {
-            self::markTestSkipped('ext/intl not enabled');
-        }
-
-        $hostnameValidator    = new Hostname();
-        $translations         = [
+        $hostnameValidator = new Hostname();
+        $translations      = [
             'hostnameIpAddressNotAllowed'   => 'hostnameIpAddressNotAllowed translation',
             'hostnameUnknownTld'            => 'The input appears to be a DNS hostname '
             . 'but cannot match TLD against known list',
@@ -469,13 +463,11 @@ final class EmailAddressTest extends TestCase
             'hostnameInvalidLocalName'      => 'hostnameInvalidLocalName translation',
             'hostnameLocalNameNotAllowed'   => 'hostnameLocalNameNotAllowed translation',
         ];
-        $loader               = new TestAsset\ArrayTranslator();
-        $loader->translations = $translations;
-        $translator           = new TestAsset\Translator();
-        $translator->getPluginManager()->setService('test', $loader);
-        $translator->addTranslationFile('test', null);
 
-        $this->validator->setTranslator($translator)->setHostnameValidator($hostnameValidator);
+        $translator = new Translator($translations);
+
+        $this->validator->setTranslator($translator);
+        $this->validator->setHostnameValidator($hostnameValidator);
 
         $this->validator->isValid('_XX.!!3xx@0.239,512.777');
         $messages = $hostnameValidator->getMessages();
@@ -760,12 +752,9 @@ final class EmailAddressTest extends TestCase
             'bob+jones@dailymail.co.uk',
             'bob@teaparty.uk.com',
             'bob@thelongestdomainnameintheworldandthensomeandthensomemoreandmore.com',
+            'test@кц.рф', // Registry for .рф-TLD
+            'test@xn--j1ay.xn--p1ai',
         ];
-
-        if (extension_loaded('intl')) {
-            $emailAddresses[] = 'test@кц.рф'; // Registry for .рф-TLD
-            $emailAddresses[] = 'test@xn--j1ay.xn--p1ai';
-        }
 
         foreach ($emailAddresses as $input) {
             self::assertTrue(
@@ -800,12 +789,9 @@ final class EmailAddressTest extends TestCase
             'bob@ domain.com',
             'bob @ domain.com',
             'Abc..123@example.com',
+            'иван@письмо.рф',
+            'xn--@-7sbfxdyelgv5j.xn--p1ai',
         ];
-
-        if (! extension_loaded('intl')) {
-            $emailAddresses[] = 'иван@письмо.рф';
-            $emailAddresses[] = 'xn--@-7sbfxdyelgv5j.xn--p1ai';
-        }
 
         foreach ($emailAddresses as $input) {
             self::assertFalse($validator->isValid($input), implode("\n", $this->validator->getMessages()) . $input);
