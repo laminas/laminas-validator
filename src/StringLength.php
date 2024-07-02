@@ -6,7 +6,6 @@ namespace Laminas\Validator;
 
 use Laminas\Stdlib\StringUtils;
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Laminas\Validator\Exception\RuntimeException;
 use Throwable;
 
 use function is_string;
@@ -82,20 +81,20 @@ final class StringLength extends AbstractValidator
             return false;
         }
 
-        $this->setValue($value);
-
-        $wrapper   = StringUtils::getWrapper($this->encoding);
-        $exception = null;
+        $wrapper = StringUtils::getWrapper($this->encoding);
         try {
             $length = $wrapper->strlen($value);
-        } catch (Throwable $exception) {
+        } catch (Throwable) {
             $length = false;
         }
 
         if ($length === false) {
-            throw new RuntimeException('Failed to detect string length', 0, $exception);
+            $this->error(self::INVALID);
+
+            return false;
         }
 
+        $this->setValue($value);
         $this->length = $length;
 
         if ($this->length < $this->min) {
