@@ -1183,11 +1183,6 @@
       <code><![CDATA[$value]]></code>
     </MoreSpecificImplementedParamType>
   </file>
-  <file src="src/StaticValidator.php">
-    <UndefinedMethod>
-      <code><![CDATA[setShareByDefault]]></code>
-    </UndefinedMethod>
-  </file>
   <file src="src/ValidatorChain.php">
     <MixedPropertyTypeCoercion>
       <code><![CDATA[new PriorityQueue()]]></code>
@@ -1833,12 +1828,6 @@
     <PossiblyInvalidCast>
       <code><![CDATA[$value]]></code>
     </PossiblyInvalidCast>
-  </file>
-  <file src="test/StaticValidatorTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[invalidParameterizedData]]></code>
-      <code><![CDATA[parameterizedData]]></code>
-    </PossiblyUnusedMethod>
   </file>
   <file src="test/StepTest.php">
     <PossiblyUnusedMethod>
