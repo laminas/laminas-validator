@@ -48,9 +48,9 @@ abstract class AbstractValidator implements
     /**
      * The value to be validated
      *
-     * @var mixed
+     * phpcs:disable WebimpressCodingStandard.Classes.NoNullValues
      */
-    protected $value;
+    protected mixed $value = null;
 
     /**
      * Default translation object for all validate objects
@@ -309,12 +309,8 @@ abstract class AbstractValidator implements
      *
      * If a translator is available and a translation exists for $messageKey,
      * the translation will be used.
-     *
-     * @param string              $messageKey
-     * @param string|array|object $value
-     * @return null|string
      */
-    protected function createMessage($messageKey, $value)
+    protected function createMessage(string $messageKey, mixed $value): ?string
     {
         if (! isset($this->abstractOptions['messageTemplates'][$messageKey])) {
             return null;
@@ -331,7 +327,6 @@ abstract class AbstractValidator implements
         } elseif (is_array($value)) {
             $value = var_export($value, true);
         } else {
-            /** @psalm-suppress RedundantCastGivenDocblockType $value */
             $value = (string) $value;
         }
 
@@ -362,13 +357,8 @@ abstract class AbstractValidator implements
 
     protected function error(string $messageKey, mixed $value = null): void
     {
-        if ($messageKey === null) {
-            $keys       = array_keys($this->abstractOptions['messageTemplates']);
-            $messageKey = current($keys);
-        }
-
         if ($value === null) {
-            /** @psalm-var string|array|object $value */
+            /** @psalm-var mixed $value */
             $value = $this->value;
         }
 
