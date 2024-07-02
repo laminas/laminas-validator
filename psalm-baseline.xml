@@ -3166,6 +3166,17 @@
       <code><![CDATA[Between::class]]></code>
       <code><![CDATA[Between::class]]></code>
       <code><![CDATA[Between::class]]></code>
+      <code><![CDATA[StaticValidator::execute($value, $validator, $options)]]></code>
+      <code><![CDATA[StaticValidator::execute($value, $validator, $options)]]></code>
+      <code><![CDATA[StaticValidator::execute('1234', 'UnknownValidator')]]></code>
+      <code><![CDATA[StaticValidator::getPluginManager()]]></code>
+      <code><![CDATA[StaticValidator::getPluginManager()]]></code>
+      <code><![CDATA[StaticValidator::getPluginManager()]]></code>
+      <code><![CDATA[StaticValidator::getPluginManager()]]></code>
+      <code><![CDATA[StaticValidator::setPluginManager($plugins)]]></code>
+      <code><![CDATA[StaticValidator::setPluginManager($plugins)]]></code>
+      <code><![CDATA[StaticValidator::setPluginManager(null)]]></code>
+      <code><![CDATA[StaticValidator::setPluginManager(null)]]></code>
       <code><![CDATA[new Between(1, 10)]]></code>
     </DeprecatedClass>
     <InvalidArgument>
