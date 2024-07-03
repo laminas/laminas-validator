@@ -21,17 +21,14 @@ the token, as demonstrated in the following example:
 token.
 
 ```php
-$valid = new Laminas\Validator\Identical('origin');
+$validator = new Laminas\Validator\Identical(['token' => 'donkey');
 
-if ($valid->isValid($value)) {
-    return true;
-}
+$validator->isValid('donkey'); // true
+$validator->isValid('goat'); // false
 ```
 
 The validation will only then return `true` when both values are 100% identical.
-In our example, when `$value` is `'origin'`.
-
-You can set the token after instantiation by using the method `setToken()`.
+In our example, when `$value` is `'donkey'`.
 
 ## Identical objects
 
@@ -40,9 +37,9 @@ type, such as booleans, integers, floats, arrays, or even objects. As already
 noted, the token and value must be identical.
 
 ```php
-$valid = new Laminas\Validator\Identical(123);
+$validator = new Laminas\Validator\Identical(['token' => 123]);
 
-if ($valid->isValid($input)) {
+if ($validator->isValid($input)) {
     // input appears to be valid
 } else {
     // input is invalid
@@ -63,14 +60,14 @@ done by using the element's name as the `token`:
 ```php
 $form->add([
     'name' => 'elementOne',
-    'type' => 'Password',
+    'type' => Laminas\Form\Element\Password::class,
 ]);
 $form->add([
     'name'       => 'elementTwo',
-    'type'       => 'Password',
+    'type'       => Laminas\Form\Element\Password::class,
     'validators' => [
         [
-            'name'    => 'Identical',
+            'name'    => Laminas\Validator\Identical::class,
             'options' => [
                 'token' => 'elementOne',
             ],
@@ -99,7 +96,7 @@ use Laminas\InputFilter\InputFilter;
 $userFieldset = new Fieldset('user'); // (1)
 $userFieldset->add([
     'name' => 'email', // (2)
-    'type' => 'Email',
+    'type' => Element\Email::class,
 ]);
 
 // Let's add one fieldset inside the 'user' fieldset,
@@ -107,7 +104,7 @@ $userFieldset->add([
 $deeperFieldset = new Fieldset('deeperFieldset'); // (3)
 $deeperFieldset->add([
     'name'    => 'deeperFieldsetInput', // (4)
-    'type'    => 'Text',
+    'type'    => Element\Text::class,
     'options' => [
         'label' => 'What validator are we testing?',
     ],
@@ -120,14 +117,14 @@ $signUpForm->add($userFieldset);
 // Add an input that will validate the 'email' input from 'user' fieldset
 $signUpForm->add([
     'name' => 'confirmEmail', // (5)
-    'type' => 'Email',
+    'type' => Element\Email::class,
 ]);
 
 // Add an input that will validate the 'deeperFieldsetInput' from
 // 'deeperFieldset' that lives inside the 'user' fieldset
 $signUpForm->add([
     'name' => 'confirmTestingValidator', // (6)
-    'type' => 'Text',
+    'type' => Element\Text::class,
 ]);
 
 // This will ensure the user enter the same email in 'email' (2) and
@@ -137,7 +134,7 @@ $inputFilter->add([
     'name' => 'confirmEmail', // references (5)
     'validators' => [
         [
-            'name' => 'Identical',
+            'name' => Laminas\Validator\Identical::class,
             'options' => [
                 // 'user' key references 'user' fieldset (1), and 'email'
                 // references 'email' element inside 'user' fieldset (2)
@@ -153,7 +150,7 @@ $inputFilter->add([
     'name' => 'confirmTestingValidator', // references (6)
     'validators' => [
         [
-            'name' => 'Identical',
+            'name' => Laminas\Validator\Identical::class,
             'options' => [
                 'token' => [
                     'user' => [ // references 'user' fieldset (1)
@@ -173,7 +170,7 @@ $signUpForm->setInputFilter($inputFilter);
 
 > #### Use one token per leaf
 >
-> Aways make sure that your token array have just one key per level all the way
+> Always make sure that your token array has just one key per level all the way
 > till the leaf, otherwise you can end up with unexpected results.
 
 ## Strict validation
@@ -193,47 +190,5 @@ if ($valid->isValid($input)) {
 ```
 
 The difference to the previous example is that the validation returns in this
-case `true`, even if you compare a integer with string value as long as the
+case `true`, even if you compare an integer with string value as long as the
 content is identical but not the type.
-
-For convenience you can also use `setStrict()` and `getStrict()`.
-
-## Configuration
-
-As all other validators, `Laminas\Validator\Identical` also supports the usage of
-configuration settings during instantiation. This means that you can configure
-this validator with a `Traversable` object.
-
-There is a case which you should be aware of. If you are using an array as
-token, and it contains a `token` key, you should wrap it within another
-`token` key. See the examples below to understand this situation.
-
-```php
-// This will not validate ['token' => 123], it will actually validate the
-// integer 123
-$valid = new Laminas\Validator\Identical(['token' => 123]);
-if ($valid->isValid($input)) {
-    // input appears to be valid
-} else {
-    // input is invalid
-}
-```
-
-The reason for this special case is that you can configure the token which has
-to be used by giving the `token` key.
-
-So, when you are using an array as the token, and it contains one element with a
-`token` key, then you have to wrap it as shown in the example below:
-
-```php
-// Unlike the previous example, this will validate ['token' => 123]
-$valid = new Laminas\Validator\Identical(['token' => ['token' => 123]]);
-if ($valid->isValid($input)) {
-    // input appears to be valid
-} else {
-    // input is invalid
-}
-```
-
-If the array you are willing to validate does not have a `token` key, you do not
-need to wrap it.
