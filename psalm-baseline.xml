@@ -40,6 +40,9 @@
     <MixedPropertyTypeCoercion>
       <code><![CDATA[$this->abstractOptions]]></code>
     </MixedPropertyTypeCoercion>
+    <PossiblyUnusedMethod>
+      <code><![CDATA[getOptions]]></code>
+    </PossiblyUnusedMethod>
     <PossiblyUnusedParam>
       <code><![CDATA[$messageKey]]></code>
     </PossiblyUnusedParam>
@@ -172,72 +175,15 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/EmailAddress.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA['']]></code>
-      <code><![CDATA[is_string($value)]]></code>
-    </DocblockTypeContradiction>
     <LessSpecificImplementedReturnType>
       <code><![CDATA[AbstractValidator]]></code>
     </LessSpecificImplementedReturnType>
-    <MixedArgument>
-      <code><![CDATA[$this->getValue()]]></code>
-    </MixedArgument>
     <MixedArrayAssignment>
       <code><![CDATA[$this->abstractOptions['messages'][$code]]]></code>
     </MixedArrayAssignment>
-    <MixedAssignment>
-      <code><![CDATA[$temp['allow']]]></code>
-      <code><![CDATA[$temp['hostnameValidator']]]></code>
-      <code><![CDATA[$temp['useMxCheck']]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[Hostname]]></code>
-      <code><![CDATA[bool]]></code>
-      <code><![CDATA[bool]]></code>
-      <code><![CDATA[bool]]></code>
-      <code><![CDATA[int-mask-of<Hostname::ALLOW_*>]]></code>
-    </MixedInferredReturnType>
-    <MixedMethodCall>
-      <code><![CDATA[setAllow]]></code>
-    </MixedMethodCall>
     <MixedPropertyTypeCoercion>
       <code><![CDATA[$this->abstractOptions]]></code>
     </MixedPropertyTypeCoercion>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->options['allow']]]></code>
-      <code><![CDATA[$this->options['hostnameValidator']]]></code>
-      <code><![CDATA[$this->options['hostnameValidator']]]></code>
-      <code><![CDATA[$this->options['useDeepMxCheck']]]></code>
-      <code><![CDATA[$this->options['useDomainCheck']]]></code>
-      <code><![CDATA[$this->options['useMxCheck']]]></code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$temp]]></code>
-    </PossiblyUndefinedVariable>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[idnToUtf8]]></code>
-      <code><![CDATA[setAllow]]></code>
-      <code><![CDATA[useDeepMxCheck]]></code>
-    </PossiblyUnusedMethod>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$hostname]]></code>
-      <code><![CDATA[$localPart]]></code>
-    </PropertyNotSetInConstructor>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(bool) $deep]]></code>
-      <code><![CDATA[(bool) $domain]]></code>
-      <code><![CDATA[(bool) $mx]]></code>
-    </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[array_combine($mxHosts, $weight)]]></code>
-      <code><![CDATA[is_string($value)]]></code>
-    </RedundantConditionGivenDocblockType>
     <TypeDoesNotContainType>
       <code><![CDATA[false === UConverter::transcode($localPart, 'UTF-8', 'UTF-8')]]></code>
     </TypeDoesNotContainType>
@@ -1159,32 +1105,26 @@
   </file>
   <file src="test/EmailAddressTest.php">
     <InvalidArgument>
-      <code><![CDATA[Hostname::ALLOW_ALL]]></code>
-      <code><![CDATA[Hostname::ALLOW_ALL]]></code>
-      <code><![CDATA[Hostname::ALLOW_ALL]]></code>
-      <code><![CDATA[Hostname::ALLOW_DNS | Hostname::ALLOW_IP]]></code>
-      <code><![CDATA[[$this, 'errorHandler']]]></code>
-      <code><![CDATA[[1 => 1]]]></code>
+      <code><![CDATA[[
+            'hostnameValidator' => $hostnameValidator,
+            'translator'        => new Translator($translations),
+        ]]]></code>
+      <code><![CDATA[[
+            'message'           => 'TestMessage',
+            'hostnameValidator' => $hostname,
+        ]]]></code>
+      <code><![CDATA[['messages' => [EmailAddress::INVALID => 'TestMessage']]]]></code>
     </InvalidArgument>
-    <InvalidCast>
-      <code><![CDATA[[1 => 1]]]></code>
-    </InvalidCast>
     <PossiblyUnusedMethod>
       <code><![CDATA[emailAddressesForMxChecks]]></code>
       <code><![CDATA[errorHandler]]></code>
       <code><![CDATA[invalidEmailAddresses]]></code>
       <code><![CDATA[validEmailAddresses]]></code>
     </PossiblyUnusedMethod>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[assertIsArray]]></code>
-    </RedundantConditionGivenDocblockType>
     <UnusedParam>
       <code><![CDATA[$errno]]></code>
       <code><![CDATA[$errstr]]></code>
     </UnusedParam>
-    <UnusedPsalmSuppress>
-      <code><![CDATA[TooManyArguments]]></code>
-    </UnusedPsalmSuppress>
   </file>
   <file src="test/File/CountTest.php">
     <MixedArgument>
