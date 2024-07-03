@@ -6,26 +6,44 @@ namespace LaminasTest\Validator;
 
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\ServiceManager\Test\CommonPluginManagerTrait;
+use Laminas\Validator\Barcode;
 use Laminas\Validator\Bitwise;
 use Laminas\Validator\Callback;
 use Laminas\Validator\DateComparison;
 use Laminas\Validator\Exception\RuntimeException;
 use Laminas\Validator\Explode;
+use Laminas\Validator\File\ExcludeExtension;
+use Laminas\Validator\File\Extension;
+use Laminas\Validator\File\FilesSize;
 use Laminas\Validator\IsInstanceOf;
 use Laminas\Validator\NumberComparison;
+use Laminas\Validator\Regex;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 
 use function assert;
+use function in_array;
 use function is_string;
-use function method_exists;
-use function strpos;
 
 final class ValidatorPluginManagerCompatibilityTest extends TestCase
 {
     use CommonPluginManagerTrait;
+
+    private const SKIP_VALIDATORS = [
+        Barcode::class,
+        ExcludeExtension::class,
+        Extension::class,
+        FilesSize::class,
+        Regex::class,
+        Bitwise::class,
+        Explode::class,
+        Callback::class,
+        DateComparison::class,
+        NumberComparison::class,
+        IsInstanceOf::class,
+    ];
 
     protected static function getPluginManager(): ValidatorPluginManager
     {
@@ -45,9 +63,8 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
     /** @return array<string, array{0: string, 1: string}> */
     public static function aliasProvider(): array
     {
-        $out               = [];
-        $pluginManager     = self::getPluginManager();
-        $isV2PluginManager = method_exists($pluginManager, 'validatePlugin');
+        $out           = [];
+        $pluginManager = self::getPluginManager();
 
         $r       = new ReflectionProperty($pluginManager, 'aliases');
         $aliases = $r->getValue($pluginManager);
@@ -58,72 +75,7 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
             assert(is_string($alias));
 
             // Skipping due to required options
-            if (strpos($target, '\\Barcode') !== false) {
-                continue;
-            }
-
-            // Skipping due to required options
-            if (strpos($target, '\\Between') !== false) {
-                continue;
-            }
-
-            // Skipping on v2 releases of service manager
-            if ($isV2PluginManager && strpos($target, '\\BusinessIdentifierCode') !== false) {
-                continue;
-            }
-
-            // Skipping due to required options
-            if (strpos($target, '\\Db\\') !== false) {
-                continue;
-            }
-
-            // Skipping due to required options
-            if (strpos($target, '\\File\\ExcludeExtension') !== false) {
-                continue;
-            }
-
-            // Skipping due to required options
-            if (strpos($target, '\\File\\Extension') !== false) {
-                continue;
-            }
-
-            // Skipping due to required options
-            if (strpos($target, '\\File\\FilesSize') !== false) {
-                continue;
-            }
-
-            // Skipping due to required options
-            if (strpos($target, '\\Regex') !== false) {
-                continue;
-            }
-
-            // Skipping due to required options
-            if ($target === Bitwise::class) {
-                continue;
-            }
-
-            // Skipping due to required options
-            if ($target === Explode::class) {
-                continue;
-            }
-
-            // Skipping due to required options
-            if ($target === Callback::class) {
-                continue;
-            }
-
-            // Skipping due to required options
-            if ($target === DateComparison::class) {
-                continue;
-            }
-
-            // Skipping due to required options
-            if ($target === NumberComparison::class) {
-                continue;
-            }
-
-            // Skipping due to required options
-            if ($target === IsInstanceOf::class) {
+            if (in_array($target, self::SKIP_VALIDATORS, true)) {
                 continue;
             }
 
