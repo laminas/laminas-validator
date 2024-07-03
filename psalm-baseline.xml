@@ -1751,6 +1751,16 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Identical.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getLiteral]]></code>
+      <code><![CDATA[getStrict]]></code>
+      <code><![CDATA[getToken]]></code>
+      <code><![CDATA[getToken]]></code>
+      <code><![CDATA[setLiteral]]></code>
+      <code><![CDATA[setStrict]]></code>
+      <code><![CDATA[setToken]]></code>
+      <code><![CDATA[setToken]]></code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$token['literal']]]></code>
       <code><![CDATA[$token['strict']]]></code>
@@ -2995,6 +3005,27 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/IdenticalTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getLiteral]]></code>
+      <code><![CDATA[getToken]]></code>
+      <code><![CDATA[getToken]]></code>
+      <code><![CDATA[getToken]]></code>
+      <code><![CDATA[setLiteral]]></code>
+      <code><![CDATA[setLiteral]]></code>
+      <code><![CDATA[setLiteral]]></code>
+      <code><![CDATA[setLiteral]]></code>
+      <code><![CDATA[setStrict]]></code>
+      <code><![CDATA[setToken]]></code>
+      <code><![CDATA[setToken]]></code>
+      <code><![CDATA[setToken]]></code>
+      <code><![CDATA[setToken]]></code>
+      <code><![CDATA[setToken]]></code>
+      <code><![CDATA[setToken]]></code>
+      <code><![CDATA[setToken]]></code>
+      <code><![CDATA[setToken]]></code>
+      <code><![CDATA[setToken]]></code>
+      <code><![CDATA[setToken]]></code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$context]]></code>
     </MixedArgument>
