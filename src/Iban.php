@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
-use Laminas\Stdlib\ArrayUtils;
-use Traversable;
+use Laminas\Validator\Exception\InvalidArgumentException;
 
 use function array_key_exists;
 use function in_array;
@@ -19,6 +18,11 @@ use function substr;
 
 /**
  * Validates IBAN Numbers (International Bank Account Numbers)
+ *
+ * @psalm-type OptionsArgument = array{
+ *     country_code?: string,
+ *     allow_non_sepa?: bool,
+ * }
  */
 final class Iban extends AbstractValidator
 {
@@ -41,17 +45,13 @@ final class Iban extends AbstractValidator
 
     /**
      * Optional country code by ISO 3166-1
-     *
-     * @var string|null
      */
-    protected $countryCode;
+    private readonly ?string $countryCode;
 
     /**
      * Optionally allow IBAN codes from non-SEPA countries. Defaults to true
-     *
-     * @var bool
      */
-    protected $allowNonSepa = true;
+    private readonly bool $allowNonSepa;
 
     /**
      * SEPA ISO 3166-1country codes
@@ -168,81 +168,22 @@ final class Iban extends AbstractValidator
         'VG' => 'VG[0-9]{2}[A-Z]{4}[0-9]{16}',
     ];
 
-    /**
-     * Sets validator options
-     *
-     * @param  array|Traversable $options OPTIONAL
-     */
-    public function __construct($options = [])
+    /** @param OptionsArgument $options */
+    public function __construct(array $options = [])
     {
-        if ($options instanceof Traversable) {
-            $options = ArrayUtils::iteratorToArray($options);
+        $countryCode = $options['country_code'] ?? null;
+        if ($countryCode !== null && ! isset(self::IBAN_REGEX[$countryCode])) {
+            throw new InvalidArgumentException(
+                "Country code '{$countryCode}' invalid by ISO 3166-1 or not supported"
+            );
         }
 
-        if (array_key_exists('country_code', $options)) {
-            $this->setCountryCode($options['country_code']);
-        }
+        $this->countryCode  = $countryCode;
+        $this->allowNonSepa = $options['allow_non_sepa'] ?? true;
 
-        if (array_key_exists('allow_non_sepa', $options)) {
-            $this->setAllowNonSepa($options['allow_non_sepa']);
-        }
+        unset($options['country_code'], $options['allow_non_sepa']);
 
         parent::__construct($options);
-    }
-
-    /**
-     * Returns the optional country code by ISO 3166-1
-     *
-     * @return string|null
-     */
-    public function getCountryCode()
-    {
-        return $this->countryCode;
-    }
-
-    /**
-     * Sets an optional country code by ISO 3166-1
-     *
-     * @param  string|null $countryCode
-     * @return $this provides a fluent interface
-     * @throws Exception\InvalidArgumentException
-     */
-    public function setCountryCode($countryCode = null)
-    {
-        if ($countryCode !== null) {
-            $countryCode = (string) $countryCode;
-
-            if (! isset(self::IBAN_REGEX[$countryCode])) {
-                throw new Exception\InvalidArgumentException(
-                    "Country code '{$countryCode}' invalid by ISO 3166-1 or not supported"
-                );
-            }
-        }
-
-        $this->countryCode = $countryCode;
-        return $this;
-    }
-
-    /**
-     * Returns the optional allow non-sepa countries setting
-     *
-     * @return bool
-     */
-    public function allowNonSepa()
-    {
-        return $this->allowNonSepa;
-    }
-
-    /**
-     * Sets the optional allow non-sepa countries setting
-     *
-     * @param  bool $allowNonSepa
-     * @return $this provides a fluent interface
-     */
-    public function setAllowNonSepa($allowNonSepa)
-    {
-        $this->allowNonSepa = (bool) $allowNonSepa;
-        return $this;
     }
 
     /**
@@ -258,7 +199,7 @@ final class Iban extends AbstractValidator
         $value = str_replace(' ', '', strtoupper($value));
         $this->setValue($value);
 
-        $countryCode = $this->getCountryCode();
+        $countryCode = $this->countryCode;
         if ($countryCode === null) {
             $countryCode = substr($value, 0, 2);
         }

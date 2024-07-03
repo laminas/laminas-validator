@@ -989,19 +989,6 @@
       <code><![CDATA[$regexChar]]></code>
     </MixedAssignment>
   </file>
-  <file src="src/Iban.php">
-    <MixedArgument>
-      <code><![CDATA[$options['allow_non_sepa']]]></code>
-      <code><![CDATA[$options['country_code']]]></code>
-    </MixedArgument>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(bool) $allowNonSepa]]></code>
-      <code><![CDATA[(string) $countryCode]]></code>
-    </RedundantCastGivenDocblockType>
-  </file>
   <file src="src/IsJsonString.php">
     <InvalidArgument>
       <code><![CDATA[$this->maxDepth]]></code>

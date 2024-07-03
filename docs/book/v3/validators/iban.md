@@ -9,6 +9,7 @@ The following options are supported for `Laminas\Validator\Iban`:
 
 - `country_code`: Sets the country code which is used to get the IBAN format
   for validation.
+- `allow_non_sepa`: A boolean that limits allowable account numbers to SEPA countries when `false`
 
 ## IBAN validation
 
@@ -19,13 +20,12 @@ to use `Laminas\Validator\Iban`.
 
 ### Ungreedy IBAN validation
 
-Sometime it is useful just to validate if the given value is a IBAN number or
+Sometimes it is useful just to validate if the given value is a IBAN number or
 not. This means that you don't want to validate it against a defined country.
-This can be done by using `false` as locale.
+This can be done by omitting the `country_code` option.
 
 ```php
-$validator = new Laminas\Validator\Iban(['country_code' => false]);
-// Note: you can also provide FALSE as the sole parameter
+$validator = new Laminas\Validator\Iban();
 
 if ($validator->isValid('AT611904300234573201')) {
     // IBAN appears to be valid
@@ -40,9 +40,8 @@ country!
 
 ### Region aware IBAN validation
 
-To validate against a defined country, you just provide a country code. You can
-do this during instaniation via the option `country_code`, or afterwards by
-using `setCountryCode()`.
+To validate against a defined country, you must provide a country code. You can
+do this during instantiation via the option `country_code`.
 
 ```php
 $validator = new Laminas\Validator\Iban(['country_code' => 'AT']);
@@ -52,4 +51,16 @@ if ($validator->isValid('AT611904300234573201')) {
 } else {
     // IBAN is not valid
 }
+```
+
+### Restrict to SEPA Countries
+
+To only accept bank accounts from within the Single Euro Payments Area (SEPA), you can set the option `allow_non_sepa` to `false`:
+
+```php
+$validator = new Laminas\Validator\Iban(['allow_non_sepa' => false]);
+
+$validator->isValid('AT611904300234573201'); // true
+$validator->isValid('BA391290079401028494'); // false
+
 ```
