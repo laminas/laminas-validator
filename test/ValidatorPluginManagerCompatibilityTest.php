@@ -15,6 +15,7 @@ use Laminas\Validator\Explode;
 use Laminas\Validator\File\ExcludeExtension;
 use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\FilesSize;
+use Laminas\Validator\InArray;
 use Laminas\Validator\IsInstanceOf;
 use Laminas\Validator\NumberComparison;
 use Laminas\Validator\Regex;
@@ -44,6 +45,7 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
         DateComparison::class,
         NumberComparison::class,
         IsInstanceOf::class,
+        InArray::class,
     ];
 
     /**

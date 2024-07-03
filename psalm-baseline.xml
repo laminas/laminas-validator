@@ -49,7 +49,6 @@
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
     </UndefinedThisPropertyAssignment>
   </file>
   <file src="src/Barcode/Code128.php">
@@ -1026,29 +1025,6 @@
     <RedundantCastGivenDocblockType>
       <code><![CDATA[(bool) $literal]]></code>
       <code><![CDATA[(bool) $strict]]></code>
-    </RedundantCastGivenDocblockType>
-  </file>
-  <file src="src/InArray.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[$this->haystack === null]]></code>
-    </DocblockTypeContradiction>
-    <MixedArgument>
-      <code><![CDATA[$haystack]]></code>
-      <code><![CDATA[$haystack]]></code>
-      <code><![CDATA[$haystack]]></code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code><![CDATA[$el]]></code>
-      <code><![CDATA[$element]]></code>
-      <code><![CDATA[$h]]></code>
-      <code><![CDATA[$haystack]]></code>
-      <code><![CDATA[$this->haystack]]></code>
-    </MixedAssignment>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$haystack]]></code>
-    </PropertyNotSetInConstructor>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(bool) $recursive]]></code>
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/IsJsonString.php">

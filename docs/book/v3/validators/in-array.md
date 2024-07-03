@@ -53,21 +53,6 @@ needle and haystack.
 > By default, this validation is not strict, nor can it validate
 > multidimensional arrays.
 
-Alternately, you can define the array to validate against after object
-construction by using the `setHaystack()` method. `getHaystack()` returns the
-actual set haystack array.
-
-```php
-$validator = new Laminas\Validator\InArray();
-$validator->setHaystack(['value1', 'value2',...'valueN']);
-
-if ($validator->isValid('value')) {
-    // value found
-} else {
-    // no value found
-}
-```
-
 ## Array validation modes
 
 As previously mentioned, there are possible security issues when using the
@@ -75,8 +60,8 @@ default non-strict comparison mode, so rather than restricting the developer,
 we've chosen to offer both strict and non-strict comparisons, and add a safer
 middle-ground.
 
-It's possible to set the strict mode at initialisation and afterwards with the
-`setStrict` method. `InArray::COMPARE_STRICT` equates to `true` and
+It's possible to set the strict mode at initialisation with the
+`strict` option. `InArray::COMPARE_STRICT` equates to `true` and
 `InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY` equates to
 `false`.
 
@@ -95,14 +80,8 @@ $validator = new Laminas\Validator\InArray([
 // set non-strict mode
 $validator = new Laminas\Validator\InArray([
     'haystack' => ['value1', 'value2', /* ... */ 'valueN'],
-    'strict'   => InArray:COMPARE_NOT_STRICT,  // equates to ``false``
+    'strict'   => InArray::COMPARE_NOT_STRICT,  // equates to ``false``
 ]);
-
-// or
-
-$validator->setStrict(InArray::COMPARE_STRICT);
-$validator->setStrict(InArray::COMPARE_NOT_STRICT);
-$validator->setStrict(InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY);
 ```
 
 > ### Non-strict safe-mode by default
@@ -133,29 +112,8 @@ if ($validator->isValid('value')) {
 ```
 
 Your array will then be validated recursively to see if the given value is
-contained. Additionally you could use `setRecursive()` to set this option
-afterwards and `getRecursive()` to retrieve it.
-
-```php
-$validator = new Laminas\Validator\InArray([
-    'firstDimension' => ['value1', 'value2', /* ... */ 'valueN'],
-    'secondDimension' => ['foo1', 'foo2', /* ... */ 'fooN'],
-]);
-
-$validator->setRecursive(true);
-
-if ($validator->isValid('value')) {
-    // value found
-} else {
-    // no value found
-}
-```
+contained.
 
 > ### Default setting for recursion
 >
-> By default, the recursive validation is turned off.
-
-> ### Option keys within the haystack
->
-> When you are using the keys `haystack`, `strict`, or `recursive` within
-> your haystack, then you must wrap the `haystack` key.
+> By default, recursive validation is turned off.
