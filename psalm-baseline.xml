@@ -1776,6 +1776,10 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/InArray.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getHaystack]]></code>
+      <code><![CDATA[getRecursive]]></code>
+    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA[$this->haystack === null]]></code>
     </DocblockTypeContradiction>
@@ -2597,6 +2601,7 @@
   </file>
   <file src="test/ExplodeTest.php">
     <DeprecatedMethod>
+      <code><![CDATA[getHaystack]]></code>
       <code><![CDATA[getValidator]]></code>
       <code><![CDATA[setValidator]]></code>
       <code><![CDATA[setValidator]]></code>
@@ -2998,6 +3003,50 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/InArrayTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getHaystack]]></code>
+      <code><![CDATA[getHaystack]]></code>
+      <code><![CDATA[getHaystack]]></code>
+      <code><![CDATA[getRecursive]]></code>
+      <code><![CDATA[getRecursive]]></code>
+      <code><![CDATA[getRecursive]]></code>
+      <code><![CDATA[getStrict]]></code>
+      <code><![CDATA[getStrict]]></code>
+      <code><![CDATA[getStrict]]></code>
+      <code><![CDATA[getStrict]]></code>
+      <code><![CDATA[getStrict]]></code>
+      <code><![CDATA[getStrict]]></code>
+      <code><![CDATA[getStrict]]></code>
+      <code><![CDATA[getStrict]]></code>
+      <code><![CDATA[getStrict]]></code>
+      <code><![CDATA[getStrict]]></code>
+      <code><![CDATA[getStrict]]></code>
+      <code><![CDATA[setHaystack]]></code>
+      <code><![CDATA[setRecursive]]></code>
+      <code><![CDATA[setRecursive]]></code>
+      <code><![CDATA[setRecursive]]></code>
+      <code><![CDATA[setRecursive]]></code>
+      <code><![CDATA[setRecursive]]></code>
+      <code><![CDATA[setStrict]]></code>
+      <code><![CDATA[setStrict]]></code>
+      <code><![CDATA[setStrict]]></code>
+      <code><![CDATA[setStrict]]></code>
+      <code><![CDATA[setStrict]]></code>
+      <code><![CDATA[setStrict]]></code>
+      <code><![CDATA[setStrict]]></code>
+      <code><![CDATA[setStrict]]></code>
+      <code><![CDATA[setStrict]]></code>
+      <code><![CDATA[setStrict]]></code>
+      <code><![CDATA[setStrict]]></code>
+      <code><![CDATA[setStrict]]></code>
+      <code><![CDATA[setStrict]]></code>
+      <code><![CDATA[setStrict]]></code>
+      <code><![CDATA[setStrict]]></code>
+      <code><![CDATA[setStrict]]></code>
+      <code><![CDATA[setStrict]]></code>
+      <code><![CDATA[setStrict]]></code>
+      <code><![CDATA[setStrict]]></code>
+    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[nonStrictValidationSet]]></code>
       <code><![CDATA[strictValidationSet]]></code>

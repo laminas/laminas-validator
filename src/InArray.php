@@ -67,6 +67,8 @@ class InArray extends AbstractValidator
     /**
      * Returns the haystack option
      *
+     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
+     *
      * @return mixed
      * @throws Exception\RuntimeException If haystack option is not set.
      */
@@ -81,7 +83,9 @@ class InArray extends AbstractValidator
     /**
      * Sets the haystack option
      *
-     * @param  mixed $haystack
+     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
+     *
+     * @param mixed $haystack
      * @return $this Provides a fluent interface
      */
     public function setHaystack(array $haystack)
@@ -92,6 +96,8 @@ class InArray extends AbstractValidator
 
     /**
      * Returns the strict option
+     *
+     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
      *
      * @return bool|int
      */
@@ -113,7 +119,9 @@ class InArray extends AbstractValidator
      * InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY
      * InArray::COMPARE_NOT_STRICT
      *
-     * @param  int|bool $strict
+     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
+     *
+     * @param int|bool $strict
      * @return $this Provides a fluent interface
      * @throws Exception\InvalidArgumentException
      */
@@ -141,6 +149,8 @@ class InArray extends AbstractValidator
     /**
      * Returns the recursive option
      *
+     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
+     *
      * @return bool
      */
     public function getRecursive()
@@ -151,7 +161,9 @@ class InArray extends AbstractValidator
     /**
      * Sets the recursive option
      *
-     * @param  bool $recursive
+     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
+     *
+     * @param bool $recursive
      * @return $this Provides a fluent interface
      */
     public function setRecursive($recursive)
