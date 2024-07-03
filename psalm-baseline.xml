@@ -1837,6 +1837,15 @@
     </InvalidArgument>
   </file>
   <file src="src/Isbn.php">
+    <DeprecatedClass>
+      <code><![CDATA[new Isbn\Isbn10()]]></code>
+      <code><![CDATA[new Isbn\Isbn13()]]></code>
+    </DeprecatedClass>
+    <DeprecatedMethod>
+      <code><![CDATA[getSeparator]]></code>
+      <code><![CDATA[getSeparator]]></code>
+      <code><![CDATA[getType]]></code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$this->getValue()]]></code>
       <code><![CDATA[$this->getValue()]]></code>
@@ -3039,6 +3048,37 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/IsbnTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getSeparator]]></code>
+      <code><![CDATA[getSeparator]]></code>
+      <code><![CDATA[getSeparator]]></code>
+      <code><![CDATA[getSeparator]]></code>
+      <code><![CDATA[getSeparator]]></code>
+      <code><![CDATA[getSeparator]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[setSeparator]]></code>
+      <code><![CDATA[setSeparator]]></code>
+      <code><![CDATA[setSeparator]]></code>
+      <code><![CDATA[setSeparator]]></code>
+      <code><![CDATA[setSeparator]]></code>
+      <code><![CDATA[setSeparator]]></code>
+      <code><![CDATA[setSeparator]]></code>
+      <code><![CDATA[setSeparator]]></code>
+      <code><![CDATA[setSeparator]]></code>
+      <code><![CDATA[setSeparator]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicProvider]]></code>
     </PossiblyUnusedMethod>

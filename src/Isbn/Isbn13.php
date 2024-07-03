@@ -2,7 +2,11 @@
 
 namespace Laminas\Validator\Isbn;
 
-/** @final */
+/**
+ * @deprecated Since 2.61.0 - This class will be inlined in v3.0
+ *
+ * @final
+ */
 class Isbn13
 {
     /**
