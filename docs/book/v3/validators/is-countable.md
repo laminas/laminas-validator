@@ -1,9 +1,7 @@
 # IsCountable Validator
 
-- **Since 2.10.0**
-
 `Laminas\Validator\IsCountable` allows you to validate that a value can be counted
-(i.e., it's an array or implements `Countable`), and, optionally:
+(i.e., it's an array or an object that implements `Countable`), and, optionally:
 
 - the exact count of the value
 - the minimum count of the value
@@ -11,8 +9,7 @@
 
 Specifying either of the latter two is inconsistent with the first, and, as
 such, the validator does not allow setting both a count and a minimum or maximum
-value. You may, however specify both minimum and maximum values, in which case
-the validator operates similar to the [Between validator](between.md).
+value. You may, however specify both minimum and maximum values to ensure that the number of elements is between a given range.
 
 ## Supported options
 

@@ -49,6 +49,7 @@
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
+      <code><![CDATA[$this->options]]></code>
     </UndefinedThisPropertyAssignment>
   </file>
   <file src="src/Barcode/Code128.php">
@@ -1626,12 +1627,8 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/IsCountableTest.php">
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[conflictingOptionsProvider]]></code>
-      <code><![CDATA[conflictingSecondaryOptionsProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/IsJsonStringTest.php">
