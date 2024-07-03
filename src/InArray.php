@@ -4,15 +4,24 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Laminas\Validator\Exception\InvalidArgumentException;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 
 use function in_array;
+use function is_array;
 use function is_bool;
 use function is_float;
 use function is_int;
 use function is_string;
 
+/**
+ * @psalm-type OptionsArgument = array{
+ *     haystack: array,
+ *     strict?: bool|InArray::COMPARE_*,
+ *     recursive?: bool,
+ * }
+ */
 final class InArray extends AbstractValidator
 {
     public const NOT_IN_ARRAY = 'notInArray';
@@ -44,134 +53,59 @@ final class InArray extends AbstractValidator
     /**
      * Haystack of possible values
      *
-     * @var array
+     * @var array<array-key, mixed>
      */
-    protected $haystack;
+    private readonly array $haystack;
 
     /**
      * Type of strict check to be used. Due to "foo" == 0 === TRUE with in_array when strict = false,
      * an option has been added to prevent this. When $strict = 0/false, the most
      * secure non-strict check is implemented. if $strict = -1, the default in_array non-strict
      * behaviour is used
-     *
-     * @var int
      */
-    protected $strict = self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY;
+    private readonly int $strict;
 
     /**
      * Whether a recursive search should be done
-     *
-     * @var bool
      */
-    protected $recursive = false;
+    private readonly bool $recursive;
 
-    /**
-     * Returns the haystack option
-     *
-     * @return mixed
-     * @throws Exception\RuntimeException If haystack option is not set.
-     */
-    public function getHaystack()
+    /** @param OptionsArgument $options */
+    public function __construct(array $options)
     {
-        if ($this->haystack === null) {
-            throw new Exception\RuntimeException('haystack option is mandatory');
+        $haystack  = $options['haystack'] ?? null;
+        $strict    = $options['strict'] ?? self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY;
+        $recursive = $options['recursive'] ?? false;
+
+        unset($options['haystack'], $options['strict'], $options['recursive']);
+
+        if (! is_array($haystack)) {
+            throw new InvalidArgumentException('haystack option is mandatory and must be an array');
         }
-        return $this->haystack;
-    }
 
-    /**
-     * Sets the haystack option
-     *
-     * @param  mixed $haystack
-     * @return $this Provides a fluent interface
-     */
-    public function setHaystack(array $haystack)
-    {
-        $this->haystack = $haystack;
-        return $this;
-    }
-
-    /**
-     * Returns the strict option
-     *
-     * @return bool|int
-     */
-    public function getStrict()
-    {
-        // To keep BC with new strict modes
-        if (
-            $this->strict === self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY
-            || $this->strict === self::COMPARE_STRICT
-        ) {
-            return (bool) $this->strict;
-        }
-        return $this->strict;
-    }
-
-    /**
-     * Sets the strict option mode
-     * InArray::COMPARE_STRICT
-     * InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY
-     * InArray::COMPARE_NOT_STRICT
-     *
-     * @param  int|bool $strict
-     * @return $this Provides a fluent interface
-     * @throws Exception\InvalidArgumentException
-     */
-    public function setStrict($strict)
-    {
         if (is_bool($strict)) {
-            $strict = $strict ? self::COMPARE_STRICT : self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY;
+            $strict = $strict
+                ? self::COMPARE_STRICT
+                : self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY;
         }
 
-        $checkTypes = [
-            self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY, // 0
-            self::COMPARE_STRICT, // 1
-            self::COMPARE_NOT_STRICT, // -1
-        ];
+        $this->haystack  = $haystack;
+        $this->strict    = $strict;
+        $this->recursive = $recursive;
 
-        // validate strict value
-        if (! in_array($strict, $checkTypes)) {
-            throw new Exception\InvalidArgumentException('Strict option must be one of the COMPARE_ constants');
-        }
-
-        $this->strict = $strict;
-        return $this;
-    }
-
-    /**
-     * Returns the recursive option
-     *
-     * @return bool
-     */
-    public function getRecursive()
-    {
-        return $this->recursive;
-    }
-
-    /**
-     * Sets the recursive option
-     *
-     * @param  bool $recursive
-     * @return $this Provides a fluent interface
-     */
-    public function setRecursive($recursive)
-    {
-        $this->recursive = (bool) $recursive;
-        return $this;
+        parent::__construct($options);
     }
 
     /**
      * Returns true if and only if $value is contained in the haystack option. If the strict
      * option is true, then the type of $value is also checked.
      *
-     * @param mixed $value
      * See {@link http://php.net/manual/function.in-array.php#104501}
      */
     public function isValid(mixed $value): bool
     {
         // we create a copy of the haystack in case we need to modify it
-        $haystack = $this->getHaystack();
+        $haystack = $this->haystack;
 
         // if the input is a string or float, and vulnerability protection is on
         // we type cast the input to a string
@@ -184,8 +118,9 @@ final class InArray extends AbstractValidator
 
         $this->setValue($value);
 
-        if ($this->getRecursive()) {
+        if ($this->recursive) {
             $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($haystack));
+            /** @psalm-suppress MixedAssignment $element */
             foreach ($iterator as $element) {
                 if (self::COMPARE_STRICT === $this->strict) {
                     if ($element === $value) {
@@ -226,6 +161,7 @@ final class InArray extends AbstractValidator
             self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY === $this->strict
             && is_string($value)
         ) {
+            /** @psalm-suppress MixedAssignment */
             foreach ($haystack as &$h) {
                 if (is_int($h) || is_float($h)) {
                     $h = (string) $h;

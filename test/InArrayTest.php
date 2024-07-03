@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator;
 
-use Laminas\Validator\Exception\RuntimeException;
+use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\InArray;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
-
-use const PHP_MAJOR_VERSION;
 
 final class InArrayTest extends TestCase
 {
@@ -95,30 +92,13 @@ final class InArrayTest extends TestCase
         self::assertSame([], $this->validator->getMessages());
     }
 
-    /**
-     * Ensures that getHaystack() returns expected value
-     */
-    public function testGetHaystack(): void
-    {
-        self::assertSame([1, 2, 3], $this->validator->getHaystack());
-    }
-
     public function testUnsetHaystackRaisesException(): void
     {
-        $validator = new InArray();
-
-        $this->expectException(RuntimeException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('haystack option is mandatory');
 
-        $validator->getHaystack();
-    }
-
-    /**
-     * Ensures that getStrict() returns expected default value
-     */
-    public function testGetStrict(): void
-    {
-        self::assertFalse($this->validator->getStrict());
+        /** @psalm-suppress InvalidArgument */
+        new InArray([]);
     }
 
     public function testGivingOptionsAsArrayAtInitiation(): void
@@ -138,33 +118,6 @@ final class InArrayTest extends TestCase
         self::assertTrue($validator->isValid(2.3e0));
     }
 
-    public function testSettingANewHaystack(): void
-    {
-        $this->validator->setHaystack([1, 'a', 2.3]);
-
-        self::assertSame([1, 'a', 2.3], $this->validator->getHaystack());
-    }
-
-    #[Group('Laminas-337')]
-    public function testSettingNewStrictMode(): void
-    {
-        $validator = new InArray(
-            [
-                'haystack' => ['test', 0, 'A', 0.0],
-            ]
-        );
-
-        // test non-strict with vulnerability prevention (default choice)
-        $validator->setStrict(InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY);
-        self::assertFalse($validator->getStrict());
-
-        $validator->setStrict(InArray::COMPARE_STRICT);
-        self::assertTrue($validator->getStrict());
-
-        $validator->setStrict(InArray::COMPARE_NOT_STRICT);
-        self::assertSame(InArray::COMPARE_NOT_STRICT, $validator->getStrict());
-    }
-
     public function testNonStrictSafeComparisons(): void
     {
         $validator = new InArray(
@@ -173,7 +126,6 @@ final class InArrayTest extends TestCase
             ]
         );
 
-        self::assertFalse($validator->getStrict());
         self::assertFalse($validator->isValid('b'));
         self::assertFalse($validator->isValid('a'));
         self::assertTrue($validator->isValid('A'));
@@ -187,13 +139,9 @@ final class InArrayTest extends TestCase
         $validator = new InArray(
             [
                 'haystack' => ['test', 0, 'A', 1, 0.0],
+                'strict'   => InArray::COMPARE_STRICT,
             ]
         );
-
-        // bog standard strict compare
-        $validator->setStrict(InArray::COMPARE_STRICT);
-
-        self::assertTrue($validator->getStrict());
 
         self::assertTrue($validator->isValid('A'));
         self::assertTrue($validator->isValid(0));
@@ -208,13 +156,10 @@ final class InArrayTest extends TestCase
         $validator = new InArray(
             [
                 'haystack' => ['test', 0, 'A', 1, 0.0],
+                'strict'   => InArray::COMPARE_NOT_STRICT,
             ]
         );
 
-        // non-numeric strings converted to 0
-        $validator->setStrict(InArray::COMPARE_NOT_STRICT);
-
-        self::assertSame(InArray::COMPARE_NOT_STRICT, $validator->getStrict());
         self::assertTrue($validator->isValid('b'));
         self::assertTrue($validator->isValid('a'));
         self::assertTrue($validator->isValid('A'));
@@ -223,20 +168,16 @@ final class InArrayTest extends TestCase
         self::assertTrue($validator->isValid(0));
     }
 
-    public function testNonStrictSafeComparisonsRecurisve(): void
+    public function testNonStrictSafeComparisonsRecursive(): void
     {
-        $validator = new InArray(
-            [
-                'haystack' => [
-                    ['test', 0, 'A', 0.0],
-                    ['foo', 1, 'a', 'c'],
-                ],
-            ]
-        );
+        $validator = new InArray([
+            'haystack'  => [
+                ['test', 0, 'A', 0.0],
+                ['foo', 1, 'a', 'c'],
+            ],
+            'recursive' => true,
+        ]);
 
-        $validator->setRecursive(true);
-
-        self::assertFalse($validator->getStrict());
         self::assertFalse($validator->isValid('b'));
         self::assertTrue($validator->isValid('a'));
         self::assertTrue($validator->isValid('A'));
@@ -247,20 +188,15 @@ final class InArrayTest extends TestCase
 
     public function testStrictComparisonsRecursive(): void
     {
-        $validator = new InArray(
-            [
-                'haystack' => [
-                    ['test', 0, 'A', 0.0],
-                    ['foo', 1, 'a', 'c'],
-                ],
-            ]
-        );
+        $validator = new InArray([
+            'haystack'  => [
+                ['test', 0, 'A', 0.0],
+                ['foo', 1, 'a', 'c'],
+            ],
+            'strict'    => InArray::COMPARE_STRICT,
+            'recursive' => true,
+        ]);
 
-        // bog standard strict compare
-        $validator->setStrict(InArray::COMPARE_STRICT);
-        $validator->setRecursive(true);
-
-        self::assertTrue($validator->getStrict());
         self::assertFalse($validator->isValid('b'));
         self::assertTrue($validator->isValid('a'));
         self::assertTrue($validator->isValid('A'));
@@ -271,103 +207,116 @@ final class InArrayTest extends TestCase
 
     public function testNonStrictComparisonsRecursive(): void
     {
-        $validator = new InArray(
-            [
-                'haystack' => [
-                    ['test', 0, 'A', 0.0],
-                    ['foo', 1, 'a', 'c'],
-                ],
-            ]
-        );
+        $validator = new InArray([
+            'haystack'  => [
+                ['test', 0, 'A', 0.0],
+                ['foo', 1, 'a', 'c'],
+            ],
+            'strict'    => InArray::COMPARE_NOT_STRICT,
+            'recursive' => true,
+        ]);
 
-        // non-numeric strings converted to 0
-        $validator->setStrict(InArray::COMPARE_NOT_STRICT);
-        $validator->setRecursive(true);
-
-        $stringToNumericComparisonAssertion = PHP_MAJOR_VERSION < 8 ? 'assertTrue' : 'assertFalse';
-
-        self::assertSame(InArray::COMPARE_NOT_STRICT, $validator->getStrict());
-
-        $this->$stringToNumericComparisonAssertion($validator->isValid('b'));
-
+        self::assertFalse($validator->isValid('b'));
         self::assertTrue($validator->isValid('a'));
         self::assertTrue($validator->isValid('A'));
         self::assertTrue($validator->isValid('0'));
-
-        $this->$stringToNumericComparisonAssertion($validator->isValid('1a'));
-
+        self::assertFalse($validator->isValid('1a'));
         self::assertTrue($validator->isValid(0));
     }
 
     public function testIntegerInputAndStringInHaystack(): void
     {
-        $validator = new InArray(
-            [
-                'haystack' => ['test', 1, 2],
-            ]
-        );
+        $validator = new InArray([
+            'haystack' => ['test', 1, 2],
+            'strict'   => InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY,
+        ]);
 
-        $validator->setStrict(InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY);
         self::assertFalse($validator->isValid(0));
 
-        $validator->setStrict(InArray::COMPARE_NOT_STRICT);
+        $validator = new InArray([
+            'haystack' => ['test', 1, 2],
+            'strict'   => InArray::COMPARE_NOT_STRICT,
+        ]);
+
         self::assertTrue($validator->isValid(0));
 
-        $validator->setStrict(InArray::COMPARE_STRICT);
+        $validator = new InArray([
+            'haystack' => ['test', 1, 2],
+            'strict'   => InArray::COMPARE_STRICT,
+        ]);
+
         self::assertFalse($validator->isValid(0));
     }
 
     public function testFloatInputAndStringInHaystack(): void
     {
-        $validator = new InArray(
-            [
-                'haystack' => ['test', 1, 2],
-            ]
-        );
+        $validator = new InArray([
+            'haystack' => ['test', 1, 2],
+            'strict'   => InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY,
+        ]);
 
-        $validator->setStrict(InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY);
         self::assertFalse($validator->isValid(0.0));
 
-        $validator->setStrict(InArray::COMPARE_NOT_STRICT);
+        $validator = new InArray([
+            'haystack' => ['test', 1, 2],
+            'strict'   => InArray::COMPARE_NOT_STRICT,
+        ]);
+
         self::assertTrue($validator->isValid(0.0));
 
-        $validator->setStrict(InArray::COMPARE_STRICT);
+        $validator = new InArray([
+            'haystack' => ['test', 1, 2],
+            'strict'   => InArray::COMPARE_STRICT,
+        ]);
+
         self::assertFalse($validator->isValid(0.0));
     }
 
     public function testNumberStringInputAgainstNumberInHaystack(): void
     {
-        $validator = new InArray(
-            [
-                'haystack' => [1, 2],
-            ]
-        );
+        $validator = new InArray([
+            'haystack' => [1, 2],
+            'strict'   => InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY,
+        ]);
 
-        $validator->setStrict(InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY);
         self::assertFalse($validator->isValid('1asdf'));
 
-        $validator->setStrict(InArray::COMPARE_NOT_STRICT);
+        $validator = new InArray([
+            'haystack' => [1, 2],
+            'strict'   => InArray::COMPARE_NOT_STRICT,
+        ]);
+
         self::assertTrue($validator->isValid('1asdf'));
 
-        $validator->setStrict(InArray::COMPARE_STRICT);
+        $validator = new InArray([
+            'haystack' => [1, 2],
+            'strict'   => InArray::COMPARE_STRICT,
+        ]);
+
         self::assertFalse($validator->isValid('1asdf'));
     }
 
     public function testFloatStringInputAgainstNumberInHaystack(): void
     {
-        $validator = new InArray(
-            [
-                'haystack' => [1.5, 2.4],
-            ]
-        );
+        $validator = new InArray([
+            'haystack' => [1.5, 2.4],
+            'strict'   => InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY,
+        ]);
 
-        $validator->setStrict(InArray::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY);
         self::assertFalse($validator->isValid('1.5asdf'));
 
-        $validator->setStrict(InArray::COMPARE_NOT_STRICT);
+        $validator = new InArray([
+            'haystack' => [1.5, 2.4],
+            'strict'   => InArray::COMPARE_NOT_STRICT,
+        ]);
+
         self::assertTrue($validator->isValid('1.5asdf'));
 
-        $validator->setStrict(InArray::COMPARE_STRICT);
+        $validator = new InArray([
+            'haystack' => [1.5, 2.4],
+            'strict'   => InArray::COMPARE_STRICT,
+        ]);
+
         self::assertFalse($validator->isValid('1.5asdf'));
     }
 
@@ -380,48 +329,8 @@ final class InArrayTest extends TestCase
             ]
         );
 
-        self::assertTrue($validator->getStrict());
-    }
-
-    public function testGettingRecursiveOption(): void
-    {
-        self::assertFalse($this->validator->getRecursive());
-
-        $this->validator->setRecursive(true);
-
-        self::assertTrue($this->validator->getRecursive());
-    }
-
-    public function testSettingRecursiveViaInitiation(): void
-    {
-        $validator = new InArray(
-            [
-                'haystack'  => ['test', 0, 'A'],
-                'recursive' => true,
-            ]
-        );
-
-        self::assertTrue($validator->getRecursive());
-    }
-
-    public function testRecursiveDetection(): void
-    {
-        $validator = new InArray(
-            [
-                'haystack'
-                 => [
-                     'firstDimension'  => ['test', 0, 'A'],
-                     'secondDimension' => ['value', 2, 'a'],
-                 ],
-                'recursive' => false,
-            ]
-        );
-
-        self::assertFalse($validator->isValid('A'));
-
-        $validator->setRecursive(true);
-
-        self::assertTrue($validator->isValid('A'));
+        self::assertTrue($validator->isValid(0));
+        self::assertFalse($validator->isValid('0'));
     }
 
     public function testEqualsMessageTemplates(): void
