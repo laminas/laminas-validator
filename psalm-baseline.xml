@@ -1870,6 +1870,9 @@
     </UnusedClass>
   </file>
   <file src="src/NotEmpty.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getType]]></code>
+    </DeprecatedMethod>
     <MixedAssignment>
       <code><![CDATA[$temp['type']]]></code>
       <code><![CDATA[$value]]></code>
@@ -3074,6 +3077,28 @@
     </UndefinedMagicPropertyFetch>
   </file>
   <file src="test/NotEmptyTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getDefaultType]]></code>
+      <code><![CDATA[getDefaultType]]></code>
+      <code><![CDATA[getDefaultType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[$type]]></code>
       <code><![CDATA['boolean']]></code>

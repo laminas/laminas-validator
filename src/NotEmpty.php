@@ -119,6 +119,8 @@ class NotEmpty extends AbstractValidator
     /**
      * Returns the set types
      *
+     * @deprecated Since 2.61.0 All option getters and setters will be removed in v3.0
+     *
      * @return int
      */
     public function getType()
@@ -127,6 +129,8 @@ class NotEmpty extends AbstractValidator
     }
 
     /**
+     * @deprecated Since 2.61.0 All option getters and setters will be removed in v3.0
+     *
      * @return false|int|string
      */
     public function getDefaultType()
@@ -161,9 +165,11 @@ class NotEmpty extends AbstractValidator
     /**
      * Set the types
      *
-     * @param  int|int[] $type
-     * @throws Exception\InvalidArgumentException
+     * @deprecated Since 2.61.0 All option getters and setters will be removed in v3.0
+     *
+     * @param int|int[] $type
      * @return $this
+     * @throws Exception\InvalidArgumentException
      */
     public function setType($type = null)
     {
