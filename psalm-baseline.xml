@@ -1056,20 +1056,6 @@
       <code><![CDATA[$this->maxDepth]]></code>
     </InvalidArgument>
   </file>
-  <file src="src/Isbn.php">
-    <MixedArgument>
-      <code><![CDATA[$this->getValue()]]></code>
-      <code><![CDATA[$this->getValue()]]></code>
-    </MixedArgument>
-    <MixedInferredReturnType>
-      <code><![CDATA[string]]></code>
-      <code><![CDATA[string]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->options['separator']]]></code>
-      <code><![CDATA[$this->options['type']]]></code>
-    </MixedReturnStatement>
-  </file>
   <file src="src/Module.php">
     <PossiblyUnusedParam>
       <code><![CDATA[$moduleManager]]></code>
@@ -1621,10 +1607,8 @@
   <file src="test/IsbnTest.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[basicProvider]]></code>
+      <code><![CDATA[isbnValueProvider]]></code>
     </PossiblyUnusedMethod>
-    <RedundantCast>
-      <code><![CDATA[(float) 1.2345]]></code>
-    </RedundantCast>
   </file>
   <file src="test/MessageTest.php">
     <RedundantConditionGivenDocblockType>

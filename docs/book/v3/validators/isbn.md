@@ -1,13 +1,11 @@
 # Isbn Validator
 
-`Laminas\Validator\Isbn` allows you to validate an ISBN-10 or ISBN-13 value.
+`Laminas\Validator\Isbn` allows you to validate ISBN-10 or ISBN-13 numbers.
 
 ## Supported options
 
 The following options are supported for `Laminas\Validator\Isbn`:
 
-- `separator`: Defines the allowed separator for the ISBN number. It defaults to
-  an empty string.
 - `type`: Defines the allowed ISBN types. It defaults to
   `Laminas\Validator\Isbn::AUTO`. For details, take a look at the section on
   [explicit types](#setting-an-explicit-isbn-validation-type).
@@ -26,7 +24,7 @@ if ($validator->isValid($isbn)) {
 }
 ```
 
-This will validate any ISBN-10 and ISBN-13 without separator.
+This will validate any ISBN-10 or ISBN-13 with or without separators.
 
 ## Setting an explicit ISBN validation type
 
@@ -35,10 +33,6 @@ An example of an ISBN type restriction follows:
 ```php
 use Laminas\Validator\Isbn;
 
-$validator = new Isbn();
-$validator->setType(Isbn::ISBN13);
-
-// OR
 $validator = new Isbn([ 'type' => Isbn::ISBN13]);
 
 if ($validator->isValid($isbn)) {
@@ -56,32 +50,15 @@ Valid types include:
 - `Laminas\Validator\Isbn::ISBN10`
 - `Laminas\Validator\Isbn::ISBN13`
 
-## Specifying a separator restriction
+## About Separators
 
-An example of separator restriction:
+It is common for ISBN numbers to be formatted with either spaces or dash to make the numbers easier to read.
+This validator strips ` ` and `-` prior to validation.
 
 ```php
 $validator = new Laminas\Validator\Isbn();
-$validator->setSeparator('-');
 
-// OR
-$validator = new Laminas\Validator\Isbn(['separator' => '-']);
-
-if ($validator->isValid($isbn)) {
-    // this is a valid ISBN with separator
-} else {
-    // this is an invalid ISBN with separator
-}
+$validator->isValid('0060929871'); // true
+$validator->isValid('0-06-092987-1'); // true
+$validator->isValid('0 06 092987 1'); // true
 ```
-
-> ### Values without separators
->
-> This will return `false` if `$isbn` doesn't contain a separator **or** if it's
-> an invalid *ISBN* value.
-
-Valid separators include:
-
-- `` (empty) (default)
-- `-` (hyphen)
-<!-- markdownlint-disable-next-line MD038 -->
-- ` ` (space)
