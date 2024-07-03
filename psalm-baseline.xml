@@ -254,13 +254,11 @@
     </UnusedClass>
   </file>
   <file src="src/Explode.php">
-    <LessSpecificReturnStatement>
-      <code><![CDATA[$this->getPluginManager()->build($name, $options)]]></code>
-    </LessSpecificReturnStatement>
     <MixedInferredReturnType>
       <code><![CDATA[ValidatorInterface]]></code>
     </MixedInferredReturnType>
     <MixedReturnStatement>
+      <code><![CDATA[$this->getPluginManager()->build($name, $options)]]></code>
       <code><![CDATA[$this->getPluginManager()->build($name, $options)]]></code>
       <code><![CDATA[$this->getPluginManager()->get($validator)]]></code>
       <code><![CDATA[$this->getPluginManager()->get($validator)]]></code>
@@ -1128,28 +1126,18 @@
   </file>
   <file src="src/ValidatorPluginManager.php">
     <DeprecatedMethod>
-      <code><![CDATA[getServiceLocator]]></code>
-      <code><![CDATA[getServiceLocator]]></code>
+      <code><![CDATA[addInitializer]]></code>
+      <code><![CDATA[addInitializer]]></code>
     </DeprecatedMethod>
     <MethodSignatureMismatch>
       <code><![CDATA[ValidatorPluginManager]]></code>
     </MethodSignatureMismatch>
-    <MissingParamType>
-      <code><![CDATA[$configOrContainerInstance]]></code>
-    </MissingParamType>
-    <MixedArgument>
-      <code><![CDATA[$configOrContainerInstance]]></code>
-      <code><![CDATA[$container->get('MvcTranslator')]]></code>
-    </MixedArgument>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[validatePlugin]]></code>
-    </PossiblyUnusedMethod>
-    <PossiblyUnusedProperty>
-      <code><![CDATA[$shareByDefault]]></code>
-    </PossiblyUnusedProperty>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[$container->getServiceLocator()]]></code>
-    </RedundantConditionGivenDocblockType>
+    <NonInvariantDocblockPropertyType>
+      <code><![CDATA[$instanceOf]]></code>
+    </NonInvariantDocblockPropertyType>
+    <UnusedParam>
+      <code><![CDATA[$container]]></code>
+    </UnusedParam>
   </file>
   <file src="src/ValidatorPluginManagerAwareInterface.php">
     <MissingReturnType>
@@ -1157,18 +1145,9 @@
     </MissingReturnType>
   </file>
   <file src="src/ValidatorPluginManagerFactory.php">
-    <DeprecatedClass>
-      <code><![CDATA[new Config($config['validators'])]]></code>
-    </DeprecatedClass>
-    <DeprecatedInterface>
-      <code><![CDATA[ValidatorPluginManagerFactory]]></code>
-    </DeprecatedInterface>
     <MixedArgument>
       <code><![CDATA[$config['validators']]]></code>
     </MixedArgument>
-    <ParamNameMismatch>
-      <code><![CDATA[$container]]></code>
-    </ParamNameMismatch>
   </file>
   <file src="src/ValidatorProviderInterface.php">
     <UnusedClass>
@@ -1786,5 +1765,10 @@
     <UnusedParam>
       <code><![CDATA[$errnum]]></code>
     </UnusedParam>
+  </file>
+  <file src="test/ValidatorPluginManagerTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[setService]]></code>
+    </DeprecatedMethod>
   </file>
 </files>
