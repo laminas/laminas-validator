@@ -92,43 +92,6 @@
       <code><![CDATA[$token]]></code>
     </PossiblyInvalidOperand>
   </file>
-  <file src="src/CreditCard.php">
-    <InvalidOperand>
-      <code><![CDATA[$value[$i]]]></code>
-    </InvalidOperand>
-    <MixedArgument>
-      <code><![CDATA[$options['service']]]></code>
-      <code><![CDATA[$options['type']]]></code>
-      <code><![CDATA[$this->cardLength[$type]]]></code>
-      <code><![CDATA[$this->options['type']]]></code>
-      <code><![CDATA[$this->options['type']]]></code>
-    </MixedArgument>
-    <MixedArrayAssignment>
-      <code><![CDATA[$this->options['type'][]]]></code>
-    </MixedArrayAssignment>
-    <MixedAssignment>
-      <code><![CDATA[$prefix]]></code>
-      <code><![CDATA[$temp['service']]]></code>
-      <code><![CDATA[$temp['type']]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[callable(mixed...):bool]]></code>
-      <code><![CDATA[list<string>]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->options['service']]]></code>
-      <code><![CDATA[$this->options['type']]]></code>
-    </MixedReturnStatement>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$temp]]></code>
-    </PossiblyUndefinedVariable>
-    <PossiblyUnusedReturnValue>
-      <code><![CDATA[CreditCard]]></code>
-    </PossiblyUnusedReturnValue>
-  </file>
   <file src="src/Date.php">
     <MixedArgumentTypeCoercion>
       <code><![CDATA[$value]]></code>
@@ -1117,9 +1080,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/CreditCardTest.php">
-    <InvalidArgument>
-      <code><![CDATA[[self::class, 'nocallback']]]></code>
-    </InvalidArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicValues]]></code>
       <code><![CDATA[jcbValues]]></code>
@@ -1129,9 +1089,6 @@
       <code><![CDATA[serviceValues]]></code>
       <code><![CDATA[visaValues]]></code>
     </PossiblyUnusedMethod>
-    <PossiblyUnusedReturnValue>
-      <code><![CDATA[false]]></code>
-    </PossiblyUnusedReturnValue>
   </file>
   <file src="test/DateComparisonTest.php">
     <PossiblyUnusedMethod>

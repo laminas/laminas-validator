@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator;
 
-use ArrayObject;
 use Laminas\Validator\CreditCard;
 use Laminas\Validator\Exception\InvalidArgumentException;
-use LaminasTest\Validator\TestAsset\CreditCardValidatorExtension;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -53,48 +51,6 @@ final class CreditCardTest extends TestCase
     }
 
     /**
-     * Ensures that get and setType works as expected
-     */
-    public function testGetSetType(): void
-    {
-        $validator = new CreditCard();
-
-        self::assertCount(12, $validator->getType());
-
-        $validator->setType(CreditCard::MAESTRO);
-
-        self::assertSame([CreditCard::MAESTRO], $validator->getType());
-
-        $validator->setType(
-            [
-                CreditCard::AMERICAN_EXPRESS,
-                CreditCard::MAESTRO,
-            ]
-        );
-
-        self::assertSame(
-            [
-                CreditCard::AMERICAN_EXPRESS,
-                CreditCard::MAESTRO,
-            ],
-            $validator->getType()
-        );
-
-        $validator->addType(
-            CreditCard::MASTERCARD
-        );
-
-        self::assertSame(
-            [
-                CreditCard::AMERICAN_EXPRESS,
-                CreditCard::MAESTRO,
-                CreditCard::MASTERCARD,
-            ],
-            $validator->getType()
-        );
-    }
-
-    /**
      * @psalm-return array<array-key, array{0: string, 1: bool}>
      */
     public static function visaValues(): array
@@ -114,8 +70,18 @@ final class CreditCardTest extends TestCase
     #[DataProvider('visaValues')]
     public function testProvider(string $input, bool $expected): void
     {
-        $validator = new CreditCard(CreditCard::VISA);
+        $validator = new CreditCard(['type' => CreditCard::VISA]);
+        self::assertSame($expected, $validator->isValid($input));
 
+        $validator = new CreditCard(['type' => [CreditCard::VISA]]);
+        self::assertSame($expected, $validator->isValid($input));
+
+        /** @psalm-suppress InvalidArgument - We allow case-insensitive match of card names */
+        $validator = new CreditCard(['type' => 'ViSa']);
+        self::assertSame($expected, $validator->isValid($input));
+
+        /** @psalm-suppress InvalidArgument - We allow case-insensitive match of card names */
+        $validator = new CreditCard(['type' => ['ViSa']]);
         self::assertSame($expected, $validator->isValid($input));
     }
 
@@ -124,7 +90,7 @@ final class CreditCardTest extends TestCase
      */
     public function testIsValidWithNonString(): void
     {
-        $validator = new CreditCard(CreditCard::VISA);
+        $validator = new CreditCard(['type' => CreditCard::VISA]);
 
         self::assertFalse($validator->isValid(['something']));
     }
@@ -149,11 +115,10 @@ final class CreditCardTest extends TestCase
     #[DataProvider('serviceValues')]
     public function testServiceClass(string $input, bool $expected): void
     {
-        $validator = new CreditCard();
-
-        self::assertSame(null, $validator->getService());
-
-        $validator->setService([self::class, 'staticCallback']);
+        // phpcs:disable WebimpressCodingStandard.NamingConventions
+        $validator = new CreditCard([
+            'service' => static fn(mixed $_): bool => false,
+        ]);
 
         self::assertSame($expected, $validator->isValid($input));
     }
@@ -178,12 +143,11 @@ final class CreditCardTest extends TestCase
     #[DataProvider('optionsValues')]
     public function testConstructionWithOptions(string $input, bool $expected): void
     {
-        $validator = new CreditCard(
-            [
-                'type'    => CreditCard::VISA,
-                'service' => [self::class, 'staticCallback'],
-            ]
-        );
+        // phpcs:disable WebimpressCodingStandard.NamingConventions
+        $validator = new CreditCard([
+            'type'    => CreditCard::VISA,
+            'service' => static fn(mixed $_): bool => false,
+        ]);
 
         self::assertSame($expected, $validator->isValid($input));
     }
@@ -304,53 +268,13 @@ final class CreditCardTest extends TestCase
      */
     public function testInvalidServiceClass(): void
     {
-        $validator = new CreditCard();
-
-        self::assertSame(null, $validator->getService());
-
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid callback given');
 
-        $validator->setService([self::class, 'nocallback']);
-    }
-
-    /**
-     * Test a config object
-     */
-    public function testTraversableObject(): void
-    {
-        $options = ['type' => 'Visa'];
-        $config  = new ArrayObject($options);
-
-        $validator = new CreditCard($config);
-
-        self::assertSame(['Visa'], $validator->getType());
-    }
-
-    /**
-     * Test optional parameters with config object
-     */
-    public function testOptionalConstructorParameterByTraversableObject(): void
-    {
-        $config = new ArrayObject(
-            ['type' => 'Visa', 'service' => [self::class, 'staticCallback']]
-        );
-
-        $validator = new CreditCard($config);
-
-        self::assertSame(['Visa'], $validator->getType());
-        self::assertSame([self::class, 'staticCallback'], $validator->getService());
-    }
-
-    /**
-     * Test optional constructor parameters
-     */
-    public function testOptionalConstructorParameter(): void
-    {
-        $validator = new CreditCard('Visa', [self::class, 'staticCallback']);
-
-        self::assertSame(['Visa'], $validator->getType());
-        self::assertSame([self::class, 'staticCallback'], $validator->getService());
+        /** @psalm-suppress InvalidArgument */
+        new CreditCard([
+            'service' => [self::class, 'nocallback'],
+        ]);
     }
 
     #[Group('Laminas-9477')]
@@ -379,27 +303,32 @@ final class CreditCardTest extends TestCase
                 CreditCard::SERVICE,
                 CreditCard::SERVICEFAILURE,
             ],
-            array_keys($validator->getMessageTemplates())
+            array_keys($validator->getMessageTemplates()),
         );
         self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
-    /**
-     * @see https://github.com/zendframework/zend-validator/pull/202
-     */
-    public function testValidatorAllowsExtensionsToDefineAdditionalTypesViaConstants(): void
+    public function testThatTheCallbackReceivesTheExpectedParameters(): void
     {
-        $validator = new CreditCardValidatorExtension();
+        $list = [
+            CreditCard::VISA,
+            CreditCard::MAESTRO,
+        ];
 
-        self::assertSame($validator, $validator->addType('test_type'));
-        self::assertContains(CreditCardValidatorExtension::TEST_TYPE, $validator->getType());
-    }
+        $input = '4111111111111111';
 
-    /**
-     * @return false
-     */
-    public static function staticCallback(): bool
-    {
-        return false;
+        $callback = function (string $cardNumber, array $types) use ($list, $input): bool {
+            self::assertSame($list, $types);
+            self::assertSame($input, $cardNumber);
+
+            return true;
+        };
+
+        $validator = new CreditCard([
+            'type'    => $list,
+            'service' => $callback,
+        ]);
+
+        self::assertTrue($validator->isValid($input));
     }
 }

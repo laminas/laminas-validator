@@ -7,7 +7,7 @@ A credit card contains several items of metadata, including a hologram, account
 number, logo, expiration date, security code, and the card holder name. The
 algorithms for verifying the combination of metadata are only known to the
 issuing company, and should be verified with them for purposes of payment.
-However, it's often useful to know whether or not a given number actually falls
+However, it's often useful to know whether a given number actually falls
 within the ranges of possible numbers **prior** to performing such verification,
 and, as such, `Laminas\Validator\CreditCard` verifies that the credit card number
 provided is well-formed.
@@ -77,15 +77,14 @@ of all; e.g., when you have a webshop which accepts only Visa and American
 Express cards. `Laminas\Validator\CreditCard` allows you to do exactly this by
 limiting it to exactly these institutes.
 
-To use a limitation you can either provide specific institutes at initiation, or
-afterwards by using `setType()`. Each can take several arguments.
+To use a limitation you can provide specific institutes at initiation.
 
 You can provide a single institute:
 
 ```php
 use Laminas\Validator\CreditCard;
 
-$valid = new CreditCard(CreditCard::AMERICAN_EXPRESS);
+$valid = new CreditCard(['type' => CreditCard::AMERICAN_EXPRESS]);
 ```
 
 When you want to allow multiple institutes, then you can provide them as array:
@@ -94,33 +93,10 @@ When you want to allow multiple institutes, then you can provide them as array:
 use Laminas\Validator\CreditCard;
 
 $valid = new CreditCard([
-    CreditCard::AMERICAN_EXPRESS,
-    CreditCard::VISA
-]);
-```
-
-And, as with all validators, you can also pass an associative array of options
-or an instance of `Traversable`. In this case you have to provide the institutes
-with the `type` array key as demostrated here:
-
-```php
-use Laminas\Validator\CreditCard;
-
-$valid = new CreditCard([
-    'type' => [CreditCard::AMERICAN_EXPRESS]
-]);
-```
-
-You can also manipulate institutes after instantiation by using the methods
-`setType()`, `addType()`, and `getType()`.
-
-```php
-use Laminas\Validator\CreditCard;
-
-$valid = new CreditCard();
-$valid->setType([
-    CreditCard::AMERICAN_EXPRESS,
-    CreditCard::VISA
+    'type' => [
+        CreditCard::AMERICAN_EXPRESS,
+        CreditCard::VISA
+    ],
 ]);
 ```
 
@@ -128,9 +104,6 @@ $valid->setType([
 >
 > When no institute is given at initiation then `ALL` will be used, which sets
 > all institutes at once.
->
-> In this case the usage of `addType()` is useless because all institutes are
-> already added.
 
 ## Validation using APIs
 
@@ -143,14 +116,9 @@ per default.
 When you have access to such an API, then you can use it as an add on for
 `Laminas\Validator\CreditCard` and increase the security of the validation.
 
-To do so, provide a callback to invoke when generic validation has passed. This
-prevents the API from being called for invalid numbers, which increases the
+To do so, provide a callback in the `service` option to invoke when generic validation has passed.
+This prevents the API from being called for invalid numbers, which increases the
 performance of the application.
-
-`setService()` sets a new service, and `getService()` returns the set service.
-As a configuration option, you can give the array key `service` at instantiatio.
-For details about possible options, read the
-[Callback validator documentation](callback.md).
 
 ```php
 use Laminas\Validator\CreditCard;
@@ -158,7 +126,7 @@ use Laminas\Validator\CreditCard;
 // Your service class
 class CcService
 {
-    public function checkOnline($cardnumber, $types)
+    public function checkOnline(string $cardNumber, array $types): bool
     {
         // some online validation
     }
@@ -166,8 +134,10 @@ class CcService
 
 // The validation
 $service = new CcService();
-$valid   = new CreditCard(CreditCard::VISA);
-$valid->setService([$service, 'checkOnline']);
+$valid   = new CreditCard([
+    'type' => CreditCard::VISA,
+    'service' => [$service, 'checkOnline'],
+]);
 ```
 
 The callback method will be called with the credit card number as the first
