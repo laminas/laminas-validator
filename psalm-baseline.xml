@@ -1132,27 +1132,6 @@
       <code><![CDATA[Module]]></code>
     </UnusedClass>
   </file>
-  <file src="src/NotEmpty.php">
-    <MixedAssignment>
-      <code><![CDATA[$temp['type']]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[int]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->options['type']]]></code>
-    </MixedReturnStatement>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyNullArgument>
-      <code><![CDATA[$type]]></code>
-    </PossiblyNullArgument>
-    <RedundantCondition>
-      <code><![CDATA[is_object($value) && method_exists($value, '__toString') && (string) $value === '']]></code>
-    </RedundantCondition>
-  </file>
   <file src="src/NumberComparison.php">
     <MixedAssignment>
       <code><![CDATA[$inclusiveMax]]></code>
@@ -1756,20 +1735,17 @@
     </UndefinedThisPropertyFetch>
   </file>
   <file src="test/NotEmptyTest.php">
-    <InvalidArgument>
-      <code><![CDATA[$type]]></code>
-      <code><![CDATA['boolean']]></code>
-      <code><![CDATA['boolean']]></code>
-      <code><![CDATA[true]]></code>
-    </InvalidArgument>
+    <ArgumentTypeCoercion>
+      <code><![CDATA[[
+            'type' => [$string, $string],
+        ]]]></code>
+    </ArgumentTypeCoercion>
     <PossiblyUnusedMethod>
-      <code><![CDATA[arrayConfigNotationProvider]]></code>
       <code><![CDATA[arrayConfigNotationWithoutKeyProvider]]></code>
       <code><![CDATA[arrayConstantNotationProvider]]></code>
       <code><![CDATA[arrayOnlyProvider]]></code>
       <code><![CDATA[basicProvider]]></code>
       <code><![CDATA[booleanProvider]]></code>
-      <code><![CDATA[configObjectProvider]]></code>
       <code><![CDATA[constructorWithTypeArrayProvider]]></code>
       <code><![CDATA[duplicateStringSettingProvider]]></code>
       <code><![CDATA[floatOnlyProvider]]></code>
