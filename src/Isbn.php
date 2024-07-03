@@ -136,9 +136,11 @@ class Isbn extends AbstractValidator
      *
      * It is allowed only empty string, hyphen and space.
      *
-     * @param  string $separator
-     * @throws Exception\InvalidArgumentException When $separator is not valid.
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
+     *
+     * @param string $separator
      * @return $this Provides a fluent interface
+     * @throws Exception\InvalidArgumentException When $separator is not valid.
      */
     public function setSeparator($separator)
     {
@@ -154,6 +156,8 @@ class Isbn extends AbstractValidator
     /**
      * Get separator characters.
      *
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
+     *
      * @return string
      */
     public function getSeparator()
@@ -164,9 +168,11 @@ class Isbn extends AbstractValidator
     /**
      * Set allowed ISBN type.
      *
-     * @param  string $type
-     * @throws Exception\InvalidArgumentException When $type is not valid.
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
+     *
+     * @param string $type
      * @return $this Provides a fluent interface
+     * @throws Exception\InvalidArgumentException When $type is not valid.
      */
     public function setType($type)
     {
@@ -181,6 +187,8 @@ class Isbn extends AbstractValidator
 
     /**
      * Get allowed ISBN type.
+     *
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
      *
      * @return string
      */
