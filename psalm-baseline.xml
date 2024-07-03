@@ -1807,6 +1807,16 @@
       <code><![CDATA[$options]]></code>
     </MixedArgumentTypeCoercion>
   </file>
+  <file src="src/IsCountable.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getCount]]></code>
+      <code><![CDATA[getCount]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+    </DeprecatedMethod>
+  </file>
   <file src="src/IsInstanceOf.php">
     <MixedAssignment>
       <code><![CDATA[$tmpOptions['className']]]></code>
