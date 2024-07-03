@@ -1002,31 +1002,6 @@
       <code><![CDATA[(string) $countryCode]]></code>
     </RedundantCastGivenDocblockType>
   </file>
-  <file src="src/Identical.php">
-    <MixedArgument>
-      <code><![CDATA[$token['literal']]]></code>
-      <code><![CDATA[$token['strict']]]></code>
-    </MixedArgument>
-    <MixedArrayAccess>
-      <code><![CDATA[$context[$key]]]></code>
-      <code><![CDATA[$context[$token]]]></code>
-    </MixedArrayAccess>
-    <MixedAssignment>
-      <code><![CDATA[$context]]></code>
-      <code><![CDATA[$this->token]]></code>
-      <code><![CDATA[$token]]></code>
-      <code><![CDATA[$token]]></code>
-      <code><![CDATA[$token]]></code>
-      <code><![CDATA[$token]]></code>
-    </MixedAssignment>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[is_array($token) ? $token : null]]></code>
-    </PossiblyInvalidArgument>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(bool) $literal]]></code>
-      <code><![CDATA[(bool) $strict]]></code>
-    </RedundantCastGivenDocblockType>
-  </file>
   <file src="src/IsJsonString.php">
     <InvalidArgument>
       <code><![CDATA[$this->maxDepth]]></code>
@@ -1539,14 +1514,6 @@
     <PossiblyUnusedMethod>
       <code><![CDATA[ibanDataProvider]]></code>
       <code><![CDATA[invalidValues]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/IdenticalTest.php">
-    <MixedArgument>
-      <code><![CDATA[$context]]></code>
-    </MixedArgument>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[invalidContextProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/InArrayTest.php">
