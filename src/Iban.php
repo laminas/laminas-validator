@@ -197,6 +197,8 @@ class Iban extends AbstractValidator
     /**
      * Returns the optional country code by ISO 3166-1
      *
+     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
+     *
      * @return string|null
      */
     public function getCountryCode()
@@ -207,7 +209,9 @@ class Iban extends AbstractValidator
     /**
      * Sets an optional country code by ISO 3166-1
      *
-     * @param  string|null $countryCode
+     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
+     *
+     * @param string|null $countryCode
      * @return $this provides a fluent interface
      * @throws Exception\InvalidArgumentException
      */
@@ -230,6 +234,8 @@ class Iban extends AbstractValidator
     /**
      * Returns the optional allow non-sepa countries setting
      *
+     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
+     *
      * @return bool
      */
     public function allowNonSepa()
@@ -240,7 +246,9 @@ class Iban extends AbstractValidator
     /**
      * Sets the optional allow non-sepa countries setting
      *
-     * @param  bool $allowNonSepa
+     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
+     *
+     * @param bool $allowNonSepa
      * @return $this provides a fluent interface
      */
     public function setAllowNonSepa($allowNonSepa)

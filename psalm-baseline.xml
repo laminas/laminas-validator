@@ -1729,6 +1729,11 @@
     </UnresolvableInclude>
   </file>
   <file src="src/Iban.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getCountryCode]]></code>
+      <code><![CDATA[setAllowNonSepa]]></code>
+      <code><![CDATA[setCountryCode]]></code>
+    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA[is_string($value)]]></code>
     </DocblockTypeContradiction>
@@ -2999,6 +3004,16 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/IbanTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[allowNonSepa]]></code>
+      <code><![CDATA[getCountryCode]]></code>
+      <code><![CDATA[getCountryCode]]></code>
+      <code><![CDATA[getCountryCode]]></code>
+      <code><![CDATA[setAllowNonSepa]]></code>
+      <code><![CDATA[setAllowNonSepa]]></code>
+      <code><![CDATA[setCountryCode]]></code>
+      <code><![CDATA[setCountryCode]]></code>
+    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[ibanDataProvider]]></code>
       <code><![CDATA[invalidValues]]></code>
