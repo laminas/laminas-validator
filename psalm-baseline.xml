@@ -40,45 +40,9 @@
     </UndefinedThisPropertyAssignment>
   </file>
   <file src="src/Barcode/Code128.php">
-    <PossiblyFalseArgument>
-      <code><![CDATA[$char]]></code>
-      <code><![CDATA[$char]]></code>
-      <code><![CDATA[$char]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </PossiblyFalseArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[__construct]]></code>
     </PossiblyUnusedMethod>
-    <UnusedVariable>
-      <code><![CDATA[$read]]></code>
-      <code><![CDATA[$read]]></code>
-      <code><![CDATA[$read]]></code>
-      <code><![CDATA[$read]]></code>
-      <code><![CDATA[$read]]></code>
-      <code><![CDATA[$read]]></code>
-      <code><![CDATA[$read]]></code>
-      <code><![CDATA[$read]]></code>
-      <code><![CDATA[$read]]></code>
-      <code><![CDATA[$read]]></code>
-    </UnusedVariable>
-  </file>
-  <file src="src/Barcode/Code93.php">
-    <PossiblyFalseOperand>
-      <code><![CDATA[$check]]></code>
-      <code><![CDATA[array_search($count % 47, self::CHECK)]]></code>
-    </PossiblyFalseOperand>
-  </file>
-  <file src="src/Barcode/Issn.php">
-    <PossiblyInvalidOperand>
-      <code><![CDATA[$token]]></code>
-    </PossiblyInvalidOperand>
   </file>
   <file src="src/Date.php">
     <MixedArgumentTypeCoercion>

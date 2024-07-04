@@ -7,6 +7,7 @@ namespace Laminas\Validator\Barcode;
 use Laminas\Stdlib\StringUtils;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
+use function assert;
 use function chr;
 use function is_string;
 use function ord;
@@ -53,44 +54,29 @@ final class Code128 implements AdapterInterface
         // process barcode
         while ($value !== '' && $value !== false) {
             $char = $strWrapper->substr($value, 0, 1);
+            assert(is_string($char));
 
             switch ($char) {
                 // Function definition
                 case 'Ç':
                 case 'ü':
                 case 'å':
-                    break;
-
-                // Switch 1 char between A and B
                 case 'é':
-                    if ($set === 'A') {
-                        $read = 'B';
-                        break;
-                    }
-
-                    if ($set === 'B') {
-                        $read = 'A';
-                        break;
-                    }
-
                     break;
 
                 // Switch to C
                 case 'â':
-                    $set  = 'C';
-                    $read = 'C';
+                    $set = 'C';
                     break;
 
                 // Switch to B
                 case 'ä':
-                    $set  = 'B';
-                    $read = 'B';
+                    $set = 'B';
                     break;
 
                 // Switch to A
                 case 'à':
-                    $set  = 'A';
-                    $read = 'A';
+                    $set = 'A';
                     break;
 
                 // Doubled start character
@@ -145,54 +131,39 @@ final class Code128 implements AdapterInterface
         }
 
         $value = $strWrapper->substr($value, 1, null);
-        while ($strWrapper->strpos((string) $value, 'Š') !== false || ((string) $value !== '')) {
+        assert($value !== false);
+        while ($strWrapper->strpos($value, 'Š') !== false || ($value !== '')) {
             $char = $strWrapper->substr($value, 0, 1);
             if ($read === 'C') {
                 $char = $strWrapper->substr($value, 0, 2);
             }
+            assert($char !== false);
 
             switch ($char) {
                 // Function definition
                 case 'Ç':
                 case 'ü':
                 case 'å':
-                    $sum += $pos * $this->ord128($char, $set);
-                    break;
-
                 case 'é':
                     $sum += $pos * $this->ord128($char, $set);
-
-                    if ($set === 'A') {
-                        $read = 'B';
-                        break;
-                    }
-
-                    if ($set === 'B') {
-                        $read = 'A';
-                        break;
-                    }
-
                     break;
 
                 // Switch to C
                 case 'â':
                     $sum += $pos * $this->ord128($char, $set);
                     $set  = 'C';
-                    $read = 'C';
                     break;
 
                 // Switch to B
                 case 'ä':
                     $sum += $pos * $this->ord128($char, $set);
                     $set  = 'B';
-                    $read = 'B';
                     break;
 
                 // Switch to A
                 case 'à':
                     $sum += $pos * $this->ord128($char, $set);
                     $set  = 'A';
-                    $read = 'A';
                     break;
 
                 case '‡':
@@ -211,6 +182,7 @@ final class Code128 implements AdapterInterface
             }
 
             $value = $strWrapper->substr($value, 1);
+            assert($value !== false);
             ++$pos;
             if (($strWrapper->strpos($value, 'Š') === 1) && ($strWrapper->strlen($value) === 2)) {
                 // break by stop and checksum char
@@ -344,7 +316,7 @@ final class Code128 implements AdapterInterface
             }
         } elseif ($set === 'C') {
             if (($value >= 0) && ($value <= 9)) {
-                return '0' . (string) $value;
+                return '0' . $value;
             } elseif ($value <= 99) {
                 return (string) $value;
             } elseif ($value <= 106) {

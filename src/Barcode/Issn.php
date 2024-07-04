@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\Barcode;
 
+use function assert;
 use function in_array;
+use function is_numeric;
 use function str_contains;
 use function str_split;
 use function strlen;
@@ -63,6 +65,7 @@ final class Issn implements AdapterInterface
                 $token = 10;
             }
 
+            assert(is_numeric($token));
             $check += $token * $multi;
             --$multi;
         }
