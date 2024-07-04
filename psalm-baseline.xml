@@ -3189,6 +3189,10 @@
     </InvalidArgument>
   </file>
   <file src="test/IsJsonStringTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[setAllow]]></code>
+      <code><![CDATA[setMaxDepth]]></code>
+    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[allowProvider]]></code>
       <code><![CDATA[invalidStringProvider]]></code>
