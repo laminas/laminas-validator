@@ -100,16 +100,6 @@
       <code><![CDATA[UConverter::transcode($localPart, 'UTF-8', 'UTF-8') === false]]></code>
     </TypeDoesNotContainType>
   </file>
-  <file src="src/Exception/BadMethodCallException.php">
-    <UnusedClass>
-      <code><![CDATA[BadMethodCallException]]></code>
-    </UnusedClass>
-  </file>
-  <file src="src/Exception/ExtensionNotLoadedException.php">
-    <UnusedClass>
-      <code><![CDATA[ExtensionNotLoadedException]]></code>
-    </UnusedClass>
-  </file>
   <file src="src/Explode.php">
     <MixedInferredReturnType>
       <code><![CDATA[ValidatorInterface]]></code>
