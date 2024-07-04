@@ -2,7 +2,11 @@
 
 namespace Laminas\Validator\Exception;
 
-/** @final */
+/**
+ * @deprecated This file will be removed in 3.0
+ *
+ * @final
+ */
 class BadMethodCallException extends \BadMethodCallException implements ExceptionInterface
 {
 }
