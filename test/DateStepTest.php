@@ -8,7 +8,6 @@ use DateInterval;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
-use DateTimeZone;
 use Laminas\Validator\DateStep;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -33,58 +32,58 @@ final class DateStepTest extends TestCase
     {
         return [
             //    interval format            baseValue               value                  isValid
-            ['PT1S', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-01-01T00:00:00Z', true],
-            ['PT1S', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-01-03T00:00:00Z', true],
-            ['PT1S', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-01-01T00:00:02Z', true],
-            ['PT2S', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-01-01T00:00:01Z', false],
-            ['PT2S', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-01-01T00:00:16Z', true],
-            ['PT2S', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-01-03T00:00:00Z', true],
+            ['PT1S', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-01-01T00:00:00Z', true],
+            ['PT1S', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-01-03T00:00:00Z', true],
+            ['PT1S', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-01-01T00:00:02Z', true],
+            ['PT2S', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-01-01T00:00:01Z', false],
+            ['PT2S', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-01-01T00:00:16Z', true],
+            ['PT2S', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-01-03T00:00:00Z', true],
             // minutes
-            ['PT1M', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-03-01T00:00:00Z', true],
-            ['PT1M', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-03-01T00:00:30Z', false],
-            ['PT1M', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-01-01T00:02:00Z', true],
-            ['PT2M', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-01-01T00:01:00Z', false],
-            ['PT2M', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-01-01T00:16:00Z', true],
-            ['PT2M', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-03-01T00:00:00Z', true],
+            ['PT1M', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-03-01T00:00:00Z', true],
+            ['PT1M', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-03-01T00:00:30Z', false],
+            ['PT1M', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-01-01T00:02:00Z', true],
+            ['PT2M', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-01-01T00:01:00Z', false],
+            ['PT2M', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-01-01T00:16:00Z', true],
+            ['PT2M', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-03-01T00:00:00Z', true],
             ['PT1M', 'H:i:s',           '00:00:00',             '12:34:00',             true],
             ['PT2M', 'H:i:s',           '00:00:00',             '12:34:00',             true],
             ['PT2M', 'H:i:s',           '00:00:00',             '12:35:00',             false],
             // hours
-            ['PT1H', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-03-01T00:00:00Z', true],
-            ['PT1H', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-03-01T00:00:30Z', false],
-            ['PT1H', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-01-01T02:00:00Z', true],
-            ['PT2H', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-01-01T01:00:00Z', false],
-            ['PT2H', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-01-01T16:00:00Z', true],
-            ['PT2H', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-03-01T00:00:00Z', true],
+            ['PT1H', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-03-01T00:00:00Z', true],
+            ['PT1H', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-03-01T00:00:30Z', false],
+            ['PT1H', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-01-01T02:00:00Z', true],
+            ['PT2H', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-01-01T01:00:00Z', false],
+            ['PT2H', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-01-01T16:00:00Z', true],
+            ['PT2H', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-03-01T00:00:00Z', true],
             // days
-            ['P1D',  DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1973-01-01T00:00:00Z', true],
-            ['P1D',  DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1973-01-01T00:00:30Z', false],
-            ['P1D',  DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '2014-08-12T00:00:00Z', true],
-            ['P2D',  DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-01-02T00:00:00Z', false],
-            ['P2D',  DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-01-15T00:00:00Z', true],
-            ['P2D',  DateTimeInterface::ISO8601, '1971-01-01T00:00:00Z', '1973-01-01T00:00:00Z', false],
-            ['P2D',  DateTimeInterface::ISO8601, '2000-01-01T00:00:00Z', '2001-01-01T00:00:00Z', true], // leap year
+            ['P1D',  DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1973-01-01T00:00:00Z', true],
+            ['P1D',  DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1973-01-01T00:00:30Z', false],
+            ['P1D',  DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '2014-08-12T00:00:00Z', true],
+            ['P2D',  DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-01-02T00:00:00Z', false],
+            ['P2D',  DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-01-15T00:00:00Z', true],
+            ['P2D',  DateTimeInterface::ATOM, '1971-01-01T00:00:00Z', '1973-01-01T00:00:00Z', false],
+            ['P2D',  DateTimeInterface::ATOM, '2000-01-01T00:00:00Z', '2001-01-01T00:00:00Z', true], // leap year
             // weeks
-            ['P1W',  DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-01-29T00:00:00Z', true],
+            ['P1W',  DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-01-29T00:00:00Z', true],
             // months
-            ['P1M',  DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1973-01-01T00:00:00Z', true],
-            ['P1M',  DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1973-01-01T00:00:30Z', false],
-            ['P2M',  DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-02-01T00:00:00Z', false],
-            ['P2M',  DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1971-05-01T00:00:00Z', true],
+            ['P1M',  DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1973-01-01T00:00:00Z', true],
+            ['P1M',  DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1973-01-01T00:00:30Z', false],
+            ['P2M',  DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-02-01T00:00:00Z', false],
+            ['P2M',  DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1971-05-01T00:00:00Z', true],
             ['P1M',  'Y-m',             '1970-01',              '1970-10',              true],
             ['P2M',  '!Y-m',            '1970-01',              '1970-11',              true],
             ['P2M',  'Y-m',             '1970-01',              '1970-10',              false],
             // years
-            ['P1Y',  DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1973-01-01T00:00:00Z', true],
-            ['P1Y',  DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1973-01-01T00:00:30Z', false],
-            ['P2Y',  DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1971-01-01T00:00:00Z', false],
-            ['P2Y',  DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1976-01-01T00:00:00Z', true],
+            ['P1Y',  DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1973-01-01T00:00:00Z', true],
+            ['P1Y',  DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1973-01-01T00:00:30Z', false],
+            ['P2Y',  DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1971-01-01T00:00:00Z', false],
+            ['P2Y',  DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1976-01-01T00:00:00Z', true],
             // complex
-            ['P2M2DT12H', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-03-03T12:00:00Z', true],
-            ['P2M2DT12M', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '1970-03-03T12:00:00Z', false],
+            ['P2M2DT12H', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-03-03T12:00:00Z', true],
+            ['P2M2DT12M', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '1970-03-03T12:00:00Z', false],
             // long interval
-            ['PT1M20S', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '2020-09-13T12:26:40Z', true], // 20,000,000 steps
-            ['PT1M20S', DateTimeInterface::ISO8601, '1970-01-01T00:00:00Z', '2020-09-13T12:26:41Z', false],
+            ['PT1M20S', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '2020-09-13T12:26:40Z', true],
+            ['PT1M20S', DateTimeInterface::ATOM, '1970-01-01T00:00:00Z', '2020-09-13T12:26:41Z', false],
             ['P2W',  'Y-\WW',           '1970-W01',             '1973-W16',             true],
             ['P2W',  'Y-\WW',           '1970-W01',             '1973-W17',             false],
         ];
@@ -114,7 +113,7 @@ final class DateStepTest extends TestCase
     public function testWithDateTimeType(): void
     {
         $validator = new DateStep([
-            'format'    => DateTimeInterface::ISO8601,
+            'format'    => DateTimeInterface::ATOM,
             'baseValue' => new DateTime('1970-01-01T00:00:00Z'),
             'step'      => new DateInterval('PT2S'),
         ]);
@@ -129,7 +128,7 @@ final class DateStepTest extends TestCase
     public function testWithDateTimeImmutableType(): void
     {
         $validator = new DateStep([
-            'format'    => DateTimeInterface::ISO8601,
+            'format'    => DateTimeInterface::ATOM,
             'baseValue' => new DateTimeImmutable('1970-01-01T00:00:00Z'),
             'step'      => new DateInterval('PT2S'),
         ]);
