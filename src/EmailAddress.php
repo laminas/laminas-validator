@@ -152,6 +152,8 @@ class EmailAddress extends AbstractValidator
      *
      * If was not previously set then lazy load a new one
      *
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
+     *
      * @return Hostname
      */
     public function getHostnameValidator()
@@ -164,6 +166,8 @@ class EmailAddress extends AbstractValidator
     }
 
     /**
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
+     *
      * @param Hostname $hostnameValidator OPTIONAL
      * @return $this Provides a fluent interface
      */
@@ -177,6 +181,8 @@ class EmailAddress extends AbstractValidator
     /**
      * Returns the allow option of the attached hostname validator
      *
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
+     *
      * @return int
      */
     public function getAllow()
@@ -186,6 +192,8 @@ class EmailAddress extends AbstractValidator
 
     /**
      * Sets the allow option of the hostname validator to use
+     *
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
      *
      * @param int $allow
      * @return $this Provides a fluent interface
@@ -203,6 +211,8 @@ class EmailAddress extends AbstractValidator
     /**
      * Whether MX checking via getmxrr is supported or not
      *
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
+     *
      * @return bool
      */
     public function isMxSupported()
@@ -212,6 +222,8 @@ class EmailAddress extends AbstractValidator
 
     /**
      * Returns the set validateMx option
+     *
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
      *
      * @return bool
      */
@@ -225,7 +237,9 @@ class EmailAddress extends AbstractValidator
      *
      * This only applies when DNS hostnames are validated
      *
-     * @param  bool $mx Set allowed to true to validate for MX records, and false to not validate them
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
+     *
+     * @param bool $mx Set allowed to true to validate for MX records, and false to not validate them
      * @return $this Fluid Interface
      */
     public function useMxCheck($mx)
@@ -237,6 +251,8 @@ class EmailAddress extends AbstractValidator
     /**
      * Returns the set deepMxCheck option
      *
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
+     *
      * @return bool
      */
     public function getDeepMxCheck()
@@ -247,7 +263,9 @@ class EmailAddress extends AbstractValidator
     /**
      * Use deep validation for MX records
      *
-     * @param  bool $deep Set deep to true to perform a deep validation process for MX records
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
+     *
+     * @param bool $deep Set deep to true to perform a deep validation process for MX records
      * @return $this Fluid Interface
      */
     public function useDeepMxCheck($deep)
@@ -258,6 +276,8 @@ class EmailAddress extends AbstractValidator
 
     /**
      * Returns the set domainCheck option
+     *
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
      *
      * @return bool
      */
@@ -270,7 +290,9 @@ class EmailAddress extends AbstractValidator
      * Sets if the domain should also be checked
      * or only the local part of the email address
      *
-     * @param  bool $domain
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
+     *
+     * @param bool $domain
      * @return $this Fluid Interface
      */
     public function useDomainCheck($domain = true)
@@ -351,6 +373,8 @@ class EmailAddress extends AbstractValidator
 
     /**
      * Returns the found MX Record information after validation including weight for further processing
+     *
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
      *
      * @return array
      */

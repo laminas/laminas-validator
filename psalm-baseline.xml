@@ -786,6 +786,13 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/EmailAddress.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getAllow]]></code>
+      <code><![CDATA[getHostnameValidator]]></code>
+      <code><![CDATA[getHostnameValidator]]></code>
+      <code><![CDATA[getHostnameValidator]]></code>
+      <code><![CDATA[getHostnameValidator]]></code>
+    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA['']]></code>
       <code><![CDATA[is_string($value)]]></code>
@@ -2578,7 +2585,26 @@
   </file>
   <file src="test/EmailAddressTest.php">
     <DeprecatedMethod>
+      <code><![CDATA[getDeepMxCheck]]></code>
+      <code><![CDATA[getDomainCheck]]></code>
+      <code><![CDATA[getDomainCheck]]></code>
+      <code><![CDATA[getHostnameValidator]]></code>
+      <code><![CDATA[getHostnameValidator]]></code>
+      <code><![CDATA[getHostnameValidator]]></code>
+      <code><![CDATA[getHostnameValidator]]></code>
+      <code><![CDATA[getHostnameValidator]]></code>
+      <code><![CDATA[getHostnameValidator]]></code>
+      <code><![CDATA[getHostnameValidator]]></code>
+      <code><![CDATA[getMXRecord]]></code>
+      <code><![CDATA[getMxCheck]]></code>
+      <code><![CDATA[isMxSupported]]></code>
+      <code><![CDATA[isMxSupported]]></code>
+      <code><![CDATA[isMxSupported]]></code>
+      <code><![CDATA[isMxSupported]]></code>
+      <code><![CDATA[setHostnameValidator]]></code>
+      <code><![CDATA[useDomainCheck]]></code>
       <code><![CDATA[useIdnCheck]]></code>
+      <code><![CDATA[useMxCheck]]></code>
       <code><![CDATA[useTldCheck]]></code>
     </DeprecatedMethod>
     <InvalidArgument>
