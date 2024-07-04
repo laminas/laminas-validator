@@ -545,6 +545,14 @@
     </DeprecatedClass>
   </file>
   <file src="src/CreditCard.php">
+    <DeprecatedMethod>
+      <code><![CDATA[addType]]></code>
+      <code><![CDATA[getService]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[setService]]></code>
+      <code><![CDATA[setType]]></code>
+    </DeprecatedMethod>
     <InvalidOperand>
       <code><![CDATA[$value[$i]]]></code>
     </InvalidOperand>
@@ -2478,6 +2486,26 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/CreditCardTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[addType]]></code>
+      <code><![CDATA[addType]]></code>
+      <code><![CDATA[getService]]></code>
+      <code><![CDATA[getService]]></code>
+      <code><![CDATA[getService]]></code>
+      <code><![CDATA[getService]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[getType]]></code>
+      <code><![CDATA[setService]]></code>
+      <code><![CDATA[setService]]></code>
+      <code><![CDATA[setType]]></code>
+      <code><![CDATA[setType]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[[self::class, 'nocallback']]]></code>
     </InvalidArgument>
