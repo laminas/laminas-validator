@@ -645,6 +645,10 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Date.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getFormat]]></code>
+      <code><![CDATA[isStrict]]></code>
+    </DeprecatedMethod>
     <MixedArgumentTypeCoercion>
       <code><![CDATA[$value]]></code>
     </MixedArgumentTypeCoercion>
@@ -665,6 +669,13 @@
     <ArgumentTypeCoercion>
       <code><![CDATA[$intervalParts]]></code>
     </ArgumentTypeCoercion>
+    <DeprecatedMethod>
+      <code><![CDATA[getStep]]></code>
+    </DeprecatedMethod>
+    <DeprecatedProperty>
+      <code><![CDATA[$this->timezone]]></code>
+      <code><![CDATA[$this->timezone]]></code>
+    </DeprecatedProperty>
     <MixedAssignment>
       <code><![CDATA[$temp['baseValue']]]></code>
       <code><![CDATA[$temp['format']]]></code>
@@ -2547,12 +2558,38 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/DateStepTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getBaseValue]]></code>
+      <code><![CDATA[getBaseValue]]></code>
+      <code><![CDATA[getFormat]]></code>
+      <code><![CDATA[getStep]]></code>
+      <code><![CDATA[getTimezone]]></code>
+      <code><![CDATA[getTimezone]]></code>
+      <code><![CDATA[setBaseValue]]></code>
+      <code><![CDATA[setTimezone]]></code>
+    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[moscowWinterTimeDataProvider]]></code>
       <code><![CDATA[stepTestsDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/DateTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getFormat]]></code>
+      <code><![CDATA[getFormat]]></code>
+      <code><![CDATA[getFormat]]></code>
+      <code><![CDATA[setFormat]]></code>
+      <code><![CDATA[setFormat]]></code>
+      <code><![CDATA[setFormat]]></code>
+      <code><![CDATA[setFormat]]></code>
+      <code><![CDATA[setFormat]]></code>
+      <code><![CDATA[setFormat]]></code>
+      <code><![CDATA[setFormat]]></code>
+      <code><![CDATA[setFormat]]></code>
+      <code><![CDATA[setFormat]]></code>
+      <code><![CDATA[setFormat]]></code>
+      <code><![CDATA[setStrict]]></code>
+    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[datesDataProvider]]></code>
     </PossiblyUnusedMethod>

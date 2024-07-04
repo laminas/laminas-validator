@@ -75,6 +75,8 @@ class DateStep extends Date
      * Optional timezone to be used when the baseValue
      * and validation values do not contain timezone info
      *
+     * @deprecated Since 2.61.0 - The timezone option is unused
+     *
      * @var DateTimeZone
      */
     protected $timezone;
@@ -118,6 +120,8 @@ class DateStep extends Date
     /**
      * Sets the base value from which the step should be computed
      *
+     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
+     *
      * @param string|int|DateTimeInterface $baseValue
      * @return $this
      */
@@ -130,6 +134,8 @@ class DateStep extends Date
     /**
      * Returns the base value from which the step should be computed
      *
+     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
+     *
      * @return string|int|DateTimeInterface
      */
     public function getBaseValue()
@@ -139,6 +145,8 @@ class DateStep extends Date
 
     /**
      * Sets the step date interval
+     *
+     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
      *
      * @return $this
      */
@@ -151,6 +159,8 @@ class DateStep extends Date
     /**
      * Returns the step date interval
      *
+     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
+     *
      * @return DateInterval
      */
     public function getStep()
@@ -161,6 +171,8 @@ class DateStep extends Date
     /**
      * Returns the timezone option
      *
+     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
+     *
      * @return DateTimeZone
      */
     public function getTimezone()
@@ -170,6 +182,8 @@ class DateStep extends Date
 
     /**
      * Sets the timezone option
+     *
+     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
      *
      * @return $this
      */
