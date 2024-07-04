@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Laminas\Validator\Hostname;
-
 require __DIR__ . '/../vendor/autoload.php';
 
 const IANA_URL                        = 'https://data.iana.org/TLD/tlds-alpha-by-domain.txt';
@@ -16,6 +14,11 @@ if (! file_exists(LAMINAS_HOSTNAME_VALIDATOR_FILE) || ! is_readable(LAMINAS_HOST
 
 if (! is_writable(LAMINAS_HOSTNAME_VALIDATOR_FILE)) {
     printf("Error: cannot update file '%s'%s", LAMINAS_HOSTNAME_VALIDATOR_FILE, PHP_EOL);
+    exit(1);
+}
+
+if (! extension_loaded('intl')) {
+    printf("Error: ext-intl is required by this script%s", PHP_EOL);
     exit(1);
 }
 
@@ -49,14 +52,14 @@ foreach ($currentFileContent as $line) {
     }
 
     // Detect where the $validTlds declaration begins
-    if (preg_match('/^\s+protected\s+\$validTlds\s+=\s+\[\s*$/', $line)) {
+    if (preg_match('/^\s+private\s+array\s+\$validTlds\s+=\s+\[\s*$/', $line)) {
         $newFileContent = array_merge($newFileContent, getNewValidTlds($response));
         $insertDone     = true;
     }
 }
 
 if (! $insertDone) {
-    printf('Error: cannot find line with "protected $validTlds"%s', PHP_EOL);
+    printf('Error: cannot find line with "private array $validTlds"%s', PHP_EOL);
     exit(1);
 }
 
@@ -110,49 +113,15 @@ function getOfficialTLDs(): string
  */
 function getNewValidTlds(string $string): array
 {
-    $decodePunycode = getPunycodeDecoder();
-
     // Get new TLDs from the list previously fetched
     $newValidTlds = [];
     foreach (preg_grep('/^[^#]/', preg_split("#\r?\n#", $string)) as $line) {
         $newValidTlds [] = sprintf(
             "%s'%s',\n",
             str_repeat(' ', 8),
-            $decodePunycode(strtolower($line))
+            idn_to_utf8(strtolower($line), 0, INTL_IDNA_VARIANT_UTS46),
         );
     }
 
     return $newValidTlds;
-}
-
-/**
- * Retrieve and return a punycode decoder.
- *
- * TLDs are puny encoded.
- *
- * We need a decodePunycode function to translate TLDs to UTF-8:
- *
- * - use idn_to_utf8 if available
- * - otherwise, use Hostname::decodePunycode()
- *
- * @return callable
- */
-function getPunycodeDecoder()
-{
-    if (function_exists('idn_to_utf8')) {
-        return function ($domain) {
-            return idn_to_utf8($domain, 0, INTL_IDNA_VARIANT_UTS46);
-        };
-    }
-
-    $hostnameValidator = new Hostname();
-    $reflection        = new ReflectionClass($hostnameValidator::class);
-    $decodePunyCode    = $reflection->getMethod('decodePunycode');
-
-    return function ($encode) use ($hostnameValidator, $decodePunyCode) {
-        if (strpos($encode, 'xn--') === 0) {
-            return $decodePunyCode->invokeArgs($hostnameValidator, [substr($encode, 4)]);
-        }
-        return $encode;
-    };
 }
