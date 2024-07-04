@@ -11,7 +11,6 @@ use function array_flip;
 use function array_keys;
 use function arsort;
 use function checkdnsrr;
-use function extension_loaded;
 use function gethostbynamel;
 use function getmxrr;
 use function idn_to_ascii;
@@ -185,10 +184,7 @@ final class EmailAddress extends AbstractValidator
      */
     protected function validateInternationalizedLocalPart(string $localPart): bool
     {
-        if (
-            extension_loaded('intl')
-            && false === UConverter::transcode($localPart, 'UTF-8', 'UTF-8')
-        ) {
+        if (UConverter::transcode($localPart, 'UTF-8', 'UTF-8') === false) {
             // invalid utf?
             return false;
         }
@@ -364,12 +360,8 @@ final class EmailAddress extends AbstractValidator
      */
     private static function idnToAscii(string $hostname): string
     {
-        if (extension_loaded('intl')) {
-            $value = idn_to_ascii($hostname, 0, INTL_IDNA_VARIANT_UTS46);
+        $value = idn_to_ascii($hostname, 0, INTL_IDNA_VARIANT_UTS46);
 
-            return $value !== false ? $value : $hostname;
-        }
-
-        return $hostname;
+        return $value !== false ? $value : $hostname;
     }
 }
