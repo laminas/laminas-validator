@@ -12,7 +12,7 @@ use function is_string;
 /**
  * Validates whether a given value is valid as a sitemap <changefreq> value
  *
- * @link       http://www.sitemaps.org/protocol.php Sitemaps XML format
+ * @link https://www.sitemaps.org/protocol.html Sitemaps XML format
  */
 final class Changefreq extends AbstractValidator
 {
@@ -35,9 +35,9 @@ final class Changefreq extends AbstractValidator
     /**
      * Valid change frequencies
      *
-     * @var array
+     * @var list<string>
      */
-    protected $changeFreqs = [
+    private array $changeFreqs = [
         'always',
         'hourly',
         'daily',
@@ -50,9 +50,7 @@ final class Changefreq extends AbstractValidator
     /**
      * Validates if a string is valid as a sitemap changefreq
      *
-     * @link http://www.sitemaps.org/protocol.php#changefreqdef <changefreq>
-     *
-     * @param  string  $value  value to validate
+     * @link https://www.sitemaps.org/protocol.html#changefreqdef
      */
     public function isValid(mixed $value): bool
     {

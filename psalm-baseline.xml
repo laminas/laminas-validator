@@ -872,27 +872,6 @@
       <code><![CDATA[$min]]></code>
     </MixedAssignment>
   </file>
-  <file src="src/Sitemap/Changefreq.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_string($value)]]></code>
-    </DocblockTypeContradiction>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-  </file>
-  <file src="src/Sitemap/Lastmod.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_string($value)]]></code>
-    </DocblockTypeContradiction>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-  </file>
-  <file src="src/Sitemap/Priority.php">
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-  </file>
   <file src="src/ValidatorChain.php">
     <MixedPropertyTypeCoercion>
       <code><![CDATA[new PriorityQueue()]]></code>
@@ -1438,37 +1417,11 @@
       <code><![CDATA[specialCharValidationProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="test/Sitemap/ChangefreqTest.php">
-    <InvalidArgument>
-      <code><![CDATA[$value]]></code>
-    </InvalidArgument>
-    <PossiblyInvalidCast>
-      <code><![CDATA[$value]]></code>
-    </PossiblyInvalidCast>
-  </file>
-  <file src="test/Sitemap/LastmodTest.php">
-    <InvalidArgument>
-      <code><![CDATA[$value]]></code>
-    </InvalidArgument>
-    <PossiblyInvalidCast>
-      <code><![CDATA[$value]]></code>
-    </PossiblyInvalidCast>
-  </file>
   <file src="test/Sitemap/LocTest.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[invalidLocs]]></code>
       <code><![CDATA[validLocs]]></code>
     </PossiblyUnusedMethod>
-  </file>
-  <file src="test/Sitemap/PriorityTest.php">
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyInvalidCast>
-      <code><![CDATA[$value]]></code>
-    </PossiblyInvalidCast>
   </file>
   <file src="test/StepTest.php">
     <PossiblyUnusedMethod>
