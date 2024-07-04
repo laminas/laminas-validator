@@ -59,13 +59,21 @@ final class IsJsonString extends AbstractValidator
     /** @var positive-int */
     protected int $maxDepth = 512;
 
-    /** @param int-mask-of<self::ALLOW_*> $type */
+    /**
+     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
+     *
+     * @param int-mask-of<self::ALLOW_*> $type
+     */
     public function setAllow(int $type): void
     {
         $this->allow = $type;
     }
 
-    /** @param positive-int $maxDepth */
+    /**
+     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
+     *
+     * @param positive-int $maxDepth
+     */
     public function setMaxDepth(int $maxDepth): void
     {
         $this->maxDepth = $maxDepth;
