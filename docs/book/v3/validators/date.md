@@ -7,7 +7,7 @@
 The following options are supported for `Laminas\Validator\Date`:
 
 - `format`: Sets the format which is used to write the date.
-- `locale`: Sets the locale which will be used to validate date values.
+- `strict`: Ensures that string input exactly matches the generated date when formatted
 
 ## Default date validation
 
@@ -36,14 +36,12 @@ $validator->isValid('May');  // returns false
 
 ## Strict mode
 
-- **Since 2.13.0**
-
 By default, `Laminas\Validator\Date` only validates that it can convert the
 provided value to a valid `DateTime` value.
 
 If you want to require that the date is specified in a specific format, you can
 provide both the [date format](#specifying-a-date-format) and the `strict`
-options. In such a scenario, the value must both be covertable to a `DateTime`
+options. In such a scenario, the value must both be convertable to a `DateTime`
 value **and** be in the same format as provided to the validator. (Generally,
 this will mean the value must be a string.)
 
