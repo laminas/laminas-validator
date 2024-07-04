@@ -39,16 +39,6 @@ The `allow` option is a bit mask of the `ALLOW_*` constants in `IsJsonString`:
 - `IsJsonString::ALLOW_OBJECT` - Accept JSON objects such as `{"Some":"Object"}`
 - `IsJsonString::ALLOW_ALL` - A convenience constant allowing all of the above _(Also the default)_.
 
-The `allow` option also has a companion setter method `setAllow`. For example, to only accept arrays and objects:
-
-```php
-use Laminas\Validator\IsJsonString;
-
-$validator = new IsJsonString();
-$validator->setAllow(IsJsonString::ALLOW_ARRAY | IsJsonString::ALLOW_OBJECT);
-$validator->isValid('1.234'); // false
-```
-
 ## Restricting Max Object or Array Nesting Level
 
 If you wish to restrict the nesting level of arrays and objects that are considered valid, the validator accepts a `maxDepth` option. The default value of this option is `512` - the same default value as `json_decode`.
@@ -56,11 +46,4 @@ If you wish to restrict the nesting level of arrays and objects that are conside
 ```php
 $validator = new Laminas\Validator\IsJsonString(['maxDepth' => 2]);
 $validator->isValid('{"nested": {"object: "here"}}'); // false
-```
-
-Again, the max nesting level allowed has a companion setter method:
-
-```php
-$validator = new Laminas\Validator\IsJsonString();
-$validator->setMaxDepth(10);
 ```

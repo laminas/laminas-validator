@@ -18,12 +18,10 @@ use const JSON_ERROR_DEPTH;
 use const JSON_THROW_ON_ERROR;
 
 /**
- * @psalm-type CustomOptions = array{
- *     allow: int-mask-of<self::ALLOW_*>,
- *     maxDepth: positive-int,
+ * @psalm-type OptionsArgument = array{
+ *     allow?: int-mask-of<self::ALLOW_*>,
+ *     maxDepth?: positive-int,
  * }
- * @psalm-import-type AbstractOptions from AbstractValidator
- * @psalm-type Options = AbstractOptions|CustomOptions
  */
 final class IsJsonString extends AbstractValidator
 {
@@ -55,20 +53,19 @@ final class IsJsonString extends AbstractValidator
 
     protected ?string $type = null;
     /** @var int-mask-of<self::ALLOW_*> */
-    protected int $allow = self::ALLOW_ALL;
+    private readonly int $allow;
     /** @var positive-int */
-    protected int $maxDepth = 512;
+    protected readonly int $maxDepth;
 
-    /** @param int-mask-of<self::ALLOW_*> $type */
-    public function setAllow(int $type): void
+    /** @param OptionsArgument $options */
+    public function __construct(array $options = [])
     {
-        $this->allow = $type;
-    }
+        $this->allow    = $options['allow'] ?? self::ALLOW_ALL;
+        $this->maxDepth = $options['maxDepth'] ?? 512;
 
-    /** @param positive-int $maxDepth */
-    public function setMaxDepth(int $maxDepth): void
-    {
-        $this->maxDepth = $maxDepth;
+        unset($options['allow'], $options['maxDepth']);
+
+        parent::__construct($options);
     }
 
     public function isValid(mixed $value): bool
