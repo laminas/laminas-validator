@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Validator\Barcode;
 
 use function array_search;
+use function assert;
 use function count;
 use function str_split;
 use function substr;
@@ -84,7 +85,8 @@ final class Code93 implements AdapterInterface
             --$length;
         }
 
-        $check   = array_search($count % 47, self::CHECK);
+        $check = array_search($count % 47, self::CHECK);
+        assert($check !== false);
         $value[] = $check;
         $count   = 0;
         $length  = count($value) % 15;
@@ -96,7 +98,9 @@ final class Code93 implements AdapterInterface
             $count += self::CHECK[$char] * $length;
             --$length;
         }
-        $check .= array_search($count % 47, self::CHECK);
+        $sum = array_search($count % 47, self::CHECK);
+        assert($sum !== false);
+        $check .= $sum;
 
         if ($check === $checksum) {
             return true;
