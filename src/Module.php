@@ -5,16 +5,18 @@ declare(strict_types=1);
 namespace Laminas\Validator;
 
 use Laminas\ModuleManager\ModuleManager;
+use Laminas\ServiceManager\ServiceManager;
 
+/** @psalm-import-type ServiceManagerConfiguration from ServiceManager */
 class Module
 {
     /**
      * Return default laminas-validator configuration for laminas-mvc applications.
      *
      * @return array[]
-     * @psalm-return array{service_manager: array}
+     * @psalm-return array{service_manager: ServiceManagerConfiguration}
      */
-    public function getConfig()
+    public function getConfig(): array
     {
         $provider = new ConfigProvider();
 
@@ -27,9 +29,8 @@ class Module
      * Register a specification for the ValidatorManager with the ServiceListener.
      *
      * @param ModuleManager $moduleManager
-     * @return void
      */
-    public function init($moduleManager)
+    public function init($moduleManager): void
     {
         $event           = $moduleManager->getEvent();
         $container       = $event->getParam('ServiceManager');
