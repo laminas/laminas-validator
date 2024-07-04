@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\Sitemap;
 
-use Laminas\Stdlib\ErrorHandler;
 use Laminas\Validator\AbstractValidator;
 
 use function is_string;
@@ -13,7 +12,7 @@ use function preg_match;
 /**
  * Validates whether a given value is valid as a sitemap <lastmod> value
  *
- * @link       http://www.sitemaps.org/protocol.php Sitemaps XML format
+ * @link https://www.sitemaps.org/protocol.html Sitemaps XML format
  */
 final class Lastmod extends AbstractValidator
 {
@@ -45,9 +44,7 @@ final class Lastmod extends AbstractValidator
     /**
      * Validates if a string is valid as a sitemap lastmod
      *
-     * @link http://www.sitemaps.org/protocol.php#lastmoddef <lastmod>
-     *
-     * @param  string  $value  value to validate
+     * @link https://www.sitemaps.org/protocol.html#lastmoddef
      */
     public function isValid(mixed $value): bool
     {
@@ -57,9 +54,7 @@ final class Lastmod extends AbstractValidator
         }
 
         $this->setValue($value);
-        ErrorHandler::start();
         $result = preg_match(self::LASTMOD_REGEX, $value);
-        ErrorHandler::stop();
         if ($result !== 1) {
             $this->error(self::NOT_VALID);
             return false;

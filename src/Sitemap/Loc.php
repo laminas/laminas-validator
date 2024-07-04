@@ -40,7 +40,7 @@ final class Loc extends AbstractValidator
     /**
      * Validates if a string is valid as a sitemap location
      *
-     * @link https://www.sitemaps.org/protocol.php#locdef
+     * @link https://www.sitemaps.org/protocol.html#locdef
      */
     public function isValid(mixed $value): bool
     {

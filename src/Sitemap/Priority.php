@@ -11,7 +11,7 @@ use function is_numeric;
 /**
  * Validates whether a given value is valid as a sitemap <priority> value
  *
- * @link       http://www.sitemaps.org/protocol.php Sitemaps XML format
+ * @link https://www.sitemaps.org/protocol.html Sitemaps XML format
  */
 final class Priority extends AbstractValidator
 {
@@ -34,9 +34,7 @@ final class Priority extends AbstractValidator
     /**
      * Validates if a string is valid as a sitemap priority
      *
-     * @link http://www.sitemaps.org/protocol.php#prioritydef <priority>
-     *
-     * @param  string  $value  value to validate
+     * @link https://www.sitemaps.org/protocol.html#prioritydef
      */
     public function isValid(mixed $value): bool
     {
