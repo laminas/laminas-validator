@@ -133,7 +133,7 @@
       <code><![CDATA[$this->abstractOptions]]></code>
     </MixedPropertyTypeCoercion>
     <TypeDoesNotContainType>
-      <code><![CDATA[false === UConverter::transcode($localPart, 'UTF-8', 'UTF-8')]]></code>
+      <code><![CDATA[UConverter::transcode($localPart, 'UTF-8', 'UTF-8') === false]]></code>
     </TypeDoesNotContainType>
   </file>
   <file src="src/Exception/BadMethodCallException.php">
