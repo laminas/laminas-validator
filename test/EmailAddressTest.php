@@ -6,7 +6,6 @@ namespace LaminasTest\Validator;
 
 use Generator;
 use Laminas\Validator\EmailAddress;
-use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Hostname;
 use LaminasTest\Validator\TestAsset\Translator;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -22,11 +21,8 @@ use function current;
 use function implode;
 use function next;
 use function preg_replace;
-use function set_error_handler;
 use function sprintf;
 use function str_repeat;
-
-use const E_USER_NOTICE;
 
 final class EmailAddressTest extends TestCase
 {
@@ -44,7 +40,8 @@ final class EmailAddressTest extends TestCase
      */
     public function testBasic(): void
     {
-        self::assertTrue($this->validator->isValid('username@example.com'));
+        $validator = new EmailAddress();
+        self::assertTrue($validator->isValid('username@example.com'));
     }
 
     /**
@@ -52,7 +49,9 @@ final class EmailAddressTest extends TestCase
      */
     public function testLocalhostAllowed(): void
     {
-        $validator = new EmailAddress(Hostname::ALLOW_ALL);
+        $validator = new EmailAddress([
+            'allow' => Hostname::ALLOW_ALL,
+        ]);
 
         self::assertTrue($validator->isValid('username@localhost'));
     }
@@ -62,7 +61,9 @@ final class EmailAddressTest extends TestCase
      */
     public function testLocalDomainAllowed(): void
     {
-        $validator = new EmailAddress(Hostname::ALLOW_ALL);
+        $validator = new EmailAddress([
+            'allow' => Hostname::ALLOW_ALL,
+        ]);
 
         self::assertTrue($validator->isValid('username@localhost.localdomain'));
     }
@@ -72,7 +73,9 @@ final class EmailAddressTest extends TestCase
      */
     public function testIPAllowed(): void
     {
-        $validator      = new EmailAddress(Hostname::ALLOW_DNS | Hostname::ALLOW_IP);
+        $validator      = new EmailAddress([
+            'allow' => Hostname::ALLOW_DNS | Hostname::ALLOW_IP,
+        ]);
         $valuesExpected = [
             [Hostname::ALLOW_DNS, true, ['bob@212.212.20.4']],
             [Hostname::ALLOW_DNS, false, ['bob@localhost']],
@@ -89,12 +92,13 @@ final class EmailAddressTest extends TestCase
      */
     public function testLocalPartMissing(): void
     {
-        self::assertFalse($this->validator->isValid('@example.com'));
+        $validator = new EmailAddress();
+        self::assertFalse($validator->isValid('@example.com'));
 
-        $messages = $this->validator->getMessages();
+        $messages = $validator->getMessages();
 
         self::assertCount(1, $messages);
-        self::assertStringContainsString('local-part@hostname', current($messages));
+        self::assertArrayHasKey(EmailAddress::INVALID_FORMAT, $messages);
     }
 
     /**
@@ -102,20 +106,20 @@ final class EmailAddressTest extends TestCase
      */
     public function testLocalPartInvalid(): void
     {
-        self::assertFalse($this->validator->isValid('Some User@example.com'));
+        $validator = new EmailAddress();
+        self::assertFalse($validator->isValid('Some User@example.com'));
 
-        $messages = $this->validator->getMessages();
+        $messages = $validator->getMessages();
 
         self::assertCount(3, $messages);
 
-        self::assertStringContainsString('Some User', current($messages));
-        self::assertStringContainsString('dot-atom', current($messages));
+        self::assertArrayHasKey(EmailAddress::DOT_ATOM, $messages);
+        self::assertArrayHasKey(EmailAddress::QUOTED_STRING, $messages);
+        self::assertArrayHasKey(EmailAddress::INVALID_LOCAL_PART, $messages);
 
-        self::assertStringContainsString('Some User', next($messages));
-        self::assertStringContainsString('quoted-string', current($messages));
-
-        self::assertStringContainsString('Some User', next($messages));
-        self::assertStringContainsString('not a valid local part', current($messages));
+        foreach ($messages as $message) {
+            self::assertStringContainsString('Some User', $message);
+        }
     }
 
     /**
@@ -123,11 +127,10 @@ final class EmailAddressTest extends TestCase
      */
     public function testLocalPartQuotedString(): void
     {
-        self::assertTrue($this->validator->isValid('"Some User"@example.com'));
+        $validator = new EmailAddress();
+        self::assertTrue($validator->isValid('"Some User"@example.com'));
 
-        $messages = $this->validator->getMessages();
-
-        self::assertIsArray($messages);
+        $messages = $validator->getMessages();
         self::assertCount(0, $messages);
     }
 
@@ -136,12 +139,13 @@ final class EmailAddressTest extends TestCase
      */
     public function testHostnameInvalid(): void
     {
-        self::assertFalse($this->validator->isValid('username@ example . com'));
+        $validator = new EmailAddress();
+        self::assertFalse($validator->isValid('username@ example . com'));
 
-        $messages = $this->validator->getMessages();
+        $messages = $validator->getMessages();
 
         self::assertGreaterThanOrEqual(1, count($messages));
-        self::assertStringContainsString('not a valid hostname', current($messages));
+        self::assertArrayHasKey(EmailAddress::INVALID_HOSTNAME, $messages);
     }
 
     /**
@@ -172,9 +176,10 @@ final class EmailAddressTest extends TestCase
         ];
 
         foreach ($emailAddresses as $input) {
+            $validator = new EmailAddress();
             self::assertTrue(
-                $this->validator->isValid($input),
-                "$input failed to pass validation:\n" . implode("\n", $this->validator->getMessages()),
+                $validator->isValid($input),
+                "$input failed to pass validation:\n" . implode("\n", $validator->getMessages()),
             );
         }
     }
@@ -195,9 +200,10 @@ final class EmailAddressTest extends TestCase
         ];
 
         foreach ($emailAddresses as $input) {
+            $validator = new EmailAddress();
             self::assertFalse(
-                $this->validator->isValid($input),
-                "$input failed to pass validation:\n" . implode("\n", $this->validator->getMessages()),
+                $validator->isValid($input),
+                "$input failed to pass validation:\n" . implode("\n", $validator->getMessages()),
             );
         }
     }
@@ -208,9 +214,10 @@ final class EmailAddressTest extends TestCase
      */
     public function testEmailDisplay(): void
     {
-        self::assertFalse($this->validator->isValid('User Name <username@example.com>'));
+        $validator = new EmailAddress();
+        self::assertFalse($validator->isValid('User Name <username@example.com>'));
 
-        $messages = $this->validator->getMessages();
+        $messages = $validator->getMessages();
 
         self::assertGreaterThanOrEqual(3, count($messages));
         self::assertStringContainsString('not a valid hostname', current($messages));
@@ -362,18 +369,6 @@ final class EmailAddressTest extends TestCase
             'useMxCheck' => true,
         ]);
 
-        // Are MX checks supported by this system?
-        if (! $validator->isMxSupported()) {
-            self::markTestSkipped('Testing MX records is not supported with this configuration');
-        }
-
-        self::assertSame($expect, $validator->isValid($emailAddress), implode("\n", $validator->getMessages()));
-
-        // Try a check via setting the option via a method
-        unset($validator);
-
-        $validator = new EmailAddress();
-        $validator->useMxCheck(true);
         self::assertSame($expect, $validator->isValid($emailAddress), implode("\n", $validator->getMessages()));
     }
 
@@ -389,11 +384,6 @@ final class EmailAddressTest extends TestCase
             'allow'      => Hostname::ALLOW_DNS,
             'useMxCheck' => true,
         ]);
-
-        // Are MX checks supported by this system?
-        if (! $validator->isMxSupported()) {
-            self::markTestSkipped('Testing MX records is not supported with this configuration');
-        }
 
         $email = 'good@www.getlaminas.org';
         $host  = preg_replace('/.*@/', '', $email);
@@ -457,8 +447,7 @@ final class EmailAddressTest extends TestCase
     #[Group('Laminas-2861')]
     public function testHostnameValidatorMessagesShouldBeTranslated(): void
     {
-        $hostnameValidator = new Hostname();
-        $translations      = [
+        $translations = [
             'hostnameIpAddressNotAllowed'   => 'hostnameIpAddressNotAllowed translation',
             'hostnameUnknownTld'            => 'The input appears to be a DNS hostname '
             . 'but cannot match TLD against known list',
@@ -470,12 +459,13 @@ final class EmailAddressTest extends TestCase
             'hostnameLocalNameNotAllowed'   => 'hostnameLocalNameNotAllowed translation',
         ];
 
-        $translator = new Translator($translations);
+        $hostnameValidator = new Hostname();
+        $validator         = new EmailAddress([
+            'hostnameValidator' => $hostnameValidator,
+            'translator'        => new Translator($translations),
+        ]);
 
-        $this->validator->setTranslator($translator);
-        $this->validator->setHostnameValidator($hostnameValidator);
-
-        $this->validator->isValid('_XX.!!3xx@0.239,512.777');
+        $validator->isValid('_XX.!!3xx@0.239,512.777');
         $messages = $hostnameValidator->getMessages();
         $found    = false;
         foreach ($messages as $code => $message) {
@@ -544,48 +534,6 @@ final class EmailAddressTest extends TestCase
     }
 
     /**
-     * Testing initializing with several options
-     */
-    public function testInstanceWithOldOptions(): void
-    {
-        $handler   = set_error_handler([$this, 'errorHandler'], E_USER_NOTICE);
-        $validator = new EmailAddress();
-        $options   = $validator->getOptions();
-
-        self::assertSame(Hostname::ALLOW_DNS, $options['allow']);
-        self::assertFalse($options['useMxCheck']);
-
-        try {
-            /** @psalm-suppress TooManyArguments */
-            $validator = new EmailAddress(Hostname::ALLOW_ALL, true, new Hostname(['allow' => Hostname::ALLOW_ALL]));
-            $options   = $validator->getOptions();
-
-            self::assertSame(Hostname::ALLOW_ALL, $options['allow']);
-            self::assertTrue($options['useMxCheck']);
-            set_error_handler($handler);
-        } catch (InvalidArgumentException) {
-            self::markTestSkipped('MX not available on this system');
-        }
-    }
-
-    /**
-     * Testing setOptions
-     */
-    public function testSetOptions(): void
-    {
-        $this->validator->setOptions(['messages' => [EmailAddress::INVALID => 'TestMessage']]);
-        $messages = $this->validator->getMessageTemplates();
-
-        self::assertSame('TestMessage', $messages[EmailAddress::INVALID]);
-
-        $oldHostname = $this->validator->getHostnameValidator();
-        $this->validator->setOptions(['hostnameValidator' => new Hostname(['allow' => Hostname::ALLOW_ALL])]);
-        $hostname = $this->validator->getHostnameValidator();
-
-        self::assertNotSame($oldHostname, $hostname);
-    }
-
-    /**
      * Testing setMessage
      */
     public function testSetSingleMessage(): void
@@ -602,13 +550,17 @@ final class EmailAddressTest extends TestCase
 
     public function testSetSingleMessageViaOptions(): void
     {
-        $validator = new EmailAddress(['message' => 'TestMessage']);
+        $hostname  = new Hostname();
+        $validator = new EmailAddress([
+            'message'           => 'TestMessage',
+            'hostnameValidator' => $hostname,
+        ]);
 
         foreach ($validator->getMessageTemplates() as $message) {
             self::assertSame('TestMessage', $message);
         }
 
-        foreach ($validator->getHostnameValidator()->getMessageTemplates() as $message) {
+        foreach ($hostname->getMessageTemplates() as $message) {
             self::assertSame('TestMessage', $message);
         }
     }
@@ -622,48 +574,29 @@ final class EmailAddressTest extends TestCase
     }
 
     /**
-     * Testing getValidateMx
-     */
-    public function testGetValidateMx(): void
-    {
-        self::assertFalse($this->validator->getMxCheck());
-    }
-
-    /**
-     * Testing getDeepMxCheck
-     */
-    public function testGetDeepMxCheck(): void
-    {
-        self::assertFalse($this->validator->getDeepMxCheck());
-    }
-
-    /**
      * Testing setMessage for all messages
      */
     #[Group('Laminas-10690')]
     public function testSetMultipleMessages(): void
     {
-        $messages = $this->validator->getMessageTemplates();
+        $hostname  = new Hostname();
+        $validator = new EmailAddress([
+            'hostnameValidator' => $hostname,
+        ]);
+
+        $messages = $validator->getMessageTemplates();
 
         self::assertNotSame('TestMessage', $messages[EmailAddress::INVALID]);
 
-        $this->validator->setMessage('TestMessage');
+        $validator->setMessage('TestMessage');
 
-        foreach ($this->validator->getMessageTemplates() as $message) {
+        foreach ($validator->getMessageTemplates() as $message) {
             self::assertSame('TestMessage', $message);
         }
 
-        foreach ($this->validator->getHostnameValidator()->getMessageTemplates() as $message) {
+        foreach ($hostname->getMessageTemplates() as $message) {
             self::assertSame('TestMessage', $message);
         }
-    }
-
-    /**
-     * Testing getDomainCheck
-     */
-    public function testGetDomainCheck(): void
-    {
-        self::assertTrue($this->validator->getDomainCheck());
     }
 
     public function errorHandler(int $errno, string $errstr): void
@@ -677,36 +610,6 @@ final class EmailAddressTest extends TestCase
         self::assertFalse($this->validator->isValid('example@gmail.com.'));
         self::assertFalse($this->validator->isValid('test@test.co.'));
         self::assertFalse($this->validator->isValid('test@test.co.za.'));
-    }
-
-    #[Group('Laminas-11239')]
-    public function testNotSetHostnameValidator(): void
-    {
-        $hostname = $this->validator->getHostnameValidator();
-
-        self::assertInstanceOf(Hostname::class, $hostname);
-    }
-
-    public function testIsMxSupported(): void
-    {
-        $validator = new EmailAddress(['useMxCheck' => true, 'allow' => Hostname::ALLOW_ALL]);
-
-        self::assertIsBool($validator->isMxSupported());
-    }
-
-    public function testGetMXRecord(): void
-    {
-        $validator = new EmailAddress(['useMxCheck' => true, 'allow' => Hostname::ALLOW_ALL]);
-
-        if (! $validator->isMxSupported()) {
-            self::markTestSkipped('Testing MX records is not supported with this configuration');
-        }
-
-        self::assertTrue($validator->isValid('john.doe@gmail.com'));
-
-        $result = $validator->getMXRecord();
-
-        self::assertNotEmpty($result);
     }
 
     public function testEqualsMessageTemplates(): void
@@ -821,14 +724,6 @@ final class EmailAddressTest extends TestCase
             'useDeepMxCheck' => true,
         ]);
         self::assertFalse($validator->isValid('root@localhost'));
-    }
-
-    public function testCanSetDomainCheckFlag(): void
-    {
-        $validator = new EmailAddress();
-        $validator->useDomainCheck(false);
-
-        self::assertFalse($validator->getDomainCheck());
     }
 
     public function testWillNotCheckEmptyDeepMxChecks(): void
