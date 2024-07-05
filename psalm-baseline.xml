@@ -1054,6 +1054,12 @@
     </PossiblyFalseOperand>
   </file>
   <file src="src/File/ExcludeMimeType.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getHeaderCheck]]></code>
+      <code><![CDATA[getMagicFile]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[isMagicFileDisabled]]></code>
+    </DeprecatedMethod>
     <DeprecatedTrait>
       <code><![CDATA[FileInformationTrait]]></code>
     </DeprecatedTrait>
@@ -1410,6 +1416,10 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/File/IsCompressed.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[setMimeType]]></code>
+    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA[$options === null]]></code>
     </DocblockTypeContradiction>
@@ -1423,6 +1433,10 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/File/IsImage.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[setMimeType]]></code>
+    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA[$options === null]]></code>
     </DocblockTypeContradiction>
@@ -1465,6 +1479,27 @@
     </MoreSpecificImplementedParamType>
   </file>
   <file src="src/File/MimeType.php">
+    <DeprecatedClass>
+      <code><![CDATA[new Exception\InvalidMagicMimeFileException(sprintf(
+                    'The given magicfile ("%s") could not be used by ext/finfo',
+                    $file
+                ), 0, $error)]]></code>
+    </DeprecatedClass>
+    <DeprecatedMethod>
+      <code><![CDATA[addMimeType]]></code>
+      <code><![CDATA[addMimeType]]></code>
+      <code><![CDATA[enableHeaderCheck]]></code>
+      <code><![CDATA[getHeaderCheck]]></code>
+      <code><![CDATA[getMagicFile]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[isMagicFileDisabled]]></code>
+      <code><![CDATA[setMagicFile]]></code>
+      <code><![CDATA[setMagicFile]]></code>
+      <code><![CDATA[setMagicFile]]></code>
+      <code><![CDATA[setMimeType]]></code>
+      <code><![CDATA[setMimeType]]></code>
+    </DeprecatedMethod>
     <DeprecatedTrait>
       <code><![CDATA[FileInformationTrait]]></code>
     </DeprecatedTrait>
@@ -2993,6 +3028,26 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/ExcludeMimeTypeTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[addMimeType]]></code>
+      <code><![CDATA[addMimeType]]></code>
+      <code><![CDATA[addMimeType]]></code>
+      <code><![CDATA[addMimeType]]></code>
+      <code><![CDATA[enableHeaderCheck]]></code>
+      <code><![CDATA[enableHeaderCheck]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[setMimeType]]></code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$isValidParam['tmp_name']]]></code>
     </MixedArgument>
@@ -3174,6 +3229,31 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/IsCompressedTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[addMimeType]]></code>
+      <code><![CDATA[addMimeType]]></code>
+      <code><![CDATA[addMimeType]]></code>
+      <code><![CDATA[addMimeType]]></code>
+      <code><![CDATA[enableHeaderCheck]]></code>
+      <code><![CDATA[enableHeaderCheck]]></code>
+      <code><![CDATA[enableHeaderCheck]]></code>
+      <code><![CDATA[getHeaderCheck]]></code>
+      <code><![CDATA[getMagicFile]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[setMimeType]]></code>
+    </DeprecatedMethod>
     <PossiblyInvalidArgument>
       <code><![CDATA[$isValidParam['tmp_name']]]></code>
     </PossiblyInvalidArgument>
@@ -3188,6 +3268,31 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/IsImageTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[addMimeType]]></code>
+      <code><![CDATA[addMimeType]]></code>
+      <code><![CDATA[addMimeType]]></code>
+      <code><![CDATA[addMimeType]]></code>
+      <code><![CDATA[enableHeaderCheck]]></code>
+      <code><![CDATA[enableHeaderCheck]]></code>
+      <code><![CDATA[enableHeaderCheck]]></code>
+      <code><![CDATA[getHeaderCheck]]></code>
+      <code><![CDATA[getMagicFile]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[setMimeType]]></code>
+    </DeprecatedMethod>
     <PossiblyInvalidArgument>
       <code><![CDATA[$isValidParam['tmp_name']]]></code>
     </PossiblyInvalidArgument>
@@ -3235,6 +3340,44 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/MimeTypeTest.php">
+    <DeprecatedClass>
+      <code><![CDATA[InvalidMagicMimeFileException::class]]></code>
+    </DeprecatedClass>
+    <DeprecatedMethod>
+      <code><![CDATA[addMimeType]]></code>
+      <code><![CDATA[addMimeType]]></code>
+      <code><![CDATA[addMimeType]]></code>
+      <code><![CDATA[addMimeType]]></code>
+      <code><![CDATA[addMimeType]]></code>
+      <code><![CDATA[addMimeType]]></code>
+      <code><![CDATA[disableMagicFile]]></code>
+      <code><![CDATA[enableHeaderCheck]]></code>
+      <code><![CDATA[enableHeaderCheck]]></code>
+      <code><![CDATA[getHeaderCheck]]></code>
+      <code><![CDATA[getMagicFile]]></code>
+      <code><![CDATA[getMagicFile]]></code>
+      <code><![CDATA[getMagicFile]]></code>
+      <code><![CDATA[getMagicFile]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[getMimeType]]></code>
+      <code><![CDATA[isMagicFileDisabled]]></code>
+      <code><![CDATA[setMagicFile]]></code>
+      <code><![CDATA[setMagicFile]]></code>
+      <code><![CDATA[setMimeType]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[[]]]></code>
     </InvalidArgument>

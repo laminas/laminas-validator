@@ -151,6 +151,8 @@ class MimeType extends AbstractValidator
     /**
      * Returns the actual set magicfile
      *
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
+     *
      * @return string|false
      */
     public function getMagicFile()
@@ -192,11 +194,13 @@ class MimeType extends AbstractValidator
      * if the MAGIC file is erroneous, no file will be set
      * if false, the default MAGIC file from PHP will be used
      *
-     * @param  string $file
-     * @throws Exception\RuntimeException When finfo can not read the magicfile.
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
+     *
+     * @param string $file
+     * @return self Provides fluid interface
      * @throws Exception\InvalidArgumentException
      * @throws Exception\InvalidMagicMimeFileException
-     * @return self Provides fluid interface
+     * @throws Exception\RuntimeException When finfo can not read the magicfile.
      */
     public function setMagicFile($file)
     {
@@ -232,6 +236,8 @@ class MimeType extends AbstractValidator
     /**
      * Disables usage of MagicFile
      *
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
+     *
      * @param bool $disable False disables usage of magic file; true enables it.
      * @return self Provides fluid interface
      */
@@ -244,6 +250,8 @@ class MimeType extends AbstractValidator
     /**
      * Is usage of MagicFile disabled?
      *
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
+     *
      * @return bool
      */
     public function isMagicFileDisabled()
@@ -253,6 +261,8 @@ class MimeType extends AbstractValidator
 
     /**
      * Returns the Header Check option
+     *
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
      *
      * @return bool
      */
@@ -265,7 +275,9 @@ class MimeType extends AbstractValidator
      * Defines if the http header should be used
      * Note that this is unsafe and therefor the default value is false
      *
-     * @param  bool $headerCheck
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
+     *
+     * @param bool $headerCheck
      * @return self Provides fluid interface
      */
     public function enableHeaderCheck($headerCheck = true)
@@ -277,7 +289,9 @@ class MimeType extends AbstractValidator
     /**
      * Returns the set mimetypes
      *
-     * @param  bool $asArray Returns the values as array, when false a concatenated string is returned
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
+     *
+     * @param bool $asArray Returns the values as array, when false a concatenated string is returned
      * @return string|list<string>
      * @psalm-return ($asArray is true ? list<string> : string)
      */
@@ -295,7 +309,9 @@ class MimeType extends AbstractValidator
     /**
      * Sets the mimetypes
      *
-     * @param  string|list<string> $mimetype The mimetypes to validate
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
+     *
+     * @param string|list<string> $mimetype The mimetypes to validate
      * @return self Provides a fluent interface
      */
     public function setMimeType($mimetype)
@@ -307,6 +323,8 @@ class MimeType extends AbstractValidator
 
     /**
      * Adds the mimetypes
+     *
+     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
      *
      * @param  string|list<string> $mimetype The mimetypes to add for validation
      * @throws Exception\InvalidArgumentException
