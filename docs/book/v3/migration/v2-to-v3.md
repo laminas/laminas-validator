@@ -97,9 +97,44 @@ A new option `bind` has been added that will bind the given callback to the scop
 
 The [documentation](../validators/callback.md#callbacks-and-scope) has been updated with the relevant details.
 
+### `Laminas\Validator\CreditCard`
+
+The following methods have been removed:
+
+- `getType`
+- `setType`
+- `addType`
+- `getService`
+- `setService`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/credit-card.md).
+
 ### `Laminas\Validator\Digits`
 
 This validator no longer uses the Digits filter from `laminas/laminas-filter`, so its static filter property has been removed. This change is unlikely to cause any problems unless for some reason you have extended this class.
+
+### `Laminas\Validator\EmailAddress`
+
+The following methods have been removed:
+
+- `getHostnameValidator`
+- `setHostnameValidator`
+- `getAllow`
+- `setAllow`
+- `isMxSupported`
+- `getMxCheck`
+- `useMxCheck`
+- `getDeepMxCheck`
+- `useDeepMxCheck`
+- `getDomainCheck`
+- `useDomainCheck`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/email-address.md).
+- If you use custom `Hostname` validators to restrict valid host types, it is worth [reading the documentation](../validators/email-address.md#controlling-hostname-validation-options) about how the Email Address validator interacts with the Hostname validator with regard to option priority for the `allow` option.
 
 ### `Laminas\Validator\Explode`
 
