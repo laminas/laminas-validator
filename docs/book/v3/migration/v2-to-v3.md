@@ -156,6 +156,23 @@ Behaviour changes:
 - The constructor now only accepts an associative array
 - Error messages match the same format as other validators, i.e. `array<string, string>`
 
+### `Laminas\Validator\Hostname`
+
+The following methods have been removed:
+
+- `getIpValidator`
+- `setIpValidator`
+- `getAllow`
+- `setAllow`
+- `getIdnCheck`
+- `useIdnCheck`
+- `getTldCheck`
+- `useTldCheck`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/hostname.md).
+
 ### `Laminas\Validator\Regex`
 
 The following methods have been removed:
