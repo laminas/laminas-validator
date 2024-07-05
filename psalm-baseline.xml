@@ -42,6 +42,7 @@
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
+      <code><![CDATA[$this->options]]></code>
     </UndefinedThisPropertyAssignment>
   </file>
   <file src="src/Barcode/Code128.php">
@@ -279,7 +280,6 @@
     </MixedAssignment>
     <PossiblyInvalidArgument>
       <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
@@ -529,42 +529,6 @@
     </MoreSpecificImplementedParamType>
     <RedundantConditionGivenDocblockType>
       <code><![CDATA[is_string($value)]]></code>
-    </RedundantConditionGivenDocblockType>
-  </file>
-  <file src="src/File/WordCount.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_string($options)]]></code>
-    </DocblockTypeContradiction>
-    <MixedArgument>
-      <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$fileInfo['file']]]></code>
-    </MixedArgument>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$options]]></code>
-    </MixedArgumentTypeCoercion>
-    <MixedAssignment>
-      <code><![CDATA[$max]]></code>
-      <code><![CDATA[$min]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[int]]></code>
-      <code><![CDATA[int]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->options['max']]]></code>
-      <code><![CDATA[$this->options['min']]]></code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$count]]></code>
-    </PropertyNotSetInConstructor>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[$this->getMax() !== null]]></code>
-      <code><![CDATA[$this->getMax() !== null]]></code>
-      <code><![CDATA[$this->getMin() !== null]]></code>
-      <code><![CDATA[$this->getMin() !== null]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/GpsPoint.php">
@@ -945,14 +909,8 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/WordCountTest.php">
-    <MixedArgument>
-      <code><![CDATA[$isValidParam['tmp_name']]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicBehaviorDataProvider]]></code>
-      <code><![CDATA[invalidMinMaxValues]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/GPSPointTest.php">
