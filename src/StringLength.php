@@ -42,14 +42,6 @@ final class StringLength extends AbstractValidator
     private readonly string $encoding;
     protected ?int $length = null;
 
-    /** @var array<string, mixed> */
-    protected array $options = [
-        'min'      => 0, // Minimum length
-        'max'      => null, // Maximum length, null if there is no length limitation
-        'encoding' => 'UTF-8', // Encoding to use
-        'length'   => 0, // Actual length
-    ];
-
     /**
      * Sets validator options
      *
