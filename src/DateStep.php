@@ -9,20 +9,17 @@ use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
-use Laminas\Stdlib\ArrayUtils;
-use Traversable;
+use Laminas\Validator\Exception\InvalidArgumentException;
 
 use function array_combine;
 use function array_count_values;
 use function array_map;
-use function array_shift;
 use function ceil;
-use function date_default_timezone_get;
 use function explode;
 use function floor;
-use function func_get_args;
 use function in_array;
 use function is_array;
+use function is_string;
 use function max;
 use function min;
 use function preg_match;
@@ -31,6 +28,14 @@ use function str_starts_with;
 
 use const PHP_INT_MAX;
 
+/**
+ * @psalm-type OptionsArgument = array{
+ *     format?: string|null,
+ *     strict?: bool,
+ *     baseValue?: string|DateTimeInterface,
+ *     step?: string|DateInterval,
+ * }
+ */
 final class DateStep extends Date
 {
     /**
@@ -41,7 +46,7 @@ final class DateStep extends Date
     /**
      * Default format constant
      */
-    public const FORMAT_DEFAULT = DateTime::ISO8601;
+    public const FORMAT_DEFAULT = DateTimeInterface::ATOM;
 
     /**
      * Validation failure message template definitions
@@ -57,147 +62,67 @@ final class DateStep extends Date
 
     /**
      * Optional base date value
-     *
-     * @var string|int|DateTimeInterface
      */
-    protected $baseValue = '1970-01-01T00:00:00Z';
-
+    protected readonly DateTimeInterface $baseValue;
     /**
      * Date step interval (defaults to 1 day).
      * Uses the DateInterval specification.
-     *
-     * @var DateInterval
      */
-    protected $step;
-
-    /**
-     * Optional timezone to be used when the baseValue
-     * and validation values do not contain timezone info
-     *
-     * @var DateTimeZone
-     */
-    protected $timezone;
+    protected readonly DateInterval $step;
 
     /**
      * Set default options for this instance
      *
-     * @param string|array|Traversable $options
+     * @param OptionsArgument $options
      */
-    public function __construct($options = [])
+    public function __construct(array $options = [])
     {
-        if ($options instanceof Traversable) {
-            $options = ArrayUtils::iteratorToArray($options);
-        } elseif (! is_array($options)) {
-            $options           = func_get_args();
-            $temp              = [];
-            $temp['baseValue'] = array_shift($options);
-            if (! empty($options)) {
-                $temp['step'] = array_shift($options);
-            }
-            if (! empty($options)) {
-                $temp['format'] = array_shift($options);
-            }
-            if (! empty($options)) {
-                $temp['timezone'] = array_shift($options);
-            }
+        $step      = $options['step'] ?? 'P1D';
+        $baseValue = $options['baseValue'] ?? null;
 
-            $options = $temp;
-        }
-
-        if (! isset($options['step'])) {
-            $options['step'] = new DateInterval('P1D');
-        }
-        if (! isset($options['timezone'])) {
-            $options['timezone'] = new DateTimeZone(date_default_timezone_get());
-        }
+        unset(
+            $options['step'],
+            $options['baseValue'],
+        );
 
         parent::__construct($options);
-    }
 
-    /**
-     * Sets the base value from which the step should be computed
-     *
-     * @param string|int|DateTimeInterface $baseValue
-     * @return $this
-     */
-    public function setBaseValue($baseValue)
-    {
-        $this->baseValue = $baseValue;
-        return $this;
-    }
-
-    /**
-     * Returns the base value from which the step should be computed
-     *
-     * @return string|int|DateTimeInterface
-     */
-    public function getBaseValue()
-    {
-        return $this->baseValue;
-    }
-
-    /**
-     * Sets the step date interval
-     *
-     * @return $this
-     */
-    public function setStep(DateInterval $step)
-    {
+        if (! $step instanceof DateInterval) {
+            $step = new DateInterval($step);
+        }
         $this->step = $step;
-        return $this;
-    }
 
-    /**
-     * Returns the step date interval
-     *
-     * @return DateInterval
-     */
-    public function getStep()
-    {
-        return $this->step;
-    }
+        if (! $baseValue instanceof DateTimeInterface && is_string($baseValue)) {
+            $baseValue = $this->convertToDateTime($baseValue, false);
+        }
 
-    /**
-     * Returns the timezone option
-     *
-     * @return DateTimeZone
-     */
-    public function getTimezone()
-    {
-        return $this->timezone;
-    }
+        if (! $baseValue instanceof DateTimeInterface) {
+            $baseValue = DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, '1970-01-01T00:00:00Z');
+        }
 
-    /**
-     * Sets the timezone option
-     *
-     * @return $this
-     */
-    public function setTimezone(DateTimeZone $timezone)
-    {
-        $this->timezone = $timezone;
-        return $this;
+        if ($baseValue === false) {
+            throw new InvalidArgumentException(
+                'The given base value is not in the expected format, or is an invalid date time string',
+            );
+        }
+
+        $this->baseValue = $baseValue;
     }
 
     /**
      * Supports formats with ISO week (W) definitions
-     *
-     * @see Date::convertString()
-     *
-     * @param string $value
-     * @param bool $addErrors
-     * @return DateTime|false
      */
-    protected function convertString($value, $addErrors = true)
+    protected function convertString(string $value, bool $addErrors = true): false|DateTimeImmutable
     {
         // Custom week format support
         if (
             str_starts_with($this->format, 'Y-\WW')
-            && preg_match('/^([0-9]{4})\-W([0-9]{2})/', $value, $matches)
+            && preg_match('/^([0-9]{4})-W([0-9]{2})/', $value, $matches)
         ) {
-            $date = new DateTime();
-            $date->setISODate((int) $matches[1], (int) $matches[2]);
+            $date = new DateTimeImmutable();
+            $date = $date->setISODate((int) $matches[1], (int) $matches[2]);
         } else {
-            $date = DateTime::createFromFormat($this->format, $value, new DateTimeZone('UTC'));
+            $date = DateTimeImmutable::createFromFormat($this->format, $value, new DateTimeZone('UTC'));
         }
 
         // Invalid dates can show up as warnings (ie. "2007-02-99")
@@ -216,8 +141,7 @@ final class DateStep extends Date
     /**
      * Returns true if a date is within a valid step
      *
-     * @param string|int|DateTimeInterface $value
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function isValid(mixed $value): bool
     {
@@ -232,7 +156,7 @@ final class DateStep extends Date
             return false;
         }
 
-        $step = $this->getStep();
+        $step = $this->step;
 
         // Same date?
         // phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedEqualOperator
@@ -381,7 +305,7 @@ final class DateStep extends Date
      *
      * @param int[] $intervalParts
      * @param int[] $diffParts
-     * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     private function fallbackIncrementalIterationLogic(
         DateTimeInterface $baseDate,
@@ -394,11 +318,8 @@ final class DateStep extends Date
         $minimumInterval                 = $this->computeMinimumInterval($intervalParts, $minSteps);
         $isIncrementalStepping           = $baseDate < $valueDate;
 
-        if (! ($baseDate instanceof DateTime || $baseDate instanceof DateTimeImmutable)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                'Function %s requires the baseDate to be a DateTime or DateTimeImmutable instance.',
-                __FUNCTION__
-            ));
+        if ($baseDate instanceof DateTime) {
+            $baseDate = DateTimeImmutable::createFromMutable($baseDate);
         }
 
         for ($offsetIterations = 0; $offsetIterations < $requiredIterations; $offsetIterations += 1) {

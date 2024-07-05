@@ -37,6 +37,7 @@
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
+      <code><![CDATA[$this->options]]></code>
     </UndefinedThisPropertyAssignment>
   </file>
   <file src="src/Barcode/Code128.php">
@@ -48,43 +49,11 @@
     <MixedArgumentTypeCoercion>
       <code><![CDATA[$value]]></code>
     </MixedArgumentTypeCoercion>
-    <MixedAssignment>
-      <code><![CDATA[$temp['format']]]></code>
-    </MixedAssignment>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUndefinedVariable>
-      <code><![CDATA[$temp]]></code>
-    </PossiblyUndefinedVariable>
   </file>
   <file src="src/DateStep.php">
     <ArgumentTypeCoercion>
       <code><![CDATA[$intervalParts]]></code>
     </ArgumentTypeCoercion>
-    <MixedAssignment>
-      <code><![CDATA[$temp['baseValue']]]></code>
-      <code><![CDATA[$temp['format']]]></code>
-      <code><![CDATA[$temp['step']]]></code>
-      <code><![CDATA[$temp['timezone']]]></code>
-    </MixedAssignment>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[setStep]]></code>
-    </PossiblyUnusedMethod>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$step]]></code>
-      <code><![CDATA[$timezone]]></code>
-    </PropertyNotSetInConstructor>
-    <TypeDoesNotContainType>
-      <code><![CDATA[$baseDate instanceof DateTimeImmutable]]></code>
-    </TypeDoesNotContainType>
   </file>
   <file src="src/EmailAddress.php">
     <LessSpecificImplementedReturnType>
@@ -968,6 +937,7 @@
   <file src="test/DateTest.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[datesDataProvider]]></code>
+      <code><![CDATA[manualFormatProvider]]></code>
     </PossiblyUnusedMethod>
     <UnusedParam>
       <code><![CDATA[$result]]></code>
