@@ -17,6 +17,7 @@ use Laminas\Validator\File\ExcludeMimeType;
 use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\FilesSize;
 use Laminas\Validator\File\MimeType;
+use Laminas\Validator\File\Size;
 use Laminas\Validator\InArray;
 use Laminas\Validator\IsInstanceOf;
 use Laminas\Validator\NumberComparison;
@@ -50,6 +51,7 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
         InArray::class,
         MimeType::class,
         ExcludeMimeType::class,
+        Size::class,
     ];
 
     /**

@@ -36,3 +36,11 @@ if ($validator->isValid($_FILES)) {
     // > 1kB, < 10MB in aggregate
 }
 ```
+
+## Accepted Uploaded File Types
+
+This validator accepts and validates 3 types of argument:
+
+- A list of strings that represents paths to existing files
+- An array that represents uploaded files as per PHP's [`$_FILES`](https://www.php.net/manual/reserved.variables.files.php) superglobal
+- A list of PSR-7 [`UploadedFileInterface`](https://www.php-fig.org/psr/psr-7/#36-psrhttpmessageuploadedfileinterface) instances

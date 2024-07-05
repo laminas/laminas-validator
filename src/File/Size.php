@@ -5,32 +5,21 @@ declare(strict_types=1);
 namespace Laminas\Validator\File;
 
 use Laminas\Validator\AbstractValidator;
-use Laminas\Validator\Exception;
-use Traversable;
+use Laminas\Validator\Exception\InvalidArgumentException;
 
-use function array_shift;
-use function assert;
-use function filesize;
-use function func_get_args;
-use function func_num_args;
-use function is_numeric;
-use function is_readable;
 use function is_string;
-use function round;
-use function strtoupper;
-use function substr;
-use function trim;
 
 /**
- * Validator for the maximum size of a file up to a max of 2GB
+ * Validator for the maximum size of a file
+ *
+ * @psalm-type OptionsArgument = array{
+ *     min?: string|numeric|null,
+ *     max?: string|numeric|null,
+ *     useByteString?: bool,
+ * }
  */
-class Size extends AbstractValidator
+final class Size extends AbstractValidator
 {
-    use FileInformationTrait;
-
-    /**
-     * @const string Error constants
-     */
     public const TOO_BIG   = 'fileSizeTooBig';
     public const TOO_SMALL = 'fileSizeTooSmall';
     public const NOT_FOUND = 'fileSizeNotFound';
@@ -44,313 +33,111 @@ class Size extends AbstractValidator
 
     /** @var array<string, string|array> */
     protected array $messageVariables = [
-        'min'  => ['options' => 'min'],
-        'max'  => ['options' => 'max'],
+        'min'  => 'minString',
+        'max'  => 'maxString',
         'size' => 'size',
     ];
 
     /**
      * Detected size
-     *
-     * @var int
      */
-    protected $size;
+    protected string $size = '';
+    protected readonly string $minString;
+    protected readonly string $maxString;
 
-    /**
-     * Options for this validator
-     *
-     * @var array
-     */
-    protected $options = [
-        'min'           => null, // Minimum file size, if null there is no minimum
-        'max'           => null, // Maximum file size, if null there is no maximum
-        'useByteString' => true, // Use byte string?
-    ];
+    protected readonly int|null $min;
+    protected readonly int|null $max;
+    private readonly bool $useByteString;
 
     /**
      * Sets validator options
      *
-     * If $options is an integer, it will be used as maximum file size
-     * As Array is accepts the following keys:
+     * $options accepts the following keys:
      * 'min': Minimum file size
      * 'max': Maximum file size
      * 'useByteString': Use bytestring or real size for messages
      *
-     * @param int|array|Traversable $options Options for the adapter
+     * @param OptionsArgument $options
      */
-    public function __construct($options = null)
+    public function __construct(array $options = [])
     {
-        if (is_string($options) || is_numeric($options)) {
-            $options = ['max' => $options];
+        $min                 = $options['min'] ?? null;
+        $max                 = $options['max'] ?? null;
+        $this->useByteString = $options['useByteString'] ?? true;
+
+        if ($min === null && $max === null) {
+            throw new InvalidArgumentException('One of `min` or `max` options are required');
         }
 
-        if (1 < func_num_args()) {
-            $argv = func_get_args();
-            array_shift($argv);
-            $options['max'] = array_shift($argv);
-            if (! empty($argv)) {
-                $options['useByteString'] = array_shift($argv);
-            }
+        if (is_string($min)) {
+            $min = FileInformation::siUnitToBytes($min);
         }
+
+        if (is_string($max)) {
+            $max = FileInformation::siUnitToBytes($max);
+        }
+
+        $this->min = $min !== null ? (int) $min : null;
+        $this->max = $max !== null ? (int) $max : null;
+
+        if ($this->min !== null && $this->max !== null && $this->min > $this->max) {
+            throw new InvalidArgumentException('The `min` option cannot exceed the `max` option');
+        }
+
+        unset(
+            $options['min'],
+            $options['max'],
+            $options['useByteString'],
+        );
+
+        $this->minString = $this->min !== null && $this->useByteString
+            ? FileInformation::bytesToSiUnit($this->min)
+            : (string) $this->min;
+        $this->maxString = $this->max !== null && $this->useByteString
+            ? FileInformation::bytesToSiUnit($this->max)
+            : (string) $this->max;
 
         parent::__construct($options);
     }
 
     /**
-     * Should messages return bytes as integer or as string in SI notation
-     *
-     * @param bool $byteString Use bytestring ?
-     * @return self
-     */
-    public function useByteString($byteString = true)
-    {
-        $this->options['useByteString'] = (bool) $byteString;
-        return $this;
-    }
-
-    /**
-     * Will bytestring be used?
-     *
-     * @return bool
-     */
-    public function getByteString()
-    {
-        return $this->options['useByteString'];
-    }
-
-    /**
-     * Returns the minimum file size
-     *
-     * @param  bool $raw Whether or not to force return of the raw value (defaults off)
-     * @return int|string
-     */
-    public function getMin($raw = false)
-    {
-        $min = $this->options['min'];
-        if (! $raw && $this->getByteString()) {
-            $min = $this->toByteString($min);
-        }
-
-        return $min;
-    }
-
-    /**
-     * Sets the minimum file size
-     *
-     * File size can be an integer or a byte string
-     * This includes 'B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'
-     * For example: 2000, 2MB, 0.2GB
-     *
-     * @param  int|string $min The minimum file size
-     * @return $this Provides a fluent interface
-     * @throws Exception\InvalidArgumentException When min is greater than max.
-     */
-    public function setMin($min)
-    {
-        if (! is_string($min) && ! is_numeric($min)) {
-            throw new Exception\InvalidArgumentException('Invalid options to validator provided');
-        }
-
-        $min = (int) $this->fromByteString($min);
-        $max = $this->getMax(true);
-        if (($max !== null) && ($min > $max)) {
-            throw new Exception\InvalidArgumentException(
-                "The minimum must be less than or equal to the maximum file size, but $min > $max"
-            );
-        }
-
-        $this->options['min'] = $min;
-        return $this;
-    }
-
-    /**
-     * Returns the maximum file size
-     *
-     * @param  bool $raw Whether or not to force return of the raw value (defaults off)
-     * @return int|string
-     */
-    public function getMax($raw = false)
-    {
-        $max = $this->options['max'];
-        if (! $raw && $this->getByteString()) {
-            $max = $this->toByteString($max);
-        }
-
-        return $max;
-    }
-
-    /**
-     * Sets the maximum file size
-     *
-     * File size can be an integer or a byte string
-     * This includes 'B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'
-     * For example: 2000, 2MB, 0.2GB
-     *
-     * @param  int|string $max The maximum file size
-     * @return $this Provides a fluent interface
-     * @throws Exception\InvalidArgumentException When max is smaller than min.
-     */
-    public function setMax($max)
-    {
-        if (! is_string($max) && ! is_numeric($max)) {
-            throw new Exception\InvalidArgumentException('Invalid options to validator provided');
-        }
-
-        $max = (int) $this->fromByteString($max);
-        $min = $this->getMin(true);
-        if (($min !== null) && ($max < $min)) {
-            throw new Exception\InvalidArgumentException(
-                "The maximum must be greater than or equal to the minimum file size, but $max < $min"
-            );
-        }
-
-        $this->options['max'] = $max;
-        return $this;
-    }
-
-    /**
-     * Retrieve current detected file size
-     *
-     * @return int
-     */
-    protected function getSize()
-    {
-        return $this->size;
-    }
-
-    /**
-     * Set current size
-     *
-     * @param  int $size
-     * @return $this
-     */
-    protected function setSize($size)
-    {
-        $this->size = $size;
-        return $this;
-    }
-
-    /**
      * Returns true if and only if the file size of $value is at least min and
      * not bigger than max (when max is not null).
-     *
-     * @param  string|array $value File to check for size
-     * @param  array        $file  File data from \Laminas\File\Transfer\Transfer (optional)
      */
-    public function isValid(mixed $value, $file = null): bool
+    public function isValid(mixed $value): bool
     {
-        $fileInfo = $this->getFileInfo($value, $file);
+        if (! FileInformation::isPossibleFile($value)) {
+            $this->error(self::NOT_FOUND);
 
-        $this->setValue($fileInfo['filename']);
+            return false;
+        }
 
-        $path = $fileInfo['file'] ?? null;
-        // Is file readable ?
-        if (! is_string($path) || false === is_readable($path)) {
+        $file = FileInformation::factory($value);
+
+        $this->value = $file->clientFileName ?? $file->baseName;
+
+        if (! $file->readable) {
             $this->error(self::NOT_FOUND);
             return false;
         }
 
-        $size       = filesize($path);
-        $this->size = $size;
+        $size       = $file->size();
+        $this->size = $this->useByteString
+            ? $file->sizeAsSiUnit()
+            : (string) $size;
 
-        // Check to see if it's smaller than min size
-        $min = $this->getMin(true);
-        $max = $this->getMax(true);
-        if (($min !== null) && ($size < $min)) {
-            if ($this->getByteString()) {
-                $this->options['min'] = $this->toByteString($min);
-                $this->size           = $this->toByteString($size);
-                $this->error(self::TOO_SMALL);
-                $this->options['min'] = $min;
-                $this->size           = $size;
-            } else {
-                $this->error(self::TOO_SMALL);
-            }
+        if ($this->min !== null && $size < $this->min) {
+            $this->error(self::TOO_SMALL);
+
+            return false;
         }
 
-        // Check to see if it's larger than max size
-        if (($max !== null) && ($max < $size)) {
-            if ($this->getByteString()) {
-                $this->options['max'] = $this->toByteString($max);
-                $this->size           = $this->toByteString($size);
-                $this->error(self::TOO_BIG);
-                $this->options['max'] = $max;
-                $this->size           = $size;
-            } else {
-                $this->error(self::TOO_BIG);
-            }
-        }
+        if ($this->max !== null && $size > $this->max) {
+            $this->error(self::TOO_BIG);
 
-        if ($this->getMessages()) {
             return false;
         }
 
         return true;
-    }
-
-    /**
-     * Returns the formatted size
-     */
-    protected function toByteString(int $size): string
-    {
-        $sizes = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-        for ($i = 0; $size >= 1024 && $i < 9; $i++) {
-            $size /= 1024;
-        }
-
-        return round($size, 2) . $sizes[$i];
-    }
-
-    /**
-     * Returns the unformatted size
-     *
-     * @param string $size
-     * @return float|int|string
-     */
-    protected function fromByteString($size)
-    {
-        if (is_numeric($size)) {
-            return (int) $size;
-        }
-
-        $type = trim(substr($size, -2, 1));
-
-        $value = substr($size, 0, -1);
-        if (! is_numeric($value)) {
-            $value = trim(substr($value, 0, -1));
-        }
-
-        assert(is_numeric($value));
-
-        switch (strtoupper($type)) {
-            case 'Y':
-                $value *= 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024;
-                break;
-            case 'Z':
-                $value *= 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024;
-                break;
-            case 'E':
-                $value *= 1024 * 1024 * 1024 * 1024 * 1024 * 1024;
-                break;
-            case 'P':
-                $value *= 1024 * 1024 * 1024 * 1024 * 1024;
-                break;
-            case 'T':
-                $value *= 1024 * 1024 * 1024 * 1024;
-                break;
-            case 'G':
-                $value *= 1024 * 1024 * 1024;
-                break;
-            case 'M':
-                $value *= 1024 * 1024;
-                break;
-            case 'K':
-                $value *= 1024;
-                break;
-            default:
-                break;
-        }
-
-        return $value;
     }
 }
