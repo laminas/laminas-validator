@@ -50,9 +50,7 @@
     },
     "suggest": {
         "laminas/laminas-i18n": "Laminas\\I18n component to allow translation of validation error messages",
-        "laminas/laminas-i18n-resources": "Translations of validator messages",
-        "laminas/laminas-servicemanager": "Laminas\\ServiceManager component to allow using the ValidatorPluginManager and validator chains",
-        "psr/http-message": "psr/http-message, required when validating PSR-7 UploadedFileInterface instances via the Upload and UploadFile validators"
+        "laminas/laminas-i18n-resources": "Translations of validator messages"
     },
     "autoload": {
         "psr-4": {
