@@ -32,6 +32,7 @@ class FileInformationTest extends TestCase
             'tmp_name' => 'Foo',
             'name'     => 'Foo',
             'type'     => 'text/plain',
+            'size'     => 0,
         ]);
     }
 
@@ -46,6 +47,7 @@ class FileInformationTest extends TestCase
         self::assertTrue($file->readable);
         self::assertSame('image/jpeg', $file->detectMimeType());
         self::assertSame('picture.jpg', $file->baseName);
+        self::assertSame(filesize($path), $file->size());
     }
 
     public function testExpectedValuesForUploadedFile(): void
@@ -68,6 +70,7 @@ class FileInformationTest extends TestCase
         self::assertTrue($file->readable);
         self::assertSame('image/jpeg', $file->detectMimeType());
         self::assertSame('picture.jpg', $file->baseName);
+        self::assertSame(filesize($path), $file->size());
     }
 
     public function testExpectedValuesForSapiFilesArray(): void
@@ -90,6 +93,7 @@ class FileInformationTest extends TestCase
         self::assertTrue($file->readable);
         self::assertSame('image/jpeg', $file->detectMimeType());
         self::assertSame('picture.jpg', $file->baseName);
+        self::assertSame(filesize($path), $file->size());
     }
 
     public function testUnReadableFile(): void
