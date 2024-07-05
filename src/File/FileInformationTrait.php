@@ -9,6 +9,9 @@ use function basename;
 use function is_array;
 use function is_string;
 
+/**
+ * @deprecated Since 2.61.0 - This internal trait will be removed in 3.0
+ */
 trait FileInformationTrait
 {
     /**

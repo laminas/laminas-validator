@@ -69,7 +69,9 @@ class Exists extends AbstractValidator
     /**
      * Returns the set file directories which are checked
      *
-     * @param  bool $asArray Returns the values as array; when false, a concatenated string is returned
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
+     * @param bool $asArray Returns the values as array; when false, a concatenated string is returned
      * @return string|null
      */
     public function getDirectory($asArray = false)
@@ -86,6 +88,8 @@ class Exists extends AbstractValidator
     /**
      * Sets the file directory which will be checked
      *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
      * @param string|array $directory The directories to validate
      * @return self Provides a fluent interface
      */
@@ -98,6 +102,8 @@ class Exists extends AbstractValidator
 
     /**
      * Adds the file directory which will be checked
+     *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
      *
      * @param string|array $directory The directory to add for validation
      * @return self Provides a fluent interface

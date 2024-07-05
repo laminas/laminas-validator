@@ -43,6 +43,8 @@ class Sha1 extends Hash
     /**
      * Returns all set sha1 hashes
      *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
      * @return array
      */
     public function getSha1()
@@ -52,6 +54,8 @@ class Sha1 extends Hash
 
     /**
      * Sets the sha1 hash for one or multiple files
+     *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
      *
      * @param  string|array $options
      * @return Hash Provides a fluent interface
@@ -64,6 +68,8 @@ class Sha1 extends Hash
 
     /**
      * Adds the sha1 hash for one or multiple files
+     *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
      *
      * @param  string|array $options
      * @return Hash Provides a fluent interface

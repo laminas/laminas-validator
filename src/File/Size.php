@@ -98,6 +98,8 @@ class Size extends AbstractValidator
     /**
      * Should messages return bytes as integer or as string in SI notation
      *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
      * @param bool $byteString Use bytestring ?
      * @return self
      */
@@ -110,6 +112,8 @@ class Size extends AbstractValidator
     /**
      * Will bytestring be used?
      *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
      * @return bool
      */
     public function getByteString()
@@ -120,7 +124,9 @@ class Size extends AbstractValidator
     /**
      * Returns the minimum file size
      *
-     * @param  bool $raw Whether or not to force return of the raw value (defaults off)
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
+     * @param bool $raw Whether or not to force return of the raw value (defaults off)
      * @return int|string
      */
     public function getMin($raw = false)
@@ -139,6 +145,8 @@ class Size extends AbstractValidator
      * File size can be an integer or a byte string
      * This includes 'B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'
      * For example: 2000, 2MB, 0.2GB
+     *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
      *
      * @param  int|string $min The minimum file size
      * @return $this Provides a fluent interface
@@ -165,7 +173,9 @@ class Size extends AbstractValidator
     /**
      * Returns the maximum file size
      *
-     * @param  bool $raw Whether or not to force return of the raw value (defaults off)
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
+     * @param bool $raw Whether or not to force return of the raw value (defaults off)
      * @return int|string
      */
     public function getMax($raw = false)
@@ -185,7 +195,9 @@ class Size extends AbstractValidator
      * This includes 'B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'
      * For example: 2000, 2MB, 0.2GB
      *
-     * @param  int|string $max The maximum file size
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
+     * @param int|string $max The maximum file size
      * @return $this Provides a fluent interface
      * @throws Exception\InvalidArgumentException When max is smaller than min.
      */
@@ -210,6 +222,8 @@ class Size extends AbstractValidator
     /**
      * Retrieve current detected file size
      *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
      * @return int
      */
     protected function getSize()
@@ -219,6 +233,8 @@ class Size extends AbstractValidator
 
     /**
      * Set current size
+     *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
      *
      * @param  int $size
      * @return $this

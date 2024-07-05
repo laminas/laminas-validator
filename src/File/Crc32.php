@@ -43,6 +43,8 @@ class Crc32 extends Hash
     /**
      * Returns all set crc32 hashes
      *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
      * @return array
      */
     public function getCrc32()
@@ -53,7 +55,9 @@ class Crc32 extends Hash
     /**
      * Sets the crc32 hash for one or multiple files
      *
-     * @param  string|array $options
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
+     * @param string|array $options
      * @return $this Provides a fluent interface
      */
     public function setCrc32($options)
@@ -65,7 +69,9 @@ class Crc32 extends Hash
     /**
      * Adds the crc32 hash for one or multiple files
      *
-     * @param  string|array $options
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
+     * @param string|array $options
      * @return $this Provides a fluent interface
      */
     public function addCrc32($options)
