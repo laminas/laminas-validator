@@ -38,6 +38,10 @@
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
+      <code><![CDATA[$this->options]]></code>
+      <code><![CDATA[$this->options]]></code>
+      <code><![CDATA[$this->options]]></code>
+      <code><![CDATA[$this->options]]></code>
     </UndefinedThisPropertyAssignment>
   </file>
   <file src="src/Barcode/Code128.php">
@@ -173,29 +177,6 @@
       <code><![CDATA[strrpos($fileInfo['filename'], '.')]]></code>
     </PossiblyFalseOperand>
   </file>
-  <file src="src/File/ExcludeMimeType.php">
-    <InvalidClassConstantType>
-      <code><![CDATA[FALSE_TYPE]]></code>
-      <code><![CDATA[NOT_DETECTED]]></code>
-      <code><![CDATA[NOT_READABLE]]></code>
-    </InvalidClassConstantType>
-    <MixedArgument>
-      <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$fileInfo['file']]]></code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code><![CDATA[$this->type]]></code>
-    </MixedAssignment>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <PossiblyNullPropertyAssignmentValue>
-      <code><![CDATA[null]]></code>
-    </PossiblyNullPropertyAssignmentValue>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[ExcludeMimeType]]></code>
-    </PropertyNotSetInConstructor>
-  </file>
   <file src="src/File/Exists.php">
     <DocblockTypeContradiction>
       <code><![CDATA[is_array($directory)]]></code>
@@ -298,8 +279,6 @@
     </MixedAssignment>
     <PossiblyInvalidArgument>
       <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
@@ -455,32 +434,6 @@
       <code><![CDATA[$this->getMinWidth() !== null]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
-  <file src="src/File/IsCompressed.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[$options === null]]></code>
-    </DocblockTypeContradiction>
-    <InvalidClassConstantType>
-      <code><![CDATA[FALSE_TYPE]]></code>
-      <code><![CDATA[NOT_DETECTED]]></code>
-      <code><![CDATA[NOT_READABLE]]></code>
-    </InvalidClassConstantType>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[IsCompressed]]></code>
-    </PropertyNotSetInConstructor>
-  </file>
-  <file src="src/File/IsImage.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[$options === null]]></code>
-    </DocblockTypeContradiction>
-    <InvalidClassConstantType>
-      <code><![CDATA[FALSE_TYPE]]></code>
-      <code><![CDATA[NOT_DETECTED]]></code>
-      <code><![CDATA[NOT_READABLE]]></code>
-    </InvalidClassConstantType>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[IsImage]]></code>
-    </PropertyNotSetInConstructor>
-  </file>
   <file src="src/File/Md5.php">
     <InvalidClassConstantType>
       <code><![CDATA[DOES_NOT_MATCH]]></code>
@@ -500,70 +453,6 @@
     <MoreSpecificImplementedParamType>
       <code><![CDATA[$value]]></code>
     </MoreSpecificImplementedParamType>
-  </file>
-  <file src="src/File/MimeType.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[! is_string($content)]]></code>
-      <code><![CDATA[$file === false]]></code>
-      <code><![CDATA[is_array($mimetype)]]></code>
-    </DocblockTypeContradiction>
-    <InvalidArrayOffset>
-      <code><![CDATA[$mimetype['magicFile']]]></code>
-    </InvalidArrayOffset>
-    <InvalidCatch>
-      <code><![CDATA[try {
-                    $this->setMagicFile($file);
-                } catch (Exception\ExceptionInterface) {
-                    // suppressing errors which are thrown due to open_basedir restrictions
-                    continue;
-                }]]></code>
-    </InvalidCatch>
-    <MixedArgument>
-      <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$options[$key]]]></code>
-      <code><![CDATA[$options['magicFile']]]></code>
-      <code><![CDATA[$options['mimeType']]]></code>
-      <code><![CDATA[$this->type]]></code>
-      <code><![CDATA[static::FALSE_TYPE]]></code>
-      <code><![CDATA[static::NOT_DETECTED]]></code>
-      <code><![CDATA[static::NOT_READABLE]]></code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code><![CDATA[$this->type]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[bool]]></code>
-      <code><![CDATA[bool]]></code>
-      <code><![CDATA[string|false]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->options['disableMagicFile']]]></code>
-      <code><![CDATA[$this->options['enableHeaderCheck']]]></code>
-      <code><![CDATA[$this->options['magicFile']]]></code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <NoValue>
-      <code><![CDATA[return $this->options['magicFile'];]]></code>
-    </NoValue>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyNullPropertyAssignmentValue>
-      <code><![CDATA[null]]></code>
-    </PossiblyNullPropertyAssignmentValue>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$type]]></code>
-    </PropertyNotSetInConstructor>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(bool) $disable]]></code>
-      <code><![CDATA[(bool) $headerCheck]]></code>
-    </RedundantCastGivenDocblockType>
-    <TypeDoesNotContainType>
-      <code><![CDATA[is_string($this->options['magicFile'])]]></code>
-    </TypeDoesNotContainType>
   </file>
   <file src="src/File/NotExists.php">
     <InvalidIterator>
@@ -1008,13 +897,8 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/ExcludeMimeTypeTest.php">
-    <MixedArgument>
-      <code><![CDATA[$isValidParam['tmp_name']]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicBehaviorDataProvider]]></code>
-      <code><![CDATA[getMimeTypeProvider]]></code>
-      <code><![CDATA[setMimeTypeProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/ExistsTest.php">
@@ -1102,35 +986,14 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/IsCompressedTest.php">
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$isValidParam['tmp_name']]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyNullArgument>
-      <code><![CDATA[$options]]></code>
-      <code><![CDATA[$options]]></code>
-    </PossiblyNullArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicBehaviorDataProvider]]></code>
-      <code><![CDATA[getMimeTypeProvider]]></code>
-      <code><![CDATA[setMimeTypeProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/IsImageTest.php">
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$isValidParam['tmp_name']]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyNullArgument>
-      <code><![CDATA[$options]]></code>
-      <code><![CDATA[$options]]></code>
-    </PossiblyNullArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicBehaviorDataProvider]]></code>
-      <code><![CDATA[getMimeTypeProvider]]></code>
-      <code><![CDATA[setMimeTypeProvider]]></code>
     </PossiblyUnusedMethod>
-    <RedundantCondition>
-      <code><![CDATA[is_array($isValidParam)]]></code>
-    </RedundantCondition>
   </file>
   <file src="test/File/Md5Test.php">
     <MixedArgument>
@@ -1141,24 +1004,9 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/MimeTypeTest.php">
-    <InvalidArgument>
-      <code><![CDATA[[]]]></code>
-    </InvalidArgument>
-    <InvalidCast>
-      <code><![CDATA[[]]]></code>
-    </InvalidCast>
-    <MixedArgument>
-      <code><![CDATA[$isValidParam['tmp_name']]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicBehaviorDataProvider]]></code>
-      <code><![CDATA[getMimeTypeProvider]]></code>
-      <code><![CDATA[invalidMimeTypeTypes]]></code>
-      <code><![CDATA[setMimeTypeProvider]]></code>
     </PossiblyUnusedMethod>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[is_array($isValidParam)]]></code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="test/File/NotExistsTest.php">
     <ArgumentTypeCoercion>

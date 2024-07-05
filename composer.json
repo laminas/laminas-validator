@@ -32,6 +32,7 @@
     },
     "require": {
         "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
+        "ext-fileinfo": "*",
         "ext-intl": "*",
         "laminas/laminas-servicemanager": "^4.1.0",
         "laminas/laminas-stdlib": "^3.13",
@@ -40,6 +41,7 @@
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "^2.5",
+        "laminas/laminas-diactoros": "^3.3",
         "phpunit/phpunit": "^10.5.20",
         "psalm/plugin-phpunit": "^0.19.0",
         "psr/http-client": "^1.0.3",

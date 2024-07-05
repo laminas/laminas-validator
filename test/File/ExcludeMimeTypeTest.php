@@ -4,27 +4,25 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator\File;
 
-use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File\ExcludeMimeType;
+use Laminas\Validator\File\MimeType;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function basename;
+use function chmod;
+use function touch;
+use function unlink;
 
 use const UPLOAD_ERR_NO_FILE;
 
+/** @psalm-import-type OptionsArgument from MimeType */
 final class ExcludeMimeTypeTest extends TestCase
 {
     /**
      * @psalm-return array<array-key, array{
-     *     0: string|string[],
-     *     1: array{
-     *         tmp_name: string,
-     *         name: string,
-     *         size: int,
-     *         error: int,
-     *         type: string
-     *     },
+     *     0: OptionsArgument,
+     *     1: mixed,
      *     2: bool,
      *     3: array<string, string>
      * }>
@@ -44,125 +42,33 @@ final class ExcludeMimeTypeTest extends TestCase
 
         return [
             //    Options, isValid Param, Expected value, messages
-            ['image/gif', $fileUpload, true, []],
-            ['image',                     $fileUpload, false, $falseTypeMessage],
-            ['test/notype', $fileUpload, true, []],
-            ['image/gif, image/jpeg',     $fileUpload, false, $falseTypeMessage],
-            [['image/vasa', 'image/gif'], $fileUpload, true, []],
-            [['image/gif', 'jpeg'], $fileUpload, false, $falseTypeMessage],
-            [['image/gif', 'gif'], $fileUpload, true, []],
+            [['mimeType' => 'image/gif'], $fileUpload, true, []],
+            [['mimeType' => 'image'], $fileUpload, false, $falseTypeMessage],
+            [['mimeType' => 'test/notype'], $fileUpload, true, []],
+            [['mimeType' => 'image/gif, image/jpeg'], $fileUpload, false, $falseTypeMessage],
+            [['mimeType' => ['image/vasa', 'image/gif']], $fileUpload, true, []],
+            [['mimeType' => ['image/gif', 'jpeg']], $fileUpload, false, $falseTypeMessage],
+            [['mimeType' => ['image/gif', 'gif']], $fileUpload, true, []],
         ];
     }
 
     /**
      * Ensures that the validator follows expected behavior
      *
-     * @param string|string[] $options
+     * @param OptionsArgument $options
      */
     #[DataProvider('basicBehaviorDataProvider')]
-    public function testBasic($options, array $isValidParam, bool $expected, array $messages): void
+    public function testBasic(array $options, mixed $isValidParam, bool $expected, array $messages): void
     {
         $validator = new ExcludeMimeType($options);
-        $validator->enableHeaderCheck();
 
         self::assertSame($expected, $validator->isValid($isValidParam));
         self::assertSame($messages, $validator->getMessages());
     }
 
-    /**
-     * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
-     *
-     * @param string|string[] $options
-     */
-    #[DataProvider('basicBehaviorDataProvider')]
-    public function testLegacy($options, array $isValidParam, bool $expected): void
-    {
-        $validator = new ExcludeMimeType($options);
-        $validator->enableHeaderCheck();
-
-        self::assertSame($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
-    }
-
-    /** @psalm-return array<array{string|string[], string|string[], bool}> */
-    public static function getMimeTypeProvider(): array
-    {
-        return [
-            ['image/gif', 'image/gif', false],
-            [['image/gif', 'video', 'text/test'], 'image/gif,video,text/test', false],
-            [['image/gif', 'video', 'text/test'], ['image/gif', 'video', 'text/test'], true],
-        ];
-    }
-
-    /**
-     * Ensures that getMimeType() returns expected value
-     *
-     * @param string|string[] $mimeType
-     * @param string|string[] $expected
-     */
-    #[DataProvider('getMimeTypeProvider')]
-    public function testGetMimeType($mimeType, $expected, bool $asArray): void
-    {
-        $validator = new ExcludeMimeType($mimeType);
-
-        self::assertSame($expected, $validator->getMimeType($asArray));
-    }
-
-    /** @psalm-return array<array{string|string[], string, string[]}> */
-    public static function setMimeTypeProvider(): array
-    {
-        return [
-            ['image/jpeg', 'image/jpeg', ['image/jpeg']],
-            ['image/gif, text/test', 'image/gif,text/test', ['image/gif', 'text/test']],
-            [['video/mpeg', 'gif'], 'video/mpeg,gif', ['video/mpeg', 'gif']],
-        ];
-    }
-
-    /**
-     * Ensures that setMimeType() returns expected value
-     *
-     * @param string|list<string> $mimeType
-     * @param list<string> $expectedAsArray
-     */
-    #[DataProvider('setMimeTypeProvider')]
-    public function testSetMimeType(string|array $mimeType, string $expected, array $expectedAsArray): void
-    {
-        $validator = new ExcludeMimeType('image/gif');
-        $validator->setMimeType($mimeType);
-
-        self::assertSame($expected, $validator->getMimeType());
-        self::assertSame($expectedAsArray, $validator->getMimeType(true));
-    }
-
-    /**
-     * Ensures that addMimeType() returns expected value
-     */
-    public function testAddMimeType(): void
-    {
-        $validator = new ExcludeMimeType('image/gif');
-        $validator->addMimeType('text');
-
-        self::assertSame('image/gif,text', $validator->getMimeType());
-        self::assertSame(['image/gif', 'text'], $validator->getMimeType(true));
-
-        $validator->addMimeType('jpg, to');
-
-        self::assertSame('image/gif,text,jpg,to', $validator->getMimeType());
-        self::assertSame(['image/gif', 'text', 'jpg', 'to'], $validator->getMimeType(true));
-
-        $validator->addMimeType(['zip', 'ti']);
-
-        self::assertSame('image/gif,text,jpg,to,zip,ti', $validator->getMimeType());
-        self::assertSame(['image/gif', 'text', 'jpg', 'to', 'zip', 'ti'], $validator->getMimeType(true));
-
-        $validator->addMimeType('');
-
-        self::assertSame('image/gif,text,jpg,to,zip,ti', $validator->getMimeType());
-        self::assertSame(['image/gif', 'text', 'jpg', 'to', 'zip', 'ti'], $validator->getMimeType(true));
-    }
-
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
-        $validator = new ExcludeMimeType();
+        $validator = new ExcludeMimeType(['mimeType' => 'image/gif']);
 
         self::assertFalse($validator->isValid(''));
         self::assertArrayHasKey(ExcludeMimeType::NOT_READABLE, $validator->getMessages());
@@ -171,7 +77,7 @@ final class ExcludeMimeTypeTest extends TestCase
 
     public function testEmptyArrayFileShouldReturnFalseAdnDisplayNotFoundMessage(): void
     {
-        $validator = new ExcludeMimeType();
+        $validator = new ExcludeMimeType(['mimeType' => 'image/gif']);
 
         $filesArray = [
             'name'     => '',
@@ -188,12 +94,27 @@ final class ExcludeMimeTypeTest extends TestCase
 
     public function testIsValidRaisesExceptionWithArrayNotInFilesFormat(): void
     {
-        $validator = new ExcludeMimeType('image\gif');
+        $validator = new ExcludeMimeType(['mimeType' => 'image/gif']);
         $value     = ['foo' => 'bar'];
 
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Value array must be in $_FILES format');
+        self::assertFalse($validator->isValid($value));
+        $messages = $validator->getMessages();
+        self::assertArrayHasKey(ExcludeMimeType::NOT_READABLE, $messages);
+    }
 
-        $validator->isValid($value);
+    public function testUnreadableFile(): void
+    {
+        $validator = new ExcludeMimeType(['mimeType' => 'text/plain']);
+
+        $path = __DIR__ . '/_files/no-read.txt';
+        touch($path);
+        chmod($path, 0333);
+        try {
+            self::assertFalse($validator->isValid($path));
+            $messages = $validator->getMessages();
+            self::assertArrayHasKey(ExcludeMimeType::NOT_READABLE, $messages);
+        } finally {
+            unlink($path);
+        }
     }
 }
