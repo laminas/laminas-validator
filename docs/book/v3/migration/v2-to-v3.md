@@ -173,6 +173,70 @@ Behaviour changes:
 
 - The constructor now only accepts an associative array of [documented options](../validators/hostname.md).
 
+### `Laminas\Validator\Iban`
+
+The following methods have been removed:
+
+- `getCountryCode`
+- `setCountryCode`
+- `allowNonSepa`
+- `setAllowNonSepa`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/iban.md).
+
+### `Laminas\Validator\Identical`
+
+The following methods have been removed:
+
+- `getToken`
+- `setToken`
+- `getStrict`
+- `setStrict`
+- `getLiteral`
+- `setLiteral`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/identical.md).
+
+### `Laminas\Validator\InArray`
+
+The following methods have been removed:
+
+- `getHaystack`
+- `setHaystack`
+- `getStrict`
+- `setStrict`
+- `getRecursive`
+- `setRecursive`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/in-array.md).
+
+### `Laminas\Validator\Ip`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/ip.md).
+
+### `Laminas\Validator\Isbn`
+
+The following methods have been removed:
+
+- `setSeparator`
+- `getSeparator`
+- `setType`
+- `getType`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/isbn.md).
+- The `separator` option has been removed. Instead of requiring users to provide the expected separator, all valid separators are now stripped from the input prior to validation. With the default option for auto-detection of ISBN-10 and ISBN-13 formats, the validator is greatly simplified at the point of use.
+- Previously, the classes `Laminas\Validator\Isbn\Isbn10` and `Laminas\Validator\Isbn\Isbn13` were used to validate each format. The code in these classes is now inlined inside the validator so these classes have been removed. 
+
 ### `Laminas\Validator\Regex`
 
 The following methods have been removed:
