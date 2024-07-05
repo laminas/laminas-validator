@@ -853,15 +853,6 @@
       <code><![CDATA[Module]]></code>
     </UnusedClass>
   </file>
-  <file src="src/NumberComparison.php">
-    <MixedAssignment>
-      <code><![CDATA[$inclusiveMax]]></code>
-      <code><![CDATA[$inclusiveMin]]></code>
-      <code><![CDATA[$max]]></code>
-      <code><![CDATA[$max]]></code>
-      <code><![CDATA[$min]]></code>
-    </MixedAssignment>
-  </file>
   <file src="src/ValidatorChain.php">
     <MixedPropertyTypeCoercion>
       <code><![CDATA[new PriorityQueue()]]></code>

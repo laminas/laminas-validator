@@ -23,14 +23,7 @@ use function substr_count;
  *     allowipv6?: bool,
  *     allowipvfuture?: bool,
  *     allowliteral?: bool,
- *     ...<string, mixed>,
  * }
- * @psalm-type Options = array{
- *      allowipv4: bool,
- *      allowipv6: bool,
- *      allowipvfuture: bool,
- *      allowliteral: bool,
- *  }
  */
 final class Ip extends AbstractValidator
 {
@@ -43,29 +36,33 @@ final class Ip extends AbstractValidator
         self::NOT_IP_ADDRESS => 'The input does not appear to be a valid IP address',
     ];
 
-    /** @var Options */
-    protected array $options = [
-        'allowipv4'      => true, // Enable IPv4 Validation
-        'allowipv6'      => true, // Enable IPv6 Validation
-        'allowipvfuture' => false, // Enable IPvFuture Validation
-        'allowliteral'   => true, // Enable IPs in literal format (only IPv6 and IPvFuture)
-    ];
+    private readonly bool $allowipv4;      // Enable IPv4 Validation
+    private readonly bool $allowipv6;      // Enable IPv6 Validation
+    private readonly bool $allowipvfuture; // Enable IPvFuture Validation
+    private readonly bool $allowliteral;   // Enable IPs in literal format (only IPv6 and IPvFuture)
 
     /** @param OptionsArgument $options */
     public function __construct(array $options = [])
     {
-        $this->options['allowipv4']      = $options['allowipv4'] ?? true;
-        $this->options['allowipv6']      = $options['allowipv6'] ?? true;
-        $this->options['allowipvfuture'] = $options['allowipvfuture'] ?? false;
-        $this->options['allowliteral']   = $options['allowliteral'] ?? true;
+        $this->allowipv4      = $options['allowipv4'] ?? true;
+        $this->allowipv6      = $options['allowipv6'] ?? true;
+        $this->allowipvfuture = $options['allowipvfuture'] ?? false;
+        $this->allowliteral   = $options['allowliteral'] ?? true;
 
         if (
-            $this->options['allowipv4'] === false
-            && $this->options['allowipv6'] === false
-            && $this->options['allowipvfuture'] === false
+            $this->allowipv4 === false
+            && $this->allowipv6 === false
+            && $this->allowipvfuture === false
         ) {
             throw new Exception\InvalidArgumentException('Nothing to validate. Check your options');
         }
+
+        unset(
+            $options['allowipv4'],
+            $options['allowipv6'],
+            $options['allowipvfuture'],
+            $options['allowliteral'],
+        );
 
         parent::__construct($options);
     }
@@ -82,18 +79,18 @@ final class Ip extends AbstractValidator
 
         $this->setValue($value);
 
-        if ($this->options['allowipv4'] && $this->validateIPv4($value)) {
+        if ($this->allowipv4 && $this->validateIPv4($value)) {
             return true;
         } else {
-            if ($this->options['allowliteral']) {
+            if ($this->allowliteral) {
                 if (preg_match('/^\[(.*)\]$/', $value, $matches)) {
                     $value = $matches[1];
                 }
             }
 
             if (
-                ($this->options['allowipv6'] && $this->validateIPv6($value)) ||
-                ($this->options['allowipvfuture'] && $this->validateIPvFuture($value))
+                ($this->allowipv6 && $this->validateIPv6($value)) ||
+                ($this->allowipvfuture && $this->validateIPvFuture($value))
             ) {
                 return true;
             }
