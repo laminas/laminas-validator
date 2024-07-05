@@ -8,12 +8,8 @@ This validator is inversely related to the
 
 > ### Compatibility
 >
-> This component will use the `FileInfo` extension if it is available. If it's
-> not, it will degrade to the `mime_content_type()` function. And if the
-> function call fails, it will use the MIME type which is given by HTTP. You
-> should be aware of possible security problems when you do not have `FileInfo`
-> or `mime_content_type()` available; the MIME type given by HTTP is not secure
-> and can be easily manipulated.
+> This component makes use of the [`FileInfo`](https://www.php.net/manual/book.fileinfo.php) extension which is enabled by default in PHP.
+> If you are using a version of PHP that was explicitly built without the File Info extension, this validator will not work. 
 
 ## Supported Options
 
@@ -22,11 +18,6 @@ The following set of options are supported:
 - `mimeType`: Comma-delimited string of MIME types, or array of MIME types,
   against which to test. Types can be specific (e.g., `image/jpeg`), or refer
   only to the group (e.g., `image`).
-- `magicFile`: Location of the magicfile to use for MIME type comparisons;
-  defaults to the value of the `MAGIC` constant.
-- `enableHeaderCheck`: Boolean flag indicating whether or not to use HTTP
-  headers when determining the MIME type if neither the `FileInfo` nor
-  `mime_magic` extensions are available; defaults to `false`.
 
 ## Basic Usage
 
@@ -34,25 +25,13 @@ The following set of options are supported:
 use Laminas\Validator\File\MimeType;
 
 // Only allow 'gif' or 'jpg' files
-$validator = new MimeType('image/gif,image/jpeg');
+$validator = new MimeType(['mimeType' => 'image/gif,image/jpeg']);
 
 // ... or with array notation:
-$validator = new MimeType(['image/gif', 'image/jpeg']);
+$validator = new MimeType(['mimeType' => ['image/gif', 'image/jpeg']]);
 
 // ... or restrict to  entire group of types:
-$validator = new MimeType(['image', 'audio']);
-
-// Specify a different magicFile:
-$validator = new MimeType([
-    'mimeType' => ['image/gif', 'image/jpeg'],
-    'magicFile' => '/path/to/magicfile.mgx',
-]);
-
-// Enable HTTP header scanning (do not do this!):
-$validator = new MimeType([
-    'mimeType' => ['image/gif', 'image/jpeg'],
-    'enableHeaderCheck' => true,
-]);
+$validator = new MimeType(['mimeType' => ['image', 'audio']]);
 
 // Perform validation
 if ($validator->isValid('./myfile.jpg')) {
@@ -66,3 +45,11 @@ if ($validator->isValid('./myfile.jpg')) {
 > if your application does not support them. For instance, When you allow
 > `image` you also allow `image/xpixmap` and `image/vasa`, both of which could
 > be problematic.
+
+## Validating Uploaded Files
+
+This validator accepts and validates 3 types of argument:
+
+- A string that represents a path to an existing file
+- An array that represents an uploaded file as per PHP's [`$_FILES`](https://www.php.net/manual/reserved.variables.files.php) superglobal
+- A PSR-7 [`UploadedFileInterface`](https://www.php-fig.org/psr/psr-7/#36-psrhttpmessageuploadedfileinterface) instance
