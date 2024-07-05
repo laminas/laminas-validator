@@ -104,6 +104,8 @@ class Count extends AbstractValidator
     /**
      * Returns the minimum file count
      *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
      * @return int
      */
     public function getMin()
@@ -114,7 +116,9 @@ class Count extends AbstractValidator
     /**
      * Sets the minimum file count
      *
-     * @param  int|array $min The minimum file count
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
+     * @param int|array $min The minimum file count
      * @return $this Provides a fluent interface
      * @throws Exception\InvalidArgumentException When min is greater than max.
      */
@@ -142,6 +146,8 @@ class Count extends AbstractValidator
     /**
      * Returns the maximum file count
      *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
      * @return int
      */
     public function getMax()
@@ -152,7 +158,9 @@ class Count extends AbstractValidator
     /**
      * Sets the maximum file count
      *
-     * @param  int|array $max The maximum file count
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
+     * @param int|array $max The maximum file count
      * @return $this Provides a fluent interface
      * @throws Exception\InvalidArgumentException When max is smaller than min.
      */
@@ -179,6 +187,8 @@ class Count extends AbstractValidator
 
     /**
      * Adds a file for validation
+     *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
      *
      * @param string|array|UploadedFileInterface $file
      * @return $this

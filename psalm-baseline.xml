@@ -929,6 +929,20 @@
     </TooManyArguments>
   </file>
   <file src="src/File/Count.php">
+    <DeprecatedMethod>
+      <code><![CDATA[addFile]]></code>
+      <code><![CDATA[addFile]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA[is_string($options)]]></code>
     </DocblockTypeContradiction>
@@ -978,6 +992,15 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/File/Crc32.php">
+    <DeprecatedMethod>
+      <code><![CDATA[addHash]]></code>
+      <code><![CDATA[getHash]]></code>
+      <code><![CDATA[getHash]]></code>
+      <code><![CDATA[setHash]]></code>
+    </DeprecatedMethod>
+    <DeprecatedTrait>
+      <code><![CDATA[FileInformationTrait]]></code>
+    </DeprecatedTrait>
     <InvalidClassConstantType>
       <code><![CDATA[DOES_NOT_MATCH]]></code>
       <code><![CDATA[NOT_DETECTED]]></code>
@@ -998,6 +1021,15 @@
     </MoreSpecificImplementedParamType>
   </file>
   <file src="src/File/ExcludeExtension.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getAllowNonExistentFile]]></code>
+      <code><![CDATA[getCase]]></code>
+      <code><![CDATA[getCase]]></code>
+      <code><![CDATA[getExtension]]></code>
+    </DeprecatedMethod>
+    <DeprecatedTrait>
+      <code><![CDATA[FileInformationTrait]]></code>
+    </DeprecatedTrait>
     <InvalidClassConstantType>
       <code><![CDATA[FALSE_EXTENSION]]></code>
       <code><![CDATA[NOT_FOUND]]></code>
@@ -1022,6 +1054,9 @@
     </PossiblyFalseOperand>
   </file>
   <file src="src/File/ExcludeMimeType.php">
+    <DeprecatedTrait>
+      <code><![CDATA[FileInformationTrait]]></code>
+    </DeprecatedTrait>
     <InvalidClassConstantType>
       <code><![CDATA[FALSE_TYPE]]></code>
       <code><![CDATA[NOT_DETECTED]]></code>
@@ -1045,6 +1080,14 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/File/Exists.php">
+    <DeprecatedMethod>
+      <code><![CDATA[addDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+    </DeprecatedMethod>
+    <DeprecatedTrait>
+      <code><![CDATA[FileInformationTrait]]></code>
+    </DeprecatedTrait>
     <DocblockTypeContradiction>
       <code><![CDATA[is_array($directory)]]></code>
     </DocblockTypeContradiction>
@@ -1087,6 +1130,17 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/File/Extension.php">
+    <DeprecatedMethod>
+      <code><![CDATA[addExtension]]></code>
+      <code><![CDATA[getAllowNonExistentFile]]></code>
+      <code><![CDATA[getCase]]></code>
+      <code><![CDATA[getCase]]></code>
+      <code><![CDATA[getExtension]]></code>
+      <code><![CDATA[getExtension]]></code>
+    </DeprecatedMethod>
+    <DeprecatedTrait>
+      <code><![CDATA[FileInformationTrait]]></code>
+    </DeprecatedTrait>
     <MixedArgument>
       <code><![CDATA[$ext]]></code>
       <code><![CDATA[$fileInfo['file']]]></code>
@@ -1167,6 +1221,14 @@
     </PossiblyInvalidCast>
   </file>
   <file src="src/File/FilesSize.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getByteString]]></code>
+      <code><![CDATA[getByteString]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getSize]]></code>
+      <code><![CDATA[setSize]]></code>
+    </DeprecatedMethod>
     <InvalidClassConstantType>
       <code><![CDATA[TOO_BIG]]></code>
       <code><![CDATA[TOO_SMALL]]></code>
@@ -1210,6 +1272,15 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/File/Hash.php">
+    <DeprecatedMethod>
+      <code><![CDATA[addHash]]></code>
+      <code><![CDATA[getHash]]></code>
+      <code><![CDATA[getHash]]></code>
+      <code><![CDATA[getHash]]></code>
+    </DeprecatedMethod>
+    <DeprecatedTrait>
+      <code><![CDATA[FileInformationTrait]]></code>
+    </DeprecatedTrait>
     <DocblockTypeContradiction>
       <code><![CDATA[is_array($options)]]></code>
     </DocblockTypeContradiction>
@@ -1247,6 +1318,41 @@
     </PossiblyInvalidArgument>
   </file>
   <file src="src/File/ImageSize.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getMaxHeight]]></code>
+      <code><![CDATA[getMaxHeight]]></code>
+      <code><![CDATA[getMaxHeight]]></code>
+      <code><![CDATA[getMaxHeight]]></code>
+      <code><![CDATA[getMaxHeight]]></code>
+      <code><![CDATA[getMaxHeight]]></code>
+      <code><![CDATA[getMaxHeight]]></code>
+      <code><![CDATA[getMaxWidth]]></code>
+      <code><![CDATA[getMaxWidth]]></code>
+      <code><![CDATA[getMaxWidth]]></code>
+      <code><![CDATA[getMaxWidth]]></code>
+      <code><![CDATA[getMaxWidth]]></code>
+      <code><![CDATA[getMaxWidth]]></code>
+      <code><![CDATA[getMaxWidth]]></code>
+      <code><![CDATA[getMinHeight]]></code>
+      <code><![CDATA[getMinHeight]]></code>
+      <code><![CDATA[getMinHeight]]></code>
+      <code><![CDATA[getMinHeight]]></code>
+      <code><![CDATA[getMinHeight]]></code>
+      <code><![CDATA[getMinHeight]]></code>
+      <code><![CDATA[getMinWidth]]></code>
+      <code><![CDATA[getMinWidth]]></code>
+      <code><![CDATA[getMinWidth]]></code>
+      <code><![CDATA[getMinWidth]]></code>
+      <code><![CDATA[getMinWidth]]></code>
+      <code><![CDATA[getMinWidth]]></code>
+      <code><![CDATA[setImageMax]]></code>
+      <code><![CDATA[setImageMax]]></code>
+      <code><![CDATA[setImageMin]]></code>
+      <code><![CDATA[setImageMin]]></code>
+    </DeprecatedMethod>
+    <DeprecatedTrait>
+      <code><![CDATA[FileInformationTrait]]></code>
+    </DeprecatedTrait>
     <MixedArgument>
       <code><![CDATA[$fileInfo['file']]]></code>
       <code><![CDATA[$fileInfo['file']]]></code>
@@ -1330,6 +1436,15 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="src/File/Md5.php">
+    <DeprecatedMethod>
+      <code><![CDATA[addHash]]></code>
+      <code><![CDATA[getHash]]></code>
+      <code><![CDATA[getHash]]></code>
+      <code><![CDATA[setHash]]></code>
+    </DeprecatedMethod>
+    <DeprecatedTrait>
+      <code><![CDATA[FileInformationTrait]]></code>
+    </DeprecatedTrait>
     <InvalidClassConstantType>
       <code><![CDATA[DOES_NOT_MATCH]]></code>
       <code><![CDATA[NOT_DETECTED]]></code>
@@ -1350,6 +1465,9 @@
     </MoreSpecificImplementedParamType>
   </file>
   <file src="src/File/MimeType.php">
+    <DeprecatedTrait>
+      <code><![CDATA[FileInformationTrait]]></code>
+    </DeprecatedTrait>
     <DocblockTypeContradiction>
       <code><![CDATA[! is_string($content)]]></code>
       <code><![CDATA[$file === false]]></code>
@@ -1416,6 +1534,12 @@
     </TypeDoesNotContainType>
   </file>
   <file src="src/File/NotExists.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getDirectory]]></code>
+    </DeprecatedMethod>
+    <DeprecatedTrait>
+      <code><![CDATA[FileInformationTrait]]></code>
+    </DeprecatedTrait>
     <InvalidIterator>
       <code><![CDATA[$directories]]></code>
     </InvalidIterator>
@@ -1434,6 +1558,15 @@
     </MoreSpecificImplementedParamType>
   </file>
   <file src="src/File/Sha1.php">
+    <DeprecatedMethod>
+      <code><![CDATA[addHash]]></code>
+      <code><![CDATA[getHash]]></code>
+      <code><![CDATA[getHash]]></code>
+      <code><![CDATA[setHash]]></code>
+    </DeprecatedMethod>
+    <DeprecatedTrait>
+      <code><![CDATA[FileInformationTrait]]></code>
+    </DeprecatedTrait>
     <InvalidClassConstantType>
       <code><![CDATA[DOES_NOT_MATCH]]></code>
       <code><![CDATA[NOT_DETECTED]]></code>
@@ -1455,6 +1588,19 @@
     </MoreSpecificImplementedParamType>
   </file>
   <file src="src/File/Size.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getByteString]]></code>
+      <code><![CDATA[getByteString]]></code>
+      <code><![CDATA[getByteString]]></code>
+      <code><![CDATA[getByteString]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+    </DeprecatedMethod>
+    <DeprecatedTrait>
+      <code><![CDATA[FileInformationTrait]]></code>
+    </DeprecatedTrait>
     <DocblockTypeContradiction>
       <code><![CDATA[! is_string($max) && ! is_numeric($max)]]></code>
       <code><![CDATA[! is_string($min) && ! is_numeric($min)]]></code>
@@ -1541,6 +1687,14 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/File/Upload.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getFiles]]></code>
+      <code><![CDATA[getFiles]]></code>
+      <code><![CDATA[getFiles]]></code>
+      <code><![CDATA[getFiles]]></code>
+      <code><![CDATA[getFiles]]></code>
+      <code><![CDATA[getFiles]]></code>
+    </DeprecatedMethod>
     <DocblockTypeContradiction>
       <code><![CDATA[null === $files]]></code>
     </DocblockTypeContradiction>
@@ -1623,6 +1777,21 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/File/WordCount.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+    </DeprecatedMethod>
+    <DeprecatedTrait>
+      <code><![CDATA[FileInformationTrait]]></code>
+    </DeprecatedTrait>
     <DocblockTypeContradiction>
       <code><![CDATA[is_string($options)]]></code>
     </DocblockTypeContradiction>
@@ -2725,6 +2894,25 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/CountTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[setMax]]></code>
+      <code><![CDATA[setMax]]></code>
+      <code><![CDATA[setMax]]></code>
+      <code><![CDATA[setMin]]></code>
+      <code><![CDATA[setMin]]></code>
+      <code><![CDATA[setMin]]></code>
+      <code><![CDATA[setMin]]></code>
+      <code><![CDATA[setMin]]></code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$max]]></code>
       <code><![CDATA[$min]]></code>
@@ -2735,6 +2923,28 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/Crc32Test.php">
+    <DeprecatedMethod>
+      <code><![CDATA[addCrc32]]></code>
+      <code><![CDATA[addCrc32]]></code>
+      <code><![CDATA[addHash]]></code>
+      <code><![CDATA[addHash]]></code>
+      <code><![CDATA[getCrc32]]></code>
+      <code><![CDATA[getCrc32]]></code>
+      <code><![CDATA[getCrc32]]></code>
+      <code><![CDATA[getCrc32]]></code>
+      <code><![CDATA[getCrc32]]></code>
+      <code><![CDATA[getCrc32]]></code>
+      <code><![CDATA[getCrc32]]></code>
+      <code><![CDATA[getCrc32]]></code>
+      <code><![CDATA[getCrc32]]></code>
+      <code><![CDATA[getCrc32]]></code>
+      <code><![CDATA[getHash]]></code>
+      <code><![CDATA[getHash]]></code>
+      <code><![CDATA[setCrc32]]></code>
+      <code><![CDATA[setCrc32]]></code>
+      <code><![CDATA[setHash]]></code>
+      <code><![CDATA[setHash]]></code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$isValidParam['tmp_name']]]></code>
     </MixedArgument>
@@ -2743,6 +2953,19 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/ExcludeExtensionTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[addExtension]]></code>
+      <code><![CDATA[addExtension]]></code>
+      <code><![CDATA[addExtension]]></code>
+      <code><![CDATA[addExtension]]></code>
+      <code><![CDATA[getExtension]]></code>
+      <code><![CDATA[getExtension]]></code>
+      <code><![CDATA[getExtension]]></code>
+      <code><![CDATA[getExtension]]></code>
+      <code><![CDATA[getExtension]]></code>
+      <code><![CDATA[getExtension]]></code>
+      <code><![CDATA[setExtension]]></code>
+    </DeprecatedMethod>
     <InvalidReturnStatement>
       <code><![CDATA[$testData]]></code>
     </InvalidReturnStatement>
@@ -2783,6 +3006,25 @@
     <ArgumentTypeCoercion>
       <code><![CDATA[$value]]></code>
     </ArgumentTypeCoercion>
+    <DeprecatedMethod>
+      <code><![CDATA[addDirectory]]></code>
+      <code><![CDATA[addDirectory]]></code>
+      <code><![CDATA[addDirectory]]></code>
+      <code><![CDATA[addDirectory]]></code>
+      <code><![CDATA[addDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[setDirectory]]></code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$isValidParam['tmp_name']]]></code>
     </MixedArgument>
@@ -2797,6 +3039,19 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/ExtensionTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[addExtension]]></code>
+      <code><![CDATA[addExtension]]></code>
+      <code><![CDATA[addExtension]]></code>
+      <code><![CDATA[addExtension]]></code>
+      <code><![CDATA[getExtension]]></code>
+      <code><![CDATA[getExtension]]></code>
+      <code><![CDATA[getExtension]]></code>
+      <code><![CDATA[getExtension]]></code>
+      <code><![CDATA[getExtension]]></code>
+      <code><![CDATA[getExtension]]></code>
+      <code><![CDATA[setExtension]]></code>
+    </DeprecatedMethod>
     <InvalidReturnStatement>
       <code><![CDATA[$testData]]></code>
     </InvalidReturnStatement>
@@ -2824,6 +3079,23 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/FilesSizeTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getByteString]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[setMax]]></code>
+      <code><![CDATA[setMin]]></code>
+      <code><![CDATA[setMin]]></code>
+      <code><![CDATA[setMin]]></code>
+      <code><![CDATA[useByteString]]></code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$options]]></code>
     </MixedArgument>
@@ -2835,6 +3107,20 @@
     </PossiblyUnusedProperty>
   </file>
   <file src="test/File/HashTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[addHash]]></code>
+      <code><![CDATA[addHash]]></code>
+      <code><![CDATA[addHash]]></code>
+      <code><![CDATA[addHash]]></code>
+      <code><![CDATA[addHash]]></code>
+      <code><![CDATA[addHash]]></code>
+      <code><![CDATA[addHash]]></code>
+      <code><![CDATA[getHash]]></code>
+      <code><![CDATA[getHash]]></code>
+      <code><![CDATA[getHash]]></code>
+      <code><![CDATA[getHash]]></code>
+      <code><![CDATA[setHash]]></code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$isValidParam['tmp_name']]]></code>
       <code><![CDATA[$value]]></code>
@@ -2852,6 +3138,30 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/ImageSizeTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getImageHeight]]></code>
+      <code><![CDATA[getImageHeight]]></code>
+      <code><![CDATA[getImageMax]]></code>
+      <code><![CDATA[getImageMax]]></code>
+      <code><![CDATA[getImageMin]]></code>
+      <code><![CDATA[getImageMin]]></code>
+      <code><![CDATA[getImageMin]]></code>
+      <code><![CDATA[getImageWidth]]></code>
+      <code><![CDATA[getImageWidth]]></code>
+      <code><![CDATA[getMaxHeight]]></code>
+      <code><![CDATA[getMaxWidth]]></code>
+      <code><![CDATA[getMinHeight]]></code>
+      <code><![CDATA[getMinWidth]]></code>
+      <code><![CDATA[setImageHeight]]></code>
+      <code><![CDATA[setImageHeight]]></code>
+      <code><![CDATA[setImageMax]]></code>
+      <code><![CDATA[setImageMax]]></code>
+      <code><![CDATA[setImageMin]]></code>
+      <code><![CDATA[setImageMin]]></code>
+      <code><![CDATA[setImageMin]]></code>
+      <code><![CDATA[setImageWidth]]></code>
+      <code><![CDATA[setImageWidth]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[$minWidth]]></code>
     </InvalidArgument>
@@ -2895,6 +3205,28 @@
     </RedundantCondition>
   </file>
   <file src="test/File/Md5Test.php">
+    <DeprecatedMethod>
+      <code><![CDATA[addHash]]></code>
+      <code><![CDATA[addHash]]></code>
+      <code><![CDATA[addMd5]]></code>
+      <code><![CDATA[addMd5]]></code>
+      <code><![CDATA[getHash]]></code>
+      <code><![CDATA[getHash]]></code>
+      <code><![CDATA[getMd5]]></code>
+      <code><![CDATA[getMd5]]></code>
+      <code><![CDATA[getMd5]]></code>
+      <code><![CDATA[getMd5]]></code>
+      <code><![CDATA[getMd5]]></code>
+      <code><![CDATA[getMd5]]></code>
+      <code><![CDATA[getMd5]]></code>
+      <code><![CDATA[getMd5]]></code>
+      <code><![CDATA[getMd5]]></code>
+      <code><![CDATA[getMd5]]></code>
+      <code><![CDATA[setHash]]></code>
+      <code><![CDATA[setHash]]></code>
+      <code><![CDATA[setMd5]]></code>
+      <code><![CDATA[setMd5]]></code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$isValidParam['tmp_name']]]></code>
     </MixedArgument>
@@ -2926,6 +3258,25 @@
     <ArgumentTypeCoercion>
       <code><![CDATA[$value]]></code>
     </ArgumentTypeCoercion>
+    <DeprecatedMethod>
+      <code><![CDATA[addDirectory]]></code>
+      <code><![CDATA[addDirectory]]></code>
+      <code><![CDATA[addDirectory]]></code>
+      <code><![CDATA[addDirectory]]></code>
+      <code><![CDATA[addDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[getDirectory]]></code>
+      <code><![CDATA[setDirectory]]></code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$isValidParam['tmp_name']]]></code>
     </MixedArgument>
@@ -2940,6 +3291,22 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/Sha1Test.php">
+    <DeprecatedMethod>
+      <code><![CDATA[addHash]]></code>
+      <code><![CDATA[addHash]]></code>
+      <code><![CDATA[addSha1]]></code>
+      <code><![CDATA[addSha1]]></code>
+      <code><![CDATA[getHash]]></code>
+      <code><![CDATA[getSha1]]></code>
+      <code><![CDATA[getSha1]]></code>
+      <code><![CDATA[getSha1]]></code>
+      <code><![CDATA[getSha1]]></code>
+      <code><![CDATA[getSha1]]></code>
+      <code><![CDATA[getSha1]]></code>
+      <code><![CDATA[getSha1]]></code>
+      <code><![CDATA[setHash]]></code>
+      <code><![CDATA[setSha1]]></code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$isValidParam['tmp_name']]]></code>
     </MixedArgument>
@@ -2952,6 +3319,23 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/SizeTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[setMax]]></code>
+      <code><![CDATA[setMax]]></code>
+      <code><![CDATA[setMin]]></code>
+      <code><![CDATA[setMin]]></code>
+      <code><![CDATA[setMin]]></code>
+      <code><![CDATA[setMin]]></code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$isValidParam['tmp_name']]]></code>
       <code><![CDATA[$value]]></code>
@@ -2963,12 +3347,44 @@
       <code><![CDATA[setMaxProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
+  <file src="test/File/TestAsset/FileInformation.php">
+    <DeprecatedTrait>
+      <code><![CDATA[FileInformationTrait]]></code>
+    </DeprecatedTrait>
+  </file>
   <file src="test/File/UploadFileTest.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[uploadErrorsTestDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/UploadTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getFiles]]></code>
+      <code><![CDATA[getFiles]]></code>
+      <code><![CDATA[getFiles]]></code>
+      <code><![CDATA[getFiles]]></code>
+      <code><![CDATA[getFiles]]></code>
+      <code><![CDATA[getFiles]]></code>
+      <code><![CDATA[getFiles]]></code>
+      <code><![CDATA[getFiles]]></code>
+      <code><![CDATA[getFiles]]></code>
+      <code><![CDATA[getFiles]]></code>
+      <code><![CDATA[getFiles]]></code>
+      <code><![CDATA[getFiles]]></code>
+      <code><![CDATA[getFiles]]></code>
+      <code><![CDATA[getFiles]]></code>
+      <code><![CDATA[getFiles]]></code>
+      <code><![CDATA[setFiles]]></code>
+      <code><![CDATA[setFiles]]></code>
+      <code><![CDATA[setFiles]]></code>
+      <code><![CDATA[setFiles]]></code>
+      <code><![CDATA[setFiles]]></code>
+      <code><![CDATA[setFiles]]></code>
+      <code><![CDATA[setFiles]]></code>
+      <code><![CDATA[setFiles]]></code>
+      <code><![CDATA[setFiles]]></code>
+      <code><![CDATA[setFiles]]></code>
+    </DeprecatedMethod>
     <NullArgument>
       <code><![CDATA[null]]></code>
     </NullArgument>
@@ -2977,6 +3393,25 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/WordCountTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getMin]]></code>
+      <code><![CDATA[setMax]]></code>
+      <code><![CDATA[setMax]]></code>
+      <code><![CDATA[setMax]]></code>
+      <code><![CDATA[setMin]]></code>
+      <code><![CDATA[setMin]]></code>
+      <code><![CDATA[setMin]]></code>
+      <code><![CDATA[setMin]]></code>
+      <code><![CDATA[setMin]]></code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$isValidParam['tmp_name']]]></code>
       <code><![CDATA[$value]]></code>

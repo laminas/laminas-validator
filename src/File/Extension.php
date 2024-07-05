@@ -95,6 +95,8 @@ class Extension extends AbstractValidator
     /**
      * Returns the case option
      *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
      * @return bool
      */
     public function getCase()
@@ -104,6 +106,8 @@ class Extension extends AbstractValidator
 
     /**
      * Sets the case to use
+     *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
      *
      * @param  bool $case
      * @return $this Provides a fluent interface
@@ -116,6 +120,8 @@ class Extension extends AbstractValidator
 
     /**
      * Returns the set file extension
+     *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
      *
      * @return array
      */
@@ -134,6 +140,8 @@ class Extension extends AbstractValidator
     /**
      * Sets the file extensions
      *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
      * @param  string|array $extension The extensions to validate
      * @return $this Provides a fluent interface
      */
@@ -147,7 +155,9 @@ class Extension extends AbstractValidator
     /**
      * Adds the file extensions
      *
-     * @param  string|array $extension The extensions to add for validation
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
+     * @param string|array $extension The extensions to add for validation
      * @return $this Provides a fluent interface
      */
     public function addExtension($extension)
@@ -181,6 +191,8 @@ class Extension extends AbstractValidator
     /**
      * Returns whether or not to allow validation of non-existent files.
      *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
      * @return bool
      */
     public function getAllowNonExistentFile()
@@ -190,6 +202,8 @@ class Extension extends AbstractValidator
 
     /**
      * Sets the flag indicating whether or not to allow validation of non-existent files.
+     *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
      *
      * @param  bool $flag Whether or not to allow validation of non-existent files.
      * @return $this Provides a fluent interface

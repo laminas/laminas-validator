@@ -96,6 +96,8 @@ class WordCount extends AbstractValidator
     /**
      * Returns the minimum word count
      *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
      * @return int
      */
     public function getMin()
@@ -106,7 +108,9 @@ class WordCount extends AbstractValidator
     /**
      * Sets the minimum word count
      *
-     * @param  int|array $min The minimum word count
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
+     * @param int|array $min The minimum word count
      * @return $this Provides a fluent interface
      * @throws Exception\InvalidArgumentException When min is greater than max.
      */
@@ -134,6 +138,8 @@ class WordCount extends AbstractValidator
     /**
      * Returns the maximum word count
      *
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
      * @return int
      */
     public function getMax()
@@ -144,7 +150,9 @@ class WordCount extends AbstractValidator
     /**
      * Sets the maximum file count
      *
-     * @param  int|array $max The maximum word count
+     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
+     *
+     * @param int|array $max The maximum word count
      * @return $this Provides a fluent interface
      * @throws Exception\InvalidArgumentException When max is smaller than min.
      */
