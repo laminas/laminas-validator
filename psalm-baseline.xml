@@ -290,55 +290,11 @@
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
     </PossiblyInvalidArgument>
     <PossiblyInvalidCast>
       <code><![CDATA[$fileInfo['file']]]></code>
       <code><![CDATA[$value]]></code>
     </PossiblyInvalidCast>
-  </file>
-  <file src="src/File/FilesSize.php">
-    <InvalidClassConstantType>
-      <code><![CDATA[TOO_BIG]]></code>
-      <code><![CDATA[TOO_SMALL]]></code>
-    </InvalidClassConstantType>
-    <InvalidPropertyAssignmentValue>
-      <code><![CDATA[$this->toByteString($size)]]></code>
-      <code><![CDATA[$this->toByteString($size)]]></code>
-    </InvalidPropertyAssignmentValue>
-    <MixedArgument>
-      <code><![CDATA[$files]]></code>
-      <code><![CDATA[$files]]></code>
-    </MixedArgument>
-    <MixedArrayOffset>
-      <code><![CDATA[$this->files[$files]]]></code>
-      <code><![CDATA[$this->files[$files]]]></code>
-    </MixedArrayOffset>
-    <MixedAssignment>
-      <code><![CDATA[$files]]></code>
-      <code><![CDATA[$files]]></code>
-      <code><![CDATA[$options['max']]]></code>
-      <code><![CDATA[$options['useByteString']]]></code>
-    </MixedAssignment>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$max]]></code>
-      <code><![CDATA[$min]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUnusedReturnValue>
-      <code><![CDATA[false]]></code>
-    </PossiblyUnusedReturnValue>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[FilesSize]]></code>
-    </PropertyNotSetInConstructor>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[$max !== null]]></code>
-      <code><![CDATA[$min !== null]]></code>
-      <code><![CDATA[is_array($value)]]></code>
-      <code><![CDATA[is_string($file)]]></code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/File/Hash.php">
     <DocblockTypeContradiction>
@@ -492,73 +448,6 @@
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
     </MoreSpecificImplementedParamType>
-  </file>
-  <file src="src/File/Size.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[! is_string($max) && ! is_numeric($max)]]></code>
-      <code><![CDATA[! is_string($min) && ! is_numeric($min)]]></code>
-      <code><![CDATA[is_string($options)]]></code>
-    </DocblockTypeContradiction>
-    <InvalidArrayOffset>
-      <code><![CDATA[$sizes[$i]]]></code>
-    </InvalidArrayOffset>
-    <InvalidPropertyAssignmentValue>
-      <code><![CDATA[$this->toByteString($size)]]></code>
-      <code><![CDATA[$this->toByteString($size)]]></code>
-    </InvalidPropertyAssignmentValue>
-    <MixedArgument>
-      <code><![CDATA[$max]]></code>
-      <code><![CDATA[$min]]></code>
-    </MixedArgument>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$options]]></code>
-    </MixedArgumentTypeCoercion>
-    <MixedAssignment>
-      <code><![CDATA[$max]]></code>
-      <code><![CDATA[$min]]></code>
-      <code><![CDATA[$options['max']]]></code>
-      <code><![CDATA[$options['useByteString']]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[bool]]></code>
-      <code><![CDATA[int|string]]></code>
-      <code><![CDATA[int|string]]></code>
-    </MixedInferredReturnType>
-    <MixedOperand>
-      <code><![CDATA[$sizes[$i]]]></code>
-    </MixedOperand>
-    <MixedReturnStatement>
-      <code><![CDATA[$max]]></code>
-      <code><![CDATA[$max]]></code>
-      <code><![CDATA[$min]]></code>
-      <code><![CDATA[$min]]></code>
-      <code><![CDATA[$this->options['useByteString']]]></code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$max]]></code>
-      <code><![CDATA[$max]]></code>
-      <code><![CDATA[$min]]></code>
-      <code><![CDATA[$min]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyInvalidArrayAssignment>
-      <code><![CDATA[$options['max']]]></code>
-      <code><![CDATA[$options['useByteString']]]></code>
-    </PossiblyInvalidArrayAssignment>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$size]]></code>
-    </PropertyNotSetInConstructor>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(bool) $byteString]]></code>
-    </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[$max !== null]]></code>
-      <code><![CDATA[$max !== null]]></code>
-      <code><![CDATA[$min !== null]]></code>
-      <code><![CDATA[$min !== null]]></code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/File/Upload.php">
     <DocblockTypeContradiction>
@@ -851,6 +740,12 @@
       <code><![CDATA[$errstr]]></code>
     </UnusedParam>
   </file>
+  <file src="test/File/BytesTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[bytesToSiUnitDataProvider]]></code>
+      <code><![CDATA[siUnitToBytesProvider]]></code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="test/File/CountTest.php">
     <MixedArgument>
       <code><![CDATA[$max]]></code>
@@ -946,15 +841,9 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/FilesSizeTest.php">
-    <MixedArgument>
-      <code><![CDATA[$options]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicDataProvider]]></code>
     </PossiblyUnusedMethod>
-    <PossiblyUnusedProperty>
-      <code><![CDATA[$multipleOptionsDetected]]></code>
-    </PossiblyUnusedProperty>
   </file>
   <file src="test/File/HashTest.php">
     <MixedArgument>
@@ -1038,15 +927,8 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/SizeTest.php">
-    <MixedArgument>
-      <code><![CDATA[$isValidParam['tmp_name']]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicBehaviorDataProvider]]></code>
-      <code><![CDATA[invalidMinMaxValues]]></code>
-      <code><![CDATA[setMaxProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/UploadFileTest.php">
