@@ -43,6 +43,7 @@
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
+      <code><![CDATA[$this->options]]></code>
     </UndefinedThisPropertyAssignment>
   </file>
   <file src="src/Barcode/Code128.php">
@@ -289,7 +290,6 @@
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
     </PossiblyInvalidArgument>
     <PossiblyInvalidCast>
       <code><![CDATA[$fileInfo['file']]]></code>
@@ -332,63 +332,6 @@
     <PossiblyInvalidArgument>
       <code><![CDATA[$options]]></code>
     </PossiblyInvalidArgument>
-  </file>
-  <file src="src/File/ImageSize.php">
-    <MixedArgument>
-      <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$fileInfo['file']]]></code>
-    </MixedArgument>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$options]]></code>
-    </MixedArgumentTypeCoercion>
-    <MixedAssignment>
-      <code><![CDATA[$options['maxHeight']]]></code>
-      <code><![CDATA[$options['maxWidth']]]></code>
-      <code><![CDATA[$options['minHeight']]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[int]]></code>
-      <code><![CDATA[int]]></code>
-      <code><![CDATA[int]]></code>
-      <code><![CDATA[int]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->options['maxHeight']]]></code>
-      <code><![CDATA[$this->options['maxWidth']]]></code>
-      <code><![CDATA[$this->options['minHeight']]]></code>
-      <code><![CDATA[$this->options['minWidth']]]></code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[setMaxHeight]]></code>
-      <code><![CDATA[setMaxWidth]]></code>
-      <code><![CDATA[setMinHeight]]></code>
-      <code><![CDATA[setMinWidth]]></code>
-    </PossiblyUnusedMethod>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$height]]></code>
-      <code><![CDATA[$width]]></code>
-    </PropertyNotSetInConstructor>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(int) $maxHeight]]></code>
-      <code><![CDATA[(int) $maxWidth]]></code>
-      <code><![CDATA[(int) $minHeight]]></code>
-      <code><![CDATA[(int) $minWidth]]></code>
-    </RedundantCastGivenDocblockType>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[$this->getMaxHeight() !== null]]></code>
-      <code><![CDATA[$this->getMaxHeight() !== null]]></code>
-      <code><![CDATA[$this->getMaxWidth() !== null]]></code>
-      <code><![CDATA[$this->getMaxWidth() !== null]]></code>
-      <code><![CDATA[$this->getMinHeight() !== null]]></code>
-      <code><![CDATA[$this->getMinWidth() !== null]]></code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/File/Md5.php">
     <InvalidClassConstantType>
@@ -827,15 +770,8 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/ImageSizeTest.php">
-    <InvalidArgument>
-      <code><![CDATA[$minWidth]]></code>
-    </InvalidArgument>
-    <MixedArgument>
-      <code><![CDATA[$isValidParam['tmp_name']]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicBehaviorDataProvider]]></code>
-      <code><![CDATA[imageMaxProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/IsCompressedTest.php">

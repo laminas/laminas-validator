@@ -22,9 +22,6 @@ The following set of options are supported:
 use Laminas\Validator\File\ImageSize;
 
 // Is image size between 320x200 (min) and 640x480 (max)?
-$validator = new ImageSize(320, 200, 640, 480);
-
-// ...or with array notation
 $validator = new ImageSize([
     'minWidth' => 320,
     'minHeight' => 200,
@@ -50,22 +47,10 @@ if ($validator->isValid('./myfile.jpg')) {
 }
 ```
 
-## Public Methods
+## Validating Uploaded Files
 
-### getImageMin
+This validator accepts and validates 3 types of argument:
 
-```php
-getImageMin() : array
-```
-
-Returns the minimum valid dimensions as an array with the keys `width` and
-`height`.
-
-### getImageMax
-
-```php
-getImageMax() : array
-```
-
-Returns the maximum valid dimensions as an array with the keys `width` and
-`height`.
+- A string that represents a path to an existing file
+- An array that represents an uploaded file as per PHP's [`$_FILES`](https://www.php.net/manual/reserved.variables.files.php) superglobal
+- A PSR-7 [`UploadedFileInterface`](https://www.php-fig.org/psr/psr-7/#36-psrhttpmessageuploadedfileinterface) instance
