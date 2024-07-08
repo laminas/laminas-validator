@@ -740,6 +740,12 @@
       <code><![CDATA[$errstr]]></code>
     </UnusedParam>
   </file>
+  <file src="test/File/BytesTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[bytesToSiUnitDataProvider]]></code>
+      <code><![CDATA[siUnitToBytesProvider]]></code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="test/File/CountTest.php">
     <MixedArgument>
       <code><![CDATA[$max]]></code>
@@ -832,12 +838,6 @@
       <code><![CDATA[basicBehaviorDataProvider]]></code>
       <code><![CDATA[getExtensionProvider]]></code>
       <code><![CDATA[setExtensionProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/File/FileInformationTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[bytesToSiUnitDataProvider]]></code>
-      <code><![CDATA[siUnitToBytesProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/FilesSizeTest.php">

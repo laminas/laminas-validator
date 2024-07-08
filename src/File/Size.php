@@ -70,11 +70,11 @@ final class Size extends AbstractValidator
         }
 
         if (is_string($min)) {
-            $min = FileInformation::siUnitToBytes($min);
+            $min = Bytes::fromSiUnit($min)->bytes;
         }
 
         if (is_string($max)) {
-            $max = FileInformation::siUnitToBytes($max);
+            $max = Bytes::fromSiUnit($max)->bytes;
         }
 
         $this->min = $min !== null ? (int) $min : null;
@@ -91,10 +91,10 @@ final class Size extends AbstractValidator
         );
 
         $this->minString = $this->min !== null && $this->useByteString
-            ? FileInformation::bytesToSiUnit($this->min)
+            ? Bytes::fromInteger($this->min)->toSiUnit()
             : (string) $this->min;
         $this->maxString = $this->max !== null && $this->useByteString
-            ? FileInformation::bytesToSiUnit($this->max)
+            ? Bytes::fromInteger($this->max)->toSiUnit()
             : (string) $this->max;
 
         parent::__construct($options);
@@ -121,9 +121,9 @@ final class Size extends AbstractValidator
             return false;
         }
 
-        $size       = $file->size();
+        $size       = $file->size()->bytes;
         $this->size = $this->useByteString
-            ? $file->sizeAsSiUnit()
+            ? $file->size()->toSiUnit()
             : (string) $size;
 
         if ($this->min !== null && $size < $this->min) {
