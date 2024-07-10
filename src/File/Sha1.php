@@ -10,6 +10,8 @@ use function is_readable;
 /**
  * Validator for the sha1 hash of given files
  *
+ * @deprecated Since 2.61.0 Use the {@link Hash} validator and specify `sha1` as the algorithm
+ *
  * @final
  */
 class Sha1 extends Hash

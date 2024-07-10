@@ -10,6 +10,8 @@ use function is_readable;
 /**
  * Validator for the crc32 hash of given files
  *
+ * @deprecated Since 2.61.0 Use the {@link Hash} validator and specify `cr32` as the algorithm
+ *
  * @final
  */
 class Crc32 extends Hash

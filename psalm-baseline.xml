@@ -2466,6 +2466,24 @@
       <code><![CDATA[Db\RecordExists::class]]></code>
       <code><![CDATA[Db\RecordExists::class]]></code>
       <code><![CDATA[Db\RecordExists::class]]></code>
+      <code><![CDATA[File\Crc32::class]]></code>
+      <code><![CDATA[File\Crc32::class]]></code>
+      <code><![CDATA[File\Crc32::class]]></code>
+      <code><![CDATA[File\Crc32::class]]></code>
+      <code><![CDATA[File\Crc32::class]]></code>
+      <code><![CDATA[File\Crc32::class]]></code>
+      <code><![CDATA[File\Md5::class]]></code>
+      <code><![CDATA[File\Md5::class]]></code>
+      <code><![CDATA[File\Md5::class]]></code>
+      <code><![CDATA[File\Md5::class]]></code>
+      <code><![CDATA[File\Md5::class]]></code>
+      <code><![CDATA[File\Md5::class]]></code>
+      <code><![CDATA[File\Sha1::class]]></code>
+      <code><![CDATA[File\Sha1::class]]></code>
+      <code><![CDATA[File\Sha1::class]]></code>
+      <code><![CDATA[File\Sha1::class]]></code>
+      <code><![CDATA[File\Sha1::class]]></code>
+      <code><![CDATA[File\Sha1::class]]></code>
       <code><![CDATA[GreaterThan::class]]></code>
       <code><![CDATA[GreaterThan::class]]></code>
       <code><![CDATA[GreaterThan::class]]></code>
@@ -2958,6 +2976,23 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/Crc32Test.php">
+    <DeprecatedClass>
+      <code><![CDATA[Crc32::NOT_FOUND]]></code>
+      <code><![CDATA[Crc32::NOT_FOUND]]></code>
+      <code><![CDATA[new Crc32($options)]]></code>
+      <code><![CDATA[new Crc32($options)]]></code>
+      <code><![CDATA[new Crc32('12345')]]></code>
+      <code><![CDATA[new Crc32('12345')]]></code>
+      <code><![CDATA[new Crc32('12345')]]></code>
+      <code><![CDATA[new Crc32('12345')]]></code>
+      <code><![CDATA[new Crc32('12345')]]></code>
+      <code><![CDATA[new Crc32('12345')]]></code>
+      <code><![CDATA[new Crc32('3f8d07e2')]]></code>
+      <code><![CDATA[new Crc32()]]></code>
+      <code><![CDATA[new Crc32()]]></code>
+      <code><![CDATA[new Crc32(['12345', '12333', '12344'])]]></code>
+      <code><![CDATA[new Crc32(['12345', '12333', '12344'])]]></code>
+    </DeprecatedClass>
     <DeprecatedMethod>
       <code><![CDATA[addCrc32]]></code>
       <code><![CDATA[addCrc32]]></code>
@@ -3310,6 +3345,23 @@
     </RedundantCondition>
   </file>
   <file src="test/File/Md5Test.php">
+    <DeprecatedClass>
+      <code><![CDATA[Md5::NOT_FOUND]]></code>
+      <code><![CDATA[Md5::NOT_FOUND]]></code>
+      <code><![CDATA[new Md5($options)]]></code>
+      <code><![CDATA[new Md5($options)]]></code>
+      <code><![CDATA[new Md5('12345')]]></code>
+      <code><![CDATA[new Md5('12345')]]></code>
+      <code><![CDATA[new Md5('12345')]]></code>
+      <code><![CDATA[new Md5('12345')]]></code>
+      <code><![CDATA[new Md5('12345')]]></code>
+      <code><![CDATA[new Md5('12345')]]></code>
+      <code><![CDATA[new Md5('12345')]]></code>
+      <code><![CDATA[new Md5()]]></code>
+      <code><![CDATA[new Md5()]]></code>
+      <code><![CDATA[new Md5(['12345', '12333', '12344'])]]></code>
+      <code><![CDATA[new Md5(['12345', '12333', '12344'])]]></code>
+    </DeprecatedClass>
     <DeprecatedMethod>
       <code><![CDATA[addHash]]></code>
       <code><![CDATA[addHash]]></code>
@@ -3434,6 +3486,21 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/Sha1Test.php">
+    <DeprecatedClass>
+      <code><![CDATA[Sha1::NOT_FOUND]]></code>
+      <code><![CDATA[Sha1::NOT_FOUND]]></code>
+      <code><![CDATA[new Sha1($hash)]]></code>
+      <code><![CDATA[new Sha1($hash)]]></code>
+      <code><![CDATA[new Sha1($options)]]></code>
+      <code><![CDATA[new Sha1($options)]]></code>
+      <code><![CDATA[new Sha1('12345')]]></code>
+      <code><![CDATA[new Sha1('12345')]]></code>
+      <code><![CDATA[new Sha1('12345')]]></code>
+      <code><![CDATA[new Sha1('12345')]]></code>
+      <code><![CDATA[new Sha1('12345')]]></code>
+      <code><![CDATA[new Sha1()]]></code>
+      <code><![CDATA[new Sha1()]]></code>
+    </DeprecatedClass>
     <DeprecatedMethod>
       <code><![CDATA[addHash]]></code>
       <code><![CDATA[addHash]]></code>
