@@ -4,7 +4,6 @@ Laminas comes with a set of classes for validating both files and
 uploaded files, such as file size validation and CRC checking.
 
 - [Count](count.md)
-- [crc32](crc32.md)
 - [ExcludeExtension](exclude-extension.md)
 - [ExcludeMimeType](exclude-mime-type.md)
 - [Exists](exists.md)
@@ -14,10 +13,8 @@ uploaded files, such as file size validation and CRC checking.
 - [ImageSize](image-size.md)
 - [IsCompressed](is-compressed.md)
 - [IsImage](is-image.md)
-- [Md5](md5.md)
 - [MimeType](mime-type.md)
 - [NotExists](not-exists.md)
-- [Sha1](sha1.md)
 - [Size](size.md)
 - [Upload](upload.md)
 - [UploadFile](upload-file.md)
