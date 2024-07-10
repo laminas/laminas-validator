@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Laminas\Validator\File;
 
 use Laminas\Validator\AbstractValidator;
-use Laminas\Validator\Exception;
 use Psr\Http\Message\UploadedFileInterface;
 
 use function basename;
 use function is_array;
 use function is_file;
+use function is_int;
 use function is_string;
 use function is_uploaded_file;
 
@@ -59,19 +59,16 @@ final class UploadFile extends AbstractValidator
 
     /**
      * Returns true if and only if the file was uploaded without errors
-     *
-     * @param  string|array|UploadedFileInterface $value File to check for upload errors
-     * @throws Exception\InvalidArgumentException
      */
     public function isValid(mixed $value): bool
     {
-        if (is_array($value)) {
-            if (! isset($value['tmp_name']) || ! isset($value['name']) || ! isset($value['error'])) {
-                throw new Exception\InvalidArgumentException(
-                    'Value array must be in $_FILES format'
-                );
-            }
-
+        if (
+            is_array($value)
+            && isset($value['tmp_name'], $value['name'], $value['error'])
+            && is_string($value['tmp_name'])
+            && is_string($value['name'])
+            && is_int($value['error'])
+        ) {
             return $this->validateUploadedFile(
                 $value['error'],
                 $value['name'],
@@ -91,11 +88,7 @@ final class UploadFile extends AbstractValidator
         return false;
     }
 
-    /**
-     * @param int $error UPLOAD_ERR_* constant value
-     * @return bool
-     */
-    private function validateFileFromErrorCode($error)
+    private function validateFileFromErrorCode(int $error): bool
     {
         switch ($error) {
             case UPLOAD_ERR_OK:
@@ -136,12 +129,11 @@ final class UploadFile extends AbstractValidator
     }
 
     /**
-     * @param  int $error UPLOAD_ERR_* constant
-     * @param  string $filename
-     * @param  string $uploadedFile Name of uploaded file (gen tmp_name)
-     * @return bool
+     * @param int $error UPLOAD_ERR_* constant
+     * @param string $filename Client file name
+     * @param string $uploadedFile File path
      */
-    private function validateUploadedFile($error, $filename, $uploadedFile)
+    private function validateUploadedFile(int $error, string $filename, string $uploadedFile): bool
     {
         $this->setValue($filename);
 
@@ -165,10 +157,7 @@ final class UploadFile extends AbstractValidator
         return true;
     }
 
-    /**
-     * @return bool
-     */
-    private function validatePsr7UploadedFile(UploadedFileInterface $uploadedFile)
+    private function validatePsr7UploadedFile(UploadedFileInterface $uploadedFile): bool
     {
         $this->setValue($uploadedFile);
         return $this->validateFileFromErrorCode($uploadedFile->getError());

@@ -21,9 +21,7 @@ if ($validator->isValid($files['my-upload'])) {
 
 ## PSR-7 Support
 
-- Since 2.11.0
-
-Starting in 2.11.0, you can also pass [PSR-7 UploadedFileInterface](https://www.php-fig.org/psr/psr-7/#uploadedfileinterface)
+You can also pass [PSR-7 UploadedFileInterface](https://www.php-fig.org/psr/psr-7/#36-psrhttpmessageuploadedfileinterface)
 instances as values to the validator. When valid, `getValue()` will return the
 instance validated verbatim:
 

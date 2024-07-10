@@ -461,19 +461,6 @@
       <code><![CDATA[$this->options['files'] === null]]></code>
     </TypeDoesNotContainNull>
   </file>
-  <file src="src/File/UploadFile.php">
-    <MixedArgument>
-      <code><![CDATA[$value['error']]]></code>
-      <code><![CDATA[$value['name']]]></code>
-      <code><![CDATA[$value['tmp_name']]]></code>
-    </MixedArgument>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[is_string($value)]]></code>
-    </RedundantConditionGivenDocblockType>
-  </file>
   <file src="src/GpsPoint.php">
     <InvalidOperand>
       <code><![CDATA[$matches[1][0]]]></code>
