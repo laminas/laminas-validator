@@ -18,6 +18,7 @@ use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\FilesSize;
 use Laminas\Validator\File\MimeType;
 use Laminas\Validator\File\Size;
+use Laminas\Validator\File\WordCount;
 use Laminas\Validator\InArray;
 use Laminas\Validator\IsInstanceOf;
 use Laminas\Validator\NumberComparison;
@@ -52,6 +53,7 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
         MimeType::class,
         ExcludeMimeType::class,
         Size::class,
+        WordCount::class,
     ];
 
     /**
