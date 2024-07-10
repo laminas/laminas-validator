@@ -1,6 +1,7 @@
 # laminas-validator
 
 [![Build Status](https://github.com/laminas/laminas-validator/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/laminas/laminas-validator/actions/workflows/continuous-integration.yml)
+[![Type Coverage](https://shepherd.dev/github/laminas/laminas-validator/coverage.svg)](https://shepherd.dev/github/laminas/laminas-validator)
 
 > ## 🇷🇺 Русским гражданам
 >
