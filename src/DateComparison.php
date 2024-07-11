@@ -96,8 +96,8 @@ final class DateComparison extends AbstractValidator
 
     public function isValid(mixed $value): bool
     {
-        $this->type  = get_debug_type($value);
-        $this->value = $value;
+        $this->type = get_debug_type($value);
+        $this->setValue($value);
 
         if (! is_string($value) && ! $value instanceof DateTimeInterface) {
             $this->error(self::ERROR_INVALID_TYPE);

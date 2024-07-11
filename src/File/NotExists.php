@@ -82,7 +82,7 @@ final class NotExists extends AbstractValidator
             $value = $file->baseName;
         }
 
-        $this->value = $value;
+        $this->setValue($value);
 
         if (! is_string($value)) {
             // Not a file path, therefore it cannot exist.

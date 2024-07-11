@@ -87,7 +87,7 @@ final class HostWithPublicIPv4Address extends AbstractValidator
             return false;
         }
 
-        $this->value = $value;
+        $this->setValue($value);
 
         if (filter_var($value, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) === false) {
             $addressList = gethostbynamel($value);

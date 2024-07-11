@@ -136,7 +136,7 @@ final class ImageSize extends AbstractValidator
             return false;
         }
 
-        $this->value = $file->clientFileName ?? $file->baseName;
+        $this->setValue($file->clientFileName ?? $file->baseName);
 
         $size = getimagesize($file->path);
 

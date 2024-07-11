@@ -83,7 +83,7 @@ final class Exists extends AbstractValidator
             $value = $file->baseName;
         }
 
-        $this->value = $value;
+        $this->setValue($value);
 
         if (! is_string($value)) {
             $this->error(self::DOES_NOT_EXIST);

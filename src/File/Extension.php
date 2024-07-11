@@ -85,6 +85,7 @@ final class Extension extends AbstractValidator
      */
     public function isValid(mixed $value): bool
     {
+        $this->setValue($value);
         $isFile = FileInformation::isPossibleFile($value);
         if (! $isFile && ! $this->allowNonExistentFile) {
             $this->error(self::NOT_FOUND);

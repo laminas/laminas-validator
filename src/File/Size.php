@@ -120,7 +120,7 @@ final class Size extends AbstractValidator
 
         $file = FileInformation::factory($value);
 
-        $this->value = $file->clientFileName ?? $file->baseName;
+        $this->setValue($file->clientFileName ?? $file->baseName);
 
         if (! $file->readable) {
             $this->error(self::NOT_FOUND);
