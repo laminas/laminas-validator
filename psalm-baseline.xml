@@ -2484,6 +2484,12 @@
       <code><![CDATA[File\Sha1::class]]></code>
       <code><![CDATA[File\Sha1::class]]></code>
       <code><![CDATA[File\Sha1::class]]></code>
+      <code><![CDATA[File\Upload::class]]></code>
+      <code><![CDATA[File\Upload::class]]></code>
+      <code><![CDATA[File\Upload::class]]></code>
+      <code><![CDATA[File\Upload::class]]></code>
+      <code><![CDATA[File\Upload::class]]></code>
+      <code><![CDATA[File\Upload::class]]></code>
       <code><![CDATA[GreaterThan::class]]></code>
       <code><![CDATA[GreaterThan::class]]></code>
       <code><![CDATA[GreaterThan::class]]></code>
@@ -3568,6 +3574,33 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/UploadTest.php">
+    <DeprecatedClass>
+      <code><![CDATA[Upload]]></code>
+      <code><![CDATA[Upload]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+      <code><![CDATA[new Upload()]]></code>
+    </DeprecatedClass>
     <DeprecatedMethod>
       <code><![CDATA[getFiles]]></code>
       <code><![CDATA[getFiles]]></code>
