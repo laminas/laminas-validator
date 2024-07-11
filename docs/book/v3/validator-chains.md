@@ -2,29 +2,20 @@
 
 ## Basic Usage
 
-> ### Installation requirements
->
-> The validator chain depends on the laminas-servicemanager component, so be sure
-> to have it installed before getting started:
->
-> ```bash
-> $ composer require laminas/laminas-servicemanager
-> ```
-
 Often, multiple validations should be applied to some value in a particular
 order. The following code demonstrates a way to solve the example from the
 [introduction](intro.md), where a username must be between 6 and 12 alphanumeric
 characters:
 
 ```php
-use Laminas\I18n\Validator\Alnum;
+use Laminas\Validator\Regex;
 use Laminas\Validator\StringLength;
 use Laminas\Validator\ValidatorChain;
 
 // Create a validator chain and add validators to it
 $validatorChain = new ValidatorChain();
 $validatorChain->attach(new StringLength(['min' => 6, 'max' => 12]));
-$validatorChain->attach(new Alnum());
+$validatorChain->attach(new Regex(['pattern' => '/^[a-z0-9]+$/i']));
 
 // Validate the username
 if ($validatorChain->isValid($username)) {
@@ -55,7 +46,7 @@ string length validation fails:
 
 ```php
 $chain->attach(new StringLength(['min' => 6, 'max' => 12]), true);
-$chain->attach(new Alnum());
+$chain->attach(new Regex(['pattern' => '/^[a-z0-9]+$/i']));
 ```
 
 Any object that implements `Laminas\Validator\ValidatorInterface` may be used in a
@@ -73,7 +64,6 @@ length is between 7 and 9 characters, and then it is checked to ensure that its
 length is between 3 and 5 characters.
 
 ```php
-use Laminas\I18n\Validator\Alnum;
 use Laminas\Validator\StringLength;
 use Laminas\Validator\ValidatorChain;
 
