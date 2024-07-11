@@ -159,48 +159,6 @@
       <code><![CDATA[strrpos($fileInfo['filename'], '.')]]></code>
     </PossiblyFalseOperand>
   </file>
-  <file src="src/File/Exists.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_array($directory)]]></code>
-    </DocblockTypeContradiction>
-    <InvalidIterator>
-      <code><![CDATA[$directories]]></code>
-    </InvalidIterator>
-    <InvalidReturnStatement>
-      <code><![CDATA[$directory]]></code>
-    </InvalidReturnStatement>
-    <MixedArgument>
-      <code><![CDATA[$fileInfo['file']]]></code>
-    </MixedArgument>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$directories]]></code>
-    </MixedArgumentTypeCoercion>
-    <MixedAssignment>
-      <code><![CDATA[$dir]]></code>
-      <code><![CDATA[$directory]]></code>
-      <code><![CDATA[$directory]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[string|null]]></code>
-    </MixedInferredReturnType>
-    <MixedOperand>
-      <code><![CDATA[$directory]]></code>
-      <code><![CDATA[$fileInfo['basename']]]></code>
-    </MixedOperand>
-    <MixedReturnStatement>
-      <code><![CDATA[$directory]]></code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$directories]]></code>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(bool) $asArray]]></code>
-    </RedundantCastGivenDocblockType>
-  </file>
   <file src="src/File/Extension.php">
     <MixedArgument>
       <code><![CDATA[$ext]]></code>
@@ -264,31 +222,11 @@
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
     </PossiblyInvalidArgument>
     <PossiblyInvalidCast>
       <code><![CDATA[$fileInfo['file']]]></code>
       <code><![CDATA[$value]]></code>
     </PossiblyInvalidCast>
-  </file>
-  <file src="src/File/NotExists.php">
-    <InvalidIterator>
-      <code><![CDATA[$directories]]></code>
-    </InvalidIterator>
-    <MixedArgument>
-      <code><![CDATA[$fileInfo['file']]]></code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code><![CDATA[$directory]]></code>
-    </MixedAssignment>
-    <MixedOperand>
-      <code><![CDATA[$directory]]></code>
-      <code><![CDATA[$fileInfo['basename']]]></code>
-    </MixedOperand>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
   </file>
   <file src="src/File/Upload.php">
     <DocblockTypeContradiction>
@@ -581,20 +519,8 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/ExistsTest.php">
-    <ArgumentTypeCoercion>
-      <code><![CDATA[$value]]></code>
-    </ArgumentTypeCoercion>
-    <MixedArgument>
-      <code><![CDATA[$isValidParam['tmp_name']]]></code>
-    </MixedArgument>
-    <PossiblyNullArgument>
-      <code><![CDATA[$value]]></code>
-    </PossiblyNullArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicBehaviorDataProvider]]></code>
-      <code><![CDATA[getDirectoryProvider]]></code>
-      <code><![CDATA[invalidDirectoryArguments]]></code>
-      <code><![CDATA[setDirectoryProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/ExtensionTest.php">
@@ -655,20 +581,8 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/NotExistsTest.php">
-    <ArgumentTypeCoercion>
-      <code><![CDATA[$value]]></code>
-    </ArgumentTypeCoercion>
-    <MixedArgument>
-      <code><![CDATA[$isValidParam['tmp_name']]]></code>
-    </MixedArgument>
-    <PossiblyNullArgument>
-      <code><![CDATA[$value]]></code>
-    </PossiblyNullArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicBehaviorDataProvider]]></code>
-      <code><![CDATA[getDirectoryProvider]]></code>
-      <code><![CDATA[invalidDirectoryArguments]]></code>
-      <code><![CDATA[setDirectoryProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/SizeTest.php">
