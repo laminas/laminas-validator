@@ -33,6 +33,51 @@
         'valueObscured'        => false, // Flag indicating whether value should be obfuscated in error messages
     ];]]></code>
     </DeprecatedInterface>
+    <DeprecatedMethod>
+      <code><![CDATA[getTranslatorTextDomain]]></code>
+      <code><![CDATA[isTranslatorEnabled]]></code>
+      <code><![CDATA[isValueObscured]]></code>
+      <code><![CDATA[self::getDefaultTranslator()]]></code>
+      <code><![CDATA[self::getDefaultTranslatorTextDomain()]]></code>
+      <code><![CDATA[self::getMessageLength()]]></code>
+      <code><![CDATA[setOptions]]></code>
+      <code><![CDATA[setTranslatorTextDomain]]></code>
+    </DeprecatedMethod>
+    <DeprecatedProperty>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+    </DeprecatedProperty>
     <MixedArgumentTypeCoercion>
       <code><![CDATA[$value]]></code>
     </MixedArgumentTypeCoercion>
@@ -550,6 +595,7 @@
       <code><![CDATA[getService]]></code>
       <code><![CDATA[getType]]></code>
       <code><![CDATA[getType]]></code>
+      <code><![CDATA[setOptions]]></code>
       <code><![CDATA[setService]]></code>
       <code><![CDATA[setType]]></code>
     </DeprecatedMethod>
@@ -811,7 +857,12 @@
       <code><![CDATA[getHostnameValidator]]></code>
       <code><![CDATA[getHostnameValidator]]></code>
       <code><![CDATA[getHostnameValidator]]></code>
+      <code><![CDATA[getOption]]></code>
     </DeprecatedMethod>
+    <DeprecatedProperty>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+    </DeprecatedProperty>
     <DocblockTypeContradiction>
       <code><![CDATA['']]></code>
       <code><![CDATA[is_string($value)]]></code>
@@ -902,6 +953,11 @@
       <code><![CDATA[getValueDelimiter]]></code>
       <code><![CDATA[isBreakOnFirstFailure]]></code>
     </DeprecatedMethod>
+    <DeprecatedProperty>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+      <code><![CDATA[$this->abstractOptions]]></code>
+    </DeprecatedProperty>
     <DocblockTypeContradiction>
       <code><![CDATA[[$value]]]></code>
     </DocblockTypeContradiction>
@@ -1355,6 +1411,8 @@
       <code><![CDATA[setImageMax]]></code>
       <code><![CDATA[setImageMin]]></code>
       <code><![CDATA[setImageMin]]></code>
+      <code><![CDATA[setOptions]]></code>
+      <code><![CDATA[setOptions]]></code>
     </DeprecatedMethod>
     <DeprecatedTrait>
       <code><![CDATA[FileInformationTrait]]></code>
@@ -2048,6 +2106,9 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/Ip.php">
+    <DeprecatedMethod>
+      <code><![CDATA[parent::setOptions($options)]]></code>
+    </DeprecatedMethod>
     <MixedArgument>
       <code><![CDATA[$regex]]></code>
       <code><![CDATA[$regex]]></code>
@@ -2064,6 +2125,7 @@
       <code><![CDATA[getMax]]></code>
       <code><![CDATA[getMin]]></code>
       <code><![CDATA[getMin]]></code>
+      <code><![CDATA[parent::setOptions($options)]]></code>
     </DeprecatedMethod>
   </file>
   <file src="src/IsInstanceOf.php">
@@ -2549,6 +2611,34 @@
     </UnusedClass>
   </file>
   <file src="test/AbstractValidatorTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[AbstractValidator::getDefaultTranslator()]]></code>
+      <code><![CDATA[AbstractValidator::getDefaultTranslator()]]></code>
+      <code><![CDATA[AbstractValidator::getDefaultTranslatorTextDomain()]]></code>
+      <code><![CDATA[AbstractValidator::getDefaultTranslatorTextDomain()]]></code>
+      <code><![CDATA[AbstractValidator::hasDefaultTranslator()]]></code>
+      <code><![CDATA[AbstractValidator::hasDefaultTranslator()]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getOption]]></code>
+      <code><![CDATA[getTranslatorTextDomain]]></code>
+      <code><![CDATA[getTranslatorTextDomain]]></code>
+      <code><![CDATA[hasTranslator]]></code>
+      <code><![CDATA[hasTranslator]]></code>
+      <code><![CDATA[isTranslatorEnabled]]></code>
+      <code><![CDATA[isTranslatorEnabled]]></code>
+      <code><![CDATA[isTranslatorEnabled]]></code>
+      <code><![CDATA[isTranslatorEnabled]]></code>
+      <code><![CDATA[isValueObscured]]></code>
+      <code><![CDATA[isValueObscured]]></code>
+      <code><![CDATA[isValueObscured]]></code>
+      <code><![CDATA[setMessages]]></code>
+      <code><![CDATA[setOptions]]></code>
+      <code><![CDATA[setTranslatorEnabled]]></code>
+      <code><![CDATA[setTranslatorEnabled]]></code>
+      <code><![CDATA[setValueObscured]]></code>
+      <code><![CDATA[setValueObscured]]></code>
+      <code><![CDATA[setValueObscured]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[$options]]></code>
     </InvalidArgument>
@@ -2587,6 +2677,11 @@
       <code><![CDATA[getAdapter]]></code>
       <code><![CDATA[getAdapter]]></code>
       <code><![CDATA[getAdapter]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageVariables]]></code>
+      <code><![CDATA[getOption]]></code>
+      <code><![CDATA[getOption]]></code>
       <code><![CDATA[setAdapter]]></code>
       <code><![CDATA[setAdapter]]></code>
       <code><![CDATA[useChecksum]]></code>
@@ -2631,6 +2726,13 @@
       <code><![CDATA[new Between(['min' => 1, 'max' => 10])]]></code>
       <code><![CDATA[new Between(['min' => 1, 'max' => 10])]]></code>
     </DeprecatedClass>
+    <DeprecatedMethod>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageVariables]]></code>
+      <code><![CDATA[getOption]]></code>
+      <code><![CDATA[getOption]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[1]]></code>
     </InvalidArgument>
@@ -2708,6 +2810,9 @@
       <code><![CDATA[getCallbackOptions]]></code>
       <code><![CDATA[getCallbackOptions]]></code>
       <code><![CDATA[getCallbackOptions]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getOption]]></code>
       <code><![CDATA[setCallback]]></code>
       <code><![CDATA[setCallback]]></code>
       <code><![CDATA[setCallback]]></code>
@@ -2729,6 +2834,9 @@
     <DeprecatedMethod>
       <code><![CDATA[addType]]></code>
       <code><![CDATA[addType]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getOption]]></code>
       <code><![CDATA[getService]]></code>
       <code><![CDATA[getService]]></code>
       <code><![CDATA[getService]]></code>
@@ -2784,6 +2892,9 @@
       <code><![CDATA[getBaseValue]]></code>
       <code><![CDATA[getBaseValue]]></code>
       <code><![CDATA[getFormat]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getOption]]></code>
       <code><![CDATA[getStep]]></code>
       <code><![CDATA[getTimezone]]></code>
       <code><![CDATA[getTimezone]]></code>
@@ -2800,6 +2911,11 @@
       <code><![CDATA[getFormat]]></code>
       <code><![CDATA[getFormat]]></code>
       <code><![CDATA[getFormat]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageVariables]]></code>
+      <code><![CDATA[getOption]]></code>
+      <code><![CDATA[getOption]]></code>
       <code><![CDATA[setFormat]]></code>
       <code><![CDATA[setFormat]]></code>
       <code><![CDATA[setFormat]]></code>
@@ -2823,6 +2939,9 @@
     <DeprecatedMethod>
       <code><![CDATA[addMethods]]></code>
       <code><![CDATA[addMethods]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getOption]]></code>
+      <code><![CDATA[getOption]]></code>
     </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA['users']]></code>
@@ -2842,6 +2961,9 @@
     <DeprecatedMethod>
       <code><![CDATA[addMethods]]></code>
       <code><![CDATA[addMethods]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getOption]]></code>
+      <code><![CDATA[getOption]]></code>
     </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA['users']]></code>
@@ -2866,6 +2988,11 @@
     </PropertyNotSetInConstructor>
   </file>
   <file src="test/DigitsTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getOption]]></code>
+    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicDataProvider]]></code>
     </PossiblyUnusedMethod>
@@ -2883,12 +3010,31 @@
       <code><![CDATA[getHostnameValidator]]></code>
       <code><![CDATA[getHostnameValidator]]></code>
       <code><![CDATA[getMXRecord]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageVariables]]></code>
       <code><![CDATA[getMxCheck]]></code>
+      <code><![CDATA[getOption]]></code>
+      <code><![CDATA[getOption]]></code>
+      <code><![CDATA[getOptions]]></code>
+      <code><![CDATA[getOptions]]></code>
       <code><![CDATA[isMxSupported]]></code>
       <code><![CDATA[isMxSupported]]></code>
       <code><![CDATA[isMxSupported]]></code>
       <code><![CDATA[isMxSupported]]></code>
       <code><![CDATA[setHostnameValidator]]></code>
+      <code><![CDATA[setMessages]]></code>
+      <code><![CDATA[setOptions]]></code>
+      <code><![CDATA[setOptions]]></code>
       <code><![CDATA[useDomainCheck]]></code>
       <code><![CDATA[useIdnCheck]]></code>
       <code><![CDATA[useMxCheck]]></code>
@@ -2930,6 +3076,11 @@
   <file src="test/ExplodeTest.php">
     <DeprecatedMethod>
       <code><![CDATA[getHaystack]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageVariables]]></code>
+      <code><![CDATA[getOption]]></code>
+      <code><![CDATA[getOption]]></code>
       <code><![CDATA[getValidator]]></code>
       <code><![CDATA[setValidator]]></code>
       <code><![CDATA[setValidator]]></code>
@@ -3653,6 +3804,13 @@
       <code><![CDATA[new GreaterThan(10, true)]]></code>
       <code><![CDATA[new GreaterThan(['min' => 10, 'inclusive' => true])]]></code>
     </DeprecatedClass>
+    <DeprecatedMethod>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageVariables]]></code>
+      <code><![CDATA[getOption]]></code>
+      <code><![CDATA[getOption]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[1]]></code>
       <code><![CDATA[1]]></code>
@@ -3672,6 +3830,11 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/HexTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getOption]]></code>
+    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicDataProvider]]></code>
     </PossiblyUnusedMethod>
@@ -3686,6 +3849,11 @@
   <file src="test/HostnameTest.php">
     <DeprecatedMethod>
       <code><![CDATA[getAllow]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageVariables]]></code>
+      <code><![CDATA[getOption]]></code>
+      <code><![CDATA[getOption]]></code>
       <code><![CDATA[useIdnCheck]]></code>
       <code><![CDATA[useTldCheck]]></code>
     </DeprecatedMethod>
@@ -3745,6 +3913,9 @@
       <code><![CDATA[getCountryCode]]></code>
       <code><![CDATA[getCountryCode]]></code>
       <code><![CDATA[getCountryCode]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getOption]]></code>
       <code><![CDATA[setAllowNonSepa]]></code>
       <code><![CDATA[setAllowNonSepa]]></code>
       <code><![CDATA[setCountryCode]]></code>
@@ -3758,6 +3929,11 @@
   <file src="test/IdenticalTest.php">
     <DeprecatedMethod>
       <code><![CDATA[getLiteral]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageVariables]]></code>
+      <code><![CDATA[getOption]]></code>
+      <code><![CDATA[getOption]]></code>
       <code><![CDATA[getToken]]></code>
       <code><![CDATA[getToken]]></code>
       <code><![CDATA[getToken]]></code>
@@ -3789,6 +3965,9 @@
       <code><![CDATA[getHaystack]]></code>
       <code><![CDATA[getHaystack]]></code>
       <code><![CDATA[getHaystack]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getOption]]></code>
       <code><![CDATA[getRecursive]]></code>
       <code><![CDATA[getRecursive]]></code>
       <code><![CDATA[getRecursive]]></code>
@@ -3835,6 +4014,11 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/IpTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getOption]]></code>
+    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[iPvFutureAddressesProvider]]></code>
       <code><![CDATA[invalidIpV4Addresses]]></code>
@@ -3859,6 +4043,8 @@
     <DeprecatedMethod>
       <code><![CDATA[getClassName]]></code>
       <code><![CDATA[getClassName]]></code>
+      <code><![CDATA[getOption]]></code>
+      <code><![CDATA[getOption]]></code>
     </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[DateTime::class]]></code>
@@ -3884,6 +4070,9 @@
   </file>
   <file src="test/IsbnTest.php">
     <DeprecatedMethod>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getOption]]></code>
       <code><![CDATA[getSeparator]]></code>
       <code><![CDATA[getSeparator]]></code>
       <code><![CDATA[getSeparator]]></code>
@@ -3933,6 +4122,13 @@
       <code><![CDATA[new LessThan(10)]]></code>
       <code><![CDATA[new LessThan(10, true)]]></code>
     </DeprecatedClass>
+    <DeprecatedMethod>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageVariables]]></code>
+      <code><![CDATA[getOption]]></code>
+      <code><![CDATA[getOption]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[10]]></code>
       <code><![CDATA[10]]></code>
@@ -3949,6 +4145,19 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/MessageTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageVariables]]></code>
+      <code><![CDATA[getMessageVariables]]></code>
+      <code><![CDATA[getOption]]></code>
+      <code><![CDATA[getOption]]></code>
+      <code><![CDATA[max]]></code>
+      <code><![CDATA[min]]></code>
+      <code><![CDATA[setMessages]]></code>
+      <code><![CDATA[unknownProperty]]></code>
+      <code><![CDATA[value]]></code>
+    </DeprecatedMethod>
     <InaccessibleProperty>
       <code><![CDATA[$this->validator->value]]></code>
     </InaccessibleProperty>
@@ -3966,6 +4175,7 @@
       <code><![CDATA[getDefaultType]]></code>
       <code><![CDATA[getDefaultType]]></code>
       <code><![CDATA[getDefaultType]]></code>
+      <code><![CDATA[getOption]]></code>
       <code><![CDATA[getType]]></code>
       <code><![CDATA[getType]]></code>
       <code><![CDATA[getType]]></code>
@@ -4023,6 +4233,10 @@
       <code><![CDATA[Regex::ERROROUS]]></code>
     </DeprecatedConstant>
     <DeprecatedMethod>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getOption]]></code>
+      <code><![CDATA[getOption]]></code>
       <code><![CDATA[getPattern]]></code>
     </DeprecatedMethod>
     <MixedArgument>
@@ -4093,6 +4307,15 @@
       <code><![CDATA[StaticValidator::setPluginManager(null)]]></code>
       <code><![CDATA[new Between(1, 10)]]></code>
     </DeprecatedClass>
+    <DeprecatedMethod>
+      <code><![CDATA[AbstractValidator::getDefaultTranslator()]]></code>
+      <code><![CDATA[AbstractValidator::getDefaultTranslator()]]></code>
+      <code><![CDATA[AbstractValidator::getDefaultTranslator()]]></code>
+      <code><![CDATA[AbstractValidator::getDefaultTranslator()]]></code>
+      <code><![CDATA[AbstractValidator::getMessageLength()]]></code>
+      <code><![CDATA[AbstractValidator::getMessageLength()]]></code>
+      <code><![CDATA[AbstractValidator::getMessageLength()]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[1]]></code>
     </InvalidArgument>
@@ -4108,6 +4331,8 @@
     <DeprecatedMethod>
       <code><![CDATA[getBaseValue]]></code>
       <code><![CDATA[getBaseValue]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getOption]]></code>
       <code><![CDATA[getStep]]></code>
       <code><![CDATA[getStep]]></code>
       <code><![CDATA[getStep]]></code>
@@ -4133,7 +4358,12 @@
       <code><![CDATA[getEncoding]]></code>
       <code><![CDATA[getEncoding]]></code>
       <code><![CDATA[getMax]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageVariables]]></code>
       <code><![CDATA[getMin]]></code>
+      <code><![CDATA[getOption]]></code>
+      <code><![CDATA[getOption]]></code>
       <code><![CDATA[setEncoding]]></code>
       <code><![CDATA[setMax]]></code>
       <code><![CDATA[setMax]]></code>
@@ -4211,12 +4441,20 @@
     </DeprecatedClass>
   </file>
   <file src="test/UndisclosedPasswordTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getMessageTemplates]]></code>
+    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[goodPasswordProvider]]></code>
       <code><![CDATA[seenPasswordProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/UriTest.php">
+    <DeprecatedMethod>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getMessageTemplates]]></code>
+      <code><![CDATA[getOption]]></code>
+    </DeprecatedMethod>
     <InvalidArgument>
       <code><![CDATA[$uriMock]]></code>
       <code><![CDATA[new stdClass()]]></code>
