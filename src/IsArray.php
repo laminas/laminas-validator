@@ -23,9 +23,6 @@ final class IsArray extends AbstractValidator
 
     protected ?string $type = null;
 
-    /** @var array<never, never> */
-    protected $options = [];
-
     public function isValid(mixed $value): bool
     {
         if (is_array($value)) {
