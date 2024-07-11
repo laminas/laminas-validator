@@ -138,30 +138,6 @@
       <code><![CDATA[is_string($file)]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
-  <file src="src/File/FileInformationTrait.php">
-    <MixedArgument>
-      <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$fileInfo['file']]]></code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$fileInfo['filename']]]></code>
-      <code><![CDATA[$fileInfo['filename']]]></code>
-      <code><![CDATA[$fileInfo['filetype']]]></code>
-      <code><![CDATA[$fileInfo['filetype']]]></code>
-    </MixedAssignment>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$value]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyInvalidCast>
-      <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$value]]></code>
-    </PossiblyInvalidCast>
-  </file>
   <file src="src/File/Upload.php">
     <DocblockTypeContradiction>
       <code><![CDATA[null === $files]]></code>
