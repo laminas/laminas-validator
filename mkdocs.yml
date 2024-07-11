@@ -44,7 +44,6 @@ nav:
         - "File Validators":
             - Introduction: v3/validators/file/intro.md
             - Count: v3/validators/file/count.md
-            - Crc32: v3/validators/file/crc32.md
             - ExcludeExtension: v3/validators/file/exclude-extension.md
             - ExcludeMimeType: v3/validators/file/exclude-mime-type.md
             - Exists: v3/validators/file/exists.md
@@ -54,10 +53,8 @@ nav:
             - ImageSize: v3/validators/file/image-size.md
             - IsCompressed: v3/validators/file/is-compressed.md
             - IsImage: v3/validators/file/is-image.md
-            - Md5: v3/validators/file/md5.md
             - MimeType: v3/validators/file/mime-type.md
             - NotExists: v3/validators/file/not-exists.md
-            - Sha1: v3/validators/file/sha1.md
             - Size: v3/validators/file/size.md
             - Upload: v3/validators/file/upload.md
             - UploadFile: v3/validators/file/upload-file.md
@@ -184,7 +181,7 @@ plugins:
             validators/uuid.md: v3/validators/uuid.md
             validators/file/intro.md: v3/validators/file/intro.md
             validators/file/count.md: v3/validators/file/count.md
-            validators/file/crc32.md: v3/validators/file/crc32.md
+            validators/file/crc32.md: v2/validators/file/crc32.md
             validators/file/exclude-extension.md: v3/validators/file/exclude-extension.md
             validators/file/exclude-mime-type.md: v3/validators/file/exclude-mime-type.md
             validators/file/exists.md: v3/validators/file/exists.md
@@ -194,10 +191,10 @@ plugins:
             validators/file/image-size.md: v3/validators/file/image-size.md
             validators/file/is-compressed.md: v3/validators/file/is-compressed.md
             validators/file/is-image.md: v3/validators/file/is-image.md
-            validators/file/md5.md: v3/validators/file/md5.md
+            validators/file/md5.md: v2/validators/file/md5.md
             validators/file/mime-type.md: v3/validators/file/mime-type.md
             validators/file/not-exists.md: v3/validators/file/not-exists.md
-            validators/file/sha1.md: v3/validators/file/sha1.md
+            validators/file/sha1.md: v2/validators/file/sha1.md
             validators/file/size.md: v3/validators/file/size.md
             validators/file/upload.md: v3/validators/file/upload.md
             validators/file/upload-file.md: v3/validators/file/upload-file.md

@@ -16,6 +16,7 @@ use Laminas\Validator\File\ExcludeExtension;
 use Laminas\Validator\File\ExcludeMimeType;
 use Laminas\Validator\File\Extension;
 use Laminas\Validator\File\FilesSize;
+use Laminas\Validator\File\Hash;
 use Laminas\Validator\File\ImageSize;
 use Laminas\Validator\File\MimeType;
 use Laminas\Validator\File\Size;
@@ -56,6 +57,7 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
         Size::class,
         WordCount::class,
         ImageSize::class,
+        Hash::class,
     ];
 
     /**

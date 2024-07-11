@@ -138,26 +138,6 @@
       <code><![CDATA[is_string($file)]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
-  <file src="src/File/Crc32.php">
-    <InvalidClassConstantType>
-      <code><![CDATA[DOES_NOT_MATCH]]></code>
-      <code><![CDATA[NOT_DETECTED]]></code>
-      <code><![CDATA[NOT_FOUND]]></code>
-    </InvalidClassConstantType>
-    <InvalidPropertyAssignmentValue>
-      <code><![CDATA[[
-        'algorithm' => 'crc32',
-        'hash'      => null,
-    ]]]></code>
-    </InvalidPropertyAssignmentValue>
-    <MixedArgument>
-      <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$fileInfo['file']]]></code>
-    </MixedArgument>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-  </file>
   <file src="src/File/ExcludeExtension.php">
     <InvalidClassConstantType>
       <code><![CDATA[FALSE_EXTENSION]]></code>
@@ -286,72 +266,11 @@
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
     </PossiblyInvalidArgument>
     <PossiblyInvalidCast>
       <code><![CDATA[$fileInfo['file']]]></code>
       <code><![CDATA[$value]]></code>
     </PossiblyInvalidCast>
-  </file>
-  <file src="src/File/Hash.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_array($options)]]></code>
-    </DocblockTypeContradiction>
-    <InvalidPropertyAssignmentValue>
-      <code><![CDATA[[
-        'algorithm' => 'crc32',
-        'hash'      => null,
-    ]]]></code>
-    </InvalidPropertyAssignmentValue>
-    <MixedArgument>
-      <code><![CDATA[$algorithm]]></code>
-      <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$fileInfo['file']]]></code>
-    </MixedArgument>
-    <MixedArrayAssignment>
-      <code><![CDATA[$this->options['hash'][$value]]]></code>
-    </MixedArrayAssignment>
-    <MixedAssignment>
-      <code><![CDATA[$algorithm]]></code>
-      <code><![CDATA[$algorithm]]></code>
-      <code><![CDATA[$algorithm]]></code>
-      <code><![CDATA[$options['algorithm']]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[array]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->options['hash']]]></code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </PossiblyInvalidArgument>
-  </file>
-  <file src="src/File/Md5.php">
-    <InvalidClassConstantType>
-      <code><![CDATA[DOES_NOT_MATCH]]></code>
-      <code><![CDATA[NOT_DETECTED]]></code>
-      <code><![CDATA[NOT_FOUND]]></code>
-    </InvalidClassConstantType>
-    <InvalidPropertyAssignmentValue>
-      <code><![CDATA[[
-        'algorithm' => 'md5',
-        'hash'      => null,
-    ]]]></code>
-    </InvalidPropertyAssignmentValue>
-    <MixedArgument>
-      <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$fileInfo['file']]]></code>
-    </MixedArgument>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
   </file>
   <file src="src/File/NotExists.php">
     <InvalidIterator>
@@ -368,27 +287,6 @@
       <code><![CDATA[$fileInfo['basename']]]></code>
     </MixedOperand>
     <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-  </file>
-  <file src="src/File/Sha1.php">
-    <InvalidClassConstantType>
-      <code><![CDATA[DOES_NOT_MATCH]]></code>
-      <code><![CDATA[NOT_DETECTED]]></code>
-      <code><![CDATA[NOT_FOUND]]></code>
-    </InvalidClassConstantType>
-    <InvalidPropertyAssignmentValue>
-      <code><![CDATA[[
-        'algorithm' => 'sha1',
-        'hash'      => null,
-    ]]]></code>
-    </InvalidPropertyAssignmentValue>
-    <MixedArgument>
-      <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$fileInfo['file']]]></code>
-    </MixedArgument>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
     </MoreSpecificImplementedParamType>
   </file>
@@ -650,14 +548,6 @@
       <code><![CDATA[invalidMinMaxValues]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="test/File/Crc32Test.php">
-    <MixedArgument>
-      <code><![CDATA[$isValidParam['tmp_name']]]></code>
-    </MixedArgument>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicBehaviorDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
   <file src="test/File/ExcludeExtensionTest.php">
     <InvalidReturnStatement>
       <code><![CDATA[$testData]]></code>
@@ -740,20 +630,8 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/HashTest.php">
-    <MixedArgument>
-      <code><![CDATA[$isValidParam['tmp_name']]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedArgument>
-    <MixedArrayAccess>
-      <code><![CDATA[$options['algorithm']]]></code>
-    </MixedArrayAccess>
-    <MixedAssignment>
-      <code><![CDATA[$options]]></code>
-    </MixedAssignment>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicBehaviorDataProvider]]></code>
-      <code><![CDATA[hashProvider]]></code>
-      <code><![CDATA[invalidHashTypes]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/ImageSizeTest.php">
@@ -767,14 +645,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/IsImageTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicBehaviorDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/File/Md5Test.php">
-    <MixedArgument>
-      <code><![CDATA[$isValidParam['tmp_name']]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicBehaviorDataProvider]]></code>
     </PossiblyUnusedMethod>
@@ -799,18 +669,6 @@
       <code><![CDATA[getDirectoryProvider]]></code>
       <code><![CDATA[invalidDirectoryArguments]]></code>
       <code><![CDATA[setDirectoryProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/File/Sha1Test.php">
-    <MixedArgument>
-      <code><![CDATA[$isValidParam['tmp_name']]]></code>
-    </MixedArgument>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$isValidParam]]></code>
-    </MixedArgumentTypeCoercion>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicBehaviorDataProvider]]></code>
-      <code><![CDATA[getHashProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/SizeTest.php">

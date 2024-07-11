@@ -1,13 +1,7 @@
 # Hash
 
 `Laminas\Validator\File\Hash` allows you to validate if a given file's hashed
-contents matches the supplied hash(es) and algorithm(s).
-
-> ### Requires the hash extension
->
-> This validator requires the PHP [Hash extension](http://php.net/hash). A list
-> of supported hash algorithms can be found with the
-> [hash\_algos() function](http://php.net/hash_algos).
+contents matches the supplied hash(es) and algorithm.
 
 ## Supported Options
 
@@ -22,12 +16,12 @@ The following set of options are supported:
 use Laminas\Validator\File\Hash;
 
 // Does file have the given hash?
-$validator = new Hash('3b3652f', 'crc32');
+$validator = new Hash([
+    'hash' => '3b3652f',
+    'algorithm' => 'crc32',
+]);
 
 // Or, check file against multiple hashes
-$validator = new Hash(['3b3652f', 'e612b69'], 'crc32');
-
-// Or use options notation:
 $validator = new Hash([
     'hash' => ['3b3652f', 'e612b69'],
     'algorithm' => 'crc32',
@@ -39,28 +33,14 @@ if ($validator->isValid('./myfile.txt')) {
 }
 ```
 
-## Public Methods
+The `algorithm` option must be an algorithm that is available on your installation of PHP. You can find out which algorithms are supported by calling [`hash_algos()`](https://www.php.net/hash_algos).
 
-### getHash
+When supplying a list of hashes to match, the validator will return `true` if _any_ of the hashes match the given file.
 
-```php
-getHash() : array
-```
+## Accepted Uploaded File Types
 
-Returns an array containing the set of hashes against which to validate.
+This validator accepts and validates 3 types of argument:
 
-### addHash
-
-```php
-addHash(string|array $options) : void
-```
-
-Add one or more hashes against which to validate.
-
-### setHash
-
-```php
-setHash(string|array $options) : void
-```
-
-Overwrite the current set of hashes with those provided to the method.
+- A string that represents a path to an existing files
+- An array that represents an uploaded file as per PHP's [`$_FILES`](https://www.php.net/manual/reserved.variables.files.php) superglobal
+- A PSR-7 [`UploadedFileInterface`](https://www.php-fig.org/psr/psr-7/#36-psrhttpmessageuploadedfileinterface) instance
