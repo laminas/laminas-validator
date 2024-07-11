@@ -24,6 +24,7 @@ class BytesTest extends TestCase
             [6_442_450_944, '6GB'],
             [6_597_069_766_656, '6TB'],
             [6_755_399_441_055_744, '6PB'],
+            [2_147_483_647, '2GB'], // PHP_INT_MAX on 32-bit
         ];
     }
 

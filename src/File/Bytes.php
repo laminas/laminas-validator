@@ -14,6 +14,7 @@ use function substr;
 use function trim;
 
 use const PHP_INT_MAX;
+use const PHP_INT_SIZE;
 
 /**
  * @internal
@@ -78,19 +79,34 @@ final class Bytes
                 $value = PHP_INT_MAX;
                 break;
             case 'E':
-                if ($value > 7) {
+                if ($value > 7 || PHP_INT_SIZE === 4) {
                     $value = PHP_INT_MAX;
                     break;
                 }
                 $value *= 1024 ** 6;
                 break;
             case 'P':
+                if (PHP_INT_SIZE === 4) {
+                    $value = PHP_INT_MAX;
+                    break;
+                }
+
                 $value *= 1024 ** 5;
                 break;
             case 'T':
+                if (PHP_INT_SIZE === 4) {
+                    $value = PHP_INT_MAX;
+                    break;
+                }
+
                 $value *= 1024 ** 4;
                 break;
             case 'G':
+                if ($value > 2 && PHP_INT_SIZE === 4) {
+                    $value = PHP_INT_MAX;
+                    break;
+                }
+
                 $value *= 1024 ** 3;
                 break;
             case 'M':
