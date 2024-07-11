@@ -56,7 +56,6 @@ nav:
             - MimeType: v3/validators/file/mime-type.md
             - NotExists: v3/validators/file/not-exists.md
             - Size: v3/validators/file/size.md
-            - Upload: v3/validators/file/upload.md
             - UploadFile: v3/validators/file/upload-file.md
             - WordCount: v3/validators/file/word-count.md
     - v2:
@@ -196,6 +195,6 @@ plugins:
             validators/file/not-exists.md: v3/validators/file/not-exists.md
             validators/file/sha1.md: v2/validators/file/sha1.md
             validators/file/size.md: v3/validators/file/size.md
-            validators/file/upload.md: v3/validators/file/upload.md
+            validators/file/upload.md: v2/validators/file/upload.md
             validators/file/upload-file.md: v3/validators/file/upload-file.md
             validators/file/word-count.md: v3/validators/file/word-count.md
