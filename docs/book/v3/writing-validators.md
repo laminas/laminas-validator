@@ -41,7 +41,7 @@ namespace MyValid;
 
 use Laminas\Validator\AbstractValidator;
 
-class Float extends AbstractValidator
+final class Float extends AbstractValidator
 {
     const FLOAT = 'float';
 
@@ -92,14 +92,14 @@ namespace MyValid;
 
 use Laminas\Validator\AbstractValidator;
 
-class NumericBetween extends AbstractValidator
+final class NumericBetween extends AbstractValidator
 {
     const MSG_NUMERIC = 'msgNumeric';
     const MSG_MINIMUM = 'msgMinimum';
     const MSG_MAXIMUM = 'msgMaximum';
 
-    public $minimum = 0;
-    public $maximum = 100;
+    protected readonly $minimum;
+    protected readonly $maximum;
 
     protected array $messageVariables = [
         'min' => 'minimum',
@@ -111,6 +111,11 @@ class NumericBetween extends AbstractValidator
         self::MSG_MINIMUM => "'%value%' must be at least '%min%'",
         self::MSG_MAXIMUM => "'%value%' must be no more than '%max%'",
     ];
+    
+    public function __construct(int $min, int $max) {
+        $this->minimum = $min;
+        $this->maximum = $max;
+    }
 
     public function isValid(mixed $value): bool
     {
@@ -136,7 +141,7 @@ class NumericBetween extends AbstractValidator
 }
 ```
 
-The public properties `$minimum` and `$maximum` have been established to provide
+The protected properties `$minimum` and `$maximum` have been established to provide
 the minimum and maximum boundaries, respectively, for a value to successfully
 validate. The class also defines two message variables that correspond to the
 public properties and allow `min` and `max` to be used in message templates as
@@ -169,7 +174,7 @@ namespace MyValid;
 
 use Laminas\Validator\AbstractValidator;
 
-class PasswordStrength extends AbstractValidator
+final class PasswordStrength extends AbstractValidator
 {
     const LENGTH = 'length';
     const UPPER  = 'upper';
@@ -215,7 +220,7 @@ class PasswordStrength extends AbstractValidator
 ```
 
 Note that the four criteria tests in `isValid()` do not immediately return
-`false`. This allows the validation class to provide **all** of the reasons that
+`false`. This allows the validation class to provide **all** the reasons that
 the input password failed to meet the validation requirements. If, for example,
 a user were to input the string `#$%` as a password, `isValid()` would cause
 all four validation failure messages to be returned by a subsequent call to
