@@ -44,6 +44,7 @@
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
+      <code><![CDATA[$this->options]]></code>
     </UndefinedThisPropertyAssignment>
   </file>
   <file src="src/Barcode/Code128.php">
@@ -88,55 +89,6 @@
     <TooManyArguments>
       <code><![CDATA[isValid]]></code>
     </TooManyArguments>
-  </file>
-  <file src="src/File/Count.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[is_string($options)]]></code>
-    </DocblockTypeContradiction>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$options]]></code>
-    </MixedArgumentTypeCoercion>
-    <MixedArrayOffset>
-      <code><![CDATA[$this->files[$name]]]></code>
-      <code><![CDATA[$this->files[$name]]]></code>
-    </MixedArrayOffset>
-    <MixedAssignment>
-      <code><![CDATA[$max]]></code>
-      <code><![CDATA[$min]]></code>
-      <code><![CDATA[$name]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[int]]></code>
-      <code><![CDATA[int]]></code>
-    </MixedInferredReturnType>
-    <MixedOperand>
-      <code><![CDATA[$file['destination']]]></code>
-      <code><![CDATA[$file['name']]]></code>
-    </MixedOperand>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->options['max']]]></code>
-      <code><![CDATA[$this->options['min']]]></code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$value]]></code>
-    </PossiblyInvalidArgument>
-    <PossiblyInvalidCast>
-      <code><![CDATA[$value]]></code>
-    </PossiblyInvalidCast>
-    <PropertyNotSetInConstructor>
-      <code><![CDATA[$count]]></code>
-      <code><![CDATA[$files]]></code>
-    </PropertyNotSetInConstructor>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[$this->getMax() !== null]]></code>
-      <code><![CDATA[$this->getMax() !== null]]></code>
-      <code><![CDATA[$this->getMin() !== null]]></code>
-      <code><![CDATA[$this->getMin() !== null]]></code>
-      <code><![CDATA[is_string($file)]]></code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/File/ExcludeExtension.php">
     <InvalidClassConstantType>
@@ -477,13 +429,8 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/CountTest.php">
-    <MixedArgument>
-      <code><![CDATA[$max]]></code>
-      <code><![CDATA[$min]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicDataProvider]]></code>
-      <code><![CDATA[invalidMinMaxValues]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/ExcludeExtensionTest.php">

@@ -21,8 +21,7 @@ $validator = new Laminas\Validator\File\Count([
     'max' => 5,
 ]);
 
-// Setting to the $_FILES superglobal; could also use the laminas-http
-// request's `getFiles()` or PSR-7 ServerRequest's `getUploadedFiles()`.
+// Setting to the $_FILES superglobal or PSR-7 ServerRequest's `getUploadedFiles()`.
 $files = $_FILES;
 
 if ($validator->isValid($files)) {
