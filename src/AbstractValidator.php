@@ -69,8 +69,11 @@ abstract class AbstractValidator implements
      * @var int
      */
     protected static $messageLength = -1;
-
-    /** @var AbstractOptions&array<string, mixed> */
+    /**
+     * @deprecated Since 2.61.0 This property will be removed in 3.0
+     *
+     * @var AbstractOptions&array<string, mixed>
+     */
     protected $abstractOptions = [
         'messages'             => [], // Array of validation failure messages
         'messageTemplates'     => [], // Array of validation failure message templates
@@ -116,6 +119,8 @@ abstract class AbstractValidator implements
     /**
      * Returns an option
      *
+     * @deprecated Since 2.61.0 This method will be removed in 3.0
+     *
      * @param string $option Option to be returned
      * @return mixed Returned option
      * @throws Exception\InvalidArgumentException
@@ -137,6 +142,8 @@ abstract class AbstractValidator implements
     /**
      * Returns all available options
      *
+     * @deprecated Since 2.61.0 This method will be removed in 3.0
+     *
      * @return array<string, mixed> Array with all available options
      */
     public function getOptions()
@@ -152,7 +159,9 @@ abstract class AbstractValidator implements
     /**
      * Sets one or multiple options
      *
-     * @param  array<string, mixed>|Traversable<string, mixed> $options Options to set
+     * @deprecated Since 2.61.0 This method will be removed in 3.0 - Options should be passed to the constructor
+     *
+     * @param array<string, mixed>|Traversable<string, mixed> $options Options to set
      * @return self Provides fluid interface
      * @throws Exception\InvalidArgumentException If $options is not an array or Traversable.
      */
@@ -209,6 +218,8 @@ abstract class AbstractValidator implements
     /**
      * Returns an array of the names of variables that are used in constructing validation failure messages
      *
+     * @deprecated Since 2.61.0 This method will be removed in 3.0
+     *
      * @return list<string>
      */
     public function getMessageVariables()
@@ -218,6 +229,8 @@ abstract class AbstractValidator implements
 
     /**
      * Returns the message templates from the validator
+     *
+     * @deprecated Since 2.61.0 This method will be removed in 3.0
      *
      * @return array<string, string>
      */
@@ -256,7 +269,10 @@ abstract class AbstractValidator implements
      * Sets validation failure message templates given as an array, where the array keys are the message keys,
      * and the array values are the message template strings.
      *
-     * @param  array<string, string> $messages
+     * @deprecated Since 2.61.0 This method will be removed in 3.0
+     *             Provide customised messages via the `messages` constructor option
+     *
+     * @param array<string, string> $messages
      * @return $this
      */
     public function setMessages(array $messages)
@@ -271,7 +287,10 @@ abstract class AbstractValidator implements
      * Magic function returns the value of the requested property, if and only if it is the value or a
      * message variable.
      *
-     * @param  string $property
+     * @deprecated Since 2.61.0 This method will be removed in 3.0 - It will no longer be possible to fetch any internal
+     *             properties
+     *
+     * @param string $property
      * @return mixed
      * @throws Exception\InvalidArgumentException
      */
@@ -410,7 +429,9 @@ abstract class AbstractValidator implements
     /**
      * Set flag indicating whether or not value should be obfuscated in messages
      *
-     * @param  bool $flag
+     * @deprecated Since 2.61.0 This method will be removed in 3.0 - Use the `valueObscured` option via the constructor
+     *
+     * @param bool $flag
      * @return $this
      */
     public function setValueObscured($flag)
@@ -423,6 +444,8 @@ abstract class AbstractValidator implements
     /**
      * Retrieve flag indicating whether or not value should be obfuscated in
      * messages
+     *
+     * @deprecated Since 2.61.0 This method will be removed in 3.0
      *
      * @return bool
      */
@@ -468,6 +491,8 @@ abstract class AbstractValidator implements
     /**
      * Does this validator have its own specific translator?
      *
+     * @deprecated Since 2.61.0 This method will be removed in 3.0
+     *
      * @return bool
      */
     public function hasTranslator()
@@ -478,7 +503,10 @@ abstract class AbstractValidator implements
     /**
      * Set translation text domain
      *
-     * @param  string $textDomain
+     * @deprecated  since 2.61.0 This method will be removed in 3.0 Use the `translatorTextDomain` option, or set
+     *              the text domain at the same time as the translator via `setTranslator()`
+     *
+     * @param string $textDomain
      * @return $this
      */
     public function setTranslatorTextDomain($textDomain = 'default')
@@ -489,6 +517,8 @@ abstract class AbstractValidator implements
 
     /**
      * Return the translation text domain
+     *
+     * @deprecated Since 2.61.0 This method will be removed in 3.0
      *
      * @return string
      */
@@ -519,6 +549,8 @@ abstract class AbstractValidator implements
     /**
      * Get default translation object for all validate objects
      *
+     * @deprecated Since 2.61.0 This method will be removed in 3.0
+     *
      * @return Translator\TranslatorInterface|null
      */
     public static function getDefaultTranslator()
@@ -528,6 +560,8 @@ abstract class AbstractValidator implements
 
     /**
      * Is there a default translation object set?
+     *
+     * @deprecated Since 2.61.0 This method will be removed in 3.0
      *
      * @return bool
      */
@@ -550,6 +584,8 @@ abstract class AbstractValidator implements
     /**
      * Get default translation text domain for all validate objects
      *
+     * @deprecated Since 2.61.0 This method will be removed in 3.0
+     *
      * @return string
      */
     public static function getDefaultTranslatorTextDomain()
@@ -560,7 +596,9 @@ abstract class AbstractValidator implements
     /**
      * Indicate whether or not translation should be enabled
      *
-     * @param  bool $enabled
+     * @deprecated Since 2.61.0 This method will be removed in 3.0
+     *
+     * @param bool $enabled
      * @return $this
      */
     public function setTranslatorEnabled($enabled = true)
@@ -573,6 +611,8 @@ abstract class AbstractValidator implements
     /**
      * Is translation enabled?
      *
+     * @deprecated Since 2.61.0 This method will be removed in 3.0
+     *
      * @return bool
      */
     public function isTranslatorEnabled()
@@ -582,6 +622,8 @@ abstract class AbstractValidator implements
 
     /**
      * Returns the maximum allowed message length
+     *
+     * @deprecated Since 2.61.0 This method will be removed in 3.0
      *
      * @return int
      */
