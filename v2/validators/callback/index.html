@@ -617,6 +617,10 @@
                     </li>
                 
                     <li class="toc__entry">
+                        <a href="#callbacks-and-scope" class="toc__link nav-link">Callbacks and Scope</a>
+                    </li>
+                
+                    <li class="toc__entry">
                         <a href="#exceptions-within-callbacks" class="toc__link nav-link">Exceptions within Callbacks</a>
                     </li>
                 
@@ -676,6 +680,7 @@ validate a given value.</p>
 <li><code>callbackOptions</code>: Sets the additional options which will be given to the validator
   and/or callback.</li>
 <li><code>throwExceptions</code>: When true, <a href="#exceptions-within-callbacks">allows exceptions thrown inside of callbacks to propagate</a>.</li>
+<li><code>bind</code>: When true, the callback will be bound to the scope of the validator instance</li>
 </ul>
 <h2 id="basic-usage">Basic usage</h2>
 <p>The simplest use case is to pass a function as a callback. Consider the
@@ -817,6 +822,35 @@ if ($valid-&gt;isValid($input, $context)) {
 passed as the first argument to the callback followed by all other values given
 to <code>isValid()</code>; all other options will follow it. The amount and type of options
 which can be used is not limited.</p>
+<h2 id="callbacks-and-scope">Callbacks and Scope</h2>
+<p>By default, callbacks are executed in their own scope and do not have access to the validator instance they are executed in.</p>
+<p>It is possible to bind your callback to the validator scope by setting the <code>bind</code> option to true.</p>
+<p>This is useful when you wish to provide more detailed error messages in case there are multiple potential reasons for validation failure:</p>
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Callback([
+    'callback' =&gt; function (mixed $value): bool {
+        if ($value === 42) {
+            $this-&gt;setMessage(
+                'Sorry, the meaning of life is not acceptable',
+                 Laminas\Validator\Callback::INVALID_VALUE,
+            );
+
+            return false;
+        }
+
+        if ($value === 'goats') {
+            $this-&gt;setMessage(
+                'Sorry, I don’t like goats…',
+                 Laminas\Validator\Callback::INVALID_VALUE,
+            );
+
+            return false;
+        }
+
+        return true;
+    },
+    'bind' =&gt; true,
+]);</code></pre>
+<p>Binding only occurs when the <code>callback</code> option and the <code>bind</code> option are used in the constructor via an options array as shown above.</p>
 <h2 id="exceptions-within-callbacks">Exceptions within Callbacks</h2>
 <p>By default, the callback validator will catch any <code>Exception</code> thrown inside the callback and return false.
 The error message will indicate callback failure as opposed to invalid input.</p>
