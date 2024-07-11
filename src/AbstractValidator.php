@@ -89,13 +89,13 @@ abstract class AbstractValidator implements
     private bool $valueObscured = false;
 
     /** Whether translation should be enabled or not */
-    private bool $translatorEnabled;
+    private bool $translatorEnabled = true;
 
     /** The text domain for translations */
-    private string $translatorTextDomain;
+    private string $translatorTextDomain = 'default';
 
     /** A custom translator, the default translator, or null */
-    private TranslatorInterface|null $translator;
+    private TranslatorInterface|null $translator = null;
 
     /**
      * Error messages that have occurred during the last validation
