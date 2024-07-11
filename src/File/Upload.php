@@ -18,6 +18,8 @@ use function is_uploaded_file;
 /**
  * Validator for the maximum size of a file up to a max of 2GB
  *
+ * @deprecated Since 2.61.0 Use the {@link UploadFile} validator instead
+ *
  * @final
  */
 class Upload extends AbstractValidator
