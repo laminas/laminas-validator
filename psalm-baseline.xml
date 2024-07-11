@@ -44,7 +44,6 @@
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
       <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
     </UndefinedThisPropertyAssignment>
   </file>
   <file src="src/Barcode/Code128.php">
@@ -90,69 +89,54 @@
       <code><![CDATA[isValid]]></code>
     </TooManyArguments>
   </file>
-  <file src="src/File/ExcludeExtension.php">
-    <InvalidClassConstantType>
-      <code><![CDATA[FALSE_EXTENSION]]></code>
-      <code><![CDATA[NOT_FOUND]]></code>
-    </InvalidClassConstantType>
-    <MixedArgument>
-      <code><![CDATA[$ext]]></code>
-      <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$fileInfo['filename']]]></code>
-      <code><![CDATA[$fileInfo['filename']]]></code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code><![CDATA[$ext]]></code>
-    </MixedAssignment>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <PossiblyFalseOperand>
-      <code><![CDATA[strrpos($fileInfo['filename'], '.')]]></code>
-    </PossiblyFalseOperand>
-  </file>
-  <file src="src/File/Extension.php">
-    <MixedArgument>
-      <code><![CDATA[$ext]]></code>
-      <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$fileInfo['filename']]]></code>
-      <code><![CDATA[$fileInfo['filename']]]></code>
-    </MixedArgument>
+  <file src="src/File/Count.php">
+    <DocblockTypeContradiction>
+      <code><![CDATA[is_string($options)]]></code>
+    </DocblockTypeContradiction>
     <MixedArgumentTypeCoercion>
-      <code><![CDATA[$extensions]]></code>
+      <code><![CDATA[$options]]></code>
     </MixedArgumentTypeCoercion>
+    <MixedArrayOffset>
+      <code><![CDATA[$this->files[$name]]]></code>
+      <code><![CDATA[$this->files[$name]]]></code>
+    </MixedArrayOffset>
     <MixedAssignment>
-      <code><![CDATA[$case]]></code>
-      <code><![CDATA[$case]]></code>
-      <code><![CDATA[$ext]]></code>
-      <code><![CDATA[$ext]]></code>
-      <code><![CDATA[$options['case']]]></code>
+      <code><![CDATA[$max]]></code>
+      <code><![CDATA[$min]]></code>
+      <code><![CDATA[$name]]></code>
     </MixedAssignment>
     <MixedInferredReturnType>
-      <code><![CDATA[bool]]></code>
-      <code><![CDATA[bool]]></code>
+      <code><![CDATA[int]]></code>
+      <code><![CDATA[int]]></code>
     </MixedInferredReturnType>
+    <MixedOperand>
+      <code><![CDATA[$file['destination']]]></code>
+      <code><![CDATA[$file['name']]]></code>
+    </MixedOperand>
     <MixedReturnStatement>
-      <code><![CDATA[$this->options['allowNonExistentFile']]]></code>
-      <code><![CDATA[$this->options['case']]]></code>
+      <code><![CDATA[$this->options['max']]]></code>
+      <code><![CDATA[$this->options['min']]]></code>
     </MixedReturnStatement>
     <MoreSpecificImplementedParamType>
       <code><![CDATA[$value]]></code>
     </MoreSpecificImplementedParamType>
-    <PossiblyFalseOperand>
-      <code><![CDATA[strrpos($fileInfo['filename'], '.')]]></code>
-    </PossiblyFalseOperand>
     <PossiblyInvalidArgument>
-      <code><![CDATA[$options]]></code>
+      <code><![CDATA[$value]]></code>
     </PossiblyInvalidArgument>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[setAllowNonExistentFile]]></code>
-      <code><![CDATA[setCase]]></code>
-    </PossiblyUnusedMethod>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(bool) $case]]></code>
-      <code><![CDATA[(bool) $flag]]></code>
-    </RedundantCastGivenDocblockType>
+    <PossiblyInvalidCast>
+      <code><![CDATA[$value]]></code>
+    </PossiblyInvalidCast>
+    <PropertyNotSetInConstructor>
+      <code><![CDATA[$count]]></code>
+      <code><![CDATA[$files]]></code>
+    </PropertyNotSetInConstructor>
+    <RedundantConditionGivenDocblockType>
+      <code><![CDATA[$this->getMax() !== null]]></code>
+      <code><![CDATA[$this->getMax() !== null]]></code>
+      <code><![CDATA[$this->getMin() !== null]]></code>
+      <code><![CDATA[$this->getMin() !== null]]></code>
+      <code><![CDATA[is_string($file)]]></code>
+    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/File/FileInformationTrait.php">
     <MixedArgument>
@@ -171,8 +155,6 @@
     </MixedAssignment>
     <PossiblyInvalidArgument>
       <code><![CDATA[$fileInfo['file']]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
     </PossiblyInvalidArgument>
     <PossiblyInvalidCast>
@@ -429,35 +411,18 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/CountTest.php">
+    <MixedArgument>
+      <code><![CDATA[$max]]></code>
+      <code><![CDATA[$min]]></code>
+    </MixedArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicDataProvider]]></code>
+      <code><![CDATA[invalidMinMaxValues]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/ExcludeExtensionTest.php">
-    <InvalidReturnStatement>
-      <code><![CDATA[$testData]]></code>
-    </InvalidReturnStatement>
-    <InvalidReturnType>
-      <code><![CDATA[array<array-key, array{
-     *     0: string|string[],
-     *     1: string|array{
-     *         tmp_name: string,
-     *         name: string,
-     *         size: int,
-     *         error: int,
-     *         type: string
-     *     },
-     *     2: bool,
-     *     3: string
-     * }>]]></code>
-    </InvalidReturnType>
-    <MixedArgument>
-      <code><![CDATA[$isValidParam['tmp_name']]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicBehaviorDataProvider]]></code>
-      <code><![CDATA[getExtensionProvider]]></code>
-      <code><![CDATA[setExtensionProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/ExcludeMimeTypeTest.php">
@@ -471,30 +436,11 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/ExtensionTest.php">
-    <InvalidReturnStatement>
-      <code><![CDATA[$testData]]></code>
-    </InvalidReturnStatement>
-    <InvalidReturnType>
-      <code><![CDATA[array<array-key, array{
-     *     0: string|string[],
-     *     1: string|array{
-     *         tmp_name: string,
-     *         name: string,
-     *         size: int,
-     *         error: int,
-     *         type: string
-     *     },
-     *     2: bool,
-     *     3: string
-     * }>]]></code>
-    </InvalidReturnType>
-    <MixedArgument>
-      <code><![CDATA[$isValidParam['tmp_name']]]></code>
-    </MixedArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicBehaviorDataProvider]]></code>
-      <code><![CDATA[getExtensionProvider]]></code>
-      <code><![CDATA[setExtensionProvider]]></code>
+      <code><![CDATA[extensionOptions]]></code>
+      <code><![CDATA[fileNameExtensionProvider]]></code>
+      <code><![CDATA[invalidExtensionOptions]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/FilesSizeTest.php">
