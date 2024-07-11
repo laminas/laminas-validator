@@ -12,9 +12,9 @@ The following set of options are supported:
 
 - `extension`: Array of extensions, or comma-delimited string of extensions,
   against which to test.
-- `case`: Boolean indicating whether or not extensions should match case
+- `case`: Boolean indicating whether extensions should match case
   sensitively; defaults to `false` (case-insensitive).
-- `allowNonExistentFile`: (**Since 2.13.0**) Boolean indicating whether or not
+- `allowNonExistentFile`: Boolean indicating whether
   to allow validating a filename for a non-existent file. Defaults to `false`
   (will not validate non-existent files).
 
@@ -23,33 +23,40 @@ The following set of options are supported:
 ```php
 use Laminas\Validator\File\Extension;
 
-// Allow files with 'php' or 'exe' extensions
-$validator = new Extension('php,exe');
-
-// ...or with array notation
-$validator = new Extension(['php', 'exe']);
-
-// Test with case-sensitivity on
-$validator = new Extension(['php', 'exe'], true);
-
-// Using an options array:
 $validator = new Extension([
     'extension' => ['php', 'exe'],
+]);
+
+$validator->isValid('./file.php'); // true
+$validator->isValid('./file.PHP'); // true
+
+$validator = new Extension([
+    'extension' => 'php,exe',
     'case' => true,
 ]);
 
-// Perform validation
-if ($validator->isValid('./myfile.php')) {
-    // file is valid
-}
+$validator->isValid('./file.php'); // true
+$validator->isValid('./file.PHP'); // false
 ```
 
-## Public Methods
-
-### addExtension
+### Validating Arbitrary Filenames
 
 ```php
-addExtension(string|array $options) : void
+use Laminas\Validator\File\Extension;
+
+$validator = new Extension([
+    'extension' => 'gif,jpg,png',
+    'allowNonExistentFile' => true,
+]);
+
+$validator->isValid('picture.jpg'); // true
+$validator->isValid('something-else.txt'); // false
 ```
 
-Add one or more extensions as a comma-separated list, or as an array.
+## Validating Uploaded Files
+
+This validator accepts and validates 3 types of argument:
+
+- A string that represents a path or a filename
+- An array that represents an uploaded file as per PHP's [`$_FILES`](https://www.php.net/manual/reserved.variables.files.php) superglobal
+- A PSR-7 [`UploadedFileInterface`](https://www.php-fig.org/psr/psr-7/#36-psrhttpmessageuploadedfileinterface) instance
