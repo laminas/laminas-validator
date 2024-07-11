@@ -110,6 +110,20 @@ final class ExtensionTest extends TestCase
             false,
             Extension::FALSE_EXTENSION,
         ];
+
+        yield 'Numeric extension comparison failure' => [
+            ['extension' => '010', 'allowNonExistentFile' => true],
+            'some-file.10',
+            false,
+            Extension::FALSE_EXTENSION,
+        ];
+
+        yield 'Numeric extension comparison success' => [
+            ['extension' => '010', 'allowNonExistentFile' => true],
+            'some-file.010',
+            true,
+            null,
+        ];
     }
 
     /**
