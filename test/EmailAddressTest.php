@@ -14,11 +14,11 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function array_key_exists;
-use function array_keys;
 use function checkdnsrr;
 use function count;
 use function current;
 use function implode;
+use function json_encode;
 use function next;
 use function preg_replace;
 use function sprintf;
@@ -516,9 +516,12 @@ final class EmailAddressTest extends TestCase
             'hostnameLocalNameNotAllowed'   => 'hostnameLocalNameNotAllowed translation',
         ];
 
-        $this->validator->setMessages($translations);
-        $this->validator->isValid('_XX.!!3xx@0.239,512.777');
-        $messages = $this->validator->getMessages();
+        $validator = new EmailAddress([
+            'messages' => $translations,
+        ]);
+
+        $validator->isValid('_XX.!!3xx@0.239,512.777');
+        $messages = $validator->getMessages();
         $found    = false;
         foreach ($messages as $code => $message) {
             if (array_key_exists($code, $translations)) {
@@ -533,74 +536,34 @@ final class EmailAddressTest extends TestCase
         self::assertTrue($found);
     }
 
-    /**
-     * Testing setMessage
-     */
-    public function testSetSingleMessage(): void
+    public function testEmailAddressMessagesCanBeCustomisedViaOptions(): void
     {
-        $messages = $this->validator->getMessageTemplates();
+        $validator = new EmailAddress([
+            'messages' => [
+                EmailAddress::INVALID => 'TestMessage',
+            ],
+        ]);
 
-        self::assertNotSame('TestMessage', $messages[EmailAddress::INVALID]);
+        $validator->isValid([]);
 
-        $this->validator->setMessage('TestMessage', EmailAddress::INVALID);
-        $messages = $this->validator->getMessageTemplates();
-
+        $messages = $validator->getMessages();
+        self::assertArrayHasKey(EmailAddress::INVALID, $messages, json_encode($messages));
         self::assertSame('TestMessage', $messages[EmailAddress::INVALID]);
     }
 
-    public function testSetSingleMessageViaOptions(): void
+    public function testHostnameValidatorMessagesCanBeCustomisedViaOptions(): void
     {
-        $hostname  = new Hostname();
         $validator = new EmailAddress([
-            'message'           => 'TestMessage',
-            'hostnameValidator' => $hostname,
+            'messages' => [
+                Hostname::IP_ADDRESS_NOT_ALLOWED => 'Bad Hostname',
+            ],
         ]);
 
-        foreach ($validator->getMessageTemplates() as $message) {
-            self::assertSame('TestMessage', $message);
-        }
+        self::assertFalse($validator->isValid('me@127.0.0.1'));
 
-        foreach ($hostname->getMessageTemplates() as $message) {
-            self::assertSame('TestMessage', $message);
-        }
-    }
-
-    public function testSetMultipleMessageViaOptions(): void
-    {
-        $validator = new EmailAddress(['messages' => [EmailAddress::INVALID => 'TestMessage']]);
-        $messages  = $validator->getMessageTemplates();
-
-        self::assertSame('TestMessage', $messages[EmailAddress::INVALID]);
-    }
-
-    /**
-     * Testing setMessage for all messages
-     */
-    #[Group('Laminas-10690')]
-    public function testSetMultipleMessages(): void
-    {
-        $hostname  = new Hostname();
-        $validator = new EmailAddress([
-            'hostnameValidator' => $hostname,
-        ]);
-
-        $messages = $validator->getMessageTemplates();
-
-        self::assertNotSame('TestMessage', $messages[EmailAddress::INVALID]);
-
-        $validator->setMessage('TestMessage');
-
-        foreach ($validator->getMessageTemplates() as $message) {
-            self::assertSame('TestMessage', $message);
-        }
-
-        foreach ($hostname->getMessageTemplates() as $message) {
-            self::assertSame('TestMessage', $message);
-        }
-    }
-
-    public function errorHandler(int $errno, string $errstr): void
-    {
+        $messages = $validator->getMessages();
+        self::assertArrayHasKey(Hostname::IP_ADDRESS_NOT_ALLOWED, $messages, json_encode($messages));
+        self::assertSame('Bad Hostname', $messages[Hostname::IP_ADDRESS_NOT_ALLOWED]);
     }
 
     #[Group('Laminas-11222')]
@@ -610,36 +573,6 @@ final class EmailAddressTest extends TestCase
         self::assertFalse($this->validator->isValid('example@gmail.com.'));
         self::assertFalse($this->validator->isValid('test@test.co.'));
         self::assertFalse($this->validator->isValid('test@test.co.za.'));
-    }
-
-    public function testEqualsMessageTemplates(): void
-    {
-        self::assertSame(
-            [
-                EmailAddress::INVALID,
-                EmailAddress::INVALID_FORMAT,
-                EmailAddress::INVALID_HOSTNAME,
-                EmailAddress::INVALID_MX_RECORD,
-                EmailAddress::INVALID_SEGMENT,
-                EmailAddress::DOT_ATOM,
-                EmailAddress::QUOTED_STRING,
-                EmailAddress::INVALID_LOCAL_PART,
-                EmailAddress::LENGTH_EXCEEDED,
-            ],
-            array_keys($this->validator->getMessageTemplates()),
-        );
-        self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
-    }
-
-    public function testEqualsMessageVariables(): void
-    {
-        $messageVariables = [
-            'hostname'  => 'hostname',
-            'localPart' => 'localPart',
-        ];
-
-        self::assertSame($messageVariables, $this->validator->getOption('messageVariables'));
-        self::assertSame(array_keys($messageVariables), $this->validator->getMessageVariables());
     }
 
     #[Group('Laminas-130')]

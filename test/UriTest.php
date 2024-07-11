@@ -9,8 +9,6 @@ use Laminas\Validator\Uri;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-use function array_keys;
-
 final class UriTest extends TestCase
 {
     private Uri $validator;
@@ -99,20 +97,6 @@ final class UriTest extends TestCase
     public function testGetMessages(): void
     {
         self::assertSame([], $this->validator->getMessages());
-    }
-
-    public function testEqualsMessageTemplates(): void
-    {
-        self::assertSame(
-            [
-                Uri::INVALID,
-                Uri::NOT_URI,
-                Uri::NOT_ABSOLUTE,
-                Uri::NOT_RELATIVE,
-            ],
-            array_keys($this->validator->getMessageTemplates()),
-        );
-        self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 
     /**

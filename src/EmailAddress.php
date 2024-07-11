@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Laminas\Translator\TranslatorInterface;
 use UConverter;
 
 use function array_combine;
+use function array_filter;
 use function array_flip;
+use function array_key_exists;
 use function array_keys;
 use function arsort;
 use function checkdnsrr;
@@ -21,6 +24,7 @@ use function str_contains;
 use function strlen;
 use function trim;
 
+use const ARRAY_FILTER_USE_BOTH;
 use const INTL_IDNA_VARIANT_UTS46;
 
 /**
@@ -31,6 +35,11 @@ use const INTL_IDNA_VARIANT_UTS46;
  *     allow?: int-mask-of<Hostname::ALLOW_*>,
  *     strict?: bool,
  *     hostnameValidator?: Hostname|null,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class EmailAddress extends AbstractValidator
@@ -62,7 +71,7 @@ final class EmailAddress extends AbstractValidator
 
     // phpcs:enable
 
-    /** @var array<string, string> */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
         'hostname'  => 'hostname',
         'localPart' => 'localPart',
@@ -91,8 +100,23 @@ final class EmailAddress extends AbstractValidator
      */
     public function __construct(array $options = [])
     {
+        $messages         = $options['messages'] ?? [];
+        $hostnameMessages = array_filter(
+            $messages,
+            fn (string $value, string $key): bool => ! array_key_exists($key, $this->messageTemplates),
+            ARRAY_FILTER_USE_BOTH,
+        );
+        $messages         = array_filter(
+            $messages,
+            fn (string $value, string $key): bool => array_key_exists($key, $this->messageTemplates),
+            ARRAY_FILTER_USE_BOTH,
+        );
+
         $allow                   = $options['allow'] ?? Hostname::ALLOW_DNS;
-        $this->hostnameValidator = $options['hostnameValidator'] ?? new Hostname(['allow' => $allow]);
+        $this->hostnameValidator = $options['hostnameValidator'] ?? new Hostname([
+            'allow'    => $allow,
+            'messages' => $hostnameMessages,
+        ]);
         $this->useMxCheck        = $options['useMxCheck'] ?? false;
         $this->useDeepMxCheck    = $options['useDeepMxCheck'] ?? false;
         $this->useDomainCheck    = $options['useDomainCheck'] ?? true;
@@ -107,23 +131,21 @@ final class EmailAddress extends AbstractValidator
             $options['strict'],
         );
 
+        $options['messages'] = $messages;
+
         parent::__construct($options);
     }
 
     /**
-     * Sets the validation failure message template for a particular key
-     * Adds the ability to set messages to the attached hostname validator
+     * Overrides `setMessage` of AbstractValidator so that messages propagate to the composed hostname validator
      *
-     * @param  string $messageString
-     * @param  string $messageKey     OPTIONAL
-     * @return AbstractValidator Provides a fluent interface
+     * @inheritDoc
      */
-    public function setMessage($messageString, $messageKey = null)
+    public function setMessage(string $messageString, ?string $messageKey = null): void
     {
         if ($messageKey === null) {
             $this->hostnameValidator->setMessage($messageString);
             parent::setMessage($messageString);
-            return $this;
         }
 
         if (! isset($this->messageTemplates[$messageKey])) {
@@ -131,8 +153,6 @@ final class EmailAddress extends AbstractValidator
         } else {
             parent::setMessage($messageString, $messageKey);
         }
-
-        return $this;
     }
 
     /**
@@ -272,7 +292,7 @@ final class EmailAddress extends AbstractValidator
             $this->error(self::INVALID_HOSTNAME);
             // Get messages and errors from hostnameValidator
             foreach ($this->hostnameValidator->getMessages() as $code => $message) {
-                $this->abstractOptions['messages'][$code] = $message;
+                $this->errorMessages[$code] = $message;
             }
 
             return false;

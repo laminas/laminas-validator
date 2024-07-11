@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\File;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\InvalidArgumentException;
 
@@ -15,6 +16,11 @@ use function is_array;
  * @psalm-type OptionsArgument = array{
  *     min?: positive-int|null,
  *     max?: positive-int|null,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class Count extends AbstractValidator
@@ -30,7 +36,7 @@ final class Count extends AbstractValidator
         self::ERROR_NOT_ARRAY => 'Invalid type provided. The file list must an array.',
     ];
 
-    /** @var array<string, string> */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
         'min'   => 'min',
         'max'   => 'max',

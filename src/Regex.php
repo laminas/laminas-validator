@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
 
 use function is_string;
@@ -12,6 +13,11 @@ use function preg_match;
 /**
  * @psalm-type OptionsArgument = array{
  *     pattern: non-empty-string,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class Regex extends AbstractValidator
@@ -25,7 +31,7 @@ final class Regex extends AbstractValidator
         self::NOT_MATCH => "The input does not match against pattern '%pattern%'",
     ];
 
-    /** @var array<string, string> */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
         'pattern' => 'pattern',
     ];

@@ -9,7 +9,6 @@ use Laminas\Validator\Regex;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-use function array_keys;
 use function implode;
 use function restore_error_handler;
 use function set_error_handler;
@@ -109,30 +108,6 @@ final class RegexTest extends TestCase
             [true, 'èùòìiieeà'],
             [false, 'test99'],
         ];
-    }
-
-    public function testEqualsMessageTemplates(): void
-    {
-        $validator = new Regex('//');
-
-        self::assertSame(
-            [
-                Regex::INVALID,
-                Regex::NOT_MATCH,
-            ],
-            array_keys($validator->getMessageTemplates())
-        );
-        self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
-    }
-
-    public function testEqualsMessageVariables(): void
-    {
-        $validator        = new Regex('//');
-        $messageVariables = [
-            'pattern' => 'pattern',
-        ];
-
-        self::assertSame($messageVariables, $validator->getOption('messageVariables'));
     }
 
     /**

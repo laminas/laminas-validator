@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\File;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\InvalidArgumentException;
 
@@ -22,6 +23,11 @@ use function trim;
  *
  * @psalm-type OptionsArgument = array{
  *     mimeType?: string|list<string>,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 class MimeType extends AbstractValidator
@@ -40,7 +46,7 @@ class MimeType extends AbstractValidator
         self::NOT_READABLE => 'File is not readable or does not exist',
     ];
 
-    /** @var array<string, string> */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
         'type' => 'type',
     ];

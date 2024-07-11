@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Validator;
 
 use Laminas\Stdlib\StringUtils;
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Throwable;
 
@@ -15,6 +16,11 @@ use function is_string;
  *     min?: int,
  *     max?: int|null,
  *     encoding?: string,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class StringLength extends AbstractValidator
@@ -30,7 +36,7 @@ final class StringLength extends AbstractValidator
         self::TOO_LONG  => 'The input is more than %max% characters long',
     ];
 
-    /** @var array<string, string> */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
         'min'    => 'min',
         'max'    => 'max',

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
 
 use function in_array;
@@ -17,6 +18,11 @@ use function substr;
 /**
  * @psalm-type OptionsArgument = array{
  *     type?: Isbn::AUTO|Isbn::ISBN10|Isbn::ISBN13,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class Isbn extends AbstractValidator

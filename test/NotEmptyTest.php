@@ -695,14 +695,4 @@ final class NotEmptyTest extends TestCase
             [null, true],
         ];
     }
-
-    public function testEqualsMessageTemplates(): void
-    {
-        $messageTemplates = [
-            'isEmpty'         => "Value is required and can't be empty",
-            'notEmptyInvalid' => "Invalid type given. String, integer, float, boolean or array expected",
-        ];
-
-        self::assertSame($messageTemplates, $this->validator->getOption('messageTemplates'));
-    }
 }

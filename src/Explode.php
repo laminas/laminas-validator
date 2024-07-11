@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Validator;
 
 use Laminas\ServiceManager\ServiceManager;
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\RuntimeException;
 
 use function explode;
@@ -19,6 +20,11 @@ use function sprintf;
  *     validatorPluginManager?: ValidatorPluginManager|null,
  *     validator?: ValidatorInterface|class-string<ValidatorInterface>|ValidatorSpecification,
  *     breakOnFirstFailure?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  * @psalm-import-type ValidatorSpecification from ValidatorInterface
  */
@@ -42,7 +48,7 @@ final class Explode extends AbstractValidator
     protected int $count     = 0;
     protected ?string $error = null;
 
-    /** @var array<string, string> */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
         'count' => 'count',
         'error' => 'error',

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Laminas\Translator\TranslatorInterface;
+
 use function bindec;
 use function hexdec;
 use function ip2long;
@@ -23,6 +25,11 @@ use function substr_count;
  *     allowipv6?: bool,
  *     allowipvfuture?: bool,
  *     allowliteral?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class Ip extends AbstractValidator

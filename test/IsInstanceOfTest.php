@@ -9,7 +9,6 @@ use Exception;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\IsInstanceOf;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
 
 final class IsInstanceOfTest extends TestCase
 {
@@ -43,32 +42,6 @@ final class IsInstanceOfTest extends TestCase
         $validator = new IsInstanceOf(['className' => DateTime::class]);
 
         self::assertSame([], $validator->getMessages());
-    }
-
-    public function testEqualsMessageTemplates(): void
-    {
-        $validator  = new IsInstanceOf(['className' => DateTime::class]);
-        $reflection = new ReflectionClass($validator);
-
-        $property = $reflection->getProperty('messageTemplates');
-
-        self::assertSame(
-            $property->getValue($validator),
-            $validator->getOption('messageTemplates')
-        );
-    }
-
-    public function testEqualsMessageVariables(): void
-    {
-        $validator  = new IsInstanceOf(['className' => DateTime::class]);
-        $reflection = new ReflectionClass($validator);
-
-        $property = $reflection->getProperty('messageVariables');
-
-        self::assertSame(
-            $property->getValue($validator),
-            $validator->getOption('messageVariables')
-        );
     }
 
     public function testPassOptionsWithoutClassNameKey(): void

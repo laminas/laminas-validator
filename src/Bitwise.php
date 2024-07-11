@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Laminas\Translator\TranslatorInterface;
+
 use function is_float;
 use function is_numeric;
 
@@ -12,6 +14,11 @@ use function is_numeric;
  *     operator?: Bitwise::OP_AND|Bitwise::OP_XOR|null,
  *     control: int,
  *     strict?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class Bitwise extends AbstractValidator
@@ -38,11 +45,7 @@ final class Bitwise extends AbstractValidator
         self::NOT_INTEGER    => "Expected an integer to compare '%control%' against",
     ];
 
-    /**
-     * Additional variables available for validation failure messages
-     *
-     * @var array<string, string>
-     */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
         'control' => 'control',
     ];

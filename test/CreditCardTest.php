@@ -10,7 +10,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
-use function array_keys;
 use function current;
 
 final class CreditCardTest extends TestCase
@@ -287,25 +286,6 @@ final class CreditCardTest extends TestCase
         $message = $validator->getMessages();
 
         self::assertStringContainsString('not from an allowed institute', current($message));
-    }
-
-    public function testEqualsMessageTemplates(): void
-    {
-        $validator = new CreditCard();
-
-        self::assertSame(
-            [
-                CreditCard::CHECKSUM,
-                CreditCard::CONTENT,
-                CreditCard::INVALID,
-                CreditCard::LENGTH,
-                CreditCard::PREFIX,
-                CreditCard::SERVICE,
-                CreditCard::SERVICEFAILURE,
-            ],
-            array_keys($validator->getMessageTemplates()),
-        );
-        self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testThatTheCallbackReceivesTheExpectedParameters(): void

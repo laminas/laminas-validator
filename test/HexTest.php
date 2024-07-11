@@ -8,8 +8,6 @@ use Laminas\Validator\Hex;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-use function array_keys;
-
 final class HexTest extends TestCase
 {
     private Hex $validator;
@@ -70,17 +68,5 @@ final class HexTest extends TestCase
     public function testGetMessages(): void
     {
         self::assertSame([], $this->validator->getMessages());
-    }
-
-    public function testEqualsMessageTemplates(): void
-    {
-        self::assertSame(
-            [
-                Hex::INVALID,
-                Hex::NOT_HEX,
-            ],
-            array_keys($this->validator->getMessageTemplates())
-        );
-        self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 }

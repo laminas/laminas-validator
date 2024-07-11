@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
@@ -20,6 +21,11 @@ use function is_string;
  *     haystack: array,
  *     strict?: bool|InArray::COMPARE_*,
  *     recursive?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class InArray extends AbstractValidator

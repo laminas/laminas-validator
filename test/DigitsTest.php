@@ -8,8 +8,6 @@ use Laminas\Validator\Digits;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-use function array_keys;
-
 final class DigitsTest extends TestCase
 {
     private Digits $validator;
@@ -89,18 +87,5 @@ final class DigitsTest extends TestCase
     public function testNonStringValidation(): void
     {
         self::assertFalse($this->validator->isValid([1 => 1]));
-    }
-
-    public function testEqualsMessageTemplates(): void
-    {
-        self::assertSame(
-            [
-                Digits::NOT_DIGITS,
-                Digits::STRING_EMPTY,
-                Digits::INVALID,
-            ],
-            array_keys($this->validator->getMessageTemplates())
-        );
-        self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 }

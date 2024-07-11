@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
 
 use function class_exists;
@@ -11,6 +12,11 @@ use function class_exists;
 /**
  * @psalm-type OptionsArgument = array{
  *     className: class-string,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class IsInstanceOf extends AbstractValidator
@@ -26,11 +32,7 @@ final class IsInstanceOf extends AbstractValidator
         self::NOT_INSTANCE_OF => "The input is not an instance of '%className%'",
     ];
 
-    /**
-     * Additional variables available for validation failure messages
-     *
-     * @var array<string, string>
-     */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
         'className' => 'className',
     ];

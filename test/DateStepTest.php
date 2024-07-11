@@ -13,7 +13,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 
-use function array_keys;
 use function date;
 
 final class DateStepTest extends TestCase
@@ -141,22 +140,6 @@ final class DateStepTest extends TestCase
         $validator = new DateStep();
 
         self::assertSame([], $validator->getMessages());
-    }
-
-    public function testEqualsMessageTemplates(): void
-    {
-        $validator = new DateStep([]);
-
-        self::assertSame(
-            [
-                DateStep::INVALID,
-                DateStep::INVALID_DATE,
-                DateStep::FALSEFORMAT,
-                DateStep::NOT_STEP,
-            ],
-            array_keys($validator->getMessageTemplates())
-        );
-        self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     public function testStepError(): void

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Validator;
 
 use JsonException;
+use Laminas\Translator\TranslatorInterface;
 
 use function gettype;
 use function is_float;
@@ -21,6 +22,11 @@ use const JSON_THROW_ON_ERROR;
  * @psalm-type OptionsArgument = array{
  *     allow?: int-mask-of<self::ALLOW_*>,
  *     maxDepth?: positive-int,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class IsJsonString extends AbstractValidator
@@ -37,7 +43,7 @@ final class IsJsonString extends AbstractValidator
     public const ALLOW_OBJECT = 0b0010000;
     public const ALLOW_ALL    = 0b0011111;
 
-    /** @var array<self::ERROR_*, non-empty-string> */
+    /** @var array<string, string> */
     protected array $messageTemplates = [
         self::ERROR_NOT_STRING         => 'Expected a string but %type% was received',
         self::ERROR_TYPE_NOT_ALLOWED   => 'Received a JSON %type% but this type is not acceptable',
@@ -45,7 +51,7 @@ final class IsJsonString extends AbstractValidator
         self::ERROR_INVALID_JSON       => 'An invalid JSON payload was received',
     ];
 
-    /** @var array<string, string> */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
         'type'     => 'type',
         'maxDepth' => 'maxDepth',

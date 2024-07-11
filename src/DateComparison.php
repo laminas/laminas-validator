@@ -7,6 +7,7 @@ namespace Laminas\Validator;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
 
 use function assert;
@@ -21,6 +22,11 @@ use function preg_match;
  *     inclusiveMin?: bool,
  *     inclusiveMax?: bool,
  *     inputFormat?: string|null,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class DateComparison extends AbstractValidator
@@ -42,7 +48,7 @@ final class DateComparison extends AbstractValidator
         self::ERROR_NOT_LESS              => 'A date before %max% is required',
     ];
 
-    /** @var array<string, string> */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
         'type' => 'type',
         'min'  => 'minString',

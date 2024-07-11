@@ -11,8 +11,6 @@ use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
-use function array_keys;
-
 final class IpTest extends TestCase
 {
     /**
@@ -371,19 +369,6 @@ final class IpTest extends TestCase
     {
         $validator = new Ip();
         self::assertSame([], $validator->getMessages());
-    }
-
-    public function testEqualsMessageTemplates(): void
-    {
-        $validator = new Ip();
-        self::assertSame(
-            [
-                Ip::INVALID,
-                Ip::NOT_IP_ADDRESS,
-            ],
-            array_keys($validator->getMessageTemplates())
-        );
-        self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     /**
