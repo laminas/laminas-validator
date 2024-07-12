@@ -16,7 +16,6 @@ uploaded files, such as file size validation and CRC checking.
 - [MimeType](mime-type.md)
 - [NotExists](not-exists.md)
 - [Size](size.md)
-- [Upload](upload.md)
 - [UploadFile](upload-file.md)
 - [WordCount](word-count.md)
 

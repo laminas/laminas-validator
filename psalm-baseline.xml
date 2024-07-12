@@ -90,75 +90,6 @@
       <code><![CDATA[isValid]]></code>
     </TooManyArguments>
   </file>
-  <file src="src/File/Upload.php">
-    <DocblockTypeContradiction>
-      <code><![CDATA[null === $files]]></code>
-    </DocblockTypeContradiction>
-    <MixedArgument>
-      <code><![CDATA[$content]]></code>
-      <code><![CDATA[$content]]></code>
-      <code><![CDATA[$content]]></code>
-      <code><![CDATA[$content]]></code>
-      <code><![CDATA[$content]]></code>
-      <code><![CDATA[$content]]></code>
-      <code><![CDATA[$content]]></code>
-      <code><![CDATA[$content]]></code>
-      <code><![CDATA[$content]]></code>
-      <code><![CDATA[$content['tmp_name']]]></code>
-      <code><![CDATA[$file]]></code>
-    </MixedArgument>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$file]]></code>
-      <code><![CDATA[$file]]></code>
-      <code><![CDATA[$file]]></code>
-      <code><![CDATA[$options]]></code>
-    </MixedArgumentTypeCoercion>
-    <MixedArrayAccess>
-      <code><![CDATA[$content['error']]]></code>
-      <code><![CDATA[$content['name']]]></code>
-      <code><![CDATA[$content['tmp_name']]]></code>
-      <code><![CDATA[$this->options['files'][$name]]]></code>
-      <code><![CDATA[$this->options['files'][$name]]]></code>
-      <code><![CDATA[$this->options['files'][$name]]]></code>
-    </MixedArrayAccess>
-    <MixedArrayOffset>
-      <code><![CDATA[$return[$name]]]></code>
-      <code><![CDATA[$return[$name]]]></code>
-      <code><![CDATA[$this->options['files'][$name]]]></code>
-      <code><![CDATA[$this->options['files'][$name]]]></code>
-    </MixedArrayOffset>
-    <MixedAssignment>
-      <code><![CDATA[$content]]></code>
-      <code><![CDATA[$content]]></code>
-      <code><![CDATA[$content]]></code>
-      <code><![CDATA[$error]]></code>
-      <code><![CDATA[$name]]></code>
-      <code><![CDATA[$return[$file]]]></code>
-      <code><![CDATA[$return[$name]]]></code>
-      <code><![CDATA[$return[$name]]]></code>
-    </MixedAssignment>
-    <MixedInferredReturnType>
-      <code><![CDATA[array]]></code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement>
-      <code><![CDATA[$this->options['files']]]></code>
-    </MixedReturnStatement>
-    <MoreSpecificImplementedParamType>
-      <code><![CDATA[$value]]></code>
-    </MoreSpecificImplementedParamType>
-    <PossiblyNullArgument>
-      <code><![CDATA[$file]]></code>
-    </PossiblyNullArgument>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[$file !== null]]></code>
-      <code><![CDATA[(is_countable($files))
-                && count($files) === 0]]></code>
-      <code><![CDATA[is_countable($files)]]></code>
-    </RedundantConditionGivenDocblockType>
-    <TypeDoesNotContainNull>
-      <code><![CDATA[$this->options['files'] === null]]></code>
-    </TypeDoesNotContainNull>
-  </file>
   <file src="src/GpsPoint.php">
     <InvalidOperand>
       <code><![CDATA[$matches[1][0]]]></code>
@@ -409,14 +340,6 @@
   <file src="test/File/UploadFileTest.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[uploadErrorsTestDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/File/UploadTest.php">
-    <NullArgument>
-      <code><![CDATA[null]]></code>
-    </NullArgument>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[invalidPsr7UploadedFiles]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/WordCountTest.php">
