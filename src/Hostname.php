@@ -1132,7 +1132,6 @@ final class Hostname extends AbstractValidator
         'sh',
         'shangrila',
         'sharp',
-        'shaw',
         'shell',
         'shia',
         'shiksha',
