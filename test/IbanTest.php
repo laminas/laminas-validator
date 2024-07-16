@@ -10,7 +10,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
-use function array_keys;
 use function array_merge;
 use function implode;
 
@@ -144,22 +143,6 @@ final class IbanTest extends TestCase
         $validator = new IbanValidator();
 
         self::assertTrue($validator->isValid('AT611904300234573201'));
-    }
-
-    public function testEqualsMessageTemplates(): void
-    {
-        $validator = new IbanValidator();
-
-        self::assertSame(
-            [
-                IbanValidator::NOTSUPPORTED,
-                IbanValidator::SEPANOTSUPPORTED,
-                IbanValidator::FALSEFORMAT,
-                IbanValidator::CHECKFAILED,
-            ],
-            array_keys($validator->getMessageTemplates())
-        );
-        self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
     /**

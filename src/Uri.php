@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
 
 use function is_array;
@@ -14,6 +15,11 @@ use function parse_url;
  * @psalm-type Options = array{
  *     allowRelative?: bool,
  *     allowAbsolute?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class Uri extends AbstractValidator

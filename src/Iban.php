@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
 
 use function array_key_exists;
@@ -22,6 +23,11 @@ use function substr;
  * @psalm-type OptionsArgument = array{
  *     country_code?: string,
  *     allow_non_sepa?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class Iban extends AbstractValidator

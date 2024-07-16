@@ -9,8 +9,6 @@ use Laminas\Validator\InArray;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-use function array_keys;
-
 final class InArrayTest extends TestCase
 {
     private InArray $validator;
@@ -331,17 +329,6 @@ final class InArrayTest extends TestCase
 
         self::assertTrue($validator->isValid(0));
         self::assertFalse($validator->isValid('0'));
-    }
-
-    public function testEqualsMessageTemplates(): void
-    {
-        self::assertSame(
-            [
-                InArray::NOT_IN_ARRAY,
-            ],
-            array_keys($this->validator->getMessageTemplates())
-        );
-        self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 
     /**

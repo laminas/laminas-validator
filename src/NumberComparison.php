@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
 
 use function is_numeric;
@@ -14,6 +15,11 @@ use function is_numeric;
  *     max?: numeric|null,
  *     inclusiveMin?: bool,
  *     inclusiveMax?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class NumberComparison extends AbstractValidator
@@ -33,7 +39,7 @@ final class NumberComparison extends AbstractValidator
         self::ERROR_NOT_LESS              => 'Values must be less than %max%. Received "%value%"',
     ];
 
-    /** @var array<string, string> */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
         'min' => 'min',
         'max' => 'max',

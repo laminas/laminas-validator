@@ -48,7 +48,7 @@ final class GpsPoint extends AbstractValidator
 
     private function isValidCoordinate(string $value, float $maxBoundary): bool
     {
-        $this->value = $value;
+        $this->setValue($value);
 
         $value = $this->removeWhiteSpace($value);
         if ($this->isDMSValue($value)) {

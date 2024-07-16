@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\File;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\InvalidArgumentException;
 
@@ -16,6 +17,11 @@ use function is_string;
  *     min?: string|numeric|null,
  *     max?: string|numeric|null,
  *     useByteString?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class Size extends AbstractValidator
@@ -31,7 +37,7 @@ final class Size extends AbstractValidator
         self::NOT_FOUND => 'File is not readable or does not exist',
     ];
 
-    /** @var array<string, string|array> */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
         'min'  => 'minString',
         'max'  => 'maxString',
@@ -114,7 +120,7 @@ final class Size extends AbstractValidator
 
         $file = FileInformation::factory($value);
 
-        $this->value = $file->clientFileName ?? $file->baseName;
+        $this->setValue($file->clientFileName ?? $file->baseName);
 
         if (! $file->readable) {
             $this->error(self::NOT_FOUND);

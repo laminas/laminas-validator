@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use SensitiveParameter;
 use Throwable;
@@ -24,6 +25,11 @@ use function strtoupper;
  * @psalm-type OptionsArgument = array{
  *     type?: value-of<CreditCard::TYPES>|list<value-of<CreditCard::TYPES>>,
  *     service?: callable(mixed...): bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class CreditCard extends AbstractValidator

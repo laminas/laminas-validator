@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\File;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\InvalidArgumentException;
 
@@ -18,6 +19,11 @@ use function getimagesize;
  *     maxWidth?: int|null,
  *     minHeight?: int|null,
  *     maxHeight?: int|null,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class ImageSize extends AbstractValidator
@@ -42,7 +48,7 @@ final class ImageSize extends AbstractValidator
         self::NOT_READABLE     => 'File is not readable or does not exist',
     ];
 
-    /** @var array<string, string> */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
         'minwidth'  => 'minWidth',
         'maxwidth'  => 'maxWidth',
@@ -130,7 +136,7 @@ final class ImageSize extends AbstractValidator
             return false;
         }
 
-        $this->value = $file->clientFileName ?? $file->baseName;
+        $this->setValue($file->clientFileName ?? $file->baseName);
 
         $size = getimagesize($file->path);
 

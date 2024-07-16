@@ -1,70 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
-  <file src="src/AbstractValidator.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getTranslatorTextDomain]]></code>
-      <code><![CDATA[isTranslatorEnabled]]></code>
-      <code><![CDATA[isValueObscured]]></code>
-      <code><![CDATA[self::getDefaultTranslatorTextDomain()]]></code>
-      <code><![CDATA[self::getMessageLength()]]></code>
-      <code><![CDATA[setOptions]]></code>
-      <code><![CDATA[setTranslatorTextDomain]]></code>
-    </DeprecatedMethod>
-    <MixedArgumentTypeCoercion>
-      <code><![CDATA[$value]]></code>
-    </MixedArgumentTypeCoercion>
-    <MixedArrayAccess>
-      <code><![CDATA[$this->{key($property)}[current($property)]]]></code>
-      <code><![CDATA[$this->{key($result)}[current($result)]]]></code>
-      <code><![CDATA[$this->{key($result)}[current($result)]]]></code>
-    </MixedArrayAccess>
-    <MixedArrayAssignment>
-      <code><![CDATA[$this->abstractOptions['messages'][$messageKey]]]></code>
-    </MixedArrayAssignment>
-    <MixedArrayOffset>
-      <code><![CDATA[$this->{key($property)}[current($property)]]]></code>
-      <code><![CDATA[$this->{key($result)}[current($result)]]]></code>
-      <code><![CDATA[$this->{key($result)}[current($result)]]]></code>
-    </MixedArrayOffset>
-    <MixedAssignment>
-      <code><![CDATA[$property]]></code>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </MixedAssignment>
-    <MixedPropertyTypeCoercion>
-      <code><![CDATA[$this->abstractOptions]]></code>
-    </MixedPropertyTypeCoercion>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[getOptions]]></code>
-    </PossiblyUnusedMethod>
-    <PossiblyUnusedParam>
-      <code><![CDATA[$messageKey]]></code>
-    </PossiblyUnusedParam>
-    <UndefinedThisPropertyAssignment>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-      <code><![CDATA[$this->options]]></code>
-    </UndefinedThisPropertyAssignment>
+  <file src="src/Barcode.php">
+    <PossiblyUnusedProperty>
+      <code><![CDATA[$length]]></code>
+    </PossiblyUnusedProperty>
   </file>
   <file src="src/Barcode/Code128.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[__construct]]></code>
     </PossiblyUnusedMethod>
   </file>
+  <file src="src/Callback.php">
+    <MixedArgumentTypeCoercion>
+      <code><![CDATA[$options]]></code>
+    </MixedArgumentTypeCoercion>
+  </file>
   <file src="src/Date.php">
     <MixedArgumentTypeCoercion>
       <code><![CDATA[$value]]></code>
     </MixedArgumentTypeCoercion>
+  </file>
+  <file src="src/DateComparison.php">
+    <PossiblyUnusedProperty>
+      <code><![CDATA[$maxString]]></code>
+      <code><![CDATA[$minString]]></code>
+      <code><![CDATA[$type]]></code>
+    </PossiblyUnusedProperty>
   </file>
   <file src="src/DateStep.php">
     <ArgumentTypeCoercion>
@@ -72,15 +33,10 @@
     </ArgumentTypeCoercion>
   </file>
   <file src="src/EmailAddress.php">
-    <LessSpecificImplementedReturnType>
-      <code><![CDATA[AbstractValidator]]></code>
-    </LessSpecificImplementedReturnType>
-    <MixedArrayAssignment>
-      <code><![CDATA[$this->abstractOptions['messages'][$code]]]></code>
-    </MixedArrayAssignment>
-    <MixedPropertyTypeCoercion>
-      <code><![CDATA[$this->abstractOptions]]></code>
-    </MixedPropertyTypeCoercion>
+    <PossiblyUnusedProperty>
+      <code><![CDATA[$hostname]]></code>
+      <code><![CDATA[$localPart]]></code>
+    </PossiblyUnusedProperty>
     <TypeDoesNotContainType>
       <code><![CDATA[UConverter::transcode($localPart, 'UTF-8', 'UTF-8') === false]]></code>
     </TypeDoesNotContainType>
@@ -95,9 +51,46 @@
       <code><![CDATA[$this->getPluginManager()->get($validator)]]></code>
       <code><![CDATA[$this->getPluginManager()->get($validator)]]></code>
     </MixedReturnStatement>
+    <PossiblyUnusedProperty>
+      <code><![CDATA[$error]]></code>
+    </PossiblyUnusedProperty>
     <TooManyArguments>
       <code><![CDATA[isValid]]></code>
     </TooManyArguments>
+  </file>
+  <file src="src/File/ExcludeExtension.php">
+    <PossiblyUnusedProperty>
+      <code><![CDATA[$extensionList]]></code>
+    </PossiblyUnusedProperty>
+  </file>
+  <file src="src/File/Exists.php">
+    <PossiblyUnusedProperty>
+      <code><![CDATA[$directoriesAsString]]></code>
+    </PossiblyUnusedProperty>
+  </file>
+  <file src="src/File/Extension.php">
+    <PossiblyUnusedProperty>
+      <code><![CDATA[$extensionList]]></code>
+    </PossiblyUnusedProperty>
+  </file>
+  <file src="src/File/FilesSize.php">
+    <PossiblyUnusedProperty>
+      <code><![CDATA[$maxString]]></code>
+      <code><![CDATA[$minString]]></code>
+      <code><![CDATA[$size]]></code>
+    </PossiblyUnusedProperty>
+  </file>
+  <file src="src/File/NotExists.php">
+    <PossiblyUnusedProperty>
+      <code><![CDATA[$directoriesAsString]]></code>
+    </PossiblyUnusedProperty>
+  </file>
+  <file src="src/File/Size.php">
+    <PossiblyUnusedProperty>
+      <code><![CDATA[$maxString]]></code>
+      <code><![CDATA[$minString]]></code>
+      <code><![CDATA[$size]]></code>
+    </PossiblyUnusedProperty>
   </file>
   <file src="src/GpsPoint.php">
     <InvalidOperand>
@@ -108,6 +101,11 @@
       <code><![CDATA[$value]]></code>
     </MixedArgument>
   </file>
+  <file src="src/HostWithPublicIPv4Address.php">
+    <PossiblyUnusedProperty>
+      <code><![CDATA[$type]]></code>
+    </PossiblyUnusedProperty>
+  </file>
   <file src="src/Hostname.php">
     <MixedArgument>
       <code><![CDATA[$regexChar]]></code>
@@ -116,10 +114,23 @@
       <code><![CDATA[$regexChar]]></code>
     </MixedAssignment>
   </file>
+  <file src="src/Identical.php">
+    <PossiblyUnusedProperty>
+      <code><![CDATA[$tokenString]]></code>
+    </PossiblyUnusedProperty>
+  </file>
+  <file src="src/IsArray.php">
+    <PossiblyUnusedProperty>
+      <code><![CDATA[$type]]></code>
+    </PossiblyUnusedProperty>
+  </file>
   <file src="src/IsJsonString.php">
     <InvalidArgument>
       <code><![CDATA[$this->maxDepth]]></code>
     </InvalidArgument>
+    <PossiblyUnusedProperty>
+      <code><![CDATA[$type]]></code>
+    </PossiblyUnusedProperty>
   </file>
   <file src="src/Module.php">
     <PossiblyUnusedParam>
@@ -176,53 +187,14 @@
     </UnusedClass>
   </file>
   <file src="test/AbstractValidatorTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[AbstractValidator::getDefaultTranslator()]]></code>
-      <code><![CDATA[AbstractValidator::getDefaultTranslator()]]></code>
-      <code><![CDATA[AbstractValidator::getDefaultTranslatorTextDomain()]]></code>
-      <code><![CDATA[AbstractValidator::getDefaultTranslatorTextDomain()]]></code>
-      <code><![CDATA[AbstractValidator::hasDefaultTranslator()]]></code>
-      <code><![CDATA[AbstractValidator::hasDefaultTranslator()]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getOption]]></code>
-      <code><![CDATA[getTranslatorTextDomain]]></code>
-      <code><![CDATA[getTranslatorTextDomain]]></code>
-      <code><![CDATA[hasTranslator]]></code>
-      <code><![CDATA[hasTranslator]]></code>
-      <code><![CDATA[isTranslatorEnabled]]></code>
-      <code><![CDATA[isTranslatorEnabled]]></code>
-      <code><![CDATA[isTranslatorEnabled]]></code>
-      <code><![CDATA[isTranslatorEnabled]]></code>
-      <code><![CDATA[isValueObscured]]></code>
-      <code><![CDATA[isValueObscured]]></code>
-      <code><![CDATA[isValueObscured]]></code>
-      <code><![CDATA[setMessages]]></code>
-      <code><![CDATA[setOptions]]></code>
-      <code><![CDATA[setTranslatorEnabled]]></code>
-      <code><![CDATA[setTranslatorEnabled]]></code>
-      <code><![CDATA[setValueObscured]]></code>
-      <code><![CDATA[setValueObscured]]></code>
-      <code><![CDATA[setValueObscured]]></code>
-    </DeprecatedMethod>
-    <InvalidArgument>
-      <code><![CDATA[$options]]></code>
-    </InvalidArgument>
     <MixedArgument>
       <code><![CDATA[$message]]></code>
     </MixedArgument>
     <MixedAssignment>
       <code><![CDATA[$message]]></code>
     </MixedAssignment>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[invalidOptionsArguments]]></code>
-    </PossiblyUnusedMethod>
   </file>
   <file src="test/BarcodeTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getOption]]></code>
-    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[invalidAdapterArguments]]></code>
       <code><![CDATA[validAdapterOptions]]></code>
@@ -247,11 +219,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/CreditCardTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getOption]]></code>
-    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicValues]]></code>
       <code><![CDATA[jcbValues]]></code>
@@ -268,11 +235,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/DateStepTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getOption]]></code>
-    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[moscowWinterTimeDataProvider]]></code>
       <code><![CDATA[stepTestsDataProvider]]></code>
@@ -288,53 +250,16 @@
     </UnusedParam>
   </file>
   <file src="test/DigitsTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getOption]]></code>
-    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicDataProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/EmailAddressTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageVariables]]></code>
-      <code><![CDATA[getOption]]></code>
-      <code><![CDATA[getOption]]></code>
-      <code><![CDATA[setMessages]]></code>
-    </DeprecatedMethod>
-    <InvalidArgument>
-      <code><![CDATA[[
-            'hostnameValidator' => $hostnameValidator,
-            'translator'        => new Translator($translations),
-        ]]]></code>
-      <code><![CDATA[[
-            'message'           => 'TestMessage',
-            'hostnameValidator' => $hostname,
-        ]]]></code>
-      <code><![CDATA[['messages' => [EmailAddress::INVALID => 'TestMessage']]]]></code>
-    </InvalidArgument>
     <PossiblyUnusedMethod>
       <code><![CDATA[emailAddressesForMxChecks]]></code>
-      <code><![CDATA[errorHandler]]></code>
       <code><![CDATA[invalidEmailAddresses]]></code>
       <code><![CDATA[validEmailAddresses]]></code>
     </PossiblyUnusedMethod>
-    <UnusedParam>
-      <code><![CDATA[$errno]]></code>
-      <code><![CDATA[$errstr]]></code>
-    </UnusedParam>
   </file>
   <file src="test/File/BytesTest.php">
     <PossiblyUnusedMethod>
@@ -428,11 +353,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/HexTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getOption]]></code>
-    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicDataProvider]]></code>
     </PossiblyUnusedMethod>
@@ -445,13 +365,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/HostnameTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageVariables]]></code>
-      <code><![CDATA[getOption]]></code>
-      <code><![CDATA[getOption]]></code>
-    </DeprecatedMethod>
     <MixedArrayOffset>
       <code><![CDATA[$translations[$code]]]></code>
     </MixedArrayOffset>
@@ -481,33 +394,18 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/IbanTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getOption]]></code>
-    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[ibanDataProvider]]></code>
       <code><![CDATA[invalidValues]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/InArrayTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getOption]]></code>
-    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[nonStrictValidationSet]]></code>
       <code><![CDATA[strictValidationSet]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/IpTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getOption]]></code>
-    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[iPvFutureAddressesProvider]]></code>
       <code><![CDATA[invalidIpV4Addresses]]></code>
@@ -524,12 +422,6 @@
       <code><![CDATA[conflictingOptionsProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="test/IsInstanceOfTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getOption]]></code>
-      <code><![CDATA[getOption]]></code>
-    </DeprecatedMethod>
-  </file>
   <file src="test/IsJsonStringTest.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[allowProvider]]></code>
@@ -544,41 +436,12 @@
       <code><![CDATA[isbnValueProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="test/MessageTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[__get]]></code>
-      <code><![CDATA[__get]]></code>
-      <code><![CDATA[__get]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageVariables]]></code>
-      <code><![CDATA[getMessageVariables]]></code>
-      <code><![CDATA[getOption]]></code>
-      <code><![CDATA[getOption]]></code>
-      <code><![CDATA[setMessages]]></code>
-      <code><![CDATA[unknownProperty]]></code>
-    </DeprecatedMethod>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[assertIsArray]]></code>
-    </RedundantConditionGivenDocblockType>
-    <UndefinedMagicPropertyFetch>
-      <code><![CDATA[$this->validator->unknownProperty]]></code>
-    </UndefinedMagicPropertyFetch>
-    <UndefinedThisPropertyFetch>
-      <code><![CDATA[$this->validator->__get('max')]]></code>
-      <code><![CDATA[$this->validator->__get('min')]]></code>
-      <code><![CDATA[$this->validator->__get('value')]]></code>
-    </UndefinedThisPropertyFetch>
-  </file>
   <file src="test/NotEmptyTest.php">
     <ArgumentTypeCoercion>
       <code><![CDATA[[
             'type' => [$string, $string],
         ]]]></code>
     </ArgumentTypeCoercion>
-    <DeprecatedMethod>
-      <code><![CDATA[getOption]]></code>
-    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[arrayConfigNotationWithoutKeyProvider]]></code>
       <code><![CDATA[arrayConstantNotationProvider]]></code>
@@ -606,12 +469,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/RegexTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getOption]]></code>
-      <code><![CDATA[getOption]]></code>
-    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[basicDataProvider]]></code>
       <code><![CDATA[invalidConstructorArgumentsProvider]]></code>
@@ -625,10 +482,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/StepTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getOption]]></code>
-    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[decimalHundredthStepValues]]></code>
       <code><![CDATA[decimalStepSubtractionBugValues]]></code>
@@ -651,20 +504,12 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/UndisclosedPasswordTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getMessageTemplates]]></code>
-    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[goodPasswordProvider]]></code>
       <code><![CDATA[seenPasswordProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/UriTest.php">
-    <DeprecatedMethod>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getMessageTemplates]]></code>
-      <code><![CDATA[getOption]]></code>
-    </DeprecatedMethod>
     <PossiblyUnusedMethod>
       <code><![CDATA[allowOptionsDataProvider]]></code>
       <code><![CDATA[invalidValueTypes]]></code>

@@ -11,7 +11,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function array_key_exists;
-use function array_keys;
 use function implode;
 use function ini_get;
 use function ini_set;
@@ -629,35 +628,6 @@ final class HostnameTest extends TestCase
         self::assertTrue($validator->isValid('città-caffè.it'));
         self::assertTrue($validator->isValid('edgetest-àâäèéêëìîïòôöùûüæœçÿß.it'));
         self::assertFalse($validator->isValid('رات.it'));
-    }
-
-    public function testEqualsMessageTemplates(): void
-    {
-        self::assertSame(
-            [
-                Hostname::CANNOT_DECODE_PUNYCODE,
-                Hostname::INVALID,
-                Hostname::INVALID_DASH,
-                Hostname::INVALID_HOSTNAME,
-                Hostname::INVALID_HOSTNAME_SCHEMA,
-                Hostname::INVALID_LOCAL_NAME,
-                Hostname::INVALID_URI,
-                Hostname::IP_ADDRESS_NOT_ALLOWED,
-                Hostname::LOCAL_NAME_NOT_ALLOWED,
-                Hostname::UNDECIPHERABLE_TLD,
-                Hostname::UNKNOWN_TLD,
-            ],
-            array_keys($this->validator->getMessageTemplates()),
-        );
-        self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
-    }
-
-    public function testEqualsMessageVariables(): void
-    {
-        $messageVariables = ['tld' => 'tld'];
-
-        self::assertSame($messageVariables, $this->validator->getOption('messageVariables'));
-        self::assertSame(array_keys($messageVariables), $this->validator->getMessageVariables());
     }
 
     public function testHostnameWithOnlyIpChars(): void

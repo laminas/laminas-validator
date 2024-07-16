@@ -12,8 +12,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
-use function array_keys;
-
 final class BarcodeTest extends TestCase
 {
     /** @return list<array{0: string|AdapterInterface}> */
@@ -537,24 +535,5 @@ final class BarcodeTest extends TestCase
         ]);
 
         self::assertFalse($barcode->isValid('3RH1131-1BB40'));
-    }
-
-    public function testEqualsMessageTemplates(): void
-    {
-        $validator = new Barcode([
-            'adapter'     => Barcode\Code128::class,
-            'useChecksum' => true,
-        ]);
-
-        self::assertSame(
-            [
-                Barcode::FAILED,
-                Barcode::INVALID_CHARS,
-                Barcode::INVALID_LENGTH,
-                Barcode::INVALID,
-            ],
-            array_keys($validator->getMessageTemplates()),
-        );
-        self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 }

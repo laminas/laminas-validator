@@ -189,13 +189,6 @@ final class StepTest extends TestCase
         self::assertSame([], $this->validator->getMessages());
     }
 
-    public function testEqualsMessageTemplates(): void
-    {
-        $validator = new Step();
-
-        self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
-    }
-
     public function testFModNormalizesZeroToFloatOne(): void
     {
         $validator = new Step();

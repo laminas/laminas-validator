@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Laminas\Translator\TranslatorInterface;
+
 use function is_array;
 use function is_int;
 use function is_string;
@@ -15,6 +17,11 @@ use function var_export;
  *     token?: mixed,
  *     strict?: bool,
  *     literal?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class Identical extends AbstractValidator
@@ -28,7 +35,7 @@ final class Identical extends AbstractValidator
         self::MISSING_TOKEN => 'No token was provided to match against',
     ];
 
-    /** @var array<string, string> */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
         'token' => 'tokenString',
     ];

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\File;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
 
 use function assert;
@@ -17,6 +18,11 @@ use function is_string;
  *     case?: bool,
  *     extension: non-empty-string|list<non-empty-string>,
  *     allowNonExistentFile?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class ExcludeExtension extends AbstractValidator
@@ -32,7 +38,7 @@ final class ExcludeExtension extends AbstractValidator
         self::ERROR_INVALID_TYPE => 'The value is neither a file, nor a string',
     ];
 
-    /** @var array<string, string|array> */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
         'extension' => 'extensionList',
     ];
@@ -71,6 +77,7 @@ final class ExcludeExtension extends AbstractValidator
      */
     public function isValid(mixed $value): bool
     {
+        $this->setValue($value);
         $isFile = FileInformation::isPossibleFile($value);
 
         if (! $isFile && ! $this->allowNonExistentFile) {

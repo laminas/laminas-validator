@@ -7,6 +7,7 @@ namespace Laminas\Validator;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
+use Laminas\Translator\TranslatorInterface;
 
 use function gettype;
 use function implode;
@@ -17,6 +18,11 @@ use function implode;
  * @psalm-type OptionsArgument = array{
  *     format?: string|null,
  *     strict?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 class Date extends AbstractValidator
@@ -41,7 +47,7 @@ class Date extends AbstractValidator
         self::FALSEFORMAT  => "The input does not fit the date format '%format%'",
     ];
 
-    /** @var array<string, string> */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
         'format' => 'format',
     ];

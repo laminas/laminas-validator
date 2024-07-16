@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\File;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Psr\Http\Message\UploadedFileInterface;
@@ -19,6 +20,11 @@ use function is_string;
  *     min?: string|numeric|null,
  *     max?: string|numeric|null,
  *     useByteString?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class FilesSize extends AbstractValidator
@@ -34,7 +40,7 @@ final class FilesSize extends AbstractValidator
         self::NOT_READABLE => 'One or more files can not be read',
     ];
 
-    /** @var array<string, string|array> */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
         'min'  => 'minString',
         'max'  => 'maxString',

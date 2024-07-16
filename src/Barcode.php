@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Barcode\AdapterInterface;
 use Laminas\Validator\Barcode\Ean13;
 use Laminas\Validator\Exception\InvalidArgumentException;
@@ -21,6 +22,11 @@ use function ucfirst;
  * @psalm-type OptionsArgument = array{
  *     adapter?: AdapterInterface|class-string<AdapterInterface>|string,
  *     useChecksum?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  * @psalm-import-type AllowedLength from AdapterInterface
  */
@@ -39,11 +45,7 @@ final class Barcode extends AbstractValidator
         self::INVALID        => 'Invalid type given. String expected',
     ];
 
-    /**
-     * Additional variables available for validation failure messages
-     *
-     * @var array<string, string>
-     */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
         'length' => 'length',
     ];

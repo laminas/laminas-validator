@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\File;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\InvalidArgumentException;
 
@@ -16,6 +17,11 @@ use function str_word_count;
  * @psalm-type OptionsArgument = array{
  *     min?: numeric,
  *     max?: numeric,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class WordCount extends AbstractValidator
@@ -34,7 +40,7 @@ final class WordCount extends AbstractValidator
         self::NOT_FOUND => 'File is not readable or does not exist',
     ];
 
-    /** @var array<string, string> */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
         'min'   => 'min',
         'max'   => 'max',

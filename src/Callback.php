@@ -6,6 +6,7 @@ namespace Laminas\Validator;
 
 use Closure;
 use Exception;
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
 
 use function array_merge;
@@ -20,7 +21,12 @@ use function is_callable;
  *     callbackOptions?: array<array-key, mixed>,
  *     bind?: bool,
  *     throwExceptions?: bool,
- * }&array<string, mixed>
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
+ * }
  */
 final class Callback extends AbstractValidator
 {

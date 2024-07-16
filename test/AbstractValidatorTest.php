@@ -6,18 +6,15 @@ namespace LaminasTest\Validator;
 
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\EmailAddress;
-use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Hostname;
 use LaminasTest\Validator\TestAsset\ConcreteValidator;
 use LaminasTest\Validator\TestAsset\Translator;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 use stdClass;
 
 use function reset;
-use function sprintf;
 use function var_export;
 
 final class AbstractValidatorTest extends TestCase
@@ -75,31 +72,15 @@ final class AbstractValidatorTest extends TestCase
         self::assertStringContainsString('This is the translated message for bar', $messages['fooMessage']);
     }
 
-    public function testObscureValueFlagFalseByDefault(): void
-    {
-        self::assertFalse($this->validator->isValueObscured());
-    }
-
-    public function testCanSetValueObscuredFlag(): void
-    {
-        $this->testObscureValueFlagFalseByDefault();
-
-        $this->validator->setValueObscured(true);
-
-        self::assertTrue($this->validator->isValueObscured());
-
-        $this->validator->setValueObscured(false);
-
-        self::assertFalse($this->validator->isValueObscured());
-    }
-
     public function testValueIsObfuscatedWheObscureValueFlagIsTrue(): void
     {
-        $this->validator->setValueObscured(true);
+        $validator = new ConcreteValidator([
+            'valueObscured' => true,
+        ]);
 
-        self::assertFalse($this->validator->isValid('foobar'));
+        self::assertFalse($validator->isValid('foobar'));
 
-        $messages = $this->validator->getMessages();
+        $messages = $validator->getMessages();
 
         self::assertTrue(isset($messages['fooMessage']));
 
@@ -119,54 +100,36 @@ final class AbstractValidatorTest extends TestCase
         self::assertArrayHasKey('fooMessage', $messages);
     }
 
-    public function testTranslatorEnabledPerDefault(): void
-    {
-        $translator = new Translator([]);
-        $this->validator->setTranslator($translator);
-
-        self::assertTrue($this->validator->isTranslatorEnabled());
-    }
-
     public function testCanDisableTranslator(): void
     {
         $translator = new Translator([
             '%value% was passed' => 'This is the translated message for %value%',
         ]);
-        $this->validator->setTranslator($translator);
 
-        self::assertFalse($this->validator->isValid('bar'));
+        $validator = new ConcreteValidator([
+            'translator' => $translator,
+        ]);
 
-        $messages = $this->validator->getMessages();
+        self::assertFalse($validator->isValid('bar'));
+
+        $messages = $validator->getMessages();
 
         self::assertArrayHasKey('fooMessage', $messages);
         self::assertStringContainsString('bar', $messages['fooMessage']);
         self::assertStringContainsString('This is the translated message for bar', $messages['fooMessage']);
 
-        $this->validator->setTranslatorEnabled(false);
+        $validator = new ConcreteValidator([
+            'translator'        => $translator,
+            'translatorEnabled' => false,
+        ]);
 
-        self::assertFalse($this->validator->isTranslatorEnabled());
-        self::assertFalse($this->validator->isValid('bar'));
+        self::assertFalse($validator->isValid('bar'));
 
-        $messages = $this->validator->getMessages();
+        $messages = $validator->getMessages();
 
         self::assertArrayHasKey('fooMessage', $messages);
         self::assertStringContainsString('bar', $messages['fooMessage']);
         self::assertStringContainsString('bar was passed', $messages['fooMessage']);
-    }
-
-    public function testGetMessageTemplates(): void
-    {
-        $messages = $this->validator->getMessageTemplates();
-
-        self::assertSame([
-            'fooMessage' => '%value% was passed',
-            'barMessage' => '%value% was wrong',
-        ], $messages);
-
-        self::assertSame([
-            ConcreteValidator::FOO_MESSAGE => '%value% was passed',
-            ConcreteValidator::BAR_MESSAGE => '%value% was wrong',
-        ], $messages);
     }
 
     public function testInvokeProxiesToIsValid(): void
@@ -183,31 +146,21 @@ final class AbstractValidatorTest extends TestCase
         $this->validator->setTranslator($translatorMock, 'foo');
 
         self::assertSame($translatorMock, $this->validator->getTranslator());
-        self::assertSame('foo', $this->validator->getTranslatorTextDomain());
-        self::assertTrue($this->validator->hasTranslator());
-        self::assertTrue($this->validator->isTranslatorEnabled());
-
-        $this->validator->setTranslatorEnabled(false);
-
-        self::assertFalse($this->validator->isTranslatorEnabled());
     }
 
     public function testDefaultTranslatorMethods(): void
     {
-        self::assertFalse(AbstractValidator::hasDefaultTranslator());
-        self::assertNull(AbstractValidator::getDefaultTranslator());
-        self::assertSame('default', AbstractValidator::getDefaultTranslatorTextDomain());
+        $validator = new ConcreteValidator();
 
-        self::assertFalse($this->validator->hasTranslator());
+        self::assertNull($validator->getTranslator());
 
-        $translatorMock = $this->createMock(Translator::class);
-        AbstractValidator::setDefaultTranslator($translatorMock, 'foo');
+        $translator = new Translator([]);
+        AbstractValidator::setDefaultTranslator($translator, 'foo');
 
-        self::assertSame($translatorMock, AbstractValidator::getDefaultTranslator());
-        self::assertSame($translatorMock, $this->validator->getTranslator());
-        self::assertSame('foo', AbstractValidator::getDefaultTranslatorTextDomain());
-        self::assertSame('foo', $this->validator->getTranslatorTextDomain());
-        self::assertTrue(AbstractValidator::hasDefaultTranslator());
+        self::assertNull($validator->getTranslator());
+
+        $validator2 = new ConcreteValidator();
+        self::assertSame($translator, $validator2->getTranslator());
     }
 
     public function testMessageCreationWithNestedArrayValueDoesNotRaiseNotice(): void
@@ -256,9 +209,11 @@ final class AbstractValidatorTest extends TestCase
         self::assertArrayHasKey(Hostname::UNKNOWN_TLD, $validator->getMessages());
         self::assertArrayHasKey(Hostname::LOCAL_NAME_NOT_ALLOWED, $validator->getMessages());
 
-        $validator->setMessages([
-            EmailAddress::INVALID_HOSTNAME => 'This is the same error message',
-            Hostname::UNKNOWN_TLD          => 'This is the same error message',
+        $validator = new EmailAddress([
+            'messages' => [
+                EmailAddress::INVALID_HOSTNAME => 'This is the same error message',
+                Hostname::UNKNOWN_TLD          => 'This is the same error message',
+            ],
         ]);
 
         self::assertFalse($validator->isValid('invalid@email.coma'));
@@ -267,43 +222,15 @@ final class AbstractValidatorTest extends TestCase
         self::assertArrayHasKey(Hostname::LOCAL_NAME_NOT_ALLOWED, $validator->getMessages());
     }
 
-    public function testRetrievingUnknownOptionRaisesException(): void
+    public function testThatRepeatedValidationsClearErrorMessages(): void
     {
-        $option = 'foo';
+        $validator = new ConcreteValidator();
 
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(sprintf("Invalid option '%s'", $option));
+        self::assertFalse($validator->isValid('Foo'));
+        self::assertArrayHasKey(ConcreteValidator::BAR_MESSAGE, $validator->getMessages());
 
-        $this->validator->getOption($option);
-    }
+        self::assertTrue($validator->isValid($validator->validValue));
 
-    /**
-     * @psalm-return array<string, array{scalar|object|null}>
-     */
-    public static function invalidOptionsArguments(): array
-    {
-        return [
-            'null'       => [null],
-            'true'       => [true],
-            'false'      => [false],
-            'zero'       => [0],
-            'int'        => [1],
-            'zero-float' => [0.0],
-            'float'      => [1.1],
-            'string'     => ['string'],
-            'object'     => [(object) []],
-        ];
-    }
-
-    /**
-     * @psalm-param scalar|object|null $options
-     */
-    #[DataProvider('invalidOptionsArguments')]
-    public function testSettingOptionsWithNonTraversableRaisesException($options): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('setOptions expects an array or Traversable');
-
-        $this->validator->setOptions($options);
+        self::assertSame([], $validator->getMessages());
     }
 }

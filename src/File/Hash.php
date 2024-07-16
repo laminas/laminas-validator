@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\File;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\InvalidArgumentException;
 
@@ -20,6 +21,11 @@ use function strtolower;
  * @psalm-type OptionsArgument = array{
  *     hash: non-empty-string|list<non-empty-string>,
  *     algorithm?: non-empty-string|null,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class Hash extends AbstractValidator

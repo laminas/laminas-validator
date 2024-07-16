@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
 
 use function count;
@@ -28,6 +29,11 @@ use function is_countable;
  *     count?: int|null,
  *     min?: int|null,
  *     max?: int|null,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class IsCountable extends AbstractValidator
@@ -49,11 +55,7 @@ final class IsCountable extends AbstractValidator
         self::LESS_THAN     => "The input count must be greater than '%min%', inclusively",
     ];
 
-    /**
-     * Additional variables available for validation failure messages
-     *
-     * @var array<string, string>
-     */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
         'count' => 'count',
         'min'   => 'min',

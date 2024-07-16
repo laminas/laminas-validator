@@ -22,41 +22,4 @@ interface TranslatorAwareInterface
      * Returns translator used in object
      */
     public function getTranslator(): ?TranslatorInterface;
-
-    /**
-     * Checks if the object has a translator
-     *
-     * @deprecated since 2.61.0 This method will be removed in 3.0
-     */
-    public function hasTranslator(): bool;
-
-    /**
-     * Sets whether translator is enabled and should be used
-     *
-     * @deprecated since 2.61.0 This method will be removed in 3.0 disable translation via the
-     *            `translatorEnabled` option
-     */
-    public function setTranslatorEnabled(bool $enabled = true): void;
-
-    /**
-     * Returns whether translator is enabled and should be used
-     *
-     * @deprecated since 2.61.0 This method will be removed in 3.0
-     */
-    public function isTranslatorEnabled(): bool;
-
-    /**
-     * Set translation text domain
-     *
-     * @deprecated since 2.61.0 This method will be removed in 3.0 Use the `translatorTextDomain` option, or set
-     *             the text domain at the same time as the translator via `setTranslator()`
-     */
-    public function setTranslatorTextDomain(string $textDomain = 'default'): void;
-
-    /**
-     * Return the translation text domain
-     *
-     * @deprecated since 2.61.0 This method will be removed in 3.0
-     */
-    public function getTranslatorTextDomain(): string;
 }

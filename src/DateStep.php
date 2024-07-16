@@ -9,6 +9,7 @@ use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
 
 use function array_combine;
@@ -34,6 +35,11 @@ use const PHP_INT_MAX;
  *     strict?: bool,
  *     baseValue?: string|DateTimeInterface,
  *     step?: string|DateInterval,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class DateStep extends Date

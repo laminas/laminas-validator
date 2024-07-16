@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\File;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
 
 use function array_filter;
@@ -27,6 +28,11 @@ use const DIRECTORY_SEPARATOR;
  * @psalm-type OptionsArgument = array{
  *     directory?: string|list<string>,
  *     all?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class Exists extends AbstractValidator
@@ -38,7 +44,7 @@ final class Exists extends AbstractValidator
         self::DOES_NOT_EXIST => 'File does not exist',
     ];
 
-    /** @var array<string, string|array> */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
         'directory' => 'directoriesAsString',
     ];
@@ -77,7 +83,7 @@ final class Exists extends AbstractValidator
             $value = $file->baseName;
         }
 
-        $this->value = $value;
+        $this->setValue($value);
 
         if (! is_string($value)) {
             $this->error(self::DOES_NOT_EXIST);
