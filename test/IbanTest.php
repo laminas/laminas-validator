@@ -110,29 +110,12 @@ final class IbanTest extends TestCase
         );
     }
 
-    public function testSettingAndGettingCountryCode(): void
+    public function testInvalidCountryCodeIsExceptional(): void
     {
-        $validator = new IbanValidator();
-        $validator->setCountryCode('DE');
-
-        self::assertSame('DE', $validator->getCountryCode());
-
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('ISO 3166-1');
 
-        $validator->setCountryCode('foo');
-    }
-
-    public function testInstanceWithCountryCode(): void
-    {
-        $validator = new IbanValidator(['country_code' => 'AT']);
-
-        self::assertSame('AT', $validator->getCountryCode());
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('ISO 3166-1');
-
-        new IbanValidator(['country_code' => 'BAR']);
+        new IbanValidator(['country_code' => 'foo']);
     }
 
     public function testSepaNotSupportedCountryCode(): void
@@ -141,13 +124,11 @@ final class IbanTest extends TestCase
 
         self::assertTrue($validator->isValid('DO17552081023122561803924090'));
 
-        $validator->setAllowNonSepa(false);
+        $validator = new IbanValidator([
+            'allow_non_sepa' => false,
+        ]);
 
         self::assertFalse($validator->isValid('DO17552081023122561803924090'));
-
-        $validator->setAllowNonSepa(true);
-
-        self::assertTrue($validator->isValid('DO17552081023122561803924090'));
     }
 
     public function testIbanNotSupportedCountryCode(): void
@@ -181,38 +162,31 @@ final class IbanTest extends TestCase
         self::assertSame($validator->getOption('messageTemplates'), $validator->getMessageTemplates());
     }
 
-    public function testConstructorAllowsSettingOptionsViaOptionsArray(): void
-    {
-        $validator = new IbanValidator(['country_code' => 'AT', 'allow_non_sepa' => false]);
-
-        self::assertSame('AT', $validator->getCountryCode());
-        self::assertFalse($validator->allowNonSepa());
-    }
-
     /**
-     * @psalm-return array<string, array{0: mixed}>
+     * @psalm-return array<string, array{0: mixed, 1: string}>
      */
     public static function invalidValues(): array
     {
         return [
-            'null'       => [null],
-            'true'       => [true],
-            'false'      => [false],
-            'zero'       => [0],
-            'int'        => [1],
-            'zero-float' => [0.0],
-            'float'      => [1.1],
-            'array'      => [['foo']],
-            'object'     => [(object) []],
+            'null'            => [null, IbanValidator::FALSEFORMAT],
+            'true'            => [true, IbanValidator::FALSEFORMAT],
+            'false'           => [false,  IbanValidator::FALSEFORMAT],
+            'zero'            => [0,  IbanValidator::FALSEFORMAT],
+            'int'             => [1,  IbanValidator::FALSEFORMAT],
+            'zero-float'      => [0.0,  IbanValidator::FALSEFORMAT],
+            'float'           => [1.1,  IbanValidator::FALSEFORMAT],
+            'array'           => [['foo'], IbanValidator::FALSEFORMAT],
+            'object'          => [(object) [], IbanValidator::FALSEFORMAT],
+            'Not match regex' => ['GB123', IbanValidator::FALSEFORMAT],
         ];
     }
 
     #[DataProvider('invalidValues')]
-    public function testIsValidReturnsFalseForNonStringValue(mixed $value): void
+    public function testIsValidReturnsFalseForNonStringValue(mixed $value, string $errorKey): void
     {
         $validator = new IbanValidator();
 
-        /** @psalm-suppress MixedArgument */
         self::assertFalse($validator->isValid($value));
+        self::assertArrayHasKey($errorKey, $validator->getMessages());
     }
 }

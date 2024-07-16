@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use Psr\Http\Client\ClientExceptionInterface;
@@ -35,7 +37,7 @@ final class UndisclosedPassword extends AbstractValidator
     // phpcs:disable Generic.Files.LineLength.TooLong
 
     /** @var array<string, string> */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::PASSWORD_BREACHED => 'The provided password was found in previous breaches, please create another password',
         self::NOT_A_STRING      => 'The provided password is not a string, please provide a correct password',
     ];
@@ -46,13 +48,10 @@ final class UndisclosedPassword extends AbstractValidator
         parent::__construct();
     }
 
-    // The following rule is buggy for parameters attributes
-    // phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing.NoSpaceBetweenTypeHintAndParameter
-
     /** {@inheritDoc} */
     public function isValid(
         #[SensitiveParameter]
-        $value
+        mixed $value
     ): bool {
         if (! is_string($value)) {
             $this->error(self::NOT_A_STRING);
@@ -66,8 +65,6 @@ final class UndisclosedPassword extends AbstractValidator
 
         return true;
     }
-
-    // phpcs:enable SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing.NoSpaceBetweenTypeHintAndParameter
 
     private function isPwnedPassword(
         #[SensitiveParameter]

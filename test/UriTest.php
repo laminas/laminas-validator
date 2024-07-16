@@ -4,15 +4,10 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator;
 
-use Laminas\Uri\Exception\InvalidArgumentException;
-use Laminas\Uri\Http;
-use Laminas\Uri\Uri as UriHandler;
-use Laminas\Validator\Exception\InvalidArgumentException as ValidatorInvalidArgumentException;
+use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Uri;
-use LaminasTest\Validator\TestAsset\CustomTraversable;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 
 use function array_keys;
 
@@ -30,139 +25,72 @@ final class UriTest extends TestCase
         $this->validator = new Uri();
     }
 
-    public function testHasDefaultSettingsAndLazyLoadsUriHandler(): void
-    {
-        $uriHandler = $this->validator->getUriHandler();
-
-        self::assertInstanceOf(UriHandler::class, $uriHandler);
-        self::assertTrue($this->validator->getAllowRelative());
-        self::assertTrue($this->validator->getAllowAbsolute());
-    }
-
-    public function testWithProperUriHandler(): void
-    {
-        $uriHandler = new UriHandler();
-        $this->validator->setUriHandler($uriHandler);
-
-        self::assertInstanceOf(UriHandler::class, $this->validator->getUriHandler());
-
-        $this->validator->setUriHandler(UriHandler::class);
-
-        self::assertInstanceOf(UriHandler::class, $this->validator->getUriHandler());
-    }
-
     public function testConstructorWithArraySetsOptions(): void
     {
-        $uriMock   = $this->createMock(UriHandler::class);
         $validator = new Uri([
-            'uriHandler'    => $uriMock,
-            'allowRelative' => false,
+            'allowRelative' => true,
             'allowAbsolute' => false,
         ]);
 
-        self::assertSame($uriMock, $validator->getUriHandler());
-        self::assertFalse($validator->getAllowRelative());
-        self::assertFalse($validator->getAllowAbsolute());
+        self::assertTrue($validator->isValid('/foo'));
     }
 
-    public function testConstructorWithArgsSetsOptions(): void
+    public function testDisallowingBothRelativeAndAbsoluteUrisIsExceptional(): void
     {
-        $uriMock   = $this->createMock(UriHandler::class);
-        $validator = new Uri($uriMock, false, false);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Disallowing both relative and absolute uris means that no uris will be valid');
 
-        self::assertSame($uriMock, $validator->getUriHandler());
-        self::assertFalse($validator->getAllowRelative());
-        self::assertFalse($validator->getAllowAbsolute());
-    }
-
-    public function testConstructWithTraversableSetsOptions(): void
-    {
-        $uriMock   = $this->createMock(UriHandler::class);
-        $options   = new CustomTraversable([
-            'uriHandler'    => $uriMock,
+        new Uri([
             'allowRelative' => false,
             'allowAbsolute' => false,
         ]);
-        $validator = new Uri($options);
-
-        self::assertSame($uriMock, $validator->getUriHandler());
-        self::assertFalse($validator->getAllowRelative());
-        self::assertFalse($validator->getAllowAbsolute());
     }
 
     /**
-     * @psalm-return array<array-key, array{
-     *     0: bool,
+     * @psalm-return list<array{
+     *     0: string,
      *     1: bool,
      *     2: bool,
      *     3: bool,
-     *     4: bool,
-     *     5: bool
+     *     4: string|null,
      * }>
      */
     public static function allowOptionsDataProvider(): array
     {
         return [
-            //    allowAbsolute allowRelative isAbsolute isRelative isValid expects
-            [true,         true,         true,      false,     true,   true],
-            [true,         true,         false,     true,      true,   true],
-            [false,        true,         true,      false,     true,   false],
-            [false,        true,         false,     true,      true,   true],
-            [true,         false,        true,      false,     true,   true],
-            [true,         false,        false,     true,      true,   false],
-            [false,        false,        true,      false,     true,   false],
-            [false,        false,        false,     true,      true,   false],
-            [true,         true,         false,     false,     false,  false],
+            // Uri, allowAbsolute, allowRelative, isValid, errorKey
+            // Empty String
+            ['', true,         true,         false,  Uri::INVALID],
+            ['', true,         false,        false,  Uri::INVALID],
+            ['', false,        true,         false,  Uri::INVALID],
+            ['https://www.example.com/foo', true, true, true, null],
+            ['https://www.example.com/foo', false, true, false, Uri::NOT_RELATIVE],
+            ['ftp://www.example.com/foo', true, true, true, null],
+            ['ftp://www.example.com/foo', false, true, false, Uri::NOT_RELATIVE],
+            ['/foo', true, false, false, Uri::NOT_ABSOLUTE],
+            ['/foo', true, true, true, null],
+            ['https:///baz', true, true, false, Uri::NOT_URI],
         ];
     }
 
     #[DataProvider('allowOptionsDataProvider')]
     public function testUriHandlerBehaviorWithAllowSettings(
+        string $uri,
         bool $allowAbsolute,
         bool $allowRelative,
-        bool $isAbsolute,
-        bool $isRelative,
         bool $isValid,
-        bool $expects
+        string|null $expectError,
     ): void {
-        $uriMock = $this->getMockBuilder(UriHandler::class)
-            ->setConstructorArgs(['parse', 'isValid', 'isAbsolute', 'isValidRelative'])
-            ->getMock();
+        $validator = new Uri([
+            'allowAbsolute' => $allowAbsolute,
+            'allowRelative' => $allowRelative,
+        ]);
 
-        $uriMock
-            ->expects(self::once())
-            ->method('isValid')
-            ->willReturn($isValid);
-
-        $uriMock
-            ->expects(self::any())
-            ->method('isAbsolute')
-            ->willReturn($isAbsolute);
-
-        $uriMock
-            ->expects(self::any())
-            ->method('isValidRelative')
-            ->willReturn($isRelative);
-
-        $this->validator
-            ->setUriHandler($uriMock)
-            ->setAllowAbsolute($allowAbsolute)
-            ->setAllowRelative($allowRelative);
-
-        self::assertSame($expects, $this->validator->isValid('uri'));
-    }
-
-    public function testUriHandlerThrowsExceptionInParseMethodNotValid(): void
-    {
-        $uriMock = $this->createMock(UriHandler::class);
-        $uriMock
-            ->expects(self::once())
-            ->method('parse')
-            ->willThrowException(new InvalidArgumentException());
-
-        $this->validator->setUriHandler($uriMock);
-
-        self::assertFalse($this->validator->isValid('uri'));
+        self::assertSame($isValid, $validator->isValid($uri));
+        if (! $isValid) {
+            self::assertNotNull($expectError, 'Expected an error key from the data provider');
+            self::assertArrayHasKey($expectError, $validator->getMessages());
+        }
     }
 
     /**
@@ -179,47 +107,12 @@ final class UriTest extends TestCase
             [
                 Uri::INVALID,
                 Uri::NOT_URI,
+                Uri::NOT_ABSOLUTE,
+                Uri::NOT_RELATIVE,
             ],
-            array_keys($this->validator->getMessageTemplates())
+            array_keys($this->validator->getMessageTemplates()),
         );
         self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
-    }
-
-    public function testUriHandlerCanBeSpecifiedAsString(): void
-    {
-        $this->validator->setUriHandler(Http::class);
-
-        self::assertInstanceOf(Http::class, $this->validator->getUriHandler());
-    }
-
-    public function testUriHandlerStringInvalidClassThrowsException(): void
-    {
-        $this->expectException(ValidatorInvalidArgumentException::class);
-        /** @psalm-suppress InvalidArgument */
-        $this->validator->setUriHandler(stdClass::class);
-    }
-
-    public function testUriHandlerInvalidTypeThrowsException(): void
-    {
-        $this->expectException(ValidatorInvalidArgumentException::class);
-        /** @psalm-suppress InvalidArgument */
-        $this->validator->setUriHandler(new stdClass());
-    }
-
-    public function testConstructUriHandlerStringInvalidClassThrowsException(): void
-    {
-        $this->expectException(ValidatorInvalidArgumentException::class);
-        $this->expectExceptionMessage('Expecting a subclass name or instance of Laminas\Uri\Uri as $uriHandler');
-        /** @psalm-suppress InvalidArgument */
-        new Uri(stdClass::class, false, false);
-    }
-
-    public function testConstructUriHandlerInvalidTypeThrowsException(): void
-    {
-        $this->expectException(ValidatorInvalidArgumentException::class);
-        $this->expectExceptionMessage('Expecting a subclass name or instance of Laminas\Uri\Uri as $uriHandler');
-
-        new Uri(new stdClass(), false, false);
     }
 
     /**
@@ -235,8 +128,8 @@ final class UriTest extends TestCase
             'int'        => [1],
             'zero-float' => [0.0],
             'float'      => [1.1],
-            'array'      => [['http://example.com']],
-            'object'     => [(object) ['uri' => 'http://example.com']],
+            'array'      => [['https://example.com']],
+            'object'     => [(object) ['uri' => 'https://example.com']],
         ];
     }
 

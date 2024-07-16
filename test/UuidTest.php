@@ -9,9 +9,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-/**
- * Uuid test cases based on https://github.com/beberlei/assert/blob/master/tests/Assert/Tests/AssertTest.php
- */
 final class UuidTest extends TestCase
 {
     private Uuid $validator;
@@ -46,23 +43,25 @@ final class UuidTest extends TestCase
     }
 
     /**
-     * @psalm-return array<string, array{string}>
+     * @psalm-return array<string, array{0: string}>
      */
     public static function validUuidProvider(): array
     {
         return [
             'zero-fill' => ['00000000-0000-0000-0000-000000000000'],
-            'version-1' => ['ff6f8cb0-c57d-11e1-9b21-0800200c9a66'],
-            'version-2' => ['ff6f8cb0-c57d-21e1-9b21-0800200c9a66'],
-            'version-3' => ['ff6f8cb0-c57d-31e1-9b21-0800200c9a66'],
-            'version-4' => ['ff6f8cb0-c57d-41e1-9b21-0800200c9a66'],
-            'version-5' => ['ff6f8cb0-c57d-51e1-9b21-0800200c9a66'],
+            'version-1' => ['74f941b0-3083-11ef-9a10-ee9df49b771c'],
+            'version-2' => ['00000014-3083-21ef-bd01-ee9df49b771c'],
+            'version-3' => ['9bbcc896-cd1f-3f0c-869b-d0e039ed363d'],
+            'version-4' => ['b2e6a6ac-5efe-4f45-8210-147ff417da2e'],
+            'version-5' => ['de560e31-bef7-589b-82b6-449f06ee38db'],
+            'version-6' => ['1ef30837-4fa1-6b12-995a-ee9df49b771c'],
+            'version-7' => ['01903f85-fa15-7095-ab0a-e250c9310140'],
             'uppercase' => ['FF6F8CB0-C57D-11E1-9B21-0800200C9A66'],
         ];
     }
 
     /**
-     * @psalm-return array<string, array{string|int|stdClass, string}>
+     * @psalm-return array<string, array{0: mixed, 1: string}>
      */
     public static function invalidUuidProvider(): array
     {

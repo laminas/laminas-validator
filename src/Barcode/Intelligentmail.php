@@ -1,19 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Barcode;
 
-/** @final */
-class Intelligentmail extends AbstractAdapter
+use function in_array;
+use function is_numeric;
+use function strlen;
+
+final class Intelligentmail implements AdapterInterface
 {
-    /**
-     * Constructor
-     *
-     * Sets check flag to false.
-     */
-    public function __construct()
+    private const LENGTH = [20, 25, 29, 31];
+
+    public function hasValidLength(string $value): bool
     {
-        $this->setLength([20, 25, 29, 31]);
-        $this->setCharacters('0123456789');
-        $this->useChecksum(false);
+        return in_array(strlen($value), self::LENGTH, true);
+    }
+
+    public function hasValidCharacters(string $value): bool
+    {
+        return is_numeric($value);
+    }
+
+    public function hasValidChecksum(string $value): bool
+    {
+        return true;
+    }
+
+    public function getLength(): array
+    {
+        return self::LENGTH;
     }
 }

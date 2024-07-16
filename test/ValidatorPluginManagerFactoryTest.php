@@ -10,7 +10,6 @@ use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
 use Laminas\Validator\ValidatorPluginManagerFactory;
 use LaminasTest\Validator\TestAsset\InMemoryContainer;
-use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 
 final class ValidatorPluginManagerFactoryTest extends TestCase
@@ -18,42 +17,9 @@ final class ValidatorPluginManagerFactoryTest extends TestCase
     public function testFactoryReturnsPluginManager(): void
     {
         $factory    = new ValidatorPluginManagerFactory();
-        $validators = $factory(new InMemoryContainer(), ValidatorPluginManagerFactory::class);
+        $validators = $factory(new InMemoryContainer());
 
         self::assertInstanceOf(ValidatorPluginManager::class, $validators);
-    }
-
-    #[Depends('testFactoryReturnsPluginManager')]
-    public function testFactoryConfiguresPluginManagerUnderContainerInterop(): void
-    {
-        $validator = $this->createMock(ValidatorInterface::class);
-
-        $factory    = new ValidatorPluginManagerFactory();
-        $validators = $factory(new InMemoryContainer(), ValidatorPluginManagerFactory::class, [
-            'services' => [
-                'test' => $validator,
-            ],
-        ]);
-
-        self::assertSame($validator, $validators->get('test'));
-    }
-
-    #[Depends('testFactoryReturnsPluginManager')]
-    public function testFactoryConfiguresPluginManagerUnderServiceManagerV2(): void
-    {
-        $container = $this->createMock(ServiceLocatorInterface::class);
-        $validator = $this->createMock(ValidatorInterface::class);
-
-        $factory = new ValidatorPluginManagerFactory();
-        $factory->setCreationOptions([
-            'services' => [
-                'test' => $validator,
-            ],
-        ]);
-
-        $validators = $factory->createService($container);
-
-        self::assertSame($validator, $validators->get('test'));
     }
 
     public function testConfiguresValidatorServicesWhenFound(): void
@@ -74,7 +40,7 @@ final class ValidatorPluginManagerFactoryTest extends TestCase
         $container->set('config', $config);
 
         $factory    = new ValidatorPluginManagerFactory();
-        $validators = $factory($container, 'ValidatorManager');
+        $validators = $factory($container);
 
         self::assertInstanceOf(ValidatorPluginManager::class, $validators);
         self::assertTrue($validators->has('test'));
@@ -99,7 +65,7 @@ final class ValidatorPluginManagerFactoryTest extends TestCase
             ->with('config');
 
         $factory    = new ValidatorPluginManagerFactory();
-        $validators = $factory($container, 'ValidatorManager');
+        $validators = $factory($container);
 
         self::assertInstanceOf(ValidatorPluginManager::class, $validators);
         self::assertFalse($validators->has('test'));
@@ -110,7 +76,7 @@ final class ValidatorPluginManagerFactoryTest extends TestCase
     {
         $container  = new InMemoryContainer();
         $factory    = new ValidatorPluginManagerFactory();
-        $validators = $factory($container, 'ValidatorManager');
+        $validators = $factory($container);
 
         self::assertInstanceOf(ValidatorPluginManager::class, $validators);
     }
@@ -120,7 +86,7 @@ final class ValidatorPluginManagerFactoryTest extends TestCase
         $container = new InMemoryContainer();
         $container->set('config', ['foo' => 'bar']);
         $factory    = new ValidatorPluginManagerFactory();
-        $validators = $factory($container, 'ValidatorManager');
+        $validators = $factory($container);
 
         self::assertInstanceOf(ValidatorPluginManager::class, $validators);
         self::assertFalse($validators->has('foo'));

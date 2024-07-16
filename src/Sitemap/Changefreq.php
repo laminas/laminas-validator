@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Sitemap;
 
 use Laminas\Validator\AbstractValidator;
@@ -10,11 +12,9 @@ use function is_string;
 /**
  * Validates whether a given value is valid as a sitemap <changefreq> value
  *
- * @link       http://www.sitemaps.org/protocol.php Sitemaps XML format
- *
- * @final
+ * @link https://www.sitemaps.org/protocol.html Sitemaps XML format
  */
-class Changefreq extends AbstractValidator
+final class Changefreq extends AbstractValidator
 {
     /**
      * Validation key for not valid
@@ -25,9 +25,9 @@ class Changefreq extends AbstractValidator
     /**
      * Validation failure message template definitions
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::NOT_VALID => 'The input is not a valid sitemap changefreq',
         self::INVALID   => 'Invalid type given. String expected',
     ];
@@ -35,9 +35,9 @@ class Changefreq extends AbstractValidator
     /**
      * Valid change frequencies
      *
-     * @var array
+     * @var list<string>
      */
-    protected $changeFreqs = [
+    private array $changeFreqs = [
         'always',
         'hourly',
         'daily',
@@ -50,12 +50,9 @@ class Changefreq extends AbstractValidator
     /**
      * Validates if a string is valid as a sitemap changefreq
      *
-     * @link http://www.sitemaps.org/protocol.php#changefreqdef <changefreq>
-     *
-     * @param  string  $value  value to validate
-     * @return bool
+     * @link https://www.sitemaps.org/protocol.html#changefreqdef
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if (! is_string($value)) {
             $this->error(self::INVALID);

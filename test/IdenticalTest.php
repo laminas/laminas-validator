@@ -4,105 +4,50 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator;
 
-use Laminas\Stdlib\Parameters;
-use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Identical;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
-use stdClass;
-
-use function array_keys;
 
 final class IdenticalTest extends TestCase
 {
-    private Identical $validator;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->validator = new Identical();
-    }
-
-    public function testTokenInitiallyNull(): void
-    {
-        self::assertNull($this->validator->getToken());
-    }
-
-    public function testCanSetToken(): void
-    {
-        $this->testTokenInitiallyNull();
-
-        $this->validator->setToken('foo');
-
-        self::assertSame('foo', $this->validator->getToken());
-    }
-
-    public function testCanSetTokenViaConstructor(): void
-    {
-        $validator = new Identical('foo');
-
-        self::assertSame('foo', $validator->getToken());
-    }
-
     public function testValidatingWhenTokenNullReturnsFalse(): void
     {
-        self::assertFalse($this->validator->isValid('foo'));
-    }
-
-    public function testValidatingWhenTokenNullSetsMissingTokenMessage(): void
-    {
-        $this->testValidatingWhenTokenNullReturnsFalse();
-
-        $messages = $this->validator->getMessages();
-
-        self::assertArrayHasKey('missingToken', $messages);
+        $validator = new Identical();
+        self::assertFalse($validator->isValid('foo'));
+        self::assertArrayHasKey(Identical::MISSING_TOKEN, $validator->getMessages());
     }
 
     public function testValidatingAgainstTokenWithNonMatchingValueReturnsFalse(): void
     {
-        $this->validator->setToken('foo');
-
-        self::assertFalse($this->validator->isValid('bar'));
-    }
-
-    public function testValidatingAgainstTokenWithNonMatchingValueSetsNotSameMessage(): void
-    {
-        $this->testValidatingAgainstTokenWithNonMatchingValueReturnsFalse();
-
-        $messages = $this->validator->getMessages();
-
-        self::assertArrayHasKey('notSame', $messages);
+        $validator = new Identical(['token' => 'foo']);
+        self::assertFalse($validator->isValid('bar'));
+        self::assertArrayHasKey(Identical::NOT_SAME, $validator->getMessages());
     }
 
     public function testValidatingAgainstTokenWithMatchingValueReturnsTrue(): void
     {
-        $this->validator->setToken('foo');
-
-        self::assertTrue($this->validator->isValid('foo'));
+        $validator = new Identical(['token' => 'foo']);
+        self::assertTrue($validator->isValid('foo'));
     }
 
     #[Group('Laminas-6953')]
     public function testValidatingAgainstEmptyToken(): void
     {
-        $this->validator->setToken('');
-
-        self::assertTrue($this->validator->isValid(''));
+        $validator = new Identical(['token' => '']);
+        self::assertTrue($validator->isValid(''));
     }
 
     #[Group('Laminas-7128')]
     public function testValidatingAgainstNonStrings(): void
     {
-        $this->validator->setToken(true);
+        $validator = new Identical(['token' => true]);
+        self::assertTrue($validator->isValid(true));
+        self::assertFalse($validator->isValid(1));
 
-        self::assertTrue($this->validator->isValid(true));
-        self::assertFalse($this->validator->isValid(1));
+        $validator = new Identical(['token' => ['one' => 'two', 'three']]);
 
-        $this->validator->setToken(['one' => 'two', 'three']);
-
-        self::assertTrue($this->validator->isValid(['one' => 'two', 'three']));
-        self::assertFalse($this->validator->isValid([]));
+        self::assertTrue($validator->isValid(['one' => 'two', 'three']));
+        self::assertFalse($validator->isValid([]));
     }
 
     public function testValidatingTokenArray(): void
@@ -116,74 +61,37 @@ final class IdenticalTest extends TestCase
     public function testValidatingNonStrictToken(): void
     {
         $validator = new Identical(['token' => 123, 'strict' => false]);
-
         self::assertTrue($validator->isValid('123'));
 
-        $validator->setStrict(true);
-
-        self::assertFalse($validator->isValid(['token' => '123']));
-    }
-
-    public function testEqualsMessageTemplates(): void
-    {
-        self::assertSame(
-            [
-                Identical::NOT_SAME,
-                Identical::MISSING_TOKEN,
-            ],
-            array_keys($this->validator->getMessageTemplates())
-        );
-        self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
-    }
-
-    public function testEqualsMessageVariables(): void
-    {
-        $messageVariables = ['token' => 'tokenString'];
-
-        self::assertSame($messageVariables, $this->validator->getOption('messageVariables'));
-        self::assertSame(array_keys($messageVariables), $this->validator->getMessageVariables());
+        $validator = new Identical(['token' => 123, 'strict' => true]);
+        self::assertFalse($validator->isValid('123'));
     }
 
     public function testValidatingStringTokenInContext(): void
     {
-        $this->validator->setToken('email');
+        $validator = new Identical(['token' => 'email']);
 
-        self::assertTrue($this->validator->isValid(
+        self::assertTrue($validator->isValid(
             'john@doe.com',
             ['email' => 'john@doe.com']
         ));
 
-        self::assertFalse($this->validator->isValid(
+        self::assertFalse($validator->isValid(
             'john@doe.com',
             ['email' => 'harry@hoe.com']
         ));
 
-        self::assertFalse($this->validator->isValid(
+        self::assertFalse($validator->isValid(
             'harry@hoe.com',
             ['email' => 'john@doe.com']
-        ));
-
-        self::assertTrue($this->validator->isValid(
-            'john@doe.com',
-            new Parameters(['email' => 'john@doe.com'])
-        ));
-
-        self::assertFalse($this->validator->isValid(
-            'john@doe.com',
-            new Parameters(['email' => 'harry@hoe.com'])
-        ));
-
-        self::assertFalse($this->validator->isValid(
-            'harry@hoe.com',
-            new Parameters(['email' => 'john@doe.com'])
         ));
     }
 
     public function testValidatingArrayTokenInContext(): void
     {
-        $this->validator->setToken(['user' => 'email']);
+        $validator = new Identical(['token' => ['user' => 'email']]);
 
-        self::assertTrue($this->validator->isValid(
+        self::assertTrue($validator->isValid(
             'john@doe.com',
             [
                 'user' => [
@@ -192,7 +100,7 @@ final class IdenticalTest extends TestCase
             ]
         ));
 
-        self::assertFalse($this->validator->isValid(
+        self::assertFalse($validator->isValid(
             'john@doe.com',
             [
                 'user' => [
@@ -201,7 +109,7 @@ final class IdenticalTest extends TestCase
             ]
         ));
 
-        self::assertFalse($this->validator->isValid(
+        self::assertFalse($validator->isValid(
             'harry@hoe.com',
             [
                 'user' => [
@@ -209,84 +117,35 @@ final class IdenticalTest extends TestCase
                 ],
             ]
         ));
-
-        self::assertTrue($this->validator->isValid(
-            'john@doe.com',
-            new Parameters([
-                'user' => [
-                    'email' => 'john@doe.com',
-                ],
-            ])
-        ));
-
-        self::assertFalse($this->validator->isValid(
-            'john@doe.com',
-            new Parameters([
-                'user' => [
-                    'email' => 'harry@hoe.com',
-                ],
-            ])
-        ));
-
-        self::assertFalse($this->validator->isValid(
-            'harry@hoe.com',
-            new Parameters([
-                'user' => [
-                    'email' => 'john@doe.com',
-                ],
-            ])
-        ));
-    }
-
-    public function testCanSetLiteralParameterThroughConstructor(): void
-    {
-        $validator = new Identical(['token' => 'foo', 'literal' => true]);
-        // Default is false
-        $validator->setLiteral(true);
-
-        self::assertTrue($validator->getLiteral());
     }
 
     public function testLiteralParameterDoesNotAffectValidationWhenNoContextIsProvided(): void
     {
-        $this->validator->setToken(['foo' => 'bar']);
-        $this->validator->setLiteral(false);
+        $validator = new Identical([
+            'token'   => ['foo' => 'bar'],
+            'literal' => false,
+        ]);
 
-        self::assertTrue($this->validator->isValid(['foo' => 'bar']));
+        self::assertTrue($validator->isValid(['foo' => 'bar']));
 
-        $this->validator->setLiteral(true);
+        $validator = new Identical([
+            'token'   => ['foo' => 'bar'],
+            'literal' => true,
+        ]);
 
-        self::assertTrue($this->validator->isValid(['foo' => 'bar']));
+        self::assertTrue($validator->isValid(['foo' => 'bar']));
     }
 
     public function testLiteralParameterWorksWhenContextIsProvided(): void
     {
-        $this->validator->setToken(['foo' => 'bar']);
-        $this->validator->setLiteral(true);
+        $validator = new Identical([
+            'token'   => ['foo' => 'bar'],
+            'literal' => true,
+        ]);
 
-        self::assertTrue($this->validator->isValid(
+        self::assertTrue($validator->isValid(
             ['foo' => 'bar'],
             ['foo' => 'baz'] // Provide a context to make sure the literal parameter will work
         ));
-    }
-
-    #[DataProvider('invalidContextProvider')]
-    public function testIsValidThrowsExceptionOnInvalidContext(mixed $context): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        $this->validator->isValid('john@doe.com', $context);
-    }
-
-    /**
-     * @return mixed[][]
-     */
-    public static function invalidContextProvider(): array
-    {
-        return [
-            [false],
-            [new stdClass()],
-            ['dummy'],
-        ];
     }
 }

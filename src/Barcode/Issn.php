@@ -1,32 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Barcode;
 
+use function assert;
+use function in_array;
+use function is_numeric;
 use function str_contains;
 use function str_split;
 use function strlen;
 use function substr;
 
-/** @final */
-class Issn extends AbstractAdapter
+final class Issn implements AdapterInterface
 {
-    /**
-     * Constructor for this barcode adapter
-     */
-    public function __construct()
-    {
-        $this->setLength([8, 13]);
-        $this->setCharacters('0123456789X');
-        $this->setChecksum('gtin');
-    }
+    private const LENGTH   = [8, 13];
+    private const ALPHABET = '0123456789X';
 
     /**
      * Allows X on length of 8 chars
-     *
-     * @param  string $value The barcode to check for allowed characters
-     * @return bool
      */
-    public function hasValidCharacters($value)
+    public function hasValidCharacters(string $value): bool
     {
         if (strlen($value) !== 8) {
             if (str_contains($value, 'X')) {
@@ -34,34 +28,33 @@ class Issn extends AbstractAdapter
             }
         }
 
-        return parent::hasValidCharacters($value);
+        return Util::stringMatchesAlphabet($value, self::ALPHABET);
     }
 
-    /**
-     * Validates the checksum
-     *
-     * @param  string $value The barcode to check the checksum for
-     * @return bool
-     */
-    public function hasValidChecksum($value)
+    public function hasValidLength(string $value): bool
+    {
+        return in_array(strlen($value), self::LENGTH, true);
+    }
+
+    public function getLength(): array
+    {
+        return self::LENGTH;
+    }
+
+    public function hasValidChecksum(string $value): bool
     {
         if (strlen($value) === 8) {
-            $this->setChecksum('issn');
-        } else {
-            $this->setChecksum('gtin');
+            return self::issnCheck($value);
         }
 
-        return parent::hasValidChecksum($value);
+        return Util::gtin($value);
     }
 
     /**
      * Validates the checksum ()
      * ISSN implementation (reversed mod11)
-     *
-     * @param  string $value The barcode to validate
-     * @return bool
      */
-    protected function issn($value)
+    private static function issnCheck(string $value): bool
     {
         $checksum = substr($value, -1, 1);
         $values   = str_split(substr($value, 0, -1));
@@ -72,6 +65,7 @@ class Issn extends AbstractAdapter
                 $token = 10;
             }
 
+            assert(is_numeric($token));
             $check += $token * $multi;
             --$multi;
         }

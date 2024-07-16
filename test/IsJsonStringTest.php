@@ -51,10 +51,11 @@ class IsJsonStringTest extends TestCase
     #[DataProvider('allowProvider')]
     public function testBasicBehaviour(int $allowed, string $input, bool $expect, string|null $expectedErrorKey): void
     {
-        $validator = new IsJsonString();
-        $validator->setAllow($allowed);
-        $result = $validator->isValid($input);
-        self::assertSame($expect, $result);
+        $validator = new IsJsonString([
+            'allow' => $allowed,
+        ]);
+
+        self::assertSame($expect, $validator->isValid($input));
         if ($expectedErrorKey !== null) {
             self::assertArrayHasKey($expectedErrorKey, $validator->getMessages());
         }
@@ -87,7 +88,9 @@ class IsJsonStringTest extends TestCase
 
     public function testThatMaxDepthCanBeExceeded(): void
     {
-        $validator = new IsJsonString();
+        $validator = new IsJsonString([
+            'maxDepth' => 1,
+        ]);
         $input     = json_encode([
             'foo' => [
                 'bar' => [
@@ -96,7 +99,6 @@ class IsJsonStringTest extends TestCase
             ],
         ]);
 
-        $validator->setMaxDepth(1);
         self::assertFalse($validator->isValid($input));
         self::assertArrayHasKey(IsJsonString::ERROR_MAX_DEPTH_EXCEEDED, $validator->getMessages());
     }

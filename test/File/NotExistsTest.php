@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator\File;
 
-use Laminas\Validator\Exception\InvalidArgumentException;
+use Laminas\Diactoros\UploadedFile;
 use Laminas\Validator\File\NotExists;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -13,20 +13,18 @@ use PHPUnit\Framework\TestCase;
 use function basename;
 use function current;
 use function dirname;
-use function is_array;
+use function implode;
 
+use const UPLOAD_ERR_OK;
+
+/** @psalm-import-type OptionsArgument from NotExists */
 final class NotExistsTest extends TestCase
 {
     /**
-     * @psalm-return array<array-key, array{
-     *     0: string,
-     *     1: string|array{
-     *         tmp_name: string,
-     *         name: string,
-     *         size: int,
-     *         error: int,
-     *         type: string
-     *     },
+     * phpcs:disable Generic.Files.LineLength
+     * @psalm-return array<string, array{
+     *     0: OptionsArgument,
+     *     1: mixed,
      *     2: bool
      * }>
      */
@@ -39,125 +37,55 @@ final class NotExistsTest extends TestCase
             'tmp_name' => $testFile,
             'name'     => basename($testFile),
             'size'     => 200,
-            'error'    => 0,
+            'error'    => UPLOAD_ERR_OK,
             'type'     => 'text',
         ];
+        $psrUpload  = new UploadedFile(
+            $testFile,
+            200,
+            UPLOAD_ERR_OK,
+            'foo.txt',
+            'text/plain',
+        );
+
+        $directoryList = [
+            __DIR__,
+            __DIR__ . '/_files',
+            dirname(__DIR__),
+        ];
+
+        $csv = implode(', ', $directoryList);
 
         return [
-            //    Options, isValid Param, Expected value
-            [dirname($baseDir), $baseName,   true],
-            [$baseDir,          $baseName,   false],
-            [$baseDir,          $testFile,   false],
-            [dirname($baseDir), $fileUpload, true],
-            [$baseDir,          $fileUpload, false],
+            'String file name, not found in directory'             => [['directory' => dirname($baseDir)], $baseName, true],
+            'String file name, found in directory'                 => [['directory' => $baseDir], $baseName, false],
+            'String path, directory option irrelevant'             => [['directory' => $baseDir], $testFile, false],
+            'String path, no directory option'                     => [[], $testFile, false],
+            '$_FILES. No directory option'                         => [[], $fileUpload, false],
+            '$_FILES. Basename located in directory'               => [['directory' => $baseDir], $fileUpload, false],
+            '$_FILES. Basename not located in directory'           => [['directory' => dirname($baseDir)], $fileUpload, true],
+            'PSR. No Directory option'                             => [[], $psrUpload, false],
+            'PSR. Basename located in directory'                   => [['directory' => $baseDir], $psrUpload, false],
+            'PSR. Basename not located in directory'               => [['directory' => dirname($baseDir)], $psrUpload, true],
+            'String filename, found in one of the listed dirs'     => [['directory' => $directoryList], 'picture.jpg', false],
+            'String filename, found in CSV dirs'                   => [['directory' => $csv], 'picture.jpg', false],
+            'String filename, not found in one of the listed dirs' => [['directory' => $directoryList], 'nope.jpg', true],
+            'String filename, not found in CSV dirs'               => [['directory' => $csv], 'nope.jpg', true],
+            'Not a string, can’t exist'                            => [['directory' => __DIR__], 123, true],
         ];
     }
 
     /**
      * Ensures that the validator follows expected behavior
      *
-     * @param string|array<string, mixed> $isValidParam
+     * @param OptionsArgument $options
      */
     #[DataProvider('basicBehaviorDataProvider')]
-    public function testBasic(string $options, $isValidParam, bool $expected): void
+    public function testBasic(array $options, mixed $value, bool $expected): void
     {
         $validator = new NotExists($options);
 
-        self::assertSame($expected, $validator->isValid($isValidParam));
-    }
-
-    /**
-     * Ensures that the validator follows expected behavior for legacy Laminas\Transfer API
-     *
-     * @param string|array<string, mixed> $isValidParam
-     */
-    #[DataProvider('basicBehaviorDataProvider')]
-    public function testLegacy(string $options, $isValidParam, bool $expected): void
-    {
-        if (! is_array($isValidParam)) {
-            self::markTestSkipped('An array is expected for legacy compat tests');
-        }
-
-        $validator = new NotExists($options);
-
-        self::assertSame($expected, $validator->isValid($isValidParam['tmp_name'], $isValidParam));
-    }
-
-    /** @psalm-return array<array{string|string[], string|string[], bool}> */
-    public static function getDirectoryProvider(): array
-    {
-        return [
-            ['C:/temp', 'C:/temp', false],
-            [['temp', 'dir', 'jpg'], 'temp,dir,jpg', false],
-            [['temp', 'dir', 'jpg'], ['temp', 'dir', 'jpg'], true],
-        ];
-    }
-
-    /**
-     * Ensures that getDirectory() returns expected value
-     *
-     * @param string|string[] $directory
-     * @param string|string[] $expected
-     */
-    #[DataProvider('getDirectoryProvider')]
-    public function testGetDirectory($directory, $expected, bool $asArray): void
-    {
-        $validator = new NotExists($directory);
-
-        self::assertSame($expected, $validator->getDirectory($asArray));
-    }
-
-    /** @psalm-return array<array{string|string[], string, string[]}> */
-    public static function setDirectoryProvider(): array
-    {
-        return [
-            ['gif', 'gif', ['gif']],
-            ['jpg, temp', 'jpg,temp', ['jpg', 'temp']],
-            [['zip', 'ti'], 'zip,ti', ['zip', 'ti']],
-        ];
-    }
-
-    /**
-     * Ensures that setDirectory() returns expected value
-     *
-     * @param string|string[] $directory
-     * @param string[] $expectedAsArray
-     */
-    #[DataProvider('setDirectoryProvider')]
-    public function testSetDirectory($directory, string $expected, array $expectedAsArray): void
-    {
-        $validator = new NotExists('temp');
-        $validator->setDirectory($directory);
-
-        self::assertSame($expected, $validator->getDirectory());
-        self::assertSame($expectedAsArray, $validator->getDirectory(true));
-    }
-
-    /**
-     * Ensures that addDirectory() returns expected value
-     */
-    public function testAddDirectory(): void
-    {
-        $validator = new NotExists('temp');
-        $validator->addDirectory('gif');
-
-        self::assertSame('temp,gif', $validator->getDirectory());
-        self::assertSame(['temp', 'gif'], $validator->getDirectory(true));
-
-        $validator->addDirectory('jpg, to');
-
-        self::assertSame('temp,gif,jpg,to', $validator->getDirectory());
-        self::assertSame(['temp', 'gif', 'jpg', 'to'], $validator->getDirectory(true));
-
-        $validator->addDirectory(['zip', 'ti']);
-
-        self::assertSame('temp,gif,jpg,to,zip,ti', $validator->getDirectory());
-        self::assertSame(['temp', 'gif', 'jpg', 'to', 'zip', 'ti'], $validator->getDirectory(true));
-
-        $validator->addDirectory('');
-
-        self::assertSame('temp,gif,jpg,to,zip,ti', $validator->getDirectory());
-        self::assertSame(['temp', 'gif', 'jpg', 'to', 'zip', 'ti'], $validator->getDirectory(true));
+        self::assertSame($expected, $validator->isValid($value));
     }
 
     #[Group('Laminas-11258')]
@@ -166,48 +94,7 @@ final class NotExistsTest extends TestCase
         $validator = new NotExists();
 
         self::assertFalse($validator->isValid(__DIR__ . '/_files/testsize.mo'));
-        self::assertArrayHasKey('fileNotExistsDoesExist', $validator->getMessages());
+        self::assertArrayHasKey(NotExists::DOES_EXIST, $validator->getMessages());
         self::assertStringContainsString('File exists', current($validator->getMessages()));
-    }
-
-    public function testIsValidShouldThrowInvalidArgumentExceptionForArrayNotInFilesFormat(): void
-    {
-        $validator = new NotExists();
-        $value     = ['foo' => 'bar'];
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Value array must be in $_FILES format');
-
-        $validator->isValid($value);
-    }
-
-    /**
-     * @psalm-return array<string, array{scalar|object|null}>
-     */
-    public static function invalidDirectoryArguments(): array
-    {
-        return [
-            'null'       => [null],
-            'true'       => [true],
-            'false'      => [false],
-            'zero'       => [0],
-            'int'        => [1],
-            'zero-float' => [0.0],
-            'float'      => [1.1],
-            'object'     => [(object) []],
-        ];
-    }
-
-    /**
-     * @psalm-param scalar|object|null $value
-     */
-    #[DataProvider('invalidDirectoryArguments')]
-    public function testAddingDirectoryUsingInvalidTypeRaisesException($value): void
-    {
-        $validator = new NotExists();
-
-        $this->expectException(InvalidArgumentException::class);
-
-        $validator->addDirectory($value);
     }
 }

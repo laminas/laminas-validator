@@ -12,19 +12,16 @@ final class IsArray extends AbstractValidator
     public const NOT_ARRAY = 'NotArray';
 
     /** @var array<non-empty-string, non-empty-string> */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::NOT_ARRAY => 'Expected an array value but %type% provided',
     ];
 
     /** @var array<string, string> */
-    protected $messageVariables = [
+    protected array $messageVariables = [
         'type' => 'type',
     ];
 
     protected ?string $type = null;
-
-    /** @var array<never, never> */
-    protected $options = [];
 
     public function isValid(mixed $value): bool
     {

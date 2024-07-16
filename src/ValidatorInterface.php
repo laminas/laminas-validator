@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 /**
@@ -19,11 +21,9 @@ interface ValidatorInterface
      * getMessages() will return an array of messages that explain why the
      * validation failed.
      *
-     * @param  mixed $value
-     * @return bool
      * @throws Exception\RuntimeException If validation of $value is impossible.
      */
-    public function isValid($value);
+    public function isValid(mixed $value): bool;
 
     /**
      * Returns an array of messages that explain why the most recent isValid()

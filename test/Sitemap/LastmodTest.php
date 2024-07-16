@@ -24,7 +24,7 @@ final class LastmodTest extends TestCase
     /**
      * Tests valid change frequencies
      */
-    public function testValidChangefreqs(): void
+    public function testValidLastModTimes(): void
     {
         $values = [
             '1994-05-11T18:00:09-08:45',

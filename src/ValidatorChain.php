@@ -1,4 +1,6 @@
-<?php // phpcs:disable SlevomatCodingStandard.Namespaces.UnusedUses.UnusedUse
+<?php
+
+declare(strict_types=1);
 
 namespace Laminas\Validator;
 
@@ -19,9 +21,8 @@ use const SORT_NUMERIC;
 /**
  * @psalm-type QueueElement = array{instance: ValidatorInterface, breakChainOnFailure: bool}
  * @implements IteratorAggregate<array-key, QueueElement>
- * @final
  */
-class ValidatorChain implements Countable, IteratorAggregate, ValidatorInterface
+final class ValidatorChain implements Countable, IteratorAggregate, ValidatorInterface
 {
     /**
      * Default priority at which validators are added
@@ -104,7 +105,7 @@ class ValidatorChain implements Countable, IteratorAggregate, ValidatorInterface
     public function plugin($name, ?array $options = null)
     {
         $plugins = $this->getPluginManager();
-        return $plugins->get($name, $options);
+        return $plugins->build($name, $options);
     }
 
     /**
@@ -241,11 +242,9 @@ class ValidatorChain implements Countable, IteratorAggregate, ValidatorInterface
      *
      * Validators are run in the order in which they were added to the chain (FIFO).
      *
-     * @param  mixed $value
      * @param  mixed $context Extra "context" to provide the validator
-     * @return bool
      */
-    public function isValid($value, $context = null)
+    public function isValid(mixed $value, $context = null): bool
     {
         $this->messages = [];
         $result         = true;

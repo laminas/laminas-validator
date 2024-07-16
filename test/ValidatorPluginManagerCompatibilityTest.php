@@ -4,33 +4,70 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator;
 
+use Laminas\ServiceManager\AbstractSingleInstancePluginManager;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\ServiceManager\Test\CommonPluginManagerTrait;
+use Laminas\Validator\Barcode;
+use Laminas\Validator\Bitwise;
+use Laminas\Validator\Callback;
 use Laminas\Validator\DateComparison;
-use Laminas\Validator\Exception\RuntimeException;
+use Laminas\Validator\Explode;
+use Laminas\Validator\File\ExcludeExtension;
+use Laminas\Validator\File\ExcludeMimeType;
+use Laminas\Validator\File\Extension;
+use Laminas\Validator\File\FilesSize;
+use Laminas\Validator\File\Hash;
+use Laminas\Validator\File\ImageSize;
+use Laminas\Validator\File\MimeType;
+use Laminas\Validator\File\Size;
+use Laminas\Validator\File\WordCount;
+use Laminas\Validator\InArray;
+use Laminas\Validator\IsInstanceOf;
 use Laminas\Validator\NumberComparison;
+use Laminas\Validator\Regex;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
 use PHPUnit\Framework\TestCase;
-use ReflectionProperty;
+use ReflectionClass;
 
 use function assert;
+use function in_array;
 use function is_string;
-use function method_exists;
-use function strpos;
 
+/** @psalm-import-type ServiceManagerConfiguration from ServiceManager */
 final class ValidatorPluginManagerCompatibilityTest extends TestCase
 {
     use CommonPluginManagerTrait;
 
-    protected static function getPluginManager(): ValidatorPluginManager
-    {
-        return new ValidatorPluginManager(new ServiceManager());
-    }
+    private const SKIP_VALIDATORS = [
+        Barcode::class,
+        ExcludeExtension::class,
+        Extension::class,
+        FilesSize::class,
+        Regex::class,
+        Bitwise::class,
+        Explode::class,
+        Callback::class,
+        DateComparison::class,
+        NumberComparison::class,
+        IsInstanceOf::class,
+        InArray::class,
+        MimeType::class,
+        ExcludeMimeType::class,
+        Size::class,
+        WordCount::class,
+        ImageSize::class,
+        Hash::class,
+    ];
 
-    protected function getV2InvalidPluginException(): string
+    /**
+     * Returns the plugin manager to test
+     *
+     * @param ServiceManagerConfiguration $config
+     */
+    protected static function getPluginManager(array $config = []): AbstractSingleInstancePluginManager
     {
-        return RuntimeException::class;
+        return new ValidatorPluginManager(new ServiceManager(), $config);
     }
 
     protected function getInstanceOf(): string
@@ -41,65 +78,19 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
     /** @return array<string, array{0: string, 1: string}> */
     public static function aliasProvider(): array
     {
-        $out               = [];
-        $pluginManager     = self::getPluginManager();
-        $isV2PluginManager = method_exists($pluginManager, 'validatePlugin');
+        $class  = new ReflectionClass(ValidatorPluginManager::class);
+        $config = $class->getConstant('DEFAULT_CONFIGURATION');
+        self::assertIsArray($config);
+        self::assertIsArray($config['aliases'] ?? null);
 
-        $r       = new ReflectionProperty($pluginManager, 'aliases');
-        $aliases = $r->getValue($pluginManager);
-        self::assertIsArray($aliases);
+        $out = [];
 
-        foreach ($aliases as $alias => $target) {
+        foreach ($config['aliases'] as $alias => $target) {
             assert(is_string($target));
             assert(is_string($alias));
 
             // Skipping due to required options
-            if (strpos($target, '\\Barcode') !== false) {
-                continue;
-            }
-
-            // Skipping due to required options
-            if (strpos($target, '\\Between') !== false) {
-                continue;
-            }
-
-            // Skipping on v2 releases of service manager
-            if ($isV2PluginManager && strpos($target, '\\BusinessIdentifierCode') !== false) {
-                continue;
-            }
-
-            // Skipping due to required options
-            if (strpos($target, '\\Db\\') !== false) {
-                continue;
-            }
-
-            // Skipping due to required options
-            if (strpos($target, '\\File\\ExcludeExtension') !== false) {
-                continue;
-            }
-
-            // Skipping due to required options
-            if (strpos($target, '\\File\\Extension') !== false) {
-                continue;
-            }
-
-            // Skipping due to required options
-            if (strpos($target, '\\File\\FilesSize') !== false) {
-                continue;
-            }
-
-            // Skipping due to required options
-            if (strpos($target, '\\Regex') !== false) {
-                continue;
-            }
-
-            // Skipping due to required options
-            if ($target === DateComparison::class) {
-                continue;
-            }
-
-            // Skipping due to required options
-            if ($target === NumberComparison::class) {
+            if (in_array($target, self::SKIP_VALIDATORS, true)) {
                 continue;
             }
 

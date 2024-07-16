@@ -24,46 +24,19 @@ final class IsCountableTest extends TestCase
     public static function conflictingOptionsProvider(): array
     {
         return [
-            'count-min' => [['count' => 10, 'min' => 1]],
-            'count-max' => [['count' => 10, 'max' => 10]],
+            'count-min'     => [['count' => 10, 'min' => 1]],
+            'count-max'     => [['count' => 10, 'max' => 10]],
+            'invalid range' => [['min' => 20, 'max' => 10]],
         ];
     }
 
+    /** @param OptionsArgument $options */
     #[DataProvider('conflictingOptionsProvider')]
     public function testConstructorRaisesExceptionWhenProvidedConflictingOptions(array $options): void
     {
         $this->expectException(Exception\InvalidArgumentException::class);
-        $this->expectExceptionMessage('conflicts');
 
         new IsCountable($options);
-    }
-
-    /**
-     * @psalm-return array<string, array{0: OptionsArgument, 1: OptionsArgument}>
-     */
-    public static function conflictingSecondaryOptionsProvider(): array
-    {
-        return [
-            'count-min' => [['count' => 10], ['min' => 1]],
-            'count-max' => [['count' => 10], ['max' => 10]],
-        ];
-    }
-
-    /**
-     * @param OptionsArgument $originalOptions
-     * @param OptionsArgument $secondaryOptions
-     */
-    #[DataProvider('conflictingSecondaryOptionsProvider')]
-    public function testSetOptionsRaisesExceptionWhenProvidedOptionConflictingWithCurrentSettings(
-        array $originalOptions,
-        array $secondaryOptions
-    ): void {
-        $validator = new IsCountable($originalOptions);
-
-        $this->expectException(Exception\InvalidArgumentException::class);
-        $this->expectExceptionMessage('conflicts');
-
-        $validator->setOptions($secondaryOptions);
     }
 
     public function testArrayIsValid(): void
@@ -122,15 +95,15 @@ final class IsCountableTest extends TestCase
         ]);
 
         self::assertFalse($sut->isValid(['Foo']));
-        self::assertCount(1, $sut->getMessages());
+        self::assertArrayHasKey(IsCountable::NOT_EQUALS, $sut->getMessages());
     }
 
     public function testInvalidType(): void
     {
-        $sut = new IsCountable();
+        $sut = new IsCountable(['count' => 99]);
 
         self::assertFalse($sut->isValid(new stdClass()));
-        self::assertCount(1, $sut->getMessages());
+        self::assertArrayHasKey(IsCountable::NOT_COUNTABLE, $sut->getMessages());
     }
 
     public function testInvalidExceedsMax(): void
@@ -140,7 +113,7 @@ final class IsCountableTest extends TestCase
         ]);
 
         self::assertFalse($sut->isValid(['Foo', 'Bar']));
-        self::assertCount(1, $sut->getMessages());
+        self::assertArrayHasKey(IsCountable::GREATER_THAN, $sut->getMessages());
     }
 
     public function testInvalidExceedsMin(): void
@@ -150,6 +123,6 @@ final class IsCountableTest extends TestCase
         ]);
 
         self::assertFalse($sut->isValid(['Foo']));
-        self::assertCount(1, $sut->getMessages());
+        self::assertArrayHasKey(IsCountable::LESS_THAN, $sut->getMessages());
     }
 }
