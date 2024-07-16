@@ -577,8 +577,8 @@ final class HostnameTest extends TestCase
             sprintf(
                 '%s failed validation: %s',
                 $value,
-                implode("\n", $this->validator->getMessages())
-            )
+                implode("\n", $this->validator->getMessages()),
+            ),
         );
     }
 
@@ -647,7 +647,7 @@ final class HostnameTest extends TestCase
                 Hostname::UNDECIPHERABLE_TLD,
                 Hostname::UNKNOWN_TLD,
             ],
-            array_keys($this->validator->getMessageTemplates())
+            array_keys($this->validator->getMessageTemplates()),
         );
         self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
@@ -693,5 +693,10 @@ final class HostnameTest extends TestCase
     public function testValidHostnameWithPunyEncodedDomainPart(): void
     {
         self::assertTrue($this->validator->isValid('xn--gld-sna.de'));
+    }
+
+    public function testValidDKIMHostName(): void
+    {
+        self::assertTrue($this->validator->isValid('selector._domainkey.example.com'));
     }
 }
