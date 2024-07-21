@@ -22,7 +22,34 @@ There are a number of aliases left over from early versions of Service Manager w
 
 The [`laminas-i18n`](https://docs.laminas.dev/laminas-i18n/validators/introduction/) component ships a number of validators that historically have been pre-configured from within this component. These aliases and factory entries have been removed.
 
-[Removal of the aliases](https://github.com/laminas/laminas-validator/commit/5bbfe8baeba48f3b77c909a8d6aa930c1d2897b7) here is unlikely to cause any issues, providing you have enabled the `ConfigProvider` or `Module` from `laminas-i18n` in your application. 
+[Removal of the aliases](https://github.com/laminas/laminas-validator/commit/5bbfe8baeba48f3b77c909a8d6aa930c1d2897b7) here is unlikely to cause any issues, providing you have enabled the `ConfigProvider` or `Module` from `laminas-i18n` in your application.
+
+### Required Options at Construction Time
+
+A number of validators now require options during construction now that runtime mutation of validator settings is no longer possible _(Described in ['General Changes'](#general-changes) below)_.
+
+Validators that require options will now throw an exception when the relevant option is not provided. For example, the [`Regex` validator](#laminasvalidatorregex) requires a `pattern` option.
+
+The affected validators are:
+
+- `Laminas\Validator\Barcode`
+- `Laminas\Validator\Bitwise`
+- `Laminas\Validator\Callback`
+- `Laminas\Validator\DateComparison`
+- `Laminas\Validator\Explode`
+- `Laminas\Validator\InArray`
+- `Laminas\Validator\IsInstanceOf`
+- `Laminas\Validator\NumberComparison`
+- `Laminas\Validator\Regex`
+- `Laminas\Validator\File\ExcludeExtension`
+- `Laminas\Validator\File\ExcludeMimeType`
+- `Laminas\Validator\File\Extension`
+- `Laminas\Validator\File\FilesSize`
+- `Laminas\Validator\File\Hash`
+- `Laminas\Validator\File\ImageSize`
+- `Laminas\Validator\File\MimeType`
+- `Laminas\Validator\File\Size`
+- `Laminas\Validator\File\WordCount`
 
 ## Changes to Individual Validators
 
@@ -110,6 +137,39 @@ The following methods have been removed:
 Behaviour changes:
 
 - The constructor now only accepts an associative array of [documented options](../validators/credit-card.md).
+
+### `Laminas\Validator\Date`
+
+The following methods have been removed:
+
+- `getFormat`
+- `setFormat`
+- `isStrict`
+- `setStrict`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/date.md).
+
+### `Laminas\Validator\DateStep`
+
+The following methods have been removed:
+
+- `getFormat`
+- `setFormat`
+- `isStrict`
+- `setStrict`
+- `getBaseValue`
+- `setBaseValue`
+- `getStep`
+- `setStep`
+- `getTimezone`
+- `setTimezone`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array.
+- The default format has changed to use `DateTimeInterface::ATOM` instead of the deprecated `DateTimeInterface::ISO8601`
 
 ### `Laminas\Validator\Digits`
 
@@ -237,6 +297,55 @@ Behaviour changes:
 - The `separator` option has been removed. Instead of requiring users to provide the expected separator, all valid separators are now stripped from the input prior to validation. With the default option for auto-detection of ISBN-10 and ISBN-13 formats, the validator is greatly simplified at the point of use.
 - Previously, the classes `Laminas\Validator\Isbn\Isbn10` and `Laminas\Validator\Isbn\Isbn13` were used to validate each format. The code in these classes is now inlined inside the validator so these classes have been removed. 
 
+### `Laminas\Validator\IsCountable`
+
+The following methods have been removed:
+
+- `getCount`
+- `setCount`
+- `getMin`
+- `setMin`
+- `getMax`
+- `setMax`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/is-countable.md).
+
+### `Laminas\Validator\IsInstanceOf`
+
+The following methods have been removed:
+
+- `getClassName`
+- `setClassName`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/isinstanceof.md).
+
+### `Laminas\Validator\IsJsonString`
+
+The following methods have been removed:
+
+- `setAllow`
+- `setMaxDepth`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/is-json-string.md).
+
+### `Laminas\Validator\NotEmpty`
+
+The following methods have been removed:
+
+- `getType`
+- `setType`
+- `getDefaultType`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/not-empty.md).
+
 ### `Laminas\Validator\Regex`
 
 The following methods have been removed:
@@ -249,6 +358,19 @@ Behaviour changes:
 - Non string input will now fail validation. Previously, scalars would be cast to string before pattern validation leading to possible bugs, for example, floating point numbers could be cast to scientific notation.
 - Now the pattern is a required option in the constructor, an invalid pattern will cause an exception during `__construct` instead of during validation.
 - The single constructor argument must now be either an associative array of options, or the regex pattern as a string.
+
+### `Laminas\Validator\Step`
+
+The following methods have been removed:
+
+- `setBaseValue`
+- `getBaseValue`
+- `setStep`
+- `getStep`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/step.md).
 
 ### `Laminas\Validator\StringLength`
 
@@ -281,6 +403,164 @@ Behaviour changes:
 - The constructor now only accepts an associative array of documented options
 - The `type` option can now only be one of the type constants declared on the class, i.e. `Timezone::ABBREVIATION`, `Timezone::LOCATION`, or `Timezone::ALL`
 - When validating timezone abbreviations, the check is now case-insensitive, so `CET` will pass validation when previously it did not.
+
+### `Laminas\Validator\Uri`
+
+The following methods have been removed:
+
+- `setUriHandler`
+- `getUriHandler`
+- `setAllowAbsolute`
+- `getAllowAbsolute`
+- `setAllowRelative`
+- `getAllowRelative`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/uri.md).
+
+### `Laminas\Validator\File\Count`
+
+The following methods have been removed:
+
+- `getMin`
+- `setMin`
+- `getMax`
+- `setMax`
+- `addFile`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/file/count.md)
+- Compatibility with the legacy `Laminas\File\Transfer` api has been removed
+
+### `Laminas\Validator\File\ExcludeExtension` and `Laminas\Validator\File\Extension`
+
+`ExcludeExtension` no longer inherits from the `Extension` validator.
+
+The following methods have been removed:
+
+- `getCase`
+- `setCase`
+- `getExtension`
+- `setExtension`
+- `addExtension`
+- `getAllowNonExistentFile`
+- `setAllowNonExistentFile`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/file/extension.md)
+- Compatibility with the legacy `Laminas\File\Transfer` api has been removed
+- An additional validation failure condition has been added for situations where the input cannot be recognised as either a file path or some type of upload.
+
+### `Laminas\Validator\File\ExcludeMimeType`, `Laminas\Validator\File\MimeType`, `Laminas\Validator\File\IsCompressed` and `Laminas\Validator\File\IsImage`
+
+The following methods have been removed:
+
+- `getMagicFile`
+- `setMagicFile`
+- `disableMagicFile`
+- `isMagicFileDisabled`
+- `getHeaderCheck`
+- `enableHeaderCheck`
+- `getMimeType`
+- `setMimeType`
+- `addMimeType`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/file/mime-type.md)
+- Compatibility with the legacy `Laminas\File\Transfer` api has been removed
+- The options `enableHeaderCheck`, `disableMagicFile` and `magicFile` have been removed. A custom magic file is now no longer accepted or used, instead the magic file bundled with PHP is used instead.
+
+### `Laminas\Validator\File\Size` and `Laminas\Validator\File\FilesSize`
+
+`FilesSize` no longer inherits from the `Size` validator.
+
+The following methods have been removed:
+
+- `useByteString`
+- `getByteString`
+- `getMin`
+- `setMin`
+- `getMax`
+- `setMax`
+- `getSize`
+- `setSize`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/file/size.md)
+- Compatibility with the legacy `Laminas\File\Transfer` api has been removed
+
+### `Laminas\Validator\File\Hash`
+
+The following methods have been removed:
+
+- `getHash`
+- `setHash`
+- `addHash`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/file/hash.md)
+- Compatibility with the legacy `Laminas\File\Transfer` api has been removed
+- Also see information about the [removal of inheritors](#removal-of-laminasvalidatorfilehash-inheritors)
+
+### `Laminas\Validator\File\Exists` and `Laminas\Validator\File\NotExists`
+
+The following methods have been removed:
+
+- `getDirectory`
+- `setDirectory`
+- `addDirectory`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/file/exists.md)
+- Compatibility with the legacy `Laminas\File\Transfer` api has been removed
+- `NotExists` no longer inherits from `Exists`
+
+### `Laminas\Validator\File\ImageSize`
+
+The following methods have been removed:
+
+- `getMinWidth`
+- `setMinWidth`
+- `getMaxWidth`
+- `setMaxWidth`
+- `getMinHeight`
+- `setMinHeight`
+- `getMaxHeight`
+- `setMaxHeight`
+- `getImageMin`
+- `setImageMin`
+- `getImageMax`
+- `setImageMax`
+- `getImageWidth`
+- `setImageWidth`
+- `getImageHeight`
+- `setImageHeight`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/file/image-size.md)
+- Compatibility with the legacy `Laminas\File\Transfer` api has been removed
+
+### `Laminas\Validator\File\WordCount`
+
+The following methods have been removed:
+
+- `getMin`
+- `setMin`
+- `getMax`
+- `setMax`
+
+Behaviour changes:
+
+- The constructor now only accepts an associative array of [documented options](../validators/file/word-count.md)
+- Compatibility with the legacy `Laminas\File\Transfer` api has been removed
 
 ## Removed Features
 
@@ -322,3 +602,30 @@ $validator = new Laminas\Validator\NumberComparison([
     'inclusiveMax' => true,
 ]);
 ```
+
+### Removal of `Laminas\Validator\File\Upload`
+
+The deprecated `Upload` validator was only capable of validating the `$_FILES` super global, providing the entire `$_FILES` array was provided, at runtime, prior to validation. The validator expected a key such as `my-upload` corresponding to a posted form element and also relied on the legacy and deprecated `Laminas\File\Transfer` api.
+
+We suggest that you look at the [`UploadFile`](../validators/file/upload-file.md) validator instead.
+
+### Removal of `Laminas\Validator\File\Hash` inheritors
+
+The following classes have been removed:
+
+- `Laminas\Validator\File\Crc32`
+- `Laminas\Validator\File\Md5`
+- `Laminas\Validator\File\Sha1`
+
+These inheritors of the `Hash` validator were unnecessary. Simply construct an instance of the `Hash` validator with the algorithm that you require, for example:
+
+```php
+$hash = new \Laminas\Validator\File\Hash([
+    'hash' => 'SomeExpectedSha256Hash',
+    'algorithm' => 'sha256',
+]);
+
+$hash->isValid('/path/to/file.md');
+```
+
+The algorithms available are dictated by your installation of PHP and can be determined with [`hash_algos()`](https://www.php.net/manual/function.hash-algos.php) 
