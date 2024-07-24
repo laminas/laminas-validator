@@ -6,6 +6,33 @@
 
 In order to reduce maintenance burden and to help users to favour [composition over inheritance](https://en.wikipedia.org/wiki/Composition_over_inheritance), all classes, where possible have been marked as final.
 
+### `AbstractValidator` Breaking Changes
+
+There have been a number of significant, breaking changes to the `AbstractValidator` which _all_ shipped validators inherit from.
+
+The following methods have been removed affecting all the shipped validators in addition to [individual changes](#changes-to-individual-validators) to those validators:
+
+- `getOption`
+- `getOptions`
+- `setOptions`
+- `getMessageVariables`
+- `getMessageTemplates`
+- `setMessages`
+- `setValueObscured`
+- `isValueObscured`
+- `getDefaultTranslator`
+- `hasDefaultTranslator`
+- `getDefaultTranslatorTextDomain`
+- `getMessageLength`
+
+#### Validator Options
+
+It is now necessary to pass all options to the validator constructor.
+This means that you cannot create a validator instance in an invalid state.
+It also makes it impossible to change the option values after the validator has been instantiated.
+
+Removal of the various option "getters" and "setters" are likely to cause a number of breaking changes to inheritors of `AbstractValidator` _(i.e. custom validators you may have written)_ so we have provided an [example refactoring](refactoring-legacy-validators.md) to illustrate the necessary changes.
+
 ### Validator Plugin Manager
 
 #### Removal of legacy Zend aliases
