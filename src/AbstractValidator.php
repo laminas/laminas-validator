@@ -106,11 +106,11 @@ abstract class AbstractValidator implements
 
     /**
      * Abstract constructor for all validators
-     * A validator should accept following parameters:
-     *  - nothing f.e. Validator()
-     *  - one or multiple scalar values f.e. Validator($first, $second, $third)
-     *  - an array f.e. Validator(array($first => 'first', $second => 'second', $third => 'third'))
-     *  - an instance of Traversable f.e. Validator($config_instance)
+     *
+     * Custom validators should call `parent::__construct($options)` after processing validator specific options in
+     * order to ensure that:
+     * - User supplied, custom errors messages override the default error messages
+     * - The configured translator is correctly set and/or enabled
      *
      * @param AbstractOptions $options
      */
@@ -156,7 +156,9 @@ abstract class AbstractValidator implements
     /**
      * Sets the validation failure message template for a particular key
      *
-     * @throws InvalidArgumentException
+     * Omitting the `$messageKey` parameter will cause _all_ error messages to have the same value.
+     *
+     * @throws InvalidArgumentException If the supplied $messageKey does not correspond to a known error message key.
      */
     public function setMessage(string $messageString, ?string $messageKey = null): void
     {
@@ -289,7 +291,10 @@ abstract class AbstractValidator implements
     }
 
     /**
-     * Sets the value to be validated and clears the messages and errors arrays
+     * Set the validated value
+     *
+     * Sets the validated value so that it can be interpolated in error messages and clears any previous validation
+     * failure messages.
      */
     protected function setValue(mixed $value): void
     {
@@ -330,7 +335,7 @@ abstract class AbstractValidator implements
     }
 
     /**
-     * Set default translation text domain for all validate objects
+     * Set default translation text domain for all validator instances
      */
     public static function setDefaultTranslatorTextDomain(string $textDomain = 'default'): void
     {
@@ -338,7 +343,7 @@ abstract class AbstractValidator implements
     }
 
     /**
-     * Sets the maximum allowed message length
+     * Sets the maximum allowed message length for all validator instances
      */
     public static function setMessageLength(int $length = -1): void
     {
