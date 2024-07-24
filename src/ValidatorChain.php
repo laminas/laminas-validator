@@ -63,7 +63,12 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorInt
     }
 
     /**
-     * Get plugin manager instance
+     * Retrieve the Validator Plugin Manager used by this instance
+     *
+     * If you need an instance of the plugin manager, you should retrieve it from your DI container. This method is
+     * only for internal use and is kept for compatibility with laminas-inputfilter.
+     *
+     * It is not subject to BC because it is marked as internal and the method may be removed in a minor release.
      *
      * @internal \Laminas
      */
@@ -79,6 +84,9 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorInt
     /**
      * Set plugin manager instance
      *
+     * This method is retained for BC with laminas-inputfilter. It is internal and not subject to BC guarantees.
+     * It may be removed in a minor release.
+     *
      * @internal \Laminas
      */
     public function setPluginManager(ValidatorPluginManager $plugins): void
@@ -88,6 +96,9 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorInt
 
     /**
      * Retrieve a validator by name
+     *
+     * This method is retained for BC with laminas-inputfilter. It is internal and not subject to BC guarantees.
+     * It may be removed in a minor release.
      *
      * @internal \Laminas
      *
