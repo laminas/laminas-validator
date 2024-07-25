@@ -6,6 +6,14 @@
 
 In order to reduce maintenance burden and to help users to favour [composition over inheritance](https://en.wikipedia.org/wiki/Composition_over_inheritance), all classes, where possible have been marked as final.
 
+As a best practice, even if a validator is not marked as final in this library, it is not advisable to extend from it; it is likely that in future major releases inheritance will become prohibited.
+
+We have prepared a short guide on [refactoring to composition here](composing-final-validators.md).
+
+### Strict Types and Native Type Hints Throughout
+
+All classes now use native parameter types, return types and property types.
+
 ### `AbstractValidator` Breaking Changes
 
 There have been a number of significant, breaking changes to the `AbstractValidator` which _all_ shipped validators inherit from.
