@@ -263,7 +263,7 @@ Additionally, call `parent::__construct($options)` within the constructor.
 
 The reason for this is to ensure that when users provide the `messages` option, the array of error messages override the defaults you have defined in the class.
 
-`AbstractValidator` also accepts 
+`AbstractValidator` also accepts:
 
 - The `translator` option which can be a specific implementation of `Laminas\Translator\TranslatorInterface`
 - The `translatorEnabled` option which is a boolean indicating whether translation should be enabled or not
