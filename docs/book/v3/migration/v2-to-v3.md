@@ -33,6 +33,36 @@ It also makes it impossible to change the option values after the validator has 
 
 Removal of the various option "getters" and "setters" are likely to cause a number of breaking changes to inheritors of `AbstractValidator` _(i.e. custom validators you may have written)_ so we have provided an [example refactoring](refactoring-legacy-validators.md) to illustrate the necessary changes.
 
+Of particular note, is that all "magic" has been removed. Previously, passing an options such as `my_option` to a validator constructor would result in `AbstractValidator` calling the `setMyOption` method if it existed. This functionality has been removed, and it is the responsibility of validator implementations to deal with option values during construction.
+
+#### Translator Interface Type has Changed
+
+In the 2.x series of `laminas-validator` there was a translator interface and implementation `Laminas\Validator\Translator\TranslatorInterface`.
+`AbstractValidator` expected an instance of this interface to its `setTranslator` method _(Defined in `Laminas\Validator\Translator\TranslatorAwareInterface`)_.
+
+`AbstractValidator` and `Laminas\Validator\Translator\TranslatorAwareInterface` now type hint on `Laminas\Translator\TranslatorInterface`. The `laminas-translator` library defines only this interface and nothing more, furthermore, the translator supplied by `Laminas\I18n` implements this interface so there is no longer any need for multiple implementations, or validator specific implementations of the translator. Users can now pass the translator shipped by `Laminas\I18n` directly.
+
+### Breaking Changes to `ValidatorChain`
+
+All methods that previously returned `$this` now return `void`. You will need to refactor code such as:
+
+```php
+// Code making use of fluent return values:
+$validatorChain->attach(new StringLength())
+               ->attach(new NotEmpty())
+               ->attach(new Digits());
+
+// Should be refactored to:
+$validatorChain->attach(new StringLength());
+$validatorChain->attach(new NotEmpty());
+$validatorChain->attach(new Digits());
+```
+
+The following methods have been removed:
+
+- `addValidator` _(replaced with `attach`)_
+- `addByName` _(replaced with `attachByName`)_
+
 ### Validator Plugin Manager
 
 #### Removal of legacy Zend aliases
@@ -656,3 +686,12 @@ $hash->isValid('/path/to/file.md');
 ```
 
 The algorithms available are dictated by your installation of PHP and can be determined with [`hash_algos()`](https://www.php.net/manual/function.hash-algos.php) 
+
+### Migration to `Laminas\Translator`
+
+As described under [changes to `AbstractValidator`](#translator-interface-type-has-changed), the following classes no longer exist:
+
+- `Laminas\Validator\Translator\DummyTranslator`
+- `Laminas\Validator\Translator\Translator`
+- `Laminas\Validator\Translator\TranslatorFactory`
+- `Laminas\Validator\Translator\TranslatorInterface`
