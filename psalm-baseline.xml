@@ -144,12 +144,7 @@
     </UnusedClass>
   </file>
   <file src="src/ValidatorChain.php">
-    <MixedPropertyTypeCoercion>
-      <code><![CDATA[new PriorityQueue()]]></code>
-    </MixedPropertyTypeCoercion>
     <PossiblyUnusedMethod>
-      <code><![CDATA[addByName]]></code>
-      <code><![CDATA[addValidator]]></code>
       <code><![CDATA[count]]></code>
     </PossiblyUnusedMethod>
     <TooManyArguments>

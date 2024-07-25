@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator;
 
+use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Callback;
 use Laminas\Validator\Digits;
@@ -12,6 +13,7 @@ use Laminas\Validator\StringLength;
 use Laminas\Validator\Timezone;
 use Laminas\Validator\ValidatorChain;
 use Laminas\Validator\ValidatorInterface;
+use Laminas\Validator\ValidatorPluginManager;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -90,9 +92,8 @@ final class ValidatorChainTest extends TestCase
      */
     public function testBreakChainOnFailure(): void
     {
-        $this->validator
-            ->attach($this->getValidatorFalse(), true)
-            ->attach($this->getValidatorFalse());
+        $this->validator->attach($this->getValidatorFalse(), true);
+        $this->validator->attach($this->getValidatorFalse());
 
         self::assertFalse($this->validator->isValid(null));
         self::assertSame(['error' => 'validation failed'], $this->validator->getMessages());
@@ -100,9 +101,8 @@ final class ValidatorChainTest extends TestCase
 
     public function testAllowsPrependingValidators(): void
     {
-        $this->validator
-            ->attach($this->getValidatorTrue())
-            ->prependValidator($this->getValidatorFalse(), true);
+        $this->validator->attach($this->getValidatorTrue());
+        $this->validator->prependValidator($this->getValidatorFalse(), true);
 
         self::assertFalse($this->validator->isValid(true));
 
@@ -113,9 +113,8 @@ final class ValidatorChainTest extends TestCase
 
     public function testAllowsPrependingValidatorsByName(): void
     {
-        $this->validator
-            ->attach($this->getValidatorTrue())
-            ->prependByName('NotEmpty', [], true);
+        $this->validator->attach($this->getValidatorTrue());
+        $this->validator->prependByName('NotEmpty', [], true);
 
         self::assertFalse($this->validator->isValid(''));
 
@@ -128,9 +127,8 @@ final class ValidatorChainTest extends TestCase
     #[Group('6496')]
     public function testValidatorsAreExecutedAccordingToPriority(): void
     {
-        $this->validator
-            ->attach($this->getValidatorTrue(), false, 1000)
-            ->attach($this->getValidatorFalse(), true, 2000);
+        $this->validator->attach($this->getValidatorTrue(), false, 1000);
+        $this->validator->attach($this->getValidatorFalse(), true, 2000);
 
         self::assertFalse($this->validator->isValid(true));
 
@@ -143,9 +141,8 @@ final class ValidatorChainTest extends TestCase
     #[Group('6496')]
     public function testPrependValidatorsAreExecutedAccordingToPriority(): void
     {
-        $this->validator
-            ->attach($this->getValidatorTrue(), false, 1000)
-            ->prependValidator($this->getValidatorFalse(), true);
+        $this->validator->attach($this->getValidatorTrue(), false, 1000);
+        $this->validator->prependValidator($this->getValidatorFalse(), true);
 
         self::assertFalse($this->validator->isValid(true));
 
@@ -350,5 +347,42 @@ final class ValidatorChainTest extends TestCase
         self::assertCount(2, $messages);
         self::assertContainsOnly('string', array_keys($messages));
         self::assertContainsOnly('string', $messages);
+    }
+
+    public function testThatOptionsArePassedToValidatorsAttachedByName(): void
+    {
+        $chain = new ValidatorChain();
+        $chain->attachByName(
+            StringLength::class,
+            ['min' => 100],
+        );
+
+        self::assertFalse($chain->isValid('Muppets'));
+        $messages = $chain->getMessages();
+        self::assertArrayHasKey(StringLength::TOO_SHORT, $messages);
+    }
+
+    public function testThatChainsCanBeInvoked(): void
+    {
+        $chain = new ValidatorChain();
+        $chain->attachByName(
+            StringLength::class,
+            ['min' => 100],
+        );
+
+        self::assertFalse($chain->__invoke('Foo'));
+    }
+
+    /** @psalm-suppress InternalMethod */
+    public function testComposedPluginManagersCanBeMutated(): void
+    {
+        $pm1 = new ValidatorPluginManager(new ServiceManager());
+        $pm2 = new ValidatorPluginManager(new ServiceManager());
+
+        $chain = new ValidatorChain($pm1);
+
+        self::assertSame($pm1, $chain->getPluginManager());
+        $chain->setPluginManager($pm2);
+        self::assertSame($pm2, $chain->getPluginManager());
     }
 }
