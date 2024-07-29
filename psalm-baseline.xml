@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
+  <file src="src/BackedEnumValue.php">
+    <PossiblyUnusedProperty>
+      <code><![CDATA[$type]]></code>
+    </PossiblyUnusedProperty>
+  </file>
   <file src="src/Barcode.php">
     <PossiblyUnusedProperty>
       <code><![CDATA[$length]]></code>
@@ -40,6 +45,11 @@
     <TypeDoesNotContainType>
       <code><![CDATA[UConverter::transcode($localPart, 'UTF-8', 'UTF-8') === false]]></code>
     </TypeDoesNotContainType>
+  </file>
+  <file src="src/EnumCase.php">
+    <PossiblyUnusedProperty>
+      <code><![CDATA[$type]]></code>
+    </PossiblyUnusedProperty>
   </file>
   <file src="src/Explode.php">
     <MixedInferredReturnType>
@@ -189,6 +199,11 @@
       <code><![CDATA[$message]]></code>
     </MixedAssignment>
   </file>
+  <file src="test/BackedEnumValueTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[basicProvider]]></code>
+    </PossiblyUnusedMethod>
+  </file>
   <file src="test/BarcodeTest.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[invalidAdapterArguments]]></code>
@@ -254,6 +269,11 @@
       <code><![CDATA[emailAddressesForMxChecks]]></code>
       <code><![CDATA[invalidEmailAddresses]]></code>
       <code><![CDATA[validEmailAddresses]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/EnumCaseTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[basicProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/BytesTest.php">
