@@ -95,3 +95,50 @@ if ($validatorChain->isValid($username)) {
 
 // This first example will display: The input is less than 7 characters long
 ```
+
+## The Validator Chain Factory
+
+It is often desirable to create validator chains from configuration arrays.
+The `ValidatorChainFactory` enables this and expects configuration in the following shape:
+
+```php
+use Laminas\Validator\NotEmpty;
+use Laminas\Validator\StringLength;
+
+$chainConfiguration = [
+    'First' => [
+        'name' => NotEmpty::class,
+        'break_chain_on_failure' => true,
+        'options' => [],
+        'priority' => 1,
+    ],
+    'Second' => [
+        'name' => StringLength::class,
+        'break_chain_on_failure' => true,
+        'options' => [
+            'min' => 5,
+            'max' => 10,
+        ],
+        'priority' => 1,
+    ],
+];
+```
+
+Note: The top-level array keys `First` and `Second` above are entirely optional and only serve to improve readability; a list is perfectly acceptable.
+
+Each element of the array **must** contain the `name` key that resolves to a validator that is configured for use in the `ValidatorPluginManager`.
+The other 3 keys `break_chain_on_failure`, `options` and `priority` are optional.
+
+- `options` are passed to the requested validator type unaltered.
+- `break_chain_on_failure`, when true, will prevent later validators from executing if validation fails
+- `priority` can be any arbitrary integer. Lower numbers execute first.
+
+Retrieve the `ValidatorChainFactory` from your application's DI container and pass the chain configuration to the factory's `fromArray` method:
+
+```php
+use Laminas\Validator\ValidatorChainFactory;
+
+$factory = $container->get(ValidatorChainFactory::class);
+$chain = $factory->fromArray($chainConfiguration);
+$chain->isValid('Some Value');
+```
