@@ -17,11 +17,6 @@ The `Uuid` validator is capable of validating whether a string is a valid UUID
 of any version. It does not validate that the UUID exists in your system,
 however, only that it is well-formed.
 
-<!-- markdownlint-disable-next-line MD001 -->
-> ### Introduced in 2.8.0
->
-> `Laminas\Validator\Uuid` was introduced with version 2.8.0.
-
 ## Supported options
 
 The `Uuid` validator has no additional options.
