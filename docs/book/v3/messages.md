@@ -42,7 +42,7 @@ The second parameter defines the failure which will be overridden. When you omit
 this parameter, then the given message will be set for all possible failures of
 this validator.
 
-## Using pre-translated validation messages
+## Using Pre-Translated Validation Messages
 
 laminas-validator is shipped with more than 45 different validators with more than
 200 failure messages. It can be a tedious task to translate all of these
@@ -72,7 +72,7 @@ $translator->addTranslationFilePattern(
 AbstractValidator::setDefaultTranslator($translator);
 ```
 
-> ### Supported languages
+> ### Supported Languages
 >
 > The supported languages may not be complete. New languages will be added with
 > each release. Additionally feel free to use the existing resource files to
@@ -81,7 +81,7 @@ AbstractValidator::setDefaultTranslator($translator);
 > You could also use these resource files to rewrite existing translations. So
 > you are not in need to create these files manually yourself.
 
-## Limit the size of a validation message
+## Limit the Size of a Validation Message
 
 Sometimes it is necessary to limit the maximum size a validation message can
 have; as an example, when your view allows a maximum size of 100 chars to be
@@ -102,7 +102,7 @@ instead of the rest of the message.
 Laminas\Validator\AbstractValidator::setMessageLength(100);
 ```
 
-> ### Where is this parameter used?
+> ### Where Is This Parameter Used?
 >
 > The set message length is used for all validators, even for self defined ones,
 > as long as they extend `Laminas\Validator\AbstractValidator`.

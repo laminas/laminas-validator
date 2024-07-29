@@ -4,7 +4,7 @@
 validator first splits the email address on `local-part @ hostname` and attempts
 to match these against known specifications for email addresses and hostnames.
 
-## Basic usage
+## Basic Usage
 
 A basic example of usage is below:
 
@@ -61,7 +61,7 @@ RFC2822. For example, valid emails include `bob@domain.com`,
 Some obsolete email formats will not currently validate (e.g. carriage returns
 or a `\\` character in an email address).
 
-## Validating only the local part
+## Validating Only the Local Part
 
 If you need `Laminas\Validator\EmailAddress` to check only the local part of an
 email address, and want to disable validation of the hostname, you can set the
@@ -73,7 +73,7 @@ $validator = new Laminas\Validator\EmailAddress();
 $validator->setOptions(['useDomainCheck' => false]);
 ```
 
-## Validating different types of hostnames
+## Validating Different Types of Hostnames
 
 The hostname part of an email address is validated against the [Hostname validator](hostname.md).
 By default only DNS hostnames of the form `domain.com` are accepted, though if
@@ -100,7 +100,7 @@ if ($validator->isValid($email)) {
 }
 ```
 
-## Checking if the hostname actually accepts email
+## Checking If the Hostname Actually Accepts Email
 
 Just because an email address is in the correct format, it doesn't necessarily
 mean that email address actually exists. To help solve this problem, you can use
@@ -137,13 +137,13 @@ $validator = new Laminas\Validator\EmailAddress([
 ]);
 ```
 
-> ### Performance warning**
+> ### Performance Warning
 >
 > You should be aware that enabling MX check will slow down you script because
 > of the used network functions. Enabling deep check will slow down your script
 > even more as it searches the given server for 3 additional types.
 
-> ### Disallowed IP addresses
+> ### Disallowed IP Addresses
 >
 > You should note that MX validation is only accepted for external servers. When
 > deep MX validation is enabled, then local IP addresses like `192.168.*` or
@@ -204,7 +204,7 @@ More information on the usage of the `useTldCheck` option appears in the
 
 Please note TLDs are only validated if you allow DNS hostnames to be validated.
 
-## Setting messages
+## Setting Messages
 
 `Laminas\Validator\EmailAddress` makes also use of `Laminas\Validator\Hostname` to
 check the hostname part of a given email address. You can specify messages for

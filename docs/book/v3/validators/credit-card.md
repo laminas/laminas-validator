@@ -36,7 +36,7 @@ The following issuing institutes are accepted:
 - Russia Mir
 
 <!-- markdownlint-disable-next-line MD001 -->
-> ### Invalid institutes
+> ### Invalid Institutes
 >
 > The institutes **Bankcard** and **Diners Club enRoute** no longer exist, and
 > are treated as invalid.
@@ -44,7 +44,7 @@ The following issuing institutes are accepted:
 > **Switch** has been rebranded to **Visa** and is therefore also treated as
 > invalid.
 
-## Supported options
+## Supported Options
 
 The following options are supported for `Laminas\Validator\CreditCard`:
 
@@ -53,7 +53,7 @@ The following options are supported for `Laminas\Validator\CreditCard`:
 - `type`: The type of credit card which will be validated. See the below list of
   institutes for details.
 
-## Basic usage
+## Basic Usage
 
 There are several credit card institutes which can be validated by
 `Laminas\Validator\CreditCard`. Per default, all known institutes will be accepted.
@@ -70,7 +70,7 @@ if ($valid->isValid($input)) {
 
 The above example would validate against all known credit card institutes.
 
-## Accepting only specific credit cards
+## Accepting Only Specific Credit Cards
 
 Sometimes it is necessary to accept only specific credit card institutes instead
 of all; e.g., when you have a webshop which accepts only Visa and American
@@ -100,12 +100,12 @@ $valid = new CreditCard([
 ]);
 ```
 
-> ### Default institute
+> ### Default Institute
 >
 > When no institute is given at initiation then `ALL` will be used, which sets
 > all institutes at once.
 
-## Validation using APIs
+## Validation Using APIs
 
 As said before `Laminas\Validator\CreditCard` will only validate the credit card
 number. Fortunately, some institutes provide online APIs which can validate a

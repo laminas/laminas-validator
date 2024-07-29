@@ -3,14 +3,14 @@
 `Laminas\Validator\IsInstanceOf` allows you to validate whether a given object is
 an instance of a specific class or interface.
 
-## Supported options
+## Supported Options
 
 The following options are supported for `Laminas\Validator\IsInstanceOf`:
 
 - `className`: Defines the fully-qualified class name which objects must be an
   instance of.
 
-## Basic usage
+## Basic Usage
 
 ```php
 $validator = new Laminas\Validator\IsInstanceOf([

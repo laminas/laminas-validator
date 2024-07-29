@@ -2,13 +2,13 @@
 
 `Laminas\Validator\BackedEnumValue` allows you to validate that a string or numeric value is a valid value for a specified [enum](https://www.php.net/manual/language.enumerations.php).
 
-## Supported options
+## Supported Options
 
 The following options are supported for `Laminas\Validator\BackedEnumValue`:
 
 - `enum`: The backed enum class you wish to test against
 
-## Basic usage
+## Basic Usage
 
 ```php
 enum MyEnum: string {

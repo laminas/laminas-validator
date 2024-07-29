@@ -3,7 +3,7 @@
 `Laminas\Validator\Digits` validates if a given value contains only digits.
 
 <!-- markdownlint-disable-next-line MD001 -->
-> ### Installation requirements
+> ### Installation Requirements
 >
 > `Laminas\Validator\Digits` depends on the laminas-filter component, so be sure to
 > have it installed before getting started:
@@ -12,11 +12,11 @@
 > $ composer require laminas/laminas-filter
 > ```
 
-## Supported options
+## Supported Options
 
 There are no additional options for `Laminas\Validator\Digits`:
 
-## Validating digits
+## Validating Digits
 
 To validate if a given value contains only digits and no other characters,
 call the validator as shown below:
@@ -29,7 +29,7 @@ $validator->isValid(1234);         // returns true
 $validator->isValid('1a234');      // returns false
 ```
 
-> ### Validating numbers
+> ### Validating Numbers
 >
 > When you want to validate numbers or numeric values, be aware that this
 > validator only validates *digits*. This means that any other sign like a
