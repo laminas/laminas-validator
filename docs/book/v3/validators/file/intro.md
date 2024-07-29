@@ -19,7 +19,7 @@ uploaded files, such as file size validation and CRC checking.
 - [UploadFile](upload-file.md)
 - [WordCount](word-count.md)
 
-> ### Validation argument
+> ### Validation Argument
 >
 > All of the File validators' `isValid()` methods support both a file path
 > `string` *or* a `$_FILES` array as the supplied argument. When a `$_FILES`

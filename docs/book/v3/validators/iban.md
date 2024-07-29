@@ -3,7 +3,7 @@
 `Laminas\Validator\Iban` validates if a given value could be a IBAN number. IBAN is
 the abbreviation for "International Bank Account Number".
 
-## Supported options
+## Supported Options
 
 The following options are supported for `Laminas\Validator\Iban`:
 
@@ -11,14 +11,14 @@ The following options are supported for `Laminas\Validator\Iban`:
   for validation.
 - `allow_non_sepa`: A boolean that limits allowable account numbers to SEPA countries when `false`
 
-## IBAN validation
+## IBAN Validation
 
 IBAN numbers are always related to a country. This means that different
 countries use different formats for their IBAN numbers. This is the reason why
 IBAN numbers always need a country code. By knowing this we already know how
 to use `Laminas\Validator\Iban`.
 
-### Ungreedy IBAN validation
+### Ungreedy IBAN Validation
 
 Sometimes it is useful just to validate if the given value is a IBAN number or
 not. This means that you don't want to validate it against a defined country.
@@ -38,7 +38,7 @@ In this situation, any IBAN number from any country will considered valid. Note
 that this should not be done when you accept only accounts from a single
 country!
 
-### Region aware IBAN validation
+### Region Aware IBAN Validation
 
 To validate against a defined country, you must provide a country code. You can
 do this during instantiation via the option `country_code`.

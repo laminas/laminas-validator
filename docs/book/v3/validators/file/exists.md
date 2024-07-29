@@ -54,7 +54,7 @@ if ($validator->isValid('/path/to/myfile.txt')) {
 }
 ```
 
-> ### Checks against all directories
+> ### Checks against All Directories
 >
 > By default, this validator checks whether the specified file exists in **all** of the
 > given directories; validation will fail if the file does not exist in one

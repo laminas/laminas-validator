@@ -2,7 +2,7 @@
 
 `Laminas\Validator\Isbn` allows you to validate ISBN-10 or ISBN-13 numbers.
 
-## Supported options
+## Supported Options
 
 The following options are supported for `Laminas\Validator\Isbn`:
 
@@ -10,7 +10,7 @@ The following options are supported for `Laminas\Validator\Isbn`:
   `Laminas\Validator\Isbn::AUTO`. For details, take a look at the section on
   [explicit types](#setting-an-explicit-isbn-validation-type).
 
-## Basic usage
+## Basic Usage
 
 A basic example of usage is below:
 
@@ -26,7 +26,7 @@ if ($validator->isValid($isbn)) {
 
 This will validate any ISBN-10 or ISBN-13 with or without separators.
 
-## Setting an explicit ISBN validation type
+## Setting an Explicit ISBN Validation Type
 
 An example of an ISBN type restriction follows:
 

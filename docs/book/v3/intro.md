@@ -4,7 +4,7 @@ laminas-validator provides a set of commonly needed validators. It also provides
 simple validator chaining mechanism by which multiple validators may be applied
 to a single datum in a user-defined order.
 
-## What is a validator?
+## What Is a Validator?
 
 A validator examines its input with respect to some requirements and produces a
 boolean result indicating whether the input successfully validates against the
@@ -18,7 +18,7 @@ validator can be used for ensuring that a username meets these requirements. If
 a chosen username does not meet one or both of the requirements, it would be
 useful to know which of the requirements the username fails to meet.
 
-## Basic usage of validators
+## Basic Usage of Validators
 
 Having defined validation in this way provides the foundation for
 `Laminas\Validator\ValidatorInterface`, which defines two methods, `isValid()` and
@@ -34,7 +34,7 @@ are class-dependent; each validation class defines its own set of validation
 failure messages and the unique keys that identify them. Each class also has a
 `const` definition that matches each identifier for a validation failure cause.
 
-> ### Stateful validators
+> ### Stateful Validators
 >
 > The `getMessages()` methods return validation failure information only for the
 > most recent `isValid()` call. Each call to `isValid()` clears any messages and
@@ -58,7 +58,7 @@ if ($validator->isValid($email)) {
 }
 ```
 
-## Customizing messages
+## Customizing Messages
 
 Validator classes provide a `setMessage()` method with which you can specify the
 format of a message returned by `getMessages()` in case of validation failure.
@@ -132,9 +132,9 @@ if (! $validator->isValid('word')) {
 }
 ```
 
-## Translating messages
+## Translating Messages
 
-> ### Installation requirements
+> ### Installation Requirements
 >
 > The translation of validator messages depends on the laminas-i18n component, so
 > be sure to have it installed before getting started:
@@ -192,7 +192,7 @@ It is also possible to use a translator instead of setting own messages with
 `setMessage()`. But doing so, you should keep in mind, that the translator works
 also on messages you set your own.
 
-> ### Translation compatibility
+> ### Translation Compatibility
 >
 > In versions 2.0 - 2.1, `Laminas\Validator\AbstractValidator` implemented
 > `Laminas\I18n\Translator\TranslatorAwareInterface` and accepted instances of

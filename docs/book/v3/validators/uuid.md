@@ -22,11 +22,11 @@ however, only that it is well-formed.
 >
 > `Laminas\Validator\Uuid` was introduced with version 2.8.0.
 
-## Supported options
+## Supported Options
 
 The `Uuid` validator has no additional options.
 
-## Basic usage
+## Basic Usage
 
 ```php
 $validator = new Laminas\Validator\Uuid();

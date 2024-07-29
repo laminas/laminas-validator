@@ -34,7 +34,7 @@ The following validators come with the laminas-validator distribution.
 - [Uri](validators/uri.md)
 - [Uuid](validators/uuid.md)
 
-## Additional validators
+## Additional Validators
 
 Several other components offer validators as well:
 

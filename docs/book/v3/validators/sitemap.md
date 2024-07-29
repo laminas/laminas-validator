@@ -3,7 +3,7 @@
 The following validators conform to the
 [Sitemap XML protocol](http://www.sitemaps.org/protocol.php).
 
-## Supported options
+## Supported Options
 
 There are no additional supported options for any of the `Sitemap` validators.
 
@@ -47,7 +47,7 @@ $validator->isValid('yesterday'); // false
 [Laminas\\Uri\\Uri::isValid()](https://docs.laminas.dev/laminas-uri/usage/#validating-the-uri)
 internally.
 
-> ### Installation requirements
+> ### Installation Requirements
 >
 > `Laminas\Validator\Sitemap\Loc` depends on the laminas-uri component, so be sure to
 > have it installed before getting started:

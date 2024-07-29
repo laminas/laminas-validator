@@ -3,7 +3,7 @@
 `Laminas\Validator\Explode` executes a validator for each item exploded from an
 array.
 
-## Supported options
+## Supported Options
 
 The following options are supported for `Laminas\Validator\Explode`:
 
@@ -13,7 +13,7 @@ The following options are supported for `Laminas\Validator\Explode`:
   This may be a validator instance, a validator service name, or a "specification" array.
 - `validatorPluginManager`: The validator plugin manager in use in your application. If this plugin manager is not provided, a plugin manager will be created with the default configuration.
 
-## Basic usage
+## Basic Usage
 
 To validate if every item in an array is in a specified haystack:
 
@@ -30,7 +30,7 @@ $explodeValidator->isValid('1,4,6');    // returns true
 $explodeValidator->isValid('1,4,6,8'); // returns false
 ```
 
-## Configuration using a validator specification
+## Configuration Using a Validator Specification
 
 Instead of creating a validator instance, you can provide an array to describe the validator you wish to use for each element:
 

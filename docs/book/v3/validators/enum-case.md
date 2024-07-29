@@ -2,13 +2,13 @@
 
 `Laminas\Validator\EnumCase` allows you to validate that a string is a valid case for a specified [enum](https://www.php.net/manual/language.enumerations.php).
 
-## Supported options
+## Supported Options
 
 The following options are supported for `Laminas\Validator\BackedEnumValue`:
 
 - `enum`: The backed or unit enum class you wish to test against
 
-## Basic usage
+## Basic Usage
 
 ```php
 enum MyEnum {

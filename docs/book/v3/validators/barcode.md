@@ -256,7 +256,7 @@ The following options are supported for `Laminas\Validator\Barcode`:
 - `adapter`: Sets the barcode adapter which will be used. All the adapters listed above are supported and the option accepts either a FQCN, an adapter instance or a short string such as 'Upca' or 'Gtin13' that corresponds to the class name. Short strings should be avoided in favour of FQCN's.
 - `checksum`: `false` Checksum validation is *off* by default. If you are validating barcodes that are capable of validating a checksum, you should explicitly enable this option by setting it to `true`
 
-## Basic usage
+## Basic Usage
 
 To validate if a given string is a barcode you must know its type. See the
 following example for an EAN13 barcode:
@@ -288,7 +288,7 @@ if ($valid->isValid($input)) {
 }
 ```
 
-> ### Reduced security by disabling checksum validation
+> ### Reduced Security by Disabling Checksum Validation
 >
 > By switching off checksum validation you will also reduce the security of the
 > used barcodes. Additionally, you should note that you can also turn off the

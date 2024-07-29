@@ -3,7 +3,7 @@
 `Laminas\Validator\Callback` allows you to provide a callback with which to
 validate a given value.
 
-## Supported options
+## Supported Options
 
 The following options are supported for `Laminas\Validator\Callback`:
 
@@ -12,7 +12,7 @@ The following options are supported for `Laminas\Validator\Callback`:
 - `throwExceptions`: When true, [allows exceptions thrown inside of callbacks to propagate](#exceptions-within-callbacks).
 - `bind`: When true, the callback will bound to the validator's scope allowing the closure to call internal methods of the validator.
 
-## Basic usage
+## Basic Usage
 
 The simplest use case is to pass a function as a callback. Consider the
 following function:
@@ -36,7 +36,7 @@ if ($valid->isValid($input)) {
 }
 ```
 
-## Usage with closures
+## Usage with Closures
 
 The `Callback` validator supports any PHP callable, including PHP
 [closures](http://php.net/functions.anonymous).
@@ -54,7 +54,7 @@ if ($valid->isValid($input)) {
 }
 ```
 
-## Usage with class-based callbacks
+## Usage with Class-Based Callbacks
 
 Of course, it's also possible to use a class method as callback. Consider the
 following class definition:
@@ -124,7 +124,7 @@ if ($valid->isValid($input)) {
 }
 ```
 
-## Adding options
+## Adding Options
 
 `Laminas\Validator\Callback` also allows the usage of options which are provided as additional arguments to the callback.
 

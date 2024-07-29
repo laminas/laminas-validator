@@ -3,7 +3,7 @@
 `Laminas\Validator\Identical` allows you to validate if a given value is identical
 with a set token.
 
-## Supported options
+## Supported Options
 
 The following options are supported for `Laminas\Validator\Identical`:
 
@@ -14,7 +14,7 @@ The following options are supported for `Laminas\Validator\Identical`:
   in the form context, and validate the token just the way it was provided. The
   default value is `false`.
 
-## Basic usage
+## Basic Usage
 
 To validate if two values are identical, you need to set the original value as
 the token, as demonstrated in the following example:
@@ -30,7 +30,7 @@ $validator->isValid('goat'); // false
 The validation will only then return `true` when both values are 100% identical.
 In our example, when `$value` is `'donkey'`.
 
-## Identical objects
+## Identical Objects
 
 `Laminas\Validator\Identical` can validate not only strings, but any other variable
 type, such as booleans, integers, floats, arrays, or even objects. As already
@@ -46,13 +46,13 @@ if ($validator->isValid($input)) {
 }
 ```
 
-> ### Type comparison
+> ### Type Comparison
 >
 > You should be aware of the variable type used for validation. This means that
 > the string `'3'` is not identical to integer `3`. When you want non-strict
 > validation, you must set the `strict` option to `false`.
 
-## Form elements
+## Form Elements
 
 `Laminas\Validator\Identical` supports the comparison of form elements. This can be
 done by using the element's name as the `token`:
@@ -168,12 +168,12 @@ $inputFilter->add([
 $signUpForm->setInputFilter($inputFilter);
 ```
 
-> #### Use one token per leaf
+> #### Use One Token per Leaf
 >
 > Always make sure that your token array has just one key per level all the way
 > till the leaf, otherwise you can end up with unexpected results.
 
-## Strict validation
+## Strict Validation
 
 As mentioned before, `Laminas\Validator\Identical` validates tokens using strict
 typing. You can change this behaviour by using the `strict` option. The default

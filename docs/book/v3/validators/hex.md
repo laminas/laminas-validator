@@ -15,12 +15,12 @@ if ($validator->isValid('123ABC')) {
 ```
 
 <!-- markdownlint-disable-next-line MD001 -->
-> ### Invalid characters
+> ### Invalid Characters
 >
 > All other characters will return false, including whitespace and decimal
 > points. Additionally, unicode zeros and numbers from other scripts than latin
 > will not be treated as valid.
 
-## Supported options
+## Supported Options
 
 There are no additional options for `Laminas\Validator\Hex`.

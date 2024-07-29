@@ -28,7 +28,7 @@ if ($validator->isValid('some-file.txt')) {
 }
 ```
 
-> ### Checks against all directories
+> ### Checks against All Directories
 >
 > This validator checks whether the specified file does not exist in **any** of
 > the given directories; validation will fail if the file exists in one (or

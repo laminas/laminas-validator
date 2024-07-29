@@ -12,7 +12,7 @@ another one in case the parsing of the uri should be done differently.
 > composer require laminas/laminas-uri
 > ```
 
-## Supported options
+## Supported Options
 
 The following options are supported for `Laminas\Validator\Uri`:
 
@@ -23,7 +23,7 @@ The following options are supported for `Laminas\Validator\Uri`:
 - `allowAbsolute`: Defines if absolute paths are allowed. This option defaults
   to `true`.
 
-## Basic usage
+## Basic Usage
 
 ```php
 $validator = new Laminas\Validator\Uri();

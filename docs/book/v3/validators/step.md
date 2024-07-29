@@ -4,7 +4,7 @@
 value. This validator requires the value to be a numeric value (either string,
 int or float).
 
-## Supported options
+## Supported Options
 
 The following options are supported for `Laminas\Validator\Step`:
 
@@ -12,7 +12,7 @@ The following options are supported for `Laminas\Validator\Step`:
   This option defaults to `0`
 - `step`: This is the step value. This option defaults to `1`
 
-## Basic usage
+## Basic Usage
 
 ```php
 $validator = new Laminas\Validator\Step();
@@ -24,7 +24,7 @@ if ($validator->isValid(1)) {
 }
 ```
 
-## Using floating-point values
+## Using Floating-Point Values
 
 The `Step` validator also supports floating-point base and step values:
 
