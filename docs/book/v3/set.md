@@ -5,6 +5,7 @@ The following validators come with the laminas-validator distribution.
 - [BackedEnumValue](validators/backed-enum-value.md)
 - [Barcode](validators/barcode.md)
 - [Callback](validators/callback.md)
+- [Conditional](validators/conditional.md)
 - [CreditCard](validators/credit-card.md)
 - [Date](validators/date.md)
 - [DateComparison](validators/date-comparison.md)

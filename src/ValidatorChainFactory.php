@@ -7,12 +7,7 @@ namespace Laminas\Validator;
 use function assert;
 
 /**
- * @psalm-type ValidatorSpecification = array{
- *     name: string|class-string<ValidatorInterface>,
- *     priority?: int,
- *     break_chain_on_failure?: bool,
- *     options?: array<string, mixed>,
- * }
+ * @psalm-import-type ValidatorSpecification from ValidatorInterface
  */
 final class ValidatorChainFactory
 {

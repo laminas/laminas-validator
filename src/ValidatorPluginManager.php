@@ -27,6 +27,7 @@ final class ValidatorPluginManager extends AbstractSingleInstancePluginManager
             Bitwise::class                   => InvokableFactory::class,
             BusinessIdentifierCode::class    => InvokableFactory::class,
             Callback::class                  => InvokableFactory::class,
+            Conditional::class               => ConditionalFactory::class,
             CreditCard::class                => InvokableFactory::class,
             DateStep::class                  => InvokableFactory::class,
             Date::class                      => InvokableFactory::class,
