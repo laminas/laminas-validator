@@ -33,6 +33,7 @@ final class ConfigProvider
                 'ValidatorManager' => ValidatorPluginManager::class,
             ],
             'factories' => [
+                ValidatorChainFactory::class  => ValidatorChainFactoryFactory::class,
                 ValidatorPluginManager::class => ValidatorPluginManagerFactory::class,
             ],
         ];
