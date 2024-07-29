@@ -2,6 +2,7 @@
 
 The following validators come with the laminas-validator distribution.
 
+- [BackedEnumValue](validators/backed-enum-value.md)
 - [Barcode](validators/barcode.md)
 - [Callback](validators/callback.md)
 - [CreditCard](validators/credit-card.md)
@@ -9,6 +10,7 @@ The following validators come with the laminas-validator distribution.
 - [DateComparison](validators/date-comparison.md)
 - [Digits](validators/digits.md)
 - [EmailAddress](validators/email-address.md)
+- [EnumCase](validators/enum-case.md)
 - [Explode](validators/explode.md)
 - [File Validation Classes](validators/file/intro.md)
 - [Hex](validators/hex.md)

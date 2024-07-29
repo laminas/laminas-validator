@@ -22,6 +22,7 @@ final class ValidatorPluginManager extends AbstractSingleInstancePluginManager
 {
     private const DEFAULT_CONFIGURATION = [
         'factories' => [
+            BackedEnumValue::class           => InvokableFactory::class,
             Barcode::class                   => InvokableFactory::class,
             Bitwise::class                   => InvokableFactory::class,
             BusinessIdentifierCode::class    => InvokableFactory::class,
@@ -32,6 +33,7 @@ final class ValidatorPluginManager extends AbstractSingleInstancePluginManager
             DateComparison::class            => InvokableFactory::class,
             Digits::class                    => InvokableFactory::class,
             EmailAddress::class              => InvokableFactory::class,
+            EnumCase::class                  => InvokableFactory::class,
             Explode::class                   => InvokableFactory::class,
             File\Count::class                => InvokableFactory::class,
             File\ExcludeExtension::class     => InvokableFactory::class,
