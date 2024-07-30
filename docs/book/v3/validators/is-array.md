@@ -1,7 +1,5 @@
 # IsArray Validator
 
-- **Since 2.52.0**
-
 `Laminas\Validator\IsArray` checks that a given value is an array. There are no options.
 
 ## Example Usage

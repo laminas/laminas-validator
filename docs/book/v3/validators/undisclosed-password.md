@@ -1,7 +1,5 @@
 # Undisclosed Password Validator
 
-- **Since 2.13.0**
-
 `Laminas\Validator\UndisclosedPassword` allows you to validate if a given password was found in data breaches using the service [Have I Been Pwned?](https://www.haveibeenpwned.com), in a secure, anonymous way using [K-Anonymity](https://www.troyhunt.com/ive-just-launched-pwned-passwords-version-2) to ensure passwords are not send in full over the wire.
 
 <!-- markdownlint-disable-next-line MD001 -->
