@@ -3,7 +3,7 @@
 `Laminas\Validator\InArray` allows you to validate if a given value is contained
 within an array. It is also able to validate multidimensional arrays.
 
-## Supported options
+## Supported Options
 
 The following options are supported for `Laminas\Validator\InArray`:
 
@@ -22,14 +22,14 @@ The following options are supported for `Laminas\Validator\InArray`:
     but ensures that strings are not cast to integer during comparison,
     preventing `0 == 'foo43'` types of false positives.
 
-> ### Use non-strict carefully
+> ### Use Non-Strict Carefully
 >
 > Non-strict mode (`InArray::COMPARE_NOT_STRICT`) may give false positives when
 > strings are compared against ints or floats owing to `in_array()`'s behaviour
 > of converting strings to int in such cases. Therefore, `'foo'` would become
 > `0`, `'43foo'` would become `43`, while `foo43'` would also become `0`.
 
-## Array validation
+## Array Validation
 
 Basic usage is to provide an array during instantiation:
 
@@ -48,12 +48,12 @@ if ($validator->isValid('value')) {
 This will behave exactly like PHP's `in_array()` method when passed only a
 needle and haystack.
 
-> ### Non-strict by default
+> ### Non-Strict by Default
 >
 > By default, this validation is not strict, nor can it validate
 > multidimensional arrays.
 
-## Array validation modes
+## Array Validation Modes
 
 As previously mentioned, there are possible security issues when using the
 default non-strict comparison mode, so rather than restricting the developer,
@@ -84,11 +84,11 @@ $validator = new Laminas\Validator\InArray([
 ]);
 ```
 
-> ### Non-strict safe-mode by default
+> ### Non-Strict Safe-Mode by Default
 >
 > Note that the `strict` setting is per default `false`.
 
-## Recursive array validation
+## Recursive Array Validation
 
 In addition to PHP's `in_array()` method, this validator can also be used to
 validate multidimensional arrays.
@@ -114,6 +114,6 @@ if ($validator->isValid('value')) {
 Your array will then be validated recursively to see if the given value is
 contained.
 
-> ### Default setting for recursion
+> ### Default Setting for Recursion
 >
 > By default, recursive validation is turned off.

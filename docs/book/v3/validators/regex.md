@@ -4,13 +4,13 @@ This validator allows you to validate if a given string conforms a defined regul
 
 It will *not* automatically cast integers or floats to string prior to evaluation - when provided a non string value, validation will fail.
 
-## Supported options
+## Supported Options
 
 The following options are supported for `Laminas\Validator\Regex`:
 
 - `pattern`: Sets the regular expression pattern for this validator.
 
-## Usage
+## Basic Usage
 
 Validation with regular expressions allows complex validations without writing a custom validator.
 

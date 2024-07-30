@@ -3,7 +3,7 @@
 `Laminas\Validator\UndisclosedPassword` allows you to validate if a given password was found in data breaches using the service [Have I Been Pwned?](https://www.haveibeenpwned.com), in a secure, anonymous way using [K-Anonymity](https://www.troyhunt.com/ive-just-launched-pwned-passwords-version-2) to ensure passwords are not send in full over the wire.
 
 <!-- markdownlint-disable-next-line MD001 -->
-> ### Installation requirements
+> ### Installation Requirements
 >
 > This validator needs to make a request over HTTP; therefore it requires an HTTP client. The validator provides support only for HTTP clients implementing [PSR-18](https://www.php-fig.org/psr/psr-18/) and [PSR-17](https://www.php-fig.org/psr/psr-17/) request and response factories.
 >
@@ -14,7 +14,7 @@
 > $ composer require psr/http-factory
 > ```
 
-## Basic usage
+## Basic Usage
 
 The validator has two required constructor arguments:
 
@@ -38,7 +38,7 @@ $result = $validator->isValid('8aDk=XiW2E.77tLfuAcB');
 // $result is TRUE because "8aDk=XiW2E.77tLfuAcB" was not found in a data breach
 ```
 
-## A simple command line example
+## A Simple Command Line Example
 
 In this example, I'm using `laminas/laminas-diactoros` to provide HTTP messages, and `php-http/curl-client` as the HTTP client. Let's begin with installation of all required packages:
 

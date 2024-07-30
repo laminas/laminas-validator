@@ -17,11 +17,11 @@ The `Uuid` validator is capable of validating whether a string is a valid UUID
 of any version. It does not validate that the UUID exists in your system,
 however, only that it is well-formed.
 
-## Supported options
+## Supported Options
 
 The `Uuid` validator has no additional options.
 
-## Basic usage
+## Basic Usage
 
 ```php
 $validator = new Laminas\Validator\Uuid();

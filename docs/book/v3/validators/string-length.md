@@ -9,7 +9,7 @@ length.
 > `Laminas\Validator\StringLength` supports only the validation of strings.
 > Integers, floats, dates or objects can not be validated with this validator.
 
-## Supported options
+## Supported Options
 
 The following options are supported for `Laminas\Validator\StringLength`:
 
@@ -17,7 +17,7 @@ The following options are supported for `Laminas\Validator\StringLength`:
 - `min`: Sets the minimum allowed length for a string. _(Default `0`)_
 - `max`: Sets the maximum allowed length for a string. _(Default `null`)_
 
-## Default behaviour
+## Default Behaviour
 
 By default, this validator checks if a value is between `min` and `max` using a
 default `min` value of `0` and default `max` value of `NULL` (meaning unlimited).
@@ -25,7 +25,7 @@ default `min` value of `0` and default `max` value of `NULL` (meaning unlimited)
 As such, without any options, the validator only checks that the input is a
 string.
 
-## Limiting the maximum string length
+## Limiting the Maximum String Length
 
 To limit the maximum allowed length of a string you need to set the `max`
 property. It accepts an integer value as input.
@@ -37,7 +37,7 @@ $validator->isValid("Test"); // returns true
 $validator->isValid("Testing"); // returns false
 ```
 
-## Limiting the minimum string length
+## Limiting the Minimum String Length
 
 To limit the minimal required string length, set the `min`
 property using an integer value:
@@ -49,7 +49,7 @@ $validator->isValid("Test"); // returns false
 $validator->isValid("Testing"); // returns true
 ```
 
-## Limiting both minimum and maximum string length
+## Limiting Both Minimum and Maximum String Length
 
 Sometimes you will need to set both a minimum and a maximum string length;
 as an example, in a username input, you may want to limit the name to a maximum
@@ -63,7 +63,7 @@ $validator->isValid("Test"); // returns true
 $validator->isValid("Testing"); // returns true
 ```
 
-## Limiting to a strict length
+## Limiting to a Strict Length
 
 If you need a strict length, then set the `min` and `max` properties to the same
 value:
@@ -76,13 +76,13 @@ $validator->isValid('Test'); // returns true
 $validator->isValid('Testi'); // returns false
 ```
 
-> ### Setting a maximum lower than the minimum
+> ### Setting a Maximum Lower than the Minimum
 >
 > When you try to set a lower maximum value than the specified minimum value, or
 > a higher minimum value as the actual maximum value, the validator will raise
 > an exception.
 
-## Encoding of values
+## Encoding of Values
 
 Strings are always using an encoding. Even when you don't set the encoding
 explicitly, PHP uses one. When your application is using a different encoding

@@ -34,15 +34,11 @@ The following validators come with the laminas-validator distribution.
 - [Uri](validators/uri.md)
 - [Uuid](validators/uuid.md)
 
-## Additional validators
+## Additional Validators
 
 Several other components offer validators as well:
 
+- [laminas-authentication](https://docs.laminas.dev/laminas-authentication/validator/)
+- [laminas-captcha](https://docs.laminas.dev/laminas-captcha/)
 - [laminas-i18n](https://docs.laminas.dev/laminas-i18n/validators/)
-
-## Deprecated Validators
-
-### Ccnum
-
-The `Ccnum` validator has been deprecated in favor of the `CreditCard`
-validator. For security reasons you should use `CreditCard` instead of `Ccnum`.
+- [laminas-session](https://docs.laminas.dev/laminas-session/validators/introduction/)

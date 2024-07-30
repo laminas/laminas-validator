@@ -71,7 +71,7 @@ reason for validation failure. Since this class only defines one failure
 message, it is not necessary to provide `error()` with the name of the failure
 message template.
 
-## Writing a Validation Class having Dependent Conditions
+## Writing a Validation Class Having Dependent Conditions
 
 The following example demonstrates a more complex set of validation rules:
 

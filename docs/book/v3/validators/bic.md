@@ -3,7 +3,7 @@
 `Laminas\Validator\BusinessIdentifierCode` validates if a given value **could be a ["Business Identifier Code" (BIC)](https://www.swift.com/standards/data-standards/bic)** as defined by [ISO 9362](https://wikipedia.org/wiki/ISO_9362).
 A BIC is a unique identification code for financial and non-financial institutions.
 
-## Supported options
+## Supported Options
 
 There are no additional supported options for the `BusinessIdentifierCode` validator.
 
@@ -21,7 +21,7 @@ BICs should be a string which length should be equal to 8 or 11.
 - The last 3 characters are optional and can be letters or digits, generally to represent a branch office.
   The code 'XXX' is often used to represent the AIN office when the 11 character code is used.
 
-## Basic usage
+## Basic Usage
 
 ```php
 $validator = new Laminas\Validator\BusinessIdentifierCode();

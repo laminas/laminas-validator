@@ -10,6 +10,7 @@ nav:
         - "Validation Messages": v3/messages.md
         - "Standard Validation Classes": v3/set.md
         - Validators:
+            - BackedEnumValue: v3/validators/backed-enum-value.md
             - Barcode: v3/validators/barcode.md
             - BIC: v3/validators/bic.md
             - Callback: v3/validators/callback.md
@@ -18,6 +19,7 @@ nav:
             - DateComparison: v3/validators/date-comparison.md
             - Digits: v3/validators/digits.md
             - EmailAddress: v3/validators/email-address.md
+            - EnumCase: v3/validators/enum-case.md
             - Explode: v3/validators/explode.md
             - Hex: v3/validators/hex.md
             - Hostname: v3/validators/hostname.md

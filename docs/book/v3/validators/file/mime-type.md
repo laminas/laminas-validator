@@ -39,7 +39,7 @@ if ($validator->isValid('./myfile.jpg')) {
 }
 ```
 
-> ### Validating MIME groups is potentially dangerous
+> ### Validating MIME Groups Is Potentially Dangerous
 >
 > Allowing "groups" of MIME types will accept **all** members of this group, even
 > if your application does not support them. For instance, When you allow

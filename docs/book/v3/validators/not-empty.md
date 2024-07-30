@@ -4,14 +4,14 @@ This validator allows you to validate if a given value is not empty. This is
 often useful when working with form elements or other user input, where you can
 use it to ensure required elements have values associated with them.
 
-## Supported options
+## Supported Options
 
 The following options are supported for `Laminas\Validator\NotEmpty`:
 
 - `type`: Sets the type of validation which will be processed; for details, see
   the section on [specifying empty behavior](#specifying-empty-behavior).
 
-## Default behaviour
+## Default Behaviour
 
 By default, this validator works differently than you would expect when you've
 worked with PHP's `empty()` operator. In particular, this validator will
@@ -24,7 +24,7 @@ $result = $valid->isValid($value);
 // returns false
 ```
 
-## Specifying empty behavior
+## Specifying Empty Behavior
 
 Some projects have differing opinions of what is considered an "empty" value: a
 string with only whitespace might be considered empty, or `0` may be

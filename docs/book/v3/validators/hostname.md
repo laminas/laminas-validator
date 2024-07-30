@@ -5,7 +5,7 @@ known specifications. It is possible to check for three different types of
 hostnames: a DNS Hostname (i.e. `domain.com`), IP address (i.e. 1.2.3.4), and
 Local hostnames (i.e. localhost). By default, only DNS hostnames are matched.
 
-## Supported options
+## Supported Options
 
 The following options are supported for `Laminas\Validator\Hostname`:
 
@@ -16,7 +16,7 @@ The following options are supported for `Laminas\Validator\Hostname`:
 - `ipValidator`: Allows defining an [IP validator](ip.md) with custom configuration
 - `tld`: Defines if TLDs are validated. This option defaults to `true`.
 
-## Basic usage
+## Basic Usage
 
 ```php
 $validator = new Laminas\Validator\Hostname();
@@ -34,7 +34,7 @@ if ($validator->isValid($hostname)) {
 This will match the hostname `$hostname` and on failure populate `getMessages()`
 with useful error messages.
 
-## Validating different types of hostnames
+## Validating Different Types of Hostnames
 
 You may find you also want to match IP addresses, Local hostnames, or a
 combination of all allowed types. This can be done by passing a parameter to

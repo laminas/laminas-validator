@@ -2,14 +2,14 @@
 
 `Laminas\Validator\Date` allows you to validate if a given value contains a date.
 
-## Supported options
+## Supported Options
 
 The following options are supported for `Laminas\Validator\Date`:
 
 - `format`: Sets the format which is used to write the date.
 - `strict`: Ensures that string input exactly matches the generated date when formatted
 
-## Default date validation
+## Default Date Validation
 
 The easiest way to validate a date is by using the default date format,
 `Y-m-d`.
@@ -21,7 +21,7 @@ $validator->isValid('2000-10-10');   // returns true
 $validator->isValid('10.10.2000'); // returns false
 ```
 
-## Specifying a date format
+## Specifying a Date Format
 
 `Laminas\Validator\Date` also supports custom date formats. When you want to
 validate such a date, use the `format` option. This option accepts any format
@@ -34,7 +34,7 @@ $validator->isValid('2010'); // returns true
 $validator->isValid('May');  // returns false
 ```
 
-## Strict mode
+## Strict Mode
 
 By default, `Laminas\Validator\Date` only validates that it can convert the
 provided value to a valid `DateTime` value.
