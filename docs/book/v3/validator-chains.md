@@ -142,3 +142,13 @@ $factory = $container->get(ValidatorChainFactory::class);
 $chain = $factory->fromArray($chainConfiguration);
 $chain->isValid('Some Value');
 ```
+
+## About the `$context` Parameter
+
+Typically, `laminas-validator` is used via [`laminas-inputfilter`](https://docs.laminas.dev/laminas-inputfilter/) which is often, in turn, used via [`laminas-form`](https://docs.laminas.dev/laminas-form/).
+Some validators accept a second parameter to the `isValid()` method that contains the entire payload in an unfiltered and un-validated state.
+This parameter `$context` is normally the entire `$_POST` payload.
+
+`laminas-inputfilter` always passes this parameter to the `isValid` method, but, because it is not part of the `ValidatorInterface` contract, it's documentation has often been overlooked.
+
+`ValidatorChain` accepts this parameter and will pass the context to all composed validators in the chain during validation.

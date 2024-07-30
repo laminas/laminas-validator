@@ -48,3 +48,11 @@ $explodeValidator = new Laminas\Validator\Explode([
 $explodeValidator->isValid('a;b'); // returns true
 $explodeValidator->isValid('x;y;z');  // returns false
 ```
+
+## About the `$context` Parameter
+
+The `isValid` implementation in `Explode` accepts a second argument `?array $context = null`.
+
+This argument when used via `laminas-inputfilter` will contain the entire payload, typically `$_POST`.
+
+The context is passed to the composed item validator that checks each element in the given value in case that composed validator needs access to the wider validation context to perform conditional validation.

@@ -225,3 +225,17 @@ the input password failed to meet the validation requirements. If, for example,
 a user were to input the string `#$%` as a password, `isValid()` would cause
 all four validation failure messages to be returned by a subsequent call to
 `getMessages()`.
+
+## Access to the Wider Validation Context
+
+Typically, `laminas-validator` is used via `laminas-inputfilter` which is often, in turn, used via `laminas-form`.
+When validators are used in these contexts, validators are provided with a second argument to the `isValid()` method - an array that represents the entire payload _(Typically `$_POST`)_ in an unfiltered and un-validated state.
+
+Your custom validator can use this context to perform conditional validation by amending the signature of your `isValid` method to:
+
+```php
+public function isValid(mixed $value, ?array $context = null): bool
+{
+    // ... validation logic
+}
+```
