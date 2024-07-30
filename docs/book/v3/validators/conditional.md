@@ -32,11 +32,20 @@ Normally, using validators via `laminas-inputfilter` or `laminas-form`, this wil
 In the following example, we only wish to validate the email address if the `subscribe` field evaluates to a truthy value:
 
 ```php
+use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\Conditional;
 use Laminas\Validator\EmailAddress;
 use Laminas\Validator\ValidatorChainFactory;
+use Laminas\Validator\ValidatorPluginManager;
 
-$chainFactory = $container->get(ValidatorChainFactory::class);
+// The chain factory would typically be retrieved from a DI container,
+// but instantiated directly here for brevity.
+$chainFactory = new ValidatorChainFactory(
+    new ValidatorPluginManager(
+        new ServiceManager(),
+    ),
+);
+
 $validator = new Conditional($chainFactory, [
     'rule' => static function (array $context): bool {
         return (bool) ($context['subscribe'] ?? null) === true;
