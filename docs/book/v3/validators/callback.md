@@ -124,68 +124,59 @@ if ($valid->isValid($input)) {
 }
 ```
 
-## Adding Options
+## Validation Context Argument
 
-`Laminas\Validator\Callback` also allows the usage of options which are provided as additional arguments to the callback.
+Your callback will also receive the validation context, if it is available, as an associative array that typically represents the entire, un-filtered and un-validated payload, i.e. `$_POST`.
 
-Consider the following class and method definitions:
-
-```php
-class MyClass
-{
-    public static function myMethod(mixed $value, bool $option): bool
-    {
-        // some validation
-        return true;
-    }
-
-    /**
-     * Or, to use with contextual validation
-     */
-    public static function myMethod(mixed $value, array $context, bool $option): bool
-    {
-        // some validation
-        return true;
-    }
-
-}
-```
-
-Pass additional callback arguments to the constructor as an array with the `callbackOptions` key:
+The context will always be present as a non-empty array when the validator is used via [`laminas-inputfilter`](https://docs.laminas.dev/laminas-inputfilter/) or [`laminas-form`](https://docs.laminas.dev/laminas-form/), but in standalone usage, you will need to provide it to the validator yourself:
 
 ```php
-$valid = new Laminas\Validator\Callback([
-    'callback'        => [MyClass::class, 'myMethod'],
-    'callbackOptions' => ['option' => true],
+use Laminas\Validator\Callback;
+
+$formPayload = [
+    'muppet-1' => 'Kermit',
+    'muppet-2' => 'Miss Piggy',
+];
+
+$validator = new Callback([
+    'callback' => static function (mixed $value, array $context = []): bool {
+        if ($value === 'Kermit' && $context['muppet-2'] === 'Miss Piggy') {
+            return true;
+        }
+        
+        return false;
+    },
 ]);
 
-if ($valid->isValid($input)) {
-    // input appears to be valid
-} else {
-    // input is invalid
-}
+$validator->isValid($formPayload['muppet-1'], $formPayload); // true
 ```
 
-When there are additional values given to `isValid()`, the values will be
-passed as an additional argument:
+## Adding User-Defined Callback Arguments
+
+`Laminas\Validator\Callback` also has a `callbackOptions` option that allows you to provide an array of additional arguments to pass to your callback after the value and the validation context.
+
+For example:
 
 ```php
-$valid = new Laminas\Validator\Callback([
-    'callback' => [MyClass::class, 'myMethod'],
-    'callbackOptions' => ['option' => true],
+use Laminas\Validator\Callback;
+
+$validator = new Callback([
+    'callback' => static function (mixed $value, array $context = [], MuppetService $service): bool {
+        if ($service->isKnownMuppet($value) && $service->isKnownMuppet($context['muppet-2'] ?? null)) {
+            return true;
+        }
+        
+        return false;
+    },
+    'callbackOptions' => [
+        'service' => new MuppetService(),    
+    ],
 ]);
 
-if ($valid->isValid($input, $context)) {
-    // input appears to be valid
-} else {
-    // input is invalid
-}
+$validator->isValid('Fozzie Bear', ['muppet-2' => 'Scooter']);
 ```
 
-When making the call to the callback, the value to be validated will always be
-passed as the first argument to the callback followed by all other values given
-to `isValid()`; all other options will follow it. The amount and type of options
-which can be used is not limited.
+There is no limit to the number of arguments you can provide to your callback.
 
 ## Callbacks and Scope
 

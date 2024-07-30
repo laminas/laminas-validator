@@ -297,7 +297,22 @@ final class CreditCardTest extends TestCase
 
         $input = '4111111111111111';
 
-        $callback = function (string $cardNumber, array $types) use ($list, $input): bool {
+        $formPayload = [
+            'card'      => $input,
+            'someValue' => '1',
+            'foo'       => 'bar',
+        ];
+
+        $callback = function (
+            string $cardNumber,
+            array $context,
+            array $types,
+        ) use (
+            $list,
+            $input,
+            $formPayload,
+        ): bool {
+            self::assertSame($formPayload, $context);
             self::assertSame($list, $types);
             self::assertSame($input, $cardNumber);
 
@@ -309,6 +324,6 @@ final class CreditCardTest extends TestCase
             'service' => $callback,
         ]);
 
-        self::assertTrue($validator->isValid($input));
+        self::assertTrue($validator->isValid($input, $formPayload));
     }
 }

@@ -126,7 +126,7 @@ use Laminas\Validator\CreditCard;
 // Your service class
 class CcService
 {
-    public function checkOnline(string $cardNumber, array $types): bool
+    public function checkOnline(string $cardNumber, array $context, array $types): bool
     {
         // some online validation
     }
@@ -141,4 +141,26 @@ $valid   = new CreditCard([
 ```
 
 The callback method will be called with the credit card number as the first
-parameter, and the accepted types as the second parameter.
+parameter, the wider validation context as the second parameter and the accepted types as the third parameter.
+
+The `$context` parameter will typically be the entire `$_POST` array, un-filtered and un-validated when it is available.
+
+When used via [`laminas-inputfilter`](https://docs.laminas.dev/laminas-inputfilter/) or [`laminas-form`](https://docs.laminas.dev/laminas-form/), the context parameter will be non-empty, but in standalone usage, the context must be provided manually if required:
+
+```php
+use Laminas\Validator\CreditCard;
+
+$formPayload = [
+    'card' => '4444 4444 4444 4444',
+    'other-value' => 'Foo',
+];
+
+$validator = new CreditCard([
+    'type' => CreditCard::VISA,
+    'service' => static function (mixed $value, array $context = [], array $types = []): bool {
+        return true;
+    },
+]);
+
+$validator->isValid($formPayload['card'], $formPayload);
+```
