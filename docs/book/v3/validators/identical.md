@@ -30,6 +30,23 @@ $validator->isValid('goat'); // false
 The validation will only then return `true` when both values are 100% identical.
 In our example, when `$value` is `'donkey'`.
 
+## Relationship to the `$context` Parameter
+
+When `laminas-validator` is used with `laminas-inputfilter`, the entire payload _(Typically `$_POST`)_, is passed as the second argument to the validator as `$context`.
+You can provide a string key as the token and the Identical validator will consult the `$context` parameter when it is available:
+
+```php
+$context = [
+    'first' => 'donkey',
+    'second' => 'goat',
+    'input' => 'cat',
+];
+$validator = new Laminas\Validator\Identical(['token' => 'first');
+
+$validator->isValid($formPayload['input'], $context); // false - 'cat' !== 'donkey'
+$validator->isValid('donkey', $context); // true
+```
+
 ## Identical Objects
 
 `Laminas\Validator\Identical` can validate not only strings, but any other variable
