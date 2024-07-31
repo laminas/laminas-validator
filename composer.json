@@ -31,9 +31,9 @@
         }
     },
     "require": {
-        "php": "~8.1.0 || ~8.2.0 || ~8.3.0",
+        "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
         "laminas/laminas-servicemanager": "^3.21.0",
-        "laminas/laminas-stdlib": "^3.13",
+        "laminas/laminas-stdlib": "^3.19",
         "psr/http-message": "^1.0.1 || ^2.0.0"
     },
     "require-dev": {
