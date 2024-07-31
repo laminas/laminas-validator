@@ -14,6 +14,7 @@ nav:
             - Barcode: v3/validators/barcode.md
             - BIC: v3/validators/bic.md
             - Callback: v3/validators/callback.md
+            - Conditional: v3/validators/conditional.md
             - CreditCard: v3/validators/credit-card.md
             - Date: v3/validators/date.md
             - DateComparison: v3/validators/date-comparison.md
