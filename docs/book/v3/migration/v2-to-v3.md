@@ -187,6 +187,8 @@ The following methods have been removed:
 
 A new option `bind` has been added that will bind the given callback to the scope of the validator so that you can manipulate error messages from within the callback itself.
 
+The [arguments provided to the user supplied callable](../validators/callback.md#validation-context-argument) no longer change depending on whether the `$context` parameter is provided to the validator. Callable will now always be called with the signature `callable(mixed $value, array $context, ...$userDefinedParameters)`.
+
 The [documentation](../validators/callback.md#callbacks-and-scope) has been updated with the relevant details.
 
 ### `Laminas\Validator\CreditCard`
@@ -202,6 +204,7 @@ The following methods have been removed:
 Behaviour changes:
 
 - The constructor now only accepts an associative array of [documented options](../validators/credit-card.md).
+- If you provide a callable for further validation of the credit card number, the expected signature of the callable has changed and should now be `callable(mixed $value, array $context, array $acceptedCardTypes)`. Please [consult the documentation](../validators/credit-card.md#validation-using-apis) for further details.
 
 ### `Laminas\Validator\Date`
 
