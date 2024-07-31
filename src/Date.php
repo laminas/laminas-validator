@@ -7,27 +7,29 @@ namespace Laminas\Validator;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
-use Traversable;
+use Laminas\Translator\TranslatorInterface;
 
-use function array_shift;
-use function func_get_args;
 use function gettype;
 use function implode;
-use function is_array;
-use function iterator_to_array;
 
 /**
- * Validates that a given value is a DateTime instance or can be converted into one.
+ * Validates that a given value is a DateTimeInterface instance or can be converted into one.
+ *
+ * @psalm-type OptionsArgument = array{
+ *     format?: string|null,
+ *     strict?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
+ * }
  */
 class Date extends AbstractValidator
 {
-    /**#@+
-     * Validity constants
-     */
     public const INVALID      = 'dateInvalid';
     public const INVALID_DATE = 'dateInvalidDate';
     public const FALSEFORMAT  = 'dateFalseFormat';
-    /**#@-*/
 
     /**
      * Default format constant
@@ -37,107 +39,51 @@ class Date extends AbstractValidator
     /**
      * Validation failure message template definitions
      *
-     * @var string[]
+     * @var array<string, string>
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::INVALID      => 'Invalid type given. String, integer, array or DateTime expected',
         self::INVALID_DATE => 'The input does not appear to be a valid date',
         self::FALSEFORMAT  => "The input does not fit the date format '%format%'",
     ];
 
-    /** @var string[] */
-    protected $messageVariables = [
+    /** @var array<string, string|array<string, string>> */
+    protected array $messageVariables = [
         'format' => 'format',
     ];
 
-    /** @var string */
-    protected $format = self::FORMAT_DEFAULT;
-
-    /** @var bool */
-    protected $strict = false;
+    protected readonly string $format;
+    protected readonly bool $strict;
 
     /**
      * Sets validator options
      *
-     * @param string|array|Traversable $options OPTIONAL
+     * @param OptionsArgument $options
      */
-    public function __construct($options = [])
+    public function __construct(array $options = [])
     {
-        if ($options instanceof Traversable) {
-            $options = iterator_to_array($options);
-        } elseif (! is_array($options)) {
-            $options        = func_get_args();
-            $temp['format'] = array_shift($options);
-            $options        = $temp;
-        }
+        $this->format = $options['format'] ?? self::FORMAT_DEFAULT;
+        $this->strict = $options['strict'] ?? false;
+
+        unset($options['format'], $options['strict']);
 
         parent::__construct($options);
     }
 
     /**
-     * Returns the format option
-     *
-     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
-     *
-     * @return string
-     */
-    public function getFormat()
-    {
-        return $this->format;
-    }
-
-    /**
-     * Sets the format option
-     *
-     * Format cannot be null.  It will always default to 'Y-m-d', even
-     * if null is provided.
-     *
-     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
-     *
-     * @param string|null $format
-     * @return $this provides a fluent interface
-     * @todo   validate the format
-     */
-    public function setFormat($format = self::FORMAT_DEFAULT)
-    {
-        $this->format = $format === null || $format === '' ? self::FORMAT_DEFAULT : $format;
-        return $this;
-    }
-
-    /**
-     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
-     */
-    public function setStrict(bool $strict): self
-    {
-        $this->strict = $strict;
-        return $this;
-    }
-
-    /**
-     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
-     */
-    public function isStrict(): bool
-    {
-        return $this->strict;
-    }
-
-    /**
      * Returns true if $value is a DateTimeInterface instance or can be converted into one.
-     *
-     * @param  string|numeric|array|DateTimeInterface $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         $this->setValue($value);
 
         $date = $this->convertToDateTime($value);
-        if (! $date) {
+        if (! $date instanceof DateTimeInterface) {
             $this->error(self::INVALID_DATE);
             return false;
         }
 
-        if ($this->isStrict() && $date->format($this->getFormat()) !== $value) {
+        if ($this->strict && $date->format($this->format) !== $value) {
             $this->error(self::FALSEFORMAT);
             return false;
         }
@@ -147,19 +93,11 @@ class Date extends AbstractValidator
 
     /**
      * Attempts to convert an int, string, or array to a DateTime object
-     *
-     * @param string|numeric|array|DateTimeInterface $param
-     * @param bool $addErrors
-     * @return false|DateTime
      */
-    protected function convertToDateTime($param, $addErrors = true)
+    protected function convertToDateTime(mixed $param, bool $addErrors = true): DateTimeInterface|false
     {
-        if ($param instanceof DateTime) {
+        if ($param instanceof DateTimeInterface) {
             return $param;
-        }
-
-        if ($param instanceof DateTimeImmutable) {
-            return DateTime::createFromImmutable($param);
         }
 
         $type = gettype($param);
@@ -167,9 +105,8 @@ class Date extends AbstractValidator
             case 'string':
                 return $this->convertString($param, $addErrors);
             case 'integer':
-                return $this->convertInteger($param);
             case 'double':
-                return $this->convertDouble($param);
+                return $this->convertNumeric($param, $addErrors);
             case 'array':
                 return $this->convertArray($param, $addErrors);
         }
@@ -183,36 +120,23 @@ class Date extends AbstractValidator
 
     /**
      * Attempts to convert an integer into a DateTime object
-     *
-     * @param integer $value
-     * @return false|DateTime
      */
-    protected function convertInteger($value)
+    private function convertNumeric(int|float $value, bool $addErrors = true): DateTimeImmutable|false
     {
-        return DateTime::createFromFormat('U', (string) $value);
-    }
+        $date = DateTimeImmutable::createFromFormat('U', (string) $value);
+        if ($date === false && $addErrors) {
+            $this->error(self::INVALID_DATE);
+        }
 
-    /**
-     * Attempts to convert an double into a DateTime object
-     *
-     * @param double $value
-     * @return false|DateTime
-     */
-    protected function convertDouble($value)
-    {
-        return DateTime::createFromFormat('U', (string) $value);
+        return $date;
     }
 
     /**
      * Attempts to convert a string into a DateTime object
-     *
-     * @param string $value
-     * @param bool $addErrors
-     * @return false|DateTime
      */
-    protected function convertString($value, $addErrors = true)
+    protected function convertString(string $value, bool $addErrors = true): DateTimeImmutable|false
     {
-        $date = DateTime::createFromFormat($this->format, $value);
+        $date = DateTimeImmutable::createFromFormat($this->format, $value);
 
         // Invalid dates can show up as warnings (ie. "2007-02-99")
         // and still return a DateTime object.
@@ -233,12 +157,8 @@ class Date extends AbstractValidator
 
     /**
      * Implodes the array into a string and proxies to {@link convertString()}.
-     *
-     * @param bool $addErrors
-     * @return false|DateTime
-     * @todo   enhance the implosion
      */
-    protected function convertArray(array $value, $addErrors = true)
+    private function convertArray(array $value, bool $addErrors = true): DateTimeImmutable|false
     {
         return $this->convertString(implode('-', $value), $addErrors);
     }

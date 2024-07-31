@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
-use Laminas\Stdlib\ArrayUtils;
-use Traversable;
+use Laminas\Translator\TranslatorInterface;
+use Laminas\Validator\Exception\InvalidArgumentException;
 
 use function array_key_exists;
 use function in_array;
@@ -18,9 +20,17 @@ use function substr;
 /**
  * Validates IBAN Numbers (International Bank Account Numbers)
  *
- * @final
+ * @psalm-type OptionsArgument = array{
+ *     country_code?: string,
+ *     allow_non_sepa?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
+ * }
  */
-class Iban extends AbstractValidator
+final class Iban extends AbstractValidator
 {
     public const NOTSUPPORTED     = 'ibanNotSupported';
     public const SEPANOTSUPPORTED = 'ibanSepaNotSupported';
@@ -32,7 +42,7 @@ class Iban extends AbstractValidator
      *
      * @var array<string, string>
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::NOTSUPPORTED     => 'Unknown country within the IBAN',
         self::SEPANOTSUPPORTED => 'Countries outside the Single Euro Payments Area (SEPA) are not supported',
         self::FALSEFORMAT      => 'The input has a false IBAN format',
@@ -41,24 +51,18 @@ class Iban extends AbstractValidator
 
     /**
      * Optional country code by ISO 3166-1
-     *
-     * @var string|null
      */
-    protected $countryCode;
+    private readonly ?string $countryCode;
 
     /**
      * Optionally allow IBAN codes from non-SEPA countries. Defaults to true
-     *
-     * @var bool
      */
-    protected $allowNonSepa = true;
+    private readonly bool $allowNonSepa;
 
     /**
-     * The SEPA country codes
-     *
-     * @var string[] ISO 3166-1 codes
+     * SEPA ISO 3166-1country codes
      */
-    protected static $sepaCountries = [
+    private const SEPA_COUNTRIES = [
         'AT',
         'BE',
         'BG',
@@ -100,10 +104,8 @@ class Iban extends AbstractValidator
 
     /**
      * IBAN regexes by country code
-     *
-     * @var array
      */
-    protected static $ibanRegex = [
+    private const IBAN_REGEX = [
         'AD' => 'AD[0-9]{2}[0-9]{4}[0-9]{4}[A-Z0-9]{12}',
         'AE' => 'AE[0-9]{2}[0-9]{3}[0-9]{16}',
         'AL' => 'AL[0-9]{2}[0-9]{8}[A-Z0-9]{16}',
@@ -172,98 +174,28 @@ class Iban extends AbstractValidator
         'VG' => 'VG[0-9]{2}[A-Z]{4}[0-9]{16}',
     ];
 
-    /**
-     * Sets validator options
-     *
-     * @param  array|Traversable $options OPTIONAL
-     */
-    public function __construct($options = [])
+    /** @param OptionsArgument $options */
+    public function __construct(array $options = [])
     {
-        if ($options instanceof Traversable) {
-            $options = ArrayUtils::iteratorToArray($options);
+        $countryCode = $options['country_code'] ?? null;
+        if ($countryCode !== null && ! isset(self::IBAN_REGEX[$countryCode])) {
+            throw new InvalidArgumentException(
+                "Country code '{$countryCode}' invalid by ISO 3166-1 or not supported"
+            );
         }
 
-        if (array_key_exists('country_code', $options)) {
-            $this->setCountryCode($options['country_code']);
-        }
+        $this->countryCode  = $countryCode;
+        $this->allowNonSepa = $options['allow_non_sepa'] ?? true;
 
-        if (array_key_exists('allow_non_sepa', $options)) {
-            $this->setAllowNonSepa($options['allow_non_sepa']);
-        }
+        unset($options['country_code'], $options['allow_non_sepa']);
 
         parent::__construct($options);
     }
 
     /**
-     * Returns the optional country code by ISO 3166-1
-     *
-     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
-     *
-     * @return string|null
-     */
-    public function getCountryCode()
-    {
-        return $this->countryCode;
-    }
-
-    /**
-     * Sets an optional country code by ISO 3166-1
-     *
-     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
-     *
-     * @param string|null $countryCode
-     * @return $this provides a fluent interface
-     * @throws Exception\InvalidArgumentException
-     */
-    public function setCountryCode($countryCode = null)
-    {
-        if ($countryCode !== null) {
-            $countryCode = (string) $countryCode;
-
-            if (! isset(static::$ibanRegex[$countryCode])) {
-                throw new Exception\InvalidArgumentException(
-                    "Country code '{$countryCode}' invalid by ISO 3166-1 or not supported"
-                );
-            }
-        }
-
-        $this->countryCode = $countryCode;
-        return $this;
-    }
-
-    /**
-     * Returns the optional allow non-sepa countries setting
-     *
-     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
-     *
-     * @return bool
-     */
-    public function allowNonSepa()
-    {
-        return $this->allowNonSepa;
-    }
-
-    /**
-     * Sets the optional allow non-sepa countries setting
-     *
-     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
-     *
-     * @param bool $allowNonSepa
-     * @return $this provides a fluent interface
-     */
-    public function setAllowNonSepa($allowNonSepa)
-    {
-        $this->allowNonSepa = (bool) $allowNonSepa;
-        return $this;
-    }
-
-    /**
      * Returns true if $value is a valid IBAN
-     *
-     * @param  string $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if (! is_string($value)) {
             $this->error(self::FALSEFORMAT);
@@ -273,24 +205,24 @@ class Iban extends AbstractValidator
         $value = str_replace(' ', '', strtoupper($value));
         $this->setValue($value);
 
-        $countryCode = $this->getCountryCode();
+        $countryCode = $this->countryCode;
         if ($countryCode === null) {
             $countryCode = substr($value, 0, 2);
         }
 
-        if (! array_key_exists($countryCode, static::$ibanRegex)) {
+        if (! array_key_exists($countryCode, self::IBAN_REGEX)) {
             $this->setValue($countryCode);
             $this->error(self::NOTSUPPORTED);
             return false;
         }
 
-        if (! $this->allowNonSepa && ! in_array($countryCode, static::$sepaCountries)) {
+        if (! $this->allowNonSepa && ! in_array($countryCode, self::SEPA_COUNTRIES)) {
             $this->setValue($countryCode);
             $this->error(self::SEPANOTSUPPORTED);
             return false;
         }
 
-        if (! preg_match('/^' . static::$ibanRegex[$countryCode] . '$/', $value)) {
+        if (! preg_match('/^' . self::IBAN_REGEX[$countryCode] . '$/', $value)) {
             $this->error(self::FALSEFORMAT);
             return false;
         }

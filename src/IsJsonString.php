@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Validator;
 
 use JsonException;
+use Laminas\Translator\TranslatorInterface;
 
 use function gettype;
 use function is_float;
@@ -18,12 +19,15 @@ use const JSON_ERROR_DEPTH;
 use const JSON_THROW_ON_ERROR;
 
 /**
- * @psalm-type CustomOptions = array{
- *     allow: int-mask-of<self::ALLOW_*>,
- *     maxDepth: positive-int,
+ * @psalm-type OptionsArgument = array{
+ *     allow?: int-mask-of<self::ALLOW_*>,
+ *     maxDepth?: positive-int,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
- * @psalm-import-type AbstractOptions from AbstractValidator
- * @psalm-type Options = AbstractOptions|CustomOptions
  */
 final class IsJsonString extends AbstractValidator
 {
@@ -39,44 +43,35 @@ final class IsJsonString extends AbstractValidator
     public const ALLOW_OBJECT = 0b0010000;
     public const ALLOW_ALL    = 0b0011111;
 
-    /** @var array<self::ERROR_*, non-empty-string> */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::ERROR_NOT_STRING         => 'Expected a string but %type% was received',
         self::ERROR_TYPE_NOT_ALLOWED   => 'Received a JSON %type% but this type is not acceptable',
         self::ERROR_MAX_DEPTH_EXCEEDED => 'The decoded JSON payload exceeds the allowed depth of %maxDepth%',
         self::ERROR_INVALID_JSON       => 'An invalid JSON payload was received',
     ];
 
-    /** @var array<string, string> */
-    protected $messageVariables = [
+    /** @var array<string, string|array<string, string>> */
+    protected array $messageVariables = [
         'type'     => 'type',
         'maxDepth' => 'maxDepth',
     ];
 
     protected ?string $type = null;
     /** @var int-mask-of<self::ALLOW_*> */
-    protected int $allow = self::ALLOW_ALL;
+    private readonly int $allow;
     /** @var positive-int */
-    protected int $maxDepth = 512;
+    protected readonly int $maxDepth;
 
-    /**
-     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
-     *
-     * @param int-mask-of<self::ALLOW_*> $type
-     */
-    public function setAllow(int $type): void
+    /** @param OptionsArgument $options */
+    public function __construct(array $options = [])
     {
-        $this->allow = $type;
-    }
+        $this->allow    = $options['allow'] ?? self::ALLOW_ALL;
+        $this->maxDepth = $options['maxDepth'] ?? 512;
 
-    /**
-     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
-     *
-     * @param positive-int $maxDepth
-     */
-    public function setMaxDepth(int $maxDepth): void
-    {
-        $this->maxDepth = $maxDepth;
+        unset($options['allow'], $options['maxDepth']);
+
+        parent::__construct($options);
     }
 
     public function isValid(mixed $value): bool

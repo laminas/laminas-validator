@@ -1,38 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Barcode;
 
-/** @final */
-class Identcode extends AbstractAdapter
+use function is_numeric;
+use function strlen;
+
+final class Identcode implements AdapterInterface
 {
-    /**
-     * Allowed barcode lengths
-     *
-     * @var int
-     */
-    protected $length = 12;
-
-    /**
-     * Allowed barcode characters
-     *
-     * @var string
-     */
-    protected $characters = '0123456789';
-
-    /**
-     * Checksum function
-     *
-     * @var string
-     */
-    protected $checksum = 'identcode';
-
-    /**
-     * Constructor for this barcode adapter
-     */
-    public function __construct()
+    public function hasValidLength(string $value): bool
     {
-        $this->setLength(12);
-        $this->setCharacters('0123456789');
-        $this->setChecksum('identcode');
+        return strlen($value) === 12;
+    }
+
+    public function hasValidCharacters(string $value): bool
+    {
+        return is_numeric($value);
+    }
+
+    public function hasValidChecksum(string $value): bool
+    {
+        return Util::identcode($value);
+    }
+
+    public function getLength(): int
+    {
+        return 12;
     }
 }

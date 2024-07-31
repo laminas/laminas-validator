@@ -1,17 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Barcode;
 
-/** @final */
-class Postnet extends AbstractAdapter
+use function in_array;
+use function is_numeric;
+use function strlen;
+
+final class Postnet implements AdapterInterface
 {
-    /**
-     * Constructor for this barcode adapter
-     */
-    public function __construct()
+    private const LENGTH = [6, 7, 10, 12];
+
+    public function hasValidLength(string $value): bool
     {
-        $this->setLength([6, 7, 10, 12]);
-        $this->setCharacters('0123456789');
-        $this->setChecksum('postnet');
+        return in_array(strlen($value), self::LENGTH, true);
+    }
+
+    public function hasValidCharacters(string $value): bool
+    {
+        return is_numeric($value);
+    }
+
+    public function hasValidChecksum(string $value): bool
+    {
+        return Util::postnet($value);
+    }
+
+    public function getLength(): array
+    {
+        return self::LENGTH;
     }
 }

@@ -1,17 +1,24 @@
-<?php // phpcs:disable Generic.Files.LineLength.TooLong
+<?php
+
+/**
+ * phpcs:disable Generic.Files.LineLength
+ */
+
+declare(strict_types=1);
 
 namespace Laminas\Validator;
 
 use Laminas\Stdlib\StringUtils;
+use Laminas\Translator\TranslatorInterface;
 
 use function array_key_exists;
 use function array_pop;
-use function array_shift;
+use function assert;
 use function chr;
 use function count;
 use function end;
 use function explode;
-use function func_get_args;
+use function file_exists;
 use function implode;
 use function in_array;
 use function intval;
@@ -31,24 +38,19 @@ use function strtoupper;
 use function substr;
 
 /**
- * Please note there are two standalone test scripts for testing IDN characters due to problems
- * with file encoding.
- *
- * The first is tests/Laminas/Validator/HostnameTestStandalone.php which is designed to be run on
- * the command line.
- *
- * The second is tests/Laminas/Validator/HostnameTestForm.php which is designed to be run via HTML
- * to allow users to test entering UTF-8 characters in a form.
- *
  * @psalm-type Options = array{
  *    allow?: int-mask-of<self::ALLOW_*>,
  *    useIdnCheck?: bool,
  *    useTldCheck?: bool,
- *    ipValidator?: null|ValidatorInterface,
+ *    ipValidator?: null|Ip,
+ *    messages?: array<string, string>,
+ *    translator?: TranslatorInterface|null,
+ *    translatorTextDomain?: string|null,
+ *    translatorEnabled?: bool,
+ *    valueObscured?: bool,
  * }
- * @final
  */
-class Hostname extends AbstractValidator
+final class Hostname extends AbstractValidator
 {
     public const CANNOT_DECODE_PUNYCODE  = 'hostnameCannotDecodePunycode';
     public const INVALID                 = 'hostnameInvalid';
@@ -62,8 +64,8 @@ class Hostname extends AbstractValidator
     public const UNDECIPHERABLE_TLD      = 'hostnameUndecipherableTld';
     public const UNKNOWN_TLD             = 'hostnameUnknownTld';
 
-    /** @var array */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::CANNOT_DECODE_PUNYCODE  => "The input appears to be a DNS hostname but the given punycode notation cannot be decoded",
         self::INVALID                 => "Invalid type given. String expected",
         self::INVALID_DASH            => "The input appears to be a DNS hostname but contains a dash in an invalid position",
@@ -77,8 +79,8 @@ class Hostname extends AbstractValidator
         self::UNKNOWN_TLD             => "The input appears to be a DNS hostname but cannot match TLD against known list",
     ];
 
-    /** @var array */
-    protected $messageVariables = [
+    /** @var array<string, string|array<string, string>> */
+    protected array $messageVariables = [
         'tld' => 'tld',
     ];
 
@@ -94,9 +96,9 @@ class Hostname extends AbstractValidator
      * @see ftp://data.iana.org/TLD/tlds-alpha-by-domain.txt  List of all TLDs by domain
      * @see http://www.iana.org/domains/root/db/ Official list of supported TLDs
      *
-     * @var string[]
+     * @var list<string>
      */
-    protected $validTlds = [
+    private array $validTlds = [
         'aaa',
         'aarp',
         'abb',
@@ -1600,7 +1602,7 @@ class Hostname extends AbstractValidator
      *
      * @var array<string, string|array<int, string>>
      */
-    protected $validIdns = [
+    private array $validIdns = [
         'AC'       => [1 => '/^[\x{002d}0-9a-zà-öø-ÿāăąćĉċčďđēėęěĝġģĥħīįĵķĺļľŀłńņňŋőœŕŗřśŝşšţťŧūŭůűųŵŷźżž]{1,63}$/iu'],
         'AR'       => [1 => '/^[\x{002d}0-9a-zà-ãç-êìíñ-õü]{1,63}$/iu'],
         'AS'       => [1 => '/^[\x{002d}0-9a-zà-öø-ÿāăąćĉċčďđēĕėęěĝğġģĥħĩīĭįıĵķĸĺļľłńņňŋōŏőœŕŗřśŝşšţťŧũūŭůűųŵŷźż]{1,63}$/iu'],
@@ -1744,7 +1746,7 @@ class Hostname extends AbstractValidator
     ];
 
     /** @var array<string, array<int, int>> */
-    protected $idnLength = [
+    private array $idnLength = [
         'BIZ'      => [5 => 17, 11 => 15, 12 => 20],
         'CN'       => [1 => 20],
         'COM'      => [3 => 17, 5 => 20],
@@ -1771,19 +1773,11 @@ class Hostname extends AbstractValidator
     /** @var null|false|string */
     protected $tld;
 
-    /**
-     * Options for the hostname validator
-     *
-     * @var Options
-     */
-    protected $options = [
-        'allow'       => self::ALLOW_DNS, // Allow these hostnames
-        'useIdnCheck' => true, // Check IDN domains
-        'useTldCheck' => true, // Check TLD elements
-        'ipValidator' => null, // IP validator to use
-    ];
-
-    // phpcs:disable Squiz.Commenting.FunctionComment.ExtraParamComment
+    private readonly Ip $ipValidator;
+    /** @var int-mask-of<self::ALLOW_*> */
+    private readonly int $allow;
+    private readonly bool $useIdnCheck;
+    private readonly bool $useTldCheck;
 
     /**
      * Sets validator options.
@@ -1800,168 +1794,44 @@ class Hostname extends AbstractValidator
      *
      * For backwards compatibility, options can also be passed as variables in the order stated above.
      *
-     * @param Options $options OPTIONAL Array of validator options; see Hostname::$options
+     * @param Options $options OPTIONAL Array of validator options
      */
-    public function __construct($options = [])
+    public function __construct(array $options = [])
     {
-        if (! is_array($options)) {
-            $options       = func_get_args();
-            $temp['allow'] = array_shift($options);
-            if (! empty($options)) {
-                $temp['useIdnCheck'] = array_shift($options);
-            }
-
-            if (! empty($options)) {
-                $temp['useTldCheck'] = array_shift($options);
-            }
-
-            if (! empty($options)) {
-                $temp['ipValidator'] = array_shift($options);
-            }
-
-            $options = $temp;
-        }
-
-        if (! array_key_exists('ipValidator', $options)) {
-            $options['ipValidator'] = null;
-        }
-
         parent::__construct($options);
-    }
 
-    /**
-     * Returns the set ip validator
-     *
-     * @deprecated Since 2.61.0 all options getters and setters will be removed in 3.0
-     *
-     * @return Ip
-     */
-    public function getIpValidator()
-    {
-        return $this->options['ipValidator'];
-    }
-
-    /**
-     * @deprecated Since 2.61.0 all options getters and setters will be removed in 3.0
-     *
-     * @param Ip $ipValidator OPTIONAL
-     * @return self
-     */
-    public function setIpValidator(?Ip $ipValidator = null)
-    {
-        if ($ipValidator === null) {
-            $ipValidator = new Ip();
-        }
-
-        $this->options['ipValidator'] = $ipValidator;
-        return $this;
-    }
-
-    /**
-     * Returns the allow option
-     *
-     * @deprecated Since 2.61.0 all options getters and setters will be removed in 3.0
-     *
-     * @return int
-     */
-    public function getAllow()
-    {
-        return $this->options['allow'];
-    }
-
-    /**
-     * Sets the allow option
-     *
-     * @deprecated Since 2.61.0 all options getters and setters will be removed in 3.0
-     *
-     * @param int $allow
-     * @return $this Provides a fluent interface
-     */
-    public function setAllow($allow)
-    {
-        $this->options['allow'] = $allow;
-        return $this;
-    }
-
-    /**
-     * Returns the set idn option
-     *
-     * @deprecated Since 2.61.0 all options getters and setters will be removed in 3.0
-     *
-     * @return bool
-     */
-    public function getIdnCheck()
-    {
-        return $this->options['useIdnCheck'];
-    }
-
-    /**
-     * Set whether IDN domains are validated
-     *
-     * This only applies when DNS hostnames are validated
-     *
-     * @deprecated Since 2.61.0 all options getters and setters will be removed in 3.0
-     *
-     * @param bool $useIdnCheck Set to true to validate IDN domains
-     * @return $this
-     */
-    public function useIdnCheck($useIdnCheck)
-    {
-        $this->options['useIdnCheck'] = (bool) $useIdnCheck;
-        return $this;
-    }
-
-    /**
-     * Returns the set tld option
-     *
-     * @deprecated Since 2.61.0 all options getters and setters will be removed in 3.0
-     *
-     * @return bool
-     */
-    public function getTldCheck()
-    {
-        return $this->options['useTldCheck'];
-    }
-
-    /**
-     * Set whether the TLD element of a hostname is validated
-     *
-     * This only applies when DNS hostnames are validated
-     *
-     * @deprecated Since 2.61.0 all options getters and setters will be removed in 3.0
-     *
-     * @param bool $useTldCheck Set to true to validate TLD elements
-     * @return $this
-     */
-    public function useTldCheck($useTldCheck)
-    {
-        $this->options['useTldCheck'] = (bool) $useTldCheck;
-        return $this;
+        $this->allow       = $options['allow'] ?? self::ALLOW_DNS;
+        $this->ipValidator = $options['ipValidator'] ?? new Ip();
+        $this->useIdnCheck = $options['useIdnCheck'] ?? true;
+        $this->useTldCheck = $options['useTldCheck'] ?? true;
     }
 
     /**
      * Defined by Interface
      *
      * Returns true if and only if the $value is a valid hostname with respect to the current allow option
-     *
-     * @param  string $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if (! is_string($value)) {
             $this->error(self::INVALID);
             return false;
         }
 
+        $allowIp    = ($this->allow & self::ALLOW_IP) === self::ALLOW_IP;
+        $allowLocal = ($this->allow & self::ALLOW_LOCAL) === self::ALLOW_LOCAL;
+        $allowDns   = ($this->allow & self::ALLOW_DNS) === self::ALLOW_DNS;
+        $allowUri   = ($this->allow & self::ALLOW_URI) === self::ALLOW_URI;
+
         $this->setValue($value);
         // Check input against IP address schema
+
         if (
             ((preg_match('/^[0-9.]*$/', $value) && str_contains($value, '.'))
                 || (preg_match('/^[0-9a-f:.]*$/i', $value) && str_contains($value, ':')))
-            && $this->getIpValidator()->setTranslator($this->getTranslator())->isValid($value)
+            && $this->ipValidator->isValid($value)
         ) {
-            if (! ($this->getAllow() & self::ALLOW_IP)) {
+            if (! $allowIp) {
                 $this->error(self::IP_ADDRESS_NOT_ALLOWED);
                 return false;
             }
@@ -1978,7 +1848,7 @@ class Hostname extends AbstractValidator
         }
 
         // Local hostnames are allowed to be partial (ending '.')
-        if ($this->getAllow() & self::ALLOW_LOCAL) {
+        if ($allowLocal) {
             if (str_ends_with($value, '.')) {
                 $value = substr($value, 0, -1);
                 if (str_ends_with($value, '.')) {
@@ -1994,7 +1864,7 @@ class Hostname extends AbstractValidator
         // Prevent partial IP V4 addresses (ending '.')
         if (
             count($domainParts) === 4 && preg_match('/^[0-9.a-e:.]*$/i', $value)
-            && $this->getIpValidator()->setTranslator($this->getTranslator())->isValid($value)
+            && $this->ipValidator->isValid($value)
         ) {
             $this->error(self::INVALID_LOCAL_NAME);
         }
@@ -2036,7 +1906,7 @@ class Hostname extends AbstractValidator
 
                     // Match TLD against known list
                     $removedTld = false;
-                    if ($this->getTldCheck()) {
+                    if ($this->useTldCheck) {
                         if (
                             ! in_array(strtolower($this->tld), $this->validTlds)
                             && ! in_array($this->tld, $this->validTlds)
@@ -2054,13 +1924,15 @@ class Hostname extends AbstractValidator
                     /**
                      * Match against IDN hostnames
                      * Note: Keep label regex short to avoid issues with long patterns when matching IDN hostnames
-                     *
-                     * @see Hostname\Interface
                      */
                     $regexChars = [0 => '/^[a-z0-9\x2d]{1,63}$/i'];
-                    if ($this->getIdnCheck() && isset($this->validIdns[$this->tld])) {
+                    if ($this->useIdnCheck && isset($this->validIdns[$this->tld])) {
                         if (is_string($this->validIdns[$this->tld])) {
-                            $regexChars += include __DIR__ . '/' . $this->validIdns[$this->tld];
+                            $filePath = __DIR__ . '/' . $this->validIdns[$this->tld];
+                            assert(file_exists($filePath));
+                            $data = include $filePath;
+                            assert(is_array($data));
+                            $regexChars += $data;
                         } else {
                             $regexChars += $this->validIdns[$this->tld];
                         }
@@ -2146,15 +2018,15 @@ class Hostname extends AbstractValidator
 
             // If the input passes as an Internet domain name, and domain names are allowed, then the hostname
             // passes validation
-            if ($status && ($this->getAllow() & self::ALLOW_DNS)) {
+            if ($status && $allowDns) {
                 return true;
             }
-        } elseif ($this->getAllow() & self::ALLOW_DNS) {
+        } elseif ($allowDns) {
             $this->error(self::INVALID_HOSTNAME);
         }
 
         // Check for URI Syntax (RFC3986)
-        if ($this->getAllow() & self::ALLOW_URI) {
+        if ($allowUri) {
             if (preg_match("/^([a-zA-Z0-9-._~!$&\'()*+,;=]|%[[:xdigit:]]{2}){1,254}$/i", $value)) {
                 return true;
             }
@@ -2168,7 +2040,6 @@ class Hostname extends AbstractValidator
 
         // If the input passes as a local network name, and local network names are allowed, then the
         // hostname passes validation
-        $allowLocal = $this->getAllow() & self::ALLOW_LOCAL;
         if ($status && $allowLocal) {
             return true;
         }
@@ -2191,9 +2062,8 @@ class Hostname extends AbstractValidator
      * Returns false in case of a decoding failure.
      *
      * @param  string $encoded Punycode encoded string to decode
-     * @return string|false
      */
-    protected function decodePunycode($encoded)
+    private function decodePunycode(string $encoded): string|false
     {
         if (! preg_match('/^[a-z0-9-]+$/i', $encoded)) {
             // no punycode encoded string

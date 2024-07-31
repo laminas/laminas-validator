@@ -1,30 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\File;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
-use Laminas\Validator\Exception;
-use Traversable;
+use Laminas\Validator\Exception\InvalidArgumentException;
 
-use function array_shift;
 use function file_get_contents;
-use function func_get_args;
-use function func_num_args;
-use function is_array;
-use function is_numeric;
-use function is_readable;
-use function is_string;
 use function str_word_count;
 
 /**
  * Validator for counting all words in a file
  *
- * @final
+ * @psalm-type OptionsArgument = array{
+ *     min?: numeric,
+ *     max?: numeric,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
+ * }
  */
-class WordCount extends AbstractValidator
+final class WordCount extends AbstractValidator
 {
-    use FileInformationTrait;
-
     /**
      * @const string Error constants
      */
@@ -32,179 +33,86 @@ class WordCount extends AbstractValidator
     public const TOO_LESS  = 'fileWordCountTooLess';
     public const NOT_FOUND = 'fileWordCountNotFound';
 
-    /** @var array Error message templates */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::TOO_MUCH  => "Too many words, maximum '%max%' are allowed but '%count%' were counted",
         self::TOO_LESS  => "Too few words, minimum '%min%' are expected but '%count%' were counted",
         self::NOT_FOUND => 'File is not readable or does not exist',
     ];
 
-    /** @var array Error message template variables */
-    protected $messageVariables = [
-        'min'   => ['options' => 'min'],
-        'max'   => ['options' => 'max'],
+    /** @var array<string, string|array<string, string>> */
+    protected array $messageVariables = [
+        'min'   => 'min',
+        'max'   => 'max',
         'count' => 'count',
     ];
 
     /**
      * Word count
-     *
-     * @var int
      */
-    protected $count;
+    protected ?int $count = null;
 
-    /**
-     * Options for this validator
-     *
-     * @var array
-     */
-    protected $options = [
-        'min' => null, // Minimum word count, if null there is no minimum word count
-        'max' => null, // Maximum word count, if null there is no maximum word count
-    ];
+    protected readonly int|null $min;
+    protected readonly int|null $max;
 
     /**
      * Sets validator options
      *
-     * Min limits the word count, when used with max=null it is the maximum word count
-     * It also accepts an array with the keys 'min' and 'max'
-     *
-     * If $options is an integer, it will be used as maximum word count
-     * As Array is accepts the following keys:
-     * 'min': Minimum word count
-     * 'max': Maximum word count
-     *
-     * @param int|array|Traversable $options Options for the adapter
+     * @param OptionsArgument $options
      */
-    public function __construct($options = null)
+    public function __construct(array $options = [])
     {
-        if (1 < func_num_args()) {
-            $args    = func_get_args();
-            $options = [
-                'min' => array_shift($args),
-                'max' => array_shift($args),
-            ];
+        $min = $options['min'] ?? null;
+        $max = $options['max'] ?? null;
+
+        if ($min === null && $max === null) {
+            throw new InvalidArgumentException('A minimum or maximum word count must be set');
         }
 
-        if (is_string($options) || is_numeric($options)) {
-            $options = ['max' => $options];
+        $min = $min !== null ? (int) $min : null;
+        $max = $max !== null ? (int) $max : null;
+
+        if ($min !== null && $max !== null && $min > $max) {
+            throw new InvalidArgumentException('The minimum word count should be less than the maximum word count');
         }
+
+        unset($options['min'], $options['max']);
+
+        $this->min = $min;
+        $this->max = $max;
 
         parent::__construct($options);
     }
 
     /**
-     * Returns the minimum word count
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @return int
-     */
-    public function getMin()
-    {
-        return $this->options['min'];
-    }
-
-    /**
-     * Sets the minimum word count
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @param int|array $min The minimum word count
-     * @return $this Provides a fluent interface
-     * @throws Exception\InvalidArgumentException When min is greater than max.
-     */
-    public function setMin($min)
-    {
-        if (is_array($min) && isset($min['min'])) {
-            $min = $min['min'];
-        }
-
-        if (! is_numeric($min)) {
-            throw new Exception\InvalidArgumentException('Invalid options to validator provided');
-        }
-
-        $min = (int) $min;
-        if (($this->getMax() !== null) && ($min > $this->getMax())) {
-            throw new Exception\InvalidArgumentException(
-                "The minimum must be less than or equal to the maximum word count, but $min > {$this->getMax()}"
-            );
-        }
-
-        $this->options['min'] = $min;
-        return $this;
-    }
-
-    /**
-     * Returns the maximum word count
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @return int
-     */
-    public function getMax()
-    {
-        return $this->options['max'];
-    }
-
-    /**
-     * Sets the maximum file count
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @param int|array $max The maximum word count
-     * @return $this Provides a fluent interface
-     * @throws Exception\InvalidArgumentException When max is smaller than min.
-     */
-    public function setMax($max)
-    {
-        if (is_array($max) && isset($max['max'])) {
-            $max = $max['max'];
-        }
-
-        if (! is_numeric($max)) {
-            throw new Exception\InvalidArgumentException('Invalid options to validator provided');
-        }
-
-        $max = (int) $max;
-        if (($this->getMin() !== null) && ($max < $this->getMin())) {
-            throw new Exception\InvalidArgumentException(
-                "The maximum must be greater than or equal to the minimum word count, but $max < {$this->getMin()}"
-            );
-        }
-
-        $this->options['max'] = $max;
-        return $this;
-    }
-
-    /**
      * Returns true if and only if the counted words are at least min and
      * not bigger than max (when max is not null).
-     *
-     * @param  string|array $value Filename to check for word count
-     * @param  array        $file  File data from \Laminas\File\Transfer\Transfer (optional)
-     * @return bool
      */
-    public function isValid($value, $file = null)
+    public function isValid(mixed $value): bool
     {
-        $fileInfo = $this->getFileInfo($value, $file);
-
-        $this->setValue($fileInfo['filename']);
-
-        // Is file readable ?
-        if (empty($fileInfo['file']) || false === is_readable($fileInfo['file'])) {
+        if (! FileInformation::isPossibleFile($value)) {
             $this->error(self::NOT_FOUND);
+
             return false;
         }
 
-        $content     = file_get_contents($fileInfo['file']);
+        $file = FileInformation::factory($value);
+
+        if (! $file->readable) {
+            $this->error(self::NOT_FOUND);
+
+            return false;
+        }
+
+        $content     = file_get_contents($file->path);
         $this->count = str_word_count($content);
-        if (($this->getMax() !== null) && ($this->count > $this->getMax())) {
+
+        if (($this->max !== null) && ($this->count > $this->max)) {
             $this->error(self::TOO_MUCH);
             return false;
         }
 
-        if (($this->getMin() !== null) && ($this->count < $this->getMin())) {
+        if (($this->min !== null) && ($this->count < $this->min)) {
             $this->error(self::TOO_LESS);
             return false;
         }

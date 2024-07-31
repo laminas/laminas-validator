@@ -1,226 +1,117 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
-use ArrayAccess;
-use Laminas\Stdlib\ArrayUtils;
-use Traversable;
+use Laminas\Translator\TranslatorInterface;
 
-use function array_key_exists;
-use function get_debug_type;
 use function is_array;
 use function is_int;
 use function is_string;
 use function key;
-use function sprintf;
 use function var_export;
 
-/** @final */
-class Identical extends AbstractValidator
+/**
+ * @psalm-type OptionsArgument = array{
+ *     token?: mixed,
+ *     strict?: bool,
+ *     literal?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
+ * }
+ */
+final class Identical extends AbstractValidator
 {
-    /**
-     * Error codes
-     *
-     * @const string
-     */
     public const NOT_SAME      = 'notSame';
     public const MISSING_TOKEN = 'missingToken';
 
-    /**
-     * Error messages
-     *
-     * @var array
-     */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::NOT_SAME      => 'The two given tokens do not match',
         self::MISSING_TOKEN => 'No token was provided to match against',
     ];
 
-    /** @var array */
-    protected $messageVariables = [
+    /** @var array<string, string|array<string, string>> */
+    protected array $messageVariables = [
         'token' => 'tokenString',
     ];
 
-    /**
-     * Original token against which to validate
-     *
-     * @var null|string
-     */
-    protected $tokenString;
-
-    /** @var null|string */
-    protected $token;
-
-    /** @var bool */
-    protected $strict = true;
-
-    /** @var bool */
-    protected $literal = false;
+    protected readonly ?string $tokenString;
+    private readonly mixed $token;
+    private readonly bool $strict;
+    private readonly bool $literal;
 
     /**
      * Sets validator options
      *
-     * @param  mixed $token
+     * @param OptionsArgument $options
      */
-    public function __construct($token = null)
+    public function __construct(array $options = [])
     {
-        if ($token instanceof Traversable) {
-            $token = ArrayUtils::iteratorToArray($token);
-        }
+        /** @psalm-suppress MixedAssignment $token */
+        $token   = $options['token'] ?? null;
+        $strict  = $options['strict'] ?? true;
+        $literal = $options['literal'] ?? false;
+        unset($options['token'], $options['strict'], $options['literal']);
 
-        if (is_array($token) && array_key_exists('token', $token)) {
-            if (array_key_exists('strict', $token)) {
-                $this->setStrict($token['strict']);
-            }
-
-            if (array_key_exists('literal', $token)) {
-                $this->setLiteral($token['literal']);
-            }
-
-            $this->setToken($token['token']);
-        } elseif (null !== $token) {
-            $this->setToken($token);
-        }
-
-        parent::__construct(is_array($token) ? $token : null);
-    }
-
-    /**
-     * Retrieve token
-     *
-     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
-     *
-     * @return mixed
-     */
-    public function getToken()
-    {
-        return $this->token;
-    }
-
-    /**
-     * Set token against which to compare
-     *
-     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
-     *
-     * @return $this
-     */
-    public function setToken(mixed $token)
-    {
-        $this->tokenString = is_array($token) ? var_export($token, true) : (string) $token;
         $this->token       = $token;
-        return $this;
-    }
+        $this->tokenString = is_array($token) ? var_export($token, true) : (string) $token;
+        $this->strict      = $strict;
+        $this->literal     = $literal;
 
-    /**
-     * Returns the strict parameter
-     *
-     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
-     *
-     * @return bool
-     */
-    public function getStrict()
-    {
-        return $this->strict;
-    }
-
-    /**
-     * Sets the strict parameter
-     *
-     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
-     *
-     * @param bool $strict
-     * @return $this
-     */
-    public function setStrict($strict)
-    {
-        $this->strict = (bool) $strict;
-        return $this;
-    }
-
-    /**
-     * Returns the literal parameter
-     *
-     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
-     *
-     * @return bool
-     */
-    public function getLiteral()
-    {
-        return $this->literal;
-    }
-
-    /**
-     * Sets the literal parameter
-     *
-     * @deprecated Since 2.61.0 - All option setters and getters will be removed in 3.0
-     *
-     * @param bool $literal
-     * @return $this
-     */
-    public function setLiteral($literal)
-    {
-        $this->literal = (bool) $literal;
-        return $this;
+        parent::__construct($options);
     }
 
     /**
      * Returns true if and only if a token has been set and the provided value
      * matches that token.
      *
-     * @param  mixed $value
-     * @param  null|array|ArrayAccess $context
-     * @throws Exception\InvalidArgumentException If context is not array or ArrayObject.
-     * @return bool
+     * @psalm-suppress MixedAssignment, MixedArrayAccess Tokens are mixed as are array members
      */
-    public function isValid($value, $context = null)
+    public function isValid(mixed $value, ?array $context = null): bool
     {
         $this->setValue($value);
 
-        $token = $this->getToken();
-
-        if (! $this->getLiteral() && $context !== null) {
-            if (! is_array($context) && ! $context instanceof ArrayAccess) {
-                throw new Exception\InvalidArgumentException(sprintf(
-                    'Context passed to %s must be array, ArrayObject or null; received "%s"',
-                    __METHOD__,
-                    get_debug_type($context)
-                ));
-            }
-
-            if (is_array($token)) {
-                while (is_array($token)) {
-                    $key = key($token);
-                    if (! isset($context[$key])) {
-                        break;
-                    }
-                    $context = $context[$key];
-                    $token   = $token[$key];
-                }
-            }
-
-            // if $token is an array it means the above loop didn't went all the way down to the leaf,
-            // so the $token structure doesn't match the $context structure
-            if (
-                is_array($token)
-                || (! is_int($token) && ! is_string($token))
-                || ! isset($context[$token])
-            ) {
-                $token = $this->getToken();
-            } else {
-                $token = $context[$token];
-            }
-        }
-
-        if ($token === null) {
+        if ($this->token === null) {
             $this->error(self::MISSING_TOKEN);
             return false;
         }
 
-        $strict = $this->getStrict();
+        $matchTo = $this->token;
+
+        if (! $this->literal && $context !== null) {
+            if (is_array($matchTo)) {
+                while (is_array($matchTo)) {
+                    $key = key($matchTo);
+                    if (! isset($context[$key])) {
+                        break;
+                    }
+                    $context = $context[$key];
+                    $matchTo = $matchTo[$key];
+                }
+            }
+
+            // if $matchTo is an array it means the above loop didn't go all the way down to the leaf,
+            // so the $matchTo structure doesn't match the $context structure
+            if (
+                is_array($matchTo)
+                || (! is_int($matchTo) && ! is_string($matchTo))
+                || ! isset($context[$matchTo])
+            ) {
+                $matchTo = $this->token;
+            } else {
+                $matchTo = $context[$matchTo] ?? null;
+            }
+        }
+
         if (
-            ($strict && ($value !== $token))
+            ($this->strict && ($value !== $matchTo))
             // phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedNotEqualOperator
-            || (! $strict && ($value != $token))
+            || (! $this->strict && ($value != $matchTo))
         ) {
             $this->error(self::NOT_SAME);
             return false;

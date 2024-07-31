@@ -1,42 +1,42 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
-use Laminas\Stdlib\ArrayUtils;
-use Traversable;
+use Laminas\Translator\TranslatorInterface;
+use Laminas\Validator\Exception\InvalidArgumentException;
 
 use function array_key_exists;
 use function array_keys;
 use function array_unique;
-use function current;
+use function assert;
 use function implode;
 use function is_array;
+use function is_bool;
 use function is_object;
 use function is_string;
 use function key;
 use function method_exists;
+use function property_exists;
+use function sprintf;
 use function str_repeat;
 use function str_replace;
 use function strlen;
 use function substr;
-use function ucfirst;
 use function var_export;
 
 use const SORT_REGULAR;
 
 /**
  * @psalm-type AbstractOptions = array{
- *     messages: array<string, string>,
- *     messageTemplates: array<string, string>,
- *     messageVariables: array<string, mixed>,
- *     translator: Translator\TranslatorInterface|null,
- *     translatorTextDomain: string|null,
- *     translatorEnabled: bool,
- *     valueObscured: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
+ *     ...<string, mixed>
  * }
- * @property array<string, mixed> $options
- * @property array<string, string> $messageTemplates
- * @property array<string, mixed> $messageVariables
  */
 abstract class AbstractValidator implements
     Translator\TranslatorAwareInterface,
@@ -45,154 +45,94 @@ abstract class AbstractValidator implements
     /**
      * The value to be validated
      *
-     * @var mixed
+     * phpcs:disable WebimpressCodingStandard.Classes.NoNullValues
      */
-    protected $value;
+    protected mixed $value = null;
 
     /**
      * Default translation object for all validate objects
-     *
-     * @var Translator\TranslatorInterface
      */
-    protected static $defaultTranslator;
+    private static ?TranslatorInterface $defaultTranslator = null;
 
     /**
      * Default text domain to be used with translator
-     *
-     * @var string
      */
-    protected static $defaultTranslatorTextDomain = 'default';
+    private static string $defaultTranslatorTextDomain = 'default';
 
     /**
      * Limits the maximum returned length of an error message
-     *
-     * @var int
      */
-    protected static $messageLength = -1;
+    private static int $messageLength = -1;
+
     /**
-     * @deprecated Since 2.61.0 This property will be removed in 3.0
+     * An array that defines the default translations (in english) of the validators error messages
      *
-     * @var AbstractOptions&array<string, mixed>
+     * @var array<string, string>
      */
-    protected $abstractOptions = [
-        'messages'             => [], // Array of validation failure messages
-        'messageTemplates'     => [], // Array of validation failure message templates
-        'messageVariables'     => [], // Array of additional variables available for validation failure messages
-        'translator'           => null, // Translation object to used -> Translator\TranslatorInterface
-        'translatorTextDomain' => null, // Translation text domain
-        'translatorEnabled'    => true, // Is translation enabled?
-        'valueObscured'        => false, // Flag indicating whether value should be obfuscated in error messages
-    ];
+    protected array $messageTemplates = [];
+
+    /**
+     * An array that defines substitutions that will be interpolated into error messages.
+     *
+     * Keys are the placeholder name and the values must be a string that references protected or public properties of
+     * the validator, for example ['myProperty' => 'myProperty'] would replace "%myProperty%" in an error message with
+     * the value of "$this->myProperty".
+     *
+     * You can also specify a replacement as an array such as ['myProperty' => ['props' => 'this-one']]. In this case,
+     * the placeholder '%myProperty%' would be replaced with the value "$this->props['this-one']".
+     *
+     * @var array<string, string|array<string, string>>
+     */
+    protected array $messageVariables = [];
+
+    /** Flag indicating whether value should be obfuscated in error messages */
+    private bool $valueObscured = false;
+
+    /** Whether translation should be enabled or not */
+    private bool $translatorEnabled = true;
+
+    /** The text domain for translations */
+    private string $translatorTextDomain = 'default';
+
+    /** A custom translator, the default translator, or null */
+    private TranslatorInterface|null $translator = null;
+
+    /**
+     * Error messages that have occurred during the last validation
+     *
+     * @var array<string, string>
+     */
+    protected array $errorMessages = [];
 
     /**
      * Abstract constructor for all validators
-     * A validator should accept following parameters:
-     *  - nothing f.e. Validator()
-     *  - one or multiple scalar values f.e. Validator($first, $second, $third)
-     *  - an array f.e. Validator(array($first => 'first', $second => 'second', $third => 'third'))
-     *  - an instance of Traversable f.e. Validator($config_instance)
      *
-     * @param array<string, mixed>|Traversable<string, mixed> $options
+     * Custom validators should call `parent::__construct($options)` after processing validator specific options in
+     * order to ensure that:
+     * - User supplied, custom errors messages override the default error messages
+     * - The configured translator is correctly set and/or enabled
+     *
+     * @param AbstractOptions $options
      */
-    public function __construct($options = null)
+    public function __construct(array $options = [])
     {
-        // The abstract constructor allows no scalar values
-        if ($options instanceof Traversable) {
-            $options = ArrayUtils::iteratorToArray($options);
-        }
+        $valueObscured        = $options['valueObscured'] ?? false;
+        $translatorEnabled    = $options['translatorEnabled'] ?? true;
+        $translatorTextDomain = $options['translatorTextDomain'] ?? self::$defaultTranslatorTextDomain;
+        $translator           = $options['translator'] ?? self::$defaultTranslator;
+        $messages             = $options['messages'] ?? [];
 
-        /** @psalm-suppress RedundantConditionGivenDocblockType */
-        if (isset($this->messageTemplates) && is_array($this->messageTemplates)) {
-            $this->abstractOptions['messageTemplates'] = $this->messageTemplates;
-        }
+        assert(is_bool($translatorEnabled));
+        assert(is_string($translatorTextDomain));
+        assert($translator instanceof TranslatorInterface || $translator === null);
+        assert(is_array($messages));
 
-        /** @psalm-suppress RedundantConditionGivenDocblockType */
-        if (isset($this->messageVariables) && is_array($this->messageVariables)) {
-            $this->abstractOptions['messageVariables'] = $this->messageVariables;
-        }
-
-        if (is_array($options)) {
-            $this->setOptions($options);
-        }
-    }
-
-    /**
-     * Returns an option
-     *
-     * @deprecated Since 2.61.0 This method will be removed in 3.0
-     *
-     * @param string $option Option to be returned
-     * @return mixed Returned option
-     * @throws Exception\InvalidArgumentException
-     */
-    public function getOption($option)
-    {
-        if (array_key_exists($option, $this->abstractOptions)) {
-            return $this->abstractOptions[$option];
-        }
-
-        /** @psalm-suppress RedundantConditionGivenDocblockType */
-        if (isset($this->options) && array_key_exists($option, $this->options)) {
-            return $this->options[$option];
-        }
-
-        throw new Exception\InvalidArgumentException("Invalid option '$option'");
-    }
-
-    /**
-     * Returns all available options
-     *
-     * @deprecated Since 2.61.0 This method will be removed in 3.0
-     *
-     * @return array<string, mixed> Array with all available options
-     */
-    public function getOptions()
-    {
-        $result = $this->abstractOptions;
-        /** @psalm-suppress RedundantConditionGivenDocblockType */
-        if (isset($this->options) && is_array($this->options)) {
-            $result += $this->options;
-        }
-        return $result;
-    }
-
-    /**
-     * Sets one or multiple options
-     *
-     * @deprecated Since 2.61.0 This method will be removed in 3.0 - Options should be passed to the constructor
-     *
-     * @param array<string, mixed>|Traversable<string, mixed> $options Options to set
-     * @return self Provides fluid interface
-     * @throws Exception\InvalidArgumentException If $options is not an array or Traversable.
-     */
-    public function setOptions($options = [])
-    {
-        /** @psalm-suppress DocblockTypeContradiction */
-        if (! is_array($options) && ! $options instanceof Traversable) {
-            throw new Exception\InvalidArgumentException(__METHOD__ . ' expects an array or Traversable');
-        }
-
-        /**
-         * @psalm-suppress RedundantConditionGivenDocblockType
-         * @psalm-var mixed $option
-         */
-        foreach ($options as $name => $option) {
-            $fname  = 'set' . ucfirst($name);
-            $fname2 = 'is' . ucfirst($name);
-            if (($name !== 'setOptions') && method_exists($this, $name)) {
-                $this->{$name}($option);
-            } elseif (($fname !== 'setOptions') && method_exists($this, $fname)) {
-                $this->{$fname}($option);
-            } elseif (method_exists($this, $fname2)) {
-                $this->{$fname2}($option);
-            } elseif (isset($this->options) && is_array($this->options)) {
-                $this->options[$name] = $option;
-            } else {
-                $this->abstractOptions[$name] = $option;
-            }
-        }
-
-        return $this;
+        $this->valueObscured        = $valueObscured;
+        $this->translatorEnabled    = $translatorEnabled;
+        $this->translatorTextDomain = $translatorTextDomain;
+        $this->translator           = $translator;
+        /** @psalm-var array<string, string> $messages Psalm cannot infer this from the declared type */
+        $this->overrideMessagesWith($messages);
     }
 
     /**
@@ -200,126 +140,41 @@ abstract class AbstractValidator implements
      *
      * @return array<string, string>
      */
-    public function getMessages()
+    public function getMessages(): array
     {
-        return array_unique($this->abstractOptions['messages'], SORT_REGULAR);
+        return array_unique($this->errorMessages, SORT_REGULAR);
     }
 
     /**
      * Invoke as command
-     *
-     * @return bool
      */
-    public function __invoke(mixed $value)
+    public function __invoke(mixed $value): bool
     {
         return $this->isValid($value);
     }
 
     /**
-     * Returns an array of the names of variables that are used in constructing validation failure messages
-     *
-     * @deprecated Since 2.61.0 This method will be removed in 3.0
-     *
-     * @return list<string>
-     */
-    public function getMessageVariables()
-    {
-        return array_keys($this->abstractOptions['messageVariables']);
-    }
-
-    /**
-     * Returns the message templates from the validator
-     *
-     * @deprecated Since 2.61.0 This method will be removed in 3.0
-     *
-     * @return array<string, string>
-     */
-    public function getMessageTemplates()
-    {
-        return $this->abstractOptions['messageTemplates'];
-    }
-
-    /**
      * Sets the validation failure message template for a particular key
      *
-     * @param  string      $messageString
-     * @param  string|null $messageKey     OPTIONAL
-     * @return $this Provides a fluent interface
-     * @throws Exception\InvalidArgumentException
+     * Omitting the `$messageKey` parameter will cause _all_ error messages to have the same value.
+     *
+     * @throws InvalidArgumentException If the supplied $messageKey does not correspond to a known error message key.
      */
-    public function setMessage($messageString, $messageKey = null)
+    public function setMessage(string $messageString, ?string $messageKey = null): void
     {
         if ($messageKey === null) {
-            $keys = array_keys($this->abstractOptions['messageTemplates']);
+            $keys = array_keys($this->messageTemplates);
             foreach ($keys as $key) {
                 $this->setMessage($messageString, $key);
             }
-            return $this;
+            return;
         }
 
-        if (! isset($this->abstractOptions['messageTemplates'][$messageKey])) {
-            throw new Exception\InvalidArgumentException("No message template exists for key '$messageKey'");
+        if (! isset($this->messageTemplates[$messageKey])) {
+            throw new InvalidArgumentException("No message template exists for key '$messageKey'");
         }
 
-        $this->abstractOptions['messageTemplates'][$messageKey] = $messageString;
-        return $this;
-    }
-
-    /**
-     * Sets validation failure message templates given as an array, where the array keys are the message keys,
-     * and the array values are the message template strings.
-     *
-     * @deprecated Since 2.61.0 This method will be removed in 3.0
-     *             Provide customised messages via the `messages` constructor option
-     *
-     * @param array<string, string> $messages
-     * @return $this
-     */
-    public function setMessages(array $messages)
-    {
-        foreach ($messages as $key => $message) {
-            $this->setMessage($message, $key);
-        }
-        return $this;
-    }
-
-    /**
-     * Magic function returns the value of the requested property, if and only if it is the value or a
-     * message variable.
-     *
-     * @deprecated Since 2.61.0 This method will be removed in 3.0 - It will no longer be possible to fetch any internal
-     *             properties
-     *
-     * @param string $property
-     * @return mixed
-     * @throws Exception\InvalidArgumentException
-     */
-    public function __get($property)
-    {
-        if ($property === 'value') {
-            return $this->value;
-        }
-
-        if (array_key_exists($property, $this->abstractOptions['messageVariables'])) {
-            /** @psalm-var mixed $result */
-            $result = $this->abstractOptions['messageVariables'][$property];
-            if (is_array($result)) {
-                return $this->{key($result)}[current($result)];
-            }
-            return $this->{$result};
-        }
-
-        /** @psalm-suppress RedundantConditionGivenDocblockType */
-        if (isset($this->messageVariables) && array_key_exists($property, $this->messageVariables)) {
-            /** @psalm-var mixed $result */
-            $result = $this->{$this->messageVariables[$property]};
-            if (is_array($result)) {
-                return $this->{key($result)}[current($result)];
-            }
-            return $this->{$result};
-        }
-
-        throw new Exception\InvalidArgumentException("No property exists by the name '$property'");
+        $this->messageTemplates[$messageKey] = $messageString;
     }
 
     /**
@@ -329,50 +184,34 @@ abstract class AbstractValidator implements
      *
      * If a translator is available and a translation exists for $messageKey,
      * the translation will be used.
-     *
-     * @param string              $messageKey
-     * @param string|array|object $value
-     * @return null|string
      */
-    protected function createMessage($messageKey, $value)
+    private function createMessage(string $messageKey, mixed $value): ?string
     {
-        if (! isset($this->abstractOptions['messageTemplates'][$messageKey])) {
+        if (! isset($this->messageTemplates[$messageKey])) {
             return null;
         }
 
-        $message = $this->abstractOptions['messageTemplates'][$messageKey];
+        $message = $this->translateMessage(
+            $this->messageTemplates[$messageKey],
+        );
 
-        $message = $this->translateMessage($messageKey, $message);
+        $message = $this->substitutePlaceholder(
+            'value',
+            $value,
+            $message,
+            $this->valueObscured,
+        );
 
-        if (is_object($value)) {
-            $value = method_exists($value, '__toString')
-                ? (string) $value
-                : $value::class . ' object';
-        } elseif (is_array($value)) {
-            $value = var_export($value, true);
-        } else {
-            /** @psalm-suppress RedundantCastGivenDocblockType $value */
-            $value = (string) $value;
+        foreach ($this->messageVariables as $id => $property) {
+            $message = $this->substitutePlaceholder(
+                $id,
+                $this->propertyValue($property),
+                $message,
+                false,
+            );
         }
 
-        if ($this->isValueObscured()) {
-            $value = str_repeat('*', strlen($value));
-        }
-
-        $message = str_replace('%value%', $value, $message);
-        foreach ($this->abstractOptions['messageVariables'] as $ident => $property) {
-            if (is_array($property)) {
-                $value = $this->{key($property)}[current($property)];
-                if (is_array($value)) {
-                    $value = '[' . implode(', ', $value) . ']';
-                }
-            } else {
-                $value = $this->$property;
-            }
-            $message = str_replace("%$ident%", (string) $value, $message);
-        }
-
-        $length = self::getMessageLength();
+        $length = self::$messageLength;
         if (($length > -1) && (strlen($message) > $length)) {
             $message = substr($message, 0, $length - 3) . '...';
         }
@@ -380,20 +219,58 @@ abstract class AbstractValidator implements
         return $message;
     }
 
-    /**
-     * @param  string|null              $messageKey
-     * @param  null|string|array|object $value      OPTIONAL
-     * @return void
-     */
-    protected function error($messageKey, $value = null)
+    /** @param string|array<string, string> $prop */
+    private function propertyValue(string|array $prop): mixed
     {
-        if ($messageKey === null) {
-            $keys       = array_keys($this->abstractOptions['messageTemplates']);
-            $messageKey = current($keys);
+        if (is_string($prop)) {
+            assert(property_exists($this, $prop));
+
+            /** @psalm-var mixed $value */
+            return $this->{$prop};
         }
 
+        $name = key($prop);
+        assert(property_exists($this, $name));
+
+        $key = $prop[$name];
+        /** @psalm-var mixed $value */
+        $value = $this->$name;
+        assert(is_array($value));
+        assert(array_key_exists($key, $value));
+
+        return $value[$key];
+    }
+
+    private function substitutePlaceholder(string $id, mixed $value, string $message, bool $obscure): string
+    {
+        $search = "%$id%";
+        $value  = $this->stringifyValue($value);
+        if ($obscure) {
+            $value = str_repeat('*', strlen($value));
+        }
+
+        return str_replace($search, $value, $message);
+    }
+
+    private function stringifyValue(mixed $value): string
+    {
+        if (is_object($value)) {
+            return method_exists($value, '__toString')
+                ? (string) $value
+                : $value::class . ' object';
+        }
+
+        if (is_array($value)) {
+            return var_export($value, true);
+        }
+
+        return (string) $value;
+    }
+
+    protected function error(string $messageKey, mixed $value = null): void
+    {
         if ($value === null) {
-            /** @psalm-var string|array|object $value */
+            /** @psalm-var mixed $value */
             $value = $this->value;
         }
 
@@ -402,261 +279,106 @@ abstract class AbstractValidator implements
             return;
         }
 
-        $this->abstractOptions['messages'][$messageKey] = $message;
+        $this->errorMessages[$messageKey] = $message;
     }
 
     /**
      * Returns the validation value
-     *
-     * @return mixed Value to be validated
      */
-    protected function getValue()
+    protected function getValue(): mixed
     {
         return $this->value;
     }
 
     /**
-     * Sets the value to be validated and clears the messages and errors arrays
+     * Set the validated value
      *
-     * @return void
+     * Sets the validated value so that it can be interpolated in error messages and clears any previous validation
+     * failure messages.
      */
-    protected function setValue(mixed $value)
+    protected function setValue(mixed $value): void
     {
-        $this->value                       = $value;
-        $this->abstractOptions['messages'] = [];
+        $this->value         = $value;
+        $this->errorMessages = [];
     }
 
     /**
-     * Set flag indicating whether or not value should be obfuscated in messages
-     *
-     * @deprecated Since 2.61.0 This method will be removed in 3.0 - Use the `valueObscured` option via the constructor
-     *
-     * @param bool $flag
-     * @return $this
+     * Set the translator for this instance
      */
-    public function setValueObscured($flag)
+    public function setTranslator(?TranslatorInterface $translator = null, ?string $textDomain = null): void
     {
-        /** @psalm-suppress RedundantCastGivenDocblockType */
-        $this->abstractOptions['valueObscured'] = (bool) $flag;
-        return $this;
-    }
-
-    /**
-     * Retrieve flag indicating whether or not value should be obfuscated in
-     * messages
-     *
-     * @deprecated Since 2.61.0 This method will be removed in 3.0
-     *
-     * @return bool
-     */
-    public function isValueObscured()
-    {
-        return $this->abstractOptions['valueObscured'];
-    }
-
-    /**
-     * Set translation object
-     *
-     * @param  string          $textDomain (optional)
-     * @return $this
-     * @throws Exception\InvalidArgumentException
-     */
-    public function setTranslator(?Translator\TranslatorInterface $translator = null, $textDomain = null)
-    {
-        $this->abstractOptions['translator'] = $translator;
-        if (null !== $textDomain) {
-            $this->setTranslatorTextDomain($textDomain);
+        $this->translator = $translator;
+        if ($textDomain !== null) {
+            $this->translatorTextDomain = $textDomain;
         }
-        return $this;
     }
 
     /**
-     * Return translation object
-     *
-     * @return Translator\TranslatorInterface|null
+     * Return the translator for this instance
      */
-    public function getTranslator()
+    public function getTranslator(): ?TranslatorInterface
     {
-        if (! $this->isTranslatorEnabled()) {
-            return null;
-        }
-
-        if (null === $this->abstractOptions['translator']) {
-            $this->abstractOptions['translator'] = self::getDefaultTranslator();
-        }
-
-        return $this->abstractOptions['translator'];
+        return $this->translator;
     }
 
     /**
-     * Does this validator have its own specific translator?
-     *
-     * @deprecated Since 2.61.0 This method will be removed in 3.0
-     *
-     * @return bool
+     * Set the default, static translator for all validators
      */
-    public function hasTranslator()
-    {
-        return (bool) $this->abstractOptions['translator'];
-    }
-
-    /**
-     * Set translation text domain
-     *
-     * @deprecated  since 2.61.0 This method will be removed in 3.0 Use the `translatorTextDomain` option, or set
-     *              the text domain at the same time as the translator via `setTranslator()`
-     *
-     * @param string $textDomain
-     * @return $this
-     */
-    public function setTranslatorTextDomain($textDomain = 'default')
-    {
-        $this->abstractOptions['translatorTextDomain'] = $textDomain;
-        return $this;
-    }
-
-    /**
-     * Return the translation text domain
-     *
-     * @deprecated Since 2.61.0 This method will be removed in 3.0
-     *
-     * @return string
-     */
-    public function getTranslatorTextDomain()
-    {
-        if (null === $this->abstractOptions['translatorTextDomain']) {
-            $this->abstractOptions['translatorTextDomain'] =
-                self::getDefaultTranslatorTextDomain();
-        }
-        return $this->abstractOptions['translatorTextDomain'];
-    }
-
-    /**
-     * Set default translation object for all validate objects
-     *
-     * @param  string          $textDomain (optional)
-     * @return void
-     * @throws Exception\InvalidArgumentException
-     */
-    public static function setDefaultTranslator(?Translator\TranslatorInterface $translator = null, $textDomain = null)
-    {
-        static::$defaultTranslator = $translator;
+    public static function setDefaultTranslator(
+        ?TranslatorInterface $translator = null,
+        ?string $textDomain = null,
+    ): void {
+        self::$defaultTranslator = $translator;
         if (null !== $textDomain) {
             self::setDefaultTranslatorTextDomain($textDomain);
         }
     }
 
     /**
-     * Get default translation object for all validate objects
-     *
-     * @deprecated Since 2.61.0 This method will be removed in 3.0
-     *
-     * @return Translator\TranslatorInterface|null
+     * Set default translation text domain for all validator instances
      */
-    public static function getDefaultTranslator()
+    public static function setDefaultTranslatorTextDomain(string $textDomain = 'default'): void
     {
-        return static::$defaultTranslator;
+        self::$defaultTranslatorTextDomain = $textDomain;
     }
 
     /**
-     * Is there a default translation object set?
-     *
-     * @deprecated Since 2.61.0 This method will be removed in 3.0
-     *
-     * @return bool
+     * Sets the maximum allowed message length for all validator instances
      */
-    public static function hasDefaultTranslator()
+    public static function setMessageLength(int $length = -1): void
     {
-        return (bool) static::$defaultTranslator;
-    }
-
-    /**
-     * Set default translation text domain for all validate objects
-     *
-     * @param  string $textDomain
-     * @return void
-     */
-    public static function setDefaultTranslatorTextDomain($textDomain = 'default')
-    {
-        static::$defaultTranslatorTextDomain = $textDomain;
-    }
-
-    /**
-     * Get default translation text domain for all validate objects
-     *
-     * @deprecated Since 2.61.0 This method will be removed in 3.0
-     *
-     * @return string
-     */
-    public static function getDefaultTranslatorTextDomain()
-    {
-        return static::$defaultTranslatorTextDomain;
-    }
-
-    /**
-     * Indicate whether or not translation should be enabled
-     *
-     * @deprecated Since 2.61.0 This method will be removed in 3.0
-     *
-     * @param bool $enabled
-     * @return $this
-     */
-    public function setTranslatorEnabled($enabled = true)
-    {
-        /** @psalm-suppress RedundantCastGivenDocblockType */
-        $this->abstractOptions['translatorEnabled'] = (bool) $enabled;
-        return $this;
-    }
-
-    /**
-     * Is translation enabled?
-     *
-     * @deprecated Since 2.61.0 This method will be removed in 3.0
-     *
-     * @return bool
-     */
-    public function isTranslatorEnabled()
-    {
-        return $this->abstractOptions['translatorEnabled'];
-    }
-
-    /**
-     * Returns the maximum allowed message length
-     *
-     * @deprecated Since 2.61.0 This method will be removed in 3.0
-     *
-     * @return int
-     */
-    public static function getMessageLength()
-    {
-        return static::$messageLength;
-    }
-
-    /**
-     * Sets the maximum allowed message length
-     *
-     * @param int $length
-     * @return void
-     */
-    public static function setMessageLength($length = -1)
-    {
-        static::$messageLength = $length;
+        self::$messageLength = $length;
     }
 
     /**
      * Translate a validation message
-     *
-     * @param  string $messageKey
-     * @param  string $message
-     * @return string
      */
-    protected function translateMessage($messageKey, $message)
+    private function translateMessage(string $message): string
     {
-        $translator = $this->getTranslator();
-        if (! $translator) {
+        if (! $this->translatorEnabled || ! $this->translator) {
             return $message;
         }
 
-        return $translator->translate($message, $this->getTranslatorTextDomain());
+        return $this->translator->translate($message, $this->translatorTextDomain);
+    }
+
+    /**
+     * Overrides message templates for this instance
+     *
+     * @param array<string, string> $customMessages
+     */
+    private function overrideMessagesWith(array $customMessages): void
+    {
+        foreach ($customMessages as $key => $message) {
+            if (! array_key_exists($key, $this->messageTemplates)) {
+                throw new InvalidArgumentException(sprintf(
+                    'The error message key "%s" does not exist. Possible keys are "%s"',
+                    $key,
+                    implode(', ', array_keys($this->messageTemplates)),
+                ));
+            }
+
+            $this->messageTemplates[$key] = $message;
+        }
     }
 }

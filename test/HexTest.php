@@ -8,8 +8,6 @@ use Laminas\Validator\Hex;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-use function array_keys;
-
 final class HexTest extends TestCase
 {
     private Hex $validator;
@@ -27,32 +25,40 @@ final class HexTest extends TestCase
      * @param int|string $input
      */
     #[DataProvider('basicDataProvider')]
-    public function testBasic($input, bool $expected): void
+    public function testBasic(mixed $input, bool $expected, string|null $errorKey): void
     {
         self::assertSame($expected, $this->validator->isValid($input));
+        if ($errorKey === null) {
+            return;
+        }
+
+        self::assertArrayHasKey($errorKey, $this->validator->getMessages());
     }
 
     /**
      * @psalm-return array<string, array{
-     *     0: int|string,
-     *     1: bool
+     *     0: mixed,
+     *     1: bool,
+     *     2: null|string,
      * }>
      */
     public static function basicDataProvider(): array
     {
         return [
-            // phpcs:disable
-            'valid; int; 1' => [1, true],
-            'valid; hex; 0x1' => [0x1, true],
-            'valid; hex; 0x123' => [0x123, true],
-            'valid; string; 1' => ['1', true],
-            'valid; string; abc123' => ['abc123', true],
-            'valid; string; ABC123' => ['ABC123', true],
-            'valid; string; 1234567890abcdef' => ['1234567890abcdef', true],
-
-            'invalid; string; g' => ['g', false],
-            'invalid; string; 1.2' => ['1.2', false],
-            // phpcs:enable
+            'valid; int; 1'                   => [1, true, null],
+            'valid; hex; 0x1'                 => [0x1, true, null],
+            'valid; hex; 0x123'               => [0x123, true, null],
+            'valid; string; 1'                => ['1', true, null],
+            'valid; string; abc123'           => ['abc123', true, null],
+            'valid; string; ABC123'           => ['ABC123', true, null],
+            'valid; string; 1234567890abcdef' => ['1234567890abcdef', true, null],
+            'invalid; string; g'              => ['g', false, Hex::NOT_HEX],
+            'invalid; string; 1.2'            => ['1.2', false, Hex::NOT_HEX],
+            'invalid; null'                   => [null, false, Hex::INVALID],
+            'invalid; empty string'           => ['', false, Hex::NOT_HEX],
+            'invalid; array'                  => [['abc123'], false, Hex::INVALID],
+            'invalid; float'                  => [1.4, false, Hex::INVALID],
+            'invalid; hex colour string'      => ['#ffffff', false, Hex::NOT_HEX],
         ];
     }
 
@@ -62,25 +68,5 @@ final class HexTest extends TestCase
     public function testGetMessages(): void
     {
         self::assertSame([], $this->validator->getMessages());
-    }
-
-    /**
-     * @Laminas-4352
-     */
-    public function testNonStringValidation(): void
-    {
-        self::assertFalse($this->validator->isValid([1 => 1]));
-    }
-
-    public function testEqualsMessageTemplates(): void
-    {
-        self::assertSame(
-            [
-                Hex::INVALID,
-                Hex::NOT_HEX,
-            ],
-            array_keys($this->validator->getMessageTemplates())
-        );
-        self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 }

@@ -1,18 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
+
+use Laminas\Translator\TranslatorInterface;
+use Laminas\Validator\Exception\InvalidArgumentException;
 
 use function in_array;
 use function is_int;
 use function is_string;
 use function preg_match;
-use function quotemeta;
 use function str_replace;
 use function strlen;
 use function substr;
 
-/** @final */
-class Isbn extends AbstractValidator
+/**
+ * @psalm-type OptionsArgument = array{
+ *     type?: Isbn::AUTO|Isbn::ISBN10|Isbn::ISBN13,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
+ * }
+ */
+final class Isbn extends AbstractValidator
 {
     public const AUTO    = 'auto';
     public const ISBN10  = '10';
@@ -23,66 +36,52 @@ class Isbn extends AbstractValidator
     /**
      * Validation failure message template definitions.
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::INVALID => 'Invalid type given. String or integer expected',
         self::NO_ISBN => 'The input is not a valid ISBN number',
     ];
 
-    /** @var array<string, mixed> */
-    protected $options = [
-        'type'      => self::AUTO, // Allowed type
-        'separator' => '', // Separator character
-    ];
+    private readonly string $type;
+
+    /**
+     * @param OptionsArgument $options
+     * @psalm-suppress DocblockTypeContradiction Ignoring runtime value checks.
+     */
+    public function __construct(array $options = [])
+    {
+        $type = $options['type'] ?? self::AUTO;
+
+        if (! in_array($type, [self::AUTO, self::ISBN10, self::ISBN13], true)) {
+            throw new InvalidArgumentException('Invalid ISBN type');
+        }
+
+        $this->type = $type;
+
+        unset($options['type']);
+
+        parent::__construct($options);
+    }
 
     /**
      * Detect input format.
      *
-     * @return null|string
+     * @return self::ISBN10|self::ISBN13|null
      */
-    protected function detectFormat()
+    private function detectFormat(string $value): ?string
     {
-        // prepare separator and pattern list
-        $sep      = quotemeta($this->getSeparator());
-        $patterns = [];
-        $lengths  = [];
-        $type     = $this->getType();
-
         // check for ISBN-10
-        if ($type === self::ISBN10 || $type === self::AUTO) {
-            if (empty($sep)) {
-                $pattern = '/^[0-9]{9}[0-9X]{1}$/';
-                $length  = 10;
-            } else {
-                $pattern = "/^[0-9]{1,7}[{$sep}]{1}[0-9]{1,7}[{$sep}]{1}[0-9]{1,7}[{$sep}]{1}[0-9X]{1}$/";
-                $length  = 13;
+        if ($this->type === self::ISBN10 || $this->type === self::AUTO) {
+            if (strlen($value) === 10 && preg_match('/^[0-9]{9}[0-9X]$/', $value)) {
+                return self::ISBN10;
             }
-
-            $patterns[$pattern] = self::ISBN10;
-            $lengths[$pattern]  = $length;
         }
 
         // check for ISBN-13
-        if ($type === self::ISBN13 || $type === self::AUTO) {
-            if (empty($sep)) {
-                $pattern = '/^[0-9]{13}$/';
-                $length  = 13;
-            } else {
-                // @codingStandardsIgnoreStart
-                $pattern = "/^[0-9]{1,9}[{$sep}]{1}[0-9]{1,5}[{$sep}]{1}[0-9]{1,9}[{$sep}]{1}[0-9]{1,9}[{$sep}]{1}[0-9]{1}$/";
-                // @codingStandardsIgnoreEnd
-                $length = 17;
-            }
-
-            $patterns[$pattern] = self::ISBN13;
-            $lengths[$pattern]  = $length;
-        }
-
-        // check pattern list
-        foreach ($patterns as $pattern => $type) {
-            if ((strlen($this->getValue()) === $lengths[$pattern]) && preg_match($pattern, $this->getValue())) {
-                return $type;
+        if ($this->type === self::ISBN13 || $this->type === self::AUTO) {
+            if (strlen($value) === 13 && preg_match('/^[0-9]{13}$/', $value)) {
+                return self::ISBN13;
             }
         }
 
@@ -91,109 +90,79 @@ class Isbn extends AbstractValidator
 
     /**
      * Returns true if and only if $value is a valid ISBN.
-     *
-     * @param  mixed $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if (! is_string($value) && ! is_int($value)) {
             $this->error(self::INVALID);
             return false;
         }
 
-        $value         = (string) $value;
-        $originalValue = $value;
+        $value = (string) $value;
         $this->setValue($value);
+        // Strip separators from the ISBN prior to validation
+        $value = str_replace([' ', '-'], '', $value);
 
-        switch ($this->detectFormat()) {
-            case self::ISBN10:
-                $isbn = new Isbn\Isbn10();
-                break;
+        $type = $this->detectFormat($value);
+        if ($type === null) {
+            $this->error(self::NO_ISBN);
 
-            case self::ISBN13:
-                $isbn = new Isbn\Isbn13();
-                break;
-
-            default:
-                $this->error(self::NO_ISBN);
-                return false;
+            return false;
         }
 
-        $value    = str_replace($this->getSeparator(), '', $value);
-        $checksum = $isbn->getChecksum($value);
+        $checksum = $type === self::ISBN10
+            ? $this->calculateIsbn10Checksum($value)
+            : $this->calculateIsbn13Checksum($value);
 
         // validate
-        if (substr($originalValue, -1) !== (string) $checksum) {
+        if (substr($value, -1) !== $checksum) {
             $this->error(self::NO_ISBN);
             return false;
         }
+
         return true;
     }
 
-    /**
-     * Set separator characters.
-     *
-     * It is allowed only empty string, hyphen and space.
-     *
-     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
-     *
-     * @param string $separator
-     * @return $this Provides a fluent interface
-     * @throws Exception\InvalidArgumentException When $separator is not valid.
-     */
-    public function setSeparator($separator)
+    private function calculateIsbn10Checksum(string $value): string
     {
-        // check separator
-        if (! in_array($separator, ['-', ' ', ''])) {
-            throw new Exception\InvalidArgumentException('Invalid ISBN separator.');
+        $sum = 0;
+
+        for ($i = 0; $i < 9; $i++) {
+            $sum += (10 - $i) * (int) $value[$i];
         }
 
-        $this->options['separator'] = $separator;
-        return $this;
-    }
+        $checksum = 11 - ($sum % 11);
 
-    /**
-     * Get separator characters.
-     *
-     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
-     *
-     * @return string
-     */
-    public function getSeparator()
-    {
-        return $this->options['separator'];
-    }
-
-    /**
-     * Set allowed ISBN type.
-     *
-     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
-     *
-     * @param string $type
-     * @return $this Provides a fluent interface
-     * @throws Exception\InvalidArgumentException When $type is not valid.
-     */
-    public function setType($type)
-    {
-        // check type
-        if (! in_array($type, [self::AUTO, self::ISBN10, self::ISBN13])) {
-            throw new Exception\InvalidArgumentException('Invalid ISBN type');
+        if ($checksum === 11) {
+            return '0';
         }
 
-        $this->options['type'] = $type;
-        return $this;
+        if ($checksum === 10) {
+            return 'X';
+        }
+
+        return (string) $checksum;
     }
 
-    /**
-     * Get allowed ISBN type.
-     *
-     * @deprecated Since 2.61.0 - All option getters and setters will be removed in 3.0
-     *
-     * @return string
-     */
-    public function getType()
+    private function calculateIsbn13Checksum(string $value): string
     {
-        return $this->options['type'];
+        $sum = 0;
+
+        for ($i = 0; $i < 12; $i++) {
+            if ($i % 2 === 0) {
+                $sum += (int) $value[$i];
+                continue;
+            }
+
+            $sum += 3 * (int) $value[$i];
+        }
+
+        $checksum = 10 - ($sum % 10);
+
+        if ($checksum === 10) {
+            return '0';
+        }
+
+        return (string) $checksum;
     }
 }

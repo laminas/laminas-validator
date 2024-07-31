@@ -1,20 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Barcode;
 
-/** @final */
-class Code25interleaved extends AbstractAdapter
+use function is_numeric;
+use function strlen;
+
+final class Code25interleaved implements AdapterInterface
 {
-    /**
-     * Constructor
-     *
-     * Sets check flag to false.
-     */
-    public function __construct()
+    public function hasValidLength(string $value): bool
     {
-        $this->setLength('even');
-        $this->setCharacters('0123456789');
-        $this->setChecksum('code25');
-        $this->useChecksum(false);
+        return (strlen($value) % 2) === 0;
+    }
+
+    public function hasValidCharacters(string $value): bool
+    {
+        return is_numeric($value);
+    }
+
+    public function hasValidChecksum(string $value): bool
+    {
+        return Util::code25($value);
+    }
+
+    public function getLength(): string
+    {
+        return 'even';
     }
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator\File;
 
-use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File\UploadFile;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
@@ -105,12 +104,11 @@ final class UploadFileTest extends TestCase
         self::assertArrayHasKey($messageKey, $this->validator->getMessages());
     }
 
-    public function testRaisesExceptionWhenValueArrayIsBad(): void
+    public function testInvalidArrayIsValidationFailure(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('$_FILES format');
-
-        $this->validator->isValid(['foo', 'bar']);
+        self::assertFalse($this->validator->isValid(['foo', 'bar']));
+        $messages = $this->validator->getMessages();
+        self::assertArrayHasKey(UploadFile::UNKNOWN, $messages);
     }
 
     #[Group('Laminas-11258')]

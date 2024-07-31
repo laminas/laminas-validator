@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use function explode;
@@ -16,6 +18,7 @@ final class GpsPoint extends AbstractValidator
     public const CONVERT_ERROR         = 'gpsPointConvertError';
     public const INCOMPLETE_COORDINATE = 'gpsPointIncompleteCoordinate';
 
+    /** @var array<string, string> */
     protected array $messageTemplates = [
         self::OUT_OF_BOUNDS         => '%value% is out of Bounds.',
         self::CONVERT_ERROR         => '%value% can not converted into a Decimal Degree Value.',
@@ -45,7 +48,7 @@ final class GpsPoint extends AbstractValidator
 
     private function isValidCoordinate(string $value, float $maxBoundary): bool
     {
-        $this->value = $value;
+        $this->setValue($value);
 
         $value = $this->removeWhiteSpace($value);
         if ($this->isDMSValue($value)) {

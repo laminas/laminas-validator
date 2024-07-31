@@ -5,15 +5,12 @@ declare(strict_types=1);
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Hostname;
-use LaminasTest\Validator\TestAsset\ArrayTranslator;
 use LaminasTest\Validator\TestAsset\Translator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function array_key_exists;
-use function array_keys;
-use function extension_loaded;
 use function implode;
 use function ini_get;
 use function ini_set;
@@ -48,16 +45,18 @@ final class HostnameTest extends TestCase
 
     /**
      * Ensures that the validator follows expected behavior
+     *
+     * @param  int-mask-of<Hostname::ALLOW_*> $allow
      */
     #[DataProvider('basicDataProvider')]
-    public function testBasic(int $option, bool $expected, string $hostname): void
+    public function testBasic(int $allow, bool $expected, string $hostname): void
     {
-        $validator = new Hostname($option);
+        $validator = new Hostname(['allow' => $allow]);
 
         self::assertSame($expected, $validator->isValid($hostname));
     }
 
-    /** @psalm-return array<array-key, array{0: int, 1: bool, 2: string}> */
+    /** @psalm-return array<array-key, array{0: int-mask-of<Hostname::ALLOW_*>, 1: bool, 2: string}> */
     public static function basicDataProvider(): array
     {
         return [
@@ -86,15 +85,16 @@ final class HostnameTest extends TestCase
         ];
     }
 
+    /** @param int-mask-of<Hostname::ALLOW_*> $allow */
     #[DataProvider('combinationDataProvider')]
-    public function testCombination(int $option, bool $expected, string $hostname): void
+    public function testCombination(int $allow, bool $expected, string $hostname): void
     {
-        $validator = new Hostname($option);
+        $validator = new Hostname(['allow' => $allow]);
 
         self::assertSame($expected, $validator->isValid($hostname));
     }
 
-    /** @psalm-return array<array-key, array{0: int, 1: bool, 2: string}> */
+    /** @psalm-return array<array-key, array{0: int-mask-of<Hostname::ALLOW_*>, 1: bool, 2: string}> */
     public static function combinationDataProvider(): array
     {
         return [
@@ -112,16 +112,18 @@ final class HostnameTest extends TestCase
 
     /**
      * Ensure the dash character tests work as expected
+     *
+     * @param int-mask-of<Hostname::ALLOW_*> $allow
      */
     #[DataProvider('dashesDataProvider')]
-    public function testDashes(int $option, bool $expected, string $hostname): void
+    public function testDashes(int $allow, bool $expected, string $hostname): void
     {
-        $validator = new Hostname($option);
+        $validator = new Hostname(['allow' => $allow]);
 
         self::assertSame($expected, $validator->isValid($hostname));
     }
 
-    /** @psalm-return array<array-key, array{0: int, 1: bool, 2: string}> */
+    /** @psalm-return array<array-key, array{0: int-mask-of<Hostname::ALLOW_*>, 1: bool, 2: string}> */
     public static function dashesDataProvider(): array
     {
         return [
@@ -140,7 +142,7 @@ final class HostnameTest extends TestCase
     #[DataProvider('domainsWithUnderscores')]
     public function testValidatorHandlesUnderscoresInDomainsCorrectly(string $input, bool $expected): void
     {
-        $validator = new Hostname(Hostname::ALLOW_DNS);
+        $validator = new Hostname(['allow' => Hostname::ALLOW_DNS]);
 
         self::assertSame($expected, $validator->isValid($input), implode("\n", $validator->getMessages()));
     }
@@ -217,9 +219,11 @@ final class HostnameTest extends TestCase
     #[DataProvider('idnNoMatchingDataProvider')]
     public function testIdnNoMatching(string $input): void
     {
-        $this->validator->useIdnCheck(false);
+        $validator = new Hostname([
+            'useIdnCheck' => false,
+        ]);
 
-        self::assertFalse($this->validator->isValid($input));
+        self::assertFalse($validator->isValid($input));
     }
 
     /**
@@ -228,7 +232,10 @@ final class HostnameTest extends TestCase
     #[DataProvider('idnNoMatchingDataProvider')]
     public function testIdnNoMatchingOptionConstructor(string $input): void
     {
-        $validator = new Hostname(Hostname::ALLOW_DNS, false);
+        $validator = new Hostname([
+            'allow'       => Hostname::ALLOW_DNS,
+            'useIdnCheck' => false,
+        ]);
 
         self::assertFalse($validator->isValid($input));
     }
@@ -269,9 +276,11 @@ final class HostnameTest extends TestCase
     #[DataProvider('tldNoMatchingDataProvider')]
     public function testTldNoMatching(string $input): void
     {
-        $this->validator->useTldCheck(false);
+        $validator = new Hostname([
+            'useTldCheck' => false,
+        ]);
 
-        self::assertTrue($this->validator->isValid($input));
+        self::assertTrue($validator->isValid($input));
     }
 
     /**
@@ -280,7 +289,10 @@ final class HostnameTest extends TestCase
     #[DataProvider('tldNoMatchingDataProvider')]
     public function testTldNoMatchingOptionConstructor(string $input): void
     {
-        $validator = new Hostname(Hostname::ALLOW_DNS, true, false);
+        $validator = new Hostname([
+            'allow'       => Hostname::ALLOW_DNS,
+            'useTldCheck' => false,
+        ]);
 
         self::assertTrue($validator->isValid($input));
     }
@@ -296,32 +308,16 @@ final class HostnameTest extends TestCase
     }
 
     /**
-     * Ensures that getAllow() returns expected default value
-     */
-    public function testGetAllow(): void
-    {
-        self::assertSame(Hostname::ALLOW_DNS, $this->validator->getAllow());
-    }
-
-    /**
      * Test changed with Laminas-6676, as IP check is only involved when IP patterns match
      */
     #[Group('Laminas-2861')]
     #[Group('Laminas-6676')]
     public function testValidatorMessagesShouldBeTranslated(): void
     {
-        if (! extension_loaded('intl')) {
-            self::markTestSkipped('ext/intl not enabled');
-        }
-
-        $translations         = [
-            'hostnameInvalidLocalName' => 'The input does not appear to be a valid local network name',
+        $translations = [
+            Hostname::INVALID_LOCAL_NAME => 'The input does not appear to be a valid local network name',
         ];
-        $loader               = new ArrayTranslator();
-        $loader->translations = $translations;
-        $translator           = new Translator();
-        $translator->getPluginManager()->setService('default', $loader);
-        $translator->addTranslationFile('default', null);
+        $translator   = new Translator($translations);
         $this->validator->setTranslator($translator);
 
         $this->validator->isValid('0.239,512.777');
@@ -448,7 +444,7 @@ final class HostnameTest extends TestCase
     #[Group('Laminas-10267')]
     public function testURI(string $input, bool $expected): void
     {
-        $validator = new Hostname(Hostname::ALLOW_URI);
+        $validator = new Hostname(['allow' => Hostname::ALLOW_URI]);
 
         self::assertSame($expected, $validator->isValid($input));
     }
@@ -472,17 +468,19 @@ final class HostnameTest extends TestCase
 
     /**
      * Ensure that a trailing "." in a local hostname is permitted
+     *
+     * @param int-mask-of<Hostname::ALLOW_*> $allow
      */
     #[DataProvider('trailingDotDataProvider')]
     #[Group('Laminas-6363')]
-    public function testTrailingDot(int $option, bool $expected, string $hostname): void
+    public function testTrailingDot(int $allow, bool $expected, string $hostname): void
     {
-        $validator = new Hostname($option);
+        $validator = new Hostname(['allow' => $allow]);
 
         self::assertSame($expected, $validator->isValid($hostname));
     }
 
-    /** @psalm-return array<string, array{0: int, 1: bool, 2: string}> */
+    /** @psalm-return array<string, array{0: int-mask-of<Hostname::ALLOW_*>, 1: bool, 2: string}> */
     public static function trailingDotDataProvider(): array
     {
         return [
@@ -501,7 +499,7 @@ final class HostnameTest extends TestCase
     #[Group('Laminas-11334')]
     public function testSupportsIpv6AddressesWhichContainHexDigitF(): void
     {
-        $validator = new Hostname(Hostname::ALLOW_ALL);
+        $validator = new Hostname(['allow' => Hostname::ALLOW_ALL]);
 
         self::assertTrue($validator->isValid('FEDC:BA98:7654:3210:FEDC:BA98:7654:3210'));
         self::assertTrue($validator->isValid('1080:0:0:0:8:800:200C:417A'));
@@ -518,7 +516,7 @@ final class HostnameTest extends TestCase
     #[Group('Laminas-11751')]
     public function testExtendedGreek(): void
     {
-        $validator = new Hostname(Hostname::ALLOW_ALL);
+        $validator = new Hostname(['allow' => Hostname::ALLOW_ALL]);
 
         self::assertTrue($validator->isValid('ῆὧὰῧῲ.com'));
     }
@@ -539,7 +537,7 @@ final class HostnameTest extends TestCase
     #[Group('Laminas-11796')]
     public function testIDNSI(string $value, bool $expected): void
     {
-        $validator = new Hostname(Hostname::ALLOW_ALL);
+        $validator = new Hostname(['allow' => Hostname::ALLOW_ALL]);
 
         self::assertSame($expected, $validator->isValid($value));
     }
@@ -548,7 +546,7 @@ final class HostnameTest extends TestCase
     #[Group('Issue #5894 - Add .il IDN domain checking; add new TLDs')]
     public function testIDNIL(string $input, bool $expected): void
     {
-        $validator = new Hostname(Hostname::ALLOW_ALL);
+        $validator = new Hostname(['allow' => Hostname::ALLOW_ALL]);
 
         self::assertSame($expected, $validator->isValid($input));
     }
@@ -578,8 +576,8 @@ final class HostnameTest extends TestCase
             sprintf(
                 '%s failed validation: %s',
                 $value,
-                implode("\n", $this->validator->getMessages())
-            )
+                implode("\n", $this->validator->getMessages()),
+            ),
         );
     }
 
@@ -624,41 +622,12 @@ final class HostnameTest extends TestCase
 
     public function testIDNIT(): void
     {
-        $validator = new Hostname(Hostname::ALLOW_ALL);
+        $validator = new Hostname(['allow' => Hostname::ALLOW_ALL]);
 
         self::assertTrue($validator->isValid('plainascii.it'));
         self::assertTrue($validator->isValid('città-caffè.it'));
         self::assertTrue($validator->isValid('edgetest-àâäèéêëìîïòôöùûüæœçÿß.it'));
         self::assertFalse($validator->isValid('رات.it'));
-    }
-
-    public function testEqualsMessageTemplates(): void
-    {
-        self::assertSame(
-            [
-                Hostname::CANNOT_DECODE_PUNYCODE,
-                Hostname::INVALID,
-                Hostname::INVALID_DASH,
-                Hostname::INVALID_HOSTNAME,
-                Hostname::INVALID_HOSTNAME_SCHEMA,
-                Hostname::INVALID_LOCAL_NAME,
-                Hostname::INVALID_URI,
-                Hostname::IP_ADDRESS_NOT_ALLOWED,
-                Hostname::LOCAL_NAME_NOT_ALLOWED,
-                Hostname::UNDECIPHERABLE_TLD,
-                Hostname::UNKNOWN_TLD,
-            ],
-            array_keys($this->validator->getMessageTemplates())
-        );
-        self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
-    }
-
-    public function testEqualsMessageVariables(): void
-    {
-        $messageVariables = ['tld' => 'tld'];
-
-        self::assertSame($messageVariables, $this->validator->getOption('messageVariables'));
-        self::assertSame(array_keys($messageVariables), $this->validator->getMessageVariables());
     }
 
     public function testHostnameWithOnlyIpChars(): void
@@ -694,5 +663,10 @@ final class HostnameTest extends TestCase
     public function testValidHostnameWithPunyEncodedDomainPart(): void
     {
         self::assertTrue($this->validator->isValid('xn--gld-sna.de'));
+    }
+
+    public function testValidDKIMHostName(): void
+    {
+        self::assertTrue($this->validator->isValid('selector._domainkey.example.com'));
     }
 }

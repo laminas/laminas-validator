@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 
 use function current;
+use function str_repeat;
 
 final class LocTest extends TestCase
 {
@@ -22,55 +23,49 @@ final class LocTest extends TestCase
         $this->validator = new Loc();
     }
 
-    /**
-     * Tests valid locations
-     */
-    public function testValidLocs(): void
+    /** @return list<array{0: string}> */
+    public static function validLocs(): array
     {
-        $values = [
-            'http://www.example.com',
-            'http://www.example.com/',
-            'http://www.exmaple.lan/',
-            'https://www.exmaple.com/?foo=bar',
-            'http://www.exmaple.com:8080/foo/bar/',
-            'https://user:pass@www.exmaple.com:8080/',
-            'https://www.exmaple.com/?foo=&quot;bar&apos;&amp;bar=&lt;bat&gt;',
+        return [
+            ['http://www.example.com'],
+            ['http://www.example.com/'],
+            ['http://www.exmaple.lan/'],
+            ['https://www.exmaple.com/?foo=bar'],
+            ['http://www.exmaple.com:8080/foo/bar/'],
+            ['https://user:pass@www.exmaple.com:8080/'],
+            ['https://www.example.com/?foo=%22bar%27&bar=%3Cbat%3E'],
         ];
+    }
 
-        foreach ($values as $value) {
-            self::assertTrue($this->validator->isValid($value));
-        }
+    #[DataProvider('validLocs')]
+    public function testValidLocs(string $uri): void
+    {
+        self::assertTrue($this->validator->isValid($uri));
     }
 
     /**
-     * @psalm-return array<array-key, array{0: string}>
+     * @psalm-return list<array{0: string, 1: string}>
      */
     public static function invalidLocs(): array
     {
         return [
-            ['www.example.com'],
-            ['/news/'],
-            ['#'],
-            ['http:/example.com/'],
-            ['https://www.exmaple.com/?foo="bar\'&bar=<bat>'],
+            ['www.example.com', Loc::NOT_VALID],
+            ['/news/', Loc::NOT_VALID],
+            ['#', Loc::NOT_VALID],
+            ['http:/example.com/', Loc::NOT_VALID],
+            ['https://www.example.com/?foo="bar\'&bar=<bat>', Loc::NOT_VALID],
+            ['https://www.exmaple.com/?foo=&quot;bar&apos;&amp;bar=&lt;bat&gt;', Loc::NOT_VALID],
+            ['https://www.example.com/' . str_repeat('foo', 2000), Loc::TOO_LONG],
         ];
     }
 
-    /**
-     * Tests invalid locations
-     *
-     * @todo A change in the URI API has led to most of these now validating
-     */
     #[DataProvider('invalidLocs')]
-    public function testInvalidLocs(string $url): void
+    public function testInvalidLocs(string $url, string $errorKey): void
     {
-        self::markTestIncomplete('Test must be reworked');
-
         self::assertFalse($this->validator->isValid($url), $url);
 
         $messages = $this->validator->getMessages();
-
-        self::assertStringContainsString('is not a valid', current($messages));
+        self::assertArrayHasKey($errorKey, $messages);
     }
 
     /**

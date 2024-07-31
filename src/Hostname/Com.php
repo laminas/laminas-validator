@@ -1,4 +1,10 @@
-<?php // phpcs:disable PSR12.Files.FileHeader.IncorrectOrder,WebimpressCodingStandard.Arrays.DoubleArrow.SpacesBefore
+<?php
+
+/**
+ * phpcs:disable PSR12.Files.FileHeader,WebimpressCodingStandard.Arrays.DoubleArrow
+ */
+
+declare(strict_types=1);
 
 namespace Laminas\Validator\Hostname;
 

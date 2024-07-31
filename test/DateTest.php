@@ -6,41 +6,26 @@ namespace LaminasTest\Validator;
 
 use DateTime;
 use DateTimeImmutable;
+use DateTimeInterface;
 use Laminas\Validator\Date;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-use function array_keys;
-use function date_get_last_errors;
-use function var_export;
-
 final class DateTest extends TestCase
 {
-    private Date $validator;
-
-    /**
-     * Creates a new Laminas\Validator\Date object for each test method
-     */
-    protected function setUp(): void
+    public function testNullFormatUsesDefault(): void
     {
-        parent::setUp();
+        $validator = new Date([
+            'format' => null,
+        ]);
 
-        $this->validator = new Date();
-    }
-
-    public function testSetFormatIgnoresNull(): void
-    {
-        $this->validator->setFormat(null);
-
-        self::assertSame(Date::FORMAT_DEFAULT, $this->validator->getFormat());
+        self::assertTrue($validator->isValid('2020-01-01'));
     }
 
     /**
-     * @return array[]
-     * @psalm-return array<array{
-     *     0: string|numeric|DateTime|object|array|null,
+     * @return array<array{
+     *     0: mixed,
      *     1: null|string,
      *     2: bool,
      *     3: bool
@@ -71,8 +56,8 @@ final class DateTest extends TestCase
             ['22/10/08',                'd/m/y',           true,     true],
             ['22/10',                   'd/m/Y',           false,    false],
             // time
-            ['2007-01-01T12:02:55Z',    DateTime::ISO8601, true,     false],
-            ['2007-01-01T12:02:55+0000', DateTime::ISO8601, true,    true],
+            ['2007-01-01T12:02:55Z',    DateTimeInterface::ATOM, true,     false],
+            ['2007-01-01T12:02:55+0000', DateTimeInterface::ISO8601, true,    true],
             ['12:02:55',                'H:i:s',           true,     true],
             ['25:02:55',                'H:i:s',           false,    false],
             // int
@@ -107,92 +92,51 @@ final class DateTest extends TestCase
 
     /**
      * Ensures that the validator follows expected behavior
-     *
-     * @param string|numeric|DateTime|object|array|null $input
      */
     #[DataProvider('datesDataProvider')]
-    public function testBasic($input, ?string $format, bool $result): void
+    public function testBasic(mixed $input, ?string $format, bool $result): void
     {
-        $this->validator->setFormat($format);
+        $validator = new Date([
+            'format' => $format,
+        ]);
 
-        /** @psalm-suppress ArgumentTypeCoercion, PossiblyNullArgument */
-        self::assertSame($result, $this->validator->isValid($input));
+        self::assertSame($result, $validator->isValid($input));
     }
 
-    /**
-     * @param string|numeric|DateTime|object|array|null $input
-     */
     #[DataProvider('datesDataProvider')]
-    public function testBasicStrictMode($input, ?string $format, bool $result, bool $resultStrict): void
+    public function testBasicStrictMode(mixed $input, ?string $format, bool $result, bool $resultStrict): void
     {
-        $this->validator->setStrict(true);
-        $this->validator->setFormat($format);
+        $validator = new Date([
+            'format' => $format,
+            'strict' => true,
+        ]);
 
-        /** @psalm-suppress ArgumentTypeCoercion, PossiblyNullArgument */
-        self::assertSame($resultStrict, $this->validator->isValid($input));
+        self::assertSame($resultStrict, $validator->isValid($input));
     }
 
-    public function testDateTimeImmutable(): void
+    public function testDateTimeInstanceIsValid(): void
     {
-        self::assertTrue($this->validator->isValid(new DateTimeImmutable()));
+        self::assertTrue((new Date())->isValid(new DateTimeImmutable()));
+        self::assertTrue((new Date())->isValid(new DateTime()));
     }
 
-    /**
-     * Ensures that getMessages() returns expected default value
-     */
-    public function testGetMessages(): void
+    public static function manualFormatProvider(): array
     {
-        self::assertSame([], $this->validator->getMessages());
-    }
-
-    /**
-     * Ensures that the validator can handle different manual dateformats
-     */
-    #[Group('Laminas-2003')]
-    public function testUseManualFormat(): void
-    {
-        self::assertTrue(
-            $this->validator->setFormat('d.m.Y')->isValid('10.01.2008'),
-            var_export(date_get_last_errors(), true)
-        );
-        self::assertSame('d.m.Y', $this->validator->getFormat());
-
-        self::assertTrue($this->validator->setFormat('m Y')->isValid('01 2010'));
-        self::assertFalse($this->validator->setFormat('d/m/Y')->isValid('2008/10/22'));
-        self::assertTrue($this->validator->setFormat('d/m/Y')->isValid('22/10/08'));
-        self::assertFalse($this->validator->setFormat('d/m/Y')->isValid('22/10'));
-        self::assertTrue($this->validator->setFormat('s')->isValid('00'));
-        self::assertFalse($this->validator->setFormat('s')->isValid('0'));
-    }
-
-    public function testEqualsMessageTemplates(): void
-    {
-        self::assertSame(
-            [
-                Date::INVALID,
-                Date::INVALID_DATE,
-                Date::FALSEFORMAT,
-            ],
-            array_keys($this->validator->getMessageTemplates())
-        );
-        self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
-    }
-
-    public function testEqualsMessageVariables(): void
-    {
-        $messageVariables = [
-            'format' => 'format',
+        return [
+            ['d.m.Y', '10.01.2008', true],
+            ['m Y', '01 2010', true],
+            ['d/m/Y', '2008/10/22', false],
+            ['d/m/Y', '22/10/08', true],
+            ['d/m/Y', '22/10', false],
+            ['s', '00', true],
+            ['s', '0', false],
         ];
-
-        self::assertSame($messageVariables, $this->validator->getOption('messageVariables'));
-        self::assertSame(array_keys($messageVariables), $this->validator->getMessageVariables());
     }
 
-    public function testConstructorWithFormatParameter(): void
+    #[DataProvider('manualFormatProvider')]
+    public function testUseManualFormat(string $format, mixed $input, bool $expect): void
     {
-        $format    = 'd/m/Y';
-        $validator = new Date($format);
-
-        self::assertSame($format, $validator->getFormat());
+        $validator = new Date(['format' => $format]);
+        self::assertSame($expect, $validator->isValid($input));
     }
 }

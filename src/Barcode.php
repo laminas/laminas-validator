@@ -1,24 +1,36 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
-use Laminas\Stdlib\ArrayUtils;
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Barcode\AdapterInterface;
+use Laminas\Validator\Barcode\Ean13;
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Traversable;
 
-use function assert;
 use function class_exists;
-use function get_debug_type;
+use function implode;
+use function is_a;
 use function is_array;
 use function is_string;
 use function sprintf;
 use function strtolower;
-use function substr;
 use function ucfirst;
 
-/** @final */
-class Barcode extends AbstractValidator
+/**
+ * @psalm-type OptionsArgument = array{
+ *     adapter?: AdapterInterface|class-string<AdapterInterface>|string,
+ *     useChecksum?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
+ * }
+ * @psalm-import-type AllowedLength from AdapterInterface
+ */
+final class Barcode extends AbstractValidator
 {
     public const INVALID        = 'barcodeInvalid';
     public const FAILED         = 'barcodeFailed';
@@ -26,155 +38,68 @@ class Barcode extends AbstractValidator
     public const INVALID_LENGTH = 'barcodeInvalidLength';
 
     /** @var array<string, string> */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::FAILED         => 'The input failed checksum validation',
         self::INVALID_CHARS  => 'The input contains invalid characters',
         self::INVALID_LENGTH => 'The input should have a length of %length% characters',
         self::INVALID        => 'Invalid type given. String expected',
     ];
 
-    /**
-     * Additional variables available for validation failure messages
-     *
-     * @var array<string, array<string, string>>
-     */
-    protected $messageVariables = [
-        'length' => ['options' => 'length'],
-    ];
-    /**
-     * @var array{
-     *     adapter: null|AdapterInterface,
-     *     options: null|array<string, mixed>,
-     *     length: null|int|array,
-     *     useChecksum: null|bool,
-     * }
-     */
-    protected $options = [
-        'adapter'     => null, // Barcode adapter Laminas\Validator\Barcode\AbstractAdapter
-        'options'     => null, // Options for this adapter
-        'length'      => null,
-        'useChecksum' => null,
+    /** @var array<string, string|array<string, string>> */
+    protected array $messageVariables = [
+        'length' => 'length',
     ];
 
-    /**
-     * Constructor for barcodes
-     *
-     * @param iterable<string, mixed>|null|string|AdapterInterface $options Options to use
-     */
-    public function __construct($options = null)
+    private readonly AdapterInterface $adapter;
+    protected readonly string $length;
+    private readonly bool $useChecksum;
+
+    /** @param OptionsArgument $options */
+    public function __construct(array $options = [])
     {
-        if ($options instanceof Traversable) {
-            $options = ArrayUtils::iteratorToArray($options);
-        }
-
-        if ($options === null) {
-            $options = [];
-        }
-
-        if (is_string($options) || $options instanceof AdapterInterface) {
-            $options = ['adapter' => $options];
-        }
-
-        if (! is_array($options)) {
-            throw new InvalidArgumentException(sprintf(
-                'Options should be an array, a string representing the name of an adapter, or an adapter instance. '
-                . 'Received "%s"',
-                get_debug_type($options),
-            ));
-        }
+        $this->adapter     = $this->resolveAdapter($options['adapter'] ?? new Ean13());
+        $this->length      = $this->stringifyExpectedLength();
+        $this->useChecksum = $options['useChecksum'] ?? false;
 
         parent::__construct($options);
     }
 
-    /**
-     * Returns the set adapter
-     *
-     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
-     *
-     * @return AdapterInterface
-     */
-    public function getAdapter()
+    private function resolveAdapter(string|AdapterInterface $adapter): AdapterInterface
     {
-        if (! $this->options['adapter'] instanceof Barcode\AdapterInterface) {
-            $this->setAdapter('Ean13');
+        if (is_string($adapter) && ! class_exists($adapter)) {
+            $adapter = sprintf('Laminas\\Validator\\Barcode\\%s', ucfirst(strtolower($adapter)));
         }
 
-        assert($this->options['adapter'] instanceof Barcode\AdapterInterface);
-
-        return $this->options['adapter'];
-    }
-
-    /**
-     * Sets a new barcode adapter
-     *
-     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
-     *
-     * @param  string|AdapterInterface $adapter Barcode adapter to use
-     * @param  array  $options Options for this adapter
-     * @return $this
-     * @throws InvalidArgumentException
-     */
-    public function setAdapter($adapter, $options = null)
-    {
-        if (is_string($adapter)) {
-            $adapter = ucfirst(strtolower($adapter));
-            $adapter = 'Laminas\\Validator\\Barcode\\' . $adapter;
-
-            if (! class_exists($adapter)) {
-                throw new InvalidArgumentException('Barcode adapter matching "' . $adapter . '" not found');
-            }
-
-            $adapter = new $adapter($options);
+        if (is_string($adapter) && is_a($adapter, AdapterInterface::class, true)) {
+            $adapter = new $adapter();
         }
 
-        if (! $adapter instanceof Barcode\AdapterInterface) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'Adapter %s does not implement Laminas\\Validator\\Barcode\\AdapterInterface',
-                    get_debug_type($adapter)
-                )
-            );
+        if (! $adapter instanceof AdapterInterface) {
+            throw new InvalidArgumentException(sprintf(
+                'The "adapter" option must resolve to an instance of %s',
+                AdapterInterface::class,
+            ));
         }
 
-        $this->options['adapter'] = $adapter;
-
-        return $this;
+        return $adapter;
     }
 
-    /**
-     * Returns the checksum option
-     *
-     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
-     *
-     * @return string|null
-     */
-    public function getChecksum()
+    private function stringifyExpectedLength(): string
     {
-        return $this->getAdapter()->getChecksum();
-    }
+        $length = $this->adapter->getLength();
+        if (is_array($length)) {
+            $length = implode('/', $length);
+        }
 
-    /**
-     * Sets if checksum should be validated, if no value is given the actual setting is returned
-     *
-     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
-     *
-     * @param null|bool $checksum
-     * @return AdapterInterface|bool
-     */
-    public function useChecksum($checksum = null)
-    {
-        return $this->getAdapter()->useChecksum($checksum);
+        return (string) $length;
     }
 
     /**
      * Defined by Laminas\Validator\ValidatorInterface
      *
      * Returns true if and only if $value contains a valid barcode
-     *
-     * @param  string $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if (! is_string($value)) {
             $this->error(self::INVALID);
@@ -182,37 +107,20 @@ class Barcode extends AbstractValidator
         }
 
         $this->setValue($value);
-        $adapter                 = $this->getAdapter();
-        $this->options['length'] = $adapter->getLength();
-        $result                  = $adapter->hasValidLength($value);
-        if (! $result) {
-            if (is_array($this->options['length'])) {
-                $temp                    = $this->options['length'];
-                $this->options['length'] = '';
-                foreach ($temp as $length) {
-                    $this->options['length'] .= '/';
-                    $this->options['length'] .= $length;
-                }
 
-                $this->options['length'] = substr($this->options['length'], 1);
-            }
-
+        if (! $this->adapter->hasValidLength($value)) {
             $this->error(self::INVALID_LENGTH);
             return false;
         }
 
-        $result = $adapter->hasValidCharacters($value);
-        if (! $result) {
+        if (! $this->adapter->hasValidCharacters($value)) {
             $this->error(self::INVALID_CHARS);
             return false;
         }
 
-        if ($this->useChecksum(null)) {
-            $result = $adapter->hasValidChecksum($value);
-            if (! $result) {
-                $this->error(self::FAILED);
-                return false;
-            }
+        if ($this->useChecksum && ! $this->adapter->hasValidChecksum($value)) {
+            $this->error(self::FAILED);
+            return false;
         }
 
         return true;

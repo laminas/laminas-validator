@@ -1,16 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
-/** @final */
-class ConfigProvider
+use Laminas\ServiceManager\ServiceManager;
+
+/** @psalm-import-type ServiceManagerConfiguration from ServiceManager */
+final class ConfigProvider
 {
     /**
      * Return configuration for this component.
      *
-     * @return array
+     * @return array{dependencies: ServiceManagerConfiguration}
      */
-    public function __invoke()
+    public function __invoke(): array
     {
         return [
             'dependencies' => $this->getDependencyConfig(),
@@ -20,20 +24,16 @@ class ConfigProvider
     /**
      * Return dependency mappings for this component.
      *
-     * @return array
+     * @return ServiceManagerConfiguration
      */
-    public function getDependencyConfig()
+    public function getDependencyConfig(): array
     {
         return [
             'aliases'   => [
-                Translator\TranslatorInterface::class => Translator\Translator::class,
-                'ValidatorManager'                    => ValidatorPluginManager::class,
-
-                // Legacy Zend Framework aliases
-                'Zend\Validator\ValidatorPluginManager' => ValidatorPluginManager::class,
+                'ValidatorManager' => ValidatorPluginManager::class,
             ],
             'factories' => [
-                Translator\Translator::class  => Translator\TranslatorFactory::class,
+                ValidatorChainFactory::class  => ValidatorChainFactoryFactory::class,
                 ValidatorPluginManager::class => ValidatorPluginManagerFactory::class,
             ],
         ];

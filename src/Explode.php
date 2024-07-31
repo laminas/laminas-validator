@@ -1,92 +1,74 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use Laminas\ServiceManager\ServiceManager;
-use Laminas\Stdlib\ArrayUtils;
-use Traversable;
+use Laminas\Translator\TranslatorInterface;
+use Laminas\Validator\Exception\RuntimeException;
 
 use function explode;
+use function implode;
 use function is_array;
 use function is_string;
 use function sprintf;
 
 /**
+ * @psalm-type OptionsArgument = array{
+ *     valueDelimiter?: non-empty-string,
+ *     validatorPluginManager?: ValidatorPluginManager|null,
+ *     validator?: ValidatorInterface|class-string<ValidatorInterface>|ValidatorSpecification,
+ *     breakOnFirstFailure?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
+ * }
  * @psalm-import-type ValidatorSpecification from ValidatorInterface
- * @final
  */
-class Explode extends AbstractValidator implements ValidatorPluginManagerAwareInterface
+final class Explode extends AbstractValidator
 {
-    public const INVALID = 'explodeInvalid';
+    public const INVALID      = 'explodeInvalid';
+    public const INVALID_ITEM = 'invalidItem';
 
-    /** @var null|ValidatorPluginManager */
-    protected $pluginManager;
-
-    /** @var array */
-    protected $messageTemplates = [
-        self::INVALID => 'Invalid type given',
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
+        self::INVALID      => 'Invalid type given, string expected',
+        self::INVALID_ITEM => '%count% items were invalid: %error%',
     ];
 
-    /** @var array */
-    protected $messageVariables = [];
-
     /** @var non-empty-string */
-    protected $valueDelimiter = ',';
+    private readonly string $valueDelimiter;
+    private ValidatorPluginManager|null $pluginManager;
+    private ValidatorInterface $validator;
+    private readonly bool $breakOnFirstFailure;
 
-    /** @var ValidatorInterface|null */
-    protected $validator;
+    protected int $count     = 0;
+    protected ?string $error = null;
 
-    /** @var bool */
-    protected $breakOnFirstFailure = false;
+    /** @var array<string, string|array<string, string>> */
+    protected array $messageVariables = [
+        'count' => 'count',
+        'error' => 'error',
+    ];
 
-    /**
-     * Sets the delimiter string that the values will be split upon
-     *
-     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
-     *
-     * @param non-empty-string $delimiter
-     * @return $this
-     */
-    public function setValueDelimiter($delimiter)
+    /** @param OptionsArgument $options */
+    public function __construct(array $options = [])
     {
-        $this->valueDelimiter = $delimiter;
-        return $this;
+        $this->valueDelimiter      = $options['valueDelimiter'] ?? ',';
+        $plugins                   = $options['validatorPluginManager'] ?? null;
+        $this->pluginManager       = $plugins instanceof ValidatorPluginManager ? $plugins : null;
+        $this->validator           = $this->resolveValidator($options['validator'] ?? null);
+        $this->breakOnFirstFailure = $options['breakOnFirstFailure'] ?? false;
+
+        parent::__construct($options);
     }
 
-    /**
-     * Returns the delimiter string that the values will be split upon
-     *
-     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
-     *
-     * @return non-empty-string
-     */
-    public function getValueDelimiter()
+    private function getPluginManager(): ValidatorPluginManager
     {
-        return $this->valueDelimiter;
-    }
-
-    /**
-     * Set validator plugin manager
-     *
-     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
-     *
-     * @return void
-     */
-    public function setValidatorPluginManager(ValidatorPluginManager $pluginManager)
-    {
-        $this->pluginManager = $pluginManager;
-    }
-
-    /**
-     * Get validator plugin manager
-     *
-     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
-     *
-     * @return ValidatorPluginManager
-     */
-    public function getValidatorPluginManager()
-    {
-        if (! $this->pluginManager) {
+        if (! $this->pluginManager instanceof ValidatorPluginManager) {
             $this->pluginManager = new ValidatorPluginManager(new ServiceManager());
         }
 
@@ -96,72 +78,35 @@ class Explode extends AbstractValidator implements ValidatorPluginManagerAwareIn
     /**
      * Sets the Validator for validating each value
      *
-     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
-     *
-     * @param ValidatorInterface|ValidatorSpecification $validator
-     * @return $this
-     * @throws Exception\RuntimeException
+     * @param ValidatorInterface|string|ValidatorSpecification $validator
+     * @throws RuntimeException
      */
-    public function setValidator($validator)
+    private function resolveValidator(ValidatorInterface|string|array|null $validator): ValidatorInterface
     {
+        if ($validator instanceof ValidatorInterface) {
+            return $validator;
+        }
+
         if (is_array($validator)) {
             if (! isset($validator['name'])) {
-                throw new Exception\RuntimeException(
-                    'Invalid validator specification provided; does not include "name" key'
+                throw new RuntimeException(
+                    'Invalid validator specification provided; does not include "name" key',
                 );
             }
             $name    = $validator['name'];
             $options = $validator['options'] ?? [];
-            /** @psalm-suppress MixedAssignment $validator */
-            $validator = $this->getValidatorPluginManager()->get($name, $options);
+
+            return $this->getPluginManager()->build($name, $options);
         }
 
-        if (! $validator instanceof ValidatorInterface) {
-            throw new Exception\RuntimeException(
-                'Invalid validator given'
-            );
+        if (is_string($validator)) {
+            return $this->getPluginManager()->get($validator);
         }
 
-        $this->validator = $validator;
-        return $this;
-    }
-
-    /**
-     * Gets the Validator for validating each value
-     *
-     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
-     *
-     * @return ValidatorInterface|null
-     */
-    public function getValidator()
-    {
-        return $this->validator;
-    }
-
-    /**
-     * Set break on first failure setting
-     *
-     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
-     *
-     * @param  bool $break
-     * @return $this
-     */
-    public function setBreakOnFirstFailure($break)
-    {
-        $this->breakOnFirstFailure = (bool) $break;
-        return $this;
-    }
-
-    /**
-     * Get break on first failure setting
-     *
-     * @deprecated Since 2.60.0 all option setters and getters are deprecated for removal in 3.0
-     *
-     * @return bool
-     */
-    public function isBreakOnFirstFailure()
-    {
-        return $this->breakOnFirstFailure;
+        throw new RuntimeException(sprintf(
+            '%s expects a validator to be set; none given',
+            self::class,
+        ));
     }
 
     /**
@@ -169,53 +114,42 @@ class Explode extends AbstractValidator implements ValidatorPluginManagerAwareIn
      *
      * Returns true if all values validate true
      *
-     * @param  mixed $value
-     * @param  mixed $context Extra "context" to provide the composed validator
-     * @return bool
-     * @throws Exception\RuntimeException
+     * @param array<string, mixed> $context
+     * @throws RuntimeException
      */
-    public function isValid($value, $context = null)
+    public function isValid(mixed $value, ?array $context = null): bool
     {
+        if (! is_string($value)) {
+            $this->error(self::INVALID);
+
+            return false;
+        }
+
         $this->setValue($value);
 
-        if ($value instanceof Traversable) {
-            $value = ArrayUtils::iteratorToArray($value);
-        }
-
-        if (is_array($value)) {
-            $values = $value;
-        } elseif (is_string($value)) {
-            $delimiter = $this->getValueDelimiter();
-            // Skip explode if delimiter is null,
-            // used when value is expected to be either an
-            // array when multiple values and a string for
-            // single values (ie. MultiCheckbox form behavior)
-            $values = null !== $delimiter
-                      ? explode($this->valueDelimiter, $value)
-                      : [$value];
-        } else {
-            $values = [$value];
-        }
-
-        $validator = $this->getValidator();
-
-        if (! $validator) {
-            throw new Exception\RuntimeException(sprintf(
-                '%s expects a validator to be set; none given',
-                __METHOD__
-            ));
-        }
+        $values      = explode($this->valueDelimiter, $value);
+        $this->count = 0;
 
         foreach ($values as $value) {
-            if (! $validator->isValid($value, $context)) {
-                $this->abstractOptions['messages'][] = $validator->getMessages();
+            if ($this->validator->isValid($value, $context)) {
+                continue;
+            }
 
-                if ($this->isBreakOnFirstFailure()) {
-                    return false;
-                }
+            $this->count++;
+
+            if ($this->breakOnFirstFailure) {
+                break;
             }
         }
 
-        return $this->abstractOptions['messages'] === [];
+        if ($this->count > 0) {
+            $this->error = implode(', ', $this->validator->getMessages());
+
+            $this->error(self::INVALID_ITEM);
+
+            return false;
+        }
+
+        return true;
     }
 }

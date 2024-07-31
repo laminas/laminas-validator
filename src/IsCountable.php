@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
-use Laminas\Stdlib\ArrayUtils;
-use Traversable;
+use Laminas\Translator\TranslatorInterface;
+use Laminas\Validator\Exception\InvalidArgumentException;
 
 use function count;
 use function is_countable;
-use function is_numeric;
 
 /**
  * Validate that a value is countable and the count meets expectations.
@@ -20,25 +21,22 @@ use function is_numeric;
  * - You can test if the value is greater than a maximum count value
  * - You can test if the value is between the minimum and maximum count values
  *
- * When creating the instance or calling `setOptions()`, if you specify a
+ * When creating the instance if you specify a
  * "count" option, specifying either "min" or "max" leads to an inconsistent
- * state and, as such will raise an Exception\InvalidArgumentException.
+ * state and, as such will raise an InvalidArgumentException.
  *
- * @psalm-type Options = array{
- *     count: int|null,
- *     min: int|null,
- *     max: int|null,
- * }
  * @psalm-type OptionsArgument = array{
  *     count?: int|null,
  *     min?: int|null,
  *     max?: int|null,
- * }&array<string, mixed>
- * @property Options&array<string, mixed> $options Required to stop Psalm getting confused about the declaration
- *                                                 on AbstractValidator
- * @final
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
+ * }
  */
-class IsCountable extends AbstractValidator
+final class IsCountable extends AbstractValidator
 {
     public const NOT_COUNTABLE = 'notCountable';
     public const NOT_EQUALS    = 'notEquals';
@@ -50,69 +48,56 @@ class IsCountable extends AbstractValidator
      *
      * @var array<string, string>
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::NOT_COUNTABLE => 'The input must be an array or an instance of \\Countable',
         self::NOT_EQUALS    => "The input count must equal '%count%'",
         self::GREATER_THAN  => "The input count must be less than '%max%', inclusively",
         self::LESS_THAN     => "The input count must be greater than '%min%', inclusively",
     ];
 
-    /**
-     * Additional variables available for validation failure messages
-     *
-     * @var array<string, array{options: string}>
-     */
-    protected $messageVariables = [
-        'count' => ['options' => 'count'],
-        'min'   => ['options' => 'min'],
-        'max'   => ['options' => 'max'],
+    /** @var array<string, string|array<string, string>> */
+    protected array $messageVariables = [
+        'count' => 'count',
+        'min'   => 'min',
+        'max'   => 'max',
     ];
 
-    /** @psalm-var Options */
-    protected $options = [
-        'count' => null,
-        'min'   => null,
-        'max'   => null,
-    ];
+    protected readonly ?int $min;
+    protected readonly ?int $max;
+    protected readonly ?int $count;
 
-    /**
-     * @param OptionsArgument|iterable<string, mixed> $options
-     * @return $this Provides fluid interface
-     */
-    public function setOptions($options = [])
+    /** @param OptionsArgument $options */
+    public function __construct(array $options = [])
     {
-        if ($options instanceof Traversable) {
-            $options = ArrayUtils::iteratorToArray($options);
+        $min   = $options['min'] ?? null;
+        $max   = $options['max'] ?? null;
+        $count = $options['count'] ?? null;
+
+        if ($count !== null && ($min !== null || $max !== null)) {
+            throw new InvalidArgumentException(
+                'The `count` option is mutually exclusive with the `min` and `max` options',
+            );
         }
 
-        /** @psalm-var Options $options */
-
-        if (isset($options['count'])) {
-            $this->setCount($options['count']);
+        if ($max !== null && $min !== null && $max < $min) {
+            throw new InvalidArgumentException(
+                'The `max` option cannot be less than the `min` option',
+            );
         }
 
-        if (isset($options['min'])) {
-            $this->setMin($options['min']);
-        }
+        $this->min   = $min;
+        $this->max   = $max;
+        $this->count = $count;
 
-        if (isset($options['max'])) {
-            $this->setMax($options['max']);
-        }
+        unset($options['min'], $options['max'], $options['count']);
 
-        unset($options['count'], $options['min'], $options['max']);
-
-        parent::setOptions($options);
-
-        return $this;
+        parent::__construct($options);
     }
 
     /**
      * Returns true if and only if $value is countable (and the count validates against optional values).
-     *
-     * @param mixed $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if (! is_countable($value)) {
             $this->error(self::NOT_COUNTABLE);
@@ -121,8 +106,8 @@ class IsCountable extends AbstractValidator
 
         $count = count($value);
 
-        if (is_numeric($this->getCount())) {
-            if ($count !== $this->getCount()) {
+        if ($this->count !== null) {
+            if ($count !== $this->count) {
                 $this->error(self::NOT_EQUALS);
                 return false;
             }
@@ -130,94 +115,16 @@ class IsCountable extends AbstractValidator
             return true;
         }
 
-        if (is_numeric($this->getMax()) && $count > $this->getMax()) {
+        if ($this->max !== null && $count > $this->max) {
             $this->error(self::GREATER_THAN);
             return false;
         }
 
-        if (is_numeric($this->getMin()) && $count < $this->getMin()) {
+        if ($this->min !== null && $count < $this->min) {
             $this->error(self::LESS_THAN);
             return false;
         }
 
         return true;
-    }
-
-    /**
-     * Returns the count option
-     *
-     * @deprecated Since 2.61.0 All option getters and setters will be removed in 3.0
-     *
-     * @return int|null
-     */
-    public function getCount()
-    {
-        return $this->options['count'];
-    }
-
-    /**
-     * Returns the min option
-     *
-     * @deprecated Since 2.61.0 All option getters and setters will be removed in 3.0
-     *
-     * @return int|null
-     */
-    public function getMin()
-    {
-        return $this->options['min'];
-    }
-
-    /**
-     * Returns the max option
-     *
-     * @deprecated Since 2.61.0 All option getters and setters will be removed in 3.0
-     *
-     * @return int|null
-     */
-    public function getMax()
-    {
-        return $this->options['max'];
-    }
-
-    /**
-     * @throws Exception\InvalidArgumentException If either a min or max option
-     *     was previously set.
-     */
-    private function setCount(int $value): void
-    {
-        if (isset($this->options['min']) || isset($this->options['max'])) {
-            throw new Exception\InvalidArgumentException(
-                'Cannot set count; conflicts with either a min or max option previously set'
-            );
-        }
-        $this->options['count'] = $value;
-    }
-
-    /**
-     * @throws Exception\InvalidArgumentException If either a count or max option
-     *     was previously set.
-     */
-    private function setMin(int $value): void
-    {
-        if (isset($this->options['count'])) {
-            throw new Exception\InvalidArgumentException(
-                'Cannot set count; conflicts with either a count option previously set'
-            );
-        }
-        $this->options['min'] = $value;
-    }
-
-    /**
-     * @throws Exception\InvalidArgumentException If either a count or min option
-     *     was previously set.
-     */
-    private function setMax(int $value): void
-    {
-        if (isset($this->options['count'])) {
-            throw new Exception\InvalidArgumentException(
-                'Cannot set count; conflicts with either a count option previously set'
-            );
-        }
-        $this->options['max'] = $value;
     }
 }

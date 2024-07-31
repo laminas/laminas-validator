@@ -10,49 +10,48 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function basename;
+use function chmod;
 use function current;
 use function filesize;
+use function json_encode;
+use function touch;
+use function unlink;
 
 use const UPLOAD_ERR_NO_FILE;
 
+/** @psalm-import-type OptionsArgument from FilesSize */
 final class FilesSizeTest extends TestCase
 {
-    public bool $multipleOptionsDetected;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->multipleOptionsDetected = false;
-    }
-
     /**
      * Ensures that the validator follows expected behavior
      *
-     * @param array|int $options
+     * @param OptionsArgument $options
      */
     #[DataProvider('basicDataProvider')]
-    public function testBasic($options, bool $expected1, bool $expected2, bool $expected3): void
+    public function testBasic(array $options, bool $expected1, bool $expected2, bool $expected3): void
     {
-        $validator = new FilesSize(...$options);
+        $validator = new FilesSize($options);
 
         self::assertSame(
             $expected1,
-            $validator->isValid(__DIR__ . '/_files/testsize.mo')
+            $validator->isValid(__DIR__ . '/_files/testsize.mo'),
+            json_encode($validator->getMessages()),
         );
         self::assertSame(
             $expected2,
-            $validator->isValid(__DIR__ . '/_files/testsize2.mo')
+            $validator->isValid(__DIR__ . '/_files/testsize2.mo'),
+            json_encode($validator->getMessages()),
         );
         self::assertSame(
             $expected3,
-            $validator->isValid(__DIR__ . '/_files/testsize3.mo')
+            $validator->isValid(__DIR__ . '/_files/picture.jpg'),
+            json_encode($validator->getMessages()),
         );
     }
 
     /**
      * @psalm-return array<string, array{
-     *     0: array,
+     *     0: OptionsArgument,
      *     1: bool,
      *     2: bool,
      *     3: bool,
@@ -62,14 +61,15 @@ final class FilesSizeTest extends TestCase
     {
         return [
             // phpcs:disable
-            'minimum: 0 byte; maximum: 500 bytes; integer'  => [[500],                            false, false, false],
-            'minimum: 0 byte; maximum: 500 bytes; array'    => [[['min' => 0, 'max' => 500]],     false, false, false],
-            'minimum: 0 byte; maximum: 2000 bytes; integer' => [[2000],                           true,  true,  false],
-            'minimum: 0 byte; maximum: 2000 bytes; array'   => [[['min' => 0, 'max' => 2000]],    true,  true,  false],
-            'minimum: 0 byte; maximum: 500 kilobytes'       => [[['min' => 0, 'max' => 500000]],  true,  true,  true],
-            'minimum: 0 byte; maximum: 2 megabytes; 2 MB'   => [[['min' => 0, 'max' => '2 MB']],  true,  true,  true],
-            'minimum: 0 byte; maximum: 2 megabytes; 2MB'    => [[['min' => 0, 'max' => '2MB']],   true,  true,  true],
-            'minimum: 0 byte; maximum: 2 megabytes; 2  MB'  => [[['min' => 0, 'max' => '2  MB']], true,  true,  true],
+            'minimum: 0 byte; maximum: 500 bytes; integer'  => [['max' => 500],                 false, false, false],
+            'minimum: 0 byte; maximum: 500 bytes; array'    => [['min' => 0, 'max' => 500],     false, false, false],
+            'minimum: 0 byte; maximum: 2000 bytes; integer' => [['max' => 2000],                true,  true,  false],
+            'minimum: 0 byte; maximum: 2000 bytes; array'   => [['min' => 0, 'max' => 2000],    true,  true,  false],
+            'minimum: 0 byte; maximum: 500 kilobytes'       => [['min' => 0, 'max' => 500000],  true,  true,  true],
+            'minimum: 0 byte; maximum: 2 megabytes; 2 MB'   => [['min' => 0, 'max' => '2 MB'],  true,  true,  true],
+            'minimum: 0 byte; maximum: 2 megabytes; 2MB'    => [['min' => 0, 'max' => '2MB'],   true,  true,  true],
+            'minimum: 0 byte; maximum: 2 megabytes; 2  MB'  => [['min' => 0, 'max' => '2  MB'], true,  true,  true],
+            'minimum: 1k; maximum: 2 megabytes; 2  MB'      => [['min' => '1k', 'max' => '2  MB'], true,  true,  true],
             // phpcs:enable
         ];
     }
@@ -90,78 +90,7 @@ final class FilesSizeTest extends TestCase
         $validator = new FilesSize(['min' => 0, 'max' => 200]);
 
         self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
-        self::assertArrayHasKey('fileFilesSizeNotReadable', $validator->getMessages());
-    }
-
-    /**
-     * Ensures that getMin() returns expected value
-     */
-    public function testGetMin(): void
-    {
-        $validator = new FilesSize(['min' => 1, 'max' => 100]);
-
-        self::assertSame('1B', $validator->getMin());
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('greater than or equal');
-
-        new FilesSize(['min' => 100, 'max' => 1]);
-    }
-
-    /**
-     * Ensures that setMin() returns expected value
-     */
-    public function testSetMin(): void
-    {
-        $validator = new FilesSize(['min' => 1000, 'max' => 10000]);
-        $validator->setMin(100);
-
-        self::assertSame('100B', $validator->getMin());
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('less than or equal');
-
-        $validator->setMin(20000);
-    }
-
-    /**
-     * Ensures that getMax() returns expected value
-     */
-    public function testGetMax(): void
-    {
-        $validator = new FilesSize(['min' => 1, 'max' => 100]);
-
-        self::assertSame('100B', $validator->getMax());
-
-        $validator = new FilesSize(['min' => 1, 'max' => 100000]);
-
-        self::assertSame('97.66kB', $validator->getMax());
-
-        $validator = new FilesSize(2000);
-        $validator->useByteString(false);
-        $test = $validator->getMax();
-
-        self::assertSame(2000, $test);
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('greater than or equal');
-
-        new FilesSize(['min' => 100, 'max' => 1]);
-    }
-
-    /**
-     * Ensures that setMax() returns expected value
-     */
-    public function testSetMax(): void
-    {
-        $validator = new FilesSize(['min' => 1000, 'max' => 10000]);
-        $validator->setMax(1_000_000);
-
-        self::assertSame('976.56kB', $validator->getMax());
-
-        $validator->setMin(100);
-
-        self::assertSame('976.56kB', $validator->getMax());
+        self::assertArrayHasKey(FilesSize::NOT_READABLE, $validator->getMessages());
     }
 
     /**
@@ -173,7 +102,7 @@ final class FilesSizeTest extends TestCase
 
         self::assertFalse($validator->isValid([
             __DIR__ . '/_files/testsize.mo',
-            __DIR__ . '/_files/testsize.mo',
+            __DIR__ . '/_files/testsize.mo', // Duplicate Path
             __DIR__ . '/_files/testsize2.mo',
         ]));
 
@@ -186,7 +115,7 @@ final class FilesSizeTest extends TestCase
 
         self::assertFalse($validator->isValid([
             __DIR__ . '/_files/testsize.mo',
-            __DIR__ . '/_files/testsize.mo',
+            __DIR__ . '/_files/testsize.mo', // Duplicate Path
             __DIR__ . '/_files/testsize2.mo',
         ]));
 
@@ -198,7 +127,7 @@ final class FilesSizeTest extends TestCase
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
     {
-        $validator = new FilesSize(0);
+        $validator = new FilesSize(['min' => 0]);
 
         self::assertFalse($validator->isValid(''));
         self::assertArrayHasKey(FilesSize::NOT_READABLE, $validator->getMessages());
@@ -226,10 +155,10 @@ final class FilesSizeTest extends TestCase
             $validator->isValid($this->createFileInfo(__DIR__ . '/_files/testsize2.mo'))
         );
         self::assertFalse(
-            $validator->isValid($this->createFileInfo(__DIR__ . '/_files/testsize3.mo'))
+            $validator->isValid($this->createFileInfo(__DIR__ . '/_files/picture.jpg'))
         );
 
-        $validator = new FilesSize(['min' => 0, 'max' => 500000]);
+        $validator = new FilesSize(['min' => 0, 'max' => '2kb']);
 
         self::assertTrue($validator->isValid([
             $this->createFileInfo(__DIR__ . '/_files/testsize.mo'),
@@ -242,9 +171,8 @@ final class FilesSizeTest extends TestCase
     {
         $validator = new FilesSize(['min' => 0, 'max' => 2000]);
 
-        $this->expectException(InvalidArgumentException::class);
-
-        $validator->isValid([['error' => 0]]);
+        self::assertFalse($validator->isValid([['error' => 0]]));
+        self::assertArrayHasKey(FilesSize::NOT_READABLE, $validator->getMessages());
     }
 
     /**
@@ -261,27 +189,33 @@ final class FilesSizeTest extends TestCase
         ];
     }
 
-    public function testConstructorCanAcceptAllOptionsAsDiscreteArguments(): void
+    public function testMinOrMaxMustBeSet(): void
     {
-        $min              = 0;
-        $max              = 10;
-        $useBytesAsString = false;
-
-        $validator = new FilesSize($min, $max, $useBytesAsString);
-
-        self::assertNull($validator->getMin(true));
-        self::assertSame($max, $validator->getMax(true));
-        self::assertSame($useBytesAsString, $validator->getByteString());
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('One of `min` or `max` options are required');
+        new FilesSize([]);
     }
 
-    public function testIsValidRaisesExceptionForArrayValueNotInFilesFormat(): void
+    public function testMinMustBeLessThanMax(): void
     {
-        $validator = new FilesSize(['min' => 0, 'max' => 2000]);
-        $value     = [['foo' => 'bar']];
-
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Value array must be in $_FILES format');
+        $this->expectExceptionMessage('The `min` option cannot exceed the `max` option');
+        new FilesSize(['min' => 500, 'max' => 100]);
+    }
 
-        $validator->isValid($value);
+    public function testUnreadableFile(): void
+    {
+        $validator = new FilesSize(['min' => 0, 'max' => '10MB']);
+
+        $path = __DIR__ . '/_files/no-read.txt';
+        touch($path);
+        chmod($path, 0333);
+        try {
+            self::assertFalse($validator->isValid($path));
+            $messages = $validator->getMessages();
+            self::assertArrayHasKey(FilesSize::NOT_READABLE, $messages);
+        } finally {
+            unlink($path);
+        }
     }
 }

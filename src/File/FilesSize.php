@@ -1,81 +1,110 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\File;
 
-use Laminas\Stdlib\ArrayUtils;
-use Laminas\Stdlib\ErrorHandler;
-use Laminas\Validator\Exception;
+use Laminas\Translator\TranslatorInterface;
+use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Traversable;
+use Psr\Http\Message\UploadedFileInterface;
 
-use function array_key_exists;
-use function array_shift;
-use function filesize;
-use function func_get_args;
-use function func_num_args;
+use function in_array;
 use function is_array;
-use function is_readable;
-use function is_scalar;
 use function is_string;
 
 /**
- * Validator for the size of all files which will be validated in sum
+ * Validate the cumulative size of multiple files
  *
- * @final
+ * @psalm-type OptionsArgument = array{
+ *     min?: string|numeric|null,
+ *     max?: string|numeric|null,
+ *     useByteString?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
+ * }
  */
-class FilesSize extends Size
+final class FilesSize extends AbstractValidator
 {
-    /**
-     * @const string Error constants
-     */
     public const TOO_BIG      = 'fileFilesSizeTooBig';
     public const TOO_SMALL    = 'fileFilesSizeTooSmall';
     public const NOT_READABLE = 'fileFilesSizeNotReadable';
 
-    /** @var array Error message templates */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::TOO_BIG      => "All files in sum should have a maximum size of '%max%' but '%size%' were detected",
         self::TOO_SMALL    => "All files in sum should have a minimum size of '%min%' but '%size%' were detected",
         self::NOT_READABLE => 'One or more files can not be read',
     ];
 
+    /** @var array<string, string|array<string, string>> */
+    protected array $messageVariables = [
+        'min'  => 'minString',
+        'max'  => 'maxString',
+        'size' => 'size',
+    ];
+
     /**
-     * Internal file array
-     *
-     * @var array
+     * Detected size
      */
-    protected $files;
+    protected string $size = '';
+    protected readonly string $minString;
+    protected readonly string $maxString;
+
+    protected readonly int|null $min;
+    protected readonly int|null $max;
+    private readonly bool $useByteString;
 
     /**
      * Sets validator options
      *
-     * Min limits the used disk space for all files, when used with max=null it is the maximum file size
-     * It also accepts an array with the keys 'min' and 'max'
+     * $options accepts the following keys:
+     * 'min': Minimum file size
+     * 'max': Maximum file size
+     * 'useByteString': Use bytestring or real size for messages
      *
-     * @param  int|array|Traversable $options Options for this validator
-     * @throws InvalidArgumentException
+     * @param OptionsArgument $options
      */
-    public function __construct($options = null)
+    public function __construct(array $options = [])
     {
-        $this->files = [];
-        $this->setSize(0);
+        $min                 = $options['min'] ?? null;
+        $max                 = $options['max'] ?? null;
+        $this->useByteString = $options['useByteString'] ?? true;
 
-        if ($options instanceof Traversable) {
-            $options = ArrayUtils::iteratorToArray($options);
-        } elseif (is_scalar($options)) {
-            $options = ['max' => $options];
-        } elseif (! is_array($options)) {
-            throw new Exception\InvalidArgumentException('Invalid options to validator provided');
+        if ($min === null && $max === null) {
+            throw new InvalidArgumentException('One of `min` or `max` options are required');
         }
 
-        if (1 < func_num_args()) {
-            $argv = func_get_args();
-            array_shift($argv);
-            $options['max'] = array_shift($argv);
-            if (! empty($argv)) {
-                $options['useByteString'] = array_shift($argv);
-            }
+        if (is_string($min)) {
+            $min = Bytes::fromSiUnit($min)->bytes;
         }
+
+        if (is_string($max)) {
+            $max = Bytes::fromSiUnit($max)->bytes;
+        }
+
+        $this->min = $min !== null ? (int) $min : null;
+        $this->max = $max !== null ? (int) $max : null;
+
+        if ($this->min !== null && $this->max !== null && $this->min > $this->max) {
+            throw new InvalidArgumentException('The `min` option cannot exceed the `max` option');
+        }
+
+        unset(
+            $options['min'],
+            $options['max'],
+            $options['useByteString'],
+        );
+
+        $this->minString = $this->min !== null && $this->useByteString
+            ? Bytes::fromInteger($this->min)->toSiUnit()
+            : (string) $this->min;
+        $this->maxString = $this->max !== null && $this->useByteString
+            ? Bytes::fromInteger($this->max)->toSiUnit()
+            : (string) $this->max;
 
         parent::__construct($options);
     }
@@ -83,104 +112,62 @@ class FilesSize extends Size
     /**
      * Returns true if and only if the disk usage of all files is at least min and
      * not bigger than max (when max is not null).
-     *
-     * @param  string|array $value Real file to check for size
-     * @param  array        $file  File data from \Laminas\File\Transfer\Transfer
-     * @return bool
      */
-    public function isValid($value, $file = null)
+    public function isValid(mixed $value): bool
     {
-        if (is_string($value)) {
-            $value = [$value];
-        } elseif (is_array($value) && isset($value['tmp_name'])) {
+        if (is_array($value) && isset($value['tmp_name'])) {
             $value = [$value];
         }
 
-        $min  = $this->getMin(true);
-        $max  = $this->getMax(true);
-        $size = $this->getSize();
-        foreach ($value as $files) {
-            if (is_array($files)) {
-                if (! isset($files['tmp_name']) || ! isset($files['name'])) {
-                    throw new Exception\InvalidArgumentException(
-                        'Value array must be in $_FILES format'
-                    );
-                }
-                $file  = $files;
-                $files = $files['tmp_name'];
+        if (is_string($value) || $value instanceof UploadedFileInterface) {
+            $value = [$value];
+        }
+
+        $paths = [];
+        $size  = 0;
+
+        /** @psalm-suppress MixedAssignment $possibleFile - Yep. This is `mixed` */
+        foreach ($value as $possibleFile) {
+            if (! FileInformation::isPossibleFile($possibleFile)) {
+                $this->error(self::NOT_READABLE);
+
+                return false;
             }
+
+            $file = FileInformation::factory($possibleFile);
 
             // Is file readable ?
-            if (empty($files) || false === is_readable($files)) {
-                $this->throwError($file, self::NOT_READABLE);
-                continue;
+            if (! $file->readable) {
+                $this->error(self::NOT_READABLE);
+
+                return false;
             }
 
-            if (! isset($this->files[$files])) {
-                $this->files[$files] = $files;
-            } else {
-                // file already counted... do not count twice
-                continue;
+            if (in_array($file->path, $paths, true)) {
+                continue; // Skip duplicate entries
             }
 
-            // limited to 2GB files
-            ErrorHandler::start();
-            $size += filesize($files);
-            ErrorHandler::stop();
-            $this->size = $size;
-            if (($max !== null) && ($max < $size)) {
-                if ($this->getByteString()) {
-                    $this->options['max'] = $this->toByteString($max);
-                    $this->size           = $this->toByteString($size);
-                    $this->throwError($file, self::TOO_BIG);
-                    $this->options['max'] = $max;
-                    $this->size           = $size;
-                } else {
-                    $this->throwError($file, self::TOO_BIG);
-                }
-            }
+            $paths[] = $file->path;
+
+            $size += $file->size()->bytes;
         }
 
-        // Check that aggregate files are >= minimum size
-        if (($min !== null) && ($size < $min)) {
-            if ($this->getByteString()) {
-                $this->options['min'] = $this->toByteString($min);
-                $this->size           = $this->toByteString($size);
-                $this->throwError($file, self::TOO_SMALL);
-                $this->options['min'] = $min;
-                $this->size           = $size;
-            } else {
-                $this->throwError($file, self::TOO_SMALL);
-            }
+        $this->size = $this->useByteString
+            ? Bytes::fromInteger($size)->toSiUnit()
+            : (string) $size;
+
+        if ($this->min !== null && $size < $this->min) {
+            $this->error(self::TOO_SMALL);
+
+            return false;
         }
 
-        if ($this->getMessages()) {
+        if ($this->max !== null && $size > $this->max) {
+            $this->error(self::TOO_BIG);
+
             return false;
         }
 
         return true;
-    }
-
-    /**
-     * Throws an error of the given type
-     *
-     * @param  string|null|array $file
-     * @param  string $errorType
-     * @return false
-     */
-    protected function throwError($file, $errorType)
-    {
-        if ($file !== null) {
-            if (is_array($file)) {
-                if (array_key_exists('name', $file)) {
-                    $this->value = $file['name'];
-                }
-            } elseif (is_string($file)) {
-                $this->value = $file;
-            }
-        }
-
-        $this->error($errorType);
-        return false;
     }
 }

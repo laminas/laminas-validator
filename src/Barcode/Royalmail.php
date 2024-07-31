@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Barcode;
 
 use function array_intersect;
@@ -9,11 +11,12 @@ use function str_split;
 use function strlen;
 use function substr;
 
-/** @final */
-class Royalmail extends AbstractAdapter
+final class Royalmail implements AdapterInterface
 {
+    private const ALPHABET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
     /** @var array<array-key, int> */
-    protected $rows = [
+    private const ROWS = [
         '0' => 1,
         '1' => 1,
         '2' => 1,
@@ -53,7 +56,7 @@ class Royalmail extends AbstractAdapter
     ];
 
     /** @var array<array-key, int> */
-    protected $columns = [
+    private const COLUMNS = [
         '0' => 1,
         '1' => 2,
         '2' => 3,
@@ -93,37 +96,24 @@ class Royalmail extends AbstractAdapter
     ];
 
     /**
-     * Constructor for this barcode adapter
-     */
-    public function __construct()
-    {
-        $this->setLength(-1);
-        $this->setCharacters('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ');
-        $this->setChecksum('royalmail');
-    }
-
-    /**
      * Validates the checksum ()
-     *
-     * @param  string $value The barcode to validate
-     * @return bool
      */
-    protected function royalmail($value)
+    private static function checksum(string $value): bool
     {
         $checksum = substr($value, -1, 1);
         $values   = str_split(substr($value, 0, -1));
         $rowvalue = 0;
         $colvalue = 0;
         foreach ($values as $row) {
-            $rowvalue += $this->rows[$row];
-            $colvalue += $this->columns[$row];
+            $rowvalue += self::ROWS[$row];
+            $colvalue += self::COLUMNS[$row];
         }
 
         $rowvalue %= 6;
         $colvalue %= 6;
 
-        $rowchkvalue = array_keys($this->rows, $rowvalue);
-        $colchkvalue = array_keys($this->columns, $colvalue);
+        $rowchkvalue = array_keys(self::ROWS, $rowvalue);
+        $colchkvalue = array_keys(self::COLUMNS, $colvalue);
         $intersect   = array_intersect($rowchkvalue, $colchkvalue);
         $chkvalue    = (string) current($intersect);
 
@@ -136,11 +126,8 @@ class Royalmail extends AbstractAdapter
 
     /**
      * Allows start and stop tag within checked chars
-     *
-     * @param  string $value The barcode to check for allowed characters
-     * @return bool
      */
-    public function hasValidCharacters($value)
+    public function hasValidCharacters(string $value): bool
     {
         if ($value[0] === '(') {
             $value = substr($value, 1);
@@ -152,6 +139,21 @@ class Royalmail extends AbstractAdapter
             }
         }
 
-        return parent::hasValidCharacters($value);
+        return Util::stringMatchesAlphabet($value, self::ALPHABET);
+    }
+
+    public function hasValidLength(string $value): bool
+    {
+        return true;
+    }
+
+    public function hasValidChecksum(string $value): bool
+    {
+        return self::checksum($value);
+    }
+
+    public function getLength(): int
+    {
+        return -1;
     }
 }
