@@ -2,317 +2,317 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/installation/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/intro/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/messages/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/set/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validator-chains/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/writing-validators/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/barcode/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/between/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/bic/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/callback/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/credit-card/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/csrf/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/date-comparison/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/date/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/db/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/digits/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/email-address/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/explode/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/greater-than/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/hex/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/host-with-public-ipv4-address/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/hostname/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/iban/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/identical/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/in-array/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/ip/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/is-array/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/is-countable/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/is-json-string/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/isbn/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/isinstanceof/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/less-than/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/not-empty/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/number-comparison/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/regex/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/sitemap/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/step/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/string-length/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/timezone/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/undisclosed-password/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/uri/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/uuid/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/file/count/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/file/crc32/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/file/exclude-extension/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/file/exclude-mime-type/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/file/exists/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/file/extension/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/file/files-size/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/file/hash/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/file/image-size/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/file/intro/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/file/is-compressed/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/file/is-image/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/file/md5/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/file/mime-type/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/file/not-exists/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/file/sha1/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/file/size/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/file/upload-file/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/file/upload/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-validator/v2/validators/file/word-count/</loc>
-         <lastmod>2024-07-16</lastmod>
+         <lastmod>2024-07-31</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
