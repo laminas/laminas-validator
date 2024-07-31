@@ -2409,6 +2409,9 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/Translator/DummyTranslator.php">
+    <DeprecatedInterface>
+      <code><![CDATA[DummyTranslator]]></code>
+    </DeprecatedInterface>
     <RedundantCastGivenDocblockType>
       <code><![CDATA[(int) $number]]></code>
     </RedundantCastGivenDocblockType>
@@ -2416,6 +2419,8 @@
   <file src="src/Translator/Translator.php">
     <DeprecatedInterface>
       <code><![CDATA[Translator]]></code>
+      <code><![CDATA[Translator]]></code>
+      <code><![CDATA[private]]></code>
     </DeprecatedInterface>
   </file>
   <file src="src/Translator/TranslatorAwareInterface.php">
@@ -2558,6 +2563,12 @@
       <code><![CDATA[GreaterThan::class]]></code>
       <code><![CDATA[GreaterThan::class]]></code>
       <code><![CDATA[GreaterThan::class]]></code>
+      <code><![CDATA[I18nValidator\PhoneNumber::class]]></code>
+      <code><![CDATA[I18nValidator\PhoneNumber::class]]></code>
+      <code><![CDATA[I18nValidator\PhoneNumber::class]]></code>
+      <code><![CDATA[I18nValidator\PhoneNumber::class]]></code>
+      <code><![CDATA[I18nValidator\PhoneNumber::class]]></code>
+      <code><![CDATA[I18nValidator\PhoneNumber::class]]></code>
       <code><![CDATA[LessThan::class]]></code>
       <code><![CDATA[LessThan::class]]></code>
       <code><![CDATA[LessThan::class]]></code>
@@ -4472,6 +4483,9 @@
       <code><![CDATA[Translator]]></code>
       <code><![CDATA[new Translator($this->i18nTranslator)]]></code>
     </DeprecatedClass>
+    <DeprecatedInterface>
+      <code><![CDATA[TranslatorInterface&MockObject]]></code>
+    </DeprecatedInterface>
   </file>
   <file src="test/UndisclosedPasswordTest.php">
     <DeprecatedMethod>
