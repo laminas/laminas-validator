@@ -9,7 +9,6 @@ use Exception;
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
 
-use function array_merge;
 use function assert;
 use function is_array;
 use function is_bool;
@@ -17,7 +16,7 @@ use function is_callable;
 
 /**
  * @psalm-type OptionsArgument = array{
- *     callback: callable(mixed...): bool,
+ *     callback: callable(mixed, array<string, mixed>, mixed...): bool,
  *     callbackOptions?: array<array-key, mixed>,
  *     bind?: bool,
  *     throwExceptions?: bool,
@@ -43,7 +42,7 @@ final class Callback extends AbstractValidator
         self::INVALID_CALLBACK => 'An exception has been raised within the callback',
     ];
 
-    /** @var Closure(mixed...): bool */
+    /** @var Closure(mixed, array<string, mixed>, mixed...): bool */
     private readonly Closure $callback;
     private readonly bool $throwExceptions;
     /** @var array<array-key, mixed> */
@@ -62,6 +61,8 @@ final class Callback extends AbstractValidator
         $callbackOptions = $options['callbackOptions'] ?? [];
         $throw           = $options['throwExceptions'] ?? false;
         $bind            = $options['bind'] ?? false;
+
+        unset($options['callback'], $options['callbackOptions'], $options['throwExceptions'], $options['bind']);
 
         if (! is_callable($callback)) {
             throw new InvalidArgumentException('A callable must be provided');
@@ -91,24 +92,8 @@ final class Callback extends AbstractValidator
     {
         $this->setValue($value);
 
-        $hasContext = $context !== null && $context !== [];
-
-        $args = [$value];
-        if ($this->callbackOptions === [] && $hasContext) {
-            $args[] = $context;
-        }
-
-        if ($this->callbackOptions !== [] && ! $hasContext) {
-            $args = array_merge($args, $this->callbackOptions);
-        }
-
-        if ($this->callbackOptions !== [] && $hasContext) {
-            $args[] = $context;
-            $args   = array_merge($args, $this->callbackOptions);
-        }
-
         try {
-            $result = ($this->callback)(...$args);
+            $result = ($this->callback)($value, $context ?? [], ...$this->callbackOptions);
         } catch (Exception $exception) {
             /**
              * Intentionally excluding catchable \Error as they are indicative of a bug and should not be suppressed

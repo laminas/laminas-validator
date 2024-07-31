@@ -24,7 +24,7 @@ use function strtoupper;
 /**
  * @psalm-type OptionsArgument = array{
  *     type?: value-of<CreditCard::TYPES>|list<value-of<CreditCard::TYPES>>,
- *     service?: callable(mixed...): bool,
+ *     service?: callable(mixed, array<string, mixed>, mixed...): bool,
  *     messages?: array<string, string>,
  *     translator?: TranslatorInterface|null,
  *     translatorTextDomain?: string|null,
@@ -303,10 +303,13 @@ final class CreditCard extends AbstractValidator
 
     /**
      * Returns true if and only if $value follows the Luhn algorithm (mod-10 checksum)
+     *
+     * @param array<string, mixed>|null $context Validation context, i.e the form payload
      */
     public function isValid(
         #[SensitiveParameter]
         mixed $value,
+        ?array $context = null,
     ): bool {
         $this->setValue($value);
 
@@ -362,7 +365,7 @@ final class CreditCard extends AbstractValidator
 
         if ($this->callback !== null) {
             try {
-                if (! $this->callback->isValid($value)) {
+                if (! $this->callback->isValid($value, $context)) {
                     $this->error(self::SERVICE);
                     return false;
                 }

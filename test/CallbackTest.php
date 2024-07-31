@@ -36,11 +36,13 @@ final class CallbackTest extends TestCase
 
     /** @param array<string, mixed>|null $context */
     #[DataProvider('emptyContextProvider')]
-    public function testOptionsArePassedAsSecondArgumentWhenGivenWithoutContext(?array $context): void
+    public function testOptionsArePassedAsThirdArgumentWhenNoContextIsPresent(?array $context): void
     {
         $validator = new Callback([
             'throwExceptions' => true,
-            'callback'        => static function (mixed $value, string $foo): bool {
+            'callback'        => static function (mixed $value, array $context, string $foo): bool {
+                self::assertSame([], $context);
+
                 return $value === 'test' && $foo === 'foo';
             },
             'callbackOptions' => ['foo' => 'foo'],
