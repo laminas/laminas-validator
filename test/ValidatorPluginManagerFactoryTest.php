@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator;
 
-use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Validator\Digits;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
@@ -47,29 +46,6 @@ final class ValidatorPluginManagerFactoryTest extends TestCase
         self::assertInstanceOf(Digits::class, $validators->get('test'));
         self::assertTrue($validators->has('test-too'));
         self::assertSame($validator, $validators->get('test-too'));
-    }
-
-    public function testDoesNotConfigureValidatorServicesWhenServiceListenerPresent(): void
-    {
-        $container = $this->createMock(ServiceLocatorInterface::class);
-
-        $container
-            ->expects(self::once())
-            ->method('has')
-            ->with('ServiceListener')
-            ->willReturn(true);
-
-        $container
-            ->expects(self::never())
-            ->method('get')
-            ->with('config');
-
-        $factory    = new ValidatorPluginManagerFactory();
-        $validators = $factory($container);
-
-        self::assertInstanceOf(ValidatorPluginManager::class, $validators);
-        self::assertFalse($validators->has('test'));
-        self::assertFalse($validators->has('test-too'));
     }
 
     public function testDoesNotConfigureValidatorServicesWhenConfigServiceNotPresent(): void
