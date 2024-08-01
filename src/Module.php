@@ -28,6 +28,8 @@ class Module
     /**
      * Register a specification for the ValidatorManager with the ServiceListener.
      *
+     * @deprecated ModuleManager support will be removed in version 3.0 of this component
+     *
      * @param ModuleManager $moduleManager
      */
     public function init($moduleManager): void
