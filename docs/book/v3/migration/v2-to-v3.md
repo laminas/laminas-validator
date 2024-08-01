@@ -706,3 +706,7 @@ As described under [changes to `AbstractValidator`](#translator-interface-type-h
 - `Laminas\Validator\Translator\Translator`
 - `Laminas\Validator\Translator\TranslatorFactory`
 - `Laminas\Validator\Translator\TranslatorInterface`
+
+### Removal of Module Manager Support
+
+[Module Manager](https://docs.laminas.dev/laminas-modulemanager/) support has been removed along with the interface `Laminas\Validator\ValidatorProviderInterface`
