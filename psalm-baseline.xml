@@ -143,12 +143,6 @@
     </PossiblyUnusedProperty>
   </file>
   <file src="src/Module.php">
-    <PossiblyUnusedParam>
-      <code><![CDATA[$moduleManager]]></code>
-    </PossiblyUnusedParam>
-    <UndefinedDocblockClass>
-      <code><![CDATA[ModuleManager]]></code>
-    </UndefinedDocblockClass>
     <UnusedClass>
       <code><![CDATA[Module]]></code>
     </UnusedClass>
@@ -180,16 +174,6 @@
     <MissingReturnType>
       <code><![CDATA[setValidatorPluginManager]]></code>
     </MissingReturnType>
-  </file>
-  <file src="src/ValidatorPluginManagerFactory.php">
-    <MixedArgument>
-      <code><![CDATA[$config['validators']]]></code>
-    </MixedArgument>
-  </file>
-  <file src="src/ValidatorProviderInterface.php">
-    <UnusedClass>
-      <code><![CDATA[ValidatorProviderInterface]]></code>
-    </UnusedClass>
   </file>
   <file src="test/AbstractValidatorTest.php">
     <MixedArgument>
