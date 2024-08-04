@@ -32,6 +32,11 @@
       <code><![CDATA[$type]]></code>
     </PossiblyUnusedProperty>
   </file>
+  <file src="src/DateIntervalString.php">
+    <PossiblyUnusedProperty>
+      <code><![CDATA[$type]]></code>
+    </PossiblyUnusedProperty>
+  </file>
   <file src="src/DateStep.php">
     <ArgumentTypeCoercion>
       <code><![CDATA[$intervalParts]]></code>
@@ -224,6 +229,11 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="test/DateComparisonTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[basicDataProvider]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/DateIntervalStringTest.php">
     <PossiblyUnusedMethod>
       <code><![CDATA[basicDataProvider]]></code>
     </PossiblyUnusedMethod>

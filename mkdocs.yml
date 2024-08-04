@@ -18,6 +18,7 @@ nav:
             - CreditCard: v3/validators/credit-card.md
             - Date: v3/validators/date.md
             - DateComparison: v3/validators/date-comparison.md
+            - DateIntervalString: v3/validators/date-interval.md
             - Digits: v3/validators/digits.md
             - EmailAddress: v3/validators/email-address.md
             - EnumCase: v3/validators/enum-case.md
