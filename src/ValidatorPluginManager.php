@@ -32,6 +32,7 @@ final class ValidatorPluginManager extends AbstractSingleInstancePluginManager
             DateStep::class                  => InvokableFactory::class,
             Date::class                      => InvokableFactory::class,
             DateComparison::class            => InvokableFactory::class,
+            DateIntervalString::class        => InvokableFactory::class,
             Digits::class                    => InvokableFactory::class,
             EmailAddress::class              => InvokableFactory::class,
             EnumCase::class                  => InvokableFactory::class,

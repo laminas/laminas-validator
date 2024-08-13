@@ -9,6 +9,7 @@ The following validators come with the laminas-validator distribution.
 - [CreditCard](validators/credit-card.md)
 - [Date](validators/date.md)
 - [DateComparison](validators/date-comparison.md)
+- [DateIntervalString](validators/date-interval.md)
 - [Digits](validators/digits.md)
 - [EmailAddress](validators/email-address.md)
 - [EnumCase](validators/enum-case.md)
