@@ -363,7 +363,7 @@ Behaviour changes:
 
 - The constructor now only accepts an associative array of [documented options](../validators/isbn.md).
 - The `separator` option has been removed. Instead of requiring users to provide the expected separator, all valid separators are now stripped from the input prior to validation. With the default option for auto-detection of ISBN-10 and ISBN-13 formats, the validator is greatly simplified at the point of use.
-- Previously, the classes `Laminas\Validator\Isbn\Isbn10` and `Laminas\Validator\Isbn\Isbn13` were used to validate each format. The code in these classes is now inlined inside the validator so these classes have been removed. 
+- Previously, the classes `Laminas\Validator\Isbn\Isbn10` and `Laminas\Validator\Isbn\Isbn13` were used to validate each format. The code in these classes is now inlined inside the validator so these classes have been removed.
 
 ### `Laminas\Validator\IsCountable`
 
@@ -696,7 +696,7 @@ $hash = new \Laminas\Validator\File\Hash([
 $hash->isValid('/path/to/file.md');
 ```
 
-The algorithms available are dictated by your installation of PHP and can be determined with [`hash_algos()`](https://www.php.net/manual/function.hash-algos.php) 
+The algorithms available are dictated by your installation of PHP and can be determined with [`hash_algos()`](https://www.php.net/manual/function.hash-algos.php)
 
 ### Migration to `Laminas\Translator`
 

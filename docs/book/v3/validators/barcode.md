@@ -311,7 +311,7 @@ your own barcode validator, you need the following information.
     - `"odd"`: The length of this barcode must have a odd amount of digits.
     - `array`: A list of integer values. The length of this barcode must have
   one of the set array values.
-- `Characters`: An alphabet of characters that can be used in your type of barcode 
+- `Characters`: An alphabet of characters that can be used in your type of barcode
 - `Checksum`: A method that calculates and verifies a checksum if appropriate
 
 Your custom barcode validator must implement `Laminas\Validator\Barcode\AdapterInterface`.

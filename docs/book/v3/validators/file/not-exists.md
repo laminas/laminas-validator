@@ -44,7 +44,7 @@ This validator accepts and validates 3 types of argument:
 
 When provided with either a PSR-7 Uploaded File, or a normalised `$_FILES` upload, if the directory option is unset, validation will fail for successfully uploaded files, however, when a directory option is provided, the given directories are searched for the base name of the uploaded file path.
 
-In the following example, assume `$files` is an array that represents a single, successful file upload in PHP's `$_FILES` array format. 
+In the following example, assume `$files` is an array that represents a single, successful file upload in PHP's `$_FILES` array format.
 
 ```php
 use Laminas\Validator\File\NotExists;

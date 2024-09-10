@@ -10,7 +10,7 @@ This validator is inversely related to the [NotExists validator](not-exists.md).
 The following set of options are supported:
 
 - `directory`: Array of directories, or comma-delimited string of directories.
-- `all`: A boolean that when `true` _(default)_ requires that the filename is present in **all** the listed directories 
+- `all`: A boolean that when `true` _(default)_ requires that the filename is present in **all** the listed directories
 
 ## Usage Examples
 

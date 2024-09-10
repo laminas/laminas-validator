@@ -30,4 +30,4 @@ if ($validator->isValid('Some Value')) {
 }
 ```
 
-[Unit enums](https://www.php.net/manual/language.enumerations.basics.php) are not supported by this validator. To validate enum cases as opposed to _values_, see the [`EnumCase` validator](enum-case.md). 
+[Unit enums](https://www.php.net/manual/language.enumerations.basics.php) are not supported by this validator. To validate enum cases as opposed to _values_, see the [`EnumCase` validator](enum-case.md).

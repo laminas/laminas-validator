@@ -6,10 +6,9 @@
 This validator is inversely related to the
 [ExcludeMimeType validator](exclude-mime-type.md)
 
-> ### Compatibility
->
-> This component makes use of the [`FileInfo`](https://www.php.net/manual/book.fileinfo.php) extension which is enabled by default in PHP.
-> If you are using a version of PHP that was explicitly built without the File Info extension, this validator will not work. 
+NOTE: **Compatibility**
+This component makes use of the [`FileInfo`](https://www.php.net/manual/book.fileinfo.php) extension which is enabled by default in PHP.
+If you are using a version of PHP that was explicitly built without the File Info extension, this validator will not work.
 
 ## Supported Options
 
@@ -39,12 +38,9 @@ if ($validator->isValid('./myfile.jpg')) {
 }
 ```
 
-> ### Validating MIME Groups Is Potentially Dangerous
->
-> Allowing "groups" of MIME types will accept **all** members of this group, even
-> if your application does not support them. For instance, When you allow
-> `image` you also allow `image/xpixmap` and `image/vasa`, both of which could
-> be problematic.
+WARNING: **Validating MIME Groups Is Potentially Dangerous**
+Allowing "groups" of MIME types will accept **all** members of this group, even if your application does not support them.
+For instance, When you allow`image` you also allow `image/xpixmap` and `image/vasa`, both of which could be problematic.
 
 ## Validating Uploaded Files
 
