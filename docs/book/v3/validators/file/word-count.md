@@ -31,7 +31,7 @@ if ($validator->isValid('./myfile.txt')) {
 ```
 
 One of `min` or `max` is required. Omitting both options will cause an exception.
-Additionally, the `min` option must be numerically less than the `max` option. 
+Additionally, the `min` option must be numerically less than the `max` option.
 
 ## Validating Uploaded Files
 

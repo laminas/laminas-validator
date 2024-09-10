@@ -30,4 +30,4 @@ if ($validator->isValid('Something')) {
 }
 ```
 
-To validate against the _values_ of a backed enum, see the [`BackedEnumValue` validator](backed-enum-value.md). 
+To validate against the _values_ of a backed enum, see the [`BackedEnumValue` validator](backed-enum-value.md).

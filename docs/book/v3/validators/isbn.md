@@ -53,6 +53,7 @@ Valid types include:
 ## About Separators
 
 It is common for ISBN numbers to be formatted with either spaces or dash to make the numbers easier to read.
+<!-- markdownlint-disable-next-line no-space-in-code -->
 This validator strips ` ` and `-` prior to validation.
 
 ```php

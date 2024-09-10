@@ -4,7 +4,7 @@ In version 3.0, nearly all validators have been marked as `final`.
 
 This document aims to provide guidance on composing validators to achieve the same results as inheritance may have.
 
-Consider the following custom validator. It ensures the value given is a valid email address and that it is an email address from `gmail.com` 
+Consider the following custom validator. It ensures the value given is a valid email address and that it is an email address from `gmail.com`
 
 ```php
 namespace My;
