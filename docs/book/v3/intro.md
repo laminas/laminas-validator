@@ -143,80 +143,84 @@ if (! $validator->isValid('word')) {
 > $ composer require laminas/laminas-i18n
 > ```
 
-Validator classes provide a `setTranslator()` method with which you can specify
-an instance of `Laminas\Validator\Translator\TranslatorInterface` which will
-translate the messages in case of a validation failure. The `getTranslator()`
-method returns the translator instance. `Laminas\Mvc\I18n\Translator` provides an
-implementation compatible with the validator component.
+Validator classes provide a `setTranslator()` method with which you can specify an instance of `Laminas\Translator\TranslatorInterface` which will translate the messages in case of a validation failure.
+
+The `getTranslator()` method returns the translator instance.
 
 ```php
-use Laminas\Mvc\I18n\Translator;
+use Laminas\I18n\Translator\Translator;
 use Laminas\Validator\StringLength;
 
 $validator = new StringLength(['min' => 8, 'max' => 12]);
-$translate = new Translator();
+$translator = new Translator();
 // configure the translator...
 
-$validator->setTranslator($translate);
+$validator->setTranslator($translator);
 ```
 
-With the static `AbstractValidator::setDefaultTranslator()` method you can set a
-instance of `Laminas\Validator\Translator\TranslatorInterface` which will be used
-for all validation classes, and can be retrieved with `getDefaultTranslator()`.
-This prevents the need for setting a translator manually with each validator.
+Avoid using the `setTranslator` method if possible and prefer to set an instance-specific translator using options in the following way:
 
 ```php
-use Laminas\Mvc\I18n\Translator;
+use Laminas\I18n\Translator\Translator;
+use Laminas\Validator\StringLength;
+
+$translator = new Translator();
+
+$validator = new StringLength([
+    'min' => 8,
+    'max' => 12,
+    'translator' => $translator,
+]);
+```
+
+### Setting a "Global" Translator Using Static Methods
+
+It is possible to set a `static` translator for any translator that inherits from `AbstractTranslator` using the `AbstractValidator::setDefaultTranslator()` method.
+
+Once set, this 'static' translator can also be retrieved from any instance with the `getTranslator()` method.
+
+```php
+use Laminas\I18n\Translator\Translator;
 use Laminas\Validator\AbstractValidator;
 
-$translate = new Translator();
+$translator = new Translator();
 // configure the translator...
 
 AbstractValidator::setDefaultTranslator($translate);
 ```
 
-Sometimes it is necessary to disable the translator within a validator. To
-achieve this you can use the `setDisableTranslator()` method, which accepts a
-boolean parameter, and `isTranslatorDisabled()` to get the set value.
+Setting the translator with this static method is not best practice, though it will continue to work for the 3.0 series of releases.
+
+Ideally, your default translator will be provided to validator instances via the `ValidatorPluginManager`.
+
+### Enabling a "Global" Translator Using the Validator Plugin Manager
+
+Assuming you are using `laminas/laminas-servicemanager` for dependency injection, all that is required for your translator to be made available to any validator instance retrieved from the validator plugin manager is to alias `Laminas\Translator\TranslatorInterface` to your translator instance.
+
+```php
+// config/autoload/dependencies.global.php
+
+return [
+    'dependencies' => [
+        'factories' => [
+            \Laminas\Translator\TranslatorInterface::class => \My\Translator\Factory::class,
+        ],
+    ],
+];
+```
+
+Providing a translator can be retrieved from the service manager, it will be injected into each validator that is retrieved from the validator plugin manager.
+
+### Disable Translation Per Validator Instance
+
+Sometimes it is necessary to disable the translator within a validator. To achieve this you can set the `translatorEnabled` option for any validator that inherits from `AbstractValidator` to `false`:
 
 ```php
 use Laminas\Validator\StringLength;
 
-$validator = new StringLength(['min' => 8, 'max' => 12]);
-if (! $validator->isTranslatorDisabled()) {
-    $validator->setDisableTranslator();
-}
+$validator = new StringLength([
+    'min' => 8,
+    'max' => 12,
+    'translatorEnabled' => false,
+]);
 ```
-
-It is also possible to use a translator instead of setting own messages with
-`setMessage()`. But doing so, you should keep in mind, that the translator works
-also on messages you set your own.
-
-> ### Translation Compatibility
->
-> In versions 2.0 - 2.1, `Laminas\Validator\AbstractValidator` implemented
-> `Laminas\I18n\Translator\TranslatorAwareInterface` and accepted instances of
-> `Laminas\I18n\Translator\Translator`. Starting in version 2.2.0, laminas-validator
-> now defines a translator interface, > `Laminas\Validator\Translator\TranslatorInterface`,
-> as well as it's own -aware variant, > `Laminas\Validator\Translator\TranslatorAwareInterface`.
-> This was done to reduce dependencies for the component, and follows the
-> principal of Separated Interfaces.
->
-> The upshot is that if you are migrating from a pre-2.2 version, and receiving
-> errors indicating that the translator provided does not implement
-> `Laminas\Validator\Translator\TranslatorInterface`, you will need to make a
-> change to your code.
->
-> An implementation of `Laminas\Validator\Translator\TranslatorInterface` is
-> provided in `Laminas\Mvc\I18n\Translator`, which also extends
-> `Laminas\I18n\Translator\Translator`. This version can be instantiated and used
-> just as the original `Laminas\I18n` version.
->
-> A new service has also been registered with the MVC, `MvcTranslator`, which
-> will return this specialized, bridge instance.
->
-> Most users should see no issues, as `Laminas\Validator\ValidatorPluginManager`
-> has been modified to use the `MvcTranslator` service internally, which is how
-> most developers were getting the translator instance into validators in the
-> first place. You will only need to change code if you were manually injecting
-> the instance previously.
