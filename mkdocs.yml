@@ -62,6 +62,10 @@ nav:
             - Size: v3/validators/file/size.md
             - UploadFile: v3/validators/file/upload-file.md
             - WordCount: v3/validators/file/word-count.md
+        - Migration:
+            - "Migration from Version 2 to 3": v3/migration/v2-to-v3.md
+            - "Refactoring Legacy Validators": v3/migration/refactoring-legacy-validators.md
+            - "Composing Final Validators": v3/migration/composing-final-validators.md
     - v2:
         - Introduction: v2/intro.md
         - Installation: v2/installation.md

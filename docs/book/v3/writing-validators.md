@@ -43,10 +43,10 @@ use Laminas\Validator\AbstractValidator;
 
 final class Float extends AbstractValidator
 {
-    const FLOAT = 'float';
+    public const ERR_NOT_FLOAT = 'float';
 
     protected array $messageTemplates = [
-        self::FLOAT => "'%value%' is not a floating point value",
+        self::ERR_NOT_FLOAT => "'%value%' is not a floating point value",
     ];
 
     public function isValid(mixed $value): bool
@@ -54,7 +54,7 @@ final class Float extends AbstractValidator
         $this->setValue($value);
 
         if (! is_float($value)) {
-            $this->error(self::FLOAT);
+            $this->error(self::ERR_NOT_FLOAT);
             return false;
         }
 
@@ -92,11 +92,17 @@ namespace MyValid;
 
 use Laminas\Validator\AbstractValidator;
 
+/**
+ * @psalm-type Options = array{
+ *     minimum: positive-int,
+ *     maximum: positive-int,
+ * }
+ */
 final class NumericBetween extends AbstractValidator
 {
-    const MSG_NUMERIC = 'msgNumeric';
-    const MSG_MINIMUM = 'msgMinimum';
-    const MSG_MAXIMUM = 'msgMaximum';
+    public const ERR_NOT_NUMERIC = 'msgNumeric';
+    public const ERR_NOT_MINIMUM = 'msgMinimum';
+    public const ERR_NOT_MAXIMUM = 'msgMaximum';
 
     protected readonly $minimum;
     protected readonly $maximum;
@@ -106,15 +112,18 @@ final class NumericBetween extends AbstractValidator
         'max' => 'maximum',
     ];
 
-    protected $messageTemplates = [
-        self::MSG_NUMERIC => "'%value%' is not numeric",
-        self::MSG_MINIMUM => "'%value%' must be at least '%min%'",
-        self::MSG_MAXIMUM => "'%value%' must be no more than '%max%'",
+    protected array $messageTemplates = [
+        self::ERR_NOT_NUMERIC => "'%value%' is not numeric",
+        self::ERR_NOT_MINIMUM => "'%value%' must be at least '%min%'",
+        self::ERR_NOT_MAXIMUM => "'%value%' must be no more than '%max%'",
     ];
     
-    public function __construct(int $min, int $max) {
-        $this->minimum = $min;
-        $this->maximum = $max;
+    /** @param Options $options */
+    public function __construct(array $options) {
+        $this->minimum = $options['minimum'];
+        $this->maximum = $options['maximum'];
+        
+        parent::__construct($options);
     }
 
     public function isValid(mixed $value): bool
@@ -122,17 +131,17 @@ final class NumericBetween extends AbstractValidator
         $this->setValue($value);
 
         if (! is_numeric($value)) {
-            $this->error(self::MSG_NUMERIC);
+            $this->error(self::ERR_NOT_NUMERIC);
             return false;
         }
 
         if ($value < $this->minimum) {
-            $this->error(self::MSG_MINIMUM);
+            $this->error(self::ERR_NOT_MINIMUM);
             return false;
         }
 
         if ($value > $this->maximum) {
-            $this->error(self::MSG_MAXIMUM);
+            $this->error(self::ERR_NOT_MAXIMUM);
             return false;
         }
 
@@ -176,16 +185,16 @@ use Laminas\Validator\AbstractValidator;
 
 final class PasswordStrength extends AbstractValidator
 {
-    const LENGTH = 'length';
-    const UPPER  = 'upper';
-    const LOWER  = 'lower';
-    const DIGIT  = 'digit';
+    public const ERR_LENGTH = 'length';
+    public const ERR_UPPER  = 'upper';
+    public const ERR_LOWER  = 'lower';
+    public const ERR_DIGIT  = 'digit';
 
-    protected $messageTemplates = [
-        self::LENGTH => "'%value%' must be at least 8 characters in length",
-        self::UPPER  => "'%value%' must contain at least one uppercase letter",
-        self::LOWER  => "'%value%' must contain at least one lowercase letter",
-        self::DIGIT  => "'%value%' must contain at least one digit character",
+    protected array $messageTemplates = [
+        self::ERR_LENGTH => "'%value%' must be at least 8 characters in length",
+        self::ERR_UPPER  => "'%value%' must contain at least one uppercase letter",
+        self::ERR_LOWER  => "'%value%' must contain at least one lowercase letter",
+        self::ERR_DIGIT  => "'%value%' must contain at least one digit character",
     ];
 
     public function isValid(mixed $value): bool
@@ -195,22 +204,22 @@ final class PasswordStrength extends AbstractValidator
         $isValid = true;
 
         if (strlen($value) < 8) {
-            $this->error(self::LENGTH);
+            $this->error(self::ERR_LENGTH);
             $isValid = false;
         }
 
         if (! preg_match('/[A-Z]/', $value)) {
-            $this->error(self::UPPER);
+            $this->error(self::ERR_UPPER);
             $isValid = false;
         }
 
         if (! preg_match('/[a-z]/', $value)) {
-            $this->error(self::LOWER);
+            $this->error(self::ERR_LOWER);
             $isValid = false;
         }
 
         if (! preg_match('/\d/', $value)) {
-            $this->error(self::DIGIT);
+            $this->error(self::ERR_DIGIT);
             $isValid = false;
         }
 
@@ -239,3 +248,77 @@ public function isValid(mixed $value, ?array $context = null): bool
     // ... validation logic
 }
 ```
+
+## Best Practices When Inheriting From `AbstractValidator`
+
+### Constructor Signature
+
+Define your constructor to accept a normal associative array of options with a signature such as:
+
+```php
+public function __construct(array $options) { /** ... **/}
+```
+
+Additionally, call `parent::__construct($options)` within the constructor.
+
+The reason for this is to ensure that when users provide the `messages` option, the array of error messages override the defaults you have defined in the class.
+
+`AbstractValidator` also accepts:
+
+- The `translator` option which can be a specific implementation of `Laminas\Translator\TranslatorInterface`
+- The `translatorEnabled` option which is a boolean indicating whether translation should be enabled or not
+- The `translatorTextDomain` option - A string defining the text domain the translator should use
+- The `valueObscured` option - A boolean that indicates whether the validated value should be replaced with '****' when interpolated into error messages
+
+The additional benefit of defining your constructor to accept an array of options is improved compatibility with the `ValidatorPluginManager`.
+The plugin manager always creates a new instance, providing options to the constructor, meaning fewer specialised factories to write.
+
+When your validator has runtime dependencies on services, consider allowing an options array in the constructor so that the `AbstractValidator` options can be provided if required:
+
+```php
+namespace MyValid;
+
+use Laminas\Validator\AbstractValidator;
+use Psr\Container\ContainerInterface;
+
+final class FlightNumber extends AbstractValidator {
+    
+    public const ERR_INVALID_FLIGHT_NUMBER = 'invalidFlightNumber';
+    
+    public function __construct(private readonly FlightNumberValidationService $service, array $options = []) {
+        parent::__construct($options);
+    }
+    
+    public function isValid(mixed $value): bool
+    {
+        if (! is_string($value)) {
+            $this->error(self::ERR_INVALID_FLIGHT_NUMBER);
+            
+            return false;
+        }
+        
+        if (! $this->service->isValidFlightNumber($value)) {
+            $this->error(self::ERR_INVALID_FLIGHT_NUMBER);
+            
+            return false;
+        }
+        
+        return true;
+    }
+}
+
+final class FlightNumberFactory
+{
+    public function __invoke(ContainerInterface $container, string $name, array $options = []): FlightNumber
+    {
+        return new FlightNumber(
+            $container->get(FlightNumberValidationService::class),
+            $options,
+        );
+    }
+}
+```
+
+### Set Option Values Once and Make Them `readonly`
+
+By resolving validator options in the constructor to `private readonly` properties, and removing methods such as `getMyOption` and `setMyOption` you are forced to test how your validator behaviour varies based on its options, and, you can be sure that options simply cannot change once the validator has been constructed.

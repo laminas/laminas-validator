@@ -11,10 +11,10 @@ The following options are supported for `Laminas\Validator\Hostname`:
 
 - `allow`: Defines the sort of hostname which is allowed to be used.
   [See below](#validating-different-types-of-hostnames) for details.
-- `idn`: Defines if IDN domains are allowed or not. This option defaults to
+- `useIdnCheck`: Defines if IDN domains are allowed or not. This option defaults to
   `true`.
 - `ipValidator`: Allows defining an [IP validator](ip.md) with custom configuration
-- `tld`: Defines if TLDs are validated. This option defaults to `true`.
+- `useTldCheck`: Defines if TLDs are validated. This option defaults to `true`.
 
 ## Basic Usage
 
