@@ -72,14 +72,12 @@ $translator->addTranslationFilePattern(
 AbstractValidator::setDefaultTranslator($translator);
 ```
 
-> ### Supported Languages
+> NOTE: **Supported Languages**
+> The supported languages may not be complete.
+> New languages will be added with each release.
+> Additionally, feel free to use the existing resource files to make your own translations.
 >
-> The supported languages may not be complete. New languages will be added with
-> each release. Additionally feel free to use the existing resource files to
-> make your own translations.
->
-> You could also use these resource files to rewrite existing translations. So
-> you are not in need to create these files manually yourself.
+> You could also use these resource files to rewrite existing translations, so you don't have to create these files manually yourself.
 
 ## Limit the Size of a Validation Message
 
