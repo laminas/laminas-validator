@@ -1789,10 +1789,8 @@ final class Hostname extends AbstractValidator
      *      'allow' => ALLOW_DNS, // OPTIONAL Set what types of hostname to allow (default ALLOW_DNS)
      *      'useIdnCheck' => true, // OPTIONAL Set whether IDN domains are validated (default true)
      *      'useTldCheck' => true, // Set whether the TLD element of a hostname is validated (default true)
-     *      'ipValidator' => null, // An IP validator instance or null @link Ip
+     *      'ipValidator' => null, // An IP validator instance or null {@link Ip}
      * ];
-     *
-     * For backwards compatibility, options can also be passed as variables in the order stated above.
      *
      * @param Options $options OPTIONAL Array of validator options
      */
