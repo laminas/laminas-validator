@@ -397,7 +397,6 @@ final class Hostname extends AbstractValidator
         'cymru',
         'cyou',
         'cz',
-        'dabur',
         'dad',
         'dance',
         'data',
