@@ -18,6 +18,7 @@ class DateComparisonTest extends TestCase
 {
     /**
      * phpcs:disable Generic.Files.LineLength
+     *
      * @return list<array{
      *     0: string|DateTimeImmutable|null,
      *     1: string|DateTimeImmutable|null,

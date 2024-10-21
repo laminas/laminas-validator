@@ -22,6 +22,7 @@ final class NotExistsTest extends TestCase
 {
     /**
      * phpcs:disable Generic.Files.LineLength
+     *
      * @psalm-return array<string, array{
      *     0: OptionsArgument,
      *     1: mixed,
