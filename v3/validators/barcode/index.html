@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Validation classes for a wide range of domains, and the ability to chain validators to create complex validation criteria."> 
+
+    
+    
+        
+    
+    <meta name="docsearch:version" content="3.0.0,latest">
+    <meta name="docsearch:language" content="en">
+    <meta name="docsearch:component" content="laminas-validator">
+
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-validator/v3/validators/barcode/">
+    <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
+
+    <title>Barcode - laminas-validator - Laminas Docs</title>
+
+    <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
+    
+</head>
+<body id="page-top" class="components" data-spy="scroll" data-target=".toc" data-offset="20">
+
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <a class="logo-link navbar-brand" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
+            <img src="https://docs.laminas.dev/img/laminas-foundation-white.svg" height="28" alt="Laminas">
+        </a>
+        <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
+            Documentation
+        </a>
+
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <div class="dropdown sub-project-selector">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a href="https://docs.mezzio.dev/" class="dropdown-item">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 col-sm-12">
+                                        <img src="https://docs.laminas.dev/img/laminas-mezzio-rgb.svg">
+                                    </div>
+                                    <div class="col-md-8 col-sm-12">
+                                        <strong>Mezzio</strong><br>
+                                        PSR-15 Middleware in Minutes
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="https://docs.laminas.dev/components/" class="dropdown-item">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 col-sm-12">
+                                        <img src="https://docs.laminas.dev/img/laminas-components-rgb.svg">
+                                    </div>
+                                    <div class="col-md-8 col-sm-12">
+                                        <strong>Components</strong><br>
+                                        Components for Enterprise Applications
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="https://docs.laminas.dev/mvc" class="dropdown-item">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 col-sm-12">
+                                        <img src="https://docs.laminas.dev/img/laminas-mvc-rgb.svg">
+                                    </div>
+                                    <div class="col-md-8 col-sm-12">
+                                        <strong>MVC</strong><br>
+                                        MVC for Enterprise Applications
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item dropdown-item--secondardy" href="https://docs.laminas.dev/migration/">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8 offset-md-4 col-sm-12">
+                                        Migration to Laminas
+                                    </div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item dropdown-item--secondardy" href="https://docs.laminas.dev/tutorials/">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8 offset-md-4 col-sm-12">
+                                        Tutorials
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
+                </li>
+            </ul>
+
+            
+            
+                <div class="d-block d-sm-none">
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="../../..">laminas-validator</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../intro/" class="subnavigation__link">Introduction</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../installation/" class="subnavigation__link">Installation</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../validator-chains/" class="subnavigation__link">Validator Chains</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../writing-validators/" class="subnavigation__link">Writing Validators</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../messages/" class="subnavigation__link">Validation Messages</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../set/" class="subnavigation__link">Standard Validation Classes</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Validators</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../backed-enum-value/" class="subnavigation__link">BackedEnumValue</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Barcode</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../bic/" class="subnavigation__link">BIC</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../callback/" class="subnavigation__link">Callback</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../conditional/" class="subnavigation__link">Conditional</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../credit-card/" class="subnavigation__link">CreditCard</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../date/" class="subnavigation__link">Date</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../date-comparison/" class="subnavigation__link">DateComparison</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../date-interval/" class="subnavigation__link">DateIntervalString</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../digits/" class="subnavigation__link">Digits</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../email-address/" class="subnavigation__link">EmailAddress</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../enum-case/" class="subnavigation__link">EnumCase</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../explode/" class="subnavigation__link">Explode</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../hex/" class="subnavigation__link">Hex</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../hostname/" class="subnavigation__link">Hostname</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../host-with-public-ipv4-address/" class="subnavigation__link">HostWithPublicIPv4Address</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../iban/" class="subnavigation__link">Iban</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../identical/" class="subnavigation__link">Identical</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../in-array/" class="subnavigation__link">InArray</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../ip/" class="subnavigation__link">Ip</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../is-array/" class="subnavigation__link">IsArray</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../isbn/" class="subnavigation__link">Isbn</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../is-countable/" class="subnavigation__link">IsCountable</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../isinstanceof/" class="subnavigation__link">IsInstanceOf</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../is-json-string/" class="subnavigation__link">IsJsonString</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../not-empty/" class="subnavigation__link">NotEmpty</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../number-comparison/" class="subnavigation__link">NumberComparison</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../regex/" class="subnavigation__link">Regex</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../sitemap/" class="subnavigation__link">Sitemap</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../step/" class="subnavigation__link">Step</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../string-length/" class="subnavigation__link">StringLength</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../timezone/" class="subnavigation__link">Timezone</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../uri/" class="subnavigation__link">Uri</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../uuid/" class="subnavigation__link">Uuid</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">File Validators</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/intro/" class="subnavigation__link">Introduction</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/count/" class="subnavigation__link">Count</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/exclude-extension/" class="subnavigation__link">ExcludeExtension</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/exclude-mime-type/" class="subnavigation__link">ExcludeMimeType</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/exists/" class="subnavigation__link">Exists</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/extension/" class="subnavigation__link">Extension</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/files-size/" class="subnavigation__link">FilesSize</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/hash/" class="subnavigation__link">Hash</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/image-size/" class="subnavigation__link">ImageSize</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/is-compressed/" class="subnavigation__link">IsCompressed</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/is-image/" class="subnavigation__link">IsImage</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/mime-type/" class="subnavigation__link">MimeType</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/not-exists/" class="subnavigation__link">NotExists</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/size/" class="subnavigation__link">Size</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/upload-file/" class="subnavigation__link">UploadFile</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/word-count/" class="subnavigation__link">WordCount</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../migration/v2-to-v3/" class="subnavigation__link">Migration from Version 2 to 3</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../migration/refactoring-legacy-validators/" class="subnavigation__link">Refactoring Legacy Validators</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../migration/composing-final-validators/" class="subnavigation__link">Composing Final Validators</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                
+            
+        </ul>
+    </div>
+
+                </div>
+            
+
+            
+            <div class="d-block d-sm-none">
+                <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <header class="header">
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="col-8">
+                <h1 class="header__title">
+                    Components
+
+                    
+                        <small class="header__subtitle">laminas-validator</small>
+                    
+                </h1>
+            </div>
+
+            
+            <div class="col-4 text-right">
+                
+                    
+<div class="version-selector">
+    <div class="btn-group">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
+            
+                v3
+            
+        </button>
+        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
+            
+                
+                    <a href="../../intro/" class="dropdown-item active">
+                        
+                            v3 (latest)
+                        
+                    </a>
+                
+            
+                
+                    <a href="../../../v2/intro/" class="dropdown-item">
+                        
+                            v2
+                        
+                    </a>
+                
+            
+        </div>
+    </div>
+</div>
+
+
+                    <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                    <a href="https://github.com/laminas/laminas-validator" class="header__link header__link--github" title="Go to repository of laminas-validator">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-sm-12 content" role="main">
+                
+                
+                    
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#supported-barcodes" class="toc__link nav-link">Supported Barcodes</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#supported-options" class="toc__link nav-link">Supported Options</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#basic-usage" class="toc__link nav-link">Basic Usage</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#optional-checksum" class="toc__link nav-link">Optional Checksum</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#writing-custom-adapters" class="toc__link nav-link">Writing Custom Adapters</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+                
+
+                
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="https://docs.laminas.dev/">Overview</a></li>
+            <li class="breadcrumb-item"><a href="https://docs.laminas.dev/components/">Components</a></li>
+
+            
+                <li class="breadcrumb-item"><a href="../../..">laminas-validator</a></li>
+
+                
+                    
+                        
+                        
+                    
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Validators</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">Barcode</li>
+            
+        
+    </ol>
+</nav>
+
+
+
+
+
+
+    
+    
+        <h2 class="chapter__headline">Validators</h2>
+    
+
+    <h1 id="barcode-validator">Barcode Validator</h1>
+<p><code>Laminas\Validator\Barcode</code> allows you to check if a given value can be represented
+as a barcode.</p>
+<h2 id="supported-barcodes">Supported Barcodes</h2>
+<p><code>Laminas\Validator\Barcode</code> supports multiple barcode standards and can be extended
+with proprietary barcode implementations. The following barcode standards are
+supported:</p>
+<h3 id="codabar">CODABAR</h3>
+<p>Also known as Code-a-bar.</p>
+<p>This barcode has no length limitation. It supports only digits, and 6 special
+chars. Codabar is a self-checking barcode. This standard is very old. Common use
+cases are within airbills or photo labs where multi-part forms are used with
+dot-matrix printers.</p>
+<h3 id="code128">CODE128</h3>
+<p>CODE128 is a high density barcode.</p>
+<p>This barcode has no length limitation. It supports the first 128 ascii
+characters. When used with printing characters it has an checksum which is
+calculated modulo 103. This standard is used worldwide as it supports upper and
+lowercase characters.</p>
+<h3 id="code25">CODE25</h3>
+<p>Often called "two of five" or "Code25 Industrial".</p>
+<p>This barcode has no length limitation. It supports only digits, and the last
+digit can be an optional checksum which is calculated with modulo 10. This
+standard is very old and nowadays not often used. Common use cases are within
+the industry.</p>
+<h3 id="code25interleaved">CODE25INTERLEAVED</h3>
+<p>Often called "Code 2 of 5 Interleaved".</p>
+<p>This standard is a variant of CODE25. It has no length limitation, but it must
+contain an even amount of characters. It supports only digits, and the last
+digit can be an optional checksum which is calculated with modulo 10. It is used
+worldwide and common on the market.</p>
+<h3 id="code39">CODE39</h3>
+<p>CODE39 is one of the oldest available codes.</p>
+<p>This barcode has a variable length. It supports digits, upper cased alphabetical
+characters and 7 special characters like whitespace, point and dollar sign. It
+can have an optional checksum which is calculated with modulo 43. This standard
+is used worldwide and common within the industry.</p>
+<h3 id="code39ext">CODE39EXT</h3>
+<p>CODE39EXT is an extension of CODE39.</p>
+<p>This barcode has the same properties as CODE39. Additionally it allows the usage
+of all 128 ASCII characters. This standard is used worldwide and common within
+the industry.</p>
+<h3 id="code93">CODE93</h3>
+<p>CODE93 is the successor of CODE39.</p>
+<p>This barcode has a variable length. It supports digits, alphabetical characters
+and 7 special characters. It has an optional checksum which is calculated with
+modulo 47 and contains 2 characters. This standard produces a denser code than
+CODE39 and is more secure.</p>
+<h3 id="code93ext">CODE93EXT</h3>
+<p>CODE93EXT is an extension of CODE93.</p>
+<p>This barcode has the same properties as CODE93. Additionally it allows the usage
+of all 128 ASCII characters. This standard is used worldwide and common within
+the industry.</p>
+<h3 id="ean2">EAN2</h3>
+<p>EAN is the shortcut for "European Article Number".</p>
+<p>These barcode must have 2 characters. It supports only digits and does not have
+a checksum. This standard is mainly used as addition to EAN13 (ISBN) when
+printed on books.</p>
+<h3 id="ean5">EAN5</h3>
+<p>EAN is the shortcut for "European Article Number".</p>
+<p>These barcode must have 5 characters. It supports only digits and does not have
+a checksum. This standard is mainly used as addition to EAN13 (ISBN) when
+printed on books.</p>
+<h3 id="ean8">EAN8</h3>
+<p>EAN is the shortcut for "European Article Number".</p>
+<p>These barcode can have 7 or 8 characters. It supports only digits. When it has a
+length of 8 characters it includes a checksum. This standard is used worldwide
+but has a very limited range. It can be found on small articles where a longer
+barcode could not be printed.</p>
+<h3 id="ean12">EAN12</h3>
+<p>EAN is the shortcut for "European Article Number".</p>
+<p>This barcode must have a length of 12 characters. It supports only digits, and
+the last digit is always a checksum which is calculated with modulo 10. This
+standard is used within the USA and common on the market. It has been superseded
+by EAN13.</p>
+<h3 id="ean13">EAN13</h3>
+<p>EAN is the shortcut for "European Article Number".</p>
+<p>This barcode must have a length of 13 characters. It supports only digits, and
+the last digit is always a checksum which is calculated with modulo 10. This
+standard is used worldwide and common on the market.</p>
+<h3 id="ean14">EAN14</h3>
+<p>EAN is the shortcut for "European Article Number".</p>
+<p>This barcode must have a length of 14 characters. It supports only digits, and
+the last digit is always a checksum which is calculated with modulo 10. This
+standard is used worldwide and common on the market. It is the successor for
+EAN13.</p>
+<h3 id="ean18">EAN18</h3>
+<p>EAN is the shortcut for "European Article Number".</p>
+<p>This barcode must have a length of 18 characters. It support only digits. The
+last digit is always a checksum digit which is calculated with modulo 10. This
+code is often used for the identification of shipping containers.</p>
+<h3 id="gtin12">GTIN12</h3>
+<p>GTIN is the shortcut for "Global Trade Item Number".</p>
+<p>This barcode uses the same standard as EAN12 and is its successor. It's commonly
+used within the USA.</p>
+<h3 id="gtin13">GTIN13</h3>
+<p>GTIN is the shortcut for "Global Trade Item Number".</p>
+<p>This barcode uses the same standard as EAN13 and is its successor. It is used
+worldwide by industry.</p>
+<h3 id="gtin14">GTIN14</h3>
+<p>GTIN is the shortcut for "Global Trade Item Number".</p>
+<p>This barcode uses the same standard as EAN14 and is its successor. It is used
+worldwide and common on the market.</p>
+<h3 id="identcode">IDENTCODE</h3>
+<p>Identcode is used by Deutsche Post and DHL. It's an specialized implementation of Code25.</p>
+<p>This barcode must have a length of 12 characters. It supports only digits, and
+the last digit is always a checksum which is calculated with modulo 10. This
+standard is mainly used by the companies DP and DHL.</p>
+<h3 id="intelligentmail">INTELLIGENTMAIL</h3>
+<p>Intelligent Mail is a postal barcode.</p>
+<p>This barcode can have a length of 20, 25, 29 or 31 characters. It supports only
+digits, and contains no checksum. This standard is the successor of PLANET and
+POSTNET. It is mainly used by the United States Postal Services.</p>
+<h3 id="issn">ISSN</h3>
+<p>ISSN is the abbreviation for International Standard Serial Number.</p>
+<p>This barcode can have a length of 8 or 13 characters. It supports only digits,
+and the last digit must be a checksum digit which is calculated with modulo 11.
+It is used worldwide for printed publications.</p>
+<h3 id="itf14">ITF14</h3>
+<p>ITF14 is the GS1 implementation of an Interleaved Two of Five bar code.</p>
+<p>This barcode is a special variant of Interleaved 2 of 5. It must have a length
+of 14 characters and is based on GTIN14. It supports only digits, and the last
+digit must be a checksum digit which is calculated with modulo 10. It is used
+worldwide and common within the market.</p>
+<h3 id="leitcode">LEITCODE</h3>
+<p>Leitcode is used by Deutsche Post and DHL. It's an specialized implementation of Code25.</p>
+<p>This barcode must have a length of 14 characters. It supports only digits, and
+the last digit is always a checksum which is calculated with modulo 10. This
+standard is mainly used by the companies DP and DHL.</p>
+<h3 id="planet">PLANET</h3>
+<p>Planet is the abbreviation for Postal Alpha Numeric Encoding Technique.</p>
+<p>This barcode can have a length of 12 or 14 characters. It supports only digits,
+and the last digit is always a checksum. This standard is mainly used by the
+United States Postal Services.</p>
+<h3 id="postnet">POSTNET</h3>
+<p>Postnet is used by the US Postal Service.</p>
+<p>This barcode can have a length of 6, 7, 10 or 12 characters. It supports only
+digits, and the last digit is always a checksum. This standard is mainly used by
+the United States Postal Services.</p>
+<h3 id="royalmail">ROYALMAIL</h3>
+<p>Royalmail is used by Royal Mail.</p>
+<p>This barcode has no defined length. It supports digits, uppercase letters, and
+the last digit is always a checksum. This standard is mainly used by Royal Mail
+for their Cleanmail Service. It is also called RM4SCC.</p>
+<h3 id="sscc">SSCC</h3>
+<p>SSCC is the shortcut for "Serial Shipping Container Code".</p>
+<p>This barcode is a variant of EAN barcode. It must have a length of 18 characters
+and supports only digits. The last digit must be a checksum digit which is
+calculated with modulo 10. It is commonly used by the transport industry.</p>
+<h3 id="upca">UPCA</h3>
+<p>UPC is the shortcut for "Universal Product Code".</p>
+<p>This barcode preceded EAN13. It must have a length of 12 characters and supports
+only digits. The last digit must be a checksum digit which is calculated with
+modulo 10. It is commonly used within the USA.</p>
+<h3 id="upce">UPCE</h3>
+<p>UPCE is the short variant from UPCA.</p>
+<p>This barcode is a smaller variant of UPCA. It can have a length of 6, 7 or 8
+characters and supports only digits. When the barcode is 8 chars long it
+includes a checksum which is calculated with modulo 10. It is commonly used with
+small products where a UPCA barcode would not fit.</p>
+<h2 id="supported-options">Supported Options</h2>
+<p>The following options are supported for <code>Laminas\Validator\Barcode</code>:</p>
+<ul>
+<li><code>adapter</code>: Sets the barcode adapter which will be used. All the adapters listed above are supported and the option accepts either a FQCN, an adapter instance or a short string such as 'Upca' or 'Gtin13' that corresponds to the class name. Short strings should be avoided in favour of FQCN's.</li>
+<li><code>checksum</code>: <code>false</code> Checksum validation is <em>off</em> by default. If you are validating barcodes that are capable of validating a checksum, you should explicitly enable this option by setting it to <code>true</code></li>
+</ul>
+<h2 id="basic-usage">Basic Usage</h2>
+<p>To validate if a given string is a barcode you must know its type. See the
+following example for an EAN13 barcode:</p>
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\Barcode([
+    'adapter' =&gt; Laminas\Validator\Barcode\Ean13::class,
+]);
+if ($validator-&gt;isValid($input)) {
+    // input appears to be valid
+} else {
+    // input is invalid
+}</code></pre>
+<h2 id="optional-checksum">Optional Checksum</h2>
+<p>Checksum validation of barcodes, for those types that support it, is optional. If you are validating a barcode type that supports checksum validation, you should enable the feature to ensure that input is valid.</p>
+<pre class="highlight"><code class="language-php">$valid = new Laminas\Validator\Barcode([
+    'adapter' =&gt; Laminas\Validator\Barcode\Ean13::class,
+    'checksum' =&gt; true,
+]);
+if ($valid-&gt;isValid($input)) {
+    // A valid EAN13 barcode, and checksum validation succeeded
+} else {
+    // input is invalid
+}</code></pre>
+<blockquote>
+<h3 id="reduced-security-by-disabling-checksum-validation">Reduced Security by Disabling Checksum Validation</h3>
+<p>By switching off checksum validation you will also reduce the security of the
+used barcodes. Additionally, you should note that you can also turn off the
+checksum validation for those barcode types which must contain a checksum
+value. Barcodes which would not be valid could then be returned as valid even
+if they are not.</p>
+</blockquote>
+<h2 id="writing-custom-adapters">Writing Custom Adapters</h2>
+<p>You may write custom barcode validators for usage with <code>Laminas\Validator\Barcode</code>;
+this is often necessary when dealing with proprietary barcode types. To write
+your own barcode validator, you need the following information.</p>
+<ul>
+<li><code>Length</code>: The length your barcode must have. It can have one of the following
+  values:<ul>
+<li><code>Integer</code>: A value greater 0, which means that the barcode must have this
+length.</li>
+<li><code>-1</code>: There is no limitation for the length of this barcode.</li>
+<li><code>"even"</code>: The length of this barcode must have a even amount of digits.</li>
+<li><code>"odd"</code>: The length of this barcode must have a odd amount of digits.</li>
+<li><code>array</code>: A list of integer values. The length of this barcode must have
+  one of the set array values.</li>
+</ul>
+</li>
+<li><code>Characters</code>: An alphabet of characters that can be used in your type of barcode</li>
+<li><code>Checksum</code>: A method that calculates and verifies a checksum if appropriate</li>
+</ul>
+<p>Your custom barcode validator must implement <code>Laminas\Validator\Barcode\AdapterInterface</code>.</p>
+<p>As an example, let's create a barcode validation adapter that expects an even number of characters that includes only digits, and which requires a checksum.</p>
+<pre class="highlight"><code class="language-php">namespace My\Barcode;
+
+use Laminas\Validator\Barcode;
+use Laminas\Validator\Barcode\AdapterInterface;use function ctype_digit;
+
+final class CustomBarcodeAdapter implements AdapterInterface
+{
+    public function hasValidLength(string $value): bool
+    {
+        return strlen($value) % 2 === 0;
+    }
+
+    public function hasValidCharacters(string $value): bool
+    {
+        return ctype_digit($value);
+    }
+
+    public function hasValidChecksum(string $value): bool
+    {
+        // do some validation and return a boolean
+        return true;
+    }
+
+    public function getLength(): string
+    {
+        return 'even';
+    }
+}
+
+$validator = new Barcode([
+    'adapter' =&gt; CustomBarcodeAdapter::class,
+]);
+
+if ($validator-&gt;isValid($input)) {
+    // input appears to be valid
+} else {
+    // input is invalid
+}</code></pre>
+
+
+
+
+    <nav>
+    <ul class="page-nav hidden-print">
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../backed-enum-value/">
+                    <small class="page-nav__label">Previous</small>
+                    <i class="fa fa-chevron-left"></i>
+                    BackedEnumValue
+                </a>
+            
+        </li>
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../bic/">
+                    <small class="page-nav__label">Next</small>
+                    BIC
+                    <i class="fa fa-chevron-right"></i>
+                </a>
+            
+        </li>
+    </ul>
+</nav>
+
+
+
+                
+            </div>
+            <div class="col-md-3 col-sm-12 sidebar">
+                <div class="donation-banner">
+    <a href="https://getlaminas.org/support/">
+        <h2>Donate</h2>
+        <p>Support Laminas Developers Directly</p>
+        <img src="https://funding.communitybridge.org/assets/cb-f-horizontal-white.svg">
+    </a>
+</div>
+
+                
+                    <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="../../..">laminas-validator</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../intro/" class="subnavigation__link">Introduction</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../installation/" class="subnavigation__link">Installation</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../validator-chains/" class="subnavigation__link">Validator Chains</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../writing-validators/" class="subnavigation__link">Writing Validators</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../messages/" class="subnavigation__link">Validation Messages</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../set/" class="subnavigation__link">Standard Validation Classes</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Validators</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../backed-enum-value/" class="subnavigation__link">BackedEnumValue</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Barcode</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../bic/" class="subnavigation__link">BIC</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../callback/" class="subnavigation__link">Callback</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../conditional/" class="subnavigation__link">Conditional</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../credit-card/" class="subnavigation__link">CreditCard</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../date/" class="subnavigation__link">Date</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../date-comparison/" class="subnavigation__link">DateComparison</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../date-interval/" class="subnavigation__link">DateIntervalString</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../digits/" class="subnavigation__link">Digits</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../email-address/" class="subnavigation__link">EmailAddress</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../enum-case/" class="subnavigation__link">EnumCase</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../explode/" class="subnavigation__link">Explode</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../hex/" class="subnavigation__link">Hex</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../hostname/" class="subnavigation__link">Hostname</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../host-with-public-ipv4-address/" class="subnavigation__link">HostWithPublicIPv4Address</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../iban/" class="subnavigation__link">Iban</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../identical/" class="subnavigation__link">Identical</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../in-array/" class="subnavigation__link">InArray</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../ip/" class="subnavigation__link">Ip</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../is-array/" class="subnavigation__link">IsArray</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../isbn/" class="subnavigation__link">Isbn</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../is-countable/" class="subnavigation__link">IsCountable</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../isinstanceof/" class="subnavigation__link">IsInstanceOf</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../is-json-string/" class="subnavigation__link">IsJsonString</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../not-empty/" class="subnavigation__link">NotEmpty</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../number-comparison/" class="subnavigation__link">NumberComparison</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../regex/" class="subnavigation__link">Regex</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../sitemap/" class="subnavigation__link">Sitemap</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../step/" class="subnavigation__link">Step</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../string-length/" class="subnavigation__link">StringLength</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../timezone/" class="subnavigation__link">Timezone</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../uri/" class="subnavigation__link">Uri</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../uuid/" class="subnavigation__link">Uuid</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">File Validators</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/intro/" class="subnavigation__link">Introduction</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/count/" class="subnavigation__link">Count</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/exclude-extension/" class="subnavigation__link">ExcludeExtension</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/exclude-mime-type/" class="subnavigation__link">ExcludeMimeType</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/exists/" class="subnavigation__link">Exists</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/extension/" class="subnavigation__link">Extension</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/files-size/" class="subnavigation__link">FilesSize</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/hash/" class="subnavigation__link">Hash</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/image-size/" class="subnavigation__link">ImageSize</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/is-compressed/" class="subnavigation__link">IsCompressed</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/is-image/" class="subnavigation__link">IsImage</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/mime-type/" class="subnavigation__link">MimeType</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/not-exists/" class="subnavigation__link">NotExists</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/size/" class="subnavigation__link">Size</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/upload-file/" class="subnavigation__link">UploadFile</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../file/word-count/" class="subnavigation__link">WordCount</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../migration/v2-to-v3/" class="subnavigation__link">Migration from Version 2 to 3</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../migration/refactoring-legacy-validators/" class="subnavigation__link">Refactoring Legacy Validators</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../migration/composing-final-validators/" class="subnavigation__link">Composing Final Validators</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                
+            
+        </ul>
+    </div>
+
+                    
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <footer class="footer">
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="footer__button" href="#page-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h5>Laminas</h5>
+                <ul>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Maintenance Overview <a href="https://getlaminas.org/packages-maintenance-status/">Current maintenance status of Laminas &amp; Mezzio packages</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+
+                    
+                    <div class="col-md-4">
+                        <h4 class="footer__headline">Support</h4>
+                        <ul class="support__list">
+                            <li class="support__list-item">
+                                <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                            </li>
+                            <li class="support__list-item">
+                                <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fab fa-slack"></i></a>
+                            </li>
+                            <li class="support__list-item">
+                                <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fab fa-github"></i></a>
+                            </li>
+                            <li class="support__list-item">
+                                <a href="https://phpc.social/@getlaminas" class="support__link" title="Mastodon"><i class="fab fa-mastodon"></i></a>
+                            </li>
+                            <li class="support__list-item">
+                                <a href="https://getlaminas.org/blog/rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                            </li>
+                            <li class="support__list-item">
+                                <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    
+                    <div class="col-md-4">
+                        <h4 class="footer__headline">License</h4>
+                        <p>
+                            Code licensed under <a
+                                href="https://github.com/laminas/laminas-validator/blob/-/LICENSE.md">BSD 3-Clause</a>.
+                        </p>
+                    </div>
+
+                    
+                    <div class="col-md-4">
+                        <h4 class="footer__headline">Copyright</h4>
+                        <p>
+                            <!--Built with love by the Laminas team with the help of our
+                            <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
+                            &copy; 2024 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let base_url = '../../..',
+            project  = "components",
+            siteName = 'laminas-validator';
+    </script>
+    <script src="https://docs.laminas.dev/js/scripts.js"></script>
+    
+        <script src="../../../search/main.js"></script>
+    
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search in laminas-validator" id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>

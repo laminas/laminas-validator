@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Validation classes for a wide range of domains, and the ability to chain validators to create complex validation criteria."> 
+
+    
+    
+        
+    
+    <meta name="docsearch:version" content="3.0.0,latest">
+    <meta name="docsearch:language" content="en">
+    <meta name="docsearch:component" content="laminas-validator">
+
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-validator/v3/migration/v2-to-v3/">
+    <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
+
+    <title>Migration from Version 2 to 3 - laminas-validator - Laminas Docs</title>
+
+    <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
+    
+</head>
+<body id="page-top" class="components" data-spy="scroll" data-target=".toc" data-offset="20">
+
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        
+        <a class="logo-link navbar-brand" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
+            <img src="https://docs.laminas.dev/img/laminas-foundation-white.svg" height="28" alt="Laminas">
+        </a>
+        <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
+            Documentation
+        </a>
+
+        
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <div class="dropdown sub-project-selector">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a href="https://docs.mezzio.dev/" class="dropdown-item">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 col-sm-12">
+                                        <img src="https://docs.laminas.dev/img/laminas-mezzio-rgb.svg">
+                                    </div>
+                                    <div class="col-md-8 col-sm-12">
+                                        <strong>Mezzio</strong><br>
+                                        PSR-15 Middleware in Minutes
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="https://docs.laminas.dev/components/" class="dropdown-item">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 col-sm-12">
+                                        <img src="https://docs.laminas.dev/img/laminas-components-rgb.svg">
+                                    </div>
+                                    <div class="col-md-8 col-sm-12">
+                                        <strong>Components</strong><br>
+                                        Components for Enterprise Applications
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="https://docs.laminas.dev/mvc" class="dropdown-item">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 col-sm-12">
+                                        <img src="https://docs.laminas.dev/img/laminas-mvc-rgb.svg">
+                                    </div>
+                                    <div class="col-md-8 col-sm-12">
+                                        <strong>MVC</strong><br>
+                                        MVC for Enterprise Applications
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item dropdown-item--secondardy" href="https://docs.laminas.dev/migration/">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8 offset-md-4 col-sm-12">
+                                        Migration to Laminas
+                                    </div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item dropdown-item--secondardy" href="https://docs.laminas.dev/tutorials/">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8 offset-md-4 col-sm-12">
+                                        Tutorials
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
+                </li>
+            </ul>
+
+            
+            
+                <div class="d-block d-sm-none">
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="../../..">laminas-validator</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../intro/" class="subnavigation__link">Introduction</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../installation/" class="subnavigation__link">Installation</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../validator-chains/" class="subnavigation__link">Validator Chains</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../writing-validators/" class="subnavigation__link">Writing Validators</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../messages/" class="subnavigation__link">Validation Messages</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../set/" class="subnavigation__link">Standard Validation Classes</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Validators</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/backed-enum-value/" class="subnavigation__link">BackedEnumValue</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/barcode/" class="subnavigation__link">Barcode</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/bic/" class="subnavigation__link">BIC</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/callback/" class="subnavigation__link">Callback</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/conditional/" class="subnavigation__link">Conditional</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/credit-card/" class="subnavigation__link">CreditCard</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/date/" class="subnavigation__link">Date</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/date-comparison/" class="subnavigation__link">DateComparison</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/date-interval/" class="subnavigation__link">DateIntervalString</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/digits/" class="subnavigation__link">Digits</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/email-address/" class="subnavigation__link">EmailAddress</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/enum-case/" class="subnavigation__link">EnumCase</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/explode/" class="subnavigation__link">Explode</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/hex/" class="subnavigation__link">Hex</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/hostname/" class="subnavigation__link">Hostname</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/host-with-public-ipv4-address/" class="subnavigation__link">HostWithPublicIPv4Address</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/iban/" class="subnavigation__link">Iban</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/identical/" class="subnavigation__link">Identical</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/in-array/" class="subnavigation__link">InArray</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/ip/" class="subnavigation__link">Ip</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/is-array/" class="subnavigation__link">IsArray</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/isbn/" class="subnavigation__link">Isbn</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/is-countable/" class="subnavigation__link">IsCountable</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/isinstanceof/" class="subnavigation__link">IsInstanceOf</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/is-json-string/" class="subnavigation__link">IsJsonString</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/not-empty/" class="subnavigation__link">NotEmpty</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/number-comparison/" class="subnavigation__link">NumberComparison</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/regex/" class="subnavigation__link">Regex</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/sitemap/" class="subnavigation__link">Sitemap</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/step/" class="subnavigation__link">Step</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/string-length/" class="subnavigation__link">StringLength</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/timezone/" class="subnavigation__link">Timezone</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/uri/" class="subnavigation__link">Uri</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/uuid/" class="subnavigation__link">Uuid</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">File Validators</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/intro/" class="subnavigation__link">Introduction</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/count/" class="subnavigation__link">Count</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/exclude-extension/" class="subnavigation__link">ExcludeExtension</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/exclude-mime-type/" class="subnavigation__link">ExcludeMimeType</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/exists/" class="subnavigation__link">Exists</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/extension/" class="subnavigation__link">Extension</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/files-size/" class="subnavigation__link">FilesSize</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/hash/" class="subnavigation__link">Hash</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/image-size/" class="subnavigation__link">ImageSize</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/is-compressed/" class="subnavigation__link">IsCompressed</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/is-image/" class="subnavigation__link">IsImage</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/mime-type/" class="subnavigation__link">MimeType</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/not-exists/" class="subnavigation__link">NotExists</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/size/" class="subnavigation__link">Size</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/upload-file/" class="subnavigation__link">UploadFile</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/word-count/" class="subnavigation__link">WordCount</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Migration from Version 2 to 3</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../refactoring-legacy-validators/" class="subnavigation__link">Refactoring Legacy Validators</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../composing-final-validators/" class="subnavigation__link">Composing Final Validators</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                
+            
+        </ul>
+    </div>
+
+                </div>
+            
+
+            
+            <div class="d-block d-sm-none">
+                <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <header class="header">
+    <div class="container">
+        <div class="row">
+
+            
+            <div class="col-8">
+                <h1 class="header__title">
+                    Components
+
+                    
+                        <small class="header__subtitle">laminas-validator</small>
+                    
+                </h1>
+            </div>
+
+            
+            <div class="col-4 text-right">
+                
+                    
+<div class="version-selector">
+    <div class="btn-group">
+        <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false" id="version-selector-dropdown">
+            
+                v3
+            
+        </button>
+        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="version-selector-dropdown">
+            
+                
+                    <a href="../../intro/" class="dropdown-item active">
+                        
+                            v3 (latest)
+                        
+                    </a>
+                
+            
+                
+                    <a href="../../../v2/intro/" class="dropdown-item">
+                        
+                            v2
+                        
+                    </a>
+                
+            
+        </div>
+    </div>
+</div>
+
+
+                    <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                    <a href="https://github.com/laminas/laminas-validator" class="header__link header__link--github" title="Go to repository of laminas-validator">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-sm-12 content" role="main">
+                
+                
+                    
+    
+
+    
+    
+        <div class="toc">
+            <h6 class="toc__headline">On this page</h6>
+            <ul class="toc__list">
+                
+                    <li class="toc__entry">
+                        <a href="#changed-behaviour-signature-changes" class="toc__link nav-link">Changed Behaviour &amp; Signature Changes</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#changes-to-individual-validators" class="toc__link nav-link">Changes to Individual Validators</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#removed-features" class="toc__link nav-link">Removed Features</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+                
+
+                
+                    <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        
+            <li class="breadcrumb-item"><a href="https://docs.laminas.dev/">Overview</a></li>
+            <li class="breadcrumb-item"><a href="https://docs.laminas.dev/components/">Components</a></li>
+
+            
+                <li class="breadcrumb-item"><a href="../../..">laminas-validator</a></li>
+
+                
+                    
+                        
+                        
+                    
+                
+                    
+                        
+                        
+                            <li class="breadcrumb-item">Migration</li>
+                        
+                    
+                
+
+                <li class="breadcrumb-item active" aria-current="page">Migration from Version 2 to 3</li>
+            
+        
+    </ol>
+</nav>
+
+
+
+
+
+
+    
+    
+        <h2 class="chapter__headline">Migration</h2>
+    
+
+    <h1 id="migration-from-version-2-to-3">Migration from Version 2 to 3</h1>
+<h2 id="changed-behaviour-signature-changes">Changed Behaviour &amp; Signature Changes</h2>
+<h3 id="final-classes">Final Classes</h3>
+<p>In order to reduce maintenance burden and to help users to favour <a href="https://en.wikipedia.org/wiki/Composition_over_inheritance">composition over inheritance</a>, all classes, where possible have been marked as final.</p>
+<p>As a best practice, even if a validator is not marked as final in this library, it is not advisable to extend from it; it is likely that in future major releases inheritance will become prohibited.</p>
+<p>We have prepared a short guide on <a href="../composing-final-validators/">refactoring to composition here</a>.</p>
+<h3 id="strict-types-and-native-type-hints-throughout">Strict Types and Native Type Hints Throughout</h3>
+<p>All classes now use native parameter types, return types and property types.</p>
+<h3 id="abstractvalidator-breaking-changes"><code>AbstractValidator</code> Breaking Changes</h3>
+<p>There have been a number of significant, breaking changes to the <code>AbstractValidator</code> which <em>all</em> shipped validators inherit from.</p>
+<p>The following methods have been removed affecting all the shipped validators in addition to <a href="#changes-to-individual-validators">individual changes</a> to those validators:</p>
+<ul>
+<li><code>getOption</code></li>
+<li><code>getOptions</code></li>
+<li><code>setOptions</code></li>
+<li><code>getMessageVariables</code></li>
+<li><code>getMessageTemplates</code></li>
+<li><code>setMessages</code></li>
+<li><code>setValueObscured</code></li>
+<li><code>isValueObscured</code></li>
+<li><code>getDefaultTranslator</code></li>
+<li><code>hasDefaultTranslator</code></li>
+<li><code>getDefaultTranslatorTextDomain</code></li>
+<li><code>getMessageLength</code></li>
+</ul>
+<h4 id="validator-options">Validator Options</h4>
+<p>It is now necessary to pass all options to the validator constructor.
+This means that you cannot create a validator instance in an invalid state.
+It also makes it impossible to change the option values after the validator has been instantiated.</p>
+<p>Removal of the various option "getters" and "setters" are likely to cause a number of breaking changes to inheritors of <code>AbstractValidator</code> <em>(i.e. custom validators you may have written)</em> so we have provided an <a href="../refactoring-legacy-validators/">example refactoring</a> to illustrate the necessary changes.</p>
+<p>Of particular note, is that all "magic" has been removed. Previously, passing an options such as <code>my_option</code> to a validator constructor would result in <code>AbstractValidator</code> calling the <code>setMyOption</code> method if it existed. This functionality has been removed, and it is the responsibility of validator implementations to deal with option values during construction.</p>
+<h4 id="translator-interface-type-has-changed">Translator Interface Type has Changed</h4>
+<p>In the 2.x series of <code>laminas-validator</code> there was a translator interface and implementation <code>Laminas\Validator\Translator\TranslatorInterface</code>.
+<code>AbstractValidator</code> expected an instance of this interface to its <code>setTranslator</code> method <em>(Defined in <code>Laminas\Validator\Translator\TranslatorAwareInterface</code>)</em>.</p>
+<p><code>AbstractValidator</code> and <code>Laminas\Validator\Translator\TranslatorAwareInterface</code> now type hint on <code>Laminas\Translator\TranslatorInterface</code>. The <code>laminas-translator</code> library defines only this interface and nothing more, furthermore, the translator supplied by <code>Laminas\I18n</code> implements this interface so there is no longer any need for multiple implementations, or validator specific implementations of the translator. Users can now pass the translator shipped by <code>Laminas\I18n</code> directly.</p>
+<h3 id="breaking-changes-to-validatorchain">Breaking Changes to <code>ValidatorChain</code></h3>
+<p>All methods that previously returned <code>$this</code> now return <code>void</code>. You will need to refactor code such as:</p>
+<pre class="highlight"><code class="language-php">// Code making use of fluent return values:
+$validatorChain-&gt;attach(new StringLength())
+               -&gt;attach(new NotEmpty())
+               -&gt;attach(new Digits());
+
+// Should be refactored to:
+$validatorChain-&gt;attach(new StringLength());
+$validatorChain-&gt;attach(new NotEmpty());
+$validatorChain-&gt;attach(new Digits());</code></pre>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>addValidator</code> <em>(replaced with <code>attach</code>)</em></li>
+<li><code>addByName</code> <em>(replaced with <code>attachByName</code>)</em></li>
+</ul>
+<h3 id="validator-plugin-manager">Validator Plugin Manager</h3>
+<h4 id="removal-of-legacy-zend-aliases">Removal of legacy Zend aliases</h4>
+<p>All aliases that referenced the equivalent, legacy "Zend" validators have been  removed. This means that an exception will be thrown if you attempt to retrieve a validator using one of these aliases such as <code>Zend\Validator\NotEmpty::class</code>.</p>
+<p>You will need to either update your codebase to use known aliases such as <code>Laminas\Validator\NotEmpty::class</code>, or re-implement the aliases in your configuration.</p>
+<h4 id="removal-of-service-manager-v2-canonical-fqcns">Removal of Service Manager v2 canonical FQCNs</h4>
+<p>There are a number of aliases left over from early versions of Service Manager where each validator would be aliased by a lowercase, normalized string such as <code>laminasvalidatoremail</code> to represent <code>Laminas\Validator\Email::class</code>. All of these aliases have been removed.</p>
+<h4 id="removal-of-laminasi18n-aliases-and-factories">Removal of Laminas\i18n aliases and factories</h4>
+<p>The <a href="https://docs.laminas.dev/laminas-i18n/validators/introduction/"><code>laminas-i18n</code></a> component ships a number of validators that historically have been pre-configured from within this component. These aliases and factory entries have been removed.</p>
+<p><a href="https://github.com/laminas/laminas-validator/commit/5bbfe8baeba48f3b77c909a8d6aa930c1d2897b7">Removal of the aliases</a> here is unlikely to cause any issues, providing you have enabled the <code>ConfigProvider</code> or <code>Module</code> from <code>laminas-i18n</code> in your application.</p>
+<h3 id="required-options-at-construction-time">Required Options at Construction Time</h3>
+<p>A number of validators now require options during construction now that runtime mutation of validator settings is no longer possible <em>(Described in <a href="#general-changes">'General Changes'</a> below)</em>.</p>
+<p>Validators that require options will now throw an exception when the relevant option is not provided. For example, the <a href="#laminasvalidatorregex"><code>Regex</code> validator</a> requires a <code>pattern</code> option.</p>
+<p>The affected validators are:</p>
+<ul>
+<li><code>Laminas\Validator\Barcode</code></li>
+<li><code>Laminas\Validator\Bitwise</code></li>
+<li><code>Laminas\Validator\Callback</code></li>
+<li><code>Laminas\Validator\DateComparison</code></li>
+<li><code>Laminas\Validator\Explode</code></li>
+<li><code>Laminas\Validator\InArray</code></li>
+<li><code>Laminas\Validator\IsInstanceOf</code></li>
+<li><code>Laminas\Validator\NumberComparison</code></li>
+<li><code>Laminas\Validator\Regex</code></li>
+<li><code>Laminas\Validator\File\ExcludeExtension</code></li>
+<li><code>Laminas\Validator\File\ExcludeMimeType</code></li>
+<li><code>Laminas\Validator\File\Extension</code></li>
+<li><code>Laminas\Validator\File\FilesSize</code></li>
+<li><code>Laminas\Validator\File\Hash</code></li>
+<li><code>Laminas\Validator\File\ImageSize</code></li>
+<li><code>Laminas\Validator\File\MimeType</code></li>
+<li><code>Laminas\Validator\File\Size</code></li>
+<li><code>Laminas\Validator\File\WordCount</code></li>
+</ul>
+<h2 id="changes-to-individual-validators">Changes to Individual Validators</h2>
+<h3 id="general-changes">General Changes</h3>
+<h4 id="removal-of-getters-and-setters">Removal of "Getters" and "Setters"</h4>
+<p>In general, most validators no longer have "getters" and "setters" for options and configuration.</p>
+<p>Taking the <code>Regex</code> validator as an example, in the 2.x series, it was possible to create a regex validator and then configure it <em>after</em> it had been constructed.
+This allows the creation of validator instances with an invalid state, or configuration.</p>
+<p>Removing getters and setters forces us to provide valid configuration of the validator instance at construction time, vastly reducing the API surface and closing off potential sources of bugs.</p>
+<h4 id="consistent-construction-via-an-array-of-options">Consistent Construction via an Array of Options</h4>
+<p>In the 2.x series, <em>most</em> validators accepted a range of constructor arguments, for example, a single options array, an <code>ArrayAccess</code> or <code>Traversable</code> and frequently variadic arguments of the most important configuration parameters.</p>
+<p>Generally speaking, validators now only accept associative arrays with improved documentation of exactly which options are available.</p>
+<h3 id="laminasvalidatorbarcode"><code>Laminas\Validator\Barcode</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>getAdapter</code></li>
+<li><code>setAdapter</code></li>
+<li><code>getChecksum</code></li>
+<li><code>useChecksum</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of documented options.</li>
+<li>The <code>adapter</code> option can now be a FQCN - previously it had to be an instance, or an unqualified class name.</li>
+</ul>
+<h4 id="significant-changes-to-adapters">Significant Changes to Adapters</h4>
+<p>Inheritance has changed for all the shipped barcode adapters. None of the adapters extend from the <strong>now removed</strong> <code>AbstractAdapter</code> and instead, all adapters implement the methods expected by <code>Laminas\Validator\Barcode\AdapterInterface</code>. The interface itself now only specifies 4 methods:</p>
+<ul>
+<li><code>hasValidLength</code></li>
+<li><code>hasValidCharacters</code></li>
+<li><code>hasValidChecksum</code></li>
+<li><code>getLength</code></li>
+</ul>
+<p>The documentation on <a href="../../validators/barcode/#writing-custom-adapters">writing custom adapters</a> has been updated to reflect these changes.</p>
+<h3 id="laminasvalidatorbitwise"><code>Laminas\Validator\Bitwise</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>setControl</code></li>
+<li><code>getControl</code></li>
+<li><code>setOperator</code></li>
+<li><code>getOperator</code></li>
+<li><code>setStrict</code></li>
+<li><code>getStrict</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of documented options</li>
+<li>Validation will now fail if the input is not <code>interger-ish</code> i.e. <code>int</code> or <code>int-string</code></li>
+</ul>
+<h3 id="laminasvalidatorcallback"><code>Laminas\Validator\Callback</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>setCallback</code></li>
+<li><code>getCallback</code></li>
+<li><code>setCallbackOptions</code></li>
+<li><code>getCallbackOptions</code></li>
+</ul>
+<p>A new option <code>bind</code> has been added that will bind the given callback to the scope of the validator so that you can manipulate error messages from within the callback itself.</p>
+<p>The <a href="../../validators/callback/#validation-context-argument">arguments provided to the user supplied callable</a> no longer change depending on whether the <code>$context</code> parameter is provided to the validator. Callable will now always be called with the signature <code>callable(mixed $value, array $context, ...$userDefinedParameters)</code>.</p>
+<p>The <a href="../../validators/callback/#callbacks-and-scope">documentation</a> has been updated with the relevant details.</p>
+<h3 id="laminasvalidatorcreditcard"><code>Laminas\Validator\CreditCard</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>getType</code></li>
+<li><code>setType</code></li>
+<li><code>addType</code></li>
+<li><code>getService</code></li>
+<li><code>setService</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/credit-card/">documented options</a>.</li>
+<li>If you provide a callable for further validation of the credit card number, the expected signature of the callable has changed and should now be <code>callable(mixed $value, array $context, array $acceptedCardTypes)</code>. Please <a href="../../validators/credit-card/#validation-using-apis">consult the documentation</a> for further details.</li>
+</ul>
+<h3 id="laminasvalidatordate"><code>Laminas\Validator\Date</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>getFormat</code></li>
+<li><code>setFormat</code></li>
+<li><code>isStrict</code></li>
+<li><code>setStrict</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/date/">documented options</a>.</li>
+</ul>
+<h3 id="laminasvalidatordatestep"><code>Laminas\Validator\DateStep</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>getFormat</code></li>
+<li><code>setFormat</code></li>
+<li><code>isStrict</code></li>
+<li><code>setStrict</code></li>
+<li><code>getBaseValue</code></li>
+<li><code>setBaseValue</code></li>
+<li><code>getStep</code></li>
+<li><code>setStep</code></li>
+<li><code>getTimezone</code></li>
+<li><code>setTimezone</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array.</li>
+<li>The default format has changed to use <code>DateTimeInterface::ATOM</code> instead of the deprecated <code>DateTimeInterface::ISO8601</code></li>
+</ul>
+<h3 id="laminasvalidatordigits"><code>Laminas\Validator\Digits</code></h3>
+<p>This validator no longer uses the Digits filter from <code>laminas/laminas-filter</code>, so its static filter property has been removed. This change is unlikely to cause any problems unless for some reason you have extended this class.</p>
+<h3 id="laminasvalidatoremailaddress"><code>Laminas\Validator\EmailAddress</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>getHostnameValidator</code></li>
+<li><code>setHostnameValidator</code></li>
+<li><code>getAllow</code></li>
+<li><code>setAllow</code></li>
+<li><code>isMxSupported</code></li>
+<li><code>getMxCheck</code></li>
+<li><code>useMxCheck</code></li>
+<li><code>getDeepMxCheck</code></li>
+<li><code>useDeepMxCheck</code></li>
+<li><code>getDomainCheck</code></li>
+<li><code>useDomainCheck</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/email-address/">documented options</a>.</li>
+<li>If you use custom <code>Hostname</code> validators to restrict valid host types, it is worth <a href="../../validators/email-address/#controlling-hostname-validation-options">reading the documentation</a> about how the Email Address validator interacts with the Hostname validator with regard to option priority for the <code>allow</code> option.</li>
+</ul>
+<h3 id="laminasvalidatorexplode"><code>Laminas\Validator\Explode</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>setValidator</code></li>
+<li><code>getValidator</code></li>
+<li><code>setValueDelimiter</code></li>
+<li><code>getValueDelimiter</code></li>
+<li><code>setValidatorPluginManager</code></li>
+<li><code>getValidatorPluginManager</code></li>
+<li><code>setBreakOnFirstFailure</code></li>
+<li><code>isBreakOnFirstFailure</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>Non-string input will now cause a validation failure</li>
+<li>The composed validator can now be specified as a FQCN</li>
+<li>The constructor now only accepts an associative array</li>
+<li>Error messages match the same format as other validators, i.e. <code>array&lt;string, string&gt;</code></li>
+</ul>
+<h3 id="laminasvalidatorhostname"><code>Laminas\Validator\Hostname</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>getIpValidator</code></li>
+<li><code>setIpValidator</code></li>
+<li><code>getAllow</code></li>
+<li><code>setAllow</code></li>
+<li><code>getIdnCheck</code></li>
+<li><code>useIdnCheck</code></li>
+<li><code>getTldCheck</code></li>
+<li><code>useTldCheck</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/hostname/">documented options</a>.</li>
+</ul>
+<h3 id="laminasvalidatoriban"><code>Laminas\Validator\Iban</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>getCountryCode</code></li>
+<li><code>setCountryCode</code></li>
+<li><code>allowNonSepa</code></li>
+<li><code>setAllowNonSepa</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/iban/">documented options</a>.</li>
+</ul>
+<h3 id="laminasvalidatoridentical"><code>Laminas\Validator\Identical</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>getToken</code></li>
+<li><code>setToken</code></li>
+<li><code>getStrict</code></li>
+<li><code>setStrict</code></li>
+<li><code>getLiteral</code></li>
+<li><code>setLiteral</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/identical/">documented options</a>.</li>
+</ul>
+<h3 id="laminasvalidatorinarray"><code>Laminas\Validator\InArray</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>getHaystack</code></li>
+<li><code>setHaystack</code></li>
+<li><code>getStrict</code></li>
+<li><code>setStrict</code></li>
+<li><code>getRecursive</code></li>
+<li><code>setRecursive</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/in-array/">documented options</a>.</li>
+</ul>
+<h3 id="laminasvalidatorip"><code>Laminas\Validator\Ip</code></h3>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/ip/">documented options</a>.</li>
+</ul>
+<h3 id="laminasvalidatorisbn"><code>Laminas\Validator\Isbn</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>setSeparator</code></li>
+<li><code>getSeparator</code></li>
+<li><code>setType</code></li>
+<li><code>getType</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/isbn/">documented options</a>.</li>
+<li>The <code>separator</code> option has been removed. Instead of requiring users to provide the expected separator, all valid separators are now stripped from the input prior to validation. With the default option for auto-detection of ISBN-10 and ISBN-13 formats, the validator is greatly simplified at the point of use.</li>
+<li>Previously, the classes <code>Laminas\Validator\Isbn\Isbn10</code> and <code>Laminas\Validator\Isbn\Isbn13</code> were used to validate each format. The code in these classes is now inlined inside the validator so these classes have been removed.</li>
+</ul>
+<h3 id="laminasvalidatoriscountable"><code>Laminas\Validator\IsCountable</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>getCount</code></li>
+<li><code>setCount</code></li>
+<li><code>getMin</code></li>
+<li><code>setMin</code></li>
+<li><code>getMax</code></li>
+<li><code>setMax</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/is-countable/">documented options</a>.</li>
+</ul>
+<h3 id="laminasvalidatorisinstanceof"><code>Laminas\Validator\IsInstanceOf</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>getClassName</code></li>
+<li><code>setClassName</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/isinstanceof/">documented options</a>.</li>
+</ul>
+<h3 id="laminasvalidatorisjsonstring"><code>Laminas\Validator\IsJsonString</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>setAllow</code></li>
+<li><code>setMaxDepth</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/is-json-string/">documented options</a>.</li>
+</ul>
+<h3 id="laminasvalidatornotempty"><code>Laminas\Validator\NotEmpty</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>getType</code></li>
+<li><code>setType</code></li>
+<li><code>getDefaultType</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/not-empty/">documented options</a>.</li>
+</ul>
+<h3 id="laminasvalidatorregex"><code>Laminas\Validator\Regex</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>setPattern</code></li>
+<li><code>getPattern</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>Non string input will now fail validation. Previously, scalars would be cast to string before pattern validation leading to possible bugs, for example, floating point numbers could be cast to scientific notation.</li>
+<li>Now the pattern is a required option in the constructor, an invalid pattern will cause an exception during <code>__construct</code> instead of during validation.</li>
+<li>The single constructor argument must now be either an associative array of options, or the regex pattern as a string.</li>
+</ul>
+<h3 id="laminasvalidatorstep"><code>Laminas\Validator\Step</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>setBaseValue</code></li>
+<li><code>getBaseValue</code></li>
+<li><code>setStep</code></li>
+<li><code>getStep</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/step/">documented options</a>.</li>
+</ul>
+<h3 id="laminasvalidatorstringlength"><code>Laminas\Validator\StringLength</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>setMin</code></li>
+<li><code>getMin</code></li>
+<li><code>setMax</code></li>
+<li><code>getMax</code></li>
+<li><code>getStringWrapper</code></li>
+<li><code>setStringWrapper</code></li>
+<li><code>getEncoding</code></li>
+<li><code>setEncoding</code></li>
+<li><code>getLength</code></li>
+<li><code>setLength</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of options.</li>
+<li>Malformed multibyte input is now handled more consistently: In the event that any of the string wrappers cannot reliably detect the length of a string, an exception will be thrown.</li>
+</ul>
+<h3 id="laminasvalidatortimezone"><code>Laminas\Validator\Timezone</code></h3>
+<p>The following methods have been removed</p>
+<ul>
+<li><code>setType</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of documented options</li>
+<li>The <code>type</code> option can now only be one of the type constants declared on the class, i.e. <code>Timezone::ABBREVIATION</code>, <code>Timezone::LOCATION</code>, or <code>Timezone::ALL</code></li>
+<li>When validating timezone abbreviations, the check is now case-insensitive, so <code>CET</code> will pass validation when previously it did not.</li>
+</ul>
+<h3 id="laminasvalidatoruri"><code>Laminas\Validator\Uri</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>setUriHandler</code></li>
+<li><code>getUriHandler</code></li>
+<li><code>setAllowAbsolute</code></li>
+<li><code>getAllowAbsolute</code></li>
+<li><code>setAllowRelative</code></li>
+<li><code>getAllowRelative</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/uri/">documented options</a>.</li>
+</ul>
+<h3 id="laminasvalidatorfilecount"><code>Laminas\Validator\File\Count</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>getMin</code></li>
+<li><code>setMin</code></li>
+<li><code>getMax</code></li>
+<li><code>setMax</code></li>
+<li><code>addFile</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/file/count/">documented options</a></li>
+<li>Compatibility with the legacy <code>Laminas\File\Transfer</code> api has been removed</li>
+</ul>
+<h3 id="laminasvalidatorfileexcludeextension-and-laminasvalidatorfileextension"><code>Laminas\Validator\File\ExcludeExtension</code> and <code>Laminas\Validator\File\Extension</code></h3>
+<p><code>ExcludeExtension</code> no longer inherits from the <code>Extension</code> validator.</p>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>getCase</code></li>
+<li><code>setCase</code></li>
+<li><code>getExtension</code></li>
+<li><code>setExtension</code></li>
+<li><code>addExtension</code></li>
+<li><code>getAllowNonExistentFile</code></li>
+<li><code>setAllowNonExistentFile</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/file/extension/">documented options</a></li>
+<li>Compatibility with the legacy <code>Laminas\File\Transfer</code> api has been removed</li>
+<li>An additional validation failure condition has been added for situations where the input cannot be recognised as either a file path or some type of upload.</li>
+</ul>
+<h3 id="laminasvalidatorfileexcludemimetype-laminasvalidatorfilemimetype-laminasvalidatorfileiscompressed-and-laminasvalidatorfileisimage"><code>Laminas\Validator\File\ExcludeMimeType</code>, <code>Laminas\Validator\File\MimeType</code>, <code>Laminas\Validator\File\IsCompressed</code> and <code>Laminas\Validator\File\IsImage</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>getMagicFile</code></li>
+<li><code>setMagicFile</code></li>
+<li><code>disableMagicFile</code></li>
+<li><code>isMagicFileDisabled</code></li>
+<li><code>getHeaderCheck</code></li>
+<li><code>enableHeaderCheck</code></li>
+<li><code>getMimeType</code></li>
+<li><code>setMimeType</code></li>
+<li><code>addMimeType</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/file/mime-type/">documented options</a></li>
+<li>Compatibility with the legacy <code>Laminas\File\Transfer</code> api has been removed</li>
+<li>The options <code>enableHeaderCheck</code>, <code>disableMagicFile</code> and <code>magicFile</code> have been removed. A custom magic file is now no longer accepted or used, instead the magic file bundled with PHP is used instead.</li>
+</ul>
+<h3 id="laminasvalidatorfilesize-and-laminasvalidatorfilefilessize"><code>Laminas\Validator\File\Size</code> and <code>Laminas\Validator\File\FilesSize</code></h3>
+<p><code>FilesSize</code> no longer inherits from the <code>Size</code> validator.</p>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>useByteString</code></li>
+<li><code>getByteString</code></li>
+<li><code>getMin</code></li>
+<li><code>setMin</code></li>
+<li><code>getMax</code></li>
+<li><code>setMax</code></li>
+<li><code>getSize</code></li>
+<li><code>setSize</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/file/size/">documented options</a></li>
+<li>Compatibility with the legacy <code>Laminas\File\Transfer</code> api has been removed</li>
+</ul>
+<h3 id="laminasvalidatorfilehash"><code>Laminas\Validator\File\Hash</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>getHash</code></li>
+<li><code>setHash</code></li>
+<li><code>addHash</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/file/hash/">documented options</a></li>
+<li>Compatibility with the legacy <code>Laminas\File\Transfer</code> api has been removed</li>
+<li>Also see information about the <a href="#removal-of-laminasvalidatorfilehash-inheritors">removal of inheritors</a></li>
+</ul>
+<h3 id="laminasvalidatorfileexists-and-laminasvalidatorfilenotexists"><code>Laminas\Validator\File\Exists</code> and <code>Laminas\Validator\File\NotExists</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>getDirectory</code></li>
+<li><code>setDirectory</code></li>
+<li><code>addDirectory</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/file/exists/">documented options</a></li>
+<li>Compatibility with the legacy <code>Laminas\File\Transfer</code> api has been removed</li>
+<li><code>NotExists</code> no longer inherits from <code>Exists</code></li>
+</ul>
+<h3 id="laminasvalidatorfileimagesize"><code>Laminas\Validator\File\ImageSize</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>getMinWidth</code></li>
+<li><code>setMinWidth</code></li>
+<li><code>getMaxWidth</code></li>
+<li><code>setMaxWidth</code></li>
+<li><code>getMinHeight</code></li>
+<li><code>setMinHeight</code></li>
+<li><code>getMaxHeight</code></li>
+<li><code>setMaxHeight</code></li>
+<li><code>getImageMin</code></li>
+<li><code>setImageMin</code></li>
+<li><code>getImageMax</code></li>
+<li><code>setImageMax</code></li>
+<li><code>getImageWidth</code></li>
+<li><code>setImageWidth</code></li>
+<li><code>getImageHeight</code></li>
+<li><code>setImageHeight</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/file/image-size/">documented options</a></li>
+<li>Compatibility with the legacy <code>Laminas\File\Transfer</code> api has been removed</li>
+</ul>
+<h3 id="laminasvalidatorfilewordcount"><code>Laminas\Validator\File\WordCount</code></h3>
+<p>The following methods have been removed:</p>
+<ul>
+<li><code>getMin</code></li>
+<li><code>setMin</code></li>
+<li><code>getMax</code></li>
+<li><code>setMax</code></li>
+</ul>
+<p>Behaviour changes:</p>
+<ul>
+<li>The constructor now only accepts an associative array of <a href="../../validators/file/word-count/">documented options</a></li>
+<li>Compatibility with the legacy <code>Laminas\File\Transfer</code> api has been removed</li>
+</ul>
+<h2 id="removed-features">Removed Features</h2>
+<h3 id="laminascsrf-validator-removal"><code>Laminas\Csrf</code> Validator Removal</h3>
+<p>This validator was the only shipped validator with a hard dependency on the <a href="https://docs.laminas.dev/laminas-session/"><code>laminas-session</code></a> component. It has now been removed from this component and re-implemented, in a different namespace, but with the same functionality in <code>laminas-session</code>.</p>
+<p>In order to transition to the new validator, all that should be required is to ensure that you have listed <code>laminas-session</code> as a composer dependency and replace references to <code>Laminas\Validator\Csrf::class</code> with <code>Laminas\Session\Validator\Csrf::class</code>.</p>
+<h3 id="laminasdb-validator-removal"><code>Laminas\Db</code> Validator Removal</h3>
+<p>The deprecated "Db" validators that shipped in version 2.0 have been removed. The removed classes are:</p>
+<ul>
+<li><code>Laminas\Validator\Db\AbstractDb</code></li>
+<li><code>Laminas\Validator\Db\NoRecordExists</code></li>
+<li><code>Laminas\Validator\Db\RecordExists</code></li>
+</ul>
+<h3 id="removal-of-between-lessthan-and-greaterthan-validators">Removal of <code>Between</code>, <code>LessThan</code> and <code>GreaterThan</code> Validators</h3>
+<p>These validators could theoretically, and indeed were used to perform comparisons on <code>DateTime</code> instances, numbers and arbitrary strings.
+Whilst these validators worked well for numbers, they worked less well for other data types.</p>
+<p>In order to reduce ambiguity, these validators have been replaced by <a href="../../validators/number-comparison/"><code>NumberComparison</code></a> and <a href="../../validators/date-comparison/"><code>DateComparison</code></a>.</p>
+<p>Taking <code>LessThan</code> as an example replacement target:</p>
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\LessThan([
+    'max' =&gt; 10,
+    'inclusive' =&gt; true,
+]);</code></pre>
+<p>Would become:</p>
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\NumberComparison([
+    'max' =&gt; 10,
+    'inclusiveMax' =&gt; true,
+]);</code></pre>
+<h3 id="removal-of-laminasvalidatorfileupload">Removal of <code>Laminas\Validator\File\Upload</code></h3>
+<p>The deprecated <code>Upload</code> validator was only capable of validating the <code>$_FILES</code> super global, providing the entire <code>$_FILES</code> array was provided, at runtime, prior to validation. The validator expected a key such as <code>my-upload</code> corresponding to a posted form element and also relied on the legacy and deprecated <code>Laminas\File\Transfer</code> api.</p>
+<p>We suggest that you look at the <a href="../../validators/file/upload-file/"><code>UploadFile</code></a> validator instead.</p>
+<h3 id="removal-of-laminasvalidatorfilehash-inheritors">Removal of <code>Laminas\Validator\File\Hash</code> inheritors</h3>
+<p>The following classes have been removed:</p>
+<ul>
+<li><code>Laminas\Validator\File\Crc32</code></li>
+<li><code>Laminas\Validator\File\Md5</code></li>
+<li><code>Laminas\Validator\File\Sha1</code></li>
+</ul>
+<p>These inheritors of the <code>Hash</code> validator were unnecessary. Simply construct an instance of the <code>Hash</code> validator with the algorithm that you require, for example:</p>
+<pre class="highlight"><code class="language-php">$hash = new \Laminas\Validator\File\Hash([
+    'hash' =&gt; 'SomeExpectedSha256Hash',
+    'algorithm' =&gt; 'sha256',
+]);
+
+$hash-&gt;isValid('/path/to/file.md');</code></pre>
+<p>The algorithms available are dictated by your installation of PHP and can be determined with <a href="https://www.php.net/manual/function.hash-algos.php"><code>hash_algos()</code></a></p>
+<h3 id="migration-to-laminastranslator">Migration to <code>Laminas\Translator</code></h3>
+<p>As described under <a href="#translator-interface-type-has-changed">changes to <code>AbstractValidator</code></a>, the following classes no longer exist:</p>
+<ul>
+<li><code>Laminas\Validator\Translator\DummyTranslator</code></li>
+<li><code>Laminas\Validator\Translator\Translator</code></li>
+<li><code>Laminas\Validator\Translator\TranslatorFactory</code></li>
+<li><code>Laminas\Validator\Translator\TranslatorInterface</code></li>
+</ul>
+<h3 id="removal-of-module-manager-support">Removal of Module Manager Support</h3>
+<p><a href="https://docs.laminas.dev/laminas-modulemanager/">Module Manager</a> support has been removed along with the interface <code>Laminas\Validator\ValidatorProviderInterface</code></p>
+
+
+
+
+    <nav>
+    <ul class="page-nav hidden-print">
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../../validators/file/word-count/">
+                    <small class="page-nav__label">Previous</small>
+                    <i class="fa fa-chevron-left"></i>
+                    WordCount
+                </a>
+            
+        </li>
+
+        
+        <li class="page-nav__item">
+            
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../refactoring-legacy-validators/">
+                    <small class="page-nav__label">Next</small>
+                    Refactoring Legacy Validators
+                    <i class="fa fa-chevron-right"></i>
+                </a>
+            
+        </li>
+    </ul>
+</nav>
+
+
+
+                
+            </div>
+            <div class="col-md-3 col-sm-12 sidebar">
+                <div class="donation-banner">
+    <a href="https://getlaminas.org/support/">
+        <h2>Donate</h2>
+        <p>Support Laminas Developers Directly</p>
+        <img src="https://funding.communitybridge.org/assets/cb-f-horizontal-white.svg">
+    </a>
+</div>
+
+                
+                    <div class="component-selector">
+    
+    <h5 class="component-selector__subtitle">Find documentation…</h5>
+    <select class="form-control component-selector__control">
+        <option value="/">Overview</option>
+        <optgroup label="Components"></optgroup>
+    </select>
+</div>
+                    
+    <div class="subnavigation hidden-print">
+        <h4 class="subnavigation__title">
+            <a href="../../..">laminas-validator</a>
+        </h4>
+
+        <h5 class="subnavigation__subtitle">Table of Contents</h5>
+
+        <ul class="subnavigation__list">
+            
+
+                
+                
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../intro/" class="subnavigation__link">Introduction</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../installation/" class="subnavigation__link">Installation</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../validator-chains/" class="subnavigation__link">Validator Chains</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../writing-validators/" class="subnavigation__link">Writing Validators</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../messages/" class="subnavigation__link">Validation Messages</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item ">
+        <a href="../../set/" class="subnavigation__link">Standard Validation Classes</a>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Validators</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/backed-enum-value/" class="subnavigation__link">BackedEnumValue</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/barcode/" class="subnavigation__link">Barcode</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/bic/" class="subnavigation__link">BIC</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/callback/" class="subnavigation__link">Callback</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/conditional/" class="subnavigation__link">Conditional</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/credit-card/" class="subnavigation__link">CreditCard</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/date/" class="subnavigation__link">Date</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/date-comparison/" class="subnavigation__link">DateComparison</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/date-interval/" class="subnavigation__link">DateIntervalString</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/digits/" class="subnavigation__link">Digits</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/email-address/" class="subnavigation__link">EmailAddress</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/enum-case/" class="subnavigation__link">EnumCase</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/explode/" class="subnavigation__link">Explode</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/hex/" class="subnavigation__link">Hex</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/hostname/" class="subnavigation__link">Hostname</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/host-with-public-ipv4-address/" class="subnavigation__link">HostWithPublicIPv4Address</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/iban/" class="subnavigation__link">Iban</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/identical/" class="subnavigation__link">Identical</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/in-array/" class="subnavigation__link">InArray</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/ip/" class="subnavigation__link">Ip</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/is-array/" class="subnavigation__link">IsArray</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/isbn/" class="subnavigation__link">Isbn</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/is-countable/" class="subnavigation__link">IsCountable</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/isinstanceof/" class="subnavigation__link">IsInstanceOf</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/is-json-string/" class="subnavigation__link">IsJsonString</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/not-empty/" class="subnavigation__link">NotEmpty</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/number-comparison/" class="subnavigation__link">NumberComparison</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/regex/" class="subnavigation__link">Regex</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/sitemap/" class="subnavigation__link">Sitemap</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/step/" class="subnavigation__link">Step</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/string-length/" class="subnavigation__link">StringLength</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/timezone/" class="subnavigation__link">Timezone</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/uri/" class="subnavigation__link">Uri</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/uuid/" class="subnavigation__link">Uuid</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">File Validators</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/intro/" class="subnavigation__link">Introduction</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/count/" class="subnavigation__link">Count</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/exclude-extension/" class="subnavigation__link">ExcludeExtension</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/exclude-mime-type/" class="subnavigation__link">ExcludeMimeType</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/exists/" class="subnavigation__link">Exists</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/extension/" class="subnavigation__link">Extension</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/files-size/" class="subnavigation__link">FilesSize</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/hash/" class="subnavigation__link">Hash</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/image-size/" class="subnavigation__link">ImageSize</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/is-compressed/" class="subnavigation__link">IsCompressed</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/is-image/" class="subnavigation__link">IsImage</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/mime-type/" class="subnavigation__link">MimeType</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/not-exists/" class="subnavigation__link">NotExists</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/size/" class="subnavigation__link">Size</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/upload-file/" class="subnavigation__link">UploadFile</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../../validators/file/word-count/" class="subnavigation__link">WordCount</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                        
+    <li class="subnavigation__list-item">
+        <span class="subnavigation__headline">Migration</span>
+        <ul class="subnavigation__list">
+            
+                
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">Migration from Version 2 to 3</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../refactoring-legacy-validators/" class="subnavigation__link">Refactoring Legacy Validators</a>
+    </li>
+
+            
+                
+    <li class="subnavigation__list-item ">
+        <a href="../composing-final-validators/" class="subnavigation__link">Composing Final Validators</a>
+    </li>
+
+            
+        </ul>
+    </li>
+
+                    
+                
+            
+
+                
+                
+
+                    
+                    
+                
+            
+        </ul>
+    </div>
+
+                    
+                
+            </div>
+        </div>
+    </div>
+
+    
+    <footer class="footer">
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <a class="footer__button" href="#page-top"><i class="fa fa-chevron-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h5>Laminas</h5>
+                <ul>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Maintenance Overview <a href="https://getlaminas.org/packages-maintenance-status/">Current maintenance status of Laminas &amp; Mezzio packages</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+
+                    
+                    <div class="col-md-4">
+                        <h4 class="footer__headline">Support</h4>
+                        <ul class="support__list">
+                            <li class="support__list-item">
+                                <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
+                            </li>
+                            <li class="support__list-item">
+                                <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fab fa-slack"></i></a>
+                            </li>
+                            <li class="support__list-item">
+                                <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fab fa-github"></i></a>
+                            </li>
+                            <li class="support__list-item">
+                                <a href="https://phpc.social/@getlaminas" class="support__link" title="Mastodon"><i class="fab fa-mastodon"></i></a>
+                            </li>
+                            <li class="support__list-item">
+                                <a href="https://getlaminas.org/blog/rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
+                            </li>
+                            <li class="support__list-item">
+                                <a href="https://getlaminas.org/security/feed" class="support__link" title="Security feed"><i class="fa fa-rss-square"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    
+                    <div class="col-md-4">
+                        <h4 class="footer__headline">License</h4>
+                        <p>
+                            Code licensed under <a
+                                href="https://github.com/laminas/laminas-validator/blob/-/LICENSE.md">BSD 3-Clause</a>.
+                        </p>
+                    </div>
+
+                    
+                    <div class="col-md-4">
+                        <h4 class="footer__headline">Copyright</h4>
+                        <p>
+                            <!--Built with love by the Laminas team with the help of our
+                            <a href="https://github.com/laminas/laminas-validator/graphs/contributors">contributors</a>.<br>-->
+                            &copy; 2024 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        let base_url = '../../..',
+            project  = "components",
+            siteName = 'laminas-validator';
+    </script>
+    <script src="https://docs.laminas.dev/js/scripts.js"></script>
+    
+        <script src="../../../search/main.js"></script>
+    
+
+    
+    <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Search</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search in laminas-validator" id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>
