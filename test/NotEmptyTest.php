@@ -695,4 +695,13 @@ final class NotEmptyTest extends TestCase
             [null, true],
         ];
     }
+
+    public function testRetrievalOfMessageTemplates(): void
+    {
+        /** @psalm-suppress InternalMethod */
+        $templates = (new NotEmpty())->getMessageTemplates();
+        self::assertNotSame([], $templates);
+        self::assertArrayHasKey(NotEmpty::IS_EMPTY, $templates);
+        self::assertArrayHasKey(NotEmpty::INVALID, $templates);
+    }
 }
