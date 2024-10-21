@@ -260,4 +260,22 @@ final class NotEmpty extends AbstractValidator
 
         return true;
     }
+
+    /**
+     * Return the configured message templates
+     *
+     * This method is an affordance to laminas-inputfilter.
+     * It needs to introspect configured message templates in order to provide a default error message for empty inputs.
+     *
+     * In future versions of laminas-validator, this method will likely be deprecated and removed. Please avoid.
+     *
+     * @internal
+     *
+     * @psalm-internal \Laminas
+     * @return array<string, string>
+     */
+    public function getMessageTemplates(): array
+    {
+        return $this->messageTemplates;
+    }
 }
