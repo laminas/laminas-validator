@@ -113,4 +113,4 @@ $input = DateTimeImmutable::createFromFormat('Y-m-d H:i:s', '2020-01-01 10:45:00
 $validator->isValid($input); // true
 ```
 
-In the above example, the validated value is considered as `2020-01-01 10:45:00` in _any_ timezone, and it is between the lower bound of `2020-01-01 10:00:00` and the upper bound of `2020-01-01 12:00:00`
+In the above example, the validated value is considered as `2020-01-01 10:45:00` in *any* timezone, and it is between the lower bound of `2020-01-01 10:00:00` and the upper bound of `2020-01-01 12:00:00`

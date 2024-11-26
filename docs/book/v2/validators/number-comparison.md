@@ -6,7 +6,7 @@
 - Greater than a min value
 - Less than a max value
 
-By default, comparisons are inclusive. 
+By default, comparisons are inclusive.
 
 CAUTION: **Only supports number validation**
 `Laminas\Validator\NumberComparison` supports only the validation of numbers.
@@ -72,5 +72,5 @@ $validator = new Laminas\Validator\NumberComparison(['max' => 5]);
 $validator->isValid(99); // false
 ```
 
-You *must* provide one of the `min` or the `max` _(or both)_ options or an exception will be thrown.
+You *must* provide one of the `min` or the `max` *(or both)* options or an exception will be thrown.
 It doesn't make sense to compare the input to nothing for this validator.

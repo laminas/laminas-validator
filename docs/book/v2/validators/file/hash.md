@@ -3,6 +3,7 @@
 `Laminas\Validator\File\Hash` allows you to validate if a given file's hashed
 contents matches the supplied hash(es) and algorithm(s).
 
+<!-- markdownlint-disable-next-line heading-increment -->
 > ### Requires the hash extension
 >
 > This validator requires the PHP [Hash extension](http://php.net/hash). A list
