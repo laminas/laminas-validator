@@ -23,6 +23,7 @@ uploaded files, such as file size validation and CRC checking.
 - [UploadFile](upload-file.md)
 - [WordCount](word-count.md)
 
+<!-- markdownlint-disable-next-line heading-increment -->
 > ### Validation argument
 >
 > All of the File validators' `isValid()` methods support both a file path

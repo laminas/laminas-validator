@@ -6,6 +6,7 @@
 This validator is inversely related to the
 [ExcludeMimeType validator](exclude-mime-type.md)
 
+<!-- markdownlint-disable-next-line heading-increment -->
 > ### Compatibility
 >
 > This component will use the `FileInfo` extension if it is available. If it's

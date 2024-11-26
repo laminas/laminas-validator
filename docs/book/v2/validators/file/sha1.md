@@ -5,6 +5,7 @@ contents matches the supplied sha1 hash(es). It is subclassed from the
 [Hash validator](hash.md) to provide a validator that only supports the `sha1`
 algorithm.
 
+<!-- markdownlint-disable-next-line heading-increment -->
 > ### Requires the hash extension
 >
 > This validator requires the PHP [Hash extension](http://php.net/hash) with the

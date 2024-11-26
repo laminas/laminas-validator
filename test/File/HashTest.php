@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator\File;
 
+use Generator;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File\Hash;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -15,6 +16,7 @@ use function array_merge;
 use function basename;
 use function current;
 use function is_array;
+use function key;
 use function sprintf;
 
 use const UPLOAD_ERR_NO_FILE;
@@ -312,5 +314,53 @@ final class HashTest extends TestCase
         $validator->addHash(['10713230', 'algorithm' => 'md5']);
 
         self::assertFalse($validator->isValid(__DIR__ . '/_files/crc32-int.pdf'));
+    }
+
+    /**
+     * Provides options that should result in the same result irrespective of key order
+     *
+     * In order to act as a regression test for issue 398, this needs to include at least
+     * one couple of permutations that does not use the default algorithm (crc32).
+     *
+     * @return Generator<non-empty-string, array{
+     *     options: array<string, mixed>,
+     *     expectedHash: array<string, mixed>,
+     * }>
+     */
+    public static function optionsOrderProvider(): Generator
+    {
+        $algos  = ['crc32', 'md5', 'sha1'];
+        $hashes = [
+            'crc32' => ['6507f172bceb9ed0cc59246d41569c4d' => 'crc32'],
+            'md5'   => ['6507f172bceb9ed0cc59246d41569c4d' => 'md5'],
+            'sha1'  => ['6507f172bceb9ed0cc59246d41569c4d' => 'sha1'],
+        ];
+
+        foreach ($algos as $algo) {
+            $hash = key($hashes[$algo]);
+            yield $algo . ' algorithm first' => [
+                'options'      => [
+                    'algorithm' => $algo,
+                    'hash'      => $hash,
+                ],
+                'expectedHash' => $hashes[$algo],
+            ];
+            yield $algo . ' hash first'      => [
+                'options'      => [
+                    'hash'      => $hash,
+                    'algorithm' => $algo,
+                ],
+                'expectedHash' => $hashes[$algo],
+            ];
+        }
+    }
+
+    #[DataProvider('optionsOrderProvider')]
+    public function testOptionsKeyOrderIsIrrelevant(array $options, array $expectedHash): void
+    {
+        $validator     = new Hash($options);
+        $resultOptions = $validator->getOptions();
+        self::assertArrayHasKey('hash', $resultOptions);
+        self::assertSame($expectedHash, $resultOptions['hash']);
     }
 }

@@ -69,6 +69,12 @@ class Hash extends AbstractValidator
             $options['algorithm'] = func_get_arg(1);
         }
 
+        // The combination of parent and local logic requires us to have the "algorithm" key before the "hash" key
+        // in the array, or else the default algorithm will be used instead of the passed one.
+        if (isset($options['algorithm'])) {
+            $options = ['algorithm' => $options['algorithm']] + $options;
+        }
+
         parent::__construct($options);
     }
 

@@ -3377,6 +3377,7 @@
       <code><![CDATA[getHash]]></code>
       <code><![CDATA[getHash]]></code>
       <code><![CDATA[getHash]]></code>
+      <code><![CDATA[getOptions]]></code>
       <code><![CDATA[setHash]]></code>
     </DeprecatedMethod>
     <MixedArgument>
@@ -3393,6 +3394,7 @@
       <code><![CDATA[basicBehaviorDataProvider]]></code>
       <code><![CDATA[hashProvider]]></code>
       <code><![CDATA[invalidHashTypes]]></code>
+      <code><![CDATA[optionsOrderProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/File/ImageSizeTest.php">
