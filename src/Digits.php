@@ -45,7 +45,7 @@ final class Digits extends AbstractValidator
 
         $digits = preg_replace('/[^0-9]/', '', (string) $value);
 
-        if ($value !== $digits) {
+        if ((string) $value !== $digits) {
             $this->error(self::NOT_DIGITS);
             return false;
         }
