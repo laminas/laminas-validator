@@ -11,7 +11,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function basename;
-use function current;
 use function dirname;
 use function implode;
 
@@ -95,7 +94,8 @@ final class NotExistsTest extends TestCase
         $validator = new NotExists();
 
         self::assertFalse($validator->isValid(__DIR__ . '/_files/testsize.mo'));
-        self::assertArrayHasKey(NotExists::DOES_EXIST, $validator->getMessages());
-        self::assertStringContainsString('File exists', current($validator->getMessages()));
+        $messages = $validator->getMessages();
+        self::assertArrayHasKey(NotExists::DOES_EXIST, $messages);
+        self::assertStringContainsString('File exists', $messages[NotExists::DOES_EXIST]);
     }
 }

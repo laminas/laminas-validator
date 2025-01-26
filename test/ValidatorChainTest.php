@@ -22,7 +22,6 @@ use PHPUnit\Framework\TestCase;
 use function array_keys;
 use function array_shift;
 use function serialize;
-use function str_contains;
 use function unserialize;
 
 final class ValidatorChainTest extends TestCase
@@ -191,17 +190,6 @@ final class ValidatorChainTest extends TestCase
     }
 
     /**
-     * Handle file not found errors
-     */
-    #[Group('Laminas-2724')]
-    public function handleNotFoundError(int $errnum, string $errstr): void
-    {
-        if (str_contains($errstr, 'No such file')) {
-            $this->error = true;
-        }
-    }
-
-    /**
      * @return ValidatorInterface&MockObject
      */
     public function getValidatorTrue(): ValidatorInterface
@@ -237,14 +225,14 @@ final class ValidatorChainTest extends TestCase
     #[Group('Laminas-412')]
     public function testCanAttachMultipleValidatorsOfTheSameTypeAsDiscreteInstances(): void
     {
-        $this->validator->attachByName('Callback', [
-            'callback' => static fn(mixed $value): bool => true,
+        $this->validator->attachByName(Callback::class, [
+            'callback' => static fn(): bool => true,
             'messages' => [
                 Callback::INVALID_VALUE => 'This should not be seen in the messages',
             ],
         ]);
-        $this->validator->attachByName('Callback', [
-            'callback' => static fn(mixed $value): bool => false,
+        $this->validator->attachByName(Callback::class, [
+            'callback' => static fn(): bool => false,
             'messages' => [
                 Callback::INVALID_VALUE => 'Second callback trapped',
             ],
@@ -345,8 +333,8 @@ final class ValidatorChainTest extends TestCase
         $messages = $chain->getMessages();
 
         self::assertCount(2, $messages);
-        self::assertContainsOnly('string', array_keys($messages));
-        self::assertContainsOnly('string', $messages);
+        self::assertContainsOnlyString(array_keys($messages));
+        self::assertContainsOnlyString($messages);
     }
 
     public function testThatOptionsArePassedToValidatorsAttachedByName(): void

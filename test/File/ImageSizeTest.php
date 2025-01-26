@@ -14,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 use function array_merge;
 use function basename;
 use function chmod;
-use function current;
 use function file_exists;
 use function touch;
 use function unlink;
@@ -172,8 +171,9 @@ final class ImageSizeTest extends TestCase
         ]);
 
         self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
-        self::assertArrayHasKey(ImageSize::NOT_READABLE, $validator->getMessages());
-        self::assertStringContainsString('does not exist', current($validator->getMessages()));
+        $messages = $validator->getMessages();
+        self::assertArrayHasKey(ImageSize::NOT_READABLE, $messages);
+        self::assertStringContainsString('does not exist', $messages[ImageSize::NOT_READABLE]);
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void

@@ -11,7 +11,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function basename;
-use function current;
 use function finfo_file;
 use function finfo_open;
 use function in_array;
@@ -35,7 +34,9 @@ final class IsCompressedTest extends TestCase
 
         // Sometimes finfo gives application/zip and sometimes
         // application/x-zip ...
-        $expectedMimeType = finfo_file(finfo_open(FILEINFO_MIME_TYPE), $testFile);
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        self::assertNotFalse($finfo);
+        $expectedMimeType = finfo_file($finfo, $testFile);
 
         $allowed    = ['application/zip', 'application/x-zip'];
         $fileUpload = [
@@ -77,7 +78,9 @@ final class IsCompressedTest extends TestCase
 
         // Sometimes finfo gives application/zip and sometimes
         // application/x-zip ...
-        $expectedMimeType = finfo_file(finfo_open(FILEINFO_MIME_TYPE), __DIR__ . '/_files/test.zip');
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        self::assertNotFalse($finfo);
+        $expectedMimeType = finfo_file($finfo, __DIR__ . '/_files/test.zip');
 
         if (! in_array($expectedMimeType, ['application/zip', 'application/x-zip'])) {
             self::markTestSkipped('finfo exhibits buggy behavior on this system!');
@@ -116,7 +119,8 @@ final class IsCompressedTest extends TestCase
         $validator = new IsCompressed();
 
         self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
-        self::assertArrayHasKey(IsCompressed::NOT_READABLE, $validator->getMessages());
-        self::assertStringContainsString('does not exist', current($validator->getMessages()));
+        $messages = $validator->getMessages();
+        self::assertArrayHasKey(IsCompressed::NOT_READABLE, $messages);
+        self::assertStringContainsString('does not exist', $messages[IsCompressed::NOT_READABLE]);
     }
 }

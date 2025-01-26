@@ -54,9 +54,11 @@ class FileInformationTest extends TestCase
     {
         $path = __DIR__ . '/_files/picture.jpg';
 
+        $size = filesize($path);
+        self::assertIsInt($size);
         $upload = new UploadedFile(
             $path,
-            filesize($path),
+            $size,
             UPLOAD_ERR_OK,
             'Foo.jpg',
             'image/jpg',
@@ -70,7 +72,7 @@ class FileInformationTest extends TestCase
         self::assertTrue($file->readable);
         self::assertSame('image/jpeg', $file->detectMimeType());
         self::assertSame('picture.jpg', $file->baseName);
-        self::assertSame(filesize($path), $file->size()->bytes);
+        self::assertSame($size, $file->size()->bytes);
     }
 
     public function testExpectedValuesForSapiFilesArray(): void

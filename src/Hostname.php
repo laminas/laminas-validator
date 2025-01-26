@@ -1866,6 +1866,8 @@ final class Hostname extends AbstractValidator
             $this->error(self::INVALID_LOCAL_NAME);
         }
 
+        /** @psalm-var non-empty-list<string> $domainParts */
+
         $utf8StrWrapper = StringUtils::getWrapper('UTF-8');
 
         // Check input against DNS hostname schema
@@ -1879,12 +1881,14 @@ final class Hostname extends AbstractValidator
             do {
                 // First check TLD
                 $matches = [];
-                if (
-                    preg_match('/([^.]{2,63})$/u', end($domainParts), $matches)
-                    || (array_key_exists(end($domainParts), $this->validIdns))
-                ) {
-                    reset($domainParts);
+                $last    = end($domainParts);
+                reset($domainParts);
+                assert(is_string($last));
 
+                if (
+                    preg_match('/([^.]{2,63})$/u', $last, $matches)
+                    || (array_key_exists($last, $this->validIdns))
+                ) {
                     // Hostname characters are: *(label dot)(label dot label); max 254 chars
                     // label: id-prefix [*ldh{61} id-prefix]; max 63 chars
                     // id-prefix: alpha / digit

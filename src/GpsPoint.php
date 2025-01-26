@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use function assert;
 use function explode;
 use function is_numeric;
+use function is_string;
 use function preg_match;
 use function preg_match_all;
 use function preg_replace;
@@ -98,7 +100,10 @@ final class GpsPoint extends AbstractValidator
 
     private function removeWhiteSpace(string $value): string
     {
-        return preg_replace('/\s/', '', $value);
+        $value = preg_replace('/\s/', '', $value);
+        assert(is_string($value));
+
+        return $value;
     }
 
     private function removeDegreeSign(string $value): string

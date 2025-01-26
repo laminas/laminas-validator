@@ -30,6 +30,7 @@ $checkOnly      = isset($argv[1]) ? $argv[1] === '--check-only' : false;
 $response       = getOfficialTLDs();
 
 $currentFileContent = file(LAMINAS_HOSTNAME_VALIDATOR_FILE);
+assert(is_array($currentFileContent));
 
 foreach ($currentFileContent as $line) {
     if ($insertDone === $insertFinish) {
@@ -95,7 +96,10 @@ exit(0);
 function getOfficialTLDs(): string
 {
     try {
-        return file_get_contents(IANA_URL);
+        $contents = file_get_contents(IANA_URL);
+        assert(is_string($contents));
+
+        return $contents;
     } catch (Throwable $e) {
         printf(
             'Downloading the IANA TLD list failed: %s',
@@ -115,11 +119,19 @@ function getNewValidTlds(string $string): array
 {
     // Get new TLDs from the list previously fetched
     $newValidTlds = [];
-    foreach (preg_grep('/^[^#]/', preg_split("#\r?\n#", $string)) as $line) {
+    $lines        = preg_split("#\r?\n#", $string);
+    assert(is_array($lines));
+
+    foreach (preg_grep('/^[^#]/', $lines) as $line) {
+        $utf8String = idn_to_utf8(strtolower($line));
+        if (! is_string($utf8String)) {
+            continue;
+        }
+
         $newValidTlds [] = sprintf(
             "%s'%s',\n",
             str_repeat(' ', 8),
-            idn_to_utf8(strtolower($line), 0, INTL_IDNA_VARIANT_UTS46),
+            $utf8String,
         );
     }
 

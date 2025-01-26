@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\File;
 
+use finfo;
 use Laminas\Validator\Exception\RuntimeException;
 use Psr\Http\Message\UploadedFileInterface;
 
@@ -40,7 +41,9 @@ final class FileInformation
     public function size(): Bytes
     {
         if ($this->size === null) {
-            $this->size = Bytes::fromInteger(filesize($this->path));
+            $bytes = filesize($this->path);
+            assert(is_int($bytes));
+            $this->size = Bytes::fromInteger($bytes);
         }
 
         return $this->size;
@@ -50,7 +53,7 @@ final class FileInformation
     {
         if ($this->mediaType === null) {
             $fileInfo = finfo_open(FILEINFO_MIME_TYPE);
-
+            assert($fileInfo instanceof finfo);
             $mime = $fileInfo->file($this->path);
             assert(is_string($mime));
 

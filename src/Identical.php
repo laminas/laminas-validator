@@ -87,7 +87,7 @@ final class Identical extends AbstractValidator
             if (is_array($matchTo)) {
                 while (is_array($matchTo)) {
                     $key = key($matchTo);
-                    if (! isset($context[$key])) {
+                    if ($key === null || ! isset($context[$key])) {
                         break;
                     }
                     $context = $context[$key];

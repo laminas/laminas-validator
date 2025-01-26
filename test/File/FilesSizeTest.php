@@ -11,12 +11,13 @@ use PHPUnit\Framework\TestCase;
 
 use function basename;
 use function chmod;
-use function current;
 use function filesize;
 use function json_encode;
+use function reset;
 use function touch;
 use function unlink;
 
+use const JSON_THROW_ON_ERROR;
 use const UPLOAD_ERR_NO_FILE;
 
 /** @psalm-import-type OptionsArgument from FilesSize */
@@ -35,17 +36,17 @@ final class FilesSizeTest extends TestCase
         self::assertSame(
             $expected1,
             $validator->isValid(__DIR__ . '/_files/testsize.mo'),
-            json_encode($validator->getMessages()),
+            json_encode($validator->getMessages(), JSON_THROW_ON_ERROR),
         );
         self::assertSame(
             $expected2,
             $validator->isValid(__DIR__ . '/_files/testsize2.mo'),
-            json_encode($validator->getMessages()),
+            json_encode($validator->getMessages(), JSON_THROW_ON_ERROR),
         );
         self::assertSame(
             $expected3,
             $validator->isValid(__DIR__ . '/_files/picture.jpg'),
-            json_encode($validator->getMessages()),
+            json_encode($validator->getMessages(), JSON_THROW_ON_ERROR),
         );
     }
 
@@ -107,9 +108,10 @@ final class FilesSizeTest extends TestCase
         ]));
 
         $messages = $validator->getMessages();
-
-        self::assertStringContainsString('9.76kB', current($messages));
-        self::assertStringContainsString('1.55kB', current($messages));
+        $message  = reset($messages);
+        self::assertIsString($message);
+        self::assertStringContainsString('9.76kB', $message);
+        self::assertStringContainsString('1.55kB', $message);
 
         $validator = new FilesSize(['min' => 9999, 'max' => 10000, 'useByteString' => false]);
 
@@ -120,9 +122,11 @@ final class FilesSizeTest extends TestCase
         ]));
 
         $messages = $validator->getMessages();
+        $message  = reset($messages);
+        self::assertIsString($message);
 
-        self::assertStringContainsString('9999', current($messages));
-        self::assertStringContainsString('1588', current($messages));
+        self::assertStringContainsString('9999', $message);
+        self::assertStringContainsString('1588', $message);
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
@@ -149,13 +153,13 @@ final class FilesSizeTest extends TestCase
         $validator = new FilesSize(['min' => 0, 'max' => 2000]);
 
         self::assertTrue(
-            $validator->isValid($this->createFileInfo(__DIR__ . '/_files/testsize.mo'))
+            $validator->isValid($this->createFileInfo(__DIR__ . '/_files/testsize.mo')),
         );
         self::assertTrue(
-            $validator->isValid($this->createFileInfo(__DIR__ . '/_files/testsize2.mo'))
+            $validator->isValid($this->createFileInfo(__DIR__ . '/_files/testsize2.mo')),
         );
         self::assertFalse(
-            $validator->isValid($this->createFileInfo(__DIR__ . '/_files/picture.jpg'))
+            $validator->isValid($this->createFileInfo(__DIR__ . '/_files/picture.jpg')),
         );
 
         $validator = new FilesSize(['min' => 0, 'max' => '2kb']);

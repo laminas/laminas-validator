@@ -14,15 +14,16 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function array_key_exists;
+use function array_values;
 use function checkdnsrr;
 use function count;
-use function current;
 use function implode;
 use function json_encode;
-use function next;
 use function preg_replace;
 use function sprintf;
 use function str_repeat;
+
+use const JSON_THROW_ON_ERROR;
 
 final class EmailAddressTest extends TestCase
 {
@@ -217,12 +218,12 @@ final class EmailAddressTest extends TestCase
         $validator = new EmailAddress();
         self::assertFalse($validator->isValid('User Name <username@example.com>'));
 
-        $messages = $validator->getMessages();
+        $messages = array_values($validator->getMessages());
 
         self::assertGreaterThanOrEqual(3, count($messages));
-        self::assertStringContainsString('not a valid hostname', current($messages));
-        self::assertStringContainsString('cannot match TLD', next($messages));
-        self::assertStringContainsString('does not appear to be a valid local network name', next($messages));
+        self::assertStringContainsString('not a valid hostname', $messages[0]);
+        self::assertStringContainsString('cannot match TLD', $messages[1]);
+        self::assertStringContainsString('does not appear to be a valid local network name', $messages[2]);
     }
 
     /**
@@ -387,6 +388,7 @@ final class EmailAddressTest extends TestCase
 
         $email = 'good@www.getlaminas.org';
         $host  = preg_replace('/.*@/', '', $email);
+        self::assertIsString($host);
 
         //Assert that email host contains no MX records.
         self::assertFalse(checkdnsrr($host, 'MX'), 'Email host contains MX records');
@@ -547,7 +549,7 @@ final class EmailAddressTest extends TestCase
         $validator->isValid([]);
 
         $messages = $validator->getMessages();
-        self::assertArrayHasKey(EmailAddress::INVALID, $messages, json_encode($messages));
+        self::assertArrayHasKey(EmailAddress::INVALID, $messages, json_encode($messages, JSON_THROW_ON_ERROR));
         self::assertSame('TestMessage', $messages[EmailAddress::INVALID]);
     }
 
@@ -562,7 +564,11 @@ final class EmailAddressTest extends TestCase
         self::assertFalse($validator->isValid('me@127.0.0.1'));
 
         $messages = $validator->getMessages();
-        self::assertArrayHasKey(Hostname::IP_ADDRESS_NOT_ALLOWED, $messages, json_encode($messages));
+        self::assertArrayHasKey(
+            Hostname::IP_ADDRESS_NOT_ALLOWED,
+            $messages,
+            json_encode($messages, JSON_THROW_ON_ERROR),
+        );
         self::assertSame('Bad Hostname', $messages[Hostname::IP_ADDRESS_NOT_ALLOWED]);
     }
 

@@ -11,7 +11,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function basename;
-use function current;
 
 /** @psalm-import-type OptionsArgument from MimeType */
 final class IsImageTest extends TestCase
@@ -90,7 +89,8 @@ final class IsImageTest extends TestCase
         $validator = new IsImage();
 
         self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
-        self::assertArrayHasKey('fileIsImageNotReadable', $validator->getMessages());
-        self::assertStringContainsString('does not exist', current($validator->getMessages()));
+        $messages = $validator->getMessages();
+        self::assertArrayHasKey(IsImage::NOT_READABLE, $messages);
+        self::assertStringContainsString('does not exist', $messages[IsImage::NOT_READABLE]);
     }
 }

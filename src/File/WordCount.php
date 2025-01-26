@@ -8,7 +8,9 @@ use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\InvalidArgumentException;
 
+use function assert;
 use function file_get_contents;
+use function is_string;
 use function str_word_count;
 
 /**
@@ -104,7 +106,8 @@ final class WordCount extends AbstractValidator
             return false;
         }
 
-        $content     = file_get_contents($file->path);
+        $content = file_get_contents($file->path);
+        assert(is_string($content));
         $this->count = str_word_count($content);
 
         if (($this->max !== null) && ($this->count > $this->max)) {

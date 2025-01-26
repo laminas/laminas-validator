@@ -10,8 +10,8 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\UploadedFileInterface;
 
-use function current;
 use function is_int;
+use function reset;
 use function sprintf;
 
 use const UPLOAD_ERR_NO_FILE;
@@ -115,8 +115,11 @@ final class UploadFileTest extends TestCase
     public function testLaminas11258(): void
     {
         self::assertFalse($this->validator->isValid(__DIR__ . '/_files/nofile.mo'));
-        self::assertArrayHasKey('fileUploadFileErrorFileNotFound', $this->validator->getMessages());
-        self::assertStringContainsString('not found', current($this->validator->getMessages()));
+        $messages = $this->validator->getMessages();
+        self::assertArrayHasKey('fileUploadFileErrorFileNotFound', $messages);
+        $message = reset($messages);
+        self::assertIsString($message);
+        self::assertStringContainsString('not found', $message);
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void

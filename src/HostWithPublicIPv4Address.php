@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use function assert;
 use function explode;
 use function filter_var;
 use function get_debug_type;
 use function gethostbynamel;
 use function ip2long;
 use function is_array;
+use function is_int;
 use function is_string;
 
 use const FILTER_FLAG_GLOBAL_RANGE;
@@ -17,7 +19,6 @@ use const FILTER_FLAG_IPV4;
 use const FILTER_FLAG_NO_PRIV_RANGE;
 use const FILTER_FLAG_NO_RES_RANGE;
 use const FILTER_VALIDATE_IP;
-use const PHP_VERSION_ID;
 
 final class HostWithPublicIPv4Address extends AbstractValidator
 {
@@ -102,14 +103,7 @@ final class HostWithPublicIPv4Address extends AbstractValidator
 
         $privateAddressWasFound = false;
 
-        $filterFlags = FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE;
-        if (PHP_VERSION_ID >= 80200) {
-            /**
-             * @psalm-var int $filterFlags
-             * @psalm-suppress UndefinedConstant
-             */
-            $filterFlags |= FILTER_FLAG_GLOBAL_RANGE;
-        }
+        $filterFlags = FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE | FILTER_FLAG_GLOBAL_RANGE;
 
         foreach ($addressList as $server) {
             /**
@@ -143,7 +137,9 @@ final class HostWithPublicIPv4Address extends AbstractValidator
         foreach (self::RESERVED_CIDR as $cidr) {
             $cidr    = explode('/', $cidr);
             $startIp = ip2long($cidr[0]);
-            $endIp   = ip2long($cidr[0]) + 2 ** (32 - (int) $cidr[1]) - 1;
+            assert(is_int($startIp));
+            $endIp = $startIp + 2 ** (32 - (int) $cidr[1]) - 1;
+            assert(is_int($endIp));
 
             $int = ip2long($ip);
 
