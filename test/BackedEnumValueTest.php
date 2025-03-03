@@ -12,7 +12,7 @@ use LaminasTest\Validator\TestAsset\ExampleStringBackedEnum;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-class BackedEnumValueTest extends TestCase
+final class BackedEnumValueTest extends TestCase
 {
     /**
      * @return iterable<int, array{

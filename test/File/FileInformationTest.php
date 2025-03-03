@@ -16,7 +16,7 @@ use function unlink;
 use const UPLOAD_ERR_OK;
 
 /** @psalm-suppress InternalClass,InternalMethod,InternalProperty */
-class FileInformationTest extends TestCase
+final class FileInformationTest extends TestCase
 {
     public function testThatANonExistentFileCannotBeCreatedFromAString(): void
     {

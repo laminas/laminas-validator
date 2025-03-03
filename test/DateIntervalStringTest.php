@@ -9,7 +9,7 @@ use Laminas\Validator\DateIntervalString;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-class DateIntervalStringTest extends TestCase
+final class DateIntervalStringTest extends TestCase
 {
     /** @return array<string, array{0: mixed, 1: bool, 2: string|null}> */
     public static function basicDataProvider(): array

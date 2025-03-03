@@ -14,7 +14,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use UnitEnum;
 
-class EnumCaseTest extends TestCase
+final class EnumCaseTest extends TestCase
 {
     /**
      * @return iterable<int, array{

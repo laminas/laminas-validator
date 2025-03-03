@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 use const PHP_INT_MAX;
 
 /** @psalm-suppress InternalClass, InternalMethod, InternalProperty */
-class BytesTest extends TestCase
+final class BytesTest extends TestCase
 {
     /** @return list<array{0: int, 1: string}> */
     public static function bytesToSiUnitDataProvider(): array
