@@ -29,4 +29,4 @@ jobs:
       - uses: ramsey/composer-install@3.0.0
       - run: composer global config bin-dir /usr/local/bin
       - run: composer global require -W maglnet/composer-require-checker
-      - run: /usr/local/bin/composer-require-checker check
+      - run: /usr/local/bin/composer-require-checker check --config-file=require-checker.json
