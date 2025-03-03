@@ -13,7 +13,6 @@ use PHPUnit\Framework\TestCase;
 
 use function basename;
 use function chmod;
-use function current;
 use function touch;
 use function unlink;
 
@@ -93,8 +92,9 @@ final class MimeTypeTest extends TestCase
         ]);
 
         self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
-        self::assertArrayHasKey(MimeType::NOT_READABLE, $validator->getMessages());
-        self::assertStringContainsString('does not exist', current($validator->getMessages()));
+        $messages = $validator->getMessages();
+        self::assertArrayHasKey(MimeType::NOT_READABLE, $messages);
+        self::assertStringContainsString('does not exist', $messages[MimeType::NOT_READABLE]);
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void

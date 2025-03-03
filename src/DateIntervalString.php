@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Laminas\Validator;
 
 use DateInterval;
-use Override;
 use Throwable;
 
 use function get_debug_type;
@@ -29,7 +28,6 @@ final class DateIntervalString extends AbstractValidator
         'type' => 'type',
     ];
 
-    #[Override]
     public function isValid(mixed $value): bool
     {
         $this->setValue($value);

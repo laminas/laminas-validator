@@ -11,7 +11,7 @@ use Laminas\Validator\ValidatorPluginManager;
 use LaminasTest\Validator\TestAsset\InMemoryContainer;
 use PHPUnit\Framework\TestCase;
 
-class ValidatorChainFactoryFactoryTest extends TestCase
+final class ValidatorChainFactoryFactoryTest extends TestCase
 {
     public function testFactoryWillBeCreated(): void
     {

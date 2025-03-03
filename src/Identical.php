@@ -87,7 +87,7 @@ final class Identical extends AbstractValidator
             if (is_array($matchTo)) {
                 while (is_array($matchTo)) {
                     $key = key($matchTo);
-                    if (! isset($context[$key])) {
+                    if ($key === null || ! isset($context[$key])) {
                         break;
                     }
                     $context = $context[$key];
@@ -110,7 +110,7 @@ final class Identical extends AbstractValidator
 
         if (
             ($this->strict && ($value !== $matchTo))
-            // phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedNotEqualOperator
+        // phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedNotEqualOperator
             || (! $this->strict && ($value != $matchTo))
         ) {
             $this->error(self::NOT_SAME);

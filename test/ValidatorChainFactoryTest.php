@@ -12,7 +12,7 @@ use Laminas\Validator\ValidatorPluginManager;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\NotFoundExceptionInterface;
 
-class ValidatorChainFactoryTest extends TestCase
+final class ValidatorChainFactoryTest extends TestCase
 {
     private ValidatorChainFactory $factory;
 

@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 use function json_encode;
 
-class IsJsonStringTest extends TestCase
+final class IsJsonStringTest extends TestCase
 {
     /**
      * @return array<string, array{

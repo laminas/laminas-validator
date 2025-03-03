@@ -9,7 +9,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-use function current;
+use function reset;
 use function str_repeat;
 
 final class LocTest extends TestCase
@@ -86,8 +86,10 @@ final class LocTest extends TestCase
             self::assertFalse($this->validator->isValid($value));
 
             $messages = $this->validator->getMessages();
+            $message  = reset($messages);
+            self::assertIsString($message);
 
-            self::assertStringContainsString('String expected', current($messages));
+            self::assertStringContainsString('String expected', $message);
         }
     }
 }

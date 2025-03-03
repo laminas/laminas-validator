@@ -48,10 +48,13 @@ final class SizeTest extends TestCase
 
         // Dupe data in File Upload format
         foreach ($testData as $data) {
+            $size = filesize($testFile);
+            self::assertIsInt($size);
+
             $fileUpload = [
                 'tmp_name' => $testFile,
                 'name'     => basename($testFile),
-                'size'     => filesize($testFile),
+                'size'     => $size,
                 'error'    => UPLOAD_ERR_OK,
                 'type'     => 'text',
             ];
@@ -59,7 +62,7 @@ final class SizeTest extends TestCase
 
             $psrUpload = new UploadedFile(
                 $testFile,
-                filesize($testFile),
+                $size,
                 UPLOAD_ERR_OK,
                 basename($testFile),
                 'text/plain',

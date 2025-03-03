@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
-use function current;
+use function reset;
 
 final class CreditCardTest extends TestCase
 {
@@ -283,9 +283,10 @@ final class CreditCardTest extends TestCase
 
         self::assertFalse($validator->isValid('4111111111111111'));
 
-        $message = $validator->getMessages();
-
-        self::assertStringContainsString('not from an allowed institute', current($message));
+        $messages = $validator->getMessages();
+        $message  = reset($messages);
+        self::assertIsString($message);
+        self::assertStringContainsString('not from an allowed institute', $message);
     }
 
     public function testThatTheCallbackReceivesTheExpectedParameters(): void

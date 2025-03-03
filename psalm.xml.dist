@@ -8,6 +8,7 @@
     findUnusedPsalmSuppress="true"
     findUnusedCode="true"
     findUnusedBaselineEntry="true"
+    strictBinaryOperands="false"
 >
     <projectFiles>
         <directory name="bin"/>
@@ -18,6 +19,24 @@
 			<directory name="test/TestAsset"/>
         </ignoreFiles>
     </projectFiles>
+
+    <issueHandlers>
+        <!-- Ignore unused methods in tests. Specifically applies to data providers -->
+        <PossiblyUnusedMethod>
+            <errorLevel type="suppress">
+                <directory name="test" />
+            </errorLevel>
+        </PossiblyUnusedMethod>
+
+        <!-- Ignore all missing override issues -->
+        <MissingOverrideAttribute>
+            <errorLevel type="suppress">
+                <directory name="src" />
+                <directory name="test" />
+            </errorLevel>
+        </MissingOverrideAttribute>
+
+    </issueHandlers>
 
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>

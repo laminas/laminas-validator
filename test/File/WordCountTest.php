@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 
 use function basename;
 use function chmod;
-use function current;
+use function reset;
 use function touch;
 use function unlink;
 
@@ -86,8 +86,11 @@ final class WordCountTest extends TestCase
         $validator = new WordCount(['min' => 1, 'max' => 10000]);
 
         self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
-        self::assertArrayHasKey(WordCount::NOT_FOUND, $validator->getMessages());
-        self::assertStringContainsString('does not exist', current($validator->getMessages()));
+        $messages = $validator->getMessages();
+        self::assertArrayHasKey(WordCount::NOT_FOUND, $messages);
+        $message = reset($messages);
+        self::assertIsString($message);
+        self::assertStringContainsString('does not exist', $message);
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void

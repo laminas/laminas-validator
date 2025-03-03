@@ -230,6 +230,7 @@ abstract class AbstractValidator implements
         }
 
         $name = key($prop);
+        assert(is_string($name));
         assert(property_exists($this, $name));
 
         $key = $prop[$name];

@@ -29,7 +29,9 @@ final class HostnameTest extends TestCase
     {
         parent::setUp();
 
-        $this->origEncoding = ini_get('default_charset');
+        $iniValue = ini_get('default_charset');
+        self::assertIsString($iniValue);
+        $this->origEncoding = $iniValue;
         $this->validator    = new Hostname();
     }
 

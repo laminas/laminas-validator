@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 use const PHP_INT_MAX;
 
-class NumberComparisonTest extends TestCase
+final class NumberComparisonTest extends TestCase
 {
     public static function basicTestDataProvider(): array
     {

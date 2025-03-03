@@ -153,8 +153,8 @@ final class FilesSize extends AbstractValidator
         }
 
         $this->size = $this->useByteString
-            ? Bytes::fromInteger($size)->toSiUnit()
-            : (string) $size;
+        ? Bytes::fromInteger($size)->toSiUnit()
+        : (string) $size;
 
         if ($this->min !== null && $size < $this->min) {
             $this->error(self::TOO_SMALL);

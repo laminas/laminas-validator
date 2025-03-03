@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
+<files psalm-version="6.8.8@1361cd33008feb3ae2b4a93f1860e14e538ec8c2">
   <file src="src/BackedEnumValue.php">
     <PossiblyUnusedProperty>
       <code><![CDATA[$type]]></code>
@@ -57,9 +57,6 @@
     </PossiblyUnusedProperty>
   </file>
   <file src="src/Explode.php">
-    <MixedInferredReturnType>
-      <code><![CDATA[ValidatorInterface]]></code>
-    </MixedInferredReturnType>
     <MixedReturnStatement>
       <code><![CDATA[$this->getPluginManager()->build($name, $options)]]></code>
       <code><![CDATA[$this->getPluginManager()->build($name, $options)]]></code>
@@ -188,190 +185,10 @@
       <code><![CDATA[$message]]></code>
     </MixedAssignment>
   </file>
-  <file src="test/BackedEnumValueTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/BarcodeTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[invalidAdapterArguments]]></code>
-      <code><![CDATA[validAdapterOptions]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/BitwiseTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/BusinessIdentifierCodeTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[notAStringProvider]]></code>
-      <code><![CDATA[notBicFormatProvider]]></code>
-      <code><![CDATA[notSwiftCountryCodeProvider]]></code>
-      <code><![CDATA[successProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/CallbackTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[emptyContextProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/CreditCardTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicValues]]></code>
-      <code><![CDATA[jcbValues]]></code>
-      <code><![CDATA[mastercardValues]]></code>
-      <code><![CDATA[mirValues]]></code>
-      <code><![CDATA[optionsValues]]></code>
-      <code><![CDATA[serviceValues]]></code>
-      <code><![CDATA[visaValues]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/DateComparisonTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/DateIntervalStringTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/DateStepTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[moscowWinterTimeDataProvider]]></code>
-      <code><![CDATA[stepTestsDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
   <file src="test/DateTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[datesDataProvider]]></code>
-      <code><![CDATA[manualFormatProvider]]></code>
-    </PossiblyUnusedMethod>
     <UnusedParam>
       <code><![CDATA[$result]]></code>
     </UnusedParam>
-  </file>
-  <file src="test/DigitsTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/EmailAddressTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[emailAddressesForMxChecks]]></code>
-      <code><![CDATA[invalidEmailAddresses]]></code>
-      <code><![CDATA[validEmailAddresses]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/EnumCaseTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/File/BytesTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[bytesToSiUnitDataProvider]]></code>
-      <code><![CDATA[siUnitToBytesProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/File/CountTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/File/ExcludeExtensionTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicBehaviorDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/File/ExcludeMimeTypeTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicBehaviorDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/File/ExistsTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicBehaviorDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/File/ExtensionTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicBehaviorDataProvider]]></code>
-      <code><![CDATA[extensionOptions]]></code>
-      <code><![CDATA[fileNameExtensionProvider]]></code>
-      <code><![CDATA[invalidExtensionOptions]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/File/FilesSizeTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/File/HashTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicBehaviorDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/File/ImageSizeTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicBehaviorDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/File/IsCompressedTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicBehaviorDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/File/IsImageTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicBehaviorDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/File/MimeTypeTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicBehaviorDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/File/NotExistsTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicBehaviorDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/File/SizeTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicBehaviorDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/File/UploadFileTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[uploadErrorsTestDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/File/WordCountTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicBehaviorDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/GPSPointTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicDataProvider]]></code>
-      <code><![CDATA[boundariesProvider]]></code>
-      <code><![CDATA[errorMessageTestValues]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/HexTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/HostWithPublicIPv4AddressTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[hostnameProvider]]></code>
-      <code><![CDATA[releasedReservedIpProvider]]></code>
-      <code><![CDATA[reservedIpProvider]]></code>
-    </PossiblyUnusedMethod>
   </file>
   <file src="test/HostnameTest.php">
     <MixedArrayOffset>
@@ -381,69 +198,6 @@
       <code><![CDATA[$code]]></code>
       <code><![CDATA[$message]]></code>
     </PossiblyUndefinedVariable>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicDataProvider]]></code>
-      <code><![CDATA[combinationDataProvider]]></code>
-      <code><![CDATA[dashesDataProvider]]></code>
-      <code><![CDATA[differentIconvEncodingDataProvider]]></code>
-      <code><![CDATA[domainsWithUnderscores]]></code>
-      <code><![CDATA[idnMatchingDataProvider]]></code>
-      <code><![CDATA[idnNoMatchingDataProvider]]></code>
-      <code><![CDATA[idnilDataProvider]]></code>
-      <code><![CDATA[idnsiProvider]]></code>
-      <code><![CDATA[invalidLatinSpecialCharsProvider]]></code>
-      <code><![CDATA[invalidTLDHostnames]]></code>
-      <code><![CDATA[numberNamesDataProvider]]></code>
-      <code><![CDATA[punyCodeDecodingDataProvider]]></code>
-      <code><![CDATA[tldMatchingDataProvider]]></code>
-      <code><![CDATA[tldNoMatchingDataProvider]]></code>
-      <code><![CDATA[trailingDotDataProvider]]></code>
-      <code><![CDATA[uriDataProvider]]></code>
-      <code><![CDATA[validTLDHostnames]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/IbanTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[ibanDataProvider]]></code>
-      <code><![CDATA[invalidValues]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/InArrayTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[nonStrictValidationSet]]></code>
-      <code><![CDATA[strictValidationSet]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/IpTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[iPvFutureAddressesProvider]]></code>
-      <code><![CDATA[invalidIpV4Addresses]]></code>
-      <code><![CDATA[ipvFutureProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/IsArrayTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[invalidValueProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/IsCountableTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[conflictingOptionsProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/IsJsonStringTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[allowProvider]]></code>
-      <code><![CDATA[invalidStringProvider]]></code>
-      <code><![CDATA[pluginManagerNameProvider]]></code>
-      <code><![CDATA[provideThingsThatAreNotStrings]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/IsbnTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicProvider]]></code>
-      <code><![CDATA[isbnValueProvider]]></code>
-    </PossiblyUnusedMethod>
   </file>
   <file src="test/NotEmptyTest.php">
     <ArgumentTypeCoercion>
@@ -451,100 +205,6 @@
             'type' => [$string, $string],
         ]]]></code>
     </ArgumentTypeCoercion>
-    <PossiblyUnusedMethod>
-      <code><![CDATA[arrayConfigNotationWithoutKeyProvider]]></code>
-      <code><![CDATA[arrayConstantNotationProvider]]></code>
-      <code><![CDATA[arrayOnlyProvider]]></code>
-      <code><![CDATA[basicProvider]]></code>
-      <code><![CDATA[booleanProvider]]></code>
-      <code><![CDATA[constructorWithTypeArrayProvider]]></code>
-      <code><![CDATA[duplicateStringSettingProvider]]></code>
-      <code><![CDATA[floatOnlyProvider]]></code>
-      <code><![CDATA[integerOnlyProvider]]></code>
-      <code><![CDATA[multiConstantNotationProvider]]></code>
-      <code><![CDATA[nullOnlyProvider]]></code>
-      <code><![CDATA[onlyAllProvider]]></code>
-      <code><![CDATA[phpOnlyProvider]]></code>
-      <code><![CDATA[singleStringNotationProvider]]></code>
-      <code><![CDATA[spaceOnlyProvider]]></code>
-      <code><![CDATA[stringNotationProvider]]></code>
-      <code><![CDATA[stringOnlyProvider]]></code>
-      <code><![CDATA[zeroOnlyProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/NumberComparisonTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicTestDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/RegexTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicDataProvider]]></code>
-      <code><![CDATA[invalidConstructorArgumentsProvider]]></code>
-      <code><![CDATA[specialCharValidationProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/Sitemap/LocTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[invalidLocs]]></code>
-      <code><![CDATA[validLocs]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/StepTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[decimalHundredthStepValues]]></code>
-      <code><![CDATA[decimalStepSubtractionBugValues]]></code>
-      <code><![CDATA[decimalStepValues]]></code>
-      <code><![CDATA[decimalValues]]></code>
-      <code><![CDATA[valuesToValidate]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/StringLengthTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[basicDataProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/TimezoneTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[abbreviationProvider]]></code>
-      <code><![CDATA[getInvalidTypes]]></code>
-      <code><![CDATA[locationAndAbbreviationProvider]]></code>
-      <code><![CDATA[locationProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/UndisclosedPasswordTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[goodPasswordProvider]]></code>
-      <code><![CDATA[seenPasswordProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/UriTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[allowOptionsDataProvider]]></code>
-      <code><![CDATA[invalidValueTypes]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/UuidTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[invalidUuidProvider]]></code>
-      <code><![CDATA[validUuidProvider]]></code>
-    </PossiblyUnusedMethod>
-  </file>
-  <file src="test/ValidatorChainTest.php">
-    <PossiblyUnusedMethod>
-      <code><![CDATA[breakChainFlags]]></code>
-      <code><![CDATA[handleNotFoundError]]></code>
-    </PossiblyUnusedMethod>
-    <UndefinedThisPropertyAssignment>
-      <code><![CDATA[$this->error]]></code>
-    </UndefinedThisPropertyAssignment>
-    <UnusedClosureParam>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </UnusedClosureParam>
-    <UnusedParam>
-      <code><![CDATA[$errnum]]></code>
-    </UnusedParam>
   </file>
   <file src="test/ValidatorPluginManagerTest.php">
     <DeprecatedMethod>
