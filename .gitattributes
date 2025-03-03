@@ -14,3 +14,5 @@
 /composer.lock export-ignore
 /renovate.json export-ignore
 /bin/ export-ignore
+/tools/ export-ignore
+/Makefile export-ignore
