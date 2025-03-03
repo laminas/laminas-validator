@@ -6,7 +6,6 @@ namespace Laminas\Validator;
 
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Override;
 
 use function is_string;
 use function preg_match;
@@ -72,7 +71,6 @@ final class Regex extends AbstractValidator
     /**
      * Returns true if and only if $value matches against the pattern option
      */
-    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_string($value)) {

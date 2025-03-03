@@ -10,7 +10,6 @@ namespace Laminas\Validator;
 
 use Laminas\Stdlib\StringUtils;
 use Laminas\Translator\TranslatorInterface;
-use Override;
 
 use function array_key_exists;
 use function array_pop;
@@ -1809,7 +1808,6 @@ final class Hostname extends AbstractValidator
      *
      * Returns true if and only if the $value is a valid hostname with respect to the current allow option
      */
-    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_string($value)) {
@@ -1827,7 +1825,7 @@ final class Hostname extends AbstractValidator
 
         if (
             ((preg_match('/^[0-9.]*$/', $value) && str_contains($value, '.'))
-                || (preg_match('/^[0-9a-f:.]*$/i', $value) && str_contains($value, ':')))
+            || (preg_match('/^[0-9a-f:.]*$/i', $value) && str_contains($value, ':')))
             && $this->ipValidator->isValid($value)
         ) {
             if (! $allowIp) {

@@ -27,7 +27,6 @@ use Laminas\Validator\NumberComparison;
 use Laminas\Validator\Regex;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
-use Override;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
@@ -66,13 +65,11 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
      *
      * @param ServiceManagerConfiguration $config
      */
-    #[Override]
     protected static function getPluginManager(array $config = []): AbstractSingleInstancePluginManager
     {
         return new ValidatorPluginManager(new ServiceManager(), $config);
     }
 
-    #[Override]
     protected function getInstanceOf(): string
     {
         return ValidatorInterface::class;

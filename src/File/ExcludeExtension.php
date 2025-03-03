@@ -6,7 +6,6 @@ namespace Laminas\Validator\File;
 
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
-use Override;
 
 use function assert;
 use function implode;
@@ -76,7 +75,6 @@ final class ExcludeExtension extends AbstractValidator
      * Returns true if and only if the file extension of $value is not included in the
      * set extension list
      */
-    #[Override]
     public function isValid(mixed $value): bool
     {
         $this->setValue($value);

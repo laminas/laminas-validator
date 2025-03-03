@@ -6,7 +6,6 @@ namespace Laminas\Validator\File;
 
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
-use Override;
 
 use function array_filter;
 use function array_map;
@@ -69,7 +68,6 @@ final class NotExists extends AbstractValidator
     /**
      * Returns true if and only if the file does not exist in the set destinations
      */
-    #[Override]
     public function isValid(mixed $value): bool
     {
         if (FileInformation::isPossibleFile($value)) {

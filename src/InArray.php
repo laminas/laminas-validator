@@ -6,7 +6,6 @@ namespace Laminas\Validator;
 
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Override;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 
@@ -109,7 +108,6 @@ final class InArray extends AbstractValidator
      *
      * See {@link http://php.net/manual/function.in-array.php#104501}
      */
-    #[Override]
     public function isValid(mixed $value): bool
     {
         // we create a copy of the haystack in case we need to modify it

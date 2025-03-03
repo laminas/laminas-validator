@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Laminas\Validator\Sitemap;
 
 use Laminas\Validator\AbstractValidator;
-use Override;
 
 use function in_array;
 use function is_string;
@@ -53,7 +52,6 @@ final class Changefreq extends AbstractValidator
      *
      * @link https://www.sitemaps.org/protocol.html#changefreqdef
      */
-    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_string($value)) {

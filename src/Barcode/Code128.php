@@ -6,7 +6,6 @@ namespace Laminas\Validator\Barcode;
 
 use Laminas\Stdlib\StringUtils;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
-use Override;
 
 use function assert;
 use function chr;
@@ -22,19 +21,16 @@ final class Code128 implements AdapterInterface
         $this->utf8StringWrapper = StringUtils::getWrapper('UTF-8');
     }
 
-    #[Override]
     public function hasValidLength(string $value): bool
     {
         return true;
     }
 
-    #[Override]
     public function hasValidChecksum(string $value): bool
     {
         return $this->code128($value);
     }
 
-    #[Override]
     public function getLength(): int
     {
         return -1;
@@ -43,7 +39,6 @@ final class Code128 implements AdapterInterface
     /**
      * Checks for allowed characters within the barcode
      */
-    #[Override]
     public function hasValidCharacters(string $value): bool
     {
         // get used string wrapper for UTF-8 character encoding

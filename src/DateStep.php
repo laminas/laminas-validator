@@ -11,7 +11,6 @@ use DateTimeInterface;
 use DateTimeZone;
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Override;
 
 use function array_combine;
 use function array_count_values;
@@ -119,7 +118,6 @@ final class DateStep extends Date
     /**
      * Supports formats with ISO week (W) definitions
      */
-    #[Override]
     protected function convertString(string $value, bool $addErrors = true): false|DateTimeImmutable
     {
         // Custom week format support
@@ -151,7 +149,6 @@ final class DateStep extends Date
      *
      * @throws InvalidArgumentException
      */
-    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! parent::isValid($value)) {

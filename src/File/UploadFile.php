@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Laminas\Validator\File;
 
 use Laminas\Validator\AbstractValidator;
-use Override;
 use Psr\Http\Message\UploadedFileInterface;
 
 use function basename;
@@ -61,7 +60,6 @@ final class UploadFile extends AbstractValidator
     /**
      * Returns true if and only if the file was uploaded without errors
      */
-    #[Override]
     public function isValid(mixed $value): bool
     {
         if (

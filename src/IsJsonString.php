@@ -6,7 +6,6 @@ namespace Laminas\Validator;
 
 use JsonException;
 use Laminas\Translator\TranslatorInterface;
-use Override;
 
 use function gettype;
 use function is_float;
@@ -75,7 +74,6 @@ final class IsJsonString extends AbstractValidator
         parent::__construct($options);
     }
 
-    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_string($value)) {

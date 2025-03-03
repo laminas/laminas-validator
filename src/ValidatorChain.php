@@ -8,7 +8,6 @@ use Countable;
 use IteratorAggregate;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\PriorityQueue;
-use Override;
 use Traversable;
 
 use function array_replace;
@@ -58,7 +57,6 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorInt
     /**
      * Return the count of attached validators
      */
-    #[Override]
     public function count(): int
     {
         return count($this->validators);
@@ -208,7 +206,6 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorInt
      *
      * @param array<string, mixed> $context Extra "context" to provide the validator
      */
-    #[Override]
     public function isValid(mixed $value, ?array $context = null): bool
     {
         $this->messages = [];
@@ -245,7 +242,6 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorInt
      *
      * @return array<string, string>
      */
-    #[Override]
     public function getMessages(): array
     {
         return $this->messages;
@@ -293,7 +289,6 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorInt
     }
 
     /** @return Traversable<array-key, QueueElement> */
-    #[Override]
     public function getIterator(): Traversable
     {
         return clone $this->validators;

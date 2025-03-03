@@ -12,7 +12,6 @@ use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\ValidatorChainFactory;
 use Laminas\Validator\ValidatorPluginManager;
-use Override;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -21,7 +20,6 @@ final class ConditionalTest extends TestCase
 {
     private ValidatorChainFactory $factory;
 
-    #[Override]
     protected function setUp(): void
     {
         $this->factory = new ValidatorChainFactory(new ValidatorPluginManager(new ServiceManager()));

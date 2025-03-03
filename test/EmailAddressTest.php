@@ -8,7 +8,6 @@ use Generator;
 use Laminas\Validator\EmailAddress;
 use Laminas\Validator\Hostname;
 use LaminasTest\Validator\TestAsset\Translator;
-use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\Group;
@@ -30,7 +29,6 @@ final class EmailAddressTest extends TestCase
 {
     private EmailAddress $validator;
 
-    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

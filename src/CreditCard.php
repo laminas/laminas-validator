@@ -6,7 +6,6 @@ namespace Laminas\Validator;
 
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Override;
 use SensitiveParameter;
 use Throwable;
 
@@ -307,7 +306,6 @@ final class CreditCard extends AbstractValidator
      *
      * @param array<string, mixed>|null $context Validation context, i.e the form payload
      */
-    #[Override]
     public function isValid(
         #[SensitiveParameter]
         mixed $value,

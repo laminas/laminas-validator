@@ -14,7 +14,6 @@ use Laminas\Validator\Timezone;
 use Laminas\Validator\ValidatorChain;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
-use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -29,7 +28,6 @@ final class ValidatorChainTest extends TestCase
 {
     private ValidatorChain $validator;
 
-    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -38,7 +36,6 @@ final class ValidatorChainTest extends TestCase
         $this->validator = new ValidatorChain();
     }
 
-    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

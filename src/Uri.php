@@ -6,7 +6,6 @@ namespace Laminas\Validator;
 
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Override;
 
 use function is_array;
 use function is_string;
@@ -59,7 +58,6 @@ final class Uri extends AbstractValidator
     /**
      * Returns true if and only if $value validates as a Uri
      */
-    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_string($value) || $value === '') {

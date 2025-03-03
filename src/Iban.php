@@ -6,7 +6,6 @@ namespace Laminas\Validator;
 
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Override;
 
 use function array_key_exists;
 use function in_array;
@@ -196,7 +195,6 @@ final class Iban extends AbstractValidator
     /**
      * Returns true if $value is a valid IBAN
      */
-    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_string($value)) {

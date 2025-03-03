@@ -6,7 +6,6 @@ namespace Laminas\Validator;
 
 use Closure;
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Override;
 
 use function is_callable;
 
@@ -36,7 +35,6 @@ final class Conditional implements ValidatorInterface
     }
 
     /** @param array<string, mixed> $context */
-    #[Override]
     public function isValid(mixed $value, array $context = []): bool
     {
         if (! ($this->rule)($context)) {
@@ -47,7 +45,6 @@ final class Conditional implements ValidatorInterface
     }
 
     /** @inheritDoc */
-    #[Override]
     public function getMessages(): array
     {
         return $this->chain->getMessages();

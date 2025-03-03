@@ -9,7 +9,6 @@ use DateTimeInterface;
 use DateTimeZone;
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Override;
 
 use function assert;
 use function get_debug_type;
@@ -95,7 +94,6 @@ final class DateComparison extends AbstractValidator
         }
     }
 
-    #[Override]
     public function isValid(mixed $value): bool
     {
         $this->type = get_debug_type($value);

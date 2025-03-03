@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Laminas\Validator;
 
 use Laminas\Translator\TranslatorInterface;
-use Override;
 use UConverter;
 
 use function array_combine;
@@ -142,7 +141,6 @@ final class EmailAddress extends AbstractValidator
      *
      * @inheritDoc
      */
-    #[Override]
     public function setMessage(string $messageString, ?string $messageKey = null): void
     {
         if ($messageKey === null) {
@@ -336,7 +334,6 @@ final class EmailAddress extends AbstractValidator
      * @link   http://www.ietf.org/rfc/rfc2822.txt RFC2822
      * @link   http://www.columbia.edu/kermit/ascii.html US-ASCII characters
      */
-    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_string($value)) {

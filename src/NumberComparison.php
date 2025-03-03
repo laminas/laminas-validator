@@ -6,7 +6,6 @@ namespace Laminas\Validator;
 
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Override;
 
 use function is_numeric;
 
@@ -86,7 +85,6 @@ final class NumberComparison extends AbstractValidator
         parent::__construct($options);
     }
 
-    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_numeric($value)) {

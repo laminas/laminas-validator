@@ -27,6 +27,15 @@
                 <directory name="test" />
             </errorLevel>
         </PossiblyUnusedMethod>
+
+        <!-- Ignore all missing override issues -->
+        <MissingOverrideAttribute>
+            <errorLevel type="suppress">
+                <directory name="src" />
+                <directory name="test" />
+            </errorLevel>
+        </MissingOverrideAttribute>
+
     </issueHandlers>
 
     <plugins>

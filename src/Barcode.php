@@ -8,7 +8,6 @@ use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Barcode\AdapterInterface;
 use Laminas\Validator\Barcode\Ean13;
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Override;
 
 use function class_exists;
 use function implode;
@@ -100,7 +99,6 @@ final class Barcode extends AbstractValidator
      *
      * Returns true if and only if $value contains a valid barcode
      */
-    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_string($value)) {

@@ -120,7 +120,7 @@ function getNewValidTlds(string $string): array
     // Get new TLDs from the list previously fetched
     $newValidTlds = [];
     $lines        = preg_split("#\r?\n#", $string);
-    assert(is_array($lines));
+    assert($lines !== false);
 
     foreach (preg_grep('/^[^#]/', $lines) as $line) {
         $utf8String = idn_to_utf8(strtolower($line));

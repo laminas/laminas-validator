@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
-use Override;
-
 use function is_string;
 use function preg_match;
 
@@ -35,7 +33,6 @@ final class Uuid extends AbstractValidator
      * getMessages() will return an array of messages that explain why the
      * validation failed.
      */
-    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_string($value)) {

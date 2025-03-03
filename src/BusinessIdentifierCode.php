@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
-use Override;
-
 use function in_array;
 use function is_string;
 use function preg_match;
@@ -295,7 +293,6 @@ final class BusinessIdentifierCode extends AbstractValidator
     private const KOSOVO_EXCEPTION = 'XK';
 
     /** {@inheritDoc} */
-    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_string($value)) {

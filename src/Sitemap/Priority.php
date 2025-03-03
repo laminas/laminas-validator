@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Laminas\Validator\Sitemap;
 
 use Laminas\Validator\AbstractValidator;
-use Override;
 
 use function is_numeric;
 
@@ -37,7 +36,6 @@ final class Priority extends AbstractValidator
      *
      * @link https://www.sitemaps.org/protocol.html#prioritydef
      */
-    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_numeric($value)) {

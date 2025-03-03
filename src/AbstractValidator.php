@@ -6,7 +6,6 @@ namespace Laminas\Validator;
 
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Override;
 
 use function array_key_exists;
 use function array_keys;
@@ -141,7 +140,6 @@ abstract class AbstractValidator implements
      *
      * @return array<string, string>
      */
-    #[Override]
     public function getMessages(): array
     {
         return array_unique($this->errorMessages, SORT_REGULAR);
@@ -308,7 +306,6 @@ abstract class AbstractValidator implements
     /**
      * Set the translator for this instance
      */
-    #[Override]
     public function setTranslator(?TranslatorInterface $translator = null, ?string $textDomain = null): void
     {
         $this->translator = $translator;
@@ -320,7 +317,6 @@ abstract class AbstractValidator implements
     /**
      * Return the translator for this instance
      */
-    #[Override]
     public function getTranslator(): ?TranslatorInterface
     {
         return $this->translator;

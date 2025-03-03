@@ -9,7 +9,6 @@ use Laminas\Validator\NotEmpty;
 use Laminas\Validator\StringLength;
 use Laminas\Validator\ValidatorChainFactory;
 use Laminas\Validator\ValidatorPluginManager;
-use Override;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -17,7 +16,6 @@ final class ValidatorChainFactoryTest extends TestCase
 {
     private ValidatorChainFactory $factory;
 
-    #[Override]
     protected function setUp(): void
     {
         $this->factory = new ValidatorChainFactory(new ValidatorPluginManager(new ServiceManager()));

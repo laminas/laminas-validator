@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Step;
-use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
@@ -17,7 +16,6 @@ final class StepTest extends TestCase
     /**
      * Creates a new Laminas\Validator\Step object for each test method
      */
-    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

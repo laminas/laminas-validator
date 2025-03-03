@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\Barcode;
 
-use Override;
-
 use function str_split;
 use function substr;
 
@@ -79,25 +77,21 @@ final class Code39 implements AdapterInterface
         return false;
     }
 
-    #[Override]
     public function hasValidLength(string $value): bool
     {
         return true;
     }
 
-    #[Override]
     public function hasValidCharacters(string $value): bool
     {
         return Util::stringMatchesAlphabet($value, self::ALPHABET);
     }
 
-    #[Override]
     public function hasValidChecksum(string $value): bool
     {
         return self::checkCode39($value);
     }
 
-    #[Override]
     public function getLength(): int
     {
         return -1;

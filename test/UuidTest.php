@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Uuid;
-use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -14,7 +13,6 @@ final class UuidTest extends TestCase
 {
     private Uuid $validator;
 
-    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -7,7 +7,6 @@ namespace Laminas\Validator\File;
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Override;
 
 use function is_string;
 
@@ -111,7 +110,6 @@ final class Size extends AbstractValidator
      * Returns true if and only if the file size of $value is at least min and
      * not bigger than max (when max is not null).
      */
-    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! FileInformation::isPossibleFile($value)) {
@@ -131,8 +129,8 @@ final class Size extends AbstractValidator
 
         $size       = $file->size()->bytes;
         $this->size = $this->useByteString
-            ? $file->size()->toSiUnit()
-            : (string) $size;
+        ? $file->size()->toSiUnit()
+        : (string) $size;
 
         if ($this->min !== null && $size < $this->min) {
             $this->error(self::TOO_SMALL);

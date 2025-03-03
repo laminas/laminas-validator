@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace LaminasTest\Validator\File;
 
 use Laminas\Validator\File\UploadFile;
-use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -22,7 +21,6 @@ final class UploadFileTest extends TestCase
 {
     private UploadFile $validator;
 
-    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

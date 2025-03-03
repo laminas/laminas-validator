@@ -7,7 +7,6 @@ namespace Laminas\Validator;
 use Laminas\Stdlib\StringUtils;
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Override;
 use Throwable;
 
 use function is_string;
@@ -73,7 +72,6 @@ final class StringLength extends AbstractValidator
      * Returns true if and only if the string length of $value is at least the min option and
      * no greater than the max option (when the max option is not null).
      */
-    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_string($value)) {

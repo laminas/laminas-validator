@@ -7,7 +7,6 @@ namespace Laminas\Validator\File;
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Override;
 
 use function hash_algos;
 use function hash_equals;
@@ -80,7 +79,6 @@ final class Hash extends AbstractValidator
     /**
      * Returns true if and only if the given file confirms the set hash
      */
-    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! FileInformation::isPossibleFile($value)) {

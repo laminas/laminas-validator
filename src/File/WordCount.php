@@ -7,7 +7,6 @@ namespace Laminas\Validator\File;
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Override;
 
 use function assert;
 use function file_get_contents;
@@ -91,7 +90,6 @@ final class WordCount extends AbstractValidator
      * Returns true if and only if the counted words are at least min and
      * not bigger than max (when max is not null).
      */
-    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! FileInformation::isPossibleFile($value)) {

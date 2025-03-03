@@ -8,7 +8,6 @@ use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Laminas\Translator\TranslatorInterface;
-use Override;
 
 use function gettype;
 use function implode;
@@ -74,7 +73,6 @@ class Date extends AbstractValidator
     /**
      * Returns true if $value is a DateTimeInterface instance or can be converted into one.
      */
-    #[Override]
     public function isValid(mixed $value): bool
     {
         $this->setValue($value);

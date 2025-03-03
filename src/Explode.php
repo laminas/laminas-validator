@@ -7,7 +7,6 @@ namespace Laminas\Validator;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\RuntimeException;
-use Override;
 
 use function explode;
 use function implode;
@@ -118,7 +117,6 @@ final class Explode extends AbstractValidator
      * @param array<string, mixed> $context
      * @throws RuntimeException
      */
-    #[Override]
     public function isValid(mixed $value, ?array $context = null): bool
     {
         if (! is_string($value)) {
