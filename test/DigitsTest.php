@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Digits;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -12,6 +13,7 @@ final class DigitsTest extends TestCase
 {
     private Digits $validator;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

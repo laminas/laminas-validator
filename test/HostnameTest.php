@@ -6,6 +6,7 @@ namespace LaminasTest\Validator;
 
 use Laminas\Validator\Hostname;
 use LaminasTest\Validator\TestAsset\Translator;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
@@ -25,6 +26,7 @@ final class HostnameTest extends TestCase
 
     private string $origEncoding;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -38,6 +40,7 @@ final class HostnameTest extends TestCase
     /**
      * Reset iconv
      */
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

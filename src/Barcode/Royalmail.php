@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\Barcode;
 
+use Override;
+
 use function array_intersect;
 use function array_keys;
 use function current;
@@ -127,6 +129,7 @@ final class Royalmail implements AdapterInterface
     /**
      * Allows start and stop tag within checked chars
      */
+    #[Override]
     public function hasValidCharacters(string $value): bool
     {
         if ($value[0] === '(') {
@@ -142,16 +145,19 @@ final class Royalmail implements AdapterInterface
         return Util::stringMatchesAlphabet($value, self::ALPHABET);
     }
 
+    #[Override]
     public function hasValidLength(string $value): bool
     {
         return true;
     }
 
+    #[Override]
     public function hasValidChecksum(string $value): bool
     {
         return self::checksum($value);
     }
 
+    #[Override]
     public function getLength(): int
     {
         return -1;

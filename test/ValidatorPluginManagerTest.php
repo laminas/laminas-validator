@@ -17,6 +17,7 @@ use Laminas\Validator\ValidatorPluginManager;
 use Laminas\Validator\ValidatorPluginManagerAwareInterface;
 use LaminasTest\Validator\TestAsset\InMemoryContainer;
 use LaminasTest\Validator\TestAsset\Translator;
+use Override;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
@@ -28,6 +29,7 @@ final class ValidatorPluginManagerTest extends TestCase
 {
     private ValidatorPluginManager $validators;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -153,21 +155,25 @@ final class ValidatorPluginManagerTest extends TestCase
         {
             private ?ValidatorPluginManager $plugins = null;
 
+            #[Override]
             public function isValid(mixed $value): bool
             {
                 return is_scalar($value);
             }
 
+            #[Override]
             public function getMessages(): array
             {
                 return [];
             }
 
+            #[Override]
             public function setValidatorPluginManager(ValidatorPluginManager $pluginManager): void
             {
                 $this->plugins = $pluginManager;
             }
 
+            #[Override]
             public function getValidatorPluginManager(): ValidatorPluginManager
             {
                 assert($this->plugins !== null);

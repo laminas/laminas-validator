@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\Barcode;
 
+use Override;
+
 use function array_search;
 use function assert;
 use function count;
@@ -109,21 +111,25 @@ final class Code93 implements AdapterInterface
         return false;
     }
 
+    #[Override]
     public function hasValidLength(string $value): bool
     {
         return true;
     }
 
+    #[Override]
     public function hasValidCharacters(string $value): bool
     {
         return Util::stringMatchesAlphabet($value, self::ALPHABET);
     }
 
+    #[Override]
     public function hasValidChecksum(string $value): bool
     {
         return self::checkCode93($value);
     }
 
+    #[Override]
     public function getLength(): int
     {
         return -1;

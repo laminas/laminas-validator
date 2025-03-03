@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Override;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
@@ -51,6 +52,7 @@ final class UndisclosedPassword extends AbstractValidator
     }
 
     /** {@inheritDoc} */
+    #[Override]
     public function isValid(
         #[SensitiveParameter]
         mixed $value

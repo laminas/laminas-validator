@@ -7,6 +7,7 @@ namespace Laminas\Validator\File;
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\InvalidArgumentException;
+use Override;
 
 use function array_reverse;
 use function array_shift;
@@ -83,6 +84,7 @@ final class Extension extends AbstractValidator
      * Returns true if and only if the file extension of $value is included in the
      * set extension list
      */
+    #[Override]
     public function isValid(mixed $value): bool
     {
         $this->setValue($value);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Validator;
 
 use Laminas\Translator\TranslatorInterface;
+use Override;
 
 use function is_float;
 use function is_numeric;
@@ -65,6 +66,7 @@ final class Bitwise extends AbstractValidator
         parent::__construct($options);
     }
 
+    #[Override]
     public function isValid(mixed $value): bool
     {
         $this->setValue($value);

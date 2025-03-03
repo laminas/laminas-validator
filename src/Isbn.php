@@ -6,6 +6,7 @@ namespace Laminas\Validator;
 
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
+use Override;
 
 use function in_array;
 use function is_int;
@@ -91,6 +92,7 @@ final class Isbn extends AbstractValidator
     /**
      * Returns true if and only if $value is a valid ISBN.
      */
+    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_string($value) && ! is_int($value)) {

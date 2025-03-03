@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\Barcode;
 
+use Override;
+
 use function strpbrk;
 use function substr;
 
@@ -15,6 +17,7 @@ final class Codabar implements AdapterInterface
     /**
      * Checks for allowed characters
      */
+    #[Override]
     public function hasValidCharacters(string $value): bool
     {
         if (strpbrk($value, 'ABCD') !== false) {
@@ -50,16 +53,19 @@ final class Codabar implements AdapterInterface
         return Util::stringMatchesAlphabet($value, '0123456789-$:/.+');
     }
 
+    #[Override]
     public function hasValidLength(string $value): bool
     {
         return true;
     }
 
+    #[Override]
     public function hasValidChecksum(string $value): bool
     {
         return true;
     }
 
+    #[Override]
     public function getLength(): int
     {
         return -1;

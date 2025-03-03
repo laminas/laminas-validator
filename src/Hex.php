@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Override;
+
 use function ctype_xdigit;
 use function is_int;
 use function is_string;
@@ -26,6 +28,7 @@ final class Hex extends AbstractValidator
     /**
      * Returns true if and only if $value contains only hexadecimal digit characters
      */
+    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_string($value) && ! is_int($value)) {

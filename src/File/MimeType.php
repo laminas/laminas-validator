@@ -7,6 +7,7 @@ namespace Laminas\Validator\File;
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\InvalidArgumentException;
+use Override;
 
 use function array_filter;
 use function array_map;
@@ -79,6 +80,7 @@ class MimeType extends AbstractValidator
      * of mimetypes can be checked. If you give for example "image" all image
      * mime types will be accepted like "image/gif", "image/jpeg" and so on.
      */
+    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! FileInformation::isPossibleFile($value)) {

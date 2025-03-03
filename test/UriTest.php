@@ -6,6 +6,7 @@ namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\Uri;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -16,6 +17,7 @@ final class UriTest extends TestCase
     /**
      * Creates a new Uri Validator object for each test method
      */
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

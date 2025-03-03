@@ -6,6 +6,7 @@ namespace Laminas\Validator\Sitemap;
 
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Uri;
+use Override;
 
 use function html_entity_decode;
 use function htmlentities;
@@ -42,6 +43,7 @@ final class Loc extends AbstractValidator
      *
      * @link https://www.sitemaps.org/protocol.html#locdef
      */
+    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_string($value) || $value === '') {

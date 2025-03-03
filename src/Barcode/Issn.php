@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\Barcode;
 
+use Override;
+
 use function assert;
 use function in_array;
 use function is_numeric;
@@ -20,6 +22,7 @@ final class Issn implements AdapterInterface
     /**
      * Allows X on length of 8 chars
      */
+    #[Override]
     public function hasValidCharacters(string $value): bool
     {
         if (strlen($value) !== 8) {
@@ -31,16 +34,19 @@ final class Issn implements AdapterInterface
         return Util::stringMatchesAlphabet($value, self::ALPHABET);
     }
 
+    #[Override]
     public function hasValidLength(string $value): bool
     {
         return in_array(strlen($value), self::LENGTH, true);
     }
 
+    #[Override]
     public function getLength(): array
     {
         return self::LENGTH;
     }
 
+    #[Override]
     public function hasValidChecksum(string $value): bool
     {
         if (strlen($value) === 8) {

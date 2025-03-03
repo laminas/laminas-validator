@@ -7,6 +7,7 @@ namespace Laminas\Validator\File;
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\InvalidArgumentException;
+use Override;
 
 use function count;
 use function getimagesize;
@@ -119,6 +120,7 @@ final class ImageSize extends AbstractValidator
      * Returns true if and only if the image size of $value is at least min and
      * not bigger than max
      */
+    #[Override]
     public function isValid(mixed $value): bool
     {
         $this->width  = null;

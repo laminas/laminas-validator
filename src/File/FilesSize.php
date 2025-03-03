@@ -7,6 +7,7 @@ namespace Laminas\Validator\File;
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\InvalidArgumentException;
+use Override;
 use Psr\Http\Message\UploadedFileInterface;
 
 use function in_array;
@@ -113,6 +114,7 @@ final class FilesSize extends AbstractValidator
      * Returns true if and only if the disk usage of all files is at least min and
      * not bigger than max (when max is not null).
      */
+    #[Override]
     public function isValid(mixed $value): bool
     {
         if (is_array($value) && isset($value['tmp_name'])) {

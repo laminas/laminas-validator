@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Validator\File;
 
+use Override;
+
 use function array_merge;
 use function explode;
 use function in_array;
@@ -29,6 +31,7 @@ final class ExcludeMimeType extends MimeType
      * of mimetypes can be checked. If you give for example "image" all image
      * mime types will not be accepted like "image/gif", "image/jpeg" and so on.
      */
+    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! FileInformation::isPossibleFile($value)) {

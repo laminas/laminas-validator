@@ -6,6 +6,7 @@ namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\InArray;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -13,6 +14,7 @@ final class InArrayTest extends TestCase
 {
     private InArray $validator;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

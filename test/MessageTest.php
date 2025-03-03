@@ -6,6 +6,7 @@ namespace LaminasTest\Validator;
 
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\StringLength;
+use Override;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
@@ -15,6 +16,7 @@ final class MessageTest extends TestCase
 {
     private StringLength $validator;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Validator\Sitemap;
 
 use Laminas\Validator\AbstractValidator;
+use Override;
 
 use function is_string;
 use function preg_match;
@@ -46,6 +47,7 @@ final class Lastmod extends AbstractValidator
      *
      * @link https://www.sitemaps.org/protocol.html#lastmoddef
      */
+    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_string($value)) {

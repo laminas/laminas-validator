@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Override;
+
 use function is_float;
 use function is_int;
 use function is_string;
@@ -29,6 +31,7 @@ final class Digits extends AbstractValidator
     /**
      * Returns true if and only if $value only contains digit characters
      */
+    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_string($value) && ! is_int($value) && ! is_float($value)) {

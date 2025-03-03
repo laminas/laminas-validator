@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Override;
+
 use function assert;
 use function explode;
 use function filter_var;
@@ -78,6 +80,7 @@ final class HostWithPublicIPv4Address extends AbstractValidator
         'value' => 'value',
     ];
 
+    #[Override]
     public function isValid(mixed $value): bool
     {
         $this->type = get_debug_type($value);

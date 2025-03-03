@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Validator;
 
 use Laminas\Translator\TranslatorInterface;
+use Override;
 
 use function bindec;
 use function hexdec;
@@ -76,6 +77,7 @@ final class Ip extends AbstractValidator
     /**
      * Returns true if and only if $value is a valid IP address
      */
+    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_string($value) || $value === '') {

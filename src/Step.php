@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Validator;
 
 use Laminas\Translator\TranslatorInterface;
+use Override;
 
 use function floor;
 use function is_numeric;
@@ -64,6 +65,7 @@ final class Step extends AbstractValidator
     /**
      * Returns true if $value is numeric and a valid step value
      */
+    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_numeric($value)) {

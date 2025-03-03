@@ -6,6 +6,7 @@ namespace Laminas\Validator;
 
 use Countable;
 use Laminas\Translator\TranslatorInterface;
+use Override;
 
 use function array_search;
 use function assert;
@@ -141,6 +142,7 @@ final class NotEmpty extends AbstractValidator
     /**
      * Returns true if and only if $value is not an empty value.
      */
+    #[Override]
     public function isValid(mixed $value): bool
     {
         if (

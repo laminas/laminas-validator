@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Laminas\Validator;
 
 use Laminas\ServiceManager\Factory\FactoryInterface;
+use Override;
 use Psr\Container\ContainerInterface;
 
 final class ConditionalFactory implements FactoryInterface
 {
     /** @inheritDoc */
+    #[Override]
     public function __invoke(
         ContainerInterface $container,
         string $requestedName,

@@ -6,6 +6,7 @@ namespace Laminas\Validator;
 
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
+use Override;
 
 use function count;
 use function is_countable;
@@ -97,6 +98,7 @@ final class IsCountable extends AbstractValidator
     /**
      * Returns true if and only if $value is countable (and the count validates against optional values).
      */
+    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_countable($value)) {

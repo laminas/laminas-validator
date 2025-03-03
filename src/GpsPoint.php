@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Override;
+
 use function assert;
 use function explode;
 use function is_numeric;
@@ -36,6 +38,7 @@ final class GpsPoint extends AbstractValidator
      *
      * @throws Exception\RuntimeException If validation of $value is impossible.
      */
+    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! str_contains($value, ',')) {

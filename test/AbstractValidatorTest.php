@@ -9,6 +9,7 @@ use Laminas\Validator\EmailAddress;
 use Laminas\Validator\Hostname;
 use LaminasTest\Validator\TestAsset\ConcreteValidator;
 use LaminasTest\Validator\TestAsset\Translator;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
@@ -21,6 +22,7 @@ final class AbstractValidatorTest extends TestCase
 {
     private AbstractValidator $validator;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -28,6 +30,7 @@ final class AbstractValidatorTest extends TestCase
         $this->validator = new ConcreteValidator();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         parent::tearDown();

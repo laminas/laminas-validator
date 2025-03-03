@@ -7,6 +7,7 @@ namespace Laminas\Validator;
 use BackedEnum;
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
+use Override;
 use ReflectionEnum;
 use ReflectionNamedType;
 
@@ -71,6 +72,7 @@ final class BackedEnumValue extends AbstractValidator
         parent::__construct($options);
     }
 
+    #[Override]
     public function isValid(mixed $value): bool
     {
         $this->setValue(is_scalar($value) ? (string) $value : get_debug_type($value));

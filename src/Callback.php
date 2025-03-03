@@ -8,6 +8,7 @@ use Closure;
 use Exception;
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
+use Override;
 
 use function assert;
 use function is_array;
@@ -88,6 +89,7 @@ final class Callback extends AbstractValidator
      *
      * @param array<string, mixed> $context Additional context to provide to the callback
      */
+    #[Override]
     public function isValid(mixed $value, ?array $context = null): bool
     {
         $this->setValue($value);

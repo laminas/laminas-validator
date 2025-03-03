@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Validator;
 
 use Laminas\Validator\Hex;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -12,6 +13,7 @@ final class HexTest extends TestCase
 {
     private Hex $validator;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

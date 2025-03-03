@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Override;
+
 use function get_debug_type;
 use function is_array;
 
@@ -23,6 +25,7 @@ final class IsArray extends AbstractValidator
 
     protected ?string $type = null;
 
+    #[Override]
     public function isValid(mixed $value): bool
     {
         if (is_array($value)) {

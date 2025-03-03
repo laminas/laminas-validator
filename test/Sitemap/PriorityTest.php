@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Validator\Sitemap;
 
 use Laminas\Validator\Sitemap\Priority;
+use Override;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -14,6 +15,7 @@ final class PriorityTest extends TestCase
 {
     private Priority $validator;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

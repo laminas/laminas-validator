@@ -7,6 +7,7 @@ namespace LaminasTest\Validator;
 use Exception;
 use Laminas\Validator\UndisclosedPassword;
 use LaminasTest\Validator\TestAsset\HttpClientException;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -34,6 +35,7 @@ final class UndisclosedPasswordTest extends TestCase
     private StreamInterface&MockObject $stream;
 
     /** {@inheritDoc} */
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

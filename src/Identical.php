@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Validator;
 
 use Laminas\Translator\TranslatorInterface;
+use Override;
 
 use function is_array;
 use function is_int;
@@ -72,6 +73,7 @@ final class Identical extends AbstractValidator
      *
      * @psalm-suppress MixedAssignment, MixedArrayAccess Tokens are mixed as are array members
      */
+    #[Override]
     public function isValid(mixed $value, ?array $context = null): bool
     {
         $this->setValue($value);

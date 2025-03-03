@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Validator\Sitemap;
 
 use Laminas\Validator\Sitemap\Loc;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -16,6 +17,7 @@ final class LocTest extends TestCase
 {
     private Loc $validator;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

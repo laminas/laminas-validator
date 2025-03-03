@@ -6,6 +6,7 @@ namespace Laminas\Validator;
 
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
+use Override;
 
 use function class_exists;
 
@@ -66,6 +67,7 @@ final class IsInstanceOf extends AbstractValidator
     /**
      * Returns true if $value is instance of $this->className
      */
+    #[Override]
     public function isValid(mixed $value): bool
     {
         if ($value instanceof $this->className) {

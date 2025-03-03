@@ -7,6 +7,7 @@ namespace Laminas\Validator;
 use DateTimeZone;
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
+use Override;
 
 use function array_key_exists;
 use function in_array;
@@ -66,6 +67,7 @@ final class Timezone extends AbstractValidator
     /**
      * Returns true if timezone location or timezone abbreviations is correct.
      */
+    #[Override]
     public function isValid(mixed $value): bool
     {
         if (! is_string($value) || $value === '') {

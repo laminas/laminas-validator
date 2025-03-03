@@ -7,6 +7,7 @@ namespace Laminas\Validator\File;
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Exception\InvalidArgumentException;
+use Override;
 
 use function is_array;
 
@@ -76,6 +77,7 @@ final class Count extends AbstractValidator
      * Returns true if and only if the file count of all checked files is at least min and
      * not bigger than max (when max is not null).
      */
+    #[Override]
     public function isValid(mixed $value): bool
     {
         if (FileInformation::isPossibleFile($value)) {
