@@ -49,7 +49,7 @@
         "laminas/laminas-diactoros": "^3.5.0",
         "phpunit/phpunit": "^10.5.45",
         "psalm/plugin-phpunit": "^0.19.2",
-        "vimeo/psalm": "^6.8.6"
+        "vimeo/psalm": "^6.8.8"
     },
     "suggest": {
         "laminas/laminas-i18n": "Laminas\\I18n component to allow translation of validation error messages",

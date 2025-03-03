@@ -9,6 +9,7 @@ use Override;
 use function array_search;
 use function assert;
 use function count;
+use function sprintf;
 use function str_split;
 use function substr;
 
@@ -102,7 +103,7 @@ final class Code93 implements AdapterInterface
         }
         $sum = array_search($count % 47, self::CHECK);
         assert($sum !== false);
-        $check .= $sum;
+        $check = sprintf('%s%s', $check, $sum);
 
         if ($check === $checksum) {
             return true;

@@ -111,10 +111,12 @@ final class HostWithPublicIPv4Address extends AbstractValidator
         if (PHP_VERSION_ID >= 80200) {
             /**
              * @psalm-var int $filterFlags
-             * @psalm-suppress UndefinedConstant
+             * @psalm-suppress UndefinedConstant,MixedAssignment This trips up Psalm quite badly
              */
             $filterFlags |= FILTER_FLAG_GLOBAL_RANGE;
         }
+
+        assert(is_int($filterFlags));
 
         foreach ($addressList as $server) {
             /**

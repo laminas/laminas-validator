@@ -13,6 +13,7 @@ use function ip2long;
 use function is_string;
 use function long2ip;
 use function preg_match;
+use function sprintf;
 use function str_contains;
 use function strlen;
 use function strrpos;
@@ -115,16 +116,31 @@ final class Ip extends AbstractValidator
     {
         if (preg_match('/^([01]{8}\.){3}[01]{8}\z/i', $value)) {
             // binary format  00000000.00000000.00000000.00000000
-            $value = bindec(substr($value, 0, 8)) . '.' . bindec(substr($value, 9, 8)) . '.'
-                   . bindec(substr($value, 18, 8)) . '.' . bindec(substr($value, 27, 8));
+            $value = sprintf(
+                '%s.%s.%s.%s',
+                bindec(substr($value, 0, 8)),
+                bindec(substr($value, 9, 8)),
+                bindec(substr($value, 18, 8)),
+                bindec(substr($value, 27, 8)),
+            );
         } elseif (preg_match('/^([0-9]{3}\.){3}[0-9]{3}\z/i', $value)) {
             // octet format 777.777.777.777
-            $value = (int) substr($value, 0, 3) . '.' . (int) substr($value, 4, 3) . '.'
-                   . (int) substr($value, 8, 3) . '.' . (int) substr($value, 12, 3);
+            $value = sprintf(
+                '%d.%d.%d.%d',
+                substr($value, 0, 3),
+                substr($value, 4, 3),
+                substr($value, 8, 3),
+                substr($value, 12, 3),
+            );
         } elseif (preg_match('/^([0-9a-f]{2}\.){3}[0-9a-f]{2}\z/i', $value)) {
             // hex format ff.ff.ff.ff
-            $value = hexdec(substr($value, 0, 2)) . '.' . hexdec(substr($value, 3, 2)) . '.'
-                   . hexdec(substr($value, 6, 2)) . '.' . hexdec(substr($value, 9, 2));
+            $value = sprintf(
+                '%s.%s.%s.%s',
+                hexdec(substr($value, 0, 2)),
+                hexdec(substr($value, 3, 2)),
+                hexdec(substr($value, 6, 2)),
+                hexdec(substr($value, 9, 2)),
+            );
         }
 
         $ip2long = ip2long($value);
