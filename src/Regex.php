@@ -50,7 +50,8 @@ final class Regex extends AbstractValidator
      */
     public function __construct(string|array $options)
     {
-        $pattern = is_string($options) ? $options : $options['pattern'] ?? null;
+        $options = is_string($options) ? ['pattern' => $options] : $options;
+        $pattern = $options['pattern'] ?? null;
         /** @psalm-suppress DocblockTypeContradiction The user may still supply an empty string */
         if (! is_string($pattern) || $pattern === '') {
             throw new InvalidArgumentException('A regex pattern is required');
@@ -65,7 +66,7 @@ final class Regex extends AbstractValidator
 
         $this->pattern = $pattern;
 
-        parent::__construct();
+        parent::__construct($options);
     }
 
     /**
