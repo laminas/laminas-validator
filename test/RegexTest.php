@@ -86,7 +86,7 @@ final class RegexTest extends TestCase
         self::assertSame(
             $expected,
             $validator->isValid($input),
-            'Reason: ' . implode('', $validator->getMessages())
+            'Reason: ' . implode('', $validator->getMessages()),
         );
     }
 
@@ -143,5 +143,21 @@ final class RegexTest extends TestCase
 
         /** @psalm-suppress InvalidArgument */
         new Regex($options);
+    }
+
+    public function testAbstractOptionsAreProvidedToParentConstructor(): void
+    {
+        $validator = new Regex([
+            'pattern'  => '/^\d+$/',
+            'messages' => [
+                Regex::NOT_MATCH => 'Numbers only',
+            ],
+        ]);
+
+        self::assertFalse($validator->isValid('Not numbers'));
+        $messages = $validator->getMessages();
+        self::assertSame([
+            Regex::NOT_MATCH => 'Numbers only',
+        ], $messages);
     }
 }
