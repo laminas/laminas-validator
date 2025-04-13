@@ -19,7 +19,7 @@ use const JSON_THROW_ON_ERROR;
 final class IsCountableTest extends TestCase
 {
     /**
-     * @psalm-return array<string, array{0: array<string, mixed>}>
+     * @psalm-return array<string, array{0: OptionsArgument}>
      */
     public static function conflictingOptionsProvider(): array
     {

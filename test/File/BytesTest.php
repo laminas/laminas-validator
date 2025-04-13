@@ -33,6 +33,7 @@ final class BytesTest extends TestCase
         self::assertSame($expect, Bytes::fromInteger($input)->toSiUnit());
     }
 
+    /** @return list<array{0: int, 1: string}> */
     public static function siUnitToBytesProvider(): array
     {
         return [

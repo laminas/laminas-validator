@@ -19,11 +19,6 @@ final class HexTest extends TestCase
         $this->validator = new Hex();
     }
 
-    /**
-     * Ensures that the validator follows expected behavior
-     *
-     * @param int|string $input
-     */
     #[DataProvider('basicDataProvider')]
     public function testBasic(mixed $input, bool $expected, string|null $errorKey): void
     {

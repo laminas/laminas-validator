@@ -149,6 +149,7 @@ final class HostWithPublicIPv4AddressTest extends TestCase
         self::assertTrue($validator->isValid($ip));
     }
 
+    /** @return list<array{0: string}> */
     public static function hostnameProvider(): array
     {
         return [
