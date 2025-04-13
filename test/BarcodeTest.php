@@ -35,6 +35,7 @@ final class BarcodeTest extends TestCase
         self::assertTrue($validator->isValid('065100004327'));
     }
 
+    /** @return list<array{0: string}> */
     public static function invalidAdapterArguments(): array
     {
         return [

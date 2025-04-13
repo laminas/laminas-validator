@@ -120,6 +120,7 @@ final class DateTest extends TestCase
         self::assertTrue((new Date())->isValid(new DateTime()));
     }
 
+    /** @return list<array{0: string, 1: string, 2: bool}> */
     public static function manualFormatProvider(): array
     {
         return [
