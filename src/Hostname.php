@@ -218,7 +218,6 @@ final class Hostname extends AbstractValidator
         'beats',
         'beauty',
         'beer',
-        'bentley',
         'berlin',
         'best',
         'bestbuy',
