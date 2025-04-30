@@ -52,7 +52,8 @@ class Callback extends AbstractValidator
     /**
      * Default options to set for the validator
      *
-     * @var OptionsProperty
+     * @var array
+     * @psalm-var OptionsProperty
      */
     protected $options = [
         'callback'        => null, // Callback in a call_user_func format, string || array
@@ -61,7 +62,10 @@ class Callback extends AbstractValidator
         'bind'            => false, // Bind the callback to the validator instance
     ];
 
-    /** @param OptionsArgument|callable $options */
+    /** 
+     * @param array|callable $options
+     * @psalm-param OptionsArgument|callable $options 
+     */
     public function __construct($options = null)
     {
         if (is_callable($options)) {
