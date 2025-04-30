@@ -64,7 +64,7 @@ class Callback extends AbstractValidator
 
     /**
      * @param array|callable $options
-     * @psalm-param OptionsArgument|callable $options 
+     * @psalm-param OptionsArgument|callable $options
      */
     public function __construct($options = null)
     {
