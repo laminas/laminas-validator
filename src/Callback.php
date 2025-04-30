@@ -62,7 +62,7 @@ class Callback extends AbstractValidator
         'bind'            => false, // Bind the callback to the validator instance
     ];
 
-    /** 
+    /**
      * @param array|callable $options
      * @psalm-param OptionsArgument|callable $options 
      */
