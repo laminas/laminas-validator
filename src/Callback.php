@@ -48,9 +48,7 @@ final class Callback extends AbstractValidator
     /** @var array<array-key, mixed> */
     private readonly array $callbackOptions;
 
-    /** 
-    * @psalm-param OptionsArgument|callable $options
-    */
+    /** @psalm-param OptionsArgument|callable $options */
     public function __construct(array|callable $options)
     {
         if (! is_array($options)) {
