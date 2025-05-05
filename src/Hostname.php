@@ -757,7 +757,6 @@ final class Hostname extends AbstractValidator
         'lacaixa',
         'lamborghini',
         'lamer',
-        'lancaster',
         'land',
         'landrover',
         'lanxess',
