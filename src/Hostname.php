@@ -1012,7 +1012,6 @@ final class Hostname extends AbstractValidator
         'porn',
         'post',
         'pr',
-        'pramerica',
         'praxi',
         'press',
         'prime',
