@@ -673,9 +673,9 @@ final class HostnameTest extends TestCase
     {
         return [
             ['google.cn', true],
-            ['something,.cn', false],
-            ['https://testtest.cn', false],
-            ['例子.cn', true],
+            ['something,.cn', false], // #181
+            ['https://testtest.cn', false], // #181
+            ['例子.cn', true], // regex should allow chinese characters
         ];
     }
 
@@ -692,7 +692,7 @@ final class HostnameTest extends TestCase
     {
         return [
             ['google.biz', true],
-            ['tapi4457@hsoqvf.biz', false],
+            ['tapi4457@hsoqvf.biz', false], // #8
         ];
     }
 
