@@ -3951,6 +3951,8 @@
       <code><![CDATA[trailingDotDataProvider]]></code>
       <code><![CDATA[uriDataProvider]]></code>
       <code><![CDATA[validTLDHostnames]]></code>
+      <code><![CDATA[cnHostnamesProvider]]></code>
+      <code><![CDATA[bizHostnamesProvider]]></code>
     </PossiblyUnusedMethod>
   </file>
   <file src="test/IbanTest.php">
