@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator\File;
 
+use Generator;
 use Laminas\Diactoros\UploadedFile;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File\Hash;
@@ -158,5 +159,48 @@ final class HashTest extends TestCase
         } finally {
             unlink($path);
         }
+    }
+
+    /**
+     * Provides options that should result in the same result irrespective of key order
+     *
+     * In order to act as a regression test for issue 398, this needs to include at least
+     * one couple of permutations that does not use the default algorithm (crc32).
+     *
+     * @return Generator<non-empty-string, array{
+     *     options: OptionsArgument,
+     * }>
+     */
+    public static function optionsOrderProvider(): Generator
+    {
+        $hashes = [
+            'crc32' => '3f8d07e2',
+            'md5'   => 'ed74c22109fe9f110579f77b053b8bc3',
+            'sha1'  => 'b2a5334847b4328e7d19d9b41fd874dffa911c98',
+        ];
+
+        foreach ($hashes as $algo => $hash) {
+            yield $algo . ' algorithm first' => [
+                'options' => [
+                    'algorithm' => $algo,
+                    'hash'      => $hash,
+                ],
+            ];
+            yield $algo . ' hash first'      => [
+                'options' => [
+                    'hash'      => $hash,
+                    'algorithm' => $algo,
+                ],
+            ];
+        }
+    }
+
+    /** @param OptionsArgument $options */
+    #[DataProvider('optionsOrderProvider')]
+    public function testOptionsKeyOrderIsIrrelevant(array $options): void
+    {
+        $testFile  = __DIR__ . '/_files/picture.jpg';
+        $validator = new Hash($options);
+        self::assertTrue($validator->isValid($testFile));
     }
 }
