@@ -8,6 +8,7 @@
     findUnusedPsalmSuppress="true"
     findUnusedCode="true"
     findUnusedBaselineEntry="true"
+    strictBinaryOperands="false"
 >
     <projectFiles>
         <directory name="bin"/>
@@ -19,6 +20,24 @@
         </ignoreFiles>
     </projectFiles>
 
+    <issueHandlers>
+        <!-- Ignore unused methods in tests. Specifically applies to data providers -->
+        <PossiblyUnusedMethod>
+            <errorLevel type="suppress">
+                <directory name="test" />
+            </errorLevel>
+        </PossiblyUnusedMethod>
+
+        <!-- Ignore all missing override issues -->
+        <MissingOverrideAttribute>
+            <errorLevel type="suppress">
+                <directory name="src" />
+                <directory name="test" />
+            </errorLevel>
+        </MissingOverrideAttribute>
+
+    </issueHandlers>
+
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
     </plugins>
@@ -26,13 +45,4 @@
     <stubs>
         <file name=".psr-container.php.stub" preloadClasses="true" />
     </stubs>
-
-    <issueHandlers>
-        <DeprecatedClass>
-            <errorLevel type="suppress">
-                <directory name="src/Db" />
-                <directory name="test/Db" />
-            </errorLevel>
-        </DeprecatedClass>
-    </issueHandlers>
 </psalm>

@@ -23,8 +23,6 @@ uploaded files, such as file size validation and CRC checking.
 - [UploadFile](upload-file.md)
 - [WordCount](word-count.md)
 
-> ### Validation argument
->
-> All of the File validators' `isValid()` methods support both a file path
-> `string` *or* a `$_FILES` array as the supplied argument. When a `$_FILES`
-> array is passed in, the `tmp_name` is used for the file path.
+NOTE: **Validation argument**
+All the File validators' `isValid()` methods support both a file path `string` *or* a `$_FILES` array as the supplied argument.
+When a `$_FILES` array is passed in, the `tmp_name` is used for the file path.

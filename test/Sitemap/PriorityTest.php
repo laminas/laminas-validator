@@ -8,7 +8,7 @@ use Laminas\Validator\Sitemap\Priority;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-use function current;
+use function reset;
 
 final class PriorityTest extends TestCase
 {
@@ -73,8 +73,10 @@ final class PriorityTest extends TestCase
             self::assertFalse($this->validator->isValid($value));
 
             $messages = $this->validator->getMessages();
+            $message  = reset($messages);
+            self::assertIsString($message);
 
-            self::assertStringContainsString('is not a valid', current($messages));
+            self::assertStringContainsString('is not a valid', $message);
         }
     }
 
@@ -95,8 +97,10 @@ final class PriorityTest extends TestCase
             self::assertFalse($this->validator->isValid($value));
 
             $messages = $this->validator->getMessages();
+            $message  = reset($messages);
+            self::assertIsString($message);
 
-            self::assertStringContainsString('integer or float expected', current($messages));
+            self::assertStringContainsString('integer or float expected', $message);
         }
     }
 }

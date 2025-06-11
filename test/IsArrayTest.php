@@ -10,7 +10,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(IsArray::class)]
-class IsArrayTest extends TestCase
+final class IsArrayTest extends TestCase
 {
     /** @return array<string, array{0: mixed}> */
     public static function invalidValueProvider(): array

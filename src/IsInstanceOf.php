@@ -1,108 +1,79 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
-use Traversable;
+use Laminas\Translator\TranslatorInterface;
+use Laminas\Validator\Exception\InvalidArgumentException;
 
-use function array_key_exists;
-use function array_shift;
-use function func_get_args;
-use function is_array;
-use function iterator_to_array;
+use function class_exists;
 
-/** @final */
-class IsInstanceOf extends AbstractValidator
+/**
+ * @psalm-type OptionsArgument = array{
+ *     className: class-string,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
+ * }
+ */
+final class IsInstanceOf extends AbstractValidator
 {
     public const NOT_INSTANCE_OF = 'notInstanceOf';
 
     /**
      * Validation failure message template definitions
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::NOT_INSTANCE_OF => "The input is not an instance of '%className%'",
     ];
 
-    /**
-     * Additional variables available for validation failure messages
-     *
-     * @var array
-     */
-    protected $messageVariables = [
+    /** @var array<string, string|array<string, string>> */
+    protected array $messageVariables = [
         'className' => 'className',
     ];
 
-    /** @var string */
-    protected $className;
+    /** @var class-string */
+    protected readonly string $className;
 
     /**
      * Sets validator options
      *
-     * @param  array|Traversable $options
-     * @throws Exception\InvalidArgumentException
+     * @param OptionsArgument $options
+     * @throws InvalidArgumentException
      */
-    public function __construct($options = null)
+    public function __construct(array $options)
     {
-        if ($options instanceof Traversable) {
-            $options = iterator_to_array($options);
+        $className = $options['className'] ?? null;
+
+        if ($className === null || ! class_exists($className)) {
+            throw new InvalidArgumentException(
+                'The className option must be a non-empty class-string for an existing class',
+            );
         }
 
-        // If argument is not an array, consider first argument as class name
-        if (! is_array($options)) {
-            $options = func_get_args();
+        $this->className = $className;
 
-            $tmpOptions              = [];
-            $tmpOptions['className'] = array_shift($options);
-
-            $options = $tmpOptions;
-        }
-
-        if (! array_key_exists('className', $options)) {
-            throw new Exception\InvalidArgumentException('Missing option "className"');
-        }
+        unset($options['className']);
 
         parent::__construct($options);
     }
 
     /**
-     * Get class name
-     *
-     * @deprecated Since 2.61.0 All option setters and getters will be removed in v3.0
-     *
-     * @return string
-     */
-    public function getClassName()
-    {
-        return $this->className;
-    }
-
-    /**
-     * Set class name
-     *
-     * @deprecated Since 2.61.0 All option setters and getters will be removed in v3.0
-     *
-     * @param string $className
-     * @return $this
-     */
-    public function setClassName($className)
-    {
-        $this->className = $className;
-        return $this;
-    }
-
-    /**
      * Returns true if $value is instance of $this->className
-     *
-     * @param  mixed $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if ($value instanceof $this->className) {
             return true;
         }
+
         $this->error(self::NOT_INSTANCE_OF);
+
         return false;
     }
 }

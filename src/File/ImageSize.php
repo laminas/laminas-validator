@@ -1,28 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\File;
 
-use Laminas\Stdlib\ErrorHandler;
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
-use Laminas\Validator\Exception;
-use Traversable;
+use Laminas\Validator\Exception\InvalidArgumentException;
 
-use function array_shift;
-use function func_get_args;
-use function func_num_args;
+use function count;
 use function getimagesize;
-use function is_array;
-use function is_readable;
 
 /**
  * Validator for the image size of an image file
  *
- * @final
+ * @psalm-type OptionsArgument = array{
+ *     minWidth?: int|null,
+ *     maxWidth?: int|null,
+ *     minHeight?: int|null,
+ *     maxHeight?: int|null,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
+ * }
  */
-class ImageSize extends AbstractValidator
+final class ImageSize extends AbstractValidator
 {
-    use FileInformationTrait;
-
     /**
      * @const string Error constants
      */
@@ -33,8 +38,8 @@ class ImageSize extends AbstractValidator
     public const NOT_DETECTED     = 'fileImageSizeNotDetected';
     public const NOT_READABLE     = 'fileImageSizeNotReadable';
 
-    /** @var array Error message template */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::WIDTH_TOO_BIG    => "Maximum allowed width for image should be '%maxwidth%' but '%width%' detected",
         self::WIDTH_TOO_SMALL  => "Minimum expected width for image should be '%minwidth%' but '%width%' detected",
         self::HEIGHT_TOO_BIG   => "Maximum allowed height for image should be '%maxheight%' but '%height%' detected",
@@ -43,362 +48,122 @@ class ImageSize extends AbstractValidator
         self::NOT_READABLE     => 'File is not readable or does not exist',
     ];
 
-    /** @var array Error message template variables */
-    protected $messageVariables = [
-        'minwidth'  => ['options' => 'minWidth'],
-        'maxwidth'  => ['options' => 'maxWidth'],
-        'minheight' => ['options' => 'minHeight'],
-        'maxheight' => ['options' => 'maxHeight'],
+    /** @var array<string, string|array<string, string>> */
+    protected array $messageVariables = [
+        'minwidth'  => 'minWidth',
+        'maxwidth'  => 'maxWidth',
+        'minheight' => 'minHeight',
+        'maxheight' => 'maxHeight',
         'width'     => 'width',
         'height'    => 'height',
     ];
 
     /**
      * Detected width
-     *
-     * @var int
      */
-    protected $width;
+    protected int|null $width;
 
     /**
      * Detected height
-     *
-     * @var int
      */
-    protected $height;
+    protected int|null $height;
 
-    /**
-     * Options for this validator
-     *
-     * @var array
-     */
-    protected $options = [
-        'minWidth'  => null, // Minimum image width
-        'maxWidth'  => null, // Maximum image width
-        'minHeight' => null, // Minimum image height
-        'maxHeight' => null, // Maximum image height
-    ];
+    protected readonly int $minWidth;
+    protected readonly int|null $maxWidth;
+    protected readonly int $minHeight;
+    protected readonly int|null $maxHeight;
 
     /**
      * Sets validator options
      *
      * Accepts the following option keys:
-     * - minheight
-     * - minwidth
-     * - maxheight
-     * - maxwidth
+     * - minHeight
+     * - minWidth
+     * - maxHeight
+     * - maxWidth
      *
-     * @param null|array|Traversable $options
+     * @param OptionsArgument $options
      */
-    public function __construct($options = null)
+    public function __construct(array $options)
     {
-        if (1 < func_num_args()) {
-            if (! is_array($options)) {
-                $options = ['minWidth' => $options];
-            }
+        $minWidth  = $options['minWidth'] ?? 0;
+        $maxWidth  = $options['maxWidth'] ?? null;
+        $minHeight = $options['minHeight'] ?? 0;
+        $maxHeight = $options['maxHeight'] ?? null;
 
-            $argv = func_get_args();
-            array_shift($argv);
-            $options['minHeight'] = array_shift($argv);
-            if (! empty($argv)) {
-                $options['maxWidth'] = array_shift($argv);
-                if (! empty($argv)) {
-                    $options['maxHeight'] = array_shift($argv);
-                }
-            }
+        if ($minWidth === 0 && $maxWidth === null && $minHeight === 0 && $maxHeight === null) {
+            throw new InvalidArgumentException(
+                'At least one size constraint is required',
+            );
         }
+
+        if (($minWidth > (int) $maxWidth) || ($minHeight > (int) $maxHeight)) {
+            throw new InvalidArgumentException(
+                'Max width or height must exceed the minimum equivalent',
+            );
+        }
+
+        $this->minWidth  = $minWidth;
+        $this->maxWidth  = $maxWidth;
+        $this->minHeight = $minHeight;
+        $this->maxHeight = $maxHeight;
+        $this->width     = null;
+        $this->height    = null;
+
+        unset($options['minWidth'], $options['maxWidth'], $options['minHeight'], $options['maxHeight']);
 
         parent::__construct($options);
     }
 
     /**
-     * Returns the minimum allowed width
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @return int
-     */
-    public function getMinWidth()
-    {
-        return $this->options['minWidth'];
-    }
-
-    /**
-     * Sets the minimum allowed width
-     *
-     * @param  int $minWidth
-     * @return $this Provides a fluid interface
-     * @throws Exception\InvalidArgumentException When minwidth is greater than maxwidth.
-     */
-    public function setMinWidth($minWidth)
-    {
-        if (($this->getMaxWidth() !== null) && ($minWidth > $this->getMaxWidth())) {
-            throw new Exception\InvalidArgumentException(
-                'The minimum image width must be less than or equal to the '
-                . " maximum image width, but {$minWidth} > {$this->getMaxWidth()}"
-            );
-        }
-
-        $this->options['minWidth'] = (int) $minWidth;
-        return $this;
-    }
-
-    /**
-     * Returns the maximum allowed width
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @return int
-     */
-    public function getMaxWidth()
-    {
-        return $this->options['maxWidth'];
-    }
-
-    /**
-     * Sets the maximum allowed width
-     *
-     * @param  int $maxWidth
-     * @return $this Provides a fluid interface
-     * @throws Exception\InvalidArgumentException When maxwidth is less than minwidth.
-     */
-    public function setMaxWidth($maxWidth)
-    {
-        if (($this->getMinWidth() !== null) && ($maxWidth < $this->getMinWidth())) {
-            throw new Exception\InvalidArgumentException(
-                'The maximum image width must be greater than or equal to the '
-                . "minimum image width, but {$maxWidth} < {$this->getMinWidth()}"
-            );
-        }
-
-        $this->options['maxWidth'] = (int) $maxWidth;
-        return $this;
-    }
-
-    /**
-     * Returns the minimum allowed height
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @return int
-     */
-    public function getMinHeight()
-    {
-        return $this->options['minHeight'];
-    }
-
-    /**
-     * Sets the minimum allowed height
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @param int $minHeight
-     * @return $this Provides a fluid interface
-     * @throws Exception\InvalidArgumentException When minheight is greater than maxheight.
-     */
-    public function setMinHeight($minHeight)
-    {
-        if (($this->getMaxHeight() !== null) && ($minHeight > $this->getMaxHeight())) {
-            throw new Exception\InvalidArgumentException(
-                'The minimum image height must be less than or equal to the '
-                . " maximum image height, but {$minHeight} > {$this->getMaxHeight()}"
-            );
-        }
-
-        $this->options['minHeight'] = (int) $minHeight;
-        return $this;
-    }
-
-    /**
-     * Returns the maximum allowed height
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @return int
-     */
-    public function getMaxHeight()
-    {
-        return $this->options['maxHeight'];
-    }
-
-    /**
-     * Sets the maximum allowed height
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @param int $maxHeight
-     * @return $this Provides a fluid interface
-     * @throws Exception\InvalidArgumentException When maxheight is less than minheight.
-     */
-    public function setMaxHeight($maxHeight)
-    {
-        if (($this->getMinHeight() !== null) && ($maxHeight < $this->getMinHeight())) {
-            throw new Exception\InvalidArgumentException(
-                'The maximum image height must be greater than or equal to the '
-                . "minimum image height, but {$maxHeight} < {$this->getMinHeight()}"
-            );
-        }
-
-        $this->options['maxHeight'] = (int) $maxHeight;
-        return $this;
-    }
-
-    /**
-     * Returns the set minimum image sizes
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @return array
-     */
-    public function getImageMin()
-    {
-        return ['minWidth' => $this->getMinWidth(), 'minHeight' => $this->getMinHeight()];
-    }
-
-    /**
-     * Returns the set maximum image sizes
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @return array
-     */
-    public function getImageMax()
-    {
-        return ['maxWidth' => $this->getMaxWidth(), 'maxHeight' => $this->getMaxHeight()];
-    }
-
-    /**
-     * Returns the set image width sizes
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @return array
-     */
-    public function getImageWidth()
-    {
-        return ['minWidth' => $this->getMinWidth(), 'maxWidth' => $this->getMaxWidth()];
-    }
-
-    /**
-     * Returns the set image height sizes
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @return array
-     */
-    public function getImageHeight()
-    {
-        return ['minHeight' => $this->getMinHeight(), 'maxHeight' => $this->getMaxHeight()];
-    }
-
-    /**
-     * Sets the minimum image size
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @param  array $options                 The minimum image dimensions
-     * @return $this Provides a fluent interface
-     */
-    public function setImageMin($options)
-    {
-        $this->setOptions($options);
-        return $this;
-    }
-
-    /**
-     * Sets the maximum image size
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @param array|Traversable $options The maximum image dimensions
-     * @return $this Provides a fluent interface
-     */
-    public function setImageMax($options)
-    {
-        $this->setOptions($options);
-        return $this;
-    }
-
-    /**
-     * Sets the minimum and maximum image width
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @param array $options The image width dimensions
-     * @return $this Provides a fluent interface
-     */
-    public function setImageWidth($options)
-    {
-        $this->setImageMin($options);
-        $this->setImageMax($options);
-
-        return $this;
-    }
-
-    /**
-     * Sets the minimum and maximum image height
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @param array $options The image height dimensions
-     * @return $this Provides a fluent interface
-     */
-    public function setImageHeight($options)
-    {
-        $this->setImageMin($options);
-        $this->setImageMax($options);
-
-        return $this;
-    }
-
-    /**
      * Returns true if and only if the image size of $value is at least min and
      * not bigger than max
-     *
-     * @param  string|array $value Real file to check for image size
-     * @param  array        $file  File data from \Laminas\File\Transfer\Transfer (optional)
-     * @return bool
      */
-    public function isValid($value, $file = null)
+    public function isValid(mixed $value): bool
     {
-        $fileInfo = $this->getFileInfo($value, $file);
+        $this->width  = null;
+        $this->height = null;
 
-        $this->setValue($fileInfo['filename']);
-
-        // Is file readable ?
-        if (empty($fileInfo['file']) || false === is_readable($fileInfo['file'])) {
+        if (! FileInformation::isPossibleFile($value)) {
             $this->error(self::NOT_READABLE);
             return false;
         }
 
-        ErrorHandler::start();
-        $size = getimagesize($fileInfo['file']);
-        ErrorHandler::stop();
+        $file = FileInformation::factory($value);
 
-        if (empty($size) || ($size[0] === 0) || ($size[1] === 0)) {
+        if (! $file->readable) {
+            $this->error(self::NOT_READABLE);
+            return false;
+        }
+
+        $this->setValue($file->clientFileName ?? $file->baseName);
+
+        $size = getimagesize($file->path);
+
+        if ($size === false || ($size[0] === 0) || ($size[1] === 0)) {
             $this->error(self::NOT_DETECTED);
             return false;
         }
 
         $this->width  = $size[0];
         $this->height = $size[1];
-        if ($this->width < $this->getMinWidth()) {
+        if ($this->width < $this->minWidth) {
             $this->error(self::WIDTH_TOO_SMALL);
         }
 
-        if (($this->getMaxWidth() !== null) && ($this->getMaxWidth() < $this->width)) {
+        if ($this->maxWidth !== null && $this->width > $this->maxWidth) {
             $this->error(self::WIDTH_TOO_BIG);
         }
 
-        if ($this->height < $this->getMinHeight()) {
+        if ($this->height < $this->minHeight) {
             $this->error(self::HEIGHT_TOO_SMALL);
         }
 
-        if (($this->getMaxHeight() !== null) && ($this->getMaxHeight() < $this->height)) {
+        if ($this->maxHeight !== null && $this->height > $this->maxHeight) {
             $this->error(self::HEIGHT_TOO_BIG);
         }
 
-        if ($this->getMessages()) {
+        if (count($this->getMessages()) > 0) {
             return false;
         }
 

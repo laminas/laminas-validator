@@ -1,32 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Barcode;
 
 use function strpbrk;
 use function substr;
 
-/** @final */
-class Codabar extends AbstractAdapter
+/**
+ * @link https://en.wikipedia.org/wiki/Codabar
+ */
+final class Codabar implements AdapterInterface
 {
     /**
-     * Constructor for this barcode adapter
-     */
-    public function __construct()
-    {
-        $this->setLength(-1);
-        $this->setCharacters('0123456789-$:/.+ABCDTN*E');
-        $this->useChecksum(false);
-    }
-
-    /**
      * Checks for allowed characters
-     *
-     * @see Laminas\Validator\Barcode.AbstractAdapter::checkChars()
-     *
-     * @param string $value
-     * @return bool
      */
-    public function hasValidCharacters($value)
+    public function hasValidCharacters(string $value): bool
     {
         if (strpbrk($value, 'ABCD') !== false) {
             $first = $value[0];
@@ -58,10 +47,21 @@ class Codabar extends AbstractAdapter
             $value = substr($value, 1, -1);
         }
 
-        $chars = $this->getCharacters();
-        $this->setCharacters('0123456789-$:/.+');
-        $result = parent::hasValidCharacters($value);
-        $this->setCharacters($chars);
-        return $result;
+        return Util::stringMatchesAlphabet($value, '0123456789-$:/.+');
+    }
+
+    public function hasValidLength(string $value): bool
+    {
+        return true;
+    }
+
+    public function hasValidChecksum(string $value): bool
+    {
+        return true;
+    }
+
+    public function getLength(): int
+    {
+        return -1;
     }
 }

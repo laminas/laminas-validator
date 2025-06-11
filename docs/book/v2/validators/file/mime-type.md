@@ -6,14 +6,13 @@
 This validator is inversely related to the
 [ExcludeMimeType validator](exclude-mime-type.md)
 
-> ### Compatibility
->
-> This component will use the `FileInfo` extension if it is available. If it's
-> not, it will degrade to the `mime_content_type()` function. And if the
-> function call fails, it will use the MIME type which is given by HTTP. You
-> should be aware of possible security problems when you do not have `FileInfo`
-> or `mime_content_type()` available; the MIME type given by HTTP is not secure
-> and can be easily manipulated.
+CAUTION: **Compatibility**
+This component will use the `FileInfo` extension if it is available. If it's
+not, it will degrade to the `mime_content_type()` function. And if the
+function call fails, it will use the MIME type which is given by HTTP. You
+should be aware of possible security problems when you do not have `FileInfo`
+or `mime_content_type()` available; the MIME type given by HTTP is not secure
+and can be easily manipulated.
 
 ## Supported Options
 

@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
+use function assert;
 use function explode;
 use function is_numeric;
+use function is_string;
 use function preg_match;
 use function preg_match_all;
 use function preg_replace;
@@ -16,6 +20,7 @@ final class GpsPoint extends AbstractValidator
     public const CONVERT_ERROR         = 'gpsPointConvertError';
     public const INCOMPLETE_COORDINATE = 'gpsPointIncompleteCoordinate';
 
+    /** @var array<string, string> */
     protected array $messageTemplates = [
         self::OUT_OF_BOUNDS         => '%value% is out of Bounds.',
         self::CONVERT_ERROR         => '%value% can not converted into a Decimal Degree Value.',
@@ -45,7 +50,7 @@ final class GpsPoint extends AbstractValidator
 
     private function isValidCoordinate(string $value, float $maxBoundary): bool
     {
-        $this->value = $value;
+        $this->setValue($value);
 
         $value = $this->removeWhiteSpace($value);
         if ($this->isDMSValue($value)) {
@@ -95,7 +100,10 @@ final class GpsPoint extends AbstractValidator
 
     private function removeWhiteSpace(string $value): string
     {
-        return preg_replace('/\s/', '', $value);
+        $value = preg_replace('/\s/', '', $value);
+        assert(is_string($value));
+
+        return $value;
     }
 
     private function removeDegreeSign(string $value): string

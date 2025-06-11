@@ -8,7 +8,7 @@ use Laminas\Validator\Sitemap\Lastmod;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-use function current;
+use function reset;
 
 final class LastmodTest extends TestCase
 {
@@ -24,7 +24,7 @@ final class LastmodTest extends TestCase
     /**
      * Tests valid change frequencies
      */
-    public function testValidChangefreqs(): void
+    public function testValidLastModTimes(): void
     {
         $values = [
             '1994-05-11T18:00:09-08:45',
@@ -63,8 +63,10 @@ final class LastmodTest extends TestCase
             self::assertFalse($this->validator->isValid($value));
 
             $messages = $this->validator->getMessages();
+            $message  = reset($messages);
+            self::assertIsString($message);
 
-            self::assertStringContainsString('is not a valid', current($messages));
+            self::assertStringContainsString('is not a valid', $message);
         }
     }
 
@@ -86,8 +88,10 @@ final class LastmodTest extends TestCase
             self::assertFalse($this->validator->isValid($value));
 
             $messages = $this->validator->getMessages();
+            $message  = reset($messages);
+            self::assertIsString($message);
 
-            self::assertStringContainsString('String expected', current($messages));
+            self::assertStringContainsString('String expected', $message);
         }
     }
 }

@@ -8,7 +8,7 @@ use Laminas\Validator\Sitemap\Changefreq;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-use function current;
+use function reset;
 
 final class ChangefreqTest extends TestCase
 {
@@ -62,8 +62,10 @@ final class ChangefreqTest extends TestCase
             self::assertFalse($this->validator->isValid($value));
 
             $messages = $this->validator->getMessages();
+            $message  = reset($messages);
+            self::assertIsString($message);
 
-            self::assertStringContainsString('is not a valid', current($messages));
+            self::assertStringContainsString('is not a valid', $message);
         }
     }
 
@@ -85,8 +87,10 @@ final class ChangefreqTest extends TestCase
             self::assertFalse($this->validator->isValid($value));
 
             $messages = $this->validator->getMessages();
+            $message  = reset($messages);
+            self::assertIsString($message);
 
-            self::assertStringContainsString('String expected', current($messages));
+            self::assertStringContainsString('String expected', $message);
         }
     }
 }
