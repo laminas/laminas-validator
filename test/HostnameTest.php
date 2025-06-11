@@ -637,19 +637,40 @@ final class HostnameTest extends TestCase
         self::assertTrue($this->validator->isValid('cafecafe.de'));
     }
 
-    public function testValidCnHostname(): void
+    /**
+     * @psalm-return array<array-key, array{0: string, 1: bool}>
+     */
+    public static function cnHostnamesProvider(): array
     {
-        self::assertTrue($this->validator->isValid('google.cn'));
+        return [
+            ['google.cn', true],
+            ['something,.cn', false], // #181
+            ['https://testtest.cn', false], // #181
+            ['例子.cn', true], // regex should allow chinese characters
+        ];
     }
 
-    public function testValidBizHostname(): void
+    #[DataProvider('cnHostnamesProvider')]
+    public function testCnHostnames(string $hostname, bool $isValid): void
     {
-        self::assertTrue($this->validator->isValid('google.biz'));
+        self::assertSame($isValid, $this->validator->isValid($hostname));
     }
 
-    public function testInValidHostnameWithAt(): void
+    /**
+     * @psalm-return array<array-key, array{0: string, 1: bool}>
+     */
+    public static function bizHostnamesProvider(): array
     {
-        self::assertFalse($this->validator->isValid('tapi4457@hsoqvf.biz'));
+        return [
+            ['google.biz', true],
+            ['tapi4457@hsoqvf.biz', false], // #8
+        ];
+    }
+
+    #[DataProvider('bizHostnamesProvider')]
+    public function testBizHostnames(string $hostname, bool $isValid): void
+    {
+        self::assertSame($isValid, $this->validator->isValid($hostname));
     }
 
     public function testHostnameWithEmptyDomainPart(): void
