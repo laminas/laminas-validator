@@ -14,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 use function basename;
 use function chmod;
 use function file_exists;
-use function key;
 use function touch;
 use function unlink;
 
@@ -170,44 +169,38 @@ final class HashTest extends TestCase
      *
      * @return Generator<non-empty-string, array{
      *     options: OptionsArgument,
-     *     expectedHash: array<string, mixed>,
      * }>
      */
     public static function optionsOrderProvider(): Generator
     {
-        $algos  = ['crc32', 'md5', 'sha1'];
         $hashes = [
-            'crc32' => ['6507f172bceb9ed0cc59246d41569c4d' => 'crc32'],
-            'md5'   => ['6507f172bceb9ed0cc59246d41569c4d' => 'md5'],
-            'sha1'  => ['6507f172bceb9ed0cc59246d41569c4d' => 'sha1'],
+            'crc32' => '3f8d07e2',
+            'md5'   => 'ed74c22109fe9f110579f77b053b8bc3',
+            'sha1'  => 'b2a5334847b4328e7d19d9b41fd874dffa911c98',
         ];
 
-        foreach ($algos as $algo) {
-            $hash = key($hashes[$algo]);
+        foreach ($hashes as $algo => $hash) {
             yield $algo . ' algorithm first' => [
-                'options'      => [
+                'options' => [
                     'algorithm' => $algo,
                     'hash'      => $hash,
                 ],
-                'expectedHash' => $hashes[$algo],
             ];
             yield $algo . ' hash first'      => [
-                'options'      => [
+                'options' => [
                     'hash'      => $hash,
                     'algorithm' => $algo,
                 ],
-                'expectedHash' => $hashes[$algo],
             ];
         }
     }
 
     /** @param OptionsArgument $options */
     #[DataProvider('optionsOrderProvider')]
-    public function testOptionsKeyOrderIsIrrelevant(array $options, array $expectedHash): void
+    public function testOptionsKeyOrderIsIrrelevant(array $options): void
     {
-        $validator     = new Hash($options);
-        $resultOptions = $validator->getOptions();
-        self::assertArrayHasKey('hash', $resultOptions);
-        self::assertSame($expectedHash, $resultOptions['hash']);
+        $testFile  = __DIR__ . '/_files/picture.jpg';
+        $validator = new Hash($options);
+        self::assertTrue($validator->isValid($testFile));
     }
 }
