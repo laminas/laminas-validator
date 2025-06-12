@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: shivammathur/setup-php@2.34.0
+      - uses: shivammathur/setup-php@2.34.1
 
         with:
           php-version: ${{ env.default_php }}
