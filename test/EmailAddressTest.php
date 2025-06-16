@@ -234,6 +234,7 @@ final class EmailAddressTest extends TestCase
             'bob@some.domain.uk.com'                                                  => ['bob@some.domain.uk.com'],
             'bob@verylongdomainsupercalifragilisticexpialidociousspoonfulofsugar.com' => ['bob@verylongdomainsupercalifragilisticexpialidociousspoonfulofsugar.com'],
             "B.O'Callaghan@domain.com"                                                => ["B.O'Callaghan@domain.com"],
+            'max@möstermann.swiss'                                                    => ['max@möstermann.swiss'],
         ];
 
         if (extension_loaded('intl')) {
