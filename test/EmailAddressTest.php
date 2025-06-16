@@ -247,6 +247,7 @@ final class EmailAddressTest extends TestCase
             'frédéric@domain.com',
             'bob@тест.рф',
             'bob@xn--e1aybc.xn--p1ai',
+            'max@möstermann.swiss',
         ];
 
         foreach ($list as $email) {
@@ -600,8 +601,8 @@ final class EmailAddressTest extends TestCase
             'bob+jones@dailymail.co.uk',
             'bob@teaparty.uk.com',
             'bob@thelongestdomainnameintheworldandthensomeandthensomemoreandmore.com',
-            'test@кц.рф', // Registry for .рф-TLD
-            'test@xn--j1ay.xn--p1ai',
+            'test@nic.みんな', // Google owned Japanese TLD
+            'test@nic.xn--q9jyb4c', // Google owned Japanese TLD
         ];
 
         foreach ($emailAddresses as $input) {
