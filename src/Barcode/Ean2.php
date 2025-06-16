@@ -1,17 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Barcode;
 
-/** @final */
-class Ean2 extends AbstractAdapter
+use function strlen;
+
+/** @psalm-import-type AllowedLength from AdapterInterface */
+final class Ean2 implements AdapterInterface
 {
-    /**
-     * Constructor for this barcode adapter
-     */
-    public function __construct()
+    public function hasValidLength(string $value): bool
     {
-        $this->setLength(2);
-        $this->setCharacters('0123456789');
-        $this->useChecksum(false);
+        return strlen($value) === 2;
+    }
+
+    public function hasValidCharacters(string $value): bool
+    {
+        return Util::stringMatchesAlphabet($value, '0123456789');
+    }
+
+    public function hasValidChecksum(string $value): bool
+    {
+        return true;
+    }
+
+    public function getLength(): int|string|array|null
+    {
+        return 2;
     }
 }

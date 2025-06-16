@@ -1,36 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Barcode;
 
+use function in_array;
+use function is_numeric;
 use function strlen;
 
-/** @final */
-class Upce extends AbstractAdapter
+final class Upce implements AdapterInterface
 {
-    /**
-     * Constructor for this barcode adapter
-     */
-    public function __construct()
-    {
-        $this->setLength([6, 7, 8]);
-        $this->setCharacters('0123456789');
-        $this->setChecksum('gtin');
-    }
+    private const LENGTH = [6, 7, 8];
 
     /**
      * Overrides parent checkLength
-     *
-     * @param string $value Value
-     * @return bool
      */
-    public function hasValidLength($value)
+    public function hasValidLength(string $value): bool
     {
-        if (strlen($value) !== 8) {
-            $this->useChecksum(false);
-        } else {
-            $this->useChecksum(true);
+        return in_array(strlen($value), self::LENGTH, true);
+    }
+
+    public function hasValidCharacters(string $value): bool
+    {
+        return is_numeric($value);
+    }
+
+    public function hasValidChecksum(string $value): bool
+    {
+        if (strlen($value) === 8) {
+            return Util::gtin($value);
         }
 
-        return parent::hasValidLength($value);
+        return true;
+    }
+
+    public function getLength(): array
+    {
+        return self::LENGTH;
     }
 }

@@ -1,182 +1,110 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\File;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
-use Laminas\Validator\Exception;
+use Laminas\Validator\Exception\InvalidArgumentException;
 
-use function array_key_exists;
-use function array_unique;
-use function array_values;
-use function func_get_arg;
-use function func_num_args;
-use function get_debug_type;
 use function hash_algos;
+use function hash_equals;
 use function hash_file;
 use function in_array;
-use function is_array;
-use function is_readable;
-use function is_scalar;
 use function is_string;
-use function sprintf;
+use function strtolower;
 
 /**
  * Validator for the hash of given files
+ *
+ * @psalm-type OptionsArgument = array{
+ *     hash: non-empty-string|list<non-empty-string>,
+ *     algorithm?: non-empty-string|null,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
+ * }
  */
-class Hash extends AbstractValidator
+final class Hash extends AbstractValidator
 {
-    use FileInformationTrait;
-
-    /**
-     * @const string Error constants
-     */
     public const DOES_NOT_MATCH = 'fileHashDoesNotMatch';
     public const NOT_DETECTED   = 'fileHashHashNotDetected';
     public const NOT_FOUND      = 'fileHashNotFound';
 
-    /** @var array Error message templates */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::DOES_NOT_MATCH => 'File does not match the given hashes',
         self::NOT_DETECTED   => 'A hash could not be evaluated for the given file',
         self::NOT_FOUND      => 'File is not readable or does not exist',
     ];
 
-    /**
-     * Options for this validator
-     *
-     * @var string
-     */
-    protected $options = [
-        'algorithm' => 'crc32',
-        'hash'      => null,
-    ];
+    /** @var list<non-empty-string> */
+    private readonly array $hash;
+    private readonly string $algorithm;
 
     /**
      * Sets validator options
      *
-     * @param string|array $options
+     * @param OptionsArgument $options
      */
-    public function __construct($options = null)
+    public function __construct(array $options)
     {
-        if (
-            is_scalar($options) ||
-            (is_array($options) && ! array_key_exists('hash', $options))
-        ) {
-            $options = ['hash' => $options];
+        $hash = $options['hash'] ?? [];
+        if (is_string($hash)) {
+            $hash = [$hash];
         }
 
-        if (1 < func_num_args()) {
-            $options['algorithm'] = func_get_arg(1);
+        if ($hash === []) {
+            throw new InvalidArgumentException(
+                'Files cannot be validated without a hash specified',
+            );
         }
 
-        // The combination of parent and local logic requires us to have the "algorithm" key before the "hash" key
-        // in the array, or else the default algorithm will be used instead of the passed one.
-        if (isset($options['algorithm'])) {
-            $options = ['algorithm' => $options['algorithm']] + $options;
+        $algorithm = strtolower($options['algorithm'] ?? 'crc32');
+        if (! in_array($algorithm, hash_algos(), true)) {
+            throw new InvalidArgumentException("Unknown algorithm '{$algorithm}'");
         }
+
+        $this->hash      = $hash;
+        $this->algorithm = $algorithm;
+
+        unset($options['hash'], $options['algorithm']);
 
         parent::__construct($options);
     }
 
     /**
-     * Returns the set hash values as array, the hash as key and the algorithm the value
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @return array
-     */
-    public function getHash()
-    {
-        return $this->options['hash'];
-    }
-
-    /**
-     * Sets the hash for one or multiple files
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @param  string|array $options
-     * @return $this Provides a fluent interface
-     */
-    public function setHash($options)
-    {
-        $this->options['hash'] = null;
-        $this->addHash($options);
-
-        return $this;
-    }
-
-    /**
-     * Adds the hash for one or multiple files
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @param  string|array $options
-     * @return $this Provides a fluent interface
-     * @throws Exception\InvalidArgumentException
-     */
-    public function addHash($options)
-    {
-        if (is_string($options)) {
-            $options = [$options];
-        } elseif (! is_array($options)) {
-            throw new Exception\InvalidArgumentException('False parameter given');
-        }
-
-        $known = hash_algos();
-        if (! isset($options['algorithm'])) {
-            $algorithm = $this->options['algorithm'];
-        } else {
-            $algorithm = $options['algorithm'];
-            unset($options['algorithm']);
-        }
-
-        if (! in_array($algorithm, $known)) {
-            throw new Exception\InvalidArgumentException("Unknown algorithm '{$algorithm}'");
-        }
-
-        foreach ($options as $value) {
-            if (! is_string($value)) {
-                throw new Exception\InvalidArgumentException(sprintf(
-                    'Hash must be a string, %s received',
-                    get_debug_type($value)
-                ));
-            }
-            $this->options['hash'][$value] = $algorithm;
-        }
-
-        return $this;
-    }
-
-    /**
      * Returns true if and only if the given file confirms the set hash
-     *
-     * @param  string|array $value File to check for hash
-     * @param  array        $file  File data from \Laminas\File\Transfer\Transfer (optional)
-     * @return bool
      */
-    public function isValid($value, $file = null)
+    public function isValid(mixed $value): bool
     {
-        $fileInfo = $this->getFileInfo($value, $file);
-
-        $this->setValue($fileInfo['filename']);
-
-        // Is file readable ?
-        if (empty($fileInfo['file']) || false === is_readable($fileInfo['file'])) {
+        if (! FileInformation::isPossibleFile($value)) {
             $this->error(self::NOT_FOUND);
+
             return false;
         }
 
-        $algos = array_unique(array_values($this->getHash()));
-        foreach ($algos as $algorithm) {
-            $filehash = hash_file($algorithm, $fileInfo['file']);
+        $file = FileInformation::factory($value);
 
-            if ($filehash === false) {
-                $this->error(self::NOT_DETECTED);
-                return false;
-            }
+        if (! $file->readable) {
+            $this->error(self::NOT_FOUND);
 
-            if (isset($this->getHash()[$filehash]) && $this->getHash()[$filehash] === $algorithm) {
+            return false;
+        }
+
+        $this->setValue($file->clientFileName ?? $file->baseName);
+
+        $hash = hash_file($this->algorithm, $file->path);
+        if ($hash === false) {
+            $this->error(self::NOT_DETECTED);
+            return false;
+        }
+
+        foreach ($this->hash as $knownHash) {
+            if (hash_equals($knownHash, $hash)) {
                 return true;
             }
         }

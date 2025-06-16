@@ -1,36 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
-use Exception;
-use Laminas\Stdlib\ArrayUtils;
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
 use SensitiveParameter;
-use Traversable;
+use Throwable;
 
-use function array_key_exists;
-use function array_keys;
-use function array_shift;
 use function constant;
 use function ctype_digit;
 use function defined;
 use function floor;
-use function func_get_args;
 use function in_array;
-use function is_array;
 use function is_callable;
 use function is_string;
+use function sprintf;
 use function str_starts_with;
 use function strlen;
 use function strtoupper;
 
-/** @final */
-class CreditCard extends AbstractValidator
+/**
+ * @psalm-type OptionsArgument = array{
+ *     type?: value-of<CreditCard::TYPES>|list<value-of<CreditCard::TYPES>>,
+ *     service?: callable(mixed, array<string, mixed>, mixed...): bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
+ * }
+ */
+final class CreditCard extends AbstractValidator
 {
     /**
      * Detected CCI list
-     *
-     * @var string
      */
     public const ALL              = 'All';
     public const AMERICAN_EXPRESS = 'American_Express';
@@ -54,47 +59,22 @@ class CreditCard extends AbstractValidator
     public const SERVICE        = 'creditcardService';
     public const SERVICEFAILURE = 'creditcardServiceFailure';
 
-    /**
-     * Validation failure message template definitions
-     *
-     * @var array
-     */
-    protected $messageTemplates = [
-        self::CHECKSUM       => 'The input seems to contain an invalid checksum',
-        self::CONTENT        => 'The input must contain only digits',
-        self::INVALID        => 'Invalid type given. String expected',
-        self::LENGTH         => 'The input contains an invalid amount of digits',
-        self::PREFIX         => 'The input is not from an allowed institute',
-        self::SERVICE        => 'The input seems to be an invalid credit card number',
-        self::SERVICEFAILURE => 'An exception has been raised while validating the input',
+    private const TYPES = [
+        self::AMERICAN_EXPRESS,
+        self::DINERS_CLUB,
+        self::DINERS_CLUB_US,
+        self::DISCOVER,
+        self::JCB,
+        self::LASER,
+        self::MAESTRO,
+        self::MASTERCARD,
+        self::SOLO,
+        self::UNIONPAY,
+        self::VISA,
+        self::MIR,
     ];
 
-    /**
-     * List of CCV names
-     *
-     * @var array
-     */
-    protected $cardName = [
-        0  => self::AMERICAN_EXPRESS,
-        1  => self::DINERS_CLUB,
-        2  => self::DINERS_CLUB_US,
-        3  => self::DISCOVER,
-        4  => self::JCB,
-        5  => self::LASER,
-        6  => self::MAESTRO,
-        7  => self::MASTERCARD,
-        8  => self::SOLO,
-        9  => self::UNIONPAY,
-        10 => self::VISA,
-        11 => self::MIR,
-    ];
-
-    /**
-     * List of allowed CCV lengths
-     *
-     * @var array
-     */
-    protected $cardLength = [
+    private const CARD_LENGTH = [
         self::AMERICAN_EXPRESS => [15],
         self::DINERS_CLUB      => [14],
         self::DINERS_CLUB_US   => [16],
@@ -109,12 +89,7 @@ class CreditCard extends AbstractValidator
         self::MIR              => [13, 16],
     ];
 
-    /**
-     * List of accepted CCV provider tags
-     *
-     * @var array
-     */
-    protected $cardType = [
+    private const CARD_PREFIXES = [
         self::AMERICAN_EXPRESS => ['34', '37'],
         self::DINERS_CLUB      => ['300', '301', '302', '303', '304', '305', '36'],
         self::DINERS_CLUB_US   => ['54', '55'],
@@ -233,188 +208,143 @@ class CreditCard extends AbstractValidator
     ];
 
     /**
-     * Options for this validator
+     * Validation failure message template definitions
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $options = [
-        'service' => null, // Service callback for additional validation
-        'type'    => [], // CCIs which are accepted by validation
+    protected array $messageTemplates = [
+        self::CHECKSUM       => 'The input seems to contain an invalid checksum',
+        self::CONTENT        => 'The input must contain only digits',
+        self::INVALID        => 'Invalid type given. String expected',
+        self::LENGTH         => 'The input contains an invalid amount of digits',
+        self::PREFIX         => 'The input is not from an allowed institute',
+        self::SERVICE        => 'The input seems to be an invalid credit card number',
+        self::SERVICEFAILURE => 'An exception has been raised while validating the input',
     ];
 
+    /** @var list<value-of<self::TYPES>> */
+    private readonly array $type;
+    private readonly ?Callback $callback;
+
     /**
-     * Constructor
-     *
-     * @param string|array|Traversable $options OPTIONAL Type of CCI to allow
+     * @param OptionsArgument $options
      */
-    public function __construct($options = [])
+    public function __construct(array $options = [])
     {
-        if ($options instanceof Traversable) {
-            $options = ArrayUtils::iteratorToArray($options);
-        } elseif (! is_array($options)) {
-            $options      = func_get_args();
-            $temp['type'] = array_shift($options);
-            if (! empty($options)) {
-                $temp['service'] = array_shift($options);
-            }
+        $type       = $options['type'] ?? self::ALL;
+        $this->type = $this->resolveType($type);
 
-            $options = $temp;
+        $service = $options['service'] ?? null;
+
+        if ($service !== null && ! is_callable($service)) {
+            throw new InvalidArgumentException('Invalid callback given');
         }
 
-        if (! array_key_exists('type', $options)) {
-            $options['type'] = self::ALL;
+        if (is_callable($service)) {
+            $this->callback = new Callback([
+                'callback'        => $service,
+                'callbackOptions' => [$this->type],
+                'throwExceptions' => true,
+            ]);
+        } else {
+            $this->callback = null;
         }
 
-        $this->setType($options['type']);
-        unset($options['type']);
-
-        if (array_key_exists('service', $options)) {
-            $this->setService($options['service']);
-            unset($options['service']);
-        }
+        unset($options['type'], $options['service']);
 
         parent::__construct($options);
     }
 
     /**
-     * Returns a list of accepted CCIs
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @return array
+     * @param string|array<array-key, string> $types
+     * @return list<value-of<self::TYPES>>
      */
-    public function getType()
+    private function resolveType(string|array $types): array
     {
-        return $this->options['type'];
-    }
-
-    /**
-     * Sets CCIs which are accepted by validation
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @param string|array $type Type to allow for validation
-     * @return CreditCard Provides a fluid interface
-     */
-    public function setType($type)
-    {
-        $this->options['type'] = [];
-        return $this->addType($type);
-    }
-
-    /**
-     * Adds a CCI to be accepted by validation
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @param  string|array $type Type to allow for validation
-     * @return $this Provides a fluid interface
-     */
-    public function addType($type)
-    {
-        if (is_string($type)) {
-            $type = [$type];
+        if (is_string($types)) {
+            $types = [$types];
         }
 
-        foreach ($type as $typ) {
-            if ($typ === self::ALL) {
-                $this->options['type'] = array_keys($this->cardLength);
+        $list = [];
+        foreach ($types as $type) {
+            if ($type === self::ALL) {
+                return self::TYPES;
+            }
+
+            $value = $this->isValidType($type);
+            if ($value !== null) {
+                $list[] = $value;
                 continue;
             }
 
-            if (in_array($typ, $this->options['type'])) {
-                continue;
+            $constant = sprintf('static::%s', strtoupper($type));
+            if (defined($constant)) {
+                $value = $this->isValidType(constant($constant));
+                if ($value !== null) {
+                    $list[] = $value;
+                }
             }
-
-            $constant = 'static::' . strtoupper($typ);
-            if (! defined($constant) || in_array(constant($constant), $this->options['type'])) {
-                continue;
-            }
-            $this->options['type'][] = constant($constant);
         }
 
-        return $this;
+        /** @psalm-var list<value-of<self::TYPES>> */
+
+        return $list;
     }
 
     /**
-     * Returns the actual set service
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @return callable
+     * @return value-of<self::TYPES>|null
      */
-    public function getService()
+    private function isValidType(mixed $type): ?string
     {
-        return $this->options['service'];
+        return is_string($type) && in_array($type, self::TYPES, true)
+            ? $type
+            : null;
     }
-
-    /**
-     * Sets a new callback for service validation
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @param callable $service
-     * @return $this
-     * @throws InvalidArgumentException On invalid service callback.
-     */
-    public function setService($service)
-    {
-        if (! is_callable($service)) {
-            throw new InvalidArgumentException('Invalid callback given');
-        }
-
-        $this->options['service'] = $service;
-        return $this;
-    }
-
-    // The following rule is buggy for parameters attributes
-    // phpcs:disable SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing.NoSpaceBetweenTypeHintAndParameter
 
     /**
      * Returns true if and only if $value follows the Luhn algorithm (mod-10 checksum)
      *
-     * @param  mixed $value
-     * @return bool
+     * @param array<string, mixed>|null $context Validation context, i.e the form payload
      */
     public function isValid(
         #[SensitiveParameter]
-        $value
-    ) {
+        mixed $value,
+        ?array $context = null,
+    ): bool {
         $this->setValue($value);
 
         if (! is_string($value)) {
-            $this->error(self::INVALID, $value);
+            $this->error(self::INVALID);
             return false;
         }
 
         if (! ctype_digit($value)) {
-            $this->error(self::CONTENT, $value);
+            $this->error(self::CONTENT);
             return false;
         }
 
-        $length = strlen($value);
-        $types  = $this->getType();
-        $foundp = false;
-        $foundl = false;
-        foreach ($types as $type) {
-            foreach ($this->cardType[$type] as $prefix) {
-                if (str_starts_with($value, (string) $prefix)) {
-                    $foundp = true;
-                    if (in_array($length, $this->cardLength[$type])) {
-                        $foundl = true;
+        $length      = strlen($value);
+        $prefixFound = false;
+        $lengthFound = false;
+        foreach ($this->type as $type) {
+            foreach (self::CARD_PREFIXES[$type] as $prefix) {
+                if (str_starts_with($value, $prefix)) {
+                    $prefixFound = true;
+                    if (in_array($length, self::CARD_LENGTH[$type])) {
+                        $lengthFound = true;
                         break 2;
                     }
                 }
             }
         }
 
-        if ($foundp === false) {
-            $this->error(self::PREFIX, $value);
+        if ($prefixFound === false) {
+            $this->error(self::PREFIX);
             return false;
         }
 
-        if ($foundl === false) {
-            $this->error(self::LENGTH, $value);
+        if ($lengthFound === false) {
+            $this->error(self::LENGTH);
             return false;
         }
 
@@ -422,7 +352,7 @@ class CreditCard extends AbstractValidator
         $weight = 2;
 
         for ($i = $length - 2; $i >= 0; $i--) {
-            $digit  = $weight * $value[$i];
+            $digit  = $weight * (int) $value[$i];
             $sum   += floor($digit / 10) + $digit % 10;
             $weight = $weight % 2 + 1;
         }
@@ -433,23 +363,18 @@ class CreditCard extends AbstractValidator
             return false;
         }
 
-        $service = $this->getService();
-        if (! empty($service)) {
+        if ($this->callback !== null) {
             try {
-                $callback = new Callback($service);
-                $callback->setOptions($this->getType());
-                if (! $callback->isValid($value)) {
-                    $this->error(self::SERVICE, $value);
+                if (! $this->callback->isValid($value, $context)) {
+                    $this->error(self::SERVICE);
                     return false;
                 }
-            } catch (Exception) {
-                $this->error(self::SERVICEFAILURE, $value);
+            } catch (Throwable) {
+                $this->error(self::SERVICEFAILURE);
                 return false;
             }
         }
 
         return true;
     }
-
-    // phpcs:enable SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing.NoSpaceBetweenTypeHintAndParameter
 }

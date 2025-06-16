@@ -1,294 +1,115 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\File;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
-use Laminas\Validator\Exception;
-use Psr\Http\Message\UploadedFileInterface;
-use Traversable;
+use Laminas\Validator\Exception\InvalidArgumentException;
 
-use function array_key_exists;
-use function array_shift;
-use function count;
-use function dirname;
-use function func_get_args;
-use function func_num_args;
 use function is_array;
-use function is_numeric;
-use function is_string;
-
-use const DIRECTORY_SEPARATOR;
 
 /**
  * Validator for counting all given files
  *
- * @final
+ * @psalm-type OptionsArgument = array{
+ *     min?: positive-int|null,
+ *     max?: positive-int|null,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
+ * }
  */
-class Count extends AbstractValidator
+final class Count extends AbstractValidator
 {
-    /**#@+
-     *
-     * @const string Error constants
-     */
-    public const TOO_MANY = 'fileCountTooMany';
-    public const TOO_FEW  = 'fileCountTooFew';
-    /**#@-*/
+    public const TOO_MANY        = 'fileCountTooMany';
+    public const TOO_FEW         = 'fileCountTooFew';
+    public const ERROR_NOT_ARRAY = 'fileListNotCountable';
 
-    /** @var array Error message templates */
-    protected $messageTemplates = [
-        self::TOO_MANY => "Too many files, maximum '%max%' are allowed but '%count%' are given",
-        self::TOO_FEW  => "Too few files, minimum '%min%' are expected but '%count%' are given",
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
+        self::TOO_MANY        => "Too many files, maximum '%max%' are allowed but '%count%' are given",
+        self::TOO_FEW         => "Too few files, minimum '%min%' are expected but '%count%' are given",
+        self::ERROR_NOT_ARRAY => 'Invalid type provided. The file list must an array.',
     ];
 
-    /** @var array Error message template variables */
-    protected $messageVariables = [
-        'min'   => ['options' => 'min'],
-        'max'   => ['options' => 'max'],
+    /** @var array<string, string|array<string, string>> */
+    protected array $messageVariables = [
+        'min'   => 'min',
+        'max'   => 'max',
         'count' => 'count',
     ];
 
-    /**
-     * Actual filecount
-     *
-     * @var int
-     */
-    protected $count;
-
-    /**
-     * Internal file array
-     *
-     * @var array
-     */
-    protected $files;
-
-    /**
-     * Options for this validator
-     *
-     * @var array
-     */
-    protected $options = [
-        'min' => null, // Minimum file count, if null there is no minimum file count
-        'max' => null, // Maximum file count, if null there is no maximum file count
-    ];
+    protected int $count;
+    protected readonly int|null $min;
+    protected readonly int|null $max;
 
     /**
      * Sets validator options
      *
-     * Min limits the file count, when used with max=null it is the maximum file count
-     * It also accepts an array with the keys 'min' and 'max'
-     *
-     * If $options is an integer, it will be used as maximum file count
-     * As Array is accepts the following keys:
-     * 'min': Minimum filecount
-     * 'max': Maximum filecount
-     *
-     * @param int|array|Traversable $options Options for the adapter
+     * @param OptionsArgument $options
      */
-    public function __construct($options = null)
+    public function __construct(array $options = [])
     {
-        if (1 < func_num_args()) {
-            $args    = func_get_args();
-            $options = [
-                'min' => array_shift($args),
-                'max' => array_shift($args),
-            ];
+        $min = $options['min'] ?? 0;
+        $max = $options['max'] ?? null;
+
+        if ($max !== null && $min > $max) {
+            throw new InvalidArgumentException(
+                'The `min` option cannot exceed the `max` option',
+            );
         }
 
-        if (is_string($options) || is_numeric($options)) {
-            $options = ['max' => $options];
-        }
+        $this->count = 0;
+        $this->min   = $min;
+        $this->max   = $max;
+
+        unset($options['min'], $options['max']);
 
         parent::__construct($options);
     }
 
     /**
-     * Returns the minimum file count
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @return int
-     */
-    public function getMin()
-    {
-        return $this->options['min'];
-    }
-
-    /**
-     * Sets the minimum file count
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @param int|array $min The minimum file count
-     * @return $this Provides a fluent interface
-     * @throws Exception\InvalidArgumentException When min is greater than max.
-     */
-    public function setMin($min)
-    {
-        if (is_array($min) && isset($min['min'])) {
-            $min = $min['min'];
-        }
-
-        if (! is_numeric($min)) {
-            throw new Exception\InvalidArgumentException('Invalid options to validator provided');
-        }
-
-        $min = (int) $min;
-        if (($this->getMax() !== null) && ($min > $this->getMax())) {
-            throw new Exception\InvalidArgumentException(
-                "The minimum must be less than or equal to the maximum file count, but {$min} > {$this->getMax()}"
-            );
-        }
-
-        $this->options['min'] = $min;
-        return $this;
-    }
-
-    /**
-     * Returns the maximum file count
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @return int
-     */
-    public function getMax()
-    {
-        return $this->options['max'];
-    }
-
-    /**
-     * Sets the maximum file count
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @param int|array $max The maximum file count
-     * @return $this Provides a fluent interface
-     * @throws Exception\InvalidArgumentException When max is smaller than min.
-     */
-    public function setMax($max)
-    {
-        if (is_array($max) && isset($max['max'])) {
-            $max = $max['max'];
-        }
-
-        if (! is_numeric($max)) {
-            throw new Exception\InvalidArgumentException('Invalid options to validator provided');
-        }
-
-        $max = (int) $max;
-        if (($this->getMin() !== null) && ($max < $this->getMin())) {
-            throw new Exception\InvalidArgumentException(
-                "The maximum must be greater than or equal to the minimum file count, but {$max} < {$this->getMin()}"
-            );
-        }
-
-        $this->options['max'] = $max;
-        return $this;
-    }
-
-    /**
-     * Adds a file for validation
-     *
-     * @deprecated Since 2.61.0 - All getters and setters will be removed in 3.0
-     *
-     * @param string|array|UploadedFileInterface $file
-     * @return $this
-     */
-    public function addFile($file)
-    {
-        if (is_string($file)) {
-            $file = [$file];
-        }
-
-        if (is_array($file)) {
-            foreach ($file as $name) {
-                if (! isset($this->files[$name]) && ! empty($name)) {
-                    $this->files[$name] = $name;
-                }
-            }
-        }
-
-        if ($file instanceof UploadedFileInterface && is_string($file->getClientFilename())) {
-            $this->files[(string) $file->getClientFilename()] = $file->getClientFilename();
-        }
-
-        return $this;
-    }
-
-    /**
      * Returns true if and only if the file count of all checked files is at least min and
-     * not bigger than max (when max is not null). Attention: When checking with set min you
-     * must give all files with the first call, otherwise you will get a false.
-     *
-     * @param  string|array|UploadedFileInterface $value Filenames to check for count
-     * @param  array                              $file  File data from \Laminas\File\Transfer\Transfer
-     * @return bool
+     * not bigger than max (when max is not null).
      */
-    public function isValid($value, $file = null)
+    public function isValid(mixed $value): bool
     {
-        if ($this->isUploadedFilterInterface($value)) {
-            $this->addFile($value);
-        } elseif ($file !== null) {
-            if (! array_key_exists('destination', $file)) {
-                $file['destination'] = dirname($value);
+        if (FileInformation::isPossibleFile($value)) {
+            $value = [$value];
+        }
+
+        if (! is_array($value)) {
+            $this->error(self::ERROR_NOT_ARRAY);
+
+            return false;
+        }
+
+        $this->count = 0;
+        /** @psalm-var mixed $item */
+        foreach ($value as $item) {
+            if (! FileInformation::isPossibleFile($item)) {
+                continue;
             }
 
-            if (array_key_exists('tmp_name', $file)) {
-                $value = $file['destination'] . DIRECTORY_SEPARATOR . $file['name'];
-            }
+            $this->count++;
         }
 
-        if (($file === null) || ! empty($file['tmp_name'])) {
-            $this->addFile($value);
+        if ($this->min !== null && $this->count < $this->min) {
+            $this->error(self::TOO_FEW);
+
+            return false;
         }
 
-        $this->count = count($this->files);
+        if ($this->max !== null && $this->count > $this->max) {
+            $this->error(self::TOO_MANY);
 
-        if (($this->getMax() !== null) && ($this->count > $this->getMax())) {
-            return $this->throwError($file, self::TOO_MANY);
-        }
-
-        if (($this->getMin() !== null) && ($this->count < $this->getMin())) {
-            return $this->throwError($file, self::TOO_FEW);
+            return false;
         }
 
         return true;
-    }
-
-    /**
-     * Throws an error of the given type
-     *
-     * @param  string|null|array $file
-     * @param  string $errorType
-     * @return false
-     */
-    protected function throwError($file, $errorType)
-    {
-        if ($file !== null) {
-            if (is_array($file)) {
-                if (array_key_exists('name', $file)) {
-                    $this->value = $file['name'];
-                }
-            } elseif (is_string($file)) {
-                $this->value = $file;
-            }
-        }
-
-        $this->error($errorType);
-        return false;
-    }
-
-    /**
-     * Checks if the type of uploaded file is UploadedFileInterface.
-     *
-     * @param  string|array|UploadedFileInterface $value Filenames to check for count
-     * @return bool
-     */
-    private function isUploadedFilterInterface($value)
-    {
-        if ($value instanceof UploadedFileInterface) {
-            return true;
-        }
-
-        return false;
     }
 }

@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use function ctype_xdigit;
 use function is_int;
 use function is_string;
 
-/** @final */
-class Hex extends AbstractValidator
+final class Hex extends AbstractValidator
 {
     public const INVALID = 'hexInvalid';
     public const NOT_HEX = 'notHex';
@@ -15,20 +16,17 @@ class Hex extends AbstractValidator
     /**
      * Validation failure message template definitions
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::INVALID => 'Invalid type given. String expected',
         self::NOT_HEX => 'The input contains non-hexadecimal characters',
     ];
 
     /**
      * Returns true if and only if $value contains only hexadecimal digit characters
-     *
-     * @param  mixed $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if (! is_string($value) && ! is_int($value)) {
             $this->error(self::INVALID);

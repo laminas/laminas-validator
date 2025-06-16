@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Sitemap;
 
 use Laminas\Validator\AbstractValidator;
@@ -9,11 +11,9 @@ use function is_numeric;
 /**
  * Validates whether a given value is valid as a sitemap <priority> value
  *
- * @link       http://www.sitemaps.org/protocol.php Sitemaps XML format
- *
- * @final
+ * @link https://www.sitemaps.org/protocol.html Sitemaps XML format
  */
-class Priority extends AbstractValidator
+final class Priority extends AbstractValidator
 {
     /**
      * Validation key for not valid
@@ -24,9 +24,9 @@ class Priority extends AbstractValidator
     /**
      * Validation failure message template definitions
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::NOT_VALID => 'The input is not a valid sitemap priority',
         self::INVALID   => 'Invalid type given. Numeric string, integer or float expected',
     ];
@@ -34,12 +34,9 @@ class Priority extends AbstractValidator
     /**
      * Validates if a string is valid as a sitemap priority
      *
-     * @link http://www.sitemaps.org/protocol.php#prioritydef <priority>
-     *
-     * @param  string  $value  value to validate
-     * @return bool
+     * @link https://www.sitemaps.org/protocol.html#prioritydef
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         if (! is_numeric($value)) {
             $this->error(self::INVALID);

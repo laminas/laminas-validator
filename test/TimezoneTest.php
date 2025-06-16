@@ -12,59 +12,43 @@ use stdClass;
 
 final class TimezoneTest extends TestCase
 {
-    private Timezone $validator;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->validator = new Timezone();
-    }
-
-    /**
-     * Test locations
-     */
-    #[DataProvider('locationProvider')]
-    public function testLocations(?string $value, bool $valid): void
-    {
-        $this->validator->setType(Timezone::LOCATION);
-
-        $this->checkValidationValue($value, $valid);
-    }
-
     /**
      * Test locations by type is string
      */
     #[DataProvider('locationProvider')]
-    public function testLocationsByTypeAsString(?string $value, bool $valid): void
+    public function testLocations(mixed $value, bool $valid, string|null $expectError): void
     {
-        $this->validator->setType('location');
+        $validator = new Timezone(['type' => Timezone::LOCATION]);
+        self::assertSame($valid, $validator->isValid($value));
 
-        $this->checkValidationValue($value, $valid);
+        if ($expectError !== null) {
+            self::assertArrayHasKey($expectError, $validator->getMessages());
+        }
     }
 
     /**
      * Provides location values
      *
-     * @psalm-return array<array-key, array{0: string|null, 1: bool}>
+     * @psalm-return array<array-key, array{0: mixed, 1: bool, 2: string|null}>
      */
     public static function locationProvider(): array
     {
         return [
-            ['America/Anguilla', true],
-            ['Antarctica/Palmer', true],
-            ['Asia/Dubai', true],
-            ['Atlantic/Cape_Verde', true],
-            ['Australia/Broken_Hill', true],
-            ['America/Sao_Paulo', true],
-            ['America/Toronto', true],
-            ['Pacific/Easter', true],
-            ['Europe/Copenhagen', true],
-            ['Indian/Maldives', true],
-            ['cest', false], // abbreviation of Anadyr Summer Time
-            ['Asia/London', false], // wrong location
-            ['', false], // empty string
-            [null, false], // null value
+            ['America/Anguilla', true, null],
+            ['Antarctica/Palmer', true, null],
+            ['Asia/Dubai', true, null],
+            ['Atlantic/Cape_Verde', true, null],
+            ['Australia/Broken_Hill', true, null],
+            ['America/Sao_Paulo', true, null],
+            ['America/Toronto', true, null],
+            ['Pacific/Easter', true, null],
+            ['Europe/Copenhagen', true, null],
+            ['Indian/Maldives', true, null],
+            ['cest', false, Timezone::INVALID_TIMEZONE_LOCATION], // abbreviation of Anadyr Summer Time
+            ['Asia/London', false, Timezone::INVALID_TIMEZONE_LOCATION], // wrong location
+            ['', false, Timezone::INVALID], // empty string
+            [null, false, Timezone::INVALID], // null value
+            [99, false, Timezone::INVALID], // non-string
         ];
     }
 
@@ -72,221 +56,90 @@ final class TimezoneTest extends TestCase
      * Test abbreviations
      */
     #[DataProvider('abbreviationProvider')]
-    public function testAbbreviations(?string $value, bool $valid): void
+    public function testAbbreviations(mixed $value, bool $valid, string|null $expectError): void
     {
-        $this->validator->setType(Timezone::ABBREVIATION);
+        $validator = new Timezone(['type' => Timezone::ABBREVIATION]);
+        self::assertSame($valid, $validator->isValid($value));
 
-        $this->checkValidationValue($value, $valid);
-    }
-
-    /**
-     * Test abbreviations byTypeAsString
-     */
-    #[DataProvider('abbreviationProvider')]
-    public function testAbbreviationsByTypeAsString(?string $value, bool $valid): void
-    {
-        $this->validator->setType('abbreviation');
-
-        $this->checkValidationValue($value, $valid);
+        if ($expectError !== null) {
+            self::assertArrayHasKey($expectError, $validator->getMessages());
+        }
     }
 
     /**
      * Provides abbreviation values
      *
-     * @return array<array-key, array{0: null|string, 1: bool}>
+     * @return array<array-key, array{0: mixed, 1: bool, 2: string|null}>
      */
     public static function abbreviationProvider(): array
     {
         return [
-            ['cest', true], // Central European Summer Time
-            ['hkt', true], // Hong Kong Time
-            ['nzdt', true], // New Zealand Daylight Time
-            ['sast', true], // South Africa Standard Time
-            ['America/Toronto', false], // location
-            ['xyz', false], // wrong abbreviation
-            ['', false], // empty string
-            [null, false], // null value
+            ['cest', true, null], // Central European Summer Time
+            ['hkt', true, null], // Hong Kong Time
+            ['nzdt', true, null], // New Zealand Daylight Time
+            ['sast', true, null], // South Africa Standard Time
+            ['SAST', true, null], // SA standard time in uppercase
+            ['America/Toronto', false, Timezone::INVALID_TIMEZONE_ABBREVIATION], // location
+            ['xyz', false, Timezone::INVALID_TIMEZONE_ABBREVIATION], // wrong abbreviation
+            ['', false, Timezone::INVALID], // empty string
+            [null, false, Timezone::INVALID], // null value
+            [99, false, Timezone::INVALID], // non-string
         ];
     }
 
-    /**
-     * Test locations and abbreviations
-     */
     #[DataProvider('locationAndAbbreviationProvider')]
-    public function testlocationsAndAbbreviationsWithAllTypeAsString(?string $value, bool $valid): void
+    public function testLocationsAndAbbreviations(mixed $value, bool $valid, string|null $expectError): void
     {
-        $this->validator->setType(Timezone::ALL);
+        $validator = new Timezone(['type' => Timezone::ALL]);
+        self::assertSame($valid, $validator->isValid($value));
 
-        $this->checkValidationValue($value, $valid);
-    }
-
-    /**
-     * Test locations and abbreviations
-     */
-    #[DataProvider('locationAndAbbreviationProvider')]
-    public function testlocationsAndAbbreviationsWithAllTypeAsArray(?string $value, bool $valid): void
-    {
-        $this->validator->setType([Timezone::LOCATION, Timezone::ABBREVIATION]);
-
-        $this->checkValidationValue($value, $valid);
-    }
-
-    /**
-     * Test locations and abbreviations
-     */
-    #[DataProvider('locationAndAbbreviationProvider')]
-    public function testLocationsAndAbbreviationsWithAllTypeAsArrayWithStrings(?string $value, bool $valid): void
-    {
-        $this->validator->setType(['location', 'abbreviation']);
-
-        $this->checkValidationValue($value, $valid);
+        if ($expectError !== null) {
+            self::assertArrayHasKey($expectError, $validator->getMessages());
+        }
     }
 
     /**
      * Provides location and abbreviation values
      *
-     * @psalm-return array<array-key, array{0: string|null, 1: bool}>
+     * @psalm-return array<array-key, array{0: mixed, 1: bool, 2: null|string}>
      */
     public static function locationAndAbbreviationProvider(): array
     {
         return [
-            ['America/Anguilla', true],
-            ['Antarctica/Palmer', true],
-            ['Asia/Dubai', true],
-            ['Atlantic/Cape_Verde', true],
-            ['Australia/Broken_Hill', true],
-            ['hkt', true], // Hong Kong Time
-            ['nzdt', true], // New Zealand Daylight Time
-            ['sast', true], // South Africa Standard Time
-            ['xyz', false], // wrong abbreviation
-            ['Asia/London', false], // wrong location
-            ['', false], // empty string
-            [null, false], // null value
+            ['America/Anguilla', true, null],
+            ['Antarctica/Palmer', true, null],
+            ['Asia/Dubai', true, null],
+            ['Atlantic/Cape_Verde', true, null],
+            ['Australia/Broken_Hill', true, null],
+            ['hkt', true, null], // Hong Kong Time
+            ['nzdt', true, null], // New Zealand Daylight Time
+            ['sast', true, null], // South Africa Standard Time
+            ['xyz', false, Timezone::INVALID], // wrong abbreviation
+            ['Asia/London', false, Timezone::INVALID], // wrong location
+            ['', false, Timezone::INVALID], // empty string
+            [null, false, Timezone::INVALID], // null value
+            [99, false, Timezone::INVALID], // non-string
         ];
-    }
-
-    /**
-     * Test wrong type
-     */
-    #[DataProvider('wrongTypesProvider')]
-    public function testWrongType(mixed $value): void
-    {
-        $this->checkExpectedException($value);
-    }
-
-    /**
-     * Provides wrong types
-     *
-     * @psalm-return array<array-key, array{0: mixed}>
-     */
-    public static function wrongTypesProvider(): array
-    {
-        return [
-            [null],
-            [''],
-            [[]],
-            [0],
-            [4],
-        ];
-    }
-
-    /**
-     * Test pass `type` option through constructor
-     */
-    public function testTypeThroughConstructor(): void
-    {
-        $timezone1 = new Timezone(Timezone::LOCATION);
-
-        self::assertTrue($timezone1->isValid('Asia/Dubai'));
-        self::assertFalse($timezone1->isValid('sast'));
-
-        $timezone2 = new Timezone('location');
-
-        self::assertTrue($timezone2->isValid('Asia/Dubai'));
-        self::assertFalse($timezone2->isValid('sast'));
-
-        $timezone3 = new Timezone(['type' => 'location']);
-
-        self::assertTrue($timezone3->isValid('Asia/Dubai'));
-        self::assertFalse($timezone3->isValid('sast'));
-
-        $timezone4 = new Timezone(Timezone::ABBREVIATION);
-
-        self::assertFalse($timezone4->isValid('Asia/Dubai'));
-        self::assertTrue($timezone4->isValid('sast'));
-
-        $timezone5 = new Timezone('abbreviation');
-
-        self::assertFalse($timezone5->isValid('Asia/Dubai'));
-        self::assertTrue($timezone5->isValid('sast'));
-
-        $timezone6 = new Timezone(['type' => 'abbreviation']);
-
-        self::assertFalse($timezone6->isValid('Asia/Dubai'));
-        self::assertTrue($timezone6->isValid('sast'));
-
-        // default value is `all`
-        $timezone7 = new Timezone();
-
-        self::assertTrue($timezone7->isValid('Asia/Dubai'));
-        self::assertTrue($timezone7->isValid('sast'));
-
-        $timezone8 = new Timezone(['type' => ['location', 'abbreviation']]);
-
-        self::assertTrue($timezone8->isValid('Asia/Dubai'));
-        self::assertTrue($timezone8->isValid('sast'));
     }
 
     #[DataProvider('getInvalidTypes')]
     public function testRejectsInvalidIntType(mixed $invalidType): void
     {
         $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The type option must be an int-mask of the type constants');
 
+        /** @psalm-suppress MixedArgumentTypeCoercion - Intentionally invalid arguments */
         new Timezone(['type' => $invalidType]);
     }
 
-    /**
-     * Checks that the validation value matches the expected validity
-     *
-     * @param mixed $value Value to validate
-     * @param bool  $valid Expected validity
-     */
-    protected function checkValidationValue(mixed $value, bool $valid): void
-    {
-        $isValid = $this->validator->isValid($value);
-
-        if ($valid) {
-            self::assertTrue($isValid);
-        } else {
-            self::assertFalse($isValid);
-        }
-    }
-
-    /**
-     * Checks expected exception on wrong type
-     *
-     * @param mixed $value Value to validate
-     */
-    protected function checkExpectedException(mixed $value): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-
-        $this->validator->setType($value);
-    }
-
-    /**
-     * Data provider
-     *
-     * @return mixed[][]
-     * @psalm-return array<list<stdClass|array|int|string>>
-     */
+    /** @return list<array{0: mixed}> */
     public static function getInvalidTypes(): array
     {
         return [
             [new stdClass()],
             [[]],
             [0],
-            [10],
+            [4],
             ['foo'],
         ];
     }

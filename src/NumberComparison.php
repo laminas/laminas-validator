@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
 
 use function is_numeric;
@@ -14,13 +15,11 @@ use function is_numeric;
  *     max?: numeric|null,
  *     inclusiveMin?: bool,
  *     inclusiveMax?: bool,
- *     ...<string, mixed>
- * }
- * @psalm-type Options = array{
- *     min: numeric|null,
- *     max: numeric|null,
- *     inclusiveMin: bool,
- *     inclusiveMax: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
  * }
  */
 final class NumberComparison extends AbstractValidator
@@ -40,25 +39,22 @@ final class NumberComparison extends AbstractValidator
         self::ERROR_NOT_LESS              => 'Values must be less than %max%. Received "%value%"',
     ];
 
-    /** @var array<string, array<string, string>> */
+    /** @var array<string, string|array<string, string>> */
     protected array $messageVariables = [
-        'min' => ['options' => 'min'],
-        'max' => ['options' => 'max'],
+        'min' => 'min',
+        'max' => 'max',
     ];
 
-    /** @var Options */
-    protected array $options = [
-        'min'          => null,
-        'max'          => null,
-        'inclusiveMin' => true,
-        'inclusiveMax' => true,
-    ];
+    /** @var numeric|null */
+    protected readonly int|float|string|null $min;
+    /** @var numeric|null */
+    protected readonly int|float|string|null $max;
+    private readonly bool $inclusiveMin;
+    private readonly bool $inclusiveMax;
 
     /** @param OptionsArgument $options */
     public function __construct(array $options = [])
     {
-        parent::__construct($options);
-
         $min = $options['min'] ?? null;
         $max = $options['max'] ?? null;
 
@@ -74,10 +70,19 @@ final class NumberComparison extends AbstractValidator
             );
         }
 
-        $this->options['min']          = $min;
-        $this->options['max']          = $max;
-        $this->options['inclusiveMin'] = $options['inclusiveMin'] ?? true;
-        $this->options['inclusiveMax'] = $options['inclusiveMax'] ?? true;
+        $this->min          = $min;
+        $this->max          = $max;
+        $this->inclusiveMin = $options['inclusiveMin'] ?? true;
+        $this->inclusiveMax = $options['inclusiveMax'] ?? true;
+
+        unset(
+            $options['min'],
+            $options['max'],
+            $options['inclusiveMin'],
+            $options['inclusiveMax'],
+        );
+
+        parent::__construct($options);
     }
 
     public function isValid(mixed $value): bool
@@ -90,30 +95,25 @@ final class NumberComparison extends AbstractValidator
 
         $this->setValue($value);
 
-        $min          = $this->options['min'];
-        $max          = $this->options['max'];
-        $inclusiveMin = $this->options['inclusiveMin'];
-        $inclusiveMax = $this->options['inclusiveMax'];
-
-        if ($min !== null && $inclusiveMin && $value < $min) {
+        if ($this->min !== null && $this->inclusiveMin && $value < $this->min) {
             $this->error(self::ERROR_NOT_GREATER_INCLUSIVE);
 
             return false;
         }
 
-        if ($min !== null && ! $inclusiveMin && $value <= $min) {
+        if ($this->min !== null && ! $this->inclusiveMin && $value <= $this->min) {
             $this->error(self::ERROR_NOT_GREATER);
 
             return false;
         }
 
-        if ($max !== null && $inclusiveMax && $value > $max) {
+        if ($this->max !== null && $this->inclusiveMax && $value > $this->max) {
             $this->error(self::ERROR_NOT_LESS_INCLUSIVE);
 
             return false;
         }
 
-        if ($max !== null && ! $inclusiveMax && $value >= $max) {
+        if ($this->max !== null && ! $this->inclusiveMax && $value >= $this->max) {
             $this->error(self::ERROR_NOT_LESS);
 
             return false;

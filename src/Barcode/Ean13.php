@@ -1,17 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\Barcode;
 
-/** @final */
-class Ean13 extends AbstractAdapter
+use function is_numeric;
+use function strlen;
+
+final class Ean13 implements AdapterInterface
 {
-    /**
-     * Constructor for this barcode adapter
-     */
-    public function __construct()
+    public function hasValidLength(string $value): bool
     {
-        $this->setLength(13);
-        $this->setCharacters('0123456789');
-        $this->setChecksum('gtin');
+        return strlen($value) === 13;
+    }
+
+    public function hasValidCharacters(string $value): bool
+    {
+        return is_numeric($value);
+    }
+
+    public function hasValidChecksum(string $value): bool
+    {
+        return Util::gtin($value);
+    }
+
+    public function getLength(): int
+    {
+        return 13;
     }
 }

@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator\File;
 
-use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\File\UploadFile;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\UploadedFileInterface;
 
-use function current;
 use function is_int;
+use function reset;
 use function sprintf;
 
 use const UPLOAD_ERR_NO_FILE;
@@ -105,20 +104,22 @@ final class UploadFileTest extends TestCase
         self::assertArrayHasKey($messageKey, $this->validator->getMessages());
     }
 
-    public function testRaisesExceptionWhenValueArrayIsBad(): void
+    public function testInvalidArrayIsValidationFailure(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('$_FILES format');
-
-        $this->validator->isValid(['foo', 'bar']);
+        self::assertFalse($this->validator->isValid(['foo', 'bar']));
+        $messages = $this->validator->getMessages();
+        self::assertArrayHasKey(UploadFile::UNKNOWN, $messages);
     }
 
     #[Group('Laminas-11258')]
     public function testLaminas11258(): void
     {
         self::assertFalse($this->validator->isValid(__DIR__ . '/_files/nofile.mo'));
-        self::assertArrayHasKey('fileUploadFileErrorFileNotFound', $this->validator->getMessages());
-        self::assertStringContainsString('not found', current($this->validator->getMessages()));
+        $messages = $this->validator->getMessages();
+        self::assertArrayHasKey('fileUploadFileErrorFileNotFound', $messages);
+        $message = reset($messages);
+        self::assertIsString($message);
+        self::assertStringContainsString('not found', $message);
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void

@@ -8,8 +8,6 @@ use Laminas\Validator\Digits;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-use function array_keys;
-
 final class DigitsTest extends TestCase
 {
     private Digits $validator;
@@ -25,13 +23,13 @@ final class DigitsTest extends TestCase
      * Ensures that the validator follows expected behavior for basic input values
      */
     #[DataProvider('basicDataProvider')]
-    public function testExpectedResultsWithBasicInputValues(string $input, bool $expected): void
+    public function testExpectedResultsWithBasicInputValues(mixed $input, bool $expected): void
     {
         self::assertSame($expected, $this->validator->isValid($input));
     }
 
     /**
-     * @psalm-return array<string, array{0: string, 1: bool}>
+     * @psalm-return array<string, array{0: mixed, 1: bool}>
      */
     public static function basicDataProvider(): array
     {
@@ -41,11 +39,17 @@ final class DigitsTest extends TestCase
             'invalid; contains alphabetic chars and one whitespace' => ['abc 123', false],
             'invalid; contains only alphabetic chars'               => ['abcxyz',  false],
             'invalid; contains alphabetic and special chars'        => ['AZ@#4.3', false],
-            'invalid; is a float'                                   => ['1.23',    false],
-            'invalid; is a hexa notation'                           => ['0x9f',    false],
+            'invalid; string float'                                 => ['1.23',    false],
+            'invalid; float'                                        => [1.23,      false],
+            'Hex string'                                            => ['0x9f',    false],
+            'Hex int'                                               => [0x9f,      true],
             'invalid; is empty'                                     => ['',        false],
+            'Boolean'                                               => [true,      false],
+            'Null'                                                  => [null,      false],
+            'Array'                                                 => [['123'],   false],
 
             'valid; is a normal integer'                            => ['123',     true],
+            'any integer'                                           => [123,       true],
             'valid; starts with a zero'                             => ['09',      true],
             // phpcs:enable
         ];
@@ -89,18 +93,5 @@ final class DigitsTest extends TestCase
     public function testNonStringValidation(): void
     {
         self::assertFalse($this->validator->isValid([1 => 1]));
-    }
-
-    public function testEqualsMessageTemplates(): void
-    {
-        self::assertSame(
-            [
-                Digits::NOT_DIGITS,
-                Digits::STRING_EMPTY,
-                Digits::INVALID,
-            ],
-            array_keys($this->validator->getMessageTemplates())
-        );
-        self::assertSame($this->validator->getOption('messageTemplates'), $this->validator->getMessageTemplates());
     }
 }
