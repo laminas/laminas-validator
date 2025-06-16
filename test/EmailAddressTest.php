@@ -763,8 +763,9 @@ final class EmailAddressTest extends TestCase
         ];
 
         if (extension_loaded('intl')) {
-            $emailAddresses[] = 'test@кц.рф'; // Registry for .рф-TLD
-            $emailAddresses[] = 'test@xn--j1ay.xn--p1ai';
+            // Google owned Japanese TLD
+            $emailAddresses[] = 'test@nic.みんな';
+            $emailAddresses[] = 'test@nic.xn--q9jyb4c';
         }
 
         foreach ($emailAddresses as $input) {
