@@ -234,6 +234,7 @@ final class EmailAddressTest extends TestCase
             'bob@some.domain.uk.com'                                                  => ['bob@some.domain.uk.com'],
             'bob@verylongdomainsupercalifragilisticexpialidociousspoonfulofsugar.com' => ['bob@verylongdomainsupercalifragilisticexpialidociousspoonfulofsugar.com'],
             "B.O'Callaghan@domain.com"                                                => ["B.O'Callaghan@domain.com"],
+            'max@möstermann.swiss'                                                    => ['max@möstermann.swiss'],
         ];
 
         if (extension_loaded('intl')) {
@@ -763,8 +764,9 @@ final class EmailAddressTest extends TestCase
         ];
 
         if (extension_loaded('intl')) {
-            $emailAddresses[] = 'test@кц.рф'; // Registry for .рф-TLD
-            $emailAddresses[] = 'test@xn--j1ay.xn--p1ai';
+            // Google owned Japanese TLD
+            $emailAddresses[] = 'test@nic.みんな';
+            $emailAddresses[] = 'test@nic.xn--q9jyb4c';
         }
 
         foreach ($emailAddresses as $input) {
