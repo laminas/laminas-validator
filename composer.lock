@@ -2328,16 +2328,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.13.1",
+            "version": "1.13.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "1720ddd719e16cf0db4eb1c6eca108031636d46c"
+                "reference": "faed855a7b5f4d4637717c2b3863e277116beb36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/1720ddd719e16cf0db4eb1c6eca108031636d46c",
-                "reference": "1720ddd719e16cf0db4eb1c6eca108031636d46c",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/faed855a7b5f4d4637717c2b3863e277116beb36",
+                "reference": "faed855a7b5f4d4637717c2b3863e277116beb36",
                 "shasum": ""
             },
             "require": {
@@ -2376,7 +2376,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.13.1"
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.13.3"
             },
             "funding": [
                 {
@@ -2384,7 +2384,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-04-29T12:36:36+00:00"
+            "time": "2025-07-05T12:25:42+00:00"
         },
         {
             "name": "netresearch/jsonmapper",
@@ -5363,16 +5363,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "6.12.0",
+            "version": "6.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "cf420941d061a57050b6c468ef2c778faf40aee2"
+                "reference": "e71404b0465be25cf7f8a631b298c01c5ddd864f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/cf420941d061a57050b6c468ef2c778faf40aee2",
-                "reference": "cf420941d061a57050b6c468ef2c778faf40aee2",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/e71404b0465be25cf7f8a631b298c01c5ddd864f",
+                "reference": "e71404b0465be25cf7f8a631b298c01c5ddd864f",
                 "shasum": ""
             },
             "require": {
@@ -5477,7 +5477,7 @@
                 "issues": "https://github.com/vimeo/psalm/issues",
                 "source": "https://github.com/vimeo/psalm"
             },
-            "time": "2025-05-28T12:52:06+00:00"
+            "time": "2025-07-04T09:56:28+00:00"
         },
         {
             "name": "webimpress/coding-standard",
