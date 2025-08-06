@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
+use Override;
+
 interface ValidatorChainInterface extends ValidatorInterface
 {
     public const DEFAULT_PRIORITY = 1;
@@ -37,4 +39,14 @@ interface ValidatorChainInterface extends ValidatorInterface
         bool $breakChainOnFailure = false,
         int $priority = self::DEFAULT_PRIORITY
     ): void;
+
+    /**
+     * Returns true if and only if $value passes all validations in the chain
+     *
+     * Validators are run in the order in which they were added to the chain (FIFO).
+     *
+     * @param array<string, mixed> $context Extra "context" to provide the validator
+     */
+    #[Override]
+    public function isValid(mixed $value, ?array $context = null): bool;
 }
