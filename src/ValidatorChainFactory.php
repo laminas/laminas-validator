@@ -16,7 +16,7 @@ final class ValidatorChainFactory
     }
 
     /** @param array<array-key, ValidatorSpecification> $specification */
-    public function fromArray(array $specification): ValidatorChainInterface
+    public function fromArray(array $specification): ValidatorChain
     {
         $chain = new ValidatorChain($this->pluginManager);
         foreach ($specification as $spec) {
