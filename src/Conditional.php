@@ -20,7 +20,7 @@ final class Conditional implements ValidatorInterface
 {
     /** @var Closure(array<string, mixed>): bool */
     private readonly Closure $rule;
-    private readonly ValidatorChain $chain;
+    private readonly ValidatorChainInterface $chain;
 
     /** @param OptionsArgument $options */
     public function __construct(ValidatorChainFactory $chainFactory, array $options)
