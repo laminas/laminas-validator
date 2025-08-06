@@ -30,7 +30,8 @@ final class ConfigProvider
     {
         return [
             'aliases'   => [
-                'ValidatorManager' => ValidatorPluginManager::class,
+                'ValidatorManager'             => ValidatorPluginManager::class,
+                ValidatorChainInterface::class => ValidatorChain::class,
             ],
             'factories' => [
                 ValidatorChainFactory::class  => ValidatorChainFactoryFactory::class,

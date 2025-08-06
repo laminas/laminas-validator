@@ -20,7 +20,7 @@ final class ValidatorChainFactory
     {
         $chain = new ValidatorChain($this->pluginManager);
         foreach ($specification as $spec) {
-            $priority   = $spec['priority'] ?? ValidatorChain::DEFAULT_PRIORITY;
+            $priority   = $spec['priority'] ?? ValidatorChainInterface::DEFAULT_PRIORITY;
             $breakChain = $spec['break_chain_on_failure'] ?? false;
             $options    = $spec['options'] ?? [];
             $validator  = $this->pluginManager->build($spec['name'], $options);
