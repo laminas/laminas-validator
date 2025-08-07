@@ -361,7 +361,6 @@ final class ValidatorChainTest extends TestCase
         self::assertFalse($chain->__invoke('Foo'));
     }
 
-    /** @psalm-suppress InternalMethod */
     public function testComposedPluginManagersCanBeMutated(): void
     {
         $pm1 = new ValidatorPluginManager(new ServiceManager());

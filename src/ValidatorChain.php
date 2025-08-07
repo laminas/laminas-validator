@@ -72,7 +72,8 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorCha
      *
      * It is not subject to BC because it is marked as internal and the method may be removed in a minor release.
      *
-     * @internal \Laminas
+     * @psalm-internal \Laminas
+     * @psalm-internal \LaminasTest
      */
     public function getPluginManager(): ValidatorPluginManager
     {
@@ -89,7 +90,8 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorCha
      * This method is retained for BC with laminas-inputfilter. It is internal and not subject to BC guarantees.
      * It may be removed in a minor release.
      *
-     * @internal \Laminas
+     * @psalm-internal \Laminas
+     * @psalm-internal \LaminasTest
      */
     public function setPluginManager(ValidatorPluginManager $plugins): void
     {
@@ -102,8 +104,8 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorCha
      * This method is retained for BC with laminas-inputfilter. It is internal and not subject to BC guarantees.
      * It may be removed in a minor release.
      *
-     * @internal \Laminas
-     *
+     * @psalm-internal \Laminas
+     * @psalm-internal \LaminasTest
      * @param string|class-string<T> $name Name of validator to return
      * @param array<string, mixed> $options Options to pass to validator constructor
      *                                        (if not already instantiated)
