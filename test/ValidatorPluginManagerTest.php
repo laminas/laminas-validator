@@ -10,8 +10,10 @@ use Laminas\ServiceManager\Factory\InvokableFactory;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\AbstractValidator;
+use Laminas\Validator\ConfigProvider;
 use Laminas\Validator\Exception\RuntimeException;
 use Laminas\Validator\NotEmpty;
+use Laminas\Validator\ValidatorChain;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
 use Laminas\Validator\ValidatorPluginManagerAwareInterface;
@@ -32,7 +34,12 @@ final class ValidatorPluginManagerTest extends TestCase
     {
         parent::setUp();
 
-        $this->validators = new ValidatorPluginManager(new ServiceManager());
+        $config           = (new ConfigProvider())->__invoke();
+        $deps             = $config['dependencies'];
+        $deps['services'] = ['config' => $config];
+        $serviceManager   = new ServiceManager($deps);
+
+        $this->validators = $serviceManager->get(ValidatorPluginManager::class);
     }
 
     public function testAllowsInjectingTranslator(): void
@@ -186,5 +193,11 @@ final class ValidatorPluginManagerTest extends TestCase
         self::assertSame($validator, $retrieved);
 
         self::assertSame($plugins, $validator->getValidatorPluginManager());
+    }
+
+    public function testAValidatorChainCanBeRetrieved(): void
+    {
+        $chain = $this->validators->get(ValidatorChain::class);
+        self::assertSame($this->validators, $chain->getPluginManager());
     }
 }

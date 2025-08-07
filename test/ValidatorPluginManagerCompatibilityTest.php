@@ -10,6 +10,7 @@ use Laminas\ServiceManager\Test\CommonPluginManagerTrait;
 use Laminas\Validator\Barcode;
 use Laminas\Validator\Bitwise;
 use Laminas\Validator\Callback;
+use Laminas\Validator\ConfigProvider;
 use Laminas\Validator\DateComparison;
 use Laminas\Validator\Explode;
 use Laminas\Validator\File\ExcludeExtension;
@@ -67,7 +68,9 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
      */
     protected static function getPluginManager(array $config = []): AbstractSingleInstancePluginManager
     {
-        return new ValidatorPluginManager(new ServiceManager(), $config);
+        return new ValidatorPluginManager(new ServiceManager(
+            (new ConfigProvider())->__invoke()['dependencies'],
+        ), $config);
     }
 
     protected function getInstanceOf(): string

@@ -143,6 +143,56 @@ $chain = $factory->fromArray($chainConfiguration);
 $chain->isValid('Some Value');
 ```
 
+## Retrieve a Validator Chain from the Plugin Manager
+
+It is also possible to create validator chains via the `ValidatorPluginManager`:
+
+```php
+use Laminas\Validator\ValidatorChain;
+use Laminas\Validator\ValidatorPluginManager;
+
+/** @var ValidatorPluginManager $pluginManager */
+
+// Create an empty chain and then add validators:
+$emptyChain = $pluginManager->get(ValidatorChain::class);
+$emptyChain->attachByName(NotEmpty::class);;
+
+// Or, "Build" a chain from an array of configuration:
+$configuredChain = $pluginManager->build(ValidatorChain::class, [
+    'notEmpty' => [
+        'name' => NotEmpty::class,
+        'break_chain_on_failure' => true,
+        'options' => [],
+        'priority' => 1,
+    ],
+]);
+```
+
+## Best Practices
+
+Avoid manually creating validator chains, i.e. never call `new ValidatorChain()`.
+When you manually create a new instance, unless you are careful, the validator plugin manager used in your application could end up being a different instance to the plugin manager inside the chain you just created.
+
+Whilst you *can* call `new ValidatorChain($pluginManager)` to prevent this issue, it is still better to delegate construction of validator instances to the plugin manager via any necessary factories; this insulates *your* code from future changes to the constructor of any/all validator types, including the chain.
+
+In summary, always `get` or `build` validator instances via your application-wide plugin manager:
+
+```php
+use Psr\Container\ContainerInterface;
+use Laminas\Validator\NotEmpty;
+use Laminas\Validator\ValidatorChain;
+use Laminas\Validator\ValidatorPluginManager;
+
+/** @var ContainerInterface $container */
+
+$pluginManager = $container->get(ValidatorPluginManager::class);
+
+$chain = $pluginManager->get(ValidatorChain::class);
+$chain->attach(
+    $pluginManager->get(NotEmpty::class),
+);
+```
+
 ## About the `$context` Parameter
 
 Typically, `laminas-validator` is used via [`laminas-inputfilter`](https://docs.laminas.dev/laminas-inputfilter/) which is often, in turn, used via [`laminas-form`](https://docs.laminas.dev/laminas-form/).
