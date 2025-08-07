@@ -2,6 +2,7 @@
 # within this `Makefile`.
 
 MKDOCS_IMAGE_ID := $(shell docker images -q laminas/mkdocs | xargs)
+MDLINT_FILE = https://raw.githubusercontent.com/laminas/laminas-continuous-integration-action/refs/heads/1.43.x/setup/markdownlint/markdownlint.json
 
 help: ## shows this help
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_\-\.]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
@@ -18,6 +19,13 @@ docs: build-mkdocs-image ## build the docs using a Docker container
 	docker run -it -w /app -v ${PWD}:/app --rm laminas/mkdocs ./documentation-theme/build.sh -u https://www.example.com
 	$(info ${PWD}/docs/html/index.html)
 .PHONY: docs
+
+docs-lint: .markdownlint.json ## Lint documentation
+	docker run -it -w /app -v ${PWD}:/app --rm davidanson/markdownlint-cli2 "docs/**/*.md" "README.md"
+.PHONY: docs-lint
+
+.markdownlint.json: ## Fetch the most recent settings for Markdown lint
+	curl -o .markdownlint.json ${MDLINT_FILE}
 
 install: install-tools ## Install PHP dependencies
 	composer install
@@ -69,5 +77,5 @@ composer-require-checker: ## Check composer.json for un-declared dependencies
 		composer.json
 .PHONY: composer-require-checker
 
-qa: coding-standards static-analysis test composer-require-checker ## Run all QA Checks
+qa: coding-standards static-analysis test composer-require-checker docs-lint ## Run all QA Checks
 .PHONY: qa
