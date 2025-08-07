@@ -642,6 +642,14 @@
                     </li>
                 
                     <li class="toc__entry">
+                        <a href="#retrieve-a-validator-chain-from-the-plugin-manager" class="toc__link nav-link">Retrieve a Validator Chain from the Plugin Manager</a>
+                    </li>
+                
+                    <li class="toc__entry">
+                        <a href="#best-practices" class="toc__link nav-link">Best Practices</a>
+                    </li>
+                
+                    <li class="toc__entry">
                         <a href="#about-the-context-parameter" class="toc__link nav-link">About the $context Parameter</a>
                     </li>
                 
@@ -805,6 +813,44 @@ The other 3 keys <code>break_chain_on_failure</code>, <code>options</code> and <
 $factory = $container-&gt;get(ValidatorChainFactory::class);
 $chain = $factory-&gt;fromArray($chainConfiguration);
 $chain-&gt;isValid('Some Value');</code></pre>
+<h2 id="retrieve-a-validator-chain-from-the-plugin-manager">Retrieve a Validator Chain from the Plugin Manager</h2>
+<p>It is also possible to create validator chains via the <code>ValidatorPluginManager</code>:</p>
+<pre class="highlight"><code class="language-php">use Laminas\Validator\ValidatorChain;
+use Laminas\Validator\ValidatorPluginManager;
+
+/** @var ValidatorPluginManager $pluginManager */
+
+// Create an empty chain and then add validators:
+$emptyChain = $pluginManager-&gt;get(ValidatorChain::class);
+$emptyChain-&gt;attachByName(NotEmpty::class);;
+
+// Or, "Build" a chain from an array of configuration:
+$configuredChain = $pluginManager-&gt;build(ValidatorChain::class, [
+    'notEmpty' =&gt; [
+        'name' =&gt; NotEmpty::class,
+        'break_chain_on_failure' =&gt; true,
+        'options' =&gt; [],
+        'priority' =&gt; 1,
+    ],
+]);</code></pre>
+<h2 id="best-practices">Best Practices</h2>
+<p>Avoid manually creating validator chains, i.e. never call <code>new ValidatorChain()</code>.
+When you manually create a new instance, unless you are careful, the validator plugin manager used in your application could end up being a different instance to the plugin manager inside the chain you just created.</p>
+<p>Whilst you <em>can</em> call <code>new ValidatorChain($pluginManager)</code> to prevent this issue, it is still better to delegate construction of validator instances to the plugin manager via any necessary factories; this insulates <em>your</em> code from future changes to the constructor of any/all validator types, including the chain.</p>
+<p>In summary, always <code>get</code> or <code>build</code> validator instances via your application-wide plugin manager:</p>
+<pre class="highlight"><code class="language-php">use Psr\Container\ContainerInterface;
+use Laminas\Validator\NotEmpty;
+use Laminas\Validator\ValidatorChain;
+use Laminas\Validator\ValidatorPluginManager;
+
+/** @var ContainerInterface $container */
+
+$pluginManager = $container-&gt;get(ValidatorPluginManager::class);
+
+$chain = $pluginManager-&gt;get(ValidatorChain::class);
+$chain-&gt;attach(
+    $pluginManager-&gt;get(NotEmpty::class),
+);</code></pre>
 <h2 id="about-the-context-parameter">About the <code>$context</code> Parameter</h2>
 <p>Typically, <code>laminas-validator</code> is used via <a href="https://docs.laminas.dev/laminas-inputfilter/"><code>laminas-inputfilter</code></a> which is often, in turn, used via <a href="https://docs.laminas.dev/laminas-form/"><code>laminas-form</code></a>.
 Some validators accept a second parameter to the <code>isValid()</code> method that contains the entire payload in an unfiltered and un-validated state.
