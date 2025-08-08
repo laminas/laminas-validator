@@ -21,7 +21,7 @@ use Psr\Container\ContainerInterface;
 final class ValidatorChainInvokableFactory implements FactoryInterface
 {
     /**
-     * @param array<array-key, ValidatorSpecification>|null $options
+     * @param array<array-key, ValidatorSpecification|ValidatorInterface>|null $options
      * @psalm-suppress MoreSpecificImplementedParamType $options is more specific to prevent psalm from requiring
      *                 runtime validation of the validator chain options payload.
      */
