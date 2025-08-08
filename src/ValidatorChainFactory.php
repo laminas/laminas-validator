@@ -15,11 +15,16 @@ final class ValidatorChainFactory
     {
     }
 
-    /** @param array<array-key, ValidatorSpecification> $specification */
+    /** @param array<array-key, ValidatorSpecification|ValidatorInterface> $specification */
     public function fromArray(array $specification): ValidatorChain
     {
         $chain = new ValidatorChain($this->pluginManager);
         foreach ($specification as $spec) {
+            if ($spec instanceof ValidatorInterface) {
+                $chain->attach($spec);
+                continue;
+            }
+
             $priority   = $spec['priority'] ?? ValidatorChainInterface::DEFAULT_PRIORITY;
             $breakChain = $spec['break_chain_on_failure'] ?? false;
             $options    = $spec['options'] ?? [];

@@ -12,6 +12,8 @@ use Laminas\Validator\ValidatorPluginManager;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\NotFoundExceptionInterface;
 
+use function iterator_to_array;
+
 final class ValidatorChainFactoryTest extends TestCase
 {
     private ValidatorChainFactory $factory;
@@ -114,5 +116,38 @@ final class ValidatorChainFactoryTest extends TestCase
                 'name' => 'Unknown',
             ],
         ]);
+    }
+
+    public function testSpecificationsCanBeMixedWithInstances(): void
+    {
+        $stringLength = new StringLength(['min' => 5]);
+        $chain        = $this->factory->fromArray([
+            [
+                'name'                   => NotEmpty::class,
+                'priority'               => 10,
+                'break_chain_on_failure' => true,
+            ],
+            $stringLength,
+        ]);
+
+        $validators = iterator_to_array($chain, false);
+        self::assertCount(2, $chain);
+        self::assertInstanceOf(NotEmpty::class, $validators[0]['instance']);
+        self::assertSame($stringLength, $validators[1]['instance']);
+    }
+
+    public function testSpecificationsCanBeAllInstances(): void
+    {
+        $stringLength = new StringLength(['min' => 5]);
+        $notEmpty     = new NotEmpty();
+        $chain        = $this->factory->fromArray([
+            $notEmpty,
+            $stringLength,
+        ]);
+
+        $validators = iterator_to_array($chain, false);
+        self::assertCount(2, $chain);
+        self::assertSame($notEmpty, $validators[0]['instance']);
+        self::assertSame($stringLength, $validators[1]['instance']);
     }
 }
