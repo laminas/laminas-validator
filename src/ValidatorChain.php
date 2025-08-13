@@ -114,7 +114,9 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorCha
      */
     public function plugin(string $name, array $options = []): ValidatorInterface
     {
-        $plugin = $this->getPluginManager()->build($name, $options);
+        $plugin = $options === []
+            ? $this->getPluginManager()->get($name)
+            : $this->getPluginManager()->build($name, $options);
         assert($plugin instanceof ValidatorInterface);
 
         return $plugin;
