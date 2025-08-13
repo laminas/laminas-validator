@@ -21,9 +21,11 @@ use PHPUnit\Framework\TestCase;
 
 use function array_keys;
 use function array_shift;
+use function iterator_to_array;
 use function serialize;
 use function unserialize;
 
+/** @psalm-import-type ServiceManagerConfiguration from ServiceManager */
 final class ValidatorChainTest extends TestCase
 {
     private ValidatorChain $validator;
@@ -371,5 +373,30 @@ final class ValidatorChainTest extends TestCase
         self::assertSame($pm1, $chain->getPluginManager());
         $chain->setPluginManager($pm2);
         self::assertSame($pm2, $chain->getPluginManager());
+    }
+
+    /** @param ServiceManagerConfiguration $config */
+    private static function pluginManagerWithConfig(array $config = []): ValidatorPluginManager
+    {
+        return new ValidatorPluginManager(
+            new ServiceManager(),
+            $config,
+        );
+    }
+
+    public function testPluginManagerServiceInstancesCanBeUsedInChains(): void
+    {
+        $validator = $this->createMock(ValidatorInterface::class);
+        $plugins   = self::pluginManagerWithConfig([
+            'services' => [
+                'custom' => $validator,
+            ],
+        ]);
+
+        $chain = new ValidatorChain($plugins);
+        $chain->attachByName('custom');
+
+        $entries = iterator_to_array($chain, false);
+        self::assertSame($validator, $entries[0]['instance']);
     }
 }
