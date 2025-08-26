@@ -34,7 +34,7 @@ final class NumberComparison extends AbstractValidator
     protected array $messageTemplates = [
         self::ERROR_NOT_NUMERIC           => 'Expected a numeric value',
         self::ERROR_NOT_GREATER_INCLUSIVE => 'Values must be greater than or equal to %min%. Received "%value%"',
-        self::ERROR_NOT_GREATER           => 'Values must be greater than %min%. Received "%value%',
+        self::ERROR_NOT_GREATER           => 'Values must be greater than %min%. Received "%value%"',
         self::ERROR_NOT_LESS_INCLUSIVE    => 'Values must be less than or equal to %max%. Received "%value%"',
         self::ERROR_NOT_LESS              => 'Values must be less than %max%. Received "%value%"',
     ];
