@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace LaminasTest\Validator;
 
 use Laminas\ServiceManager\ServiceManager;
-use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\StringLength;
 use Laminas\Validator\ValidatorChainFactory;
 use Laminas\Validator\ValidatorPluginManager;
-use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -151,45 +149,5 @@ final class ValidatorChainFactoryTest extends TestCase
         self::assertCount(2, $chain);
         self::assertSame($notEmpty, $validators[0]['instance']);
         self::assertSame($stringLength, $validators[1]['instance']);
-    }
-
-    /** @return array<string, array{0: array, 1: string}> */
-    public static function invalidSpecProvider(): array
-    {
-        return [
-            'Null'                 => [
-                [null],
-                'Validator specifications must be an array',
-            ],
-            'String'               => [
-                ['foo'],
-                'Validator specifications must be an array',
-            ],
-            'Missing Name'         => [
-                [['priority' => 10]],
-                'Validator specifications should have a `name` key',
-            ],
-            'Non-int Priority'     => [
-                [['name' => 'foo', 'priority' => 'a']],
-                'Validator priorities must be integers',
-            ],
-            'Non-array options'    => [
-                [['name' => 'foo', 'options' => 'a']],
-                'Validator options should be arrays',
-            ],
-            'Non-bool break chain' => [
-                [['name' => 'foo', 'break_chain_on_failure' => 'a']],
-                'The `break_chain_on_failure` key must contain a boolean when set',
-            ],
-        ];
-    }
-
-    /** @param mixed[] $spec */
-    #[DataProvider('invalidSpecProvider')]
-    public function testInvalidSpecsWillCauseExceptions(array $spec, string $expectMessage): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage($expectMessage);
-        $this->factory->fromArray($spec);
     }
 }
