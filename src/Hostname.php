@@ -1045,7 +1045,6 @@ final class Hostname extends AbstractValidator
         'realty',
         'recipes',
         'red',
-        'redstone',
         'redumbrella',
         'rehab',
         'reise',
