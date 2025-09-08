@@ -59,8 +59,8 @@ final class NumberComparisonTest extends TestCase
     }
 
     /**
-     * @param numeric|null $min
-     * @param numeric|null $max
+     * @param int|float|numeric-string|null $min
+     * @param int|float|numeric-string|null $max
      */
     #[DataProvider('basicTestDataProvider')]
     public function testBasic(
