@@ -8,6 +8,8 @@ interface ValidatorPluginManagerAwareInterface
 {
     /**
      * Set validator plugin manager
+     *
+     * @return void
      */
     public function setValidatorPluginManager(ValidatorPluginManager $pluginManager);
 
