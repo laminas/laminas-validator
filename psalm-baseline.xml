@@ -202,6 +202,9 @@
     </ArgumentTypeCoercion>
   </file>
   <file src="test/ValidatorPluginManagerTest.php">
+    <DeprecatedInterface>
+      <code><![CDATA[class implements ValidatorInterface, ValidatorPluginManagerAwareInterface]]></code>
+    </DeprecatedInterface>
     <DeprecatedMethod>
       <code><![CDATA[setService]]></code>
     </DeprecatedMethod>
