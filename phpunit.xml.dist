@@ -25,7 +25,7 @@
         <ini name="date.timezone" value="UTC"/>
         <ini name="xdebug.max_nesting_level" value="3000"/>
     </php>
-    <source>
+    <source restrictDeprecations="true">
         <include>
             <directory suffix=".php">./src</directory>
         </include>

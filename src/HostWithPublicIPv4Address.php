@@ -105,10 +105,6 @@ final class HostWithPublicIPv4Address extends AbstractValidator
 
         $filterFlags = FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE;
         if (PHP_VERSION_ID >= 80200) {
-            /**
-             * @psalm-var int $filterFlags
-             * @psalm-suppress UndefinedConstant
-             */
             $filterFlags |= FILTER_FLAG_GLOBAL_RANGE;
         }
 
