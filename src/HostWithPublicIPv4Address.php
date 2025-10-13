@@ -19,7 +19,6 @@ use const FILTER_FLAG_IPV4;
 use const FILTER_FLAG_NO_PRIV_RANGE;
 use const FILTER_FLAG_NO_RES_RANGE;
 use const FILTER_VALIDATE_IP;
-use const PHP_VERSION_ID;
 
 final class HostWithPublicIPv4Address extends AbstractValidator
 {
@@ -104,16 +103,7 @@ final class HostWithPublicIPv4Address extends AbstractValidator
 
         $privateAddressWasFound = false;
 
-        $filterFlags = FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE;
-        if (PHP_VERSION_ID >= 80200) {
-            /**
-             * @psalm-var int $filterFlags
-             * @psalm-suppress UndefinedConstant,MixedAssignment This trips up Psalm quite badly
-             */
-            $filterFlags |= FILTER_FLAG_GLOBAL_RANGE;
-        }
-
-        assert(is_int($filterFlags));
+        $filterFlags = FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE | FILTER_FLAG_GLOBAL_RANGE;
 
         foreach ($addressList as $server) {
             /**

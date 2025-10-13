@@ -49,7 +49,7 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorCha
      * Initialize validator chain
      */
     public function __construct(
-        private ValidatorPluginManager|null $pluginManager = null
+        private ValidatorPluginManager|null $pluginManager = null,
     ) {
         /** @var PriorityQueue<QueueElement, int> $queue */
         $queue            = new PriorityQueue();
@@ -132,14 +132,14 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorCha
     public function attach(
         ValidatorInterface $validator,
         bool $breakChainOnFailure = false,
-        int $priority = ValidatorChainInterface::DEFAULT_PRIORITY
+        int $priority = ValidatorChainInterface::DEFAULT_PRIORITY,
     ): void {
         $this->validators->insert(
             [
                 'instance'            => $validator,
                 'breakChainOnFailure' => $breakChainOnFailure,
             ],
-            $priority
+            $priority,
         );
     }
 
@@ -164,7 +164,7 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorCha
                 'instance'            => $validator,
                 'breakChainOnFailure' => $breakChainOnFailure,
             ],
-            $priority
+            $priority,
         );
     }
 
@@ -287,11 +287,27 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorCha
      * and next invocation to getPluginManager() sets
      * the default plugin manager instance (ValidatorPluginManager).
      *
+     * @deprecated Serializing the validator chain is deprecated and will be removed in version 4.0
+     *
      * @return list<string>
      */
     public function __sleep(): array
     {
         return ['validators', 'messages'];
+    }
+
+    /**
+     * @deprecated Serializing the validator chain is deprecated and will be removed in version 4.0
+     *
+     * @psalm-internal Laminas
+     * @psalm-internal LaminasTest
+     */
+    public function __serialize(): array
+    {
+        return [
+            'validators' => $this->validators,
+            'messages'   => $this->messages,
+        ];
     }
 
     /** @return Traversable<array-key, QueueElement> */

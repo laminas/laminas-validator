@@ -239,7 +239,7 @@ final class Code128 implements AdapterInterface
      */
     private function ord128(string $value, string $set): int
     {
-        $ord = ord($value);
+        $ord = ord($value[0]);
         if ($set === 'A') {
             if ($ord < 32) {
                 return $ord + 64;
