@@ -638,7 +638,7 @@ class Code128 extends AbstractAdapter
      */
     protected function ord128($value, $set)
     {
-        $ord = ord($value);
+        $ord = ord($value[0]);
         if ($set === 'A') {
             if ($ord < 32) {
                 return $ord + 64;
