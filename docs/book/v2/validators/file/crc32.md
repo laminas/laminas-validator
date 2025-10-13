@@ -5,11 +5,8 @@ contents matches the supplied crc32 hash(es). It is subclassed from the [Hash
 validator](hash.md) to provide a validator that only supports the `crc32`
 algorithm.
 
-<!-- markdownlint-disable-next-line heading-increment -->
-> ### Requires the hash extension
->
-> This validator requires the PHP [Hash extension](http://php.net/hash) with the
-> `crc32` algorithm.
+MISSING: **Requires the hash extension**
+This validator requires the PHP [Hash extension](http://php.net/hash) with the `crc32` algorithm.
 
 ## Supported Options
 

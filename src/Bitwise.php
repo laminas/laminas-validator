@@ -1,16 +1,27 @@
-<?php // phpcs:disable WebimpressCodingStandard.Formatting.Reference.UnexpectedSpace
+<?php
+
+declare(strict_types=1);
 
 namespace Laminas\Validator;
 
-use Traversable;
+use Laminas\Translator\TranslatorInterface;
 
-use function array_shift;
-use function func_get_args;
-use function is_array;
-use function iterator_to_array;
+use function is_float;
+use function is_numeric;
 
-/** @final */
-class Bitwise extends AbstractValidator
+/**
+ * @psalm-type OptionsArgument = array{
+ *     operator?: Bitwise::OP_AND|Bitwise::OP_XOR|null,
+ *     control: int,
+ *     strict?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
+ * }
+ */
+final class Bitwise extends AbstractValidator
 {
     public const OP_AND = 'and';
     public const OP_XOR = 'xor';
@@ -19,117 +30,52 @@ class Bitwise extends AbstractValidator
     public const NOT_AND_STRICT = 'notAndStrict';
     public const NOT_XOR        = 'notXor';
     public const NO_OP          = 'noOp';
-
-    /** @var int */
-    protected $control;
+    public const NOT_INTEGER    = 'notInteger';
 
     /**
      * Validation failure message template definitions
      *
      * @var array<string, string>
      */
-    protected $messageTemplates = [
+    protected array $messageTemplates = [
         self::NOT_AND        => "The input has no common bit set with '%control%'",
         self::NOT_AND_STRICT => "The input doesn't have the same bits set as '%control%'",
         self::NOT_XOR        => "The input has common bit set with '%control%'",
         self::NO_OP          => "No operator was present to compare '%control%' against",
+        self::NOT_INTEGER    => "Expected an integer to compare '%control%' against",
     ];
 
-    /**
-     * Additional variables available for validation failure messages
-     *
-     * @var array<string, string>
-     */
-    protected $messageVariables = [
+    /** @var array<string, string|array<string, string>> */
+    protected array $messageVariables = [
         'control' => 'control',
     ];
 
-    /** @var null|string */
-    protected $operator;
+    /** @var self::OP_AND|self::OP_XOR|null */
+    private readonly ?string $operator;
+    private readonly bool $strict;
+    protected readonly int $control;
 
-    /** @var bool */
-    protected $strict = false;
-
-    /**
-     * Sets validator options
-     * Accepts the following option keys:
-     *   'control'  => int
-     *   'operator' =>
-     *   'strict'   => bool
-     *
-     * @param array|Traversable $options
-     */
-    public function __construct($options = null)
+    /** @param OptionsArgument $options */
+    public function __construct(array $options)
     {
-        if ($options instanceof Traversable) {
-            $options = iterator_to_array($options);
-        }
-
-        if (! is_array($options)) {
-            $options = func_get_args();
-
-            $temp['control'] = array_shift($options);
-
-            if (! empty($options)) {
-                $temp['operator'] = array_shift($options);
-            }
-
-            if (! empty($options)) {
-                $temp['strict'] = array_shift($options);
-            }
-
-            $options = $temp;
-        }
+        $this->control  = $options['control'];
+        $this->operator = $options['operator'] ?? null;
+        $this->strict   = $options['strict'] ?? false;
 
         parent::__construct($options);
     }
 
-    /**
-     * Returns the control parameter.
-     *
-     * @deprecated Since 2.60 All option getters and setters will be removed in 3.0
-     *
-     * @return integer
-     */
-    public function getControl()
-    {
-        return $this->control;
-    }
-
-    /**
-     * Returns the operator parameter.
-     *
-     * @deprecated Since 2.60 All option getters and setters will be removed in 3.0
-     *
-     * @return null|string
-     */
-    public function getOperator()
-    {
-        return $this->operator;
-    }
-
-    /**
-     * Returns the strict parameter.
-     *
-     * @deprecated Since 2.60 All option getters and setters will be removed in 3.0
-     *
-     * @return boolean
-     */
-    public function getStrict()
-    {
-        return $this->strict;
-    }
-
-    /**
-     * Returns true if and only if $value is between min and max options, inclusively
-     * if inclusive option is true.
-     *
-     * @param  mixed $value
-     * @return bool
-     */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
         $this->setValue($value);
+
+        if (! is_numeric($value) || is_float($value)) {
+            $this->error(self::NOT_INTEGER);
+
+            return false;
+        }
+
+        $value = (int) $value;
 
         if (self::OP_AND === $this->operator) {
             if ($this->strict) {
@@ -167,50 +113,5 @@ class Bitwise extends AbstractValidator
 
         $this->error(self::NO_OP);
         return false;
-    }
-
-    /**
-     * Sets the control parameter.
-     *
-     * @deprecated Since 2.60 All option getters and setters will be removed in 3.0
-     *
-     * @param  integer $control
-     * @return $this
-     */
-    public function setControl($control)
-    {
-        $this->control = (int) $control;
-
-        return $this;
-    }
-
-    /**
-     * Sets the operator parameter.
-     *
-     * @deprecated Since 2.60 All option getters and setters will be removed in 3.0
-     *
-     * @param  string  $operator
-     * @return $this
-     */
-    public function setOperator($operator)
-    {
-        $this->operator = $operator;
-
-        return $this;
-    }
-
-    /**
-     * Sets the strict parameter.
-     *
-     * @deprecated Since 2.60 All option getters and setters will be removed in 3.0
-     *
-     * @param  boolean $strict
-     * @return $this
-     */
-    public function setStrict($strict)
-    {
-        $this->strict = (bool) $strict;
-
-        return $this;
     }
 }

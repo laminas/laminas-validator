@@ -1,20 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
 use DateTimeZone;
+use Laminas\Translator\TranslatorInterface;
+use Laminas\Validator\Exception\InvalidArgumentException;
 
 use function array_key_exists;
-use function array_search;
-use function gettype;
 use function in_array;
-use function is_array;
 use function is_int;
 use function is_string;
-use function sprintf;
+use function strtolower;
 
-/** @final */
-class Timezone extends AbstractValidator
+/**
+ * @psalm-type OptionsArgument = array{
+ *     type?: int-mask<Timezone::LOCATION,Timezone::ABBREVIATION,Timezone::ALL>,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
+ * }
+ */
+final class Timezone extends AbstractValidator
 {
     public const INVALID                       = 'invalidTimezone';
     public const INVALID_TIMEZONE_LOCATION     = 'invalidTimezoneLocation';
@@ -24,152 +34,73 @@ class Timezone extends AbstractValidator
     public const ABBREVIATION = 0b10;
     public const ALL          = 0b11;
 
-    /** @var array */
-    protected $constants = [
-        self::LOCATION     => 'location',
-        self::ABBREVIATION => 'abbreviation',
-    ];
-
-    /**
-     * Default value for types; value = 3
-     *
-     * @var array
-     */
-    protected $defaultType = [
-        self::LOCATION,
-        self::ABBREVIATION,
-    ];
-
-    /** @var array */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::INVALID                       => 'Invalid timezone given.',
         self::INVALID_TIMEZONE_LOCATION     => 'Invalid timezone location given.',
         self::INVALID_TIMEZONE_ABBREVIATION => 'Invalid timezone abbreviation given.',
     ];
 
-    /**
-     * Options for this validator
-     *
-     * @var array
-     */
-    protected $options = [];
+    /** @var int-mask<self::LOCATION,self::ABBREVIATION> */
+    private readonly int $type;
 
     /**
-     * Constructor
-     *
-     * @param array|int $options OPTIONAL
+     * @param OptionsArgument $options
      */
-    public function __construct($options = [])
+    public function __construct(array $options = [])
     {
-        $opts['type'] = $this->defaultType;
+        $type = $options['type'] ?? self::ALL;
 
-        if (is_array($options)) {
-            if (array_key_exists('type', $options)) {
-                $opts['type'] = $options['type'];
-            }
-        } elseif (! empty($options)) {
-            $opts['type'] = $options;
+        /** @psalm-suppress DocblockTypeContradiction - This is a defensive check */
+        if (! is_int($type) || ($type & self::ALL) === 0) {
+            throw new InvalidArgumentException(
+                'The type option must be an int-mask of the type constants',
+            );
         }
 
-        // setType called by parent constructor then setOptions method
-        parent::__construct($opts);
-    }
+        $this->type = $type;
 
-    /**
-     * Set the types
-     *
-     * @deprecated Since 2.60.0 All option setters and getters will be removed in v3.0
-     *
-     * @param int|array $type
-     * @return void
-     * @throws Exception\InvalidArgumentException
-     */
-    public function setType($type = null)
-    {
-        $type = $this->calculateTypeValue($type);
-
-        if (! is_int($type) || ($type < 1) || ($type > self::ALL)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                'Unknown type "%s" provided',
-                is_string($type) || is_int($type)
-                    ? $type : gettype($type)
-            ));
-        }
-
-        $this->options['type'] = $type;
+        parent::__construct($options);
     }
 
     /**
      * Returns true if timezone location or timezone abbreviations is correct.
-     *
-     * @param mixed $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
-        if ($value !== null && ! is_string($value)) {
+        if (! is_string($value) || $value === '') {
             $this->error(self::INVALID);
             return false;
         }
 
-        $type = $this->options['type'];
         $this->setValue($value);
 
-        switch (true) {
-            // Check in locations and abbreviations
-            case ($type & self::LOCATION) && ($type & self::ABBREVIATION):
-                $abbrs     = DateTimeZone::listAbbreviations();
-                $locations = DateTimeZone::listIdentifiers();
+        if ($this->type === self::ALL) {
+            if (
+                ! array_key_exists(strtolower($value), DateTimeZone::listAbbreviations())
+                && ! in_array($value, DateTimeZone::listIdentifiers(), true)
+            ) {
+                $this->error(self::INVALID);
 
-                if (! array_key_exists($value, $abbrs) && ! in_array($value, $locations)) {
-                    $this->error(self::INVALID);
-                    return false;
-                }
-                break;
-
-            // Check only in locations
-            case $type & self::LOCATION:
-                $locations = DateTimeZone::listIdentifiers();
-
-                if (! in_array($value, $locations)) {
-                    $this->error(self::INVALID_TIMEZONE_LOCATION);
-                    return false;
-                }
-                break;
-
-            // Check only in abbreviations
-            case $type & self::ABBREVIATION:
-                $abbrs = DateTimeZone::listAbbreviations();
-
-                if (! array_key_exists($value, $abbrs)) {
-                    $this->error(self::INVALID_TIMEZONE_ABBREVIATION);
-                    return false;
-                }
-                break;
-        }
-
-        return true;
-    }
-
-    /**
-     * @deprecated Since 2.60.0 This method wil be removed in 3.0
-     *
-     * @param array|int|string $type
-     * @return float|int
-     */
-    protected function calculateTypeValue($type)
-    {
-        $types    = (array) $type;
-        $detected = 0;
-
-        foreach ($types as $value) {
-            if (is_int($value)) {
-                $detected |= $value;
-            } elseif (false !== array_search($value, $this->constants)) {
-                $detected |= array_search($value, $this->constants);
+                return false;
             }
         }
 
-        return $detected;
+        if ($this->type === self::LOCATION && ! in_array($value, DateTimeZone::listIdentifiers(), true)) {
+            $this->error(self::INVALID_TIMEZONE_LOCATION);
+
+            return false;
+        }
+
+        if (
+            $this->type === self::ABBREVIATION
+            && ! array_key_exists(strtolower($value), DateTimeZone::listAbbreviations())
+        ) {
+            $this->error(self::INVALID_TIMEZONE_ABBREVIATION);
+
+            return false;
+        }
+
+        return true;
     }
 }

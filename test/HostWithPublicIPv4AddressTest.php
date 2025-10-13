@@ -8,7 +8,7 @@ use Laminas\Validator\HostWithPublicIPv4Address;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-class HostWithPublicIPv4AddressTest extends TestCase
+final class HostWithPublicIPv4AddressTest extends TestCase
 {
     public function testNonStringInput(): void
     {
@@ -149,6 +149,7 @@ class HostWithPublicIPv4AddressTest extends TestCase
         self::assertTrue($validator->isValid($ip));
     }
 
+    /** @return list<array{0: string}> */
     public static function hostnameProvider(): array
     {
         return [

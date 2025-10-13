@@ -5,11 +5,8 @@ contents matches the supplied md5 hash(es). It is subclassed from the
 [Hash validator](hash.md) to provide a validator that supports only the MD5
 algorithm.
 
-<!-- markdownlint-disable-next-line heading-increment -->
-> ### Requires the hash extension
->
-> This validator requires the PHP [Hash extension](http://php.net/hash) PHP with
-> the `md5` algorithm.
+MISSING: **Requires the hash extension**
+This validator requires the PHP [Hash extension](http://php.net/hash) with the `md5` algorithm.
 
 ## Supported Options
 

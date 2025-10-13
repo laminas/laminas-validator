@@ -11,8 +11,9 @@ use PHPUnit\Framework\TestCase;
 
 use const PHP_INT_MAX;
 
-class NumberComparisonTest extends TestCase
+final class NumberComparisonTest extends TestCase
 {
+    /** @return list<array{0: numeric|null, 1: numeric|null, 2: bool, 3: mixed, 4: bool, 5: string|null}> */
     public static function basicTestDataProvider(): array
     {
         return [
@@ -58,8 +59,8 @@ class NumberComparisonTest extends TestCase
     }
 
     /**
-     * @param numeric|null $min
-     * @param numeric|null $max
+     * @param int|float|numeric-string|null $min
+     * @param int|float|numeric-string|null $max
      */
     #[DataProvider('basicTestDataProvider')]
     public function testBasic(

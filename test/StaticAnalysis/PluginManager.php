@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Validator\StaticAnalysis;
 
+use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\Uuid;
 use Laminas\Validator\ValidatorInterface;
 use Laminas\Validator\ValidatorPluginManager;
@@ -13,13 +14,13 @@ final class PluginManager
 {
     public function validateAssertsPluginType(mixed $input): ValidatorInterface
     {
-        (new ValidatorPluginManager())->validate($input);
+        (new ValidatorPluginManager(new ServiceManager()))->validate($input);
 
         return $input;
     }
 
     public function getWithClassStringReturnsCorrectInstanceType(): ValidatorInterface
     {
-        return (new ValidatorPluginManager())->get(Uuid::class);
+        return (new ValidatorPluginManager(new ServiceManager()))->get(Uuid::class);
     }
 }

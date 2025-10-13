@@ -1,189 +1,93 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator;
 
-use Laminas\Uri\Exception\ExceptionInterface as UriException;
-use Laminas\Uri\Uri as UriHandler;
+use Laminas\Translator\TranslatorInterface;
 use Laminas\Validator\Exception\InvalidArgumentException;
-use Traversable;
 
-use function array_shift;
-use function assert;
-use function class_exists;
-use function func_get_args;
-use function is_a;
 use function is_array;
 use function is_string;
-use function iterator_to_array;
-use function sprintf;
+use function parse_url;
 
-/** @final */
-class Uri extends AbstractValidator
+/**
+ * @psalm-type Options = array{
+ *     allowRelative?: bool,
+ *     allowAbsolute?: bool,
+ *     messages?: array<string, string>,
+ *     translator?: TranslatorInterface|null,
+ *     translatorTextDomain?: string|null,
+ *     translatorEnabled?: bool,
+ *     valueObscured?: bool,
+ * }
+ */
+final class Uri extends AbstractValidator
 {
-    public const INVALID = 'uriInvalid';
-    public const NOT_URI = 'notUri';
+    public const INVALID      = 'uriInvalid';
+    public const NOT_URI      = 'notUri';
+    public const NOT_ABSOLUTE = 'notAbsoluteUri';
+    public const NOT_RELATIVE = 'notRelativeUri';
 
     /** @var array<string, string> */
-    protected $messageTemplates = [
-        self::INVALID => 'Invalid type given. String expected',
-        self::NOT_URI => 'The input does not appear to be a valid Uri',
+    protected array $messageTemplates = [
+        self::INVALID      => 'Invalid type given. String expected',
+        self::NOT_URI      => 'The input does not appear to be a valid Uri',
+        self::NOT_ABSOLUTE => 'Expected an absolute uri but a relative uri was received',
+        self::NOT_RELATIVE => 'Expected a relative uri but an absolute uri was received',
     ];
 
-    /** @var UriHandler|null|class-string<UriHandler> */
-    protected $uriHandler;
+    private readonly bool $allowRelative;
+    private readonly bool $allowAbsolute;
 
-    /** @var bool */
-    protected $allowRelative = true;
-
-    /** @var bool */
-    protected $allowAbsolute = true;
-
-    /**
-     * Sets default option values for this instance
-     *
-     * @param array|Traversable $options
-     */
-    public function __construct($options = [])
+    /** @param Options $options */
+    public function __construct(array $options = [])
     {
-        if ($options instanceof Traversable) {
-            $options = iterator_to_array($options);
-        } elseif (! is_array($options)) {
-            $options            = func_get_args();
-            $temp['uriHandler'] = array_shift($options);
-            if (! empty($options)) {
-                $temp['allowRelative'] = array_shift($options);
-            }
-            if (! empty($options)) {
-                $temp['allowAbsolute'] = array_shift($options);
-            }
+        $this->allowRelative = $options['allowRelative'] ?? true;
+        $this->allowAbsolute = $options['allowAbsolute'] ?? true;
 
-            $options = $temp;
-        }
-
-        if (isset($options['uriHandler'])) {
-            $this->setUriHandler($options['uriHandler']);
-        }
-        if (isset($options['allowRelative'])) {
-            $this->setAllowRelative($options['allowRelative']);
-        }
-        if (isset($options['allowAbsolute'])) {
-            $this->setAllowAbsolute($options['allowAbsolute']);
+        if ($this->allowRelative === false && $this->allowAbsolute === false) {
+            throw new InvalidArgumentException(
+                'Disallowing both relative and absolute uris means that no uris will be valid',
+            );
         }
 
         parent::__construct($options);
     }
 
     /**
-     * @throws InvalidArgumentException
-     * @return UriHandler
-     */
-    public function getUriHandler()
-    {
-        if (null === $this->uriHandler) {
-            // Lazy load the base Uri handler
-            $this->uriHandler = new UriHandler();
-        } elseif (is_string($this->uriHandler) && class_exists($this->uriHandler)) {
-            // Instantiate string Uri handler that references a class
-            $this->uriHandler = new $this->uriHandler();
-        }
-        assert($this->uriHandler !== null && ! is_string($this->uriHandler));
-
-        return $this->uriHandler;
-    }
-
-    /**
-     * @param  UriHandler|class-string<UriHandler> $uriHandler
-     * @throws InvalidArgumentException
-     * @return $this
-     */
-    public function setUriHandler($uriHandler)
-    {
-        if (! is_a($uriHandler, UriHandler::class, true)) {
-            throw new InvalidArgumentException(sprintf(
-                'Expecting a subclass name or instance of %s as $uriHandler',
-                UriHandler::class
-            ));
-        }
-
-        $this->uriHandler = $uriHandler;
-        return $this;
-    }
-
-    /**
-     * Returns the allowAbsolute option
-     *
-     * @return bool
-     */
-    public function getAllowAbsolute()
-    {
-        return $this->allowAbsolute;
-    }
-
-    /**
-     * Sets the allowAbsolute option
-     *
-     * @param  bool $allowAbsolute
-     * @return $this
-     */
-    public function setAllowAbsolute($allowAbsolute)
-    {
-        $this->allowAbsolute = (bool) $allowAbsolute;
-        return $this;
-    }
-
-    /**
-     * Returns the allowRelative option
-     *
-     * @return bool
-     */
-    public function getAllowRelative()
-    {
-        return $this->allowRelative;
-    }
-
-    /**
-     * Sets the allowRelative option
-     *
-     * @param  bool $allowRelative
-     * @return $this
-     */
-    public function setAllowRelative($allowRelative)
-    {
-        $this->allowRelative = (bool) $allowRelative;
-        return $this;
-    }
-
-    /**
      * Returns true if and only if $value validates as a Uri
-     *
-     * @param  string $value
-     * @return bool
      */
-    public function isValid($value)
+    public function isValid(mixed $value): bool
     {
-        if (! is_string($value)) {
+        if (! is_string($value) || $value === '') {
             $this->error(self::INVALID);
             return false;
         }
 
-        $uriHandler = $this->getUriHandler();
-        try {
-            $uriHandler->parse($value);
-            if ($uriHandler->isValid()) {
-                // It will either be a valid absolute or relative URI
-                if (
-                    ($this->allowRelative && $this->allowAbsolute)
-                    || ($this->allowAbsolute && $uriHandler->isAbsolute())
-                    || ($this->allowRelative && $uriHandler->isValidRelative())
-                ) {
-                    return true;
-                }
-            }
-        } catch (UriException) {
-            // Error parsing URI, it must be invalid
+        $parts = parse_url($value);
+        if (! is_array($parts)) {
+            $this->error(self::NOT_URI);
+
+            return false;
         }
 
-        $this->error(self::NOT_URI);
-        return false;
+        if (! $this->allowRelative && $this->allowAbsolute) {
+            if (! isset($parts['host'])) {
+                $this->error(self::NOT_ABSOLUTE);
+
+                return false;
+            }
+        }
+
+        if (! $this->allowAbsolute && $this->allowRelative) {
+            if (isset($parts['host'])) {
+                $this->error(self::NOT_RELATIVE);
+
+                return false;
+            }
+        }
+
+        return true;
     }
 }

@@ -196,15 +196,6 @@ final class UndisclosedPasswordTest extends TestCase
     }
 
     /**
-     * Test that the message templates are getting initialized via
-     * the parent::_construct call
-     */
-    public function testMessageTemplatesAreInitialized(): void
-    {
-        self::assertNotEmpty($this->validator->getMessageTemplates());
-    }
-
-    /**
      * Testing that we capture any failures when trying to connect with
      * the HIBP web service.
      */

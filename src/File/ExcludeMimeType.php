@@ -1,88 +1,53 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Laminas\Validator\File;
 
-use Psr\Http\Message\UploadedFileInterface;
-
 use function array_merge;
-use function class_exists;
 use function explode;
-use function finfo_file;
-use function finfo_open;
 use function in_array;
-use function is_readable;
-use function is_string;
-
-use const FILEINFO_MIME_TYPE;
 
 /**
  * Validator for the mime type of a file
- *
- * @final
  */
-class ExcludeMimeType extends MimeType
+final class ExcludeMimeType extends MimeType
 {
-    use FileInformationTrait;
-
     public const FALSE_TYPE   = 'fileExcludeMimeTypeFalse';
     public const NOT_DETECTED = 'fileExcludeMimeTypeNotDetected';
     public const NOT_READABLE = 'fileExcludeMimeTypeNotReadable';
 
-    /** @inheritDoc */
-    protected $messageTemplates = [
+    /** @var array<string, string> */
+    protected array $messageTemplates = [
         self::FALSE_TYPE   => "File has an incorrect mimetype of '%type%'",
         self::NOT_DETECTED => 'The mimetype could not be detected from the file',
         self::NOT_READABLE => 'File is not readable or does not exist',
     ];
 
     /**
-     * Returns true if the mimetype of the file does not matche the given ones. Also parts
+     * Returns true if the mimetype of the file does not match the given ones. Also parts
      * of mimetypes can be checked. If you give for example "image" all image
      * mime types will not be accepted like "image/gif", "image/jpeg" and so on.
-     *
-     * @param  string|array|UploadedFileInterface $value Real file to check for mimetype
-     * @param  array                              $file  File data from \Laminas\File\Transfer\Transfer (optional)
-     * @return bool
      */
-    public function isValid($value, $file = null)
+    public function isValid(mixed $value): bool
     {
-        $fileInfo = $this->getFileInfo($value, $file, true);
+        if (! FileInformation::isPossibleFile($value)) {
+            $this->error(self::NOT_READABLE);
 
-        $this->setValue($fileInfo['filename']);
+            return false;
+        }
 
-        // Is file readable ?
-        if (empty($fileInfo['file']) || false === is_readable($fileInfo['file'])) {
+        $fileInfo = FileInformation::factory($value);
+        $this->setValue($fileInfo->path);
+
+        if (! $fileInfo->readable) {
             $this->error(self::NOT_READABLE);
             return false;
         }
 
-        $mimefile = $this->getMagicFile();
-        if (class_exists('finfo', false)) {
-            if (! $this->isMagicFileDisabled() && (is_string($mimefile) && empty($this->finfo))) {
-                $this->finfo = finfo_open(FILEINFO_MIME_TYPE, $mimefile);
-            }
+        $this->type = $fileInfo->detectMimeType();
 
-            if (empty($this->finfo)) {
-                $this->finfo = finfo_open(FILEINFO_MIME_TYPE);
-            }
-
-            $this->type = null;
-            if (! empty($this->finfo)) {
-                $this->type = finfo_file($this->finfo, $fileInfo['file']);
-            }
-        }
-
-        if (! is_string($this->type) && $this->getHeaderCheck()) {
-            $this->type = $fileInfo['filetype'];
-        }
-
-        if (! is_string($this->type)) {
-            $this->error(self::NOT_DETECTED);
-            return false;
-        }
-
-        $mimetype = $this->getMimeType(true);
-        if (in_array($this->type, $mimetype)) {
+        if (in_array($this->type, $this->mimeTypes, true)) {
             $this->error(self::FALSE_TYPE);
             return false;
         }
@@ -90,7 +55,7 @@ class ExcludeMimeType extends MimeType
         $types = explode('/', $this->type);
         $types = array_merge($types, explode('-', $this->type));
         $types = array_merge($types, explode(';', $this->type));
-        foreach ($mimetype as $mime) {
+        foreach ($this->mimeTypes as $mime) {
             if (in_array($mime, $types)) {
                 $this->error(self::FALSE_TYPE);
                 return false;
