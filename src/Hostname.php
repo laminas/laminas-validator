@@ -444,7 +444,6 @@ final class Hostname extends AbstractValidator
         'drive',
         'dtv',
         'dubai',
-        'dunlop',
         'dupont',
         'durban',
         'dvag',
