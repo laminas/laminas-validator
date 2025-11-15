@@ -8,12 +8,16 @@ use Countable;
 use IteratorAggregate;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\Stdlib\PriorityQueue;
+use Laminas\Validator\Exception\InvalidSpecificationArrayException;
 use Traversable;
 
 use function array_replace;
 use function assert;
 use function count;
+use function is_array;
 use function is_bool;
+use function is_int;
+use function is_string;
 use function rsort;
 
 use const SORT_NUMERIC;
@@ -21,6 +25,13 @@ use const SORT_NUMERIC;
 /**
  * @psalm-type QueueElement = array{instance: ValidatorInterface, breakChainOnFailure: bool}
  * @implements IteratorAggregate<array-key, QueueElement>
+ * @psalm-type ValidatorSpecification = array{
+ *     name: non-empty-string|class-string<ValidatorInterface>,
+ *     options?: array<string, mixed>,
+ *     break_chain_on_failure?: bool,
+ *     priority?: int,
+ * }
+ * @psalm-type ValidatorChainSpecification = array<array-key, ValidatorSpecification|ValidatorInterface>
  */
 final class ValidatorChain implements Countable, IteratorAggregate, ValidatorChainInterface
 {
@@ -314,5 +325,54 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorCha
     public function getIterator(): Traversable
     {
         return clone $this->validators;
+    }
+
+    /**
+     * @param array<array-key, mixed> $spec
+     * @psalm-assert ValidatorChainSpecification $spec
+     * @throws InvalidSpecificationArrayException If the specification is invalid.
+     */
+    public static function validateSpecification(array $spec): void
+    {
+        /** @psalm-var mixed $item */
+        foreach ($spec as $item) {
+            self::validateValidatorSpec($item);
+        }
+    }
+
+    private static function validateValidatorSpec(mixed $spec): void
+    {
+        if ($spec instanceof ValidatorInterface) {
+            return;
+        }
+
+        if (! is_array($spec)) {
+            throw InvalidSpecificationArrayException::becauseItemsMustBeArraysOrValidators($spec);
+        }
+
+        /** @psalm-var mixed $name */
+        $name = $spec['name'] ?? null;
+
+        if (! is_string($name) || $name === '') {
+            throw InvalidSpecificationArrayException::becauseTheNameIsARequiredKey($name);
+        }
+
+        /** @psalm-var mixed $options */
+        $options = $spec['options'] ?? null;
+        if ($options !== null && ! is_array($options)) {
+            throw InvalidSpecificationArrayException::becauseOptionsMustBeAnArray($options);
+        }
+
+        /** @psalm-var mixed $options */
+        $breakChain = $spec['break_chain_on_failure'] ?? null;
+        if ($breakChain !== null && ! is_bool($breakChain)) {
+            throw InvalidSpecificationArrayException::becauseBreakChainMustBeBoolean($breakChain);
+        }
+
+        /** @psalm-var mixed $priority */
+        $priority = $spec['priority'] ?? null;
+        if ($priority !== null && ! is_int($priority)) {
+            throw InvalidSpecificationArrayException::becausePriorityMustBeAnInteger($priority);
+        }
     }
 }

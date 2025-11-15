@@ -7,9 +7,9 @@ namespace Laminas\Validator;
 /**
  * @psalm-import-type ValidatorSpecification from ValidatorInterface
  */
-final class ValidatorChainFactory
+final readonly class ValidatorChainFactory
 {
-    public function __construct(private readonly ValidatorPluginManager $pluginManager)
+    public function __construct(private ValidatorPluginManager $pluginManager)
     {
     }
 

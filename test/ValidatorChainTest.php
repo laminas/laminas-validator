@@ -8,6 +8,7 @@ use Laminas\ServiceManager\ServiceManager;
 use Laminas\Validator\AbstractValidator;
 use Laminas\Validator\Callback;
 use Laminas\Validator\Digits;
+use Laminas\Validator\Exception\InvalidSpecificationArrayException;
 use Laminas\Validator\NotEmpty;
 use Laminas\Validator\StringLength;
 use Laminas\Validator\Timezone;
@@ -398,5 +399,105 @@ final class ValidatorChainTest extends TestCase
 
         $entries = iterator_to_array($chain, false);
         self::assertSame($validator, $entries[0]['instance']);
+    }
+
+    /** @return array<string, array{0: array, 1: string}> */
+    public static function invalidSpecifications(): array
+    {
+        return [
+            'Non-array item'               => [
+                ['foo'],
+                'Each item in a specification array must be either an array or a validator instance',
+            ],
+            'Name must be defined'         => [
+                [['foo']],
+                'The `name` key must be defined and should be a string',
+            ],
+            'Name Not string'              => [
+                [['name' => 1]],
+                'The `name` key must be defined and should be a string',
+            ],
+            'Name Not Empty'               => [
+                [['name' => '']],
+                'The `name` key must be defined and should be a string',
+            ],
+            'Options not array'            => [
+                [['name' => 'foo', 'options' => 1]],
+                'When given, the `options` key must be an array',
+            ],
+            'Break chain not bool'         => [
+                [['name' => 'foo', 'break_chain_on_failure' => 1]],
+                'When given, the `break_chain_on_failure` key must be boolean',
+            ],
+            'Priority not int'             => [
+                [['name' => 'foo', 'priority' => 'foo']],
+                'When given, the `priority` key must be an integer',
+            ],
+            'Multiple items are validated' => [
+                [
+                    ['name' => 'baz'],
+                    ['name' => 'foo', 'priority' => 'foo'],
+                ],
+                'When given, the `priority` key must be an integer',
+            ],
+        ];
+    }
+
+    /** @param array<array-key, mixed> $spec */
+    #[DataProvider('invalidSpecifications')]
+    public function testInvalidSpecsCauseExceptions(array $spec, string $expectMessage): void
+    {
+        $this->expectException(InvalidSpecificationArrayException::class);
+        $this->expectExceptionMessage($expectMessage);
+
+        ValidatorChain::validateSpecification($spec);
+    }
+
+    /** @return array<string, array{0: array}> */
+    public static function validSpecs(): array
+    {
+        return [
+            'Empty array is OK'             => [[]],
+            'Instances are OK'              => [[new NotEmpty()]],
+            'Only name is required'         => [[['name' => 'foo']]],
+            'Full Spec'                     => [
+                [
+                    [
+                        'name'                   => 'foo',
+                        'options'                => [
+                            'foo' => 'bar',
+                        ],
+                        'break_chain_on_failure' => true,
+                        'priority'               => 1,
+                    ],
+                ],
+            ],
+            'Null and unset are equivalent' => [
+                [
+                    [
+                        'name'                   => 'foo',
+                        'options'                => null,
+                        'break_chain_on_failure' => null,
+                        'priority'               => null,
+                    ],
+                ],
+            ],
+            'Extraneous keys are ignored'   => [
+                [
+                    [
+                        'name' => 'foo',
+                        'baz'  => 'bat',
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /** @param array<array-key, mixed> $spec */
+    #[DataProvider('validSpecs')]
+    public function testValidSpecsDoNotCauseExceptions(array $spec): void
+    {
+        $this->expectNotToPerformAssertions();
+        ValidatorChain::validateSpecification($spec);
     }
 }
