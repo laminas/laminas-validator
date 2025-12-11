@@ -221,7 +221,7 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorCha
      *
      * Validators are run in the order in which they were added to the chain (FIFO).
      *
-     * @param array<string, mixed> $context Extra "context" to provide the validator
+     * @inheritDoc
      */
     public function isValid(mixed $value, ?array $context = null): bool
     {
