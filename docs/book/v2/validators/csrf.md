@@ -17,12 +17,12 @@ If the token provided does not match what was originally sent, an error should b
 
 The following options are supported for `Laminas\Validator\Csrf`.
 
-| Option | Description | Optional/Mandatory |
-|-|-|-|
-| `name` | The name of the CSRF element | Optional |
-| `salt` | The salt for the CSRF token | Optional |
-| `session` | The name of the session element containing the CSRF element | **Mandatory** |
-| `timeout` | The [TTL](https://en.wikipedia.org/wiki/Time_to_live) for the CSRF token | Optional |
+| Option    | Description                                                              | Optional/Mandatory |
+|-----------|--------------------------------------------------------------------------|--------------------|
+| `name`    | The name of the CSRF element                                             | Optional           |
+| `salt`    | The salt for the CSRF token                                              | Optional           |
+| `session` | The name of the session element containing the CSRF element              | **Mandatory**      |
+| `timeout` | The [TTL](https://en.wikipedia.org/wiki/Time_to_live) for the CSRF token | Optional           |
 
 ## Basic Usage
 
