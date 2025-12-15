@@ -1,7 +1,7 @@
 # Sitemap Validators
 
 The following validators conform to the
-[Sitemap XML protocol](http://www.sitemaps.org/protocol.php).
+[Sitemap XML protocol](https://www.sitemaps.org/protocol.html).
 
 ## Supported Options
 
