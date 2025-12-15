@@ -1,6 +1,6 @@
 # BIC Validator
 
-`Laminas\Validator\BusinessIdentifierCode` validates if a given value **could be a ["Business Identifier Code" (BIC)](https://www.swift.com/standards/data-standards/bic)** as defined by [ISO 9362](https://wikipedia.org/wiki/ISO_9362).
+`Laminas\Validator\BusinessIdentifierCode` validates if a given value **could be a ["Business Identifier Code" (BIC)](https://www.swift.com/standards/data-standards/bic-business-identifier-code)** as defined by [ISO 9362](https://wikipedia.org/wiki/ISO_9362).
 A BIC is a unique identification code for financial and non-financial institutions.
 
 ## Supported Options
