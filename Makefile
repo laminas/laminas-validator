@@ -4,6 +4,12 @@
 MKDOCS_IMAGE_ID := $(shell docker images -q laminas/mkdocs | xargs)
 MDLINT_FILE = https://raw.githubusercontent.com/laminas/laminas-continuous-integration-action/refs/heads/1.43.x/setup/markdownlint/markdownlint.json
 
+MK_BLUE = echo -e "\033[34m"$(1)"\033[0m"
+MK_GREEN = echo -e "\033[32m"$(1)"\033[0m"
+
+MK_INFO = @$(call MK_BLUE,$1)
+MK_SUCCESS = @$(call MK_GREEN,$1)
+
 help: ## shows this help
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_\-\.]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 .PHONY: help
@@ -77,5 +83,10 @@ composer-require-checker: ## Check composer.json for un-declared dependencies
 		composer.json
 .PHONY: composer-require-checker
 
-qa: coding-standards static-analysis test composer-require-checker docs-lint ## Run all QA Checks
+check-links: ## Check documentation links
+	@$(call MK_INFO,"Checking links in documentation files")
+	@docker run -it -w /app -v ${PWD}:/app --rm lycheeverse/lychee -t 5 -qq -f raw "docs/**/*.md" README.md
+.PHONY: check-links
+
+qa: coding-standards static-analysis test composer-require-checker docs-lint check-links ## Run all QA Checks
 .PHONY: qa
