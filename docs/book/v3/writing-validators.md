@@ -275,17 +275,31 @@ The plugin manager always creates a new instance, providing options to the const
 
 When your validator has runtime dependencies on services, consider allowing an options array in the constructor so that the `AbstractValidator` options can be provided if required:
 
+#### Example Validator with a Service Dependency
+
 ```php
 namespace MyValid;
 
 use Laminas\Validator\AbstractValidator;
 use Psr\Container\ContainerInterface;
 
+/**
+ * @psalm-type Options = array{
+ *     allowIcao?: bool,
+ * }
+ */
 final class FlightNumber extends AbstractValidator {
     
     public const ERR_INVALID_FLIGHT_NUMBER = 'invalidFlightNumber';
     
-    public function __construct(private readonly FlightNumberValidationService $service, array $options = []) {
+    private readonly $allowIcao;
+    
+    public function __construct(
+        private readonly FlightNumberValidationService $service,
+        array $options = [],
+    ) {
+        $this->allowIcao = $options['allowIcao'] ?? true;
+        
         parent::__construct($options);
     }
     
@@ -297,7 +311,7 @@ final class FlightNumber extends AbstractValidator {
             return false;
         }
         
-        if (! $this->service->isValidFlightNumber($value)) {
+        if (! $this->service->isValidFlightNumber($value, $this->allowIcao)) {
             $this->error(self::ERR_INVALID_FLIGHT_NUMBER);
             
             return false;
@@ -322,3 +336,75 @@ final class FlightNumberFactory
 ### Set Option Values Once and Make Them `readonly`
 
 By resolving validator options in the constructor to `private readonly` properties, and removing methods such as `getMyOption` and `setMyOption` you are forced to test how your validator behaviour varies based on its options, and, you can be sure that options simply cannot change once the validator has been constructed.
+
+## Registering Custom Validators with the PluginManager
+
+Once installed, and providing that the shipped `ConfigProvider` has been registered in application configuration, the `ValidatorPluginManager` will be available in your DI container _(Typically [`laminas-servicemanager`](https://docs.laminas.dev/laminas-servicemanager/))_.
+
+Custom validators can be registered by adding configuration for the plugin manager using the [standard Laminas ServiceManager configuration array shape](https://docs.laminas.dev/laminas-servicemanager/v4/configuring-the-service-manager/) beneath the top-level `validators` key:
+
+```php
+// config/autoload/custom-validators.global.php
+
+use Laminas\ServiceManager\Factory\InvokableFactory;
+
+return [
+    'validators' => [
+        'factories' => [
+            MyValid\NumericBetween::class => InvokableFactory::class
+        ],
+    ],
+];
+```
+
+If your validator only has an associative array for options, or no constructor arguments at all _(such as the [example `MyValid\NumericBetween` validator](#writing-a-validation-class-having-dependent-conditions))_, you can use the `InvokableFactory` to instantiate your validator.
+
+You are encouraged to look at the source code for `InvokableFactory` to see how straight-forward it is, but in short, a call to `$validatorPluginManager->build(MyValid\NumericBetween::class, ['minimum' => 1, 'maximum' => 10])`, will mean that the options are correctly passed to your constructor.
+
+### Factories for validators with more complex dependencies
+
+In the case of our [flight number validator](#example-validator-with-a-service-dependency), we have a service dependency that the `InvokableFactory` will not automatically resolve, therefore we need a custom factory.
+
+Whilst it is not strictly necessary, our custom factory should implement `FactoryInterface` from `Laminas\ServiceManager`:
+
+```php
+use Laminas\ServiceManager\Factory\FactoryInterface;
+use Psr\Container\ContainerInterface;
+
+final readonly class FlightNumberFactory implements FactoryInterface
+{
+    public function __invoke(
+        ContainerInterface $container,
+        string $requestedName,
+        array|null $options = null,
+    ): FlightNumber {
+        return new FlightNumber(
+            $container->get(FlightNumberValidationService::class),
+            $options ?? [],
+        );
+    }
+}
+```
+
+As you can see, the factory retrieves the service dependency from the DI container and passes it to the validator's constructor along with the options if present.
+
+Implementing `FactoryInterface` is good practice to aid in any future refactoring required due to BC breaks in future major versions and also improves the type safety of your factories.
+
+To register this factory, you would need to add the following to configuration:
+
+```php
+// config/autoload/custom-validators.global.php
+
+return [
+    'validators' => [
+        'factories' => [
+            MyValid\FlightNumber::class => MyValid\FlightNumberFactory::class,
+        ],
+    ],
+];
+```
+
+Most Laminas and Mezzio libraries provide out-of-the-box configuration for Laminas Service Manager and Laminas Validator is no exception.
+With that in mind, you are encouraged to familiarise yourself with how the Service Manager is configured by [reading its documentation](https://docs.laminas.dev/laminas-servicemanager/).
+
+Laminas Validator can be used with _any_ DI container implementing `Psr\Container\ContainerInterface`, but how third-party DI libraries are configured and whether the shipped factories are compatible with those libraries, is out of scope for this documentation.
