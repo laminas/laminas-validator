@@ -19,9 +19,7 @@ $validator->isValid(1234);         // returns true
 $validator->isValid('1a234');      // returns false
 ```
 
-> ### Validating Numbers
->
-> When you want to validate numbers or numeric values, be aware that this
-> validator only validates *digits*. This means that any other sign like a
-> thousand separator or a comma will not pass this validator. In this case you
-> should use `Laminas\I18n\Validator\IsInt` or `Laminas\I18n\Validator\IsFloat`.
+NOTE: **Validating Numbers**
+When you want to validate numbers or numeric values, be aware that this validator only validates *digits*.
+This means that any other sign like a thousand separator or a comma will not pass this validator.
+In this case you should use [`Laminas\I18n\Validator\IsInt`](https://docs.laminas.dev/laminas-i18n/validators/is-int/) or [`Laminas\I18n\Validator\IsFloat`](https://docs.laminas.dev/laminas-i18n/validators/is-float/).
