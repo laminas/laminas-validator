@@ -67,7 +67,6 @@ $validator = new Laminas\Validator\KeyExists([
 $validator->isValid(['1.0' => 'a', '1.42' => 'b']); // true
 ```
 
-## Additional Notes
-
+NOTE: **Additional Notes**
 Internally the validator calls [`iterator_to_array`](https://www.php.net/iterator_to_array) on the input to be validated.
 This may not be desirable if, for example, you are validating a queue where each item is dequeued during iteration, or there are other side effects of iteration on the subject.
