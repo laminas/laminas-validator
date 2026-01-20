@@ -2,16 +2,6 @@
 
 `Laminas\Validator\Digits` validates if a given value contains only digits.
 
-<!-- markdownlint-disable-next-line MD001 -->
-> ### Installation Requirements
->
-> `Laminas\Validator\Digits` depends on the laminas-filter component, so be sure to
-> have it installed before getting started:
->
-> ```bash
-> $ composer require laminas/laminas-filter
-> ```
-
 ## Supported Options
 
 There are no additional options for `Laminas\Validator\Digits`:
