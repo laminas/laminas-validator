@@ -15,10 +15,10 @@
     <meta name="docsearch:language" content="en">
     <meta name="docsearch:component" content="laminas-validator">
 
-    <link rel="canonical" href="https://docs.laminas.dev/laminas-validator/v3/validators/undisclosed-password/">
+    <link rel="canonical" href="https://docs.laminas.dev/laminas-validator/v3/validators/key-exists/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>UndisclosedPassword - laminas-validator - Laminas Docs</title>
+    <title>KeyExists - laminas-validator - Laminas Docs</title>
 
     <link rel="stylesheet" href="https://docs.laminas.dev/css/styles.css">
     
@@ -321,8 +321,8 @@
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../key-exists/" class="subnavigation__link">KeyExists</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">KeyExists</a>
     </li>
 
             
@@ -369,8 +369,8 @@
 
             
                 
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">UndisclosedPassword</a>
+    <li class="subnavigation__list-item ">
+        <a href="../undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
     </li>
 
             
@@ -636,11 +636,11 @@
             <ul class="toc__list">
                 
                     <li class="toc__entry">
-                        <a href="#basic-usage" class="toc__link nav-link">Basic Usage</a>
+                        <a href="#supported-options" class="toc__link nav-link">Supported Options</a>
                     </li>
                 
                     <li class="toc__entry">
-                        <a href="#a-simple-command-line-example" class="toc__link nav-link">A Simple Command Line Example</a>
+                        <a href="#basic-usage" class="toc__link nav-link">Basic Usage</a>
                     </li>
                 
             </ul>
@@ -679,7 +679,7 @@
                     
                 
 
-                <li class="breadcrumb-item active" aria-current="page">UndisclosedPassword</li>
+                <li class="breadcrumb-item active" aria-current="page">KeyExists</li>
             
         
     </ol>
@@ -695,63 +695,61 @@
         <h2 class="chapter__headline">Validators</h2>
     
 
-    <h1 id="undisclosed-password-validator">Undisclosed Password Validator</h1>
-<p><code>Laminas\Validator\UndisclosedPassword</code> allows you to validate if a given password was found in data breaches using the service <a href="https://www.haveibeenpwned.com">Have I Been Pwned?</a>, in a secure, anonymous way using <a href="https://www.troyhunt.com/ive-just-launched-pwned-passwords-version-2">K-Anonymity</a> to ensure passwords are not send in full over the wire.</p>
-<!-- markdownlint-disable-next-line MD001 -->
-<blockquote>
-<h3 id="installation-requirements">Installation Requirements</h3>
-<p>This validator needs to make a request over HTTP; therefore it requires an HTTP client. The validator provides support only for HTTP clients implementing <a href="https://www.php-fig.org/psr/psr-18/">PSR-18</a> and <a href="https://www.php-fig.org/psr/psr-17/">PSR-17</a> request and response factories.</p>
-<p>To ensure you have these installed before using this validator, run the following:</p>
-<pre class="highlight"><code class="language-bash">$ composer require psr/http-client
-$ composer require psr/http-factory</code></pre>
-</blockquote>
-<h2 id="basic-usage">Basic Usage</h2>
-<p>The validator has two required constructor arguments:</p>
+    <h1 id="keyexists-validator">KeyExists Validator</h1>
+<p>This validator allows you to validate if a given key is present in an iterable.</p>
+<h2 id="supported-options">Supported Options</h2>
+<p>The following options are supported for <code>Laminas\Validator\KeyExists</code>:</p>
 <ul>
-<li>an HTTP Client that implements <code>Psr\Http\Client\ClientInterface</code></li>
-<li>a <code>Psr\Http\Message\RequestFactoryInterface</code> instance</li>
+<li><code>key</code>: Sets the key to be checked. <code>string</code> and <code>int</code> are supported.</li>
 </ul>
-<p>Once you have an instance, you can then pass a password to its <code>isValid()</code> method to determine if it has been disclosed in a known data breach.</p>
-<p>If the password was found via the service, <code>isValid()</code> will return <code>false</code>. If the password was not found, <code>isValid()</code> will return <code>true</code>.</p>
-<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\UndisclosedPassword(
-    $httpClient, // a PSR-18 HttpClientInterface
-    $requestFactory // a PSR-17 RequestFactoryInterface
-);
+<h2 id="basic-usage">Basic Usage</h2>
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\KeyExists([
+    'key' =&gt; 'muppet',
+]);
 
-$result = $validator-&gt;isValid('password');
-// $result is FALSE because "password" was found in a data breach
+$validInputs = [
+    ['muppet' =&gt; 'Kermit'],
+    new ArrayObject(['muppet' =&gt; 'Miss Piggy']),
+];
 
-$result = $validator-&gt;isValid('8aDk=XiW2E.77tLfuAcB');
-// $result is TRUE because "8aDk=XiW2E.77tLfuAcB" was not found in a data breach</code></pre>
-<h2 id="a-simple-command-line-example">A Simple Command Line Example</h2>
-<p>In this example, I'm using <code>laminas/laminas-diactoros</code> to provide HTTP messages, and <code>php-http/curl-client</code> as the HTTP client. Let's begin with installation of all required packages:</p>
-<pre class="highlight"><code class="language-bash">$ composer require \
-    php-http/message \
-    php-http/message-factory \
-    php-http/discovery \
-    php-http/curl-client \
-    laminas/laminas-diactoros \
-    laminas/laminas-validator</code></pre>
-<p>Next, I create a file, <code>undisclosed.php</code>, where I put my code:</p>
-<pre class="highlight"><code class="language-php">require_once __DIR__ . '/vendor/autoload.php';
+foreach ($validInputs as $input) {
+    $result = $validator-&gt;isValid($input); // true
+}
 
-use Http\Client\Curl\Client;
-use Laminas\Diactoros\RequestFactory;
-use Laminas\Diactoros\ResponseFactory;
-use Laminas\Validator\UndisclosedPassword;
+// Non-exhaustive examples of invalid inputs:
+$invalidInputs = [
+    'not an array',
+    null,
+    1,
+    'muppet',
+];
 
-$requestFactory = new RequestFactory();
-$responseFactory = new ResponseFactory();
-$client = new Client($responseFactory, null);
+foreach ($invalidInputs as $input) {
+    $result = $validator-&gt;isValid($input); // false
+}</code></pre>
+<h3 id="integer-keys">Integer Keys</h3>
+<p>PHP casts numeric strings to integers when they are used as array keys:</p>
+<pre class="highlight"><code class="language-php">$array = ['1' =&gt; 'Foo'];
+// Becomes [1 =&gt; 'Foo'];</code></pre>
+<p>This validator does the same thing for integer keys:</p>
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\KeyExists([
+    'key' =&gt; '2',
+]);
 
-$undisclosedPassword = new UndisclosedPassword($client, $requestFactory);
-echo 'Password "password" is ' . ($undisclosedPassword-&gt;isValid('password') ? 'not disclosed' : 'disclosed') . PHP_EOL;
-echo 'Password "NVt3MpvQ" is ' . ($undisclosedPassword-&gt;isValid('NVt3MpvQ') ? 'not disclosed' : 'disclosed') . PHP_EOL;</code></pre>
-<p>To run it, I use the PHP command line interpreter:</p>
-<pre class="highlight"><code class="language-bash">$ php undisclosed.php</code></pre>
-<p>And it gives me the following output:</p>
-<pre class="highlight"><code class="language-bash">Password "password" is disclosed
-Password "NVt3MpvQ" is not disclosed</code></pre>
+$validator-&gt;isValid(['a', 'b', 'c']); // true</code></pre>
+<p>Using a floating point number as a key is not supported because PHP casts floats to integers <em>(And will issue a deprecation on all supported versions of PHP)</em>.
+However, using a string decimal <em>is</em> supported:</p>
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\KeyExists([
+    'key' =&gt; '1.42',
+]);
+
+$validator-&gt;isValid(['1.0' =&gt; 'a', '1.42' =&gt; 'b']); // true</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Additional Notes</p>
+<p>
+Internally the validator calls <a href="https://www.php.net/iterator_to_array"><code>iterator_to_array</code></a> on the input to be validated.
+This may not be desirable if, for example, you are validating a queue where each item is dequeued during iteration, or there are other side effects of iteration on the subject.</p>
+</div>
 
 
 
@@ -762,10 +760,10 @@ Password "NVt3MpvQ" is not disclosed</code></pre>
         
         <li class="page-nav__item">
             
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../timezone/">
+                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../is-json-string/">
                     <small class="page-nav__label">Previous</small>
                     <i class="fa fa-chevron-left"></i>
-                    Timezone
+                    IsJsonString
                 </a>
             
         </li>
@@ -773,9 +771,9 @@ Password "NVt3MpvQ" is not disclosed</code></pre>
         
         <li class="page-nav__item">
             
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../uri/">
+                <a rel="next" class="page-nav__link page-nav__link--next" href="../not-empty/">
                     <small class="page-nav__label">Next</small>
-                    Uri
+                    NotEmpty
                     <i class="fa fa-chevron-right"></i>
                 </a>
             
@@ -1016,8 +1014,8 @@ Password "NVt3MpvQ" is not disclosed</code></pre>
 
             
                 
-    <li class="subnavigation__list-item ">
-        <a href="../key-exists/" class="subnavigation__link">KeyExists</a>
+    <li class="subnavigation__list-item subnavigation__list-item--active">
+        <a href="./" class="subnavigation__link">KeyExists</a>
     </li>
 
             
@@ -1064,8 +1062,8 @@ Password "NVt3MpvQ" is not disclosed</code></pre>
 
             
                 
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">UndisclosedPassword</a>
+    <li class="subnavigation__list-item ">
+        <a href="../undisclosed-password/" class="subnavigation__link">UndisclosedPassword</a>
     </li>
 
             
