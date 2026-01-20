@@ -24,6 +24,7 @@ The following validators come with the laminas-validator distribution.
 - [Ip](validators/ip.md)
 - [IsArray](validators/is-array.md)
 - [Isbn](validators/isbn.md)
+- [KeyExists](validators/key-exists.md)
 - [IsCountable](validators/is-countable.md)
 - [IsInstanceOf](validators/isinstanceof.md)
 - [NotEmpty](validators/not-empty.md)

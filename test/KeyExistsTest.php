@@ -9,6 +9,7 @@ use Laminas\Validator\Exception\InvalidArgumentException;
 use Laminas\Validator\KeyExists;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use SplPriorityQueue;
 
 final class KeyExistsTest extends TestCase
 {
@@ -160,6 +161,18 @@ final class KeyExistsTest extends TestCase
                 true,
                 null,
             ],
+            [
+                ['1.234' => 'hey'],
+                '1.234',
+                true,
+                null,
+            ],
+            [
+                new ArrayObject(['1.234' => 'hey']),
+                '1.234',
+                true,
+                null,
+            ],
         ];
     }
 
@@ -236,5 +249,23 @@ final class KeyExistsTest extends TestCase
         $message = $validator->getMessages()[KeyExists::ERR_NOT_ITERABLE] ?? null;
         self::assertIsString($message);
         self::assertSame('"string" not good', $message);
+    }
+
+    public function testIterablesAreIteratedDuringValidation(): void
+    {
+        $input = new SplPriorityQueue();
+        $input->insert('a', 0);
+        $input->insert('b', 1);
+        $input->insert('c', 2);
+
+        self::assertCount(3, $input);
+
+        $validator = new KeyExists([
+            'key' => 2,
+        ]);
+
+        self::assertTrue($validator->isValid($input));
+
+        self::assertCount(0, $input);
     }
 }
