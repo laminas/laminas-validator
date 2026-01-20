@@ -47,15 +47,6 @@ $validator->isValid('yesterday'); // false
 [Laminas\\Uri\\Uri::isValid()](https://docs.laminas.dev/laminas-uri/usage/#validating-the-uri)
 internally.
 
-> ### Installation Requirements
->
-> `Laminas\Validator\Sitemap\Loc` depends on the laminas-uri component, so be sure to
-> have it installed before getting started:
->
-> ```bash
-> $ composer require laminas/laminas-uri
-> ```
-
 ## Priority
 
 `Laminas\Validator\Sitemap\Priority` validates whether a value is valid for using
