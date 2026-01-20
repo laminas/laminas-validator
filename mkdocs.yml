@@ -35,6 +35,7 @@ nav:
             - IsCountable: v3/validators/is-countable.md
             - IsInstanceOf: v3/validators/isinstanceof.md
             - IsJsonString: v3/validators/is-json-string.md
+            - KeyExists: v3/validators/key-exists.md
             - NotEmpty: v3/validators/not-empty.md
             - NumberComparison: v3/validators/number-comparison.md
             - Regex: v3/validators/regex.md

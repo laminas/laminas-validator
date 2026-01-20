@@ -24,6 +24,7 @@ use Laminas\Validator\File\Size;
 use Laminas\Validator\File\WordCount;
 use Laminas\Validator\InArray;
 use Laminas\Validator\IsInstanceOf;
+use Laminas\Validator\KeyExists;
 use Laminas\Validator\NumberComparison;
 use Laminas\Validator\Regex;
 use Laminas\Validator\ValidatorInterface;
@@ -53,6 +54,7 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
         NumberComparison::class,
         IsInstanceOf::class,
         InArray::class,
+        KeyExists::class,
         MimeType::class,
         ExcludeMimeType::class,
         Size::class,
