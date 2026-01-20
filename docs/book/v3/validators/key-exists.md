@@ -6,7 +6,7 @@ This validator allows you to validate if a given key is present in an iterable.
 
 The following options are supported for `Laminas\Validator\KeyExists`:
 
-- `key`: Sets the key that you wish to check.
+- `key`: Sets the key to be checked. `string` and `int` are supported.
 
 ## Basic Usage
 
