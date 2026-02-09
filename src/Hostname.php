@@ -586,7 +586,6 @@ final class Hostname extends AbstractValidator
         'gold',
         'goldpoint',
         'golf',
-        'goo',
         'goodyear',
         'goog',
         'google',
