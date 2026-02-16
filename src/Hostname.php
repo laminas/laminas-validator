@@ -1349,7 +1349,6 @@ final class Hostname extends AbstractValidator
         'wine',
         'winners',
         'wme',
-        'wolterskluwer',
         'woodside',
         'work',
         'works',
