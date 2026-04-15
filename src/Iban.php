@@ -101,6 +101,9 @@ final class Iban extends AbstractValidator
         'SM',
         'HR',
         'MD',
+        'AL',
+        'ME',
+        'MK',
     ];
 
     /**
