@@ -336,8 +336,8 @@ final class ValidatorChainTest extends TestCase
         $messages = $chain->getMessages();
 
         self::assertCount(2, $messages);
-        self::assertContainsOnly('string', array_keys($messages));
-        self::assertContainsOnly('string', $messages);
+        self::assertContainsOnlyString(array_keys($messages));
+        self::assertContainsOnlyString($messages);
     }
 
     public function testThatOptionsArePassedToValidatorsAttachedByName(): void
