@@ -841,6 +841,7 @@ final class Hostname extends AbstractValidator
         'memorial',
         'men',
         'menu',
+        'merck',
         'merckmsd',
         'mg',
         'mh',
