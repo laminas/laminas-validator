@@ -38,7 +38,7 @@
         "ext-intl": "*",
         "laminas/laminas-servicemanager": "^4.4.0",
         "laminas/laminas-stdlib": "^3.19",
-        "laminas/laminas-translator": "^1.0",
+        "laminas/laminas-translator": "^1.0 || ^2.0",
         "psr/container": "^1.1 || ^2.0",
         "psr/http-client": "^1.0.3",
         "psr/http-factory": "^1.1.0",
