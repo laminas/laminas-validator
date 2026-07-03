@@ -134,7 +134,7 @@ class MimeType extends AbstractValidator
         }
 
         return array_values(array_unique(array_filter(array_map(
-            static fn (string $type): string => trim($type),
+            static fn(string $type): string => trim($type),
             $types,
         ))));
     }

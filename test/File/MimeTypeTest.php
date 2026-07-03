@@ -39,7 +39,7 @@ final class MimeTypeTest extends TestCase
             'error'    => UPLOAD_ERR_OK,
             'type'     => 'image/jpg',
         ];
-        $upload    = new UploadedFile(
+        $upload = new UploadedFile(
             $testFile,
             200,
             UPLOAD_ERR_OK,

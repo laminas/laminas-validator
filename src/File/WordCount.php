@@ -54,8 +54,8 @@ final class WordCount extends AbstractValidator
      */
     protected ?int $count = null;
 
-    protected readonly int|null $min;
-    protected readonly int|null $max;
+    protected readonly ?int $min;
+    protected readonly ?int $max;
 
     /**
      * Sets validator options
@@ -110,12 +110,12 @@ final class WordCount extends AbstractValidator
         assert(is_string($content));
         $this->count = str_word_count($content);
 
-        if (($this->max !== null) && ($this->count > $this->max)) {
+        if ($this->max !== null && $this->count > $this->max) {
             $this->error(self::TOO_MUCH);
             return false;
         }
 
-        if (($this->min !== null) && ($this->count < $this->min)) {
+        if ($this->min !== null && $this->count < $this->min) {
             $this->error(self::TOO_LESS);
             return false;
         }

@@ -111,8 +111,8 @@ final class Isbn extends AbstractValidator
         }
 
         $checksum = $type === self::ISBN10
-        ? $this->calculateIsbn10Checksum($value)
-        : $this->calculateIsbn13Checksum($value);
+            ? $this->calculateIsbn10Checksum($value)
+            : $this->calculateIsbn13Checksum($value);
 
         // validate
         if (substr($value, -1) !== $checksum) {
@@ -149,7 +149,7 @@ final class Isbn extends AbstractValidator
         $sum = 0;
 
         for ($i = 0; $i < 12; $i++) {
-            if ($i % 2 === 0) {
+            if (($i % 2) === 0) {
                 $sum += (int) $value[$i];
                 continue;
             }

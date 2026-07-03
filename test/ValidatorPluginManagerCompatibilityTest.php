@@ -70,9 +70,12 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
      */
     protected static function getPluginManager(array $config = []): AbstractSingleInstancePluginManager
     {
-        return new ValidatorPluginManager(new ServiceManager(
-            (new ConfigProvider())->__invoke()['dependencies'],
-        ), $config);
+        return new ValidatorPluginManager(
+            new ServiceManager(
+                (new ConfigProvider())->__invoke()['dependencies'],
+            ),
+            $config,
+        );
     }
 
     protected function getInstanceOf(): string

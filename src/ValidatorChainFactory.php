@@ -9,9 +9,9 @@ namespace Laminas\Validator;
  */
 final readonly class ValidatorChainFactory
 {
-    public function __construct(private ValidatorPluginManager $pluginManager)
-    {
-    }
+    public function __construct(
+        private ValidatorPluginManager $pluginManager,
+    ) {}
 
     /** @param array<array-key, ValidatorSpecification|ValidatorInterface> $specification */
     public function fromArray(array $specification): ValidatorChain

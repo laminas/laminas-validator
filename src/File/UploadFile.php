@@ -72,7 +72,7 @@ final class UploadFile extends AbstractValidator
             return $this->validateUploadedFile(
                 $value['error'],
                 $value['name'],
-                $value['tmp_name']
+                $value['tmp_name'],
             );
         }
 

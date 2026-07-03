@@ -62,15 +62,15 @@ final class FilesSizeTest extends TestCase
     {
         return [
             // phpcs:disable
-            'minimum: 0 byte; maximum: 500 bytes; integer'  => [['max' => 500],                 false, false, false],
-            'minimum: 0 byte; maximum: 500 bytes; array'    => [['min' => 0, 'max' => 500],     false, false, false],
-            'minimum: 0 byte; maximum: 2000 bytes; integer' => [['max' => 2000],                true,  true,  false],
-            'minimum: 0 byte; maximum: 2000 bytes; array'   => [['min' => 0, 'max' => 2000],    true,  true,  false],
-            'minimum: 0 byte; maximum: 500 kilobytes'       => [['min' => 0, 'max' => 500000],  true,  true,  true],
-            'minimum: 0 byte; maximum: 2 megabytes; 2 MB'   => [['min' => 0, 'max' => '2 MB'],  true,  true,  true],
-            'minimum: 0 byte; maximum: 2 megabytes; 2MB'    => [['min' => 0, 'max' => '2MB'],   true,  true,  true],
-            'minimum: 0 byte; maximum: 2 megabytes; 2  MB'  => [['min' => 0, 'max' => '2  MB'], true,  true,  true],
-            'minimum: 1k; maximum: 2 megabytes; 2  MB'      => [['min' => '1k', 'max' => '2  MB'], true,  true,  true],
+            'minimum: 0 byte; maximum: 500 bytes; integer'  => [['max' => 500], false, false, false],
+            'minimum: 0 byte; maximum: 500 bytes; array'    => [['min' => 0, 'max' => 500], false, false, false],
+            'minimum: 0 byte; maximum: 2000 bytes; integer' => [['max' => 2000], true, true, false],
+            'minimum: 0 byte; maximum: 2000 bytes; array'   => [['min' => 0, 'max' => 2000], true, true, false],
+            'minimum: 0 byte; maximum: 500 kilobytes'       => [['min' => 0, 'max' => 500000], true, true, true],
+            'minimum: 0 byte; maximum: 2 megabytes; 2 MB'   => [['min' => 0, 'max' => '2 MB'], true, true, true],
+            'minimum: 0 byte; maximum: 2 megabytes; 2MB'    => [['min' => 0, 'max' => '2MB'], true, true, true],
+            'minimum: 0 byte; maximum: 2 megabytes; 2  MB'  => [['min' => 0, 'max' => '2  MB'], true, true, true],
+            'minimum: 1k; maximum: 2 megabytes; 2  MB'      => [['min' => '1k', 'max' => '2  MB'], true, true, true],
             // phpcs:enable
         ];
     }

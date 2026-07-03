@@ -640,7 +640,7 @@ final class NotEmptyTest extends TestCase
     {
         $valid = new NotEmpty(['type' => NotEmpty::STRING]);
 
-        $object = new class () {
+        $object = new class() {
             public function __toString(): string
             {
                 return 'Test';
@@ -651,7 +651,7 @@ final class NotEmptyTest extends TestCase
         $valid = new NotEmpty(['type' => NotEmpty::OBJECT_STRING]);
         self::assertTrue($valid->isValid($object));
 
-        $object = new class () {
+        $object = new class() {
             public function __toString(): string
             {
                 return '';

@@ -20,7 +20,7 @@ interface ValidatorChainInterface extends ValidatorInterface
     public function attach(
         ValidatorInterface $validator,
         bool $breakChainOnFailure = false,
-        int $priority = self::DEFAULT_PRIORITY
+        int $priority = self::DEFAULT_PRIORITY,
     ): void;
 
     /**
@@ -37,7 +37,7 @@ interface ValidatorChainInterface extends ValidatorInterface
         string $name,
         array $options = [],
         bool $breakChainOnFailure = false,
-        int $priority = self::DEFAULT_PRIORITY
+        int $priority = self::DEFAULT_PRIORITY,
     ): void;
 
     /**

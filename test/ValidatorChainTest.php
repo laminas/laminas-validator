@@ -198,8 +198,7 @@ final class ValidatorChainTest extends TestCase
     public function getValidatorTrue(): ValidatorInterface
     {
         $validator = $this->createMock(ValidatorInterface::class);
-        $validator
-            ->expects(self::any())
+        $validator->expects(self::any())
             ->method('isValid')
             ->willReturn(true);
 
@@ -212,13 +211,11 @@ final class ValidatorChainTest extends TestCase
     public function getValidatorFalse(): ValidatorInterface
     {
         $validator = $this->createMock(ValidatorInterface::class);
-        $validator
-            ->expects(self::any())
+        $validator->expects(self::any())
             ->method('isValid')
             ->willReturn(false);
 
-        $validator
-            ->expects(self::any())
+        $validator->expects(self::any())
             ->method('getMessages')
             ->willReturn(['error' => 'validation failed']);
 

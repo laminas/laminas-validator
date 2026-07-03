@@ -73,17 +73,17 @@ final class IdenticalTest extends TestCase
 
         self::assertTrue($validator->isValid(
             'john@doe.com',
-            ['email' => 'john@doe.com']
+            ['email' => 'john@doe.com'],
         ));
 
         self::assertFalse($validator->isValid(
             'john@doe.com',
-            ['email' => 'harry@hoe.com']
+            ['email' => 'harry@hoe.com'],
         ));
 
         self::assertFalse($validator->isValid(
             'harry@hoe.com',
-            ['email' => 'john@doe.com']
+            ['email' => 'john@doe.com'],
         ));
     }
 
@@ -97,7 +97,7 @@ final class IdenticalTest extends TestCase
                 'user' => [
                     'email' => 'john@doe.com',
                 ],
-            ]
+            ],
         ));
 
         self::assertFalse($validator->isValid(
@@ -106,7 +106,7 @@ final class IdenticalTest extends TestCase
                 'user' => [
                     'email' => 'harry@hoe.com',
                 ],
-            ]
+            ],
         ));
 
         self::assertFalse($validator->isValid(
@@ -115,7 +115,7 @@ final class IdenticalTest extends TestCase
                 'user' => [
                     'email' => 'john@doe.com',
                 ],
-            ]
+            ],
         ));
     }
 
@@ -145,7 +145,7 @@ final class IdenticalTest extends TestCase
 
         self::assertTrue($validator->isValid(
             ['foo' => 'bar'],
-            ['foo' => 'baz'] // Provide a context to make sure the literal parameter will work
+            ['foo' => 'baz'], // Provide a context to make sure the literal parameter will work
         ));
     }
 }

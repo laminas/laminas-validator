@@ -74,7 +74,7 @@ final class EmailAddressTest extends TestCase
      */
     public function testIPAllowed(): void
     {
-        $validator      = new EmailAddress([
+        $validator = new EmailAddress([
             'allow' => Hostname::ALLOW_DNS | Hostname::ALLOW_IP,
         ]);
         $valuesExpected = [
@@ -283,7 +283,9 @@ final class EmailAddressTest extends TestCase
             '.bobJones@studio24.com'                                                   => ['.bobJones@studio24.com'],
             'bobJones.@studio24.com'                                                   => ['bobJones.@studio24.com'],
             'bob.Jones.@studio24.com'                                                  => ['bob.Jones.@studio24.com'],
-            'bob@verylongdomainsupercalifragilisticexpialidociousaspoonfulofsugar.com' => ['bob@verylongdomainsupercalifragilisticexpialidociousaspoonfulofsugar.com'],
+            'bob@verylongdomainsupercalifragilisticexpialidociousaspoonfulofsugar.com' => [
+                'bob@verylongdomainsupercalifragilisticexpialidociousaspoonfulofsugar.com',
+            ],
             'bob+domain.com'                                                           => ['bob+domain.com'],
             'bob.domain.com'                                                           => ['bob.domain.com'],
             'bob @domain.com'                                                          => ['bob @domain.com'],
@@ -295,6 +297,7 @@ final class EmailAddressTest extends TestCase
 
             @domain.com'],
         ];
+
         // @codingStandardsIgnoreEnd
     }
 
@@ -423,7 +426,7 @@ final class EmailAddressTest extends TestCase
         }
 
         // Check no TLD matching
-        $validator      = new EmailAddress([
+        $validator = new EmailAddress([
             'hostnameValidator' => new Hostname([
                 'useTldCheck' => false,
             ]),
@@ -453,7 +456,7 @@ final class EmailAddressTest extends TestCase
         $translations = [
             'hostnameIpAddressNotAllowed'   => 'hostnameIpAddressNotAllowed translation',
             'hostnameUnknownTld'            => 'The input appears to be a DNS hostname '
-            . 'but cannot match TLD against known list',
+                . 'but cannot match TLD against known list',
             'hostnameDashCharacter'         => 'hostnameDashCharacter translation',
             'hostnameInvalidHostnameSchema' => 'hostnameInvalidHostnameSchema translation',
             'hostnameUndecipherableTld'     => 'hostnameUndecipherableTld translation',

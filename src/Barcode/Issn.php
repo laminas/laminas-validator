@@ -71,13 +71,13 @@ final class Issn implements AdapterInterface
         }
 
         $check %= 11;
-        $check  = $check === 0 ? 0 : 11 - $check;
+        $check = $check === 0 ? 0 : 11 - $check;
 
         if ((string) $check === $checksum) {
             return true;
         }
 
-        if (($check === 10) && ($checksum === 'X')) {
+        if ($check === 10 && $checksum === 'X') {
             return true;
         }
 

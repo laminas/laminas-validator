@@ -100,15 +100,47 @@ final class HostnameTest extends TestCase
     public static function combinationDataProvider(): array
     {
         return [
-            'dns or local succeeds for domain.com'      => [Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL, true, 'domain.com'],
-            'dns or local succeeds for localhost'       => [Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL, true, 'localhost'],
-            'dns or local succeeds for local.localhost' => [Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL, true, 'local.localhost'],
-            'dns or local fails for 1.2.3.4'            => [Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL, false, '1.2.3.4'],
-            'dns or local fails for 255.255.255.255'    => [Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL, false, '255.255.255.255'],
+            'dns or local succeeds for domain.com'      => [
+                Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL,
+                true,
+                'domain.com',
+            ],
+            'dns or local succeeds for localhost'       => [
+                Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL,
+                true,
+                'localhost',
+            ],
+            'dns or local succeeds for local.localhost' => [
+                Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL,
+                true,
+                'local.localhost',
+            ],
+            'dns or local fails for 1.2.3.4'            => [
+                Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL,
+                false,
+                '1.2.3.4',
+            ],
+            'dns or local fails for 255.255.255.255'    => [
+                Hostname::ALLOW_DNS | Hostname::ALLOW_LOCAL,
+                false,
+                '255.255.255.255',
+            ],
             'dns or ip succeeds for 1.2.3.4'            => [Hostname::ALLOW_DNS | Hostname::ALLOW_IP, true, '1.2.3.4'],
-            'dns or ip succeeds for 255.255.255.255'    => [Hostname::ALLOW_DNS | Hostname::ALLOW_IP, true, '255.255.255.255'],
-            'dns or ip fails for localhost'             => [Hostname::ALLOW_DNS | Hostname::ALLOW_IP, false, 'localhost'],
-            'dns or ip fails for local.localhost'       => [Hostname::ALLOW_DNS | Hostname::ALLOW_IP, false, 'local.localhost'],
+            'dns or ip succeeds for 255.255.255.255'    => [
+                Hostname::ALLOW_DNS | Hostname::ALLOW_IP,
+                true,
+                '255.255.255.255',
+            ],
+            'dns or ip fails for localhost'             => [
+                Hostname::ALLOW_DNS | Hostname::ALLOW_IP,
+                false,
+                'localhost',
+            ],
+            'dns or ip fails for local.localhost'       => [
+                Hostname::ALLOW_DNS | Hostname::ALLOW_IP,
+                false,
+                'local.localhost',
+            ],
         ];
     }
 
@@ -167,8 +199,10 @@ final class HostnameTest extends TestCase
      * Ensure the underscore character tests work as expected when not using tld check
      */
     #[DataProvider('domainsWithUnderscores')]
-    public function testValidatorHandlesUnderscoresInDomainsWithoutTldCheckCorrectly(string $input, bool $expected): void
-    {
+    public function testValidatorHandlesUnderscoresInDomainsWithoutTldCheckCorrectly(
+        string $input,
+        bool $expected,
+    ): void {
         $validator = new Hostname([
             'useTldCheck' => false,
             'allow'       => Hostname::ALLOW_DNS,
@@ -195,26 +229,26 @@ final class HostnameTest extends TestCase
     public static function idnMatchingDataProvider(): array
     {
         return [
-            ['bürger.de', true],
-            ['bÜrger.de', true],
-            ['hãllo.de', true],
-            ['hãllo.de', true],
-            ['hållo.se', true],
-            ['hÅllo.se', true],
-            ['bürger.com', true],
-            ['bÜrger.com', true],
-            ['hãllo.com', true],
-            ['hÃllo.com', true],
-            ['hållo.com', true],
-            ['hÅllo.com', true],
+            ['bürger.de',    true],
+            ['bÜrger.de',    true],
+            ['hãllo.de',     true],
+            ['hãllo.de',     true],
+            ['hållo.se',     true],
+            ['hÅllo.se',     true],
+            ['bürger.com',   true],
+            ['bÜrger.com',   true],
+            ['hãllo.com',    true],
+            ['hÃllo.com',    true],
+            ['hållo.com',    true],
+            ['hÅllo.com',    true],
             ['plekitööd.ee', true],
             ['plekitÖÖd.ee', true],
-            ['hãllo.lt', false],
-            ['bürger.lt', false],
-            ['hãllo.lt', false],
-            ['hãllo.se', false],
-            ['bürger.lt', false],
-            ['hãllo.uk', false],
+            ['hãllo.lt',     false],
+            ['bürger.lt',    false],
+            ['hãllo.lt',     false],
+            ['hãllo.se',     false],
+            ['bürger.lt',    false],
+            ['hãllo.uk',     false],
         ];
     }
 
@@ -265,12 +299,12 @@ final class HostnameTest extends TestCase
     public static function tldMatchingDataProvider(): array
     {
         return [
-            ['domain.co.uk', true],
+            ['domain.co.uk',  true],
             ['domain.uk.com', true],
-            ['domain.tl', true],
-            ['domain.zw', true],
-            ['domain.xx', false],
-            ['domain.zz', false],
+            ['domain.tl',     true],
+            ['domain.zw',     true],
+            ['domain.xx',     false],
+            ['domain.zz',     false],
             ['domain.madeup', false],
         ];
     }
@@ -319,7 +353,7 @@ final class HostnameTest extends TestCase
         $translations = [
             Hostname::INVALID_LOCAL_NAME => 'The input does not appear to be a valid local network name',
         ];
-        $translator   = new Translator($translations);
+        $translator = new Translator($translations);
         $this->validator->setTranslator($translator);
 
         $this->validator->isValid('0.239,512.777');
@@ -351,11 +385,11 @@ final class HostnameTest extends TestCase
     {
         return [
             ['www.danger1.com', true],
-            ['danger.com', true],
-            ['www.danger.com', true],
-            ['www.danger1com', false],
-            ['dangercom', false],
-            ['www.dangercom', false],
+            ['danger.com',      true],
+            ['www.danger.com',  true],
+            ['www.danger1com',  false],
+            ['dangercom',       false],
+            ['www.dangercom',   false],
         ];
     }
 
@@ -372,11 +406,11 @@ final class HostnameTest extends TestCase
     public static function punyCodeDecodingDataProvider(): array
     {
         return [
-            ['xn--brger-kva.com', true],
+            ['xn--brger-kva.com',       true],
             ['xn--eckwd4c7cu47r2wf.jp', true],
-            ['xn--brger-x45d2va.com', false],
-            ['xn--bürger.com', false],
-            ['xn--', false],
+            ['xn--brger-x45d2va.com',   false],
+            ['xn--bürger.com',          false],
+            ['xn--',                    false],
         ];
     }
 
@@ -464,7 +498,10 @@ final class HostnameTest extends TestCase
             ['don?t.know', false],
 
             // phpcs:ignore
-            ['thisisaverylonghostnamewhichextendstwohundredfiftysixcharactersandthereforshouldnotbeallowedbythisvalidatorbecauserfc3986limitstheallowedcharacterstoalimitoftwohunderedfiftysixcharactersinsumbutifthistestwouldfailthenitshouldreturntruewhichthrowsanexceptionbytheunittest', false],
+            [
+                'thisisaverylonghostnamewhichextendstwohundredfiftysixcharactersandthereforshouldnotbeallowedbythisvalidatorbecauserfc3986limitstheallowedcharacterstoalimitoftwohunderedfiftysixcharactersinsumbutifthistestwouldfailthenitshouldreturntruewhichthrowsanexceptionbytheunittest',
+                false,
+            ],
         ];
     }
 
@@ -560,10 +597,10 @@ final class HostnameTest extends TestCase
     {
         return [
             ['xn----zhcbgfhe2aacg8fb5i.org.il', true],
-            ['מבחן.il', true],
-            ['מבחן123.il', true],
-            ['tבדיקה123.il', false],
-            ['رات.il', false],
+            ['מבחן.il',                         true],
+            ['מבחן123.il',                      true],
+            ['tבדיקה123.il',                    false],
+            ['رات.il',                          false],
         ];
     }
 
@@ -595,6 +632,7 @@ final class HostnameTest extends TestCase
             'UTF-8 label + UTF-8 TLD (cyrillic)'         => ['тест.рф'],
             'Punycoded label + Punycoded TLD (cyrillic)' => ['xn--e1aybc.xn--p1ai'],
         ];
+
         // @codingStandardsIgnoreEnd
     }
 
@@ -615,10 +653,13 @@ final class HostnameTest extends TestCase
         // @codingStandardsIgnoreStart
         return [
             'Invalid mix of UTF-8 and ASCII in label'                              => ['சோதனை3.இலங்கை'],
-            'Invalid mix of UTF-8 and ASCII in label (Punycoded)'                  => ['xn--3-owe4au9mpa.xn--xkc2al3hye2a'],
+            'Invalid mix of UTF-8 and ASCII in label (Punycoded)'                  => [
+                'xn--3-owe4au9mpa.xn--xkc2al3hye2a',
+            ],
             'Invalid use of non-cyrillic characters with cyrillic TLD'             => ['رات.мон'],
             'Invalid use of non-cyrillic characters with cyrillic TLD (Punycoded)' => ['xn--mgbgt.xn--l1acc'],
         ];
+
         // @codingStandardsIgnoreEnd
     }
 
@@ -643,10 +684,10 @@ final class HostnameTest extends TestCase
     public static function cnHostnamesProvider(): array
     {
         return [
-            ['google.cn', true],
-            ['something,.cn', false], // #181
+            ['google.cn',           true],
+            ['something,.cn',       false], // #181
             ['https://testtest.cn', false], // #181
-            ['例子.cn', true], // regex should allow chinese characters
+            ['例子.cn',             true], // regex should allow chinese characters
         ];
     }
 
@@ -662,7 +703,7 @@ final class HostnameTest extends TestCase
     public static function bizHostnamesProvider(): array
     {
         return [
-            ['google.biz', true],
+            ['google.biz',          true],
             ['tapi4457@hsoqvf.biz', false], // #8
         ];
     }

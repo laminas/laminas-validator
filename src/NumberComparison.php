@@ -75,12 +75,7 @@ final class NumberComparison extends AbstractValidator
         $this->inclusiveMin = $options['inclusiveMin'] ?? true;
         $this->inclusiveMax = $options['inclusiveMax'] ?? true;
 
-        unset(
-            $options['min'],
-            $options['max'],
-            $options['inclusiveMin'],
-            $options['inclusiveMax'],
-        );
+        unset($options['min'], $options['max'], $options['inclusiveMin'], $options['inclusiveMax']);
 
         parent::__construct($options);
     }

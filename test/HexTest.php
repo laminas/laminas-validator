@@ -20,7 +20,7 @@ final class HexTest extends TestCase
     }
 
     #[DataProvider('basicDataProvider')]
-    public function testBasic(mixed $input, bool $expected, string|null $errorKey): void
+    public function testBasic(mixed $input, bool $expected, ?string $errorKey): void
     {
         self::assertSame($expected, $this->validator->isValid($input));
         if ($errorKey === null) {

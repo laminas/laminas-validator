@@ -16,7 +16,7 @@ final class TimezoneTest extends TestCase
      * Test locations by type is string
      */
     #[DataProvider('locationProvider')]
-    public function testLocations(mixed $value, bool $valid, string|null $expectError): void
+    public function testLocations(mixed $value, bool $valid, ?string $expectError): void
     {
         $validator = new Timezone(['type' => Timezone::LOCATION]);
         self::assertSame($valid, $validator->isValid($value));
@@ -34,21 +34,21 @@ final class TimezoneTest extends TestCase
     public static function locationProvider(): array
     {
         return [
-            ['America/Anguilla', true, null],
-            ['Antarctica/Palmer', true, null],
-            ['Asia/Dubai', true, null],
-            ['Atlantic/Cape_Verde', true, null],
-            ['Australia/Broken_Hill', true, null],
-            ['America/Sao_Paulo', true, null],
-            ['America/Toronto', true, null],
-            ['Pacific/Easter', true, null],
-            ['Europe/Copenhagen', true, null],
-            ['Indian/Maldives', true, null],
-            ['cest', false, Timezone::INVALID_TIMEZONE_LOCATION], // abbreviation of Anadyr Summer Time
-            ['Asia/London', false, Timezone::INVALID_TIMEZONE_LOCATION], // wrong location
-            ['', false, Timezone::INVALID], // empty string
-            [null, false, Timezone::INVALID], // null value
-            [99, false, Timezone::INVALID], // non-string
+            ['America/Anguilla',      true,  null],
+            ['Antarctica/Palmer',     true,  null],
+            ['Asia/Dubai',            true,  null],
+            ['Atlantic/Cape_Verde',   true,  null],
+            ['Australia/Broken_Hill', true,  null],
+            ['America/Sao_Paulo',     true,  null],
+            ['America/Toronto',       true,  null],
+            ['Pacific/Easter',        true,  null],
+            ['Europe/Copenhagen',     true,  null],
+            ['Indian/Maldives',       true,  null],
+            ['cest',                  false, Timezone::INVALID_TIMEZONE_LOCATION], // abbreviation of Anadyr Summer Time
+            ['Asia/London',           false, Timezone::INVALID_TIMEZONE_LOCATION], // wrong location
+            ['',                      false, Timezone::INVALID], // empty string
+            [null,                    false, Timezone::INVALID], // null value
+            [99,                      false, Timezone::INVALID], // non-string
         ];
     }
 
@@ -56,7 +56,7 @@ final class TimezoneTest extends TestCase
      * Test abbreviations
      */
     #[DataProvider('abbreviationProvider')]
-    public function testAbbreviations(mixed $value, bool $valid, string|null $expectError): void
+    public function testAbbreviations(mixed $value, bool $valid, ?string $expectError): void
     {
         $validator = new Timezone(['type' => Timezone::ABBREVIATION]);
         self::assertSame($valid, $validator->isValid($value));
@@ -74,21 +74,21 @@ final class TimezoneTest extends TestCase
     public static function abbreviationProvider(): array
     {
         return [
-            ['cest', true, null], // Central European Summer Time
-            ['hkt', true, null], // Hong Kong Time
-            ['nzdt', true, null], // New Zealand Daylight Time
-            ['sast', true, null], // South Africa Standard Time
-            ['SAST', true, null], // SA standard time in uppercase
+            ['cest',            true,  null], // Central European Summer Time
+            ['hkt',             true,  null], // Hong Kong Time
+            ['nzdt',            true,  null], // New Zealand Daylight Time
+            ['sast',            true,  null], // South Africa Standard Time
+            ['SAST',            true,  null], // SA standard time in uppercase
             ['America/Toronto', false, Timezone::INVALID_TIMEZONE_ABBREVIATION], // location
-            ['xyz', false, Timezone::INVALID_TIMEZONE_ABBREVIATION], // wrong abbreviation
-            ['', false, Timezone::INVALID], // empty string
-            [null, false, Timezone::INVALID], // null value
-            [99, false, Timezone::INVALID], // non-string
+            ['xyz',             false, Timezone::INVALID_TIMEZONE_ABBREVIATION], // wrong abbreviation
+            ['',                false, Timezone::INVALID], // empty string
+            [null,              false, Timezone::INVALID], // null value
+            [99,                false, Timezone::INVALID], // non-string
         ];
     }
 
     #[DataProvider('locationAndAbbreviationProvider')]
-    public function testLocationsAndAbbreviations(mixed $value, bool $valid, string|null $expectError): void
+    public function testLocationsAndAbbreviations(mixed $value, bool $valid, ?string $expectError): void
     {
         $validator = new Timezone(['type' => Timezone::ALL]);
         self::assertSame($valid, $validator->isValid($value));
@@ -106,19 +106,19 @@ final class TimezoneTest extends TestCase
     public static function locationAndAbbreviationProvider(): array
     {
         return [
-            ['America/Anguilla', true, null],
-            ['Antarctica/Palmer', true, null],
-            ['Asia/Dubai', true, null],
-            ['Atlantic/Cape_Verde', true, null],
-            ['Australia/Broken_Hill', true, null],
-            ['hkt', true, null], // Hong Kong Time
-            ['nzdt', true, null], // New Zealand Daylight Time
-            ['sast', true, null], // South Africa Standard Time
-            ['xyz', false, Timezone::INVALID], // wrong abbreviation
-            ['Asia/London', false, Timezone::INVALID], // wrong location
-            ['', false, Timezone::INVALID], // empty string
-            [null, false, Timezone::INVALID], // null value
-            [99, false, Timezone::INVALID], // non-string
+            ['America/Anguilla',      true,  null],
+            ['Antarctica/Palmer',     true,  null],
+            ['Asia/Dubai',            true,  null],
+            ['Atlantic/Cape_Verde',   true,  null],
+            ['Australia/Broken_Hill', true,  null],
+            ['hkt',                   true,  null], // Hong Kong Time
+            ['nzdt',                  true,  null], // New Zealand Daylight Time
+            ['sast',                  true,  null], // South Africa Standard Time
+            ['xyz',                   false, Timezone::INVALID], // wrong abbreviation
+            ['Asia/London',           false, Timezone::INVALID], // wrong location
+            ['',                      false, Timezone::INVALID], // empty string
+            [null,                    false, Timezone::INVALID], // null value
+            [99,                      false, Timezone::INVALID], // non-string
         ];
     }
 

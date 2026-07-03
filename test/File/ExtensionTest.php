@@ -132,7 +132,7 @@ final class ExtensionTest extends TestCase
      * @param OptionsArgument $options
      */
     #[DataProvider('basicBehaviorDataProvider')]
-    public function testBasic(array $options, mixed $value, bool $expected, string|null $messageKey): void
+    public function testBasic(array $options, mixed $value, bool $expected, ?string $messageKey): void
     {
         $validator = new Extension($options);
 

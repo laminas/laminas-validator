@@ -27,20 +27,61 @@ final class IsJsonStringTest extends TestCase
         // phpcs:disable Generic.Files.LineLength
         return [
             'Standalone Integer'              => [IsJsonString::ALLOW_INT, '1', true, null],
-            'Standalone Integer, Not Allowed' => [IsJsonString::ALLOW_ALL ^ IsJsonString::ALLOW_INT, '1', false, IsJsonString::ERROR_TYPE_NOT_ALLOWED],
+            'Standalone Integer, Not Allowed' => [
+                IsJsonString::ALLOW_ALL ^ IsJsonString::ALLOW_INT,
+                '1',
+                false,
+                IsJsonString::ERROR_TYPE_NOT_ALLOWED,
+            ],
             'Standalone Float'                => [IsJsonString::ALLOW_FLOAT, '1.23', true, null],
-            'Standalone Float, Not Allowed'   => [IsJsonString::ALLOW_ALL ^ IsJsonString::ALLOW_FLOAT, '1.23', false, IsJsonString::ERROR_TYPE_NOT_ALLOWED],
+            'Standalone Float, Not Allowed'   => [
+                IsJsonString::ALLOW_ALL ^ IsJsonString::ALLOW_FLOAT,
+                '1.23',
+                false,
+                IsJsonString::ERROR_TYPE_NOT_ALLOWED,
+            ],
             'Standalone True'                 => [IsJsonString::ALLOW_BOOL, 'true', true, null],
             'Standalone False'                => [IsJsonString::ALLOW_BOOL, 'false', true, null],
-            'Case Sensitive True'             => [IsJsonString::ALLOW_BOOL, 'TRUE', false, IsJsonString::ERROR_INVALID_JSON],
-            'Case Sensitive False'            => [IsJsonString::ALLOW_BOOL, 'FALSE', false, IsJsonString::ERROR_INVALID_JSON],
-            'Standalone True, Not Allowed'    => [IsJsonString::ALLOW_ALL ^ IsJsonString::ALLOW_BOOL, 'true', false, IsJsonString::ERROR_TYPE_NOT_ALLOWED],
-            'Standalone False, Not Allowed'   => [IsJsonString::ALLOW_ALL ^ IsJsonString::ALLOW_BOOL, 'false', false, IsJsonString::ERROR_TYPE_NOT_ALLOWED],
+            'Case Sensitive True'             => [
+                IsJsonString::ALLOW_BOOL,
+                'TRUE',
+                false,
+                IsJsonString::ERROR_INVALID_JSON,
+            ],
+            'Case Sensitive False'            => [
+                IsJsonString::ALLOW_BOOL,
+                'FALSE',
+                false,
+                IsJsonString::ERROR_INVALID_JSON,
+            ],
+            'Standalone True, Not Allowed'    => [
+                IsJsonString::ALLOW_ALL ^ IsJsonString::ALLOW_BOOL,
+                'true',
+                false,
+                IsJsonString::ERROR_TYPE_NOT_ALLOWED,
+            ],
+            'Standalone False, Not Allowed'   => [
+                IsJsonString::ALLOW_ALL ^ IsJsonString::ALLOW_BOOL,
+                'false',
+                false,
+                IsJsonString::ERROR_TYPE_NOT_ALLOWED,
+            ],
             'List Notation'                   => [IsJsonString::ALLOW_ARRAY, '["Some","List"]', true, null],
-            'List Notation, Not Allowed'      => [IsJsonString::ALLOW_ALL ^ IsJsonString::ALLOW_ARRAY, '["Some","List"]', false, IsJsonString::ERROR_TYPE_NOT_ALLOWED],
+            'List Notation, Not Allowed'      => [
+                IsJsonString::ALLOW_ALL ^ IsJsonString::ALLOW_ARRAY,
+                '["Some","List"]',
+                false,
+                IsJsonString::ERROR_TYPE_NOT_ALLOWED,
+            ],
             'Object Notation'                 => [IsJsonString::ALLOW_OBJECT, '{"Some":"Object"}', true, null],
-            'Object Notation, Not Allowed'    => [IsJsonString::ALLOW_ALL ^ IsJsonString::ALLOW_OBJECT, '{"Some":"Object"}', false, IsJsonString::ERROR_TYPE_NOT_ALLOWED],
+            'Object Notation, Not Allowed'    => [
+                IsJsonString::ALLOW_ALL ^ IsJsonString::ALLOW_OBJECT,
+                '{"Some":"Object"}',
+                false,
+                IsJsonString::ERROR_TYPE_NOT_ALLOWED,
+            ],
         ];
+
         // phpcs:enable Generic.Files.LineLength
     }
 
@@ -49,7 +90,7 @@ final class IsJsonStringTest extends TestCase
      * @param IsJsonString::ERROR_*|null $expectedErrorKey
      */
     #[DataProvider('allowProvider')]
-    public function testBasicBehaviour(int $allowed, string $input, bool $expect, string|null $expectedErrorKey): void
+    public function testBasicBehaviour(int $allowed, string $input, bool $expect, ?string $expectedErrorKey): void
     {
         $validator = new IsJsonString([
             'allow' => $allowed,
@@ -68,8 +109,7 @@ final class IsJsonStringTest extends TestCase
             [true],
             [false],
             [
-                new class () {
-                },
+                new class() {},
             ],
             [[]],
             [1],
@@ -91,7 +131,7 @@ final class IsJsonStringTest extends TestCase
         $validator = new IsJsonString([
             'maxDepth' => 1,
         ]);
-        $input     = json_encode([
+        $input = json_encode([
             'foo' => [
                 'bar' => [
                     'baz' => 'goats',

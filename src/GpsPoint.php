@@ -95,7 +95,7 @@ final class GpsPoint extends AbstractValidator
             return false;
         }
 
-        return $matches[1][0] + $matches[2][0] / 60 + ((float) $matches[3][0]) / 3600;
+        return $matches[1][0] + ($matches[2][0] / 60) + ((float) $matches[3][0] / 3600);
     }
 
     private function removeWhiteSpace(string $value): string
