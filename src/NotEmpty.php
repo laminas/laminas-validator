@@ -65,12 +65,8 @@ final class NotEmpty extends AbstractValidator
     public const INVALID  = 'notEmptyInvalid';
     public const IS_EMPTY = 'isEmpty';
 
-    private const DEFAULT_TYPE = self::OBJECT
-        | self::SPACE
-        | self::NULL
-        | self::EMPTY_ARRAY
-        | self::STRING
-        | self::BOOLEAN;
+    private const DEFAULT_TYPE =
+        self::OBJECT | self::SPACE | self::NULL | self::EMPTY_ARRAY | self::STRING | self::BOOLEAN;
 
     private const TYPE_NAMES = [
         self::BOOLEAN       => 'boolean',
@@ -163,7 +159,7 @@ final class NotEmpty extends AbstractValidator
         if ($this->type & self::OBJECT_COUNT) {
             $object = true;
 
-            if ($value instanceof Countable && (count($value) === 0)) {
+            if ($value instanceof Countable && count($value) === 0) {
                 $this->error(self::IS_EMPTY);
                 return false;
             }
@@ -174,8 +170,10 @@ final class NotEmpty extends AbstractValidator
             $object = true;
 
             if (
-                (is_object($value) && ! method_exists($value, '__toString'))
-                || (is_object($value) && (string) $value === '')
+                (is_object($value)
+                && ! method_exists($value, '__toString'))
+                || (is_object($value)
+                && (string) $value === '')
             ) {
                 $this->error(self::IS_EMPTY);
                 return false;
@@ -196,7 +194,7 @@ final class NotEmpty extends AbstractValidator
 
         // SPACE ('   ')
         if ($this->type & self::SPACE) {
-            if (is_string($value) && (preg_match('/^\s+$/s', $value))) {
+            if (is_string($value) && preg_match('/^\s+$/s', $value)) {
                 $this->error(self::IS_EMPTY);
                 return false;
             }

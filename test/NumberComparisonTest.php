@@ -69,7 +69,7 @@ final class NumberComparisonTest extends TestCase
         bool $inclusive,
         mixed $input,
         bool $expect,
-        string|null $errorKey,
+        ?string $errorKey,
     ): void {
         $validator = new NumberComparison([
             'min'          => $min,

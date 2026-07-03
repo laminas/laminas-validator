@@ -45,7 +45,7 @@ final class UndisclosedPassword extends AbstractValidator
     // phpcs:enable
     public function __construct(
         private readonly ClientInterface $httpClient,
-        private readonly RequestFactoryInterface $makeHttpRequest
+        private readonly RequestFactoryInterface $makeHttpRequest,
     ) {
         parent::__construct();
     }
@@ -53,7 +53,7 @@ final class UndisclosedPassword extends AbstractValidator
     /** {@inheritDoc} */
     public function isValid(
         #[SensitiveParameter]
-        mixed $value
+        mixed $value,
     ): bool {
         if (! is_string($value)) {
             $this->error(self::NOT_A_STRING);
@@ -70,7 +70,7 @@ final class UndisclosedPassword extends AbstractValidator
 
     private function isPwnedPassword(
         #[SensitiveParameter]
-        string $password
+        string $password,
     ): bool {
         $sha1Hash  = $this->hashPassword($password);
         $rangeHash = $this->getRangeHash($sha1Hash);
@@ -85,7 +85,7 @@ final class UndisclosedPassword extends AbstractValidator
      */
     private function hashPassword(
         #[SensitiveParameter]
-        string $password
+        string $password,
     ): string {
         $hashedPassword = sha1($password);
 
@@ -100,7 +100,7 @@ final class UndisclosedPassword extends AbstractValidator
      */
     private function getRangeHash(
         #[SensitiveParameter]
-        string $passwordHash
+        string $passwordHash,
     ): string {
         return substr($passwordHash, self::HIBP_K_ANONYMITY_HASH_RANGE_BASE, self::HIBP_K_ANONYMITY_HASH_RANGE_LENGTH);
     }
@@ -114,11 +114,11 @@ final class UndisclosedPassword extends AbstractValidator
      */
     private function retrieveHashList(
         #[SensitiveParameter]
-        string $passwordRange
+        string $passwordRange,
     ): string {
         $request = $this->makeHttpRequest->createRequest(
             'GET',
-            self::HIBP_API_URI . '/range/' . $passwordRange
+            self::HIBP_API_URI . '/range/' . $passwordRange,
         );
 
         $response = $this->httpClient->sendRequest($request);
@@ -132,7 +132,7 @@ final class UndisclosedPassword extends AbstractValidator
         #[SensitiveParameter]
         string $sha1Hash,
         #[SensitiveParameter]
-        string $resultStream
+        string $resultStream,
     ): bool {
         $data   = explode("\r\n", $resultStream);
         $hashes = array_filter($data, static function ($value) use ($sha1Hash): bool {

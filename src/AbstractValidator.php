@@ -38,9 +38,7 @@ use const SORT_REGULAR;
  *     ...<string, mixed>
  * }
  */
-abstract class AbstractValidator implements
-    Translator\TranslatorAwareInterface,
-    ValidatorInterface
+abstract class AbstractValidator implements Translator\TranslatorAwareInterface, ValidatorInterface
 {
     /**
      * The value to be validated
@@ -95,7 +93,7 @@ abstract class AbstractValidator implements
     private string $translatorTextDomain = 'default';
 
     /** A custom translator, the default translator, or null */
-    private TranslatorInterface|null $translator = null;
+    private ?TranslatorInterface $translator = null;
 
     /**
      * Error messages that have occurred during the last validation
@@ -212,7 +210,7 @@ abstract class AbstractValidator implements
         }
 
         $length = self::$messageLength;
-        if (($length > -1) && (strlen($message) > $length)) {
+        if ($length > -1 && strlen($message) > $length) {
             $message = substr($message, 0, $length - 3) . '...';
         }
 

@@ -41,11 +41,11 @@ final class Explode extends AbstractValidator
 
     /** @var non-empty-string */
     private readonly string $valueDelimiter;
-    private ValidatorPluginManager|null $pluginManager;
+    private ?ValidatorPluginManager $pluginManager;
     private readonly ValidatorInterface $validator;
     private readonly bool $breakOnFirstFailure;
 
-    protected int $count     = 0;
+    protected int     $count = 0;
     protected ?string $error = null;
 
     /** @var array<string, string|array<string, string>> */

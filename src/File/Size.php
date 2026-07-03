@@ -51,8 +51,8 @@ final class Size extends AbstractValidator
     protected readonly string $minString;
     protected readonly string $maxString;
 
-    protected readonly int|null $min;
-    protected readonly int|null $max;
+    protected readonly ?int $min;
+    protected readonly ?int $max;
     private readonly bool $useByteString;
 
     /**
@@ -90,11 +90,7 @@ final class Size extends AbstractValidator
             throw new InvalidArgumentException('The `min` option cannot exceed the `max` option');
         }
 
-        unset(
-            $options['min'],
-            $options['max'],
-            $options['useByteString'],
-        );
+        unset($options['min'], $options['max'], $options['useByteString']);
 
         $this->minString = $this->min !== null && $this->useByteString
             ? Bytes::fromInteger($this->min)->toSiUnit()
@@ -129,8 +125,8 @@ final class Size extends AbstractValidator
 
         $size       = $file->size()->bytes;
         $this->size = $this->useByteString
-        ? $file->size()->toSiUnit()
-        : (string) $size;
+            ? $file->size()->toSiUnit()
+            : (string) $size;
 
         if ($this->min !== null && $size < $this->min) {
             $this->error(self::TOO_SMALL);

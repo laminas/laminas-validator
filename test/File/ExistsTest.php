@@ -41,7 +41,7 @@ final class ExistsTest extends TestCase
             'error'    => UPLOAD_ERR_OK,
             'type'     => 'text',
         ];
-        $psrUpload  = new UploadedFile(
+        $psrUpload = new UploadedFile(
             $testFile,
             200,
             UPLOAD_ERR_OK,
@@ -58,21 +58,49 @@ final class ExistsTest extends TestCase
         $csv = implode(', ', $directoryList);
 
         return [
-            'String file name, not found in directory'             => [['directory' => dirname($baseDir)], $baseName, false],
+            'String file name, not found in directory'             => [
+                ['directory' => dirname($baseDir)],
+                $baseName,
+                false,
+            ],
             'String file name, found in directory'                 => [['directory' => $baseDir], $baseName, true],
             'String path, directory option irrelevant'             => [['directory' => $baseDir], $testFile, true],
             'String path, no directory option'                     => [[], $testFile, true],
-            '$_FILES with path. Not found in dir option'           => [['directory' => dirname($baseDir)], $fileUpload, false],
+            '$_FILES with path. Not found in dir option'           => [
+                ['directory' => dirname($baseDir)],
+                $fileUpload,
+                false,
+            ],
             '$_FILES with path. No Directory option'               => [[], $fileUpload, true],
             'PSR with path. No Directory option'                   => [[], $psrUpload, true],
-            'PSR with path. Not found in directory option'         => [['directory' => '/home/whatever'], $psrUpload, false],
-            'String filename, found in one of the listed dirs'     => [['directory' => $directoryList, 'all' => false], 'picture.jpg', true],
-            'String filename, found in one of CSV dirs'            => [['directory' => $csv, 'all' => false], 'picture.jpg', true],
-            'String filename, not found in all the listed dirs'    => [['directory' => $directoryList], 'picture.jpg', false],
+            'PSR with path. Not found in directory option'         => [
+                ['directory' => '/home/whatever'],
+                $psrUpload,
+                false,
+            ],
+            'String filename, found in one of the listed dirs'     => [
+                ['directory' => $directoryList, 'all' => false],
+                'picture.jpg',
+                true,
+            ],
+            'String filename, found in one of CSV dirs'            => [
+                ['directory' => $csv, 'all' => false],
+                'picture.jpg',
+                true,
+            ],
+            'String filename, not found in all the listed dirs'    => [
+                ['directory' => $directoryList],
+                'picture.jpg',
+                false,
+            ],
             'String filename, not found in all the CSV dirs'       => [['directory' => $csv], 'picture.jpg', false],
-            'String filename, not found in any of the listed dirs' => [['directory' => $directoryList], 'nope.jpg', false],
+            'String filename, not found in any of the listed dirs' => [
+                ['directory' => $directoryList],
+                'nope.jpg',
+                false,
+            ],
             'String filename, not found in CSV dirs'               => [['directory' => $csv], 'nope.jpg', false],
-            'Not a string, can’t exist'                            => [['directory' => __DIR__], 123, false],
+            'Not a string, can’t exist'                          => [['directory' => __DIR__], 123, false],
         ];
     }
 

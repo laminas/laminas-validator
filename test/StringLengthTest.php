@@ -54,11 +54,11 @@ final class StringLengthTest extends TestCase
     #[DataProvider('basicDataProvider')]
     public static function testBasicFunctionality(
         int $min,
-        int|null $max,
+        ?int $max,
         string $encoding,
         mixed $input,
         bool $isValid,
-        string|null $errorKey,
+        ?string $errorKey,
     ): void {
         $validator = new StringLength([
             'min'      => $min,

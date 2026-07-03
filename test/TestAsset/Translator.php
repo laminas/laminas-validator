@@ -9,9 +9,9 @@ use Laminas\Translator\TranslatorInterface;
 class Translator implements TranslatorInterface
 {
     /** @param array<string, string> $translations */
-    public function __construct(public array $translations)
-    {
-    }
+    public function __construct(
+        public array $translations,
+    ) {}
 
     /** @inheritDoc */
     public function translate(
@@ -28,7 +28,7 @@ class Translator implements TranslatorInterface
         string $plural,
         int $number,
         string $textDomain = self::DEFAULT_TEXT_DOMAIN,
-        ?string $locale = null
+        ?string $locale = null,
     ): string {
         return $number === 1 ? $singular : $plural;
     }

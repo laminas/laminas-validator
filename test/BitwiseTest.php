@@ -23,20 +23,20 @@ final class BitwiseTest extends TestCase
     public static function basicDataProvider(): array
     {
         return [
-            [null, false, 0b0001, 0b0001, false, Bitwise::NO_OP],
-            [Bitwise::OP_AND, false, 0b0001, 0b0001, true, null],
-            [Bitwise::OP_AND, false, 0b0001, 1, true, null],
-            [Bitwise::OP_AND, false, 0b0001, '1', true, null],
-            [Bitwise::OP_AND, true,  0b0001, 1, true, null],
-            [Bitwise::OP_AND, true,  0b0001, '1', true, null],
-            [Bitwise::OP_AND, false, 0b0111, 0b0001, true, null],
+            [null,            false, 0b0001, 0b0001, false, Bitwise::NO_OP],
+            [Bitwise::OP_AND, false, 0b0001, 0b0001, true,  null],
+            [Bitwise::OP_AND, false, 0b0001, 1,      true,  null],
+            [Bitwise::OP_AND, false, 0b0001, '1',    true,  null],
+            [Bitwise::OP_AND, true,  0b0001, 1,      true,  null],
+            [Bitwise::OP_AND, true,  0b0001, '1',    true,  null],
+            [Bitwise::OP_AND, false, 0b0111, 0b0001, true,  null],
             [Bitwise::OP_AND, true,  0b0001, 0b0011, false, Bitwise::NOT_AND_STRICT],
             [Bitwise::OP_AND, false, 0b0001, 0b0010, false, Bitwise::NOT_AND],
-            [Bitwise::OP_AND, false, 0b0001, 'foo', false, Bitwise::NOT_INTEGER],
-            [Bitwise::OP_AND, false, 0b0001, null, false, Bitwise::NOT_INTEGER],
-            [Bitwise::OP_AND, false, 0b0001, 0.5, false, Bitwise::NOT_INTEGER],
-            [Bitwise::OP_XOR, true,  0b0001, 0b0010, true, null],
-            [Bitwise::OP_XOR, true,  0b0001, 0b0100, true, null],
+            [Bitwise::OP_AND, false, 0b0001, 'foo',  false, Bitwise::NOT_INTEGER],
+            [Bitwise::OP_AND, false, 0b0001, null,   false, Bitwise::NOT_INTEGER],
+            [Bitwise::OP_AND, false, 0b0001, 0.5,    false, Bitwise::NOT_INTEGER],
+            [Bitwise::OP_XOR, true,  0b0001, 0b0010, true,  null],
+            [Bitwise::OP_XOR, true,  0b0001, 0b0100, true,  null],
             [Bitwise::OP_XOR, true,  0b0111, 0b0100, false, Bitwise::NOT_XOR],
         ];
     }
@@ -51,7 +51,7 @@ final class BitwiseTest extends TestCase
         int $control,
         mixed $input,
         bool $valid,
-        string|null $errorKey,
+        ?string $errorKey,
     ): void {
         $validator = new Bitwise([
             'operator' => $operator,

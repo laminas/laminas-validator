@@ -186,7 +186,7 @@ final class HashTest extends TestCase
                     'hash'      => $hash,
                 ],
             ];
-            yield $algo . ' hash first'      => [
+            yield $algo . ' hash first' => [
                 'options' => [
                     'hash'      => $hash,
                     'algorithm' => $algo,

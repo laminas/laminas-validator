@@ -353,11 +353,11 @@ final class CreditCard extends AbstractValidator
 
         for ($i = $length - 2; $i >= 0; $i--) {
             $digit  = $weight * (int) $value[$i];
-            $sum   += floor($digit / 10) + $digit % 10;
-            $weight = $weight % 2 + 1;
+            $sum    += floor($digit / 10) + ($digit % 10);
+            $weight = ($weight % 2) + 1;
         }
 
-        $checksum = (10 - $sum % 10) % 10;
+        $checksum = (10 - ($sum % 10)) % 10;
         if ((string) $checksum !== $value[$length - 1]) {
             $this->error(self::CHECKSUM, $value);
             return false;

@@ -35,22 +35,22 @@ final class DigitsTest extends TestCase
     {
         return [
             // phpcs:disable
-            'invalid; starts with alphabetic chars'                 => ['abc123',  false],
+            'invalid; starts with alphabetic chars'                 => ['abc123', false],
             'invalid; contains alphabetic chars and one whitespace' => ['abc 123', false],
-            'invalid; contains only alphabetic chars'               => ['abcxyz',  false],
+            'invalid; contains only alphabetic chars'               => ['abcxyz', false],
             'invalid; contains alphabetic and special chars'        => ['AZ@#4.3', false],
-            'invalid; string float'                                 => ['1.23',    false],
-            'invalid; float'                                        => [1.23,      false],
-            'Hex string'                                            => ['0x9f',    false],
-            'Hex int'                                               => [0x9f,      true],
-            'invalid; is empty'                                     => ['',        false],
-            'Boolean'                                               => [true,      false],
-            'Null'                                                  => [null,      false],
-            'Array'                                                 => [['123'],   false],
+            'invalid; string float'                                 => ['1.23', false],
+            'invalid; float'                                        => [1.23, false],
+            'Hex string'                                            => ['0x9f', false],
+            'Hex int'                                               => [0x9f, true],
+            'invalid; is empty'                                     => ['', false],
+            'Boolean'                                               => [true, false],
+            'Null'                                                  => [null, false],
+            'Array'                                                 => [['123'], false],
 
-            'valid; is a normal integer'                            => ['123',     true],
-            'any integer'                                           => [123,       true],
-            'valid; starts with a zero'                             => ['09',      true],
+            'valid; is a normal integer' => ['123', true],
+            'any integer'                => [123, true],
+            'valid; starts with a zero'  => ['09', true],
             // phpcs:enable
         ];
     }

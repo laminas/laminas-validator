@@ -117,7 +117,8 @@ final class InArray extends AbstractValidator
         // we type cast the input to a string
         if (
             self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY === $this->strict
-            && (is_int($value) || is_float($value))
+            && (is_int($value)
+            || is_float($value))
         ) {
             $value = (string) $value;
         }
@@ -140,7 +141,9 @@ final class InArray extends AbstractValidator
                 $el = $element;
                 if (
                     self::COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY === $this->strict
-                    && is_string($value) && (is_int($el) || is_float($el))
+                    && is_string($value)
+                    && (is_int($el)
+                    || is_float($el))
                 ) {
                     $el = (string) $el;
                 }

@@ -99,7 +99,8 @@ final class Identical extends AbstractValidator
             // so the $matchTo structure doesn't match the $context structure
             if (
                 is_array($matchTo)
-                || (! is_int($matchTo) && ! is_string($matchTo))
+                || (! is_int($matchTo)
+                && ! is_string($matchTo))
                 || ! isset($context[$matchTo])
             ) {
                 $matchTo = $this->token;
@@ -109,9 +110,11 @@ final class Identical extends AbstractValidator
         }
 
         if (
-            ($this->strict && ($value !== $matchTo))
-        // phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedNotEqualOperator
-            || (! $this->strict && ($value != $matchTo))
+            ($this->strict
+            && $value !== $matchTo)
+            // phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedNotEqualOperator
+            || (! $this->strict
+            && $value != $matchTo)
         ) {
             $this->error(self::NOT_SAME);
             return false;

@@ -97,7 +97,7 @@ final class Step extends AbstractValidator
         // find the maximum precision from both input params to give accurate results
         $precision = $this->getPrecision($x) + $this->getPrecision($y);
 
-        return round($x - $y * floor($x / $y), $precision);
+        return round($x - ($y * floor($x / $y)), $precision);
     }
 
     /**

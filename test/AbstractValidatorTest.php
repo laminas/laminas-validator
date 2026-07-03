@@ -181,10 +181,13 @@ final class AbstractValidatorTest extends TestCase
         $messages = $this->validator->getMessages();
 
         self::assertCount(2, $messages);
-        self::assertSame([
-            ConcreteValidator::FOO_MESSAGE => 'invalid was passed',
-            ConcreteValidator::BAR_MESSAGE => 'invalid was wrong',
-        ], $messages);
+        self::assertSame(
+            [
+                ConcreteValidator::FOO_MESSAGE => 'invalid was passed',
+                ConcreteValidator::BAR_MESSAGE => 'invalid was wrong',
+            ],
+            $messages,
+        );
     }
 
     public function testIdenticalMessagesNotReturned(): void

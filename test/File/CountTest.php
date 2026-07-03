@@ -155,7 +155,7 @@ final class CountTest extends TestCase
      * @param OptionsArgument $options
      */
     #[DataProvider('basicDataProvider')]
-    public function testBasic(array $options, mixed $value, bool $expect, string|null $errorKey): void
+    public function testBasic(array $options, mixed $value, bool $expect, ?string $errorKey): void
     {
         $validator = new Count($options);
 

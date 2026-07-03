@@ -19,7 +19,7 @@ final class CallbackTest extends TestCase
     public function testBasic(): void
     {
         $validator = new Callback(
-            static fn (mixed $value): bool => $value === 'test',
+            static fn(mixed $value): bool => $value === 'test',
         );
 
         self::assertTrue($validator->isValid('test'));
@@ -56,8 +56,11 @@ final class CallbackTest extends TestCase
         $givenContext = ['baz' => 'bat'];
         $validator    = new Callback([
             'throwExceptions' => true,
-            'callback'        => static fn(mixed $value, array $context, string $foo): bool
-                => $value === 'test' && $foo === 'foo' && $context === $givenContext,
+            'callback'        => static fn(mixed $value, array $context, string $foo): bool => (
+                $value === 'test'
+                && $foo === 'foo'
+                && $context === $givenContext
+            ),
             'callbackOptions' => ['foo' => 'foo'],
         ]);
 
@@ -69,8 +72,10 @@ final class CallbackTest extends TestCase
         $givenContext = ['baz' => 'bat'];
         $validator    = new Callback([
             'throwExceptions' => true,
-            'callback'        => static fn(mixed $value, array $context): bool
-                => $value === 'test' && $context === $givenContext,
+            'callback'        => static fn(mixed $value, array $context): bool => (
+                $value === 'test'
+                && $context === $givenContext
+            ),
             'callbackOptions' => [],
         ]);
 

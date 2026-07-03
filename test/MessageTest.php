@@ -38,7 +38,7 @@ final class MessageTest extends TestCase
 
         $this->validator->setMessage(
             'Your value is too long',
-            StringLength::TOO_LONG
+            StringLength::TOO_LONG,
         );
 
         self::assertFalse($this->validator->isValid('abcdefghij'));
@@ -58,7 +58,7 @@ final class MessageTest extends TestCase
     {
         $this->validator->setMessage(
             'Your value is too short',
-            StringLength::TOO_SHORT
+            StringLength::TOO_SHORT,
         );
 
         self::assertFalse($this->validator->isValid('abc'));
@@ -80,7 +80,7 @@ final class MessageTest extends TestCase
     {
         $this->validator->setMessage(
             "Your value '%value%' is too long",
-            StringLength::TOO_LONG
+            StringLength::TOO_LONG,
         );
 
         $inputInvalid = 'abcdefghij';
@@ -100,7 +100,7 @@ final class MessageTest extends TestCase
     {
         $this->validator->setMessage(
             "The length of your value is '%length%'",
-            StringLength::TOO_LONG
+            StringLength::TOO_LONG,
         );
         $inputInvalid = 'abcdefghij';
 
@@ -121,7 +121,7 @@ final class MessageTest extends TestCase
     {
         $this->validator->setMessage(
             'Your value is too long, it should be no longer than %max%',
-            StringLength::TOO_LONG
+            StringLength::TOO_LONG,
         );
 
         $inputInvalid = 'abcdefghij';
@@ -142,7 +142,7 @@ final class MessageTest extends TestCase
     {
         $this->validator->setMessage(
             'Your value is too long, and btw, %shazam%!',
-            StringLength::TOO_LONG
+            StringLength::TOO_LONG,
         );
 
         $inputInvalid = 'abcdefghij';
@@ -167,7 +167,7 @@ final class MessageTest extends TestCase
 
         $this->validator->setMessage(
             'Your value is too long',
-            $keyInvalid
+            $keyInvalid,
         );
     }
 

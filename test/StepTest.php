@@ -51,7 +51,7 @@ final class StepTest extends TestCase
         // By default, baseValue == 0 and step == 1
         self::assertSame(
             $expected,
-            $this->validator->isValid($value)
+            $this->validator->isValid($value),
         );
     }
 

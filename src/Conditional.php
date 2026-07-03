@@ -30,7 +30,7 @@ final class Conditional implements ValidatorInterface
             throw new InvalidArgumentException('The `rule` option must be callable');
         }
 
-        $this->rule  = ($rule)(...);
+        $this->rule  = $rule(...);
         $this->chain = $chainFactory->fromArray($options['validators']);
     }
 

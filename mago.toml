@@ -15,6 +15,9 @@ literal-separator = true
 
 [formatter]
 preset = "default"
+
+align-assignment-like = true
+
 preserve-breaking-member-access-chain = true
 preserve-breaking-member-access-chain-first-method-on-same-line = true
 preserve-breaking-argument-list = true
@@ -24,6 +27,8 @@ preserve-breaking-attribute-list = true
 preserve-breaking-conditional-expression = true
 preserve-breaking-condition-expression = true
 preserve-redundant-logical-binary-expression-parentheses = true
+
+space-after-logical-not-unary-prefix-operator = true
 
 [linter]
 integrations = ["phpunit"]

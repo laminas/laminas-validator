@@ -58,15 +58,15 @@ final class EmailAddress extends AbstractValidator
 
     /** @var array<string, string> */
     protected array $messageTemplates = [
-        self::INVALID            => "Invalid type given. String expected",
-        self::INVALID_FORMAT     => "The input is not a valid email address. Use the basic format local-part@hostname",
+        self::INVALID            => 'Invalid type given. String expected',
+        self::INVALID_FORMAT     => 'The input is not a valid email address. Use the basic format local-part@hostname',
         self::INVALID_HOSTNAME   => "'%hostname%' is not a valid hostname for the email address",
         self::INVALID_MX_RECORD  => "'%hostname%' does not appear to have any valid MX or A records for the email address",
         self::INVALID_SEGMENT    => "'%hostname%' is not in a routable network segment. The email address should not be resolved from public network",
         self::DOT_ATOM           => "'%localPart%' can not be matched against dot-atom format",
         self::QUOTED_STRING      => "'%localPart%' can not be matched against quoted-string format",
         self::INVALID_LOCAL_PART => "'%localPart%' is not a valid local part for the email address",
-        self::LENGTH_EXCEEDED    => "The input exceeds the allowed length",
+        self::LENGTH_EXCEEDED    => 'The input exceeds the allowed length',
     ];
 
     // phpcs:enable
@@ -103,12 +103,12 @@ final class EmailAddress extends AbstractValidator
         $messages         = $options['messages'] ?? [];
         $hostnameMessages = array_filter(
             $messages,
-            fn (string $value, string $key): bool => ! array_key_exists($key, $this->messageTemplates),
+            fn(string $value, string $key): bool => ! array_key_exists($key, $this->messageTemplates),
             ARRAY_FILTER_USE_BOTH,
         );
-        $messages         = array_filter(
+        $messages = array_filter(
             $messages,
-            fn (string $value, string $key): bool => array_key_exists($key, $this->messageTemplates),
+            fn(string $value, string $key): bool => array_key_exists($key, $this->messageTemplates),
             ARRAY_FILTER_USE_BOTH,
         );
 
@@ -117,10 +117,10 @@ final class EmailAddress extends AbstractValidator
             'allow'    => $allow,
             'messages' => $hostnameMessages,
         ]);
-        $this->useMxCheck        = $options['useMxCheck'] ?? false;
-        $this->useDeepMxCheck    = $options['useDeepMxCheck'] ?? false;
-        $this->useDomainCheck    = $options['useDomainCheck'] ?? true;
-        $this->strict            = $options['strict'] ?? true;
+        $this->useMxCheck     = $options['useMxCheck'] ?? false;
+        $this->useDeepMxCheck = $options['useDeepMxCheck'] ?? false;
+        $this->useDomainCheck = $options['useDomainCheck'] ?? true;
+        $this->strict         = $options['strict'] ?? true;
 
         unset(
             $options['allow'],
@@ -186,7 +186,7 @@ final class EmailAddress extends AbstractValidator
         // Try quoted string format (RFC 5321 Chapter 4.1.2)
 
         // Quoted-string characters are: DQUOTE *(qtext/quoted-pair) DQUOTE
-        $qtext      = '\x20-\x21\x23-\x5b\x5d-\x7e'; // %d32-33 / %d35-91 / %d93-126
+        $qtext = '\x20-\x21\x23-\x5b\x5d-\x7e'; // %d32-33 / %d35-91 / %d93-126
         $quotedPair = '\x20-\x7e'; // %d92 %d32-126
         if (preg_match('/^"([' . $qtext . ']|\x5c[' . $quotedPair . '])*"$/', $localPart)) {
             return true;
@@ -356,7 +356,7 @@ final class EmailAddress extends AbstractValidator
         $this->localPart = $localPart;
         $this->hostname  = $hostname;
 
-        if ($this->strict && (strlen($localPart) > 64) || (strlen($hostname) > 255)) {
+        if ($this->strict && strlen($localPart) > 64 || strlen($hostname) > 255) {
             $length = false;
             $this->error(self::LENGTH_EXCEEDED);
         }
@@ -370,7 +370,7 @@ final class EmailAddress extends AbstractValidator
         $local = $this->validateLocalPart($localPart);
 
         // If both parts valid, return true
-        return ($local && $length) && (! $this->useDomainCheck || $hostnameValid !== false);
+        return $local && $length && (! $this->useDomainCheck || $hostnameValid !== false);
     }
 
     /**

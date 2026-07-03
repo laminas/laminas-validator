@@ -60,7 +60,7 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorCha
      * Initialize validator chain
      */
     public function __construct(
-        private ValidatorPluginManager|null $pluginManager = null,
+        private ?ValidatorPluginManager $pluginManager = null,
     ) {
         /** @var PriorityQueue<QueueElement, int> $queue */
         $queue            = new PriorityQueue();
