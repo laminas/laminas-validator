@@ -1,0 +1,1777 @@
+variant = "loose"
+
+[[issues]]
+file = "src/AbstractValidator.php"
+code = "possibly-null-argument"
+message = "Argument #1 of function `array_key_exists` is possibly `null`, but parameter type `bool|float|int|string` does not accept it."
+count = 1
+
+[[issues]]
+file = "src/AbstractValidator.php"
+code = "possibly-null-argument"
+message = 'Argument #1 of method `Laminas\Validator\AbstractValidator::translateMessage` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/AbstractValidator.php"
+code = "possibly-undefined-string-array-index"
+message = "Possibly undefined array key `string` accessed on `array<string, string>`."
+count = 2
+
+[[issues]]
+file = "src/AbstractValidator.php"
+code = "redundant-comparison"
+message = "Redundant `===` comparison: left-hand side is always identical to right-hand side."
+count = 1
+
+[[issues]]
+file = "src/AbstractValidator.php"
+code = "redundant-docblock-type"
+message = "Redundant docblock type for variable `$messages`."
+count = 1
+
+[[issues]]
+file = "src/AbstractValidator.php"
+code = "redundant-logical-operation"
+message = "Redundant `||` operation: left operand is evaluated and right operand is always truthy."
+count = 1
+
+[[issues]]
+file = "src/AbstractValidator.php"
+code = "redundant-type-comparison"
+message = "Redundant condition: variable `$translator` (type `null`) is already known to be `null`."
+count = 1
+
+[[issues]]
+file = "src/AbstractValidator.php"
+code = "redundant-type-comparison"
+message = "Redundant type assertion: `$messages` is already `array<string, string>`."
+count = 1
+
+[[issues]]
+file = "src/AbstractValidator.php"
+code = "redundant-type-comparison"
+message = "Redundant type assertion: `$translatorEnabled` is already `bool`."
+count = 1
+
+[[issues]]
+file = "src/AbstractValidator.php"
+code = "redundant-type-comparison"
+message = "Redundant type assertion: `$translatorTextDomain` is already `string`."
+count = 1
+
+[[issues]]
+file = "src/AbstractValidator.php"
+code = "string-member-selector"
+message = "This member selector uses a non-literal string type (`string`); its specific value cannot be statically determined."
+count = 2
+
+[[issues]]
+file = "src/AbstractValidator.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Laminas\Validator\Exception\RuntimeException` in `Laminas\Validator\AbstractValidator::__invoke`.'
+count = 1
+
+[[issues]]
+file = "src/BackedEnumValue.php"
+code = "no-value"
+message = "Argument #2 passed to function `sprintf` has type `never`, meaning it cannot produce a value."
+count = 1
+
+[[issues]]
+file = "src/BackedEnumValue.php"
+code = "possibly-static-access-on-interface"
+message = "Potential static method call on interface `BackedEnum` via `class-string`."
+count = 1
+
+[[issues]]
+file = "src/Barcode.php"
+code = "unsafe-instantiation"
+message = 'Potentially unsafe instantiation: `class-string<Laminas\Validator\Barcode\AdapterInterface>` may contain the interface `Laminas\Validator\Barcode\AdapterInterface` itself, which cannot be instantiated.'
+count = 1
+
+[[issues]]
+file = "src/Barcode/AdapterInterface.php"
+code = "missing-return-type"
+message = "Function `getLength` is missing a return type hint."
+count = 1
+
+[[issues]]
+file = "src/Barcode/Code128.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Laminas\Stdlib\Exception\RuntimeException` in `Laminas\Validator\Barcode\Code128::__construct`.'
+count = 1
+
+[[issues]]
+file = "src/Barcode/Code25interleaved.php"
+code = "docblock-type-mismatch"
+message = 'Docblock return type `!Laminas\Validator\Barcode\AdapterInterface::AllowedLength` is incompatible with native return type `string`.'
+count = 1
+
+[[issues]]
+file = "src/Barcode/Code39.php"
+code = "possibly-null-operand"
+message = "Right operand in arithmetic operation might be `null` (type `int(0)|int(1)|int(10)|int(11)|int(12)|int(13)|int(14)|int(15)|int(16)|int(17)|int(18)|int(19)|int(2)|int(20)|int(21)|int(22)|int(23)|int(24)|int(25)|int(26)|int(27)|int(28)|int(29)|int(3)|int(30)|int(31)|int(32)|int(33)|int(34)|int(35)|int(36)|int(37)|int(38)|int(39)|int(4)|int(40)|int(41)|int(42)|int(5)|int(6)|int(7)|int(8)|int(9)|null`)."
+count = 1
+
+[[issues]]
+file = "src/Barcode/Code39.php"
+code = "possibly-undefined-string-array-index"
+message = "Possibly undefined array key `string` accessed on `array{' ': int(38), '$': int(39), '%': int(42), '+': int(41), '-': int(36), '.': int(37), '/': int(40), '0': int(0), '1': int(1), '2': int(2), '3': int(3), '4': int(4), '5': int(5), '6': int(6), '7': int(7), '8': int(8), '9': int(9), 'A': int(10), 'B': int(11), 'C': int(12), 'D': int(13), 'E': int(14), 'F': int(15), 'G': int(16), 'H': int(17), 'I': int(18), 'J': int(19), 'K': int(20), 'L': int(21), 'M': int(22), 'N': int(23), 'O': int(24), 'P': int(25), 'Q': int(26), 'R': int(27), 'S': int(28), 'T': int(29), 'U': int(30), 'V': int(31), 'W': int(32), 'X': int(33), 'Y': int(34), 'Z': int(35)}`."
+count = 2
+
+[[issues]]
+file = "src/Barcode/Code93.php"
+code = "possibly-null-operand"
+message = "Left operand in arithmetic operation might be `null` (type `int(0)|int(1)|int(10)|int(11)|int(12)|int(13)|int(14)|int(15)|int(16)|int(17)|int(18)|int(19)|int(2)|int(20)|int(21)|int(22)|int(23)|int(24)|int(25)|int(26)|int(27)|int(28)|int(29)|int(3)|int(30)|int(31)|int(32)|int(33)|int(34)|int(35)|int(36)|int(37)|int(38)|int(39)|int(4)|int(40)|int(41)|int(42)|int(43)|int(44)|int(45)|int(46)|int(5)|int(6)|int(7)|int(8)|int(9)|null`)."
+count = 2
+
+[[issues]]
+file = "src/Barcode/Code93.php"
+code = "possibly-undefined-string-array-index"
+message = """Possibly undefined array key `string` accessed on `array{' ': int(38), '!': int(43), '"': int(44), '$': int(39), '%': int(42), '&': int(46), '+': int(41), '-': int(36), '.': int(37), '/': int(40), '0': int(0), '1': int(1), '2': int(2), '3': int(3), '4': int(4), '5': int(5), '6': int(6), '7': int(7), '8': int(8), '9': int(9), 'A': int(10), 'B': int(11), 'C': int(12), 'D': int(13), 'E': int(14), 'F': int(15), 'G': int(16), 'H': int(17), 'I': int(18), 'J': int(19), 'K': int(20), 'L': int(21), 'M': int(22), 'N': int(23), 'O': int(24), 'P': int(25), 'Q': int(26), 'R': int(27), 'S': int(28), 'T': int(29), 'U': int(30), 'V': int(31), 'W': int(32), 'X': int(33), 'Y': int(34), 'Z': int(35), '§': int(45)}`."""
+count = 2
+
+[[issues]]
+file = "src/Barcode/Intelligentmail.php"
+code = "docblock-type-mismatch"
+message = 'Docblock return type `!Laminas\Validator\Barcode\AdapterInterface::AllowedLength` is incompatible with native return type `array<array-key, mixed>`.'
+count = 1
+
+[[issues]]
+file = "src/Barcode/Issn.php"
+code = "docblock-type-mismatch"
+message = 'Docblock return type `!Laminas\Validator\Barcode\AdapterInterface::AllowedLength` is incompatible with native return type `array<array-key, mixed>`.'
+count = 1
+
+[[issues]]
+file = "src/Barcode/Planet.php"
+code = "docblock-type-mismatch"
+message = 'Docblock return type `!Laminas\Validator\Barcode\AdapterInterface::AllowedLength` is incompatible with native return type `array<array-key, mixed>`.'
+count = 1
+
+[[issues]]
+file = "src/Barcode/Postnet.php"
+code = "docblock-type-mismatch"
+message = 'Docblock return type `!Laminas\Validator\Barcode\AdapterInterface::AllowedLength` is incompatible with native return type `array<array-key, mixed>`.'
+count = 1
+
+[[issues]]
+file = "src/Barcode/Royalmail.php"
+code = "possibly-null-operand"
+message = "Right operand in arithmetic operation might be `null` (type `int|null`)."
+count = 2
+
+[[issues]]
+file = "src/Barcode/Royalmail.php"
+code = "possibly-undefined-string-array-index"
+message = "Possibly undefined array key `string` accessed on `array<array-key, int>`."
+count = 2
+
+[[issues]]
+file = "src/Barcode/Upce.php"
+code = "docblock-type-mismatch"
+message = 'Docblock return type `!Laminas\Validator\Barcode\AdapterInterface::AllowedLength` is incompatible with native return type `array<array-key, mixed>`.'
+count = 1
+
+[[issues]]
+file = "src/BusinessIdentifierCode.php"
+code = "possibly-null-argument"
+message = 'Argument #1 of method `Laminas\Validator\BusinessIdentifierCode::isSwiftValidCountry` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/BusinessIdentifierCode.php"
+code = "possibly-undefined-string-array-index"
+message = "Possibly undefined array key `string('country')` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/BusinessIdentifierCode.php"
+code = "reference-to-undefined-variable"
+message = "Reference created from a previously undefined variable `$matches`."
+count = 1
+
+[[issues]]
+file = "src/Callback.php"
+code = "invalid-docblock"
+message = "Invalid type in `@var` tag for variable `$options`."
+count = 2
+
+[[issues]]
+file = "src/Callback.php"
+code = "invalid-method-access"
+message = "Attempting to access a method on a non-object type (`(closure(...mixed): mixed)`)."
+count = 1
+
+[[issues]]
+file = "src/Callback.php"
+code = "invalid-method-access"
+message = "Attempting to access a method on a non-object type (`(closure(mixed, array<string, mixed>, ...mixed): bool)`)."
+count = 1
+
+[[issues]]
+file = "src/Callback.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Laminas\Validator\AbstractValidator::__construct`: expected `array{'messages'?: array<string, string>, 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'valueObscured'?: bool, ...<string, mixed>}`, but possibly received `array{'messages'?: array<string, string>, 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'valueObscured'?: bool}|array{0: class-string|object, 1: non-empty-string}|array{}`.'''
+count = 1
+
+[[issues]]
+file = "src/Callback.php"
+code = "possibly-undefined-string-array-index"
+message = '''Possibly undefined array key accessed on `array{'bind'?: bool, 'callback': (callable(mixed, array<string, mixed>, ...mixed): bool), 'callbackOptions'?: array<array-key, mixed>, 'messages'?: array<string, string>, 'throwExceptions'?: bool, 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'valueObscured'?: bool}|array{'callback': (callable(...mixed): mixed)}|array{0: class-string|object, 1: non-empty-string}`.'''
+count = 1
+
+[[issues]]
+file = "src/Callback.php"
+code = "possibly-undefined-string-array-index"
+message = '''Possibly undefined array key accessed on `array{'bind'?: bool, 'callbackOptions'?: array<array-key, mixed>, 'messages'?: array<string, string>, 'throwExceptions'?: bool, 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'valueObscured'?: bool}|array{0: class-string|object, 1: non-empty-string}|array{}`.'''
+count = 1
+
+[[issues]]
+file = "src/Callback.php"
+code = "possibly-undefined-string-array-index"
+message = '''Possibly undefined array key accessed on `array{'bind'?: bool, 'messages'?: array<string, string>, 'throwExceptions'?: bool, 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'valueObscured'?: bool}|array{0: class-string|object, 1: non-empty-string}|array{}`.'''
+count = 1
+
+[[issues]]
+file = "src/Callback.php"
+code = "possibly-undefined-string-array-index"
+message = '''Possibly undefined array key accessed on `array{'bind'?: bool, 'messages'?: array<string, string>, 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'valueObscured'?: bool}|array{0: class-string|object, 1: non-empty-string}|array{}`.'''
+count = 1
+
+[[issues]]
+file = "src/Callback.php"
+code = "redundant-type-comparison"
+message = "Redundant type assertion: `$bind` is already `bool`."
+count = 1
+
+[[issues]]
+file = "src/Callback.php"
+code = "redundant-type-comparison"
+message = "Redundant type assertion: `$throw` is already `bool`."
+count = 1
+
+[[issues]]
+file = "src/Callback.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Exception` in `Laminas\Validator\Callback::isValid`.'
+count = 1
+
+[[issues]]
+file = "src/Conditional.php"
+code = "redundant-null-coalesce"
+message = "Redundant null coalesce: left-hand side can never be `null` or undefined."
+count = 1
+
+[[issues]]
+file = "src/Conditional.php"
+code = "redundant-type-comparison"
+message = "Redundant type assertion: `$rule` is already `(callable(array<string, mixed>): bool)`."
+count = 1
+
+[[issues]]
+file = "src/ConditionalFactory.php"
+code = "imprecise-type"
+message = "Type `array` in parameter `$options` is imprecise, equivalent to `array<array-key, mixed>`."
+count = 1
+
+[[issues]]
+file = "src/ConditionalFactory.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #2 of `Laminas\Validator\Conditional::__construct`: expected `array{'rule': (callable(array<string, mixed>): bool), 'validators': array<array-key, array{'break_chain_on_failure'?: bool, 'name': class-string<Laminas\Validator\ValidatorInterface>|string, 'options'?: array<string, mixed>, 'priority'?: int}>}`, but possibly received `array<array-key, mixed>`.'''
+count = 1
+
+[[issues]]
+file = "src/ConfigProvider.php"
+code = "docblock-type-mismatch"
+message = 'Docblock return type `!laminas\servicemanager\servicemanager::ServiceManagerConfiguration` is incompatible with native return type `array<array-key, mixed>`.'
+count = 1
+
+[[issues]]
+file = "src/ConfigProvider.php"
+code = "invalid-return-statement"
+message = '''Invalid return type for function `Laminas\Validator\ConfigProvider::getDependencyConfig`: expected `array{'abstract_factories'?: array<array-key, Laminas\ServiceManager\Factory\AbstractFactoryInterface|class-string<Laminas\ServiceManager\Factory\AbstractFactoryInterface>>, 'aliases'?: array<string, string>, 'delegators'?: !Laminas\ServiceManager\ServiceManager::DelegatorsConfiguration, 'factories'?: !Laminas\ServiceManager\ServiceManager::FactoriesConfiguration, 'initializers'?: !Laminas\ServiceManager\ServiceManager::InitializersConfiguration, 'invokables'?: array<string, class-string>, 'lazy_services'?: array{'class_map'?: array<string, class-string>, 'proxies_namespace'?: non-empty-string, 'proxies_target_dir'?: non-empty-string, 'write_proxy_files'?: bool}, 'services'?: array<string, mixed>, 'shared'?: array<string, bool>, 'shared_by_default'?: bool, ...<string, mixed>}`, but found `array{'aliases': array{'Laminas\Validator\ValidatorChainInterface': class-string('Laminas\Validator\ValidatorChain'), 'ValidatorManager': class-string('Laminas\Validator\ValidatorPluginManager')}, 'factories': array{'Laminas\Validator\ValidatorChainFactory': class-string('Laminas\Validator\ValidatorChainFactoryFactory'), 'Laminas\Validator\ValidatorPluginManager': class-string('Laminas\Validator\ValidatorPluginManagerFactory')}}`.'''
+count = 1
+
+[[issues]]
+file = "src/CreditCard.php"
+code = "possibly-null-argument"
+message = "Argument #2 of function `in_array` is possibly `null`, but parameter type `array<array-key, int(12)|int(13)|int(14)|int(15)|int(16)|int(17)|int(18)|int(19)>` does not accept it."
+count = 1
+
+[[issues]]
+file = "src/CreditCard.php"
+code = "possibly-null-iterator"
+message = "Expression being iterated (type `list{string('1800'), string('2131'), string('3528'), string('3529'), string('353'), string('354'), string('355'), string('356'), string('357'), string('358')}|list{string('2200'), string('2201'), string('2202'), string('2203'), string('2204')}|list{string('2221'), string('2222'), string('2223'), string('2224'), string('2225'), string('2226'), string('2227'), string('2228'), string('2229'), string('223'), string('224'), string('225'), string('226'), string('227'), string('228'), string('229'), string('23'), string('24'), string('25'), string('26'), string('271'), string('2720'), string('51'), string('52'), string('53'), string('54'), string('55')}|list{string('300'), string('301'), string('302'), string('303'), string('304'), string('305'), string('36')}|list{string('34'), string('37')}|list{string('4')}|list{string('5018'), string('5020'), string('5038'), string('6304'), string('6759'), string('6761'), string('6762'), string('6763'), string('6764'), string('6765'), string('6766'), string('6772')}|list{string('54'), string('55')}|list{string('6011'), string('622126'), string('622127'), string('622128'), string('622129'), string('62213'), string('62214'), string('62215'), string('62216'), string('62217'), string('62218'), string('62219'), string('6222'), string('6223'), string('6224'), string('6225'), string('6226'), string('6227'), string('6228'), string('62290'), string('62291'), string('622920'), string('622921'), string('622922'), string('622923'), string('622924'), string('622925'), string('644'), string('645'), string('646'), string('647'), string('648'), string('649'), string('65')}|list{string('622126'), string('622127'), string('622128'), string('622129'), string('62213'), string('62214'), string('62215'), string('62216'), string('62217'), string('62218'), string('62219'), string('6222'), string('6223'), string('6224'), string('6225'), string('6226'), string('6227'), string('6228'), string('62290'), string('62291'), string('622920'), string('622921'), string('622922'), string('622923'), string('622924'), string('622925')}|list{string('6304'), string('6706'), string('6771'), string('6709')}|list{string('6334'), string('6767')}|null`) might be `null` at runtime."
+count = 1
+
+[[issues]]
+file = "src/CreditCard.php"
+code = "possibly-undefined-string-array-index"
+message = "Possibly undefined array key `string('American_Express')|string('Diners_Club')|string('Diners_Club_US')|string('Discover')|string('JCB')|string('Laser')|string('Maestro')|string('Mastercard')|string('Mir')|string('Solo')|string('Unionpay')|string('Visa')` accessed on `array<array-key, list{int(12), int(13), int(14), int(15), int(16), int(17), int(18), int(19)}|list{int(13), int(16), int(19)}|list{int(13), int(16)}|list{int(14)}|list{int(15), int(16)}|list{int(15)}|list{int(16), int(17), int(18), int(19)}|list{int(16), int(17), int(18), int(19)}|list{int(16), int(18), int(19)}|list{int(16), int(19)}|list{int(16)}|list{int(16)}>`."
+count = 1
+
+[[issues]]
+file = "src/CreditCard.php"
+code = "possibly-undefined-string-array-index"
+message = "Possibly undefined array key `string('American_Express')|string('Diners_Club')|string('Diners_Club_US')|string('Discover')|string('JCB')|string('Laser')|string('Maestro')|string('Mastercard')|string('Mir')|string('Solo')|string('Unionpay')|string('Visa')` accessed on `array<array-key, list{string('1800'), string('2131'), string('3528'), string('3529'), string('353'), string('354'), string('355'), string('356'), string('357'), string('358')}|list{string('2200'), string('2201'), string('2202'), string('2203'), string('2204')}|list{string('2221'), string('2222'), string('2223'), string('2224'), string('2225'), string('2226'), string('2227'), string('2228'), string('2229'), string('223'), string('224'), string('225'), string('226'), string('227'), string('228'), string('229'), string('23'), string('24'), string('25'), string('26'), string('271'), string('2720'), string('51'), string('52'), string('53'), string('54'), string('55')}|list{string('300'), string('301'), string('302'), string('303'), string('304'), string('305'), string('36')}|list{string('34'), string('37')}|list{string('4')}|list{string('5018'), string('5020'), string('5038'), string('6304'), string('6759'), string('6761'), string('6762'), string('6763'), string('6764'), string('6765'), string('6766'), string('6772')}|list{string('54'), string('55')}|list{string('6011'), string('622126'), string('622127'), string('622128'), string('622129'), string('62213'), string('62214'), string('62215'), string('62216'), string('62217'), string('62218'), string('62219'), string('6222'), string('6223'), string('6224'), string('6225'), string('6226'), string('6227'), string('6228'), string('62290'), string('62291'), string('622920'), string('622921'), string('622922'), string('622923'), string('622924'), string('622925'), string('644'), string('645'), string('646'), string('647'), string('648'), string('649'), string('65')}|list{string('622126'), string('622127'), string('622128'), string('622129'), string('62213'), string('62214'), string('62215'), string('62216'), string('62217'), string('62218'), string('62219'), string('6222'), string('6223'), string('6224'), string('6225'), string('6226'), string('6227'), string('6228'), string('62290'), string('62291'), string('622920'), string('622921'), string('622922'), string('622923'), string('622924'), string('622925')}|list{string('6304'), string('6706'), string('6771'), string('6709')}|list{string('6334'), string('6767')}>`."
+count = 1
+
+[[issues]]
+file = "src/CreditCard.php"
+code = "redundant-docblock-type"
+message = "Redundant docblock type for expression."
+count = 1
+
+[[issues]]
+file = "src/CreditCard.php"
+code = "redundant-type-comparison"
+message = "Redundant type assertion: `$service` is already `(callable(mixed, array<string, mixed>, ...mixed): bool)`."
+count = 1
+
+[[issues]]
+file = "src/Date.php"
+code = "imprecise-type"
+message = "Type `array` in parameter `$value` is imprecise, equivalent to `array<array-key, mixed>`."
+count = 1
+
+[[issues]]
+file = "src/Date.php"
+code = "less-specific-nested-argument-type"
+message = "Argument type mismatch for argument #2 of `implode`: expected `array<array-key, Stringable|null|scalar>|null`, but provided type `array<array-key, mixed>` is less specific."
+count = 1
+
+[[issues]]
+file = "src/Date.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #1 of `Laminas\Validator\Date::convertArray`: expected `array<array-key, mixed>`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Date.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #1 of `Laminas\Validator\Date::convertNumeric`: expected `float|int`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/Date.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #1 of `Laminas\Validator\Date::convertString`: expected `string`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/DateComparison.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `DateInvalidTimeZoneException` in `Laminas\Validator\DateComparison::isoDateFromString`.'
+count = 1
+
+[[issues]]
+file = "src/DateComparison.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `DateInvalidTimeZoneException` in `Laminas\Validator\DateComparison::valueToDate`.'
+count = 1
+
+[[issues]]
+file = "src/DateComparison.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `DateInvalidTimeZoneException` in `Laminas\Validator\DateComparison::w3cDateFromString`.'
+count = 1
+
+[[issues]]
+file = "src/DateStep.php"
+code = "missing-parameter-type"
+message = "Parameter `$minSteps` is missing a type hint."
+count = 1
+
+[[issues]]
+file = "src/DateStep.php"
+code = "missing-return-type"
+message = "Function `computeMinSteps` is missing a return type hint."
+count = 1
+
+[[issues]]
+file = "src/DateStep.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 4
+
+[[issues]]
+file = "src/DateStep.php"
+code = "mixed-method-access"
+message = "Attempting to access a method on a non-object type (`mixed`)."
+count = 4
+
+[[issues]]
+file = "src/DateStep.php"
+code = "mixed-operand"
+message = "Left operand in `<` comparison has `mixed` type."
+count = 1
+
+[[issues]]
+file = "src/DateStep.php"
+code = "mixed-operand"
+message = "Left operand in `==` comparison has `mixed` type."
+count = 1
+
+[[issues]]
+file = "src/DateStep.php"
+code = "mixed-operand"
+message = "Left operand in `>` comparison has `mixed` type."
+count = 1
+
+[[issues]]
+file = "src/DateStep.php"
+code = "possibly-null-operand"
+message = "Left operand in arithmetic operation might be `null` (type `int|null`)."
+count = 22
+
+[[issues]]
+file = "src/DateStep.php"
+code = "possibly-null-operand"
+message = "Right operand in arithmetic operation might be `null` (type `int|null`)."
+count = 5
+
+[[issues]]
+file = "src/DateStep.php"
+code = "possibly-undefined-int-array-index"
+message = "Possibly undefined array key `int(0)` accessed on `array<int, int>`."
+count = 1
+
+[[issues]]
+file = "src/DateStep.php"
+code = "possibly-undefined-int-array-index"
+message = "Possibly undefined array key `int(1)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/DateStep.php"
+code = "possibly-undefined-int-array-index"
+message = "Possibly undefined array key `int(2)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/DateStep.php"
+code = "possibly-undefined-string-array-index"
+message = "Possibly undefined array key `string('days')` accessed on `array<array-key, int>`."
+count = 3
+
+[[issues]]
+file = "src/DateStep.php"
+code = "possibly-undefined-string-array-index"
+message = "Possibly undefined array key `string('days')` accessed on `non-empty-array<string('days')|string('hours')|string('minutes')|string('months')|string('seconds')|string('years'), int>`."
+count = 2
+
+[[issues]]
+file = "src/DateStep.php"
+code = "possibly-undefined-string-array-index"
+message = "Possibly undefined array key `string('hours')` accessed on `array<array-key, int>`."
+count = 3
+
+[[issues]]
+file = "src/DateStep.php"
+code = "possibly-undefined-string-array-index"
+message = "Possibly undefined array key `string('hours')` accessed on `non-empty-array<string('days')|string('hours')|string('minutes')|string('months')|string('seconds')|string('years'), int>`."
+count = 6
+
+[[issues]]
+file = "src/DateStep.php"
+code = "possibly-undefined-string-array-index"
+message = "Possibly undefined array key `string('minutes')` accessed on `array<array-key, int>`."
+count = 3
+
+[[issues]]
+file = "src/DateStep.php"
+code = "possibly-undefined-string-array-index"
+message = "Possibly undefined array key `string('minutes')` accessed on `non-empty-array<string('days')|string('hours')|string('minutes')|string('months')|string('seconds')|string('years'), int>`."
+count = 7
+
+[[issues]]
+file = "src/DateStep.php"
+code = "possibly-undefined-string-array-index"
+message = "Possibly undefined array key `string('months')` accessed on `array<array-key, int>`."
+count = 3
+
+[[issues]]
+file = "src/DateStep.php"
+code = "possibly-undefined-string-array-index"
+message = "Possibly undefined array key `string('months')` accessed on `non-empty-array<string('days')|string('hours')|string('minutes')|string('months')|string('seconds')|string('years'), int>`."
+count = 2
+
+[[issues]]
+file = "src/DateStep.php"
+code = "possibly-undefined-string-array-index"
+message = "Possibly undefined array key `string('seconds')` accessed on `array<array-key, int>`."
+count = 3
+
+[[issues]]
+file = "src/DateStep.php"
+code = "possibly-undefined-string-array-index"
+message = "Possibly undefined array key `string('seconds')` accessed on `non-empty-array<string('days')|string('hours')|string('minutes')|string('months')|string('seconds')|string('years'), int>`."
+count = 8
+
+[[issues]]
+file = "src/DateStep.php"
+code = "possibly-undefined-string-array-index"
+message = "Possibly undefined array key `string('years')` accessed on `array<array-key, int>`."
+count = 3
+
+[[issues]]
+file = "src/DateStep.php"
+code = "possibly-undefined-string-array-index"
+message = "Possibly undefined array key `string('years')` accessed on `non-empty-array<string('days')|string('hours')|string('minutes')|string('months')|string('seconds')|string('years'), int>`."
+count = 2
+
+[[issues]]
+file = "src/DateStep.php"
+code = "reference-to-undefined-variable"
+message = "Reference created from a previously undefined variable `$matches`."
+count = 1
+
+[[issues]]
+file = "src/DateStep.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `DateInvalidTimeZoneException` in `Laminas\Validator\DateStep::convertString`.'
+count = 1
+
+[[issues]]
+file = "src/DateStep.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `DateInvalidTimeZoneException` in `Laminas\Validator\DateStep::isValid`.'
+count = 1
+
+[[issues]]
+file = "src/DateStep.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Laminas\Validator\Exception\RuntimeException` in `Laminas\Validator\DateStep::isValid`.'
+count = 1
+
+[[issues]]
+file = "src/EmailAddress.php"
+code = "invalid-return-statement"
+message = '''Invalid return type for function `Laminas\Validator\EmailAddress::splitEmailParts`: expected `array{'hostname': string, 'localPart': string}|false`, but found `array{'hostname': string, 'localPart': null|string}`.'''
+count = 1
+
+[[issues]]
+file = "src/EmailAddress.php"
+code = "possibly-null-argument"
+message = 'Argument #1 of method `Laminas\Validator\EmailAddress::idnToAscii` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/EmailAddress.php"
+code = "possibly-null-array-index"
+message = "Possibly using `null` as an array index to access elementof variable $this->messageTemplates."
+count = 1
+
+[[issues]]
+file = "src/EmailAddress.php"
+code = "possibly-undefined-int-array-index"
+message = "Possibly undefined array key `int(1)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/EmailAddress.php"
+code = "possibly-undefined-int-array-index"
+message = "Possibly undefined array key `int(2)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/EmailAddress.php"
+code = "reference-to-undefined-variable"
+message = "Reference created from a previously undefined variable `$matches`."
+count = 1
+
+[[issues]]
+file = "src/EmailAddress.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Laminas\Validator\Exception\RuntimeException` in `Laminas\Validator\EmailAddress::isReserved`.'
+count = 1
+
+[[issues]]
+file = "src/EmailAddress.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Laminas\Validator\Exception\RuntimeException` in `Laminas\Validator\EmailAddress::validateHostnamePart`.'
+count = 1
+
+[[issues]]
+file = "src/EmailAddress.php"
+code = "unused-parameter"
+message = "Parameter `$value` is never used."
+count = 2
+
+[[issues]]
+file = "src/EnumCase.php"
+code = "no-value"
+message = "Argument #2 passed to function `sprintf` has type `never`, meaning it cannot produce a value."
+count = 1
+
+[[issues]]
+file = "src/EnumCase.php"
+code = "possibly-static-access-on-interface"
+message = "Potential static method call on interface `BackedEnum` via `class-string`."
+count = 1
+
+[[issues]]
+file = "src/EnumCase.php"
+code = "possibly-static-access-on-interface"
+message = "Potential static method call on interface `UnitEnum` via `class-string`."
+count = 1
+
+[[issues]]
+file = "src/Explode.php"
+code = "impossible-condition"
+message = "This condition (type `false`) will always evaluate to false."
+count = 1
+
+[[issues]]
+file = "src/Explode.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `Laminas\Validator\Explode::resolveValidator`. Saw type `mixed`.'
+count = 2
+
+[[issues]]
+file = "src/Explode.php"
+code = "too-many-arguments"
+message = 'Too many arguments provided for method `Laminas\Validator\ValidatorInterface::isValid`.'
+count = 1
+
+[[issues]]
+file = "src/Explode.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Laminas\Validator\Exception\RuntimeException` in `Laminas\Validator\Explode::__construct`.'
+count = 1
+
+[[issues]]
+file = "src/File/ExcludeExtension.php"
+code = "redundant-null-coalesce"
+message = "Redundant null coalesce: left-hand side can never be `null` or undefined."
+count = 1
+
+[[issues]]
+file = "src/File/Exists.php"
+code = "imprecise-type"
+message = "Type `array` in parameter `$directories` is imprecise, equivalent to `array<array-key, mixed>`."
+count = 1
+
+[[issues]]
+file = "src/File/Extension.php"
+code = "less-specific-nested-return-statement"
+message = '''Returned type `array{}|list<mixed>` is less specific than the declared return type `list<non-empty-string>` for function `Laminas\Validator\File\Extension::listPossibleFileNameExtensions` due to nested 'mixed'.'''
+count = 1
+
+[[issues]]
+file = "src/File/Extension.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #1 of `Laminas\Validator\File\Extension::listPossibleFileNameExtensions`: expected `non-empty-string`, but found `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/File/Extension.php"
+code = "mixed-argument"
+message = "Invalid argument type for argument #3 of `sprintf`: expected `Stringable|null|scalar`, but found `mixed`."
+count = 1
+
+[[issues]]
+file = "src/File/Extension.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "src/File/Extension.php"
+code = "redundant-null-coalesce"
+message = "Redundant null coalesce: left-hand side can never be `null` or undefined."
+count = 1
+
+[[issues]]
+file = "src/File/FileInformation.php"
+code = "imprecise-type"
+message = "Type `array` in parameter `$value` is imprecise, equivalent to `array<array-key, mixed>`."
+count = 1
+
+[[issues]]
+file = "src/File/FileInformation.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 4
+
+[[issues]]
+file = "src/File/FileInformation.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Laminas\Validator\Exception\RuntimeException` in `Laminas\Validator\File\FileInformation::factory`.'
+count = 1
+
+[[issues]]
+file = "src/File/FileInformation.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `RuntimeException` in `Laminas\Validator\File\FileInformation::factory`.'
+count = 1
+
+[[issues]]
+file = "src/File/FilesSize.php"
+code = "invalid-iterator"
+message = "The expression provided to `foreach` is not iterable. It resolved to type `mixed`, which is not iterable."
+count = 1
+
+[[issues]]
+file = "src/File/FilesSize.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 1
+
+[[issues]]
+file = "src/File/Hash.php"
+code = "redundant-null-coalesce"
+message = "Redundant null coalesce: left-hand side can never be `null` or undefined."
+count = 1
+
+[[issues]]
+file = "src/File/NotExists.php"
+code = "imprecise-type"
+message = "Type `array` in parameter `$directories` is imprecise, equivalent to `array<array-key, mixed>`."
+count = 1
+
+[[issues]]
+file = "src/GpsPoint.php"
+code = "invalid-operand"
+message = "Invalid type for left operand."
+count = 1
+
+[[issues]]
+file = "src/GpsPoint.php"
+code = "invalid-type-cast"
+message = "Non numeric string of type `string` implicitly cast to `float`."
+count = 2
+
+[[issues]]
+file = "src/GpsPoint.php"
+code = "mixed-argument"
+message = "Invalid argument type for argument #1 of `str_contains`: expected `string`, but found `mixed`."
+count = 1
+
+[[issues]]
+file = "src/GpsPoint.php"
+code = "mixed-argument"
+message = "Invalid argument type for argument #2 of `explode`: expected `string`, but found `mixed`."
+count = 1
+
+[[issues]]
+file = "src/GpsPoint.php"
+code = "mixed-operand"
+message = "Left operand in binary operation has type `mixed`."
+count = 1
+
+[[issues]]
+file = "src/GpsPoint.php"
+code = "mixed-operand"
+message = "Right operand in binary operation has type `mixed`."
+count = 1
+
+[[issues]]
+file = "src/GpsPoint.php"
+code = "mixed-return-statement"
+message = 'Could not infer a precise return type for function `Laminas\Validator\GpsPoint::convertValue`. Saw type `mixed`.'
+count = 1
+
+[[issues]]
+file = "src/GpsPoint.php"
+code = "possibly-false-argument"
+message = 'Argument #1 of method `Laminas\Validator\GpsPoint::removeDegreeSign` is possibly `false`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/GpsPoint.php"
+code = "possibly-false-operand"
+message = "Left operand in `>` comparison might be `false` (type `false|int`)."
+count = 1
+
+[[issues]]
+file = "src/GpsPoint.php"
+code = "possibly-invalid-argument"
+message = 'Possible argument type mismatch for argument #1 of `Laminas\Validator\GpsPoint::removeDegreeSign`: expected `string`, but possibly received `false|float|string`.'
+count = 1
+
+[[issues]]
+file = "src/GpsPoint.php"
+code = "possibly-null-argument"
+message = 'Argument #1 of method `Laminas\Validator\GpsPoint::isValidCoordinate` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/GpsPoint.php"
+code = "possibly-null-array-access"
+message = "Cannot perform array access on possibly `null` value."
+count = 3
+
+[[issues]]
+file = "src/GpsPoint.php"
+code = "possibly-null-operand"
+message = "Left operand in arithmetic operation might be `null` (type `null|string`)."
+count = 2
+
+[[issues]]
+file = "src/GpsPoint.php"
+code = "possibly-undefined-int-array-index"
+message = "Possibly undefined array index accessed on `list<array<array-key, string>>`."
+count = 3
+
+[[issues]]
+file = "src/GpsPoint.php"
+code = "possibly-undefined-int-array-index"
+message = "Possibly undefined array index accessed on `non-empty-list<string>`."
+count = 1
+
+[[issues]]
+file = "src/GpsPoint.php"
+code = "possibly-undefined-int-array-index"
+message = "Possibly undefined array key `int(0)` accessed on `array<array-key, string>`."
+count = 3
+
+[[issues]]
+file = "src/HostWithPublicIPv4Address.php"
+code = "possibly-false-operand"
+message = "Left operand in `<=` comparison might be `false` (type `false|int`)."
+count = 1
+
+[[issues]]
+file = "src/HostWithPublicIPv4Address.php"
+code = "possibly-false-operand"
+message = "Left operand in `>=` comparison might be `false` (type `false|int`)."
+count = 1
+
+[[issues]]
+file = "src/HostWithPublicIPv4Address.php"
+code = "possibly-undefined-int-array-index"
+message = "Possibly undefined array index accessed on `non-empty-list<string>`."
+count = 1
+
+[[issues]]
+file = "src/HostWithPublicIPv4Address.php"
+code = "redundant-type-comparison"
+message = "Redundant type assertion: `$endIp` is already `int`."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
+code = "mixed-argument"
+message = "Invalid argument type for argument #1 of `preg_match`: expected `string`, but found `mixed`."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "src/Hostname.php"
+code = "no-value"
+message = "Argument #1 passed to function `ord` has type `never`, meaning it cannot produce a value."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
+code = "possibly-false-operand"
+message = "Left operand in `<=` comparison might be `false` (type `false|int`)."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
+code = "possibly-false-operand"
+message = "Left operand in `>=` comparison might be `false` (type `false|int`)."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
+code = "possibly-false-operand"
+message = "Left operand in `>` comparison might be `false` (type `false|int`)."
+count = 3
+
+[[issues]]
+file = "src/Hostname.php"
+code = "possibly-false-operand"
+message = "Left operand in `>` comparison might be `false` (type `false|non-negative-int`)."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
+code = "possibly-false-operand"
+message = "Right operand in `<` comparison might be `false` (type `false|positive-int`)."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
+code = "possibly-invalid-operand"
+message = "Right operand may be an `array` when compared with non-array type `false|int` using `>`."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
+code = "possibly-null-argument"
+message = "Argument #1 of function `chr` is possibly `null`, but parameter type `int` does not accept it."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
+code = "possibly-null-argument"
+message = "Argument #1 of function `str_starts_with` is possibly `null`, but parameter type `string` does not accept it."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
+code = "possibly-null-argument"
+message = "Argument #1 of function `strtoupper` is possibly `null`, but parameter type `string` does not accept it."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
+code = "possibly-null-argument"
+message = "Argument #1 of function `substr` is possibly `null`, but parameter type `string` does not accept it."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
+code = "possibly-null-operand"
+message = "Left operand in `<` comparison might be `null` (type `int<128, max>|null`)."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
+code = "possibly-null-operand"
+message = "Left operand in `<` comparison might be `null` (type `int<2048, max>|null`)."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
+code = "possibly-null-operand"
+message = "Left operand in `<` comparison might be `null` (type `int<65536, max>|null`)."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
+code = "possibly-null-operand"
+message = "Left operand in `<` comparison might be `null` (type `int|null`)."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
+code = "possibly-null-operand"
+message = "Left operand in arithmetic operation might be `null` (type `int<128, 2047>|null`)."
+count = 2
+
+[[issues]]
+file = "src/Hostname.php"
+code = "possibly-null-operand"
+message = "Left operand in arithmetic operation might be `null` (type `int<2048, 65535>|null`)."
+count = 3
+
+[[issues]]
+file = "src/Hostname.php"
+code = "possibly-null-operand"
+message = "Left operand in arithmetic operation might be `null` (type `int<65536, 2097151>|null`)."
+count = 4
+
+[[issues]]
+file = "src/Hostname.php"
+code = "possibly-undefined-int-array-index"
+message = "Possibly undefined array index accessed on `list<int|null>`."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
+code = "possibly-undefined-int-array-index"
+message = "Possibly undefined array key `int(1)` accessed on `array<array-key, string>`."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
+code = "redundant-docblock-type"
+message = "Redundant docblock type for variable `$domainParts`."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
+code = "redundant-type-comparison"
+message = "Redundant type assertion: `$last` is already `string`."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Laminas\Stdlib\Exception\RuntimeException` in `Laminas\Validator\Hostname::isValid`.'
+count = 1
+
+[[issues]]
+file = "src/Identical.php"
+code = "impossible-type-comparison"
+message = "Impossible condition: variable `$matchTo` (type `int|string`) can never be `array<array-key, mixed>`."
+count = 1
+
+[[issues]]
+file = "src/Identical.php"
+code = "imprecise-type"
+message = "Type `array` in parameter `$context` is imprecise, equivalent to `array<array-key, mixed>`."
+count = 1
+
+[[issues]]
+file = "src/Identical.php"
+code = "mixed-argument"
+message = "Invalid argument type for argument #1 of `key`: expected `array<('K.key() extends array-key), mixed>|object`, but found `mixed`."
+count = 1
+
+[[issues]]
+file = "src/Identical.php"
+code = "mixed-array-access"
+message = "Unsafe array access on type `mixed`."
+count = 1
+
+[[issues]]
+file = "src/Identical.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 4
+
+[[issues]]
+file = "src/Identical.php"
+code = "mixed-assignment"
+message = "Assigning `nonnull` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "src/Identical.php"
+code = "mixed-operand"
+message = "Left operand in `!=` comparison has `mixed` type."
+count = 1
+
+[[issues]]
+file = "src/Identical.php"
+code = "mixed-operand"
+message = "Right operand in `!=` comparison has `mixed` type."
+count = 1
+
+[[issues]]
+file = "src/InArray.php"
+code = "impossible-condition"
+message = "This condition (type `false`) will always evaluate to false."
+count = 1
+
+[[issues]]
+file = "src/InArray.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 3
+
+[[issues]]
+file = "src/InArray.php"
+code = "mixed-operand"
+message = "Left operand in `==` comparison has `mixed` type."
+count = 1
+
+[[issues]]
+file = "src/InArray.php"
+code = "mixed-operand"
+message = "Right operand in `==` comparison has `mixed` type."
+count = 1
+
+[[issues]]
+file = "src/InArray.php"
+code = "redundant-null-coalesce"
+message = "Redundant null coalesce: left-hand side can never be `null` or undefined."
+count = 1
+
+[[issues]]
+file = "src/InArray.php"
+code = "redundant-type-comparison"
+message = "Redundant type assertion: `$haystack` is already `array<array-key, mixed>`."
+count = 1
+
+[[issues]]
+file = "src/Ip.php"
+code = "possibly-null-argument"
+message = 'Argument #1 of method `Laminas\Validator\Ip::validateIPv6` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Ip.php"
+code = "possibly-null-argument"
+message = 'Argument #1 of method `Laminas\Validator\Ip::validateIPvFuture` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "src/Ip.php"
+code = "possibly-undefined-int-array-index"
+message = "Possibly undefined array key `int(1)` accessed on `array<array-key, string>`."
+count = 2
+
+[[issues]]
+file = "src/Ip.php"
+code = "reference-to-undefined-variable"
+message = "Reference created from a previously undefined variable `$matches`."
+count = 2
+
+[[issues]]
+file = "src/IsInstanceOf.php"
+code = "impossible-null-type-comparison"
+message = "Impossible condition: variable `$className` (type `class-string`) will always be `null`."
+count = 1
+
+[[issues]]
+file = "src/IsInstanceOf.php"
+code = "redundant-comparison"
+message = "Redundant `===` comparison: left-hand side is never identical to right-hand side."
+count = 1
+
+[[issues]]
+file = "src/IsInstanceOf.php"
+code = "redundant-logical-operation"
+message = "Redundant `||` operation: left operand is always false and right operand is evaluated."
+count = 1
+
+[[issues]]
+file = "src/IsInstanceOf.php"
+code = "redundant-null-coalesce"
+message = "Redundant null coalesce: left-hand side can never be `null` or undefined."
+count = 1
+
+[[issues]]
+file = "src/KeyExists.php"
+code = "impossible-condition"
+message = "This condition (type `false`) will always evaluate to false."
+count = 1
+
+[[issues]]
+file = "src/KeyExists.php"
+code = "redundant-logical-operation"
+message = "Redundant `&&` operation: left operand is evaluated and right operand is always falsy."
+count = 1
+
+[[issues]]
+file = "src/KeyExists.php"
+code = "redundant-null-coalesce"
+message = "Redundant null coalesce: left-hand side can never be `null` or undefined."
+count = 1
+
+[[issues]]
+file = "src/KeyExists.php"
+code = "redundant-type-comparison"
+message = "Redundant type assertion: `$key` is already `int`."
+count = 1
+
+[[issues]]
+file = "src/NotEmpty.php"
+code = "redundant-docblock-type"
+message = "Redundant docblock type for variable `$type`."
+count = 1
+
+[[issues]]
+file = "src/Regex.php"
+code = "impossible-condition"
+message = "This condition (type `false`) will always evaluate to false."
+count = 1
+
+[[issues]]
+file = "src/Regex.php"
+code = "redundant-comparison"
+message = "Redundant `===` comparison: left-hand side is never identical to right-hand side."
+count = 1
+
+[[issues]]
+file = "src/Regex.php"
+code = "redundant-logical-operation"
+message = "Redundant `||` operation: left operand is always falsy and right operand is always falsy."
+count = 1
+
+[[issues]]
+file = "src/Regex.php"
+code = "redundant-null-coalesce"
+message = "Redundant null coalesce: left-hand side can never be `null` or undefined."
+count = 1
+
+[[issues]]
+file = "src/Regex.php"
+code = "redundant-type-comparison"
+message = "Redundant condition: variable `$pattern` (type `non-empty-string`) is already known to be `string`."
+count = 1
+
+[[issues]]
+file = "src/Regex.php"
+code = "redundant-type-comparison"
+message = "Redundant type assertion: `$pattern` is already `non-empty-string`."
+count = 1
+
+[[issues]]
+file = "src/StringLength.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Laminas\Stdlib\Exception\RuntimeException` in `Laminas\Validator\StringLength::isValid`.'
+count = 1
+
+[[issues]]
+file = "src/Timezone.php"
+code = "invalid-property-assignment-value"
+message = "Invalid type for property `$type`: expected `int(0)|int(1)|int(2)|int(3)`, but got `int|int|int|int`."
+count = 1
+
+[[issues]]
+file = "src/Timezone.php"
+code = "redundant-logical-operation"
+message = "Redundant `||` operation: left operand is always false and right operand is evaluated."
+count = 1
+
+[[issues]]
+file = "src/Timezone.php"
+code = "redundant-type-comparison"
+message = "Redundant condition: variable `$type` (type `int(0)|int(1)|int(2)|int(3)`) is already known to be `int`."
+count = 1
+
+[[issues]]
+file = "src/Timezone.php"
+code = "redundant-type-comparison"
+message = "Redundant type assertion: `$type` is already `int(0)|int(1)|int(2)|int(3)`."
+count = 1
+
+[[issues]]
+file = "src/UndisclosedPassword.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Psr\Http\Client\ClientExceptionInterface` in `Laminas\Validator\UndisclosedPassword::isPwnedPassword`.'
+count = 1
+
+[[issues]]
+file = "src/ValidatorChain.php"
+code = "imprecise-type"
+message = "Type `array` in parameter `$context` is imprecise, equivalent to `array<array-key, mixed>`."
+count = 1
+
+[[issues]]
+file = "src/ValidatorChain.php"
+code = "imprecise-type"
+message = "Type `array` in return type of `__serialize` is imprecise, equivalent to `array<array-key, mixed>`."
+count = 1
+
+[[issues]]
+file = "src/ValidatorChain.php"
+code = "missing-return-type"
+message = "Function `__clone` is missing a return type hint."
+count = 1
+
+[[issues]]
+file = "src/ValidatorChain.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "src/ValidatorChain.php"
+code = "possibly-null-operand"
+message = "Left operand in arithmetic operation might be `null` (type `int|null`)."
+count = 1
+
+[[issues]]
+file = "src/ValidatorChain.php"
+code = "possibly-undefined-int-array-index"
+message = "Possibly undefined array index accessed on `list<int>`."
+count = 1
+
+[[issues]]
+file = "src/ValidatorChain.php"
+code = "too-many-arguments"
+message = 'Too many arguments provided for method `Laminas\Validator\ValidatorInterface::isValid`.'
+count = 1
+
+[[issues]]
+file = "src/ValidatorChain.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `Laminas\Validator\Exception\RuntimeException` in `Laminas\Validator\ValidatorChain::__invoke`.'
+count = 1
+
+[[issues]]
+file = "src/ValidatorChainInvokableFactory.php"
+code = "incompatible-parameter-type"
+message = '''Parameter `$options` of `Laminas\Validator\ValidatorChainInvokableFactory::__invoke()` expects type `array<array-key, Laminas\Validator\ValidatorInterface|array{'break_chain_on_failure'?: bool, 'name': class-string<Laminas\Validator\ValidatorInterface>|string, 'options'?: array<string, mixed>, 'priority'?: int}>|null` but parent `Laminas\ServiceManager\Factory\FactoryInterface::__invoke()` expects type `array<array-key, mixed>|null`'''
+count = 1
+
+[[issues]]
+file = "src/ValidatorInterface.php"
+code = "missing-return-type"
+message = "Function `getMessages` is missing a return type hint."
+count = 1
+
+[[issues]]
+file = "src/ValidatorPluginManager.php"
+code = "deprecated-method"
+message = 'Call to deprecated method: `Laminas\ServiceManager\AbstractPluginManager::addInitializer`.'
+count = 2
+
+[[issues]]
+file = "src/ValidatorPluginManager.php"
+code = "docblock-type-mismatch"
+message = '''Docblock type `array{'abstract_factories'?: array<array-key, Laminas\ServiceManager\Factory\AbstractFactoryInterface|class-string<Laminas\ServiceManager\Factory\AbstractFactoryInterface>>, 'aliases'?: array<string, string>, 'delegators'?: !Laminas\ServiceManager\ServiceManager::DelegatorsConfiguration, 'factories'?: !Laminas\ServiceManager\ServiceManager::FactoriesConfiguration, 'initializers'?: !Laminas\ServiceManager\ServiceManager::InitializersConfiguration, 'invokables'?: array<string, class-string>, 'lazy_services'?: array{'class_map'?: array<string, class-string>, 'proxies_namespace'?: non-empty-string, 'proxies_target_dir'?: non-empty-string, 'write_proxy_files'?: bool}, 'services'?: array<string, mixed>, 'shared'?: array<string, bool>, 'shared_by_default'?: bool, ...<string, mixed>}` for parameter `$config` is incompatible with native type `array<array-key, mixed>`.'''
+count = 1
+
+[[issues]]
+file = "src/ValidatorPluginManager.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 1
+
+[[issues]]
+file = "src/ValidatorPluginManager.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #2 of `array_replace_recursive`: expected `array<string, mixed>`, but possibly received `array{'abstract_factories'?: array<array-key, Laminas\ServiceManager\Factory\AbstractFactoryInterface|class-string<Laminas\ServiceManager\Factory\AbstractFactoryInterface>>, 'aliases'?: array<string, string>, 'delegators'?: !Laminas\ServiceManager\ServiceManager::DelegatorsConfiguration, 'factories'?: !Laminas\ServiceManager\ServiceManager::FactoriesConfiguration, 'initializers'?: !Laminas\ServiceManager\ServiceManager::InitializersConfiguration, 'invokables'?: array<string, class-string>, 'lazy_services'?: array{'class_map'?: array<string, class-string>, 'proxies_namespace'?: non-empty-string, 'proxies_target_dir'?: non-empty-string, 'write_proxy_files'?: bool}, 'services'?: array<string, mixed>, 'shared'?: array<string, bool>, 'shared_by_default'?: bool, ...<string, mixed>}`.'''
+count = 1
+
+[[issues]]
+file = "src/ValidatorPluginManager.php"
+code = "unused-parameter"
+message = "Parameter `$container` is never used."
+count = 1
+
+[[issues]]
+file = "src/ValidatorPluginManagerAwareInterface.php"
+code = "missing-return-type"
+message = "Function `getValidatorPluginManager` is missing a return type hint."
+count = 1
+
+[[issues]]
+file = "src/ValidatorPluginManagerAwareInterface.php"
+code = "missing-return-type"
+message = "Function `setValidatorPluginManager` is missing a return type hint."
+count = 1
+
+[[issues]]
+file = "src/ValidatorPluginManagerFactory.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 1
+
+[[issues]]
+file = "test/AbstractValidatorTest.php"
+code = "mixed-argument"
+message = 'Invalid argument type for argument #2 of `PHPUnit\Framework\Assert::assertStringContainsString`: expected `string`, but found `mixed`.'
+count = 3
+
+[[issues]]
+file = "test/AbstractValidatorTest.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 1
+
+[[issues]]
+file = "test/AbstractValidatorTest.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `PHPUnit\Framework\Assert::assertStringContainsString` is possibly `null`, but parameter type `string` does not accept it.'
+count = 6
+
+[[issues]]
+file = "test/BackedEnumValueTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Laminas\Validator\BackedEnumValue::__construct`: expected `array{'enum': class-string<BackedEnum>, 'messages'?: array<string, string>, 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'valueObscured'?: bool}`, but possibly received `array{'enum': string('Foo')}`.'''
+count = 1
+
+[[issues]]
+file = "test/BarcodeTest.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `PHPUnit\Framework\Assert::assertStringContainsString` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "test/CallbackTest.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `Laminas\Validator\Callback::__construct`: expected `(callable(...mixed): mixed)|array{'bind'?: bool, 'callback': (callable(mixed, array<string, mixed>, ...mixed): bool), 'callbackOptions'?: array<array-key, mixed>, 'messages'?: array<string, string>, 'throwExceptions'?: bool, 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'valueObscured'?: bool}`, but provided type `list{$this(LaminasTest\Validator\CallbackTest), string('noMethodExists')}` is less specific.'''
+count = 1
+
+[[issues]]
+file = "test/ConditionalTest.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #2 of `Laminas\Validator\Conditional::__construct`: expected `array{'rule': (callable(array<string, mixed>): bool), 'validators': array<array-key, array{'break_chain_on_failure'?: bool, 'name': class-string<Laminas\Validator\ValidatorInterface>|string, 'options'?: array<string, mixed>, 'priority'?: int}>}`, but provided type `array{'rule': list{$this(LaminasTest\Validator\ConditionalTest), string('notAKnownMethod')}}` is less specific.'''
+count = 1
+
+[[issues]]
+file = "test/ConditionalTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #2 of `Laminas\Validator\Conditional::__construct`: expected `array{'rule': (callable(array<string, mixed>): bool), 'validators': array<array-key, array{'break_chain_on_failure'?: bool, 'name': class-string<Laminas\Validator\ValidatorInterface>|string, 'options'?: array<string, mixed>, 'priority'?: int}>}`, but possibly received `array{}`.'''
+count = 1
+
+[[issues]]
+file = "test/CreditCardTest.php"
+code = "missing-parameter-type"
+message = "Parameter `$expected` is missing a type hint."
+count = 3
+
+[[issues]]
+file = "test/CreditCardTest.php"
+code = "missing-parameter-type"
+message = "Parameter `$input` is missing a type hint."
+count = 3
+
+[[issues]]
+file = "test/CreditCardTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Laminas\Validator\CreditCard::__construct`: expected `array{'messages'?: array<string, string>, 'service'?: (callable(mixed, array<string, mixed>, ...mixed): bool), 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'type'?: list<string('American_Express')|string('Diners_Club')|string('Diners_Club_US')|string('Discover')|string('JCB')|string('Laser')|string('Maestro')|string('Mastercard')|string('Mir')|string('Solo')|string('Unionpay')|string('Visa')>|string('American_Express')|string('Diners_Club')|string('Diners_Club_US')|string('Discover')|string('JCB')|string('Laser')|string('Maestro')|string('Mastercard')|string('Mir')|string('Solo')|string('Unionpay')|string('Visa'), 'valueObscured'?: bool}`, but possibly received `array{'service': list{class-string('LaminasTest\Validator\CreditCardTest'), string('nocallback')}}`.'''
+count = 1
+
+[[issues]]
+file = "test/CreditCardTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Laminas\Validator\CreditCard::__construct`: expected `array{'messages'?: array<string, string>, 'service'?: (callable(mixed, array<string, mixed>, ...mixed): bool), 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'type'?: list<string('American_Express')|string('Diners_Club')|string('Diners_Club_US')|string('Discover')|string('JCB')|string('Laser')|string('Maestro')|string('Mastercard')|string('Mir')|string('Solo')|string('Unionpay')|string('Visa')>|string('American_Express')|string('Diners_Club')|string('Diners_Club_US')|string('Discover')|string('JCB')|string('Laser')|string('Maestro')|string('Mastercard')|string('Mir')|string('Solo')|string('Unionpay')|string('Visa'), 'valueObscured'?: bool}`, but possibly received `array{'type': list{string('ViSa')}}`.'''
+count = 1
+
+[[issues]]
+file = "test/CreditCardTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Laminas\Validator\CreditCard::__construct`: expected `array{'messages'?: array<string, string>, 'service'?: (callable(mixed, array<string, mixed>, ...mixed): bool), 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'type'?: list<string('American_Express')|string('Diners_Club')|string('Diners_Club_US')|string('Discover')|string('JCB')|string('Laser')|string('Maestro')|string('Mastercard')|string('Mir')|string('Solo')|string('Unionpay')|string('Visa')>|string('American_Express')|string('Diners_Club')|string('Diners_Club_US')|string('Discover')|string('JCB')|string('Laser')|string('Maestro')|string('Mastercard')|string('Mir')|string('Solo')|string('Unionpay')|string('Visa'), 'valueObscured'?: bool}`, but possibly received `array{'type': string('ViSa')}`.'''
+count = 1
+
+[[issues]]
+file = "test/DateTest.php"
+code = "unused-parameter"
+message = "Parameter `$result` is never used."
+count = 1
+
+[[issues]]
+file = "test/EmailAddressTest.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `PHPUnit\Framework\Assert::assertStringContainsString` is possibly `null`, but parameter type `string` does not accept it.'
+count = 3
+
+[[issues]]
+file = "test/EmailAddressTest.php"
+code = "possibly-undefined-int-array-index"
+message = "Possibly undefined array index accessed on `list<string>`."
+count = 3
+
+[[issues]]
+file = "test/EnumCaseTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Laminas\Validator\EnumCase::__construct`: expected `array{'enum': class-string<BackedEnum>|class-string<UnitEnum>, 'messages'?: array<string, string>, 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'valueObscured'?: bool}`, but possibly received `array{'enum': string('Foo')}`.'''
+count = 1
+
+[[issues]]
+file = "test/ExplodeTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Laminas\Validator\Explode::__construct`: expected `array{'breakOnFirstFailure'?: bool, 'messages'?: array<string, string>, 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'validator'?: Laminas\Validator\ValidatorInterface|array{'break_chain_on_failure'?: bool, 'name': class-string<Laminas\Validator\ValidatorInterface>|string, 'options'?: array<string, mixed>, 'priority'?: int}|class-string<Laminas\Validator\ValidatorInterface>, 'validatorPluginManager'?: Laminas\Validator\ValidatorPluginManager|null, 'valueDelimiter'?: non-empty-string, 'valueObscured'?: bool}`, but possibly received `array{'validator': array{'options': list{string('foo')}}}`.'''
+count = 1
+
+[[issues]]
+file = "test/ExplodeTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #2 of `Laminas\Validator\ValidatorPluginManager::__construct`: expected `array{'abstract_factories'?: array<array-key, Laminas\ServiceManager\Factory\AbstractFactoryInterface|class-string<Laminas\ServiceManager\Factory\AbstractFactoryInterface>>, 'aliases'?: array<string, string>, 'delegators'?: !Laminas\ServiceManager\ServiceManager::DelegatorsConfiguration, 'factories'?: !Laminas\ServiceManager\ServiceManager::FactoriesConfiguration, 'initializers'?: !Laminas\ServiceManager\ServiceManager::InitializersConfiguration, 'invokables'?: array<string, class-string>, 'lazy_services'?: array{'class_map'?: array<string, class-string>, 'proxies_namespace'?: non-empty-string, 'proxies_target_dir'?: non-empty-string, 'write_proxy_files'?: bool}, 'services'?: array<string, mixed>, 'shared'?: array<string, bool>, 'shared_by_default'?: bool, ...<string, mixed>}`, but possibly received `array{'aliases': array{'foo': class-string('Laminas\Validator\InArray')}, 'factories': array{'Laminas\Validator\InArray': class-string('Laminas\ServiceManager\Factory\InvokableFactory')}}`.'''
+count = 1
+
+[[issues]]
+file = "test/ExplodeTest.php"
+code = "unused-parameter"
+message = "Parameter `$v` is never used."
+count = 1
+
+[[issues]]
+file = "test/File/ExcludeExtensionTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Laminas\Validator\File\ExcludeExtension::__construct`: expected `array{'allowNonExistentFile'?: bool, 'case'?: bool, 'extension': list<non-empty-string>|non-empty-string, 'messages'?: array<string, string>, 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'valueObscured'?: bool}`, but possibly received `array{}`.'''
+count = 1
+
+[[issues]]
+file = "test/File/ExcludeMimeTypeTest.php"
+code = "imprecise-type"
+message = "Type `array` in parameter `$messages` is imprecise, equivalent to `array<array-key, mixed>`."
+count = 1
+
+[[issues]]
+file = "test/File/ExistsTest.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `PHPUnit\Framework\Assert::assertStringContainsString` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "test/File/ExtensionTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Laminas\Validator\File\Extension::__construct`: expected `array{'allowNonExistentFile'?: bool, 'case'?: bool, 'extension': list<non-empty-string>|non-empty-string, 'messages'?: array<string, string>, 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'valueObscured'?: bool}`, but possibly received `array{}`.'''
+count = 1
+
+[[issues]]
+file = "test/File/HashTest.php"
+code = "missing-parameter-type"
+message = "Parameter `$options` is missing a type hint."
+count = 1
+
+[[issues]]
+file = "test/File/ImageSizeTest.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `PHPUnit\Framework\Assert::assertStringContainsString` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "test/File/IsCompressedTest.php"
+code = "missing-parameter-type"
+message = "Parameter `$options` is missing a type hint."
+count = 1
+
+[[issues]]
+file = "test/File/IsCompressedTest.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `PHPUnit\Framework\Assert::assertStringContainsString` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "test/File/IsImageTest.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `PHPUnit\Framework\Assert::assertStringContainsString` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "test/File/MimeTypeTest.php"
+code = "missing-parameter-type"
+message = "Parameter `$options` is missing a type hint."
+count = 1
+
+[[issues]]
+file = "test/File/MimeTypeTest.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `PHPUnit\Framework\Assert::assertStringContainsString` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "test/File/NotExistsTest.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `PHPUnit\Framework\Assert::assertStringContainsString` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "test/File/SizeTest.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `PHPUnit\Framework\Assert::assertStringContainsString` is possibly `null`, but parameter type `string` does not accept it.'
+count = 5
+
+[[issues]]
+file = "test/File/UploadFileTest.php"
+code = "imprecise-type"
+message = "Type `array` in parameter `$fileInfo` is imprecise, equivalent to `array<array-key, mixed>`."
+count = 1
+
+[[issues]]
+file = "test/GPSPointTest.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `PHPUnit\Framework\Assert::assertStringContainsString` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "test/HostnameTest.php"
+code = "possibly-undefined-int-array-index"
+message = "Possibly undefined array key `mixed` accessed on `array{'hostnameInvalidLocalName': string('The input does not appear to be a valid local network name')}`."
+count = 1
+
+[[issues]]
+file = "test/HostnameTest.php"
+code = "possibly-undefined-variable"
+message = "Variable `$code` might not have been defined on all execution paths leading to this point."
+count = 1
+
+[[issues]]
+file = "test/HostnameTest.php"
+code = "possibly-undefined-variable"
+message = "Variable `$message` might not have been defined on all execution paths leading to this point."
+count = 1
+
+[[issues]]
+file = "test/InArrayTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Laminas\Validator\InArray::__construct`: expected `array{'haystack': array<array-key, mixed>, 'messages'?: array<string, string>, 'recursive'?: bool, 'strict'?: bool|int(-1)|int(0)|int(1), 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'valueObscured'?: bool}`, but possibly received `array{}`.'''
+count = 1
+
+[[issues]]
+file = "test/IsInstanceOfTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Laminas\Validator\IsInstanceOf::__construct`: expected `array{'className': class-string, 'messages'?: array<string, string>, 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'valueObscured'?: bool}`, but possibly received `array{'NotClassNameKey': class-string('DateTime')}`.'''
+count = 1
+
+[[issues]]
+file = "test/IsJsonStringTest.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 1
+
+[[issues]]
+file = "test/IsbnTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Laminas\Validator\Isbn::__construct`: expected `array{'messages'?: array<string, string>, 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'type'?: string('10')|string('13')|string('auto'), 'valueObscured'?: bool}`, but possibly received `array{'type': string('Foo')}`.'''
+count = 1
+
+[[issues]]
+file = "test/KeyExistsTest.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `Laminas\Validator\KeyExists::__construct`: expected `array{'key': array-key, 'messages'?: array<string, string>, 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'valueObscured'?: bool}`, but provided type `array{'key': mixed}` is less specific.'''
+count = 1
+
+[[issues]]
+file = "test/KeyExistsTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Laminas\Validator\KeyExists::__construct`: expected `array{'key': array-key, 'messages'?: array<string, string>, 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'valueObscured'?: bool}`, but possibly received `array{}`.'''
+count = 1
+
+[[issues]]
+file = "test/NotEmptyTest.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 1
+
+[[issues]]
+file = "test/NotEmptyTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Laminas\Validator\NotEmpty::__construct`: expected `array{'messages'?: array<string, string>, 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'type'?: int|list<int|string('all')|string('array')|string('boolean')|string('float')|string('integer')|string('null')|string('object')|string('objectcount')|string('objectstring')|string('php')|string('space')|string('string')|string('zero')>|string('all')|string('array')|string('boolean')|string('float')|string('integer')|string('null')|string('object')|string('objectcount')|string('objectstring')|string('php')|string('space')|string('string')|string('zero'), 'valueObscured'?: bool}`, but possibly received `array{'type': list{string, string}}`.'''
+count = 1
+
+[[issues]]
+file = "test/NotEmptyTest.php"
+code = "possibly-null-argument"
+message = 'Argument #2 of method `PHPUnit\Framework\Assert::assertStringContainsString` is possibly `null`, but parameter type `string` does not accept it.'
+count = 1
+
+[[issues]]
+file = "test/RegexTest.php"
+code = "imprecise-type"
+message = "Type `array` in parameter `$options` is imprecise, equivalent to `array<array-key, mixed>`."
+count = 1
+
+[[issues]]
+file = "test/RegexTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Laminas\Validator\Regex::__construct`: expected `array{'messages'?: array<string, string>, 'pattern': non-empty-string, 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'valueObscured'?: bool}|non-empty-string`, but possibly received `array<array-key, mixed>|string`.'''
+count = 1
+
+[[issues]]
+file = "test/RegexTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #1 of `Laminas\Validator\Regex::__construct`: expected `array{'messages'?: array<string, string>, 'pattern': non-empty-string, 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'valueObscured'?: bool}|non-empty-string`, but possibly received `array{'foo': string('bar')}`.'''
+count = 1
+
+[[issues]]
+file = "test/TestAsset/CustomTraversable.php"
+code = "imprecise-type"
+message = "Type `array` in parameter `$data` is imprecise, equivalent to `array<array-key, mixed>`."
+count = 1
+
+[[issues]]
+file = "test/TestAsset/CustomTraversable.php"
+code = "invalid-return-statement"
+message = 'Invalid return type for function `LaminasTest\Validator\TestAsset\CustomTraversable::key`: expected `int|string`, but found `array-key|null`.'
+count = 1
+
+[[issues]]
+file = "test/TestAsset/CustomTraversable.php"
+code = "missing-template-parameter"
+message = "Too few template arguments for `Iterator`: expected at least 2, but found 0."
+count = 1
+
+[[issues]]
+file = "test/TestAsset/CustomTraversable.php"
+code = "nullable-return-statement"
+message = 'Function `LaminasTest\Validator\TestAsset\CustomTraversable::key` is declared to return `int|string` but possibly returns a nullable value (inferred as `array-key|null`).'
+count = 1
+
+[[issues]]
+file = "test/TestAsset/CustomTraversable.php"
+code = "redundant-comparison"
+message = "Redundant `!==` comparison: left-hand side is always not identical to right-hand side."
+count = 1
+
+[[issues]]
+file = "test/TimezoneTest.php"
+code = "less-specific-nested-argument-type"
+message = '''Argument type mismatch for argument #1 of `Laminas\Validator\Timezone::__construct`: expected `array{'messages'?: array<string, string>, 'translator'?: Laminas\Translator\TranslatorInterface|null, 'translatorEnabled'?: bool, 'translatorTextDomain'?: null|string, 'type'?: int(0)|int(1)|int(2)|int(3), 'valueObscured'?: bool}`, but provided type `array{'type': mixed}` is less specific.'''
+count = 1
+
+[[issues]]
+file = "test/UndisclosedPasswordTest.php"
+code = "missing-return-type"
+message = "Function `getConstant` is missing a return type hint."
+count = 1
+
+[[issues]]
+file = "test/UndisclosedPasswordTest.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "test/ValidatorChainFactoryTest.php"
+code = "possibly-null-array-access"
+message = "Cannot perform array access on possibly `null` value."
+count = 4
+
+[[issues]]
+file = "test/ValidatorChainFactoryTest.php"
+code = "possibly-undefined-int-array-index"
+message = '''Possibly undefined array index accessed on `list<array{'breakChainOnFailure': bool, 'instance': Laminas\Validator\ValidatorInterface}>`.'''
+count = 4
+
+[[issues]]
+file = "test/ValidatorChainTest.php"
+code = "docblock-type-mismatch"
+message = '''Docblock type `array{'abstract_factories'?: array<array-key, Laminas\ServiceManager\Factory\AbstractFactoryInterface|class-string<Laminas\ServiceManager\Factory\AbstractFactoryInterface>>, 'aliases'?: array<string, string>, 'delegators'?: !Laminas\ServiceManager\ServiceManager::DelegatorsConfiguration, 'factories'?: !Laminas\ServiceManager\ServiceManager::FactoriesConfiguration, 'initializers'?: !Laminas\ServiceManager\ServiceManager::InitializersConfiguration, 'invokables'?: array<string, class-string>, 'lazy_services'?: array{'class_map'?: array<string, class-string>, 'proxies_namespace'?: non-empty-string, 'proxies_target_dir'?: non-empty-string, 'write_proxy_files'?: bool}, 'services'?: array<string, mixed>, 'shared'?: array<string, bool>, 'shared_by_default'?: bool, ...<string, mixed>}` for parameter `$config` is incompatible with native type `array<array-key, mixed>`.'''
+count = 1
+
+[[issues]]
+file = "test/ValidatorChainTest.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 1
+
+[[issues]]
+file = "test/ValidatorChainTest.php"
+code = "possibly-null-array-access"
+message = "Cannot perform array access on possibly `null` value."
+count = 1
+
+[[issues]]
+file = "test/ValidatorChainTest.php"
+code = "possibly-undefined-int-array-index"
+message = '''Possibly undefined array index accessed on `list<array{'breakChainOnFailure': bool, 'instance': Laminas\Validator\ValidatorInterface}>`.'''
+count = 1
+
+[[issues]]
+file = "test/ValidatorPluginManagerCompatibilityTest.php"
+code = "docblock-type-mismatch"
+message = '''Docblock type `array{'abstract_factories'?: array<array-key, Laminas\ServiceManager\Factory\AbstractFactoryInterface|class-string<Laminas\ServiceManager\Factory\AbstractFactoryInterface>>, 'aliases'?: array<string, string>, 'delegators'?: !Laminas\ServiceManager\ServiceManager::DelegatorsConfiguration, 'factories'?: !Laminas\ServiceManager\ServiceManager::FactoriesConfiguration, 'initializers'?: !Laminas\ServiceManager\ServiceManager::InitializersConfiguration, 'invokables'?: array<string, class-string>, 'lazy_services'?: array{'class_map'?: array<string, class-string>, 'proxies_namespace'?: non-empty-string, 'proxies_target_dir'?: non-empty-string, 'write_proxy_files'?: bool}, 'services'?: array<string, mixed>, 'shared'?: array<string, bool>, 'shared_by_default'?: bool, ...<string, mixed>}` for parameter `$config` is incompatible with native type `array<array-key, mixed>`.'''
+count = 1
+
+[[issues]]
+file = "test/ValidatorPluginManagerCompatibilityTest.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 2
+
+[[issues]]
+file = "test/ValidatorPluginManagerTest.php"
+code = "deprecated-method"
+message = 'Call to deprecated method: `Laminas\ServiceManager\AbstractPluginManager::setService`.'
+count = 1
+
+[[issues]]
+file = "test/ValidatorPluginManagerTest.php"
+code = "mixed-assignment"
+message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
+count = 1
+
+[[issues]]
+file = "test/ValidatorPluginManagerTest.php"
+code = "possibly-invalid-argument"
+message = 'Possible argument type mismatch for argument #2 of `Laminas\ServiceManager\AbstractPluginManager::setService`: expected `Laminas\Validator\ValidatorInterface`, but possibly received `$this(LaminasTest\Validator\ValidatorPluginManagerTest)`.'
+count = 1
+
+[[issues]]
+file = "test/ValidatorPluginManagerTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #2 of `Laminas\Validator\ValidatorPluginManager::__construct`: expected `array{'abstract_factories'?: array<array-key, Laminas\ServiceManager\Factory\AbstractFactoryInterface|class-string<Laminas\ServiceManager\Factory\AbstractFactoryInterface>>, 'aliases'?: array<string, string>, 'delegators'?: !Laminas\ServiceManager\ServiceManager::DelegatorsConfiguration, 'factories'?: !Laminas\ServiceManager\ServiceManager::FactoriesConfiguration, 'initializers'?: !Laminas\ServiceManager\ServiceManager::InitializersConfiguration, 'invokables'?: array<string, class-string>, 'lazy_services'?: array{'class_map'?: array<string, class-string>, 'proxies_namespace'?: non-empty-string, 'proxies_target_dir'?: non-empty-string, 'write_proxy_files'?: bool}, 'services'?: array<string, mixed>, 'shared'?: array<string, bool>, 'shared_by_default'?: bool, ...<string, mixed>}`, but possibly received `array{'aliases': array{'test': class-string('LaminasTest\Validator\TestAsset\InMemoryContainer')}, 'factories': array{'LaminasTest\Validator\TestAsset\InMemoryContainer': class-string('Laminas\ServiceManager\Factory\InvokableFactory')}}`.'''
+count = 1
+
+[[issues]]
+file = "test/ValidatorPluginManagerTest.php"
+code = "possibly-invalid-argument"
+message = '''Possible argument type mismatch for argument #2 of `Laminas\Validator\ValidatorPluginManager::__construct`: expected `array{'abstract_factories'?: array<array-key, Laminas\ServiceManager\Factory\AbstractFactoryInterface|class-string<Laminas\ServiceManager\Factory\AbstractFactoryInterface>>, 'aliases'?: array<string, string>, 'delegators'?: !Laminas\ServiceManager\ServiceManager::DelegatorsConfiguration, 'factories'?: !Laminas\ServiceManager\ServiceManager::FactoriesConfiguration, 'initializers'?: !Laminas\ServiceManager\ServiceManager::InitializersConfiguration, 'invokables'?: array<string, class-string>, 'lazy_services'?: array{'class_map'?: array<string, class-string>, 'proxies_namespace'?: non-empty-string, 'proxies_target_dir'?: non-empty-string, 'write_proxy_files'?: bool}, 'services'?: array<string, mixed>, 'shared'?: array<string, bool>, 'shared_by_default'?: bool, ...<string, mixed>}`, but possibly received `array{'factories': array{'test': (closure(): {anonymous-class:test/validatorpluginmanagertest.php:155:22})}}`.'''
+count = 1
+
+[[issues]]
+file = "vendor/laminas/laminas-servicemanager/src/AbstractSingleInstancePluginManager.php"
+code = "incompatible-property-type"
+message = 'Property `Laminas\Validator\ValidatorPluginManager::$instanceOf` has an incompatible type declaration from docblock.'
+count = 1

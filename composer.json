@@ -46,7 +46,6 @@
     },
     "require-dev": {
         "laminas/laminas-diactoros": "^3.8.0",
-        "laminas/laminas-translator": "^2.0",
         "phpunit/phpunit": "^11.5.55",
         "carthage-software/mago": "^1.42.0"
     },
@@ -66,13 +65,9 @@
     },
     "scripts": {
         "check": [
-            "@cs-check",
             "@test"
         ],
-        "cs-check": "phpcs",
-        "cs-fix": "phpcbf",
         "test": "phpunit --colors=always",
-        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
-        "static-analysis": "psalm --shepherd --stats"
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     }
 }
