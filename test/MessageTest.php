@@ -89,7 +89,7 @@ final class MessageTest extends TestCase
 
         $messages = $this->validator->getMessages();
 
-        self::assertSame("Your value '$inputInvalid' is too long", current($messages));
+        self::assertSame("Your value '{$inputInvalid}' is too long", current($messages));
     }
 
     /**

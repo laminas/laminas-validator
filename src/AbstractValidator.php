@@ -169,7 +169,7 @@ abstract class AbstractValidator implements Translator\TranslatorAwareInterface,
         }
 
         if (! isset($this->messageTemplates[$messageKey])) {
-            throw new InvalidArgumentException("No message template exists for key '$messageKey'");
+            throw new InvalidArgumentException("No message template exists for key '{$messageKey}'");
         }
 
         $this->messageTemplates[$messageKey] = $messageString;
@@ -242,7 +242,7 @@ abstract class AbstractValidator implements Translator\TranslatorAwareInterface,
 
     private function substitutePlaceholder(string $id, mixed $value, string $message, bool $obscure): string
     {
-        $search = "%$id%";
+        $search = "%{$id}%";
         $value  = $this->stringifyValue($value);
         if ($obscure) {
             $value = str_repeat('*', strlen($value));

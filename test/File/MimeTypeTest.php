@@ -128,7 +128,7 @@ final class MimeTypeTest extends TestCase
 
         $path = __DIR__ . '/_files/no-read.txt';
         touch($path);
-        chmod($path, 0333);
+        chmod($path, 0o333);
         try {
             self::assertFalse($validator->isValid($path));
             $messages = $validator->getMessages();

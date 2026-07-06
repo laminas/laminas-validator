@@ -166,8 +166,8 @@ final class ImageSizeTest extends TestCase
         $validator = new ImageSize([
             'minWidth'  => 100,
             'minHeight' => 1000,
-            'maxWidth'  => 10000,
-            'maxHeight' => 100000,
+            'maxWidth'  => 10_000,
+            'maxHeight' => 100_000,
         ]);
 
         self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
@@ -225,7 +225,7 @@ final class ImageSizeTest extends TestCase
 
         $path = __DIR__ . '/_files/no-read.txt';
         touch($path);
-        chmod($path, 0333);
+        chmod($path, 0o333);
         try {
             self::assertFalse($validator->isValid($path));
             $messages = $validator->getMessages();

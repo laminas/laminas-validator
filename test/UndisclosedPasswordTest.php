@@ -123,7 +123,7 @@ final class UndisclosedPasswordTest extends TestCase
                     ->willReturn(sprintf(
                         '%s:%d',
                         strtoupper(substr($hash, $constant)),
-                        random_int(0, 100000),
+                        random_int(0, 100_000),
                     ));
 
                 return $this->stream;
@@ -162,7 +162,7 @@ final class UndisclosedPasswordTest extends TestCase
                     ->willReturn(sprintf(
                         '%s:%d',
                         strtoupper(substr($hash, $constant)),
-                        random_int(0, 100000),
+                        random_int(0, 100_000),
                     ));
 
                 return $this->stream;

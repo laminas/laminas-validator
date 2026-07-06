@@ -99,11 +99,11 @@ final class Extension extends AbstractValidator
             return false;
         }
 
+        $fileName = $value;
+
         if ($isFile) {
             $file     = FileInformation::factory($value);
             $fileName = $file->clientFileName ?? $file->baseName;
-        } else {
-            $fileName = $value;
         }
 
         assert($fileName !== '');

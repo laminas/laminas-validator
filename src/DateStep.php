@@ -189,11 +189,13 @@ final class DateStep extends Date
             $intervalUnit = 'days';
             $stepValue    = 1;
             foreach ($intervalParts as $key => $value) {
-                if (0 !== $value) {
-                    $intervalUnit = $key;
-                    $stepValue    = $value;
-                    break;
+                if (0 === $value) {
+                    continue;
                 }
+
+                $intervalUnit = $key;
+                $stepValue    = $value;
+                break;
             }
 
             // Check date units

@@ -45,9 +45,9 @@ final class NumberComparisonTest extends TestCase
             [10.0, 20.0, true, 10.1, true, null],
             [10.0, 20.0, true, 15, true, null],
             [10.0, 20.0, true, '15', true, null],
-            [10.0, 20.0, true, 19.9999999, true, null],
+            [10.0, 20.0, true, 19.99_99_999, true, null],
             [10.0, 20.0, true, 4.2, false, NumberComparison::ERROR_NOT_GREATER_INCLUSIVE],
-            [10.0, 20.0, true, 20.000001, false, NumberComparison::ERROR_NOT_LESS_INCLUSIVE],
+            [10.0, 20.0, true, 20.00_00_01, false, NumberComparison::ERROR_NOT_LESS_INCLUSIVE],
             // Numeric strings behave as expected both as options and input
             ['10', '20', true, 10.1, true, null],
             ['10', '20', true, 15, true, null],

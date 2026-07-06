@@ -360,11 +360,13 @@ final class HostnameTest extends TestCase
         $messages = $this->validator->getMessages();
         $found    = false;
         foreach ($messages as $code => $message) {
-            if (array_key_exists($code, $translations)) {
-                $found = true;
-
-                break;
+            if (! array_key_exists($code, $translations)) {
+                continue;
             }
+
+            $found = true;
+
+            break;
         }
 
         self::assertTrue($found);
