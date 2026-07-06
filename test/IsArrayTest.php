@@ -47,7 +47,7 @@ final class IsArrayTest extends TestCase
 
         self::assertArrayHasKey(IsArray::NOT_ARRAY, $messages);
 
-        self::assertEquals(
+        self::assertSame(
             'Expected an array value but string provided',
             $messages[IsArray::NOT_ARRAY],
         );

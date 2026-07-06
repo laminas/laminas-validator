@@ -172,9 +172,11 @@ final class InArray extends AbstractValidator
         ) {
             /** @psalm-suppress MixedAssignment */
             foreach ($haystack as &$h) {
-                if (is_int($h) || is_float($h)) {
-                    $h = (string) $h;
+                if (! (is_int($h) || is_float($h))) {
+                    continue;
                 }
+
+                $h = (string) $h;
             }
 
             if (in_array($value, $haystack, (bool) $this->strict)) {

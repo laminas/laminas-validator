@@ -180,7 +180,7 @@ final class EmailAddressTest extends TestCase
             $validator = new EmailAddress();
             self::assertTrue(
                 $validator->isValid($input),
-                "$input failed to pass validation:\n" . implode("\n", $validator->getMessages()),
+                "{$input} failed to pass validation:\n" . implode("\n", $validator->getMessages()),
             );
         }
     }
@@ -204,7 +204,7 @@ final class EmailAddressTest extends TestCase
             $validator = new EmailAddress();
             self::assertFalse(
                 $validator->isValid($input),
-                "$input failed to pass validation:\n" . implode("\n", $validator->getMessages()),
+                "{$input} failed to pass validation:\n" . implode("\n", $validator->getMessages()),
             );
         }
     }
@@ -475,13 +475,15 @@ final class EmailAddressTest extends TestCase
         $messages = $hostnameValidator->getMessages();
         $found    = false;
         foreach ($messages as $code => $message) {
-            if (array_key_exists($code, $translations)) {
-                self::assertSame($translations[$code], $message);
-
-                $found = true;
-
-                break;
+            if (! array_key_exists($code, $translations)) {
+                continue;
             }
+
+            self::assertSame($translations[$code], $message);
+
+            $found = true;
+
+            break;
         }
 
         self::assertTrue($found);
@@ -530,13 +532,15 @@ final class EmailAddressTest extends TestCase
         $messages = $validator->getMessages();
         $found    = false;
         foreach ($messages as $code => $message) {
-            if (array_key_exists($code, $translations)) {
-                self::assertSame($translations[$code], $message);
-
-                $found = true;
-
-                break;
+            if (! array_key_exists($code, $translations)) {
+                continue;
             }
+
+            self::assertSame($translations[$code], $message);
+
+            $found = true;
+
+            break;
         }
 
         self::assertTrue($found);
@@ -611,7 +615,7 @@ final class EmailAddressTest extends TestCase
         foreach ($emailAddresses as $input) {
             self::assertTrue(
                 $validator->isValid($input),
-                "$input failed to pass validation:\n" . implode("\n", $validator->getMessages()),
+                "{$input} failed to pass validation:\n" . implode("\n", $validator->getMessages()),
             );
         }
     }

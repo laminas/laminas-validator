@@ -56,10 +56,12 @@ final class ExcludeMimeType extends MimeType
         $types = array_merge($types, explode('-', $this->type));
         $types = array_merge($types, explode(';', $this->type));
         foreach ($this->mimeTypes as $mime) {
-            if (in_array($mime, $types)) {
-                $this->error(self::FALSE_TYPE);
-                return false;
+            if (! in_array($mime, $types, true)) {
+                continue;
             }
+
+            $this->error(self::FALSE_TYPE);
+            return false;
         }
 
         return true;

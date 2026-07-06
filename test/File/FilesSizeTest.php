@@ -66,7 +66,7 @@ final class FilesSizeTest extends TestCase
             'minimum: 0 byte; maximum: 500 bytes; array'    => [['min' => 0, 'max' => 500], false, false, false],
             'minimum: 0 byte; maximum: 2000 bytes; integer' => [['max' => 2000], true, true, false],
             'minimum: 0 byte; maximum: 2000 bytes; array'   => [['min' => 0, 'max' => 2000], true, true, false],
-            'minimum: 0 byte; maximum: 500 kilobytes'       => [['min' => 0, 'max' => 500000], true, true, true],
+            'minimum: 0 byte; maximum: 500 kilobytes'       => [['min' => 0, 'max' => 500_000], true, true, true],
             'minimum: 0 byte; maximum: 2 megabytes; 2 MB'   => [['min' => 0, 'max' => '2 MB'], true, true, true],
             'minimum: 0 byte; maximum: 2 megabytes; 2MB'    => [['min' => 0, 'max' => '2MB'], true, true, true],
             'minimum: 0 byte; maximum: 2 megabytes; 2  MB'  => [['min' => 0, 'max' => '2  MB'], true, true, true],
@@ -77,7 +77,7 @@ final class FilesSizeTest extends TestCase
 
     public function testMultipleFiles(): void
     {
-        $validator = new FilesSize(['min' => 0, 'max' => 500000]);
+        $validator = new FilesSize(['min' => 0, 'max' => 500_000]);
 
         self::assertTrue($validator->isValid([
             __DIR__ . '/_files/testsize.mo',
@@ -99,7 +99,7 @@ final class FilesSizeTest extends TestCase
      */
     public function testFailureMessage(): void
     {
-        $validator = new FilesSize(['min' => 9999, 'max' => 10000]);
+        $validator = new FilesSize(['min' => 9_999, 'max' => 10_000]);
 
         self::assertFalse($validator->isValid([
             __DIR__ . '/_files/testsize.mo',
@@ -113,7 +113,7 @@ final class FilesSizeTest extends TestCase
         self::assertStringContainsString('9.76kB', $message);
         self::assertStringContainsString('1.55kB', $message);
 
-        $validator = new FilesSize(['min' => 9999, 'max' => 10000, 'useByteString' => false]);
+        $validator = new FilesSize(['min' => 9_999, 'max' => 10_000, 'useByteString' => false]);
 
         self::assertFalse($validator->isValid([
             __DIR__ . '/_files/testsize.mo',
@@ -213,7 +213,7 @@ final class FilesSizeTest extends TestCase
 
         $path = __DIR__ . '/_files/no-read.txt';
         touch($path);
-        chmod($path, 0333);
+        chmod($path, 0o333);
         try {
             self::assertFalse($validator->isValid($path));
             $messages = $validator->getMessages();

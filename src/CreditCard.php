@@ -328,12 +328,14 @@ final class CreditCard extends AbstractValidator
         $lengthFound = false;
         foreach ($this->type as $type) {
             foreach (self::CARD_PREFIXES[$type] as $prefix) {
-                if (str_starts_with($value, $prefix)) {
-                    $prefixFound = true;
-                    if (in_array($length, self::CARD_LENGTH[$type])) {
-                        $lengthFound = true;
-                        break 2;
-                    }
+                if (! str_starts_with($value, $prefix)) {
+                    continue;
+                }
+
+                $prefixFound = true;
+                if (in_array($length, self::CARD_LENGTH[$type])) {
+                    $lengthFound = true;
+                    break 2;
                 }
             }
         }
