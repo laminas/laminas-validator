@@ -46,8 +46,9 @@
     },
     "require-dev": {
         "laminas/laminas-diactoros": "^3.8.0",
+        "laminas/laminas-translator": "^2.0",
         "phpunit/phpunit": "^11.5.55",
-        "carthage-software/mago": "^1.42.0"
+        "carthage-software/mago": "^1.43.0"
     },
     "suggest": {
         "laminas/laminas-i18n": "Laminas\\I18n component to allow translation of validation error messages",
