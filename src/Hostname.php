@@ -1333,6 +1333,7 @@ final class Hostname extends AbstractValidator
         'watches',
         'weather',
         'weatherchannel',
+        'web',
         'webcam',
         'weber',
         'website',
