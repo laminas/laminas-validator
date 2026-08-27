@@ -20,7 +20,7 @@ final class InArrayTest extends TestCase
         $this->validator = new InArray(
             [
                 'haystack' => [1, 2, 3],
-            ]
+            ],
         );
     }
 
@@ -104,7 +104,7 @@ final class InArrayTest extends TestCase
         $validator = new InArray(
             [
                 'haystack' => [1, 'a', 2.3],
-            ]
+            ],
         );
 
         self::assertTrue($validator->isValid(1));
@@ -121,7 +121,7 @@ final class InArrayTest extends TestCase
         $validator = new InArray(
             [
                 'haystack' => ['test', 0, 'A', 1, 0.0],
-            ]
+            ],
         );
 
         self::assertFalse($validator->isValid('b'));
@@ -138,7 +138,7 @@ final class InArrayTest extends TestCase
             [
                 'haystack' => ['test', 0, 'A', 1, 0.0],
                 'strict'   => InArray::COMPARE_STRICT,
-            ]
+            ],
         );
 
         self::assertTrue($validator->isValid('A'));
@@ -155,7 +155,7 @@ final class InArrayTest extends TestCase
             [
                 'haystack' => ['test', 0, 'A', 1, 0.0],
                 'strict'   => InArray::COMPARE_NOT_STRICT,
-            ]
+            ],
         );
 
         self::assertTrue($validator->isValid('b'));
@@ -324,7 +324,7 @@ final class InArrayTest extends TestCase
             [
                 'haystack' => ['test', 0, 'A'],
                 'strict'   => true,
-            ]
+            ],
         );
 
         self::assertTrue($validator->isValid(0));

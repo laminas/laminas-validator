@@ -151,7 +151,7 @@ final class HashTest extends TestCase
 
         $path = __DIR__ . '/_files/no-read.txt';
         touch($path);
-        chmod($path, 0333);
+        chmod($path, 0o333);
         try {
             self::assertFalse($validator->isValid($path));
             $messages = $validator->getMessages();
@@ -186,7 +186,7 @@ final class HashTest extends TestCase
                     'hash'      => $hash,
                 ],
             ];
-            yield $algo . ' hash first'      => [
+            yield $algo . ' hash first' => [
                 'options' => [
                     'hash'      => $hash,
                     'algorithm' => $algo,

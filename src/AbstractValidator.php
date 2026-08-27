@@ -38,9 +38,7 @@ use const SORT_REGULAR;
  *     ...<string, mixed>
  * }
  */
-abstract class AbstractValidator implements
-    Translator\TranslatorAwareInterface,
-    ValidatorInterface
+abstract class AbstractValidator implements Translator\TranslatorAwareInterface, ValidatorInterface
 {
     /**
      * The value to be validated
@@ -95,7 +93,7 @@ abstract class AbstractValidator implements
     private string $translatorTextDomain = 'default';
 
     /** A custom translator, the default translator, or null */
-    private TranslatorInterface|null $translator = null;
+    private ?TranslatorInterface $translator = null;
 
     /**
      * Error messages that have occurred during the last validation
@@ -171,7 +169,7 @@ abstract class AbstractValidator implements
         }
 
         if (! isset($this->messageTemplates[$messageKey])) {
-            throw new InvalidArgumentException("No message template exists for key '$messageKey'");
+            throw new InvalidArgumentException("No message template exists for key '{$messageKey}'");
         }
 
         $this->messageTemplates[$messageKey] = $messageString;
@@ -212,7 +210,7 @@ abstract class AbstractValidator implements
         }
 
         $length = self::$messageLength;
-        if (($length > -1) && (strlen($message) > $length)) {
+        if ($length > -1 && strlen($message) > $length) {
             $message = substr($message, 0, $length - 3) . '...';
         }
 
@@ -244,7 +242,7 @@ abstract class AbstractValidator implements
 
     private function substitutePlaceholder(string $id, mixed $value, string $message, bool $obscure): string
     {
-        $search = "%$id%";
+        $search = "%{$id}%";
         $value  = $this->stringifyValue($value);
         if ($obscure) {
             $value = str_repeat('*', strlen($value));

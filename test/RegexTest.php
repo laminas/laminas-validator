@@ -21,7 +21,7 @@ final class RegexTest extends TestCase
      * @param non-empty-string $pattern
      */
     #[DataProvider('basicDataProvider')]
-    public function testBasic(string $pattern, mixed $input, bool $expected, string|null $errorKey): void
+    public function testBasic(string $pattern, mixed $input, bool $expected, ?string $errorKey): void
     {
         $validator = new Regex($pattern);
 
@@ -62,7 +62,7 @@ final class RegexTest extends TestCase
     public function testBadPattern(): void
     {
         // phpcs:disable
-        set_error_handler(static fn (int $_a, string $_b): bool => true);
+        set_error_handler(static fn(int $_a, string $_b): bool => true);
         // phpcs:enable
 
         try {
@@ -117,9 +117,9 @@ final class RegexTest extends TestCase
     {
         return [
             'empty-string'             => ['', 'A regex pattern is required'],
-            'missing-pattern-key'      => [[], "A regex pattern is required"],
-            'pattern-key-not-string'   => [['pattern' => false], "A regex pattern is required"],
-            'pattern-key-empty-string' => [['pattern' => ''], "A regex pattern is required"],
+            'missing-pattern-key'      => [[], 'A regex pattern is required'],
+            'pattern-key-not-string'   => [['pattern' => false], 'A regex pattern is required'],
+            'pattern-key-empty-string' => [['pattern' => ''], 'A regex pattern is required'],
         ];
     }
 
@@ -156,8 +156,11 @@ final class RegexTest extends TestCase
 
         self::assertFalse($validator->isValid('Not numbers'));
         $messages = $validator->getMessages();
-        self::assertSame([
-            Regex::NOT_MATCH => 'Numbers only',
-        ], $messages);
+        self::assertSame(
+            [
+                Regex::NOT_MATCH => 'Numbers only',
+            ],
+            $messages,
+        );
     }
 }

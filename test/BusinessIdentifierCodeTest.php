@@ -66,7 +66,7 @@ final class BusinessIdentifierCodeTest extends TestCase
         self::assertCount(1, $validator->getMessages());
         self::assertSame(
             'Invalid type given; string expected',
-            $validator->getMessages()[BusinessIdentifierCode::NOT_STRING]
+            $validator->getMessages()[BusinessIdentifierCode::NOT_STRING],
         );
     }
 

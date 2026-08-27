@@ -319,7 +319,6 @@ final class BusinessIdentifierCode extends AbstractValidator
     private function isSwiftValidCountry(string $countryCode): bool
     {
         $countryCode = strtoupper($countryCode);
-        return in_array($countryCode, self::ISO_COUNTRIES, true)
-            || $countryCode === self::KOSOVO_EXCEPTION;
+        return in_array($countryCode, self::ISO_COUNTRIES, true) || $countryCode === self::KOSOVO_EXCEPTION;
     }
 }

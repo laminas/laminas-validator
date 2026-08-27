@@ -83,7 +83,7 @@ final class WordCountTest extends TestCase
     #[Group('Laminas-11258')]
     public function testLaminas11258(): void
     {
-        $validator = new WordCount(['min' => 1, 'max' => 10000]);
+        $validator = new WordCount(['min' => 1, 'max' => 10_000]);
 
         self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
         $messages = $validator->getMessages();
@@ -134,7 +134,7 @@ final class WordCountTest extends TestCase
 
         $path = __DIR__ . '/_files/no-read.txt';
         touch($path);
-        chmod($path, 0333);
+        chmod($path, 0o333);
         try {
             self::assertFalse($validator->isValid($path));
             $messages = $validator->getMessages();

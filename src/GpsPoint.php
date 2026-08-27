@@ -52,10 +52,14 @@ final class GpsPoint extends AbstractValidator
     {
         $this->setValue($value);
 
-        $value = $this->removeWhiteSpace($value);
-        if ($this->isDMSValue($value)) {
+        $value      = $this->removeWhiteSpace($value);
+        $isDMSValue = $this->isDMSValue($value);
+
+        if ($isDMSValue) {
             $value = $this->convertValue($value);
-        } else {
+        }
+
+        if (! $isDMSValue) {
             $value = $this->removeDegreeSign($value);
         }
 
@@ -95,7 +99,7 @@ final class GpsPoint extends AbstractValidator
             return false;
         }
 
-        return $matches[1][0] + $matches[2][0] / 60 + ((float) $matches[3][0]) / 3600;
+        return $matches[1][0] + ($matches[2][0] / 60) + ((float) $matches[3][0] / 3600);
     }
 
     private function removeWhiteSpace(string $value): string
@@ -114,7 +118,7 @@ final class GpsPoint extends AbstractValidator
     private function isValueInbound(float $value, float $boundary): bool
     {
         $max = $boundary;
-        $min = -1 * $boundary;
+        $min = -$boundary;
         return $min <= $value && $value <= $max;
     }
 }

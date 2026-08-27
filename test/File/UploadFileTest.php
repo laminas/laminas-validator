@@ -36,8 +36,8 @@ final class UploadFileTest extends TestCase
      */
     public static function uploadErrorsTestDataProvider(): array
     {
-        $data         = [];
-        $errorTypes   = [
+        $data       = [];
+        $errorTypes = [
             0 => 'fileUploadFileErrorAttack',
             1 => 'fileUploadFileErrorIniSize',
             2 => 'fileUploadFileErrorFormSize',

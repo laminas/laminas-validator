@@ -12,9 +12,9 @@ use function reset;
 
 final class CustomTraversable implements Iterator
 {
-    public function __construct(private array $data)
-    {
-    }
+    public function __construct(
+        private array $data,
+    ) {}
 
     /** @return mixed */
     #[ReturnTypeWillChange]

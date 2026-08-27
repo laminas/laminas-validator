@@ -37,49 +37,49 @@ final class ImageSizeTest extends TestCase
         $testFile     = __DIR__ . '/_files/picture.jpg';
         $pictureTests = [
             [
-                ['minWidth' => 0,   'minHeight' => 10,  'maxWidth' => 1000, 'maxHeight' => 2000],
+                ['minWidth' => 0, 'minHeight' => 10, 'maxWidth' => 1000, 'maxHeight' => 2000],
                 $testFile,
                 true,
                 null,
             ],
             [
-                ['minWidth' => 0,   'minHeight' => 0,   'maxWidth' => 200,  'maxHeight' => 200],
+                ['minWidth' => 0, 'minHeight' => 0, 'maxWidth' => 200, 'maxHeight' => 200],
                 $testFile,
                 true,
                 null,
             ],
             [
-                ['minWidth' => 150, 'minHeight' => 150, 'maxWidth' => 200,  'maxHeight' => 200],
+                ['minWidth' => 150, 'minHeight' => 150, 'maxWidth' => 200, 'maxHeight' => 200],
                 $testFile,
                 false,
                 [ImageSize::WIDTH_TOO_SMALL, ImageSize::HEIGHT_TOO_SMALL],
             ],
             [
-                ['minWidth' => 80,  'minHeight' => 0,   'maxWidth' => 80,   'maxHeight' => 200],
+                ['minWidth' => 80, 'minHeight' => 0, 'maxWidth' => 80, 'maxHeight' => 200],
                 $testFile,
                 true,
                 null,
             ],
             [
-                ['minWidth' => 0,   'minHeight' => 0,   'maxWidth' => 60,   'maxHeight' => 200],
+                ['minWidth' => 0, 'minHeight' => 0, 'maxWidth' => 60, 'maxHeight' => 200],
                 $testFile,
                 false,
                 [ImageSize::WIDTH_TOO_BIG],
             ],
             [
-                ['minWidth' => 90,  'minHeight' => 0,   'maxWidth' => 200,  'maxHeight' => 200],
+                ['minWidth' => 90, 'minHeight' => 0, 'maxWidth' => 200, 'maxHeight' => 200],
                 $testFile,
                 false,
                 [ImageSize::WIDTH_TOO_SMALL],
             ],
             [
-                ['minWidth' => 0,   'minHeight' => 0,   'maxWidth' => 200,  'maxHeight' => 80],
+                ['minWidth' => 0, 'minHeight' => 0, 'maxWidth' => 200, 'maxHeight' => 80],
                 $testFile,
                 false,
                 [ImageSize::HEIGHT_TOO_BIG],
             ],
             [
-                ['minWidth' => 0,   'minHeight' => 110, 'maxWidth' => 200,  'maxHeight' => 140],
+                ['minWidth' => 0, 'minHeight' => 110, 'maxWidth' => 200, 'maxHeight' => 140],
                 $testFile,
                 false,
                 [ImageSize::HEIGHT_TOO_SMALL],
@@ -143,7 +143,7 @@ final class ImageSizeTest extends TestCase
      * @param list<string>|null $messageKeys
      */
     #[DataProvider('basicBehaviorDataProvider')]
-    public function testBasic(array $options, mixed $isValidParam, bool $expected, array|null $messageKeys): void
+    public function testBasic(array $options, mixed $isValidParam, bool $expected, ?array $messageKeys): void
     {
         $validator = new ImageSize($options);
 
@@ -166,8 +166,8 @@ final class ImageSizeTest extends TestCase
         $validator = new ImageSize([
             'minWidth'  => 100,
             'minHeight' => 1000,
-            'maxWidth'  => 10000,
-            'maxHeight' => 100000,
+            'maxWidth'  => 10_000,
+            'maxHeight' => 100_000,
         ]);
 
         self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
@@ -225,7 +225,7 @@ final class ImageSizeTest extends TestCase
 
         $path = __DIR__ . '/_files/no-read.txt';
         touch($path);
-        chmod($path, 0333);
+        chmod($path, 0o333);
         try {
             self::assertFalse($validator->isValid($path));
             $messages = $validator->getMessages();

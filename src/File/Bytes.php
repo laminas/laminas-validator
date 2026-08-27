@@ -24,8 +24,7 @@ final class Bytes
 {
     private function __construct(
         public readonly int $bytes,
-    ) {
-    }
+    ) {}
 
     public static function fromInteger(int $bytes): self
     {

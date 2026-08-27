@@ -76,7 +76,7 @@ final class EnumCase extends AbstractValidator
         }
 
         $match = array_map(
-            static fn (UnitEnum|BackedEnum $case): string => $case->name,
+            static fn(UnitEnum|BackedEnum $case): string => $case->name,
             $this->enum::cases(),
         );
 

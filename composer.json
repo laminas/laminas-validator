@@ -45,12 +45,10 @@
         "psr/http-message": "^1.0.1 || ^2.0.0"
     },
     "require-dev": {
-        "laminas/laminas-coding-standard": "^3.1.0",
         "laminas/laminas-diactoros": "^3.8.0",
         "laminas/laminas-translator": "^2.0",
-        "phpunit/phpunit": "^11.5.55",
-        "psalm/plugin-phpunit": "^0.19.7",
-        "vimeo/psalm": "^6.16.1"
+        "phpunit/phpunit": "^11.5.56",
+        "carthage-software/mago": "^1.47.4"
     },
     "suggest": {
         "laminas/laminas-i18n": "Laminas\\I18n component to allow translation of validation error messages",
@@ -68,13 +66,9 @@
     },
     "scripts": {
         "check": [
-            "@cs-check",
             "@test"
         ],
-        "cs-check": "phpcs",
-        "cs-fix": "phpcbf",
         "test": "phpunit --colors=always",
-        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
-        "static-analysis": "psalm --shepherd --stats"
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     }
 }

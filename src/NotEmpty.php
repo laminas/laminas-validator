@@ -48,29 +48,25 @@ use function preg_match;
  */
 final class NotEmpty extends AbstractValidator
 {
-    public const BOOLEAN       = 0b000000000001;
-    public const INTEGER       = 0b000000000010;
-    public const FLOAT         = 0b000000000100;
-    public const STRING        = 0b000000001000;
-    public const ZERO          = 0b000000010000;
-    public const EMPTY_ARRAY   = 0b000000100000;
-    public const NULL          = 0b000001000000;
-    public const PHP           = 0b000001111111;
-    public const SPACE         = 0b000010000000;
-    public const OBJECT        = 0b000100000000;
-    public const OBJECT_STRING = 0b001000000000;
-    public const OBJECT_COUNT  = 0b010000000000;
-    public const ALL           = 0b011111111111;
+    public const BOOLEAN       = 0b0000_0000_0001;
+    public const INTEGER       = 0b0000_0000_0010;
+    public const FLOAT         = 0b0000_0000_0100;
+    public const STRING        = 0b0000_0000_1000;
+    public const ZERO          = 0b0000_0001_0000;
+    public const EMPTY_ARRAY   = 0b0000_0010_0000;
+    public const NULL          = 0b0000_0100_0000;
+    public const PHP           = 0b0000_0111_1111;
+    public const SPACE         = 0b0000_1000_0000;
+    public const OBJECT        = 0b0001_0000_0000;
+    public const OBJECT_STRING = 0b0010_0000_0000;
+    public const OBJECT_COUNT  = 0b0100_0000_0000;
+    public const ALL           = 0b0111_1111_1111;
 
     public const INVALID  = 'notEmptyInvalid';
     public const IS_EMPTY = 'isEmpty';
 
-    private const DEFAULT_TYPE = self::OBJECT
-        | self::SPACE
-        | self::NULL
-        | self::EMPTY_ARRAY
-        | self::STRING
-        | self::BOOLEAN;
+    private const DEFAULT_TYPE =
+        self::OBJECT | self::SPACE | self::NULL | self::EMPTY_ARRAY | self::STRING | self::BOOLEAN;
 
     private const TYPE_NAMES = [
         self::BOOLEAN       => 'boolean',
@@ -163,7 +159,7 @@ final class NotEmpty extends AbstractValidator
         if ($this->type & self::OBJECT_COUNT) {
             $object = true;
 
-            if ($value instanceof Countable && (count($value) === 0)) {
+            if ($value instanceof Countable && count($value) === 0) {
                 $this->error(self::IS_EMPTY);
                 return false;
             }
@@ -174,8 +170,10 @@ final class NotEmpty extends AbstractValidator
             $object = true;
 
             if (
-                (is_object($value) && ! method_exists($value, '__toString'))
-                || (is_object($value) && (string) $value === '')
+                (is_object($value)
+                && ! method_exists($value, '__toString'))
+                || (is_object($value)
+                && (string) $value === '')
             ) {
                 $this->error(self::IS_EMPTY);
                 return false;
@@ -196,7 +194,7 @@ final class NotEmpty extends AbstractValidator
 
         // SPACE ('   ')
         if ($this->type & self::SPACE) {
-            if (is_string($value) && (preg_match('/^\s+$/s', $value))) {
+            if (is_string($value) && preg_match('/^\s+$/s', $value)) {
                 $this->error(self::IS_EMPTY);
                 return false;
             }

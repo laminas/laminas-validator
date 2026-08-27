@@ -52,18 +52,37 @@ clean: ## Clear out caches and documentation assets
 	docker image rm laminas/mkdocs
 	rm -rf .phpunit.cache
 	rm -f .phpcs-cache
-	vendor/bin/psalm --clear-cache
 
 static-analysis: ## Run static analysis checks
-	vendor/bin/psalm --no-cache
+	vendor/bin/mago analyse
 .PHONY: static-analysis
 
+update-sa-baseline: ## Refresh the Mago SA baseline
+	vendor/bin/mago analyse --remove-outdated-baseline-entries
+.PHONY: update-sa-baseline
+
+set-sa-baseline: ## Add violations to the Mago SA Baseline
+	vendor/bin/mago analyse --generate-baseline
+.PHONY: set-sa-baseline
+
+lint: ## Run mago lint
+	vendor/bin/mago lint
+.PHONY: lint
+
+update-lint-baseline: ## Refresh the Mago lint baseline
+	vendor/bin/mago lint --remove-outdated-baseline-entries
+.PHONY: update-sa-baseline
+
+set-lint-baseline: ## Add violations to the Mago lint Baseline
+	vendor/bin/mago lint --generate-baseline
+.PHONY: set-sa-baseline
+
 coding-standards: ## Run coding standards checks
-	vendor/bin/phpcs
+	vendor/bin/mago format --dry-run
 .PHONY: coding-standards
 
 coding-standards-fix: ## Fix coding standard violations
-	vendor/bin/phpcbf
+	vendor/bin/mago format
 .PHONY: coding-standards-fix
 
 test: ## Run unit tests
@@ -89,5 +108,5 @@ check-links: ## Check documentation links
 	@docker run -it -w /app -v ${PWD}:/app --rm ${LINK_CHECKER_IMAGE} -t 5 -qq -f raw "docs/**/*.md" README.md
 .PHONY: check-links
 
-qa: coding-standards static-analysis test composer-require-checker docs-lint check-links ## Run all QA Checks
+qa: coding-standards static-analysis lint test composer-require-checker docs-lint check-links ## Run all QA Checks
 .PHONY: qa

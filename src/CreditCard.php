@@ -328,12 +328,14 @@ final class CreditCard extends AbstractValidator
         $lengthFound = false;
         foreach ($this->type as $type) {
             foreach (self::CARD_PREFIXES[$type] as $prefix) {
-                if (str_starts_with($value, $prefix)) {
-                    $prefixFound = true;
-                    if (in_array($length, self::CARD_LENGTH[$type])) {
-                        $lengthFound = true;
-                        break 2;
-                    }
+                if (! str_starts_with($value, $prefix)) {
+                    continue;
+                }
+
+                $prefixFound = true;
+                if (in_array($length, self::CARD_LENGTH[$type])) {
+                    $lengthFound = true;
+                    break 2;
                 }
             }
         }
@@ -353,11 +355,11 @@ final class CreditCard extends AbstractValidator
 
         for ($i = $length - 2; $i >= 0; $i--) {
             $digit  = $weight * (int) $value[$i];
-            $sum   += floor($digit / 10) + $digit % 10;
-            $weight = $weight % 2 + 1;
+            $sum    += floor($digit / 10) + ($digit % 10);
+            $weight = ($weight % 2) + 1;
         }
 
-        $checksum = (10 - $sum % 10) % 10;
+        $checksum = (10 - ($sum % 10)) % 10;
         if ((string) $checksum !== $value[$length - 1]) {
             $this->error(self::CHECKSUM, $value);
             return false;

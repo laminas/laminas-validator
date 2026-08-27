@@ -103,7 +103,7 @@ final class Util
         }
 
         $check %= 10;
-        $check  = 10 - $check;
+        $check = 10 - $check;
 
         return (string) $check === $checksum;
     }

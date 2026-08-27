@@ -44,7 +44,7 @@ final class StringLength extends AbstractValidator
     ];
 
     protected readonly int $min;
-    protected readonly int|null $max;
+    protected readonly ?int $max;
     private readonly string $encoding;
     protected ?int $length = null;
 
@@ -63,7 +63,7 @@ final class StringLength extends AbstractValidator
 
         if ($this->max !== null && $this->max < $this->min) {
             throw new InvalidArgumentException(
-                "The maximum must be greater than or equal to the minimum length, but {$this->max} < {$this->min}"
+                "The maximum must be greater than or equal to the minimum length, but {$this->max} < {$this->min}",
             );
         }
     }

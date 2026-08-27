@@ -61,17 +61,17 @@ final class ImageSize extends AbstractValidator
     /**
      * Detected width
      */
-    protected int|null $width;
+    protected ?int $width;
 
     /**
      * Detected height
      */
-    protected int|null $height;
+    protected ?int $height;
 
     protected readonly int $minWidth;
-    protected readonly int|null $maxWidth;
+    protected readonly ?int $maxWidth;
     protected readonly int $minHeight;
-    protected readonly int|null $maxHeight;
+    protected readonly ?int $maxHeight;
 
     /**
      * Sets validator options
@@ -97,7 +97,7 @@ final class ImageSize extends AbstractValidator
             );
         }
 
-        if (($minWidth > (int) $maxWidth) || ($minHeight > (int) $maxHeight)) {
+        if ($minWidth > (int) $maxWidth || $minHeight > (int) $maxHeight) {
             throw new InvalidArgumentException(
                 'Max width or height must exceed the minimum equivalent',
             );
@@ -140,7 +140,7 @@ final class ImageSize extends AbstractValidator
 
         $size = getimagesize($file->path);
 
-        if ($size === false || ($size[0] === 0) || ($size[1] === 0)) {
+        if ($size === false || $size[0] === 0 || $size[1] === 0) {
             $this->error(self::NOT_DETECTED);
             return false;
         }

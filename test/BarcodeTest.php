@@ -65,7 +65,7 @@ final class BarcodeTest extends TestCase
     public function testNonStringValidation(): void
     {
         $barcode = new Barcode(['adapter' => Barcode\Upca::class]);
-        self::assertFalse($barcode->isValid(106510000.4327));
+        self::assertFalse($barcode->isValid(1_065_100_00.4327));
         self::assertArrayHasKey(Barcode::INVALID, $barcode->getMessages());
 
         self::assertFalse($barcode->isValid(['065100004327']));

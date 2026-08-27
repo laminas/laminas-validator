@@ -177,7 +177,7 @@ final class KeyExistsTest extends TestCase
     }
 
     #[DataProvider('basicDataProvider')]
-    public function testBasicBehaviour(mixed $input, int|string $key, bool $valid, string|null $expectError): void
+    public function testBasicBehaviour(mixed $input, int|string $key, bool $valid, ?string $expectError): void
     {
         $validator = new KeyExists(['key' => $key]);
 

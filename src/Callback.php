@@ -72,7 +72,7 @@ final class Callback extends AbstractValidator
         assert(is_bool($bind));
 
         /** @psalm-var Closure(mixed...):bool $callback */
-        $callback       = $bind
+        $callback = $bind
             ? $callback(...)->bindTo($this)
             : $callback(...);
         $this->callback = $callback;
