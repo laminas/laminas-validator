@@ -110,6 +110,12 @@ count = 1
 
 [[issues]]
 file = "src/Barcode/Code39.php"
+code = "mismatched-array-index"
+message = "Invalid array key type: `string` is not a valid key for this array."
+count = 2
+
+[[issues]]
+file = "src/Barcode/Code39.php"
 code = "possibly-null-operand"
 message = "Right operand in arithmetic operation might be `null` (type `int(0)|int(1)|int(10)|int(11)|int(12)|int(13)|int(14)|int(15)|int(16)|int(17)|int(18)|int(19)|int(2)|int(20)|int(21)|int(22)|int(23)|int(24)|int(25)|int(26)|int(27)|int(28)|int(29)|int(3)|int(30)|int(31)|int(32)|int(33)|int(34)|int(35)|int(36)|int(37)|int(38)|int(39)|int(4)|int(40)|int(41)|int(42)|int(5)|int(6)|int(7)|int(8)|int(9)|null`)."
 count = 1
@@ -117,8 +123,14 @@ count = 1
 [[issues]]
 file = "src/Barcode/Code39.php"
 code = "possibly-undefined-string-array-index"
-message = "Possibly undefined array key `string` accessed on `array{' ': int(38), '$': int(39), '%': int(42), '+': int(41), '-': int(36), '.': int(37), '/': int(40), '0': int(0), '1': int(1), '2': int(2), '3': int(3), '4': int(4), '5': int(5), '6': int(6), '7': int(7), '8': int(8), '9': int(9), 'A': int(10), 'B': int(11), 'C': int(12), 'D': int(13), 'E': int(14), 'F': int(15), 'G': int(16), 'H': int(17), 'I': int(18), 'J': int(19), 'K': int(20), 'L': int(21), 'M': int(22), 'N': int(23), 'O': int(24), 'P': int(25), 'Q': int(26), 'R': int(27), 'S': int(28), 'T': int(29), 'U': int(30), 'V': int(31), 'W': int(32), 'X': int(33), 'Y': int(34), 'Z': int(35)}`."
+message = "Possibly undefined array key `string` accessed on `array{0: int(0), 1: int(1), 2: int(2), 3: int(3), 4: int(4), 5: int(5), 6: int(6), 7: int(7), 8: int(8), 9: int(9), ' ': int(38), '$': int(39), '%': int(42), '+': int(41), '-': int(36), '.': int(37), '/': int(40), 'A': int(10), 'B': int(11), 'C': int(12), 'D': int(13), 'E': int(14), 'F': int(15), 'G': int(16), 'H': int(17), 'I': int(18), 'J': int(19), 'K': int(20), 'L': int(21), 'M': int(22), 'N': int(23), 'O': int(24), 'P': int(25), 'Q': int(26), 'R': int(27), 'S': int(28), 'T': int(29), 'U': int(30), 'V': int(31), 'W': int(32), 'X': int(33), 'Y': int(34), 'Z': int(35)}`."
 count = 2
+
+[[issues]]
+file = "src/Barcode/Code93.php"
+code = "mismatched-array-index"
+message = "Invalid array key type: `string` is not a valid key for this array."
+count = 1
 
 [[issues]]
 file = "src/Barcode/Code93.php"
@@ -129,8 +141,14 @@ count = 2
 [[issues]]
 file = "src/Barcode/Code93.php"
 code = "possibly-undefined-string-array-index"
-message = """Possibly undefined array key `string` accessed on `array{' ': int(38), '!': int(43), '"': int(44), '$': int(39), '%': int(42), '&': int(46), '+': int(41), '-': int(36), '.': int(37), '/': int(40), '0': int(0), '1': int(1), '2': int(2), '3': int(3), '4': int(4), '5': int(5), '6': int(6), '7': int(7), '8': int(8), '9': int(9), 'A': int(10), 'B': int(11), 'C': int(12), 'D': int(13), 'E': int(14), 'F': int(15), 'G': int(16), 'H': int(17), 'I': int(18), 'J': int(19), 'K': int(20), 'L': int(21), 'M': int(22), 'N': int(23), 'O': int(24), 'P': int(25), 'Q': int(26), 'R': int(27), 'S': int(28), 'T': int(29), 'U': int(30), 'V': int(31), 'W': int(32), 'X': int(33), 'Y': int(34), 'Z': int(35), '§': int(45)}`."""
-count = 2
+message = """Possibly undefined array key `int(0)|int(1)|int(2)|int(3)|int(4)|int(5)|int(6)|int(7)|int(8)|int(9)|string` accessed on `array{0: int(0), 1: int(1), 2: int(2), 3: int(3), 4: int(4), 5: int(5), 6: int(6), 7: int(7), 8: int(8), 9: int(9), ' ': int(38), '!': int(43), '"': int(44), '$': int(39), '%': int(42), '&': int(46), '+': int(41), '-': int(36), '.': int(37), '/': int(40), 'A': int(10), 'B': int(11), 'C': int(12), 'D': int(13), 'E': int(14), 'F': int(15), 'G': int(16), 'H': int(17), 'I': int(18), 'J': int(19), 'K': int(20), 'L': int(21), 'M': int(22), 'N': int(23), 'O': int(24), 'P': int(25), 'Q': int(26), 'R': int(27), 'S': int(28), 'T': int(29), 'U': int(30), 'V': int(31), 'W': int(32), 'X': int(33), 'Y': int(34), 'Z': int(35), '§': int(45)}`."""
+count = 1
+
+[[issues]]
+file = "src/Barcode/Code93.php"
+code = "possibly-undefined-string-array-index"
+message = """Possibly undefined array key `string` accessed on `array{0: int(0), 1: int(1), 2: int(2), 3: int(3), 4: int(4), 5: int(5), 6: int(6), 7: int(7), 8: int(8), 9: int(9), ' ': int(38), '!': int(43), '"': int(44), '$': int(39), '%': int(42), '&': int(46), '+': int(41), '-': int(36), '.': int(37), '/': int(40), 'A': int(10), 'B': int(11), 'C': int(12), 'D': int(13), 'E': int(14), 'F': int(15), 'G': int(16), 'H': int(17), 'I': int(18), 'J': int(19), 'K': int(20), 'L': int(21), 'M': int(22), 'N': int(23), 'O': int(24), 'P': int(25), 'Q': int(26), 'R': int(27), 'S': int(28), 'T': int(29), 'U': int(30), 'V': int(31), 'W': int(32), 'X': int(33), 'Y': int(34), 'Z': int(35), '§': int(45)}`."""
+count = 1
 
 [[issues]]
 file = "src/Barcode/Intelligentmail.php"
@@ -197,18 +215,6 @@ file = "src/Callback.php"
 code = "invalid-docblock"
 message = "Invalid type in `@var` tag for variable `$options`."
 count = 2
-
-[[issues]]
-file = "src/Callback.php"
-code = "invalid-method-access"
-message = "Attempting to access a method on a non-object type (`(closure(...mixed): mixed)`)."
-count = 1
-
-[[issues]]
-file = "src/Callback.php"
-code = "invalid-method-access"
-message = "Attempting to access a method on a non-object type (`(closure(mixed, array<string, mixed>, ...mixed): bool)`)."
-count = 1
 
 [[issues]]
 file = "src/Callback.php"
@@ -854,6 +860,12 @@ count = 1
 
 [[issues]]
 file = "src/Hostname.php"
+code = "missing-property-type"
+message = "Property `$tld` is missing a type hint."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
 code = "mixed-argument"
 message = "Invalid argument type for argument #1 of `preg_match`: expected `string`, but found `mixed`."
 count = 1
@@ -992,12 +1004,6 @@ count = 1
 
 [[issues]]
 file = "src/Hostname.php"
-code = "redundant-type-comparison"
-message = "Redundant type assertion: `$last` is already `string`."
-count = 1
-
-[[issues]]
-file = "src/Hostname.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `Laminas\Stdlib\Exception\RuntimeException` in `Laminas\Validator\Hostname::isValid`.'
 count = 1
@@ -1030,13 +1036,13 @@ count = 1
 file = "src/Identical.php"
 code = "mixed-assignment"
 message = "Assigning `mixed` type to a variable may lead to unexpected behavior."
-count = 4
+count = 3
 
 [[issues]]
 file = "src/Identical.php"
 code = "mixed-assignment"
 message = "Assigning `nonnull` type to a variable may lead to unexpected behavior."
-count = 2
+count = 3
 
 [[issues]]
 file = "src/Identical.php"
