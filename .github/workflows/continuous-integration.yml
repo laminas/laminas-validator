@@ -11,8 +11,29 @@ env:
   default_php: 8.2
 
 jobs:
-  ci:
-    uses: laminas/workflow-continuous-integration/.github/workflows/continuous-integration.yml@1.x
+  matrix:
+    name: Generate job matrix
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      -   name: Gather CI configuration
+          id: matrix
+          uses: laminas/laminas-ci-matrix-action@f48577eff9adecadd922d623be015e39ded8a972 # v1
+
+  qa:
+    name: QA Checks
+    needs: [ matrix ]
+    runs-on: ${{ matrix.operatingSystem }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.matrix.outputs.matrix) }}
+    steps:
+      -   name: ${{ matrix.name }}
+          uses: laminas/laminas-continuous-integration-action@757a62736b25b11240101d3c616fff4cbc707cfd # v1
+          with:
+            job: ${{ matrix.job }}
+
 
   composer-require-checker:
     name: "Check for missing dependencies"
@@ -29,48 +50,3 @@ jobs:
       - uses: ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda # 4.0.0
       - run: make install-tools
       - run: make composer-require-checker
-
-  mago-lint:
-    name: "Mago Lint"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
-        with:
-          persist-credentials: false
-      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
-        with:
-          php-version: ${{ env.default_php }}
-          extensions: ${{ env.php_extensions }}
-          ini-values: memory_limit=-1
-      - uses: "ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda" # 4.0.0
-      - run: vendor/bin/mago lint
-
-  mago-analyse:
-    name: "Mago Analyse"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
-        with:
-          persist-credentials: false
-      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
-        with:
-          php-version: ${{ env.default_php }}
-          extensions: ${{ env.php_extensions }}
-          ini-values: memory_limit=-1
-      - uses: "ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda" # 4.0.0
-      - run: vendor/bin/mago analyse
-
-  mago-format:
-    name: "Mago Format"
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
-        with:
-          persist-credentials: false
-      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
-        with:
-          php-version: ${{ env.default_php }}
-          extensions: ${{ env.php_extensions }}
-          ini-values: memory_limit=-1
-      - uses: "ramsey/composer-install@65e4f84970763564f46a70b8a54b90d033b3bdda" # 4.0.0
-      - run: vendor/bin/mago format --dry-run
