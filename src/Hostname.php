@@ -719,7 +719,6 @@ final class Hostname extends AbstractValidator
         'jpmorgan',
         'jprs',
         'juegos',
-        'juniper',
         'kaufen',
         'kddi',
         'ke',
