@@ -9,32 +9,20 @@ return Architecture::define()
     ->withPresets(Preset::PER(), Preset::CODEQUALITY())
     ->layer('Exception', 'src/Exception')
     ->layer('Translator', 'src/Translator')
-    ->layer('Base', [
+    ->layer('BaseValidator', [
         'src/AbstractValidator.php',
         'src/ValidatorInterface.php',
         'src/ValidatorChainInterface.php',
     ])
     ->layer('Barcode', 'src/Barcode')
     ->layer('Hostname', 'src/Hostname')
-    ->layer('File', 'src/File')
-    ->layer('Sitemap', 'src/Sitemap')
-    ->layer('Service', [
-        'src/Conditional.php',
-        'src/ConditionalFactory.php',
-        'src/Explode.php',
-        'src/ValidatorChain.php',
-        'src/ValidatorChainFactory.php',
-        'src/ValidatorChainFactoryFactory.php',
-        'src/ValidatorChainInvokableFactory.php',
-        'src/ValidatorPluginManager.php',
-        'src/ValidatorPluginManagerAwareInterface.php',
-        'src/ValidatorPluginManagerFactory.php',
-    ])
+    ->layer('FileValidator', 'src/File')
+    ->layer('SitemapValidator', 'src/Sitemap')
     ->layer('Config', [
         'src/ConfigProvider.php',
         'src/Module.php',
     ])
-    ->layer('Validator', 'src', [
+    ->layer('CommonValidator', 'src', [
         'src/Exception',
         'src/Translator',
         'src/AbstractValidator.php',
@@ -44,28 +32,17 @@ return Architecture::define()
         'src/Hostname',
         'src/File',
         'src/Sitemap',
-        'src/Conditional.php',
-        'src/ConditionalFactory.php',
-        'src/Explode.php',
-        'src/ValidatorChain.php',
-        'src/ValidatorChainFactory.php',
-        'src/ValidatorChainFactoryFactory.php',
-        'src/ValidatorChainInvokableFactory.php',
-        'src/ValidatorPluginManager.php',
-        'src/ValidatorPluginManagerAwareInterface.php',
-        'src/ValidatorPluginManagerFactory.php',
         'src/ConfigProvider.php',
         'src/Module.php',
     ])
     ->ruleset([
-        'Exception'  => [],
-        'Translator' => [],
-        'Base'       => ['Exception', 'Translator'],
-        'Barcode'    => [],
-        'Hostname'   => [],
-        'Validator'  => ['+Base', 'Barcode', 'Hostname'],
-        'File'       => ['+Base'],
-        'Sitemap'    => ['+Validator'],
-        'Service'    => ['+Sitemap', '+File'],
-        'Config'     => ['+Service'],
+        'Exception'        => [],
+        'Translator'       => [],
+        'BaseValidator'    => ['Exception', 'Translator'],
+        'Barcode'          => [],
+        'Hostname'         => [],
+        'CommonValidator'  => ['+FileValidator', 'Barcode', 'Hostname', 'SitemapValidator'],
+        'FileValidator'    => ['+BaseValidator'],
+        'SitemapValidator' => ['+CommonValidator'],
+        'Config'           => ['+CommonValidator'],
     ]);
