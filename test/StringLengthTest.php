@@ -89,7 +89,7 @@ final class StringLengthTest extends TestCase
          * Warnings are silenced to prevent the test from failing
          */
         // phpcs:disable
-        set_error_handler(fn(int $_a, string $_b): bool => true, E_WARNING);
+        set_error_handler(static fn(int $_a, string $_b): bool => true, E_WARNING);
         // phpcs:enable
 
         $malformed = chr(0xED) . chr(0xA0) . chr(0x80);
