@@ -116,6 +116,6 @@ final class NotExistsTest extends TestCase
         self::assertFalse($validator->isValid(__DIR__ . '/_files/testsize.mo'));
         $messages = $validator->getMessages();
         self::assertArrayHasKey(NotExists::DOES_EXIST, $messages);
-        self::assertStringContainsString('File exists', $messages[NotExists::DOES_EXIST]);
+        self::assertStringContainsString('File exists', $messages[NotExists::DOES_EXIST] ?? null);
     }
 }

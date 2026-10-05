@@ -50,7 +50,7 @@ final class GPSPointTest extends TestCase
         $messages = $this->validator->getMessages();
 
         self::assertArrayHasKey($messageKey, $messages);
-        self::assertStringContainsString($messageValue, $messages[$messageKey]);
+        self::assertStringContainsString($messageValue, $messages[$messageKey] ?? null);
     }
 
     /**

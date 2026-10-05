@@ -558,7 +558,7 @@ final class EmailAddressTest extends TestCase
 
         $messages = $validator->getMessages();
         self::assertArrayHasKey(EmailAddress::INVALID, $messages, json_encode($messages, JSON_THROW_ON_ERROR));
-        self::assertSame('TestMessage', $messages[EmailAddress::INVALID]);
+        self::assertSame('TestMessage', $messages[EmailAddress::INVALID] ?? null);
     }
 
     public function testHostnameValidatorMessagesCanBeCustomisedViaOptions(): void
@@ -577,7 +577,7 @@ final class EmailAddressTest extends TestCase
             $messages,
             json_encode($messages, JSON_THROW_ON_ERROR),
         );
-        self::assertSame('Bad Hostname', $messages[Hostname::IP_ADDRESS_NOT_ALLOWED]);
+        self::assertSame('Bad Hostname', $messages[Hostname::IP_ADDRESS_NOT_ALLOWED] ?? null);
     }
 
     #[Group('Laminas-11222')]

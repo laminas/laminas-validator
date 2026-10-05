@@ -91,6 +91,6 @@ final class IsImageTest extends TestCase
         self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
         $messages = $validator->getMessages();
         self::assertArrayHasKey(IsImage::NOT_READABLE, $messages);
-        self::assertStringContainsString('does not exist', $messages[IsImage::NOT_READABLE]);
+        self::assertStringContainsString('does not exist', $messages[IsImage::NOT_READABLE] ?? null);
     }
 }

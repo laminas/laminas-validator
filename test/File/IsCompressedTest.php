@@ -121,6 +121,6 @@ final class IsCompressedTest extends TestCase
         self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
         $messages = $validator->getMessages();
         self::assertArrayHasKey(IsCompressed::NOT_READABLE, $messages);
-        self::assertStringContainsString('does not exist', $messages[IsCompressed::NOT_READABLE]);
+        self::assertStringContainsString('does not exist', $messages[IsCompressed::NOT_READABLE] ?? null);
     }
 }

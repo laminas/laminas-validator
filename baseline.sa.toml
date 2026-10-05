@@ -8,15 +8,9 @@ count = 1
 
 [[issues]]
 file = "src/AbstractValidator.php"
-code = "possibly-null-argument"
-message = 'Argument #1 of method `Laminas\Validator\AbstractValidator::translateMessage` is possibly `null`, but parameter type `string` does not accept it.'
-count = 1
-
-[[issues]]
-file = "src/AbstractValidator.php"
 code = "possibly-undefined-string-array-index"
 message = "Possibly undefined array key `string` accessed on `array<string, string>`."
-count = 2
+count = 1
 
 [[issues]]
 file = "src/AbstractValidator.php"
@@ -82,6 +76,12 @@ count = 1
 file = "src/BackedEnumValue.php"
 code = "possibly-static-access-on-interface"
 message = "Potential static method call on interface `BackedEnum` via `class-string`."
+count = 1
+
+[[issues]]
+file = "src/BackedEnumValue.php"
+code = "unhandled-thrown-type"
+message = 'Potentially unhandled exception `ReflectionException` in `Laminas\Validator\BackedEnumValue::__construct`.'
 count = 1
 
 [[issues]]
@@ -430,13 +430,13 @@ count = 1
 file = "src/DateStep.php"
 code = "possibly-null-operand"
 message = "Left operand in arithmetic operation might be `null` (type `int|null`)."
-count = 22
+count = 18
 
 [[issues]]
 file = "src/DateStep.php"
 code = "possibly-null-operand"
 message = "Right operand in arithmetic operation might be `null` (type `int|null`)."
-count = 5
+count = 3
 
 [[issues]]
 file = "src/DateStep.php"
@@ -466,7 +466,7 @@ count = 3
 file = "src/DateStep.php"
 code = "possibly-undefined-string-array-index"
 message = "Possibly undefined array key `string('days')` accessed on `non-empty-array<string('days')|string('hours')|string('minutes')|string('months')|string('seconds')|string('years'), int>`."
-count = 2
+count = 1
 
 [[issues]]
 file = "src/DateStep.php"
@@ -478,7 +478,7 @@ count = 3
 file = "src/DateStep.php"
 code = "possibly-undefined-string-array-index"
 message = "Possibly undefined array key `string('hours')` accessed on `non-empty-array<string('days')|string('hours')|string('minutes')|string('months')|string('seconds')|string('years'), int>`."
-count = 6
+count = 2
 
 [[issues]]
 file = "src/DateStep.php"
@@ -490,7 +490,7 @@ count = 3
 file = "src/DateStep.php"
 code = "possibly-undefined-string-array-index"
 message = "Possibly undefined array key `string('minutes')` accessed on `non-empty-array<string('days')|string('hours')|string('minutes')|string('months')|string('seconds')|string('years'), int>`."
-count = 7
+count = 3
 
 [[issues]]
 file = "src/DateStep.php"
@@ -502,7 +502,7 @@ count = 3
 file = "src/DateStep.php"
 code = "possibly-undefined-string-array-index"
 message = "Possibly undefined array key `string('months')` accessed on `non-empty-array<string('days')|string('hours')|string('minutes')|string('months')|string('seconds')|string('years'), int>`."
-count = 2
+count = 1
 
 [[issues]]
 file = "src/DateStep.php"
@@ -514,19 +514,13 @@ count = 3
 file = "src/DateStep.php"
 code = "possibly-undefined-string-array-index"
 message = "Possibly undefined array key `string('seconds')` accessed on `non-empty-array<string('days')|string('hours')|string('minutes')|string('months')|string('seconds')|string('years'), int>`."
-count = 8
+count = 3
 
 [[issues]]
 file = "src/DateStep.php"
 code = "possibly-undefined-string-array-index"
 message = "Possibly undefined array key `string('years')` accessed on `array<array-key, int>`."
 count = 3
-
-[[issues]]
-file = "src/DateStep.php"
-code = "possibly-undefined-string-array-index"
-message = "Possibly undefined array key `string('years')` accessed on `non-empty-array<string('days')|string('hours')|string('minutes')|string('months')|string('seconds')|string('years'), int>`."
-count = 2
 
 [[issues]]
 file = "src/DateStep.php"
@@ -663,7 +657,7 @@ count = 1
 [[issues]]
 file = "src/File/Extension.php"
 code = "less-specific-nested-return-statement"
-message = '''Returned type `array{}|list<mixed>` is less specific than the declared return type `list<non-empty-string>` for function `Laminas\Validator\File\Extension::listPossibleFileNameExtensions` due to nested 'mixed'.'''
+message = '''Returned type `list<mixed>` is less specific than the declared return type `list<non-empty-string>` for function `Laminas\Validator\File\Extension::listPossibleFileNameExtensions` due to nested 'mixed'.'''
 count = 1
 
 [[issues]]
@@ -789,7 +783,7 @@ count = 1
 [[issues]]
 file = "src/GpsPoint.php"
 code = "possibly-false-operand"
-message = "Left operand in `>` comparison might be `false` (type `false|int`)."
+message = "Left operand in `>` comparison might be `false` (type `false|int(0)|int(1)`)."
 count = 1
 
 [[issues]]
@@ -897,8 +891,14 @@ count = 1
 [[issues]]
 file = "src/Hostname.php"
 code = "possibly-false-operand"
+message = "Left operand in `>` comparison might be `false` (type `false|int(0)|int(1)`)."
+count = 1
+
+[[issues]]
+file = "src/Hostname.php"
+code = "possibly-false-operand"
 message = "Left operand in `>` comparison might be `false` (type `false|int`)."
-count = 3
+count = 2
 
 [[issues]]
 file = "src/Hostname.php"
@@ -1210,12 +1210,6 @@ count = 1
 file = "src/StringLength.php"
 code = "unhandled-thrown-type"
 message = 'Potentially unhandled exception `Laminas\Stdlib\Exception\RuntimeException` in `Laminas\Validator\StringLength::isValid`.'
-count = 1
-
-[[issues]]
-file = "src/Timezone.php"
-code = "invalid-property-assignment-value"
-message = "Invalid type for property `$type`: expected `int(0)|int(1)|int(2)|int(3)`, but got `int|int|int|int`."
 count = 1
 
 [[issues]]
@@ -1702,13 +1696,13 @@ count = 2
 file = "test/ValidatorChainFactoryTest.php"
 code = "possibly-null-array-access"
 message = "Cannot perform array access on possibly `null` value."
-count = 4
+count = 2
 
 [[issues]]
 file = "test/ValidatorChainFactoryTest.php"
 code = "possibly-undefined-int-array-index"
 message = '''Possibly undefined array index accessed on `list<array{'breakChainOnFailure': bool, 'instance': Laminas\Validator\ValidatorInterface}>`.'''
-count = 4
+count = 2
 
 [[issues]]
 file = "test/ValidatorChainTest.php"
@@ -1774,10 +1768,4 @@ count = 1
 file = "test/ValidatorPluginManagerTest.php"
 code = "possibly-invalid-argument"
 message = '''Possible argument type mismatch for argument #2 of `Laminas\Validator\ValidatorPluginManager::__construct`: expected `array{'abstract_factories'?: array<array-key, Laminas\ServiceManager\Factory\AbstractFactoryInterface|class-string<Laminas\ServiceManager\Factory\AbstractFactoryInterface>>, 'aliases'?: array<string, string>, 'delegators'?: !Laminas\ServiceManager\ServiceManager::DelegatorsConfiguration, 'factories'?: !Laminas\ServiceManager\ServiceManager::FactoriesConfiguration, 'initializers'?: !Laminas\ServiceManager\ServiceManager::InitializersConfiguration, 'invokables'?: array<string, class-string>, 'lazy_services'?: array{'class_map'?: array<string, class-string>, 'proxies_namespace'?: non-empty-string, 'proxies_target_dir'?: non-empty-string, 'write_proxy_files'?: bool}, 'services'?: array<string, mixed>, 'shared'?: array<string, bool>, 'shared_by_default'?: bool, ...<string, mixed>}`, but possibly received `array{'factories': array{'test': (closure(): {anonymous-class:test/validatorpluginmanagertest.php:155:22})}}`.'''
-count = 1
-
-[[issues]]
-file = "vendor/laminas/laminas-servicemanager/src/AbstractSingleInstancePluginManager.php"
-code = "incompatible-property-type"
-message = 'Property `Laminas\Validator\ValidatorPluginManager::$instanceOf` has an incompatible type declaration from docblock.'
 count = 1

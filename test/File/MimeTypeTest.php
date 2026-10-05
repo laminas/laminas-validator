@@ -94,7 +94,7 @@ final class MimeTypeTest extends TestCase
         self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
         $messages = $validator->getMessages();
         self::assertArrayHasKey(MimeType::NOT_READABLE, $messages);
-        self::assertStringContainsString('does not exist', $messages[MimeType::NOT_READABLE]);
+        self::assertStringContainsString('does not exist', $messages[MimeType::NOT_READABLE] ?? null);
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void

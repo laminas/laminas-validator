@@ -39,7 +39,7 @@ final class UuidTest extends TestCase
 
         self::assertCount(1, $messages);
         self::assertArrayHasKey($expectedMessageKey, $messages);
-        self::assertNotEmpty($messages[$expectedMessageKey]);
+        self::assertNotEmpty($messages[$expectedMessageKey] ?? null);
     }
 
     /**

@@ -173,7 +173,7 @@ final class ImageSizeTest extends TestCase
         self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
         $messages = $validator->getMessages();
         self::assertArrayHasKey(ImageSize::NOT_READABLE, $messages);
-        self::assertStringContainsString('does not exist', $messages[ImageSize::NOT_READABLE]);
+        self::assertStringContainsString('does not exist', $messages[ImageSize::NOT_READABLE] ?? null);
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void

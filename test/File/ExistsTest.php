@@ -125,7 +125,7 @@ final class ExistsTest extends TestCase
         self::assertFalse($validator->isValid('nofile.mo'));
         $messages = $validator->getMessages();
         self::assertArrayHasKey(Exists::DOES_NOT_EXIST, $messages);
-        self::assertStringContainsString('does not exist', $messages[Exists::DOES_NOT_EXIST]);
+        self::assertStringContainsString('does not exist', $messages[Exists::DOES_NOT_EXIST] ?? null);
     }
 
     public function testEmptyFileArrayShouldReturnFalse(): void

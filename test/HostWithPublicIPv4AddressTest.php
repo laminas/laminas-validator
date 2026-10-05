@@ -18,7 +18,7 @@ final class HostWithPublicIPv4AddressTest extends TestCase
         self::assertArrayHasKey(HostWithPublicIPv4Address::ERROR_NOT_STRING, $messages);
         self::assertSame(
             'Expected a string hostname but received int',
-            $messages[HostWithPublicIPv4Address::ERROR_NOT_STRING],
+            $messages[HostWithPublicIPv4Address::ERROR_NOT_STRING] ?? null,
         );
     }
 
@@ -30,7 +30,7 @@ final class HostWithPublicIPv4AddressTest extends TestCase
         self::assertArrayHasKey(HostWithPublicIPv4Address::ERROR_HOSTNAME_NOT_RESOLVED, $messages);
         self::assertSame(
             'The hostname "foo" cannot be resolved',
-            $messages[HostWithPublicIPv4Address::ERROR_HOSTNAME_NOT_RESOLVED],
+            $messages[HostWithPublicIPv4Address::ERROR_HOSTNAME_NOT_RESOLVED] ?? null,
         );
     }
 
@@ -42,7 +42,7 @@ final class HostWithPublicIPv4AddressTest extends TestCase
         self::assertArrayHasKey(HostWithPublicIPv4Address::ERROR_PRIVATE_IP_FOUND, $messages);
         self::assertSame(
             'The hostname "localhost" resolves to at least one reserved IPv4 address',
-            $messages[HostWithPublicIPv4Address::ERROR_PRIVATE_IP_FOUND],
+            $messages[HostWithPublicIPv4Address::ERROR_PRIVATE_IP_FOUND] ?? null,
         );
     }
 
@@ -120,7 +120,7 @@ final class HostWithPublicIPv4AddressTest extends TestCase
         self::assertArrayHasKey(HostWithPublicIPv4Address::ERROR_PRIVATE_IP_FOUND, $messages);
         self::assertSame(
             'The hostname "' . $reservedIp . '" resolves to at least one reserved IPv4 address',
-            $messages[HostWithPublicIPv4Address::ERROR_PRIVATE_IP_FOUND],
+            $messages[HostWithPublicIPv4Address::ERROR_PRIVATE_IP_FOUND] ?? null,
         );
     }
 

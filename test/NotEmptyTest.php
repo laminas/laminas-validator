@@ -620,8 +620,8 @@ final class NotEmptyTest extends TestCase
 
         $messages = $valid->getMessages();
 
-        self::assertArrayHasKey('isEmpty', $messages);
-        self::assertStringContainsString("can't be empty", $messages['isEmpty']);
+        self::assertArrayHasKey(NotEmpty::IS_EMPTY, $messages);
+        self::assertStringContainsString("can't be empty", $messages[NotEmpty::IS_EMPTY] ?? null);
     }
 
     public function testObjects(): void

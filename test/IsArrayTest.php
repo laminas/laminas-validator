@@ -49,7 +49,7 @@ final class IsArrayTest extends TestCase
 
         self::assertSame(
             'Expected an array value but string provided',
-            $messages[IsArray::NOT_ARRAY],
+            $messages[IsArray::NOT_ARRAY] ?? null,
         );
     }
 }

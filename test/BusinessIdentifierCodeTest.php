@@ -66,7 +66,7 @@ final class BusinessIdentifierCodeTest extends TestCase
         self::assertCount(1, $validator->getMessages());
         self::assertSame(
             'Invalid type given; string expected',
-            $validator->getMessages()[BusinessIdentifierCode::NOT_STRING],
+            $validator->getMessages()[BusinessIdentifierCode::NOT_STRING] ?? null,
         );
     }
 
@@ -87,7 +87,7 @@ final class BusinessIdentifierCodeTest extends TestCase
 
         self::assertFalse($validator->isValid($code));
         self::assertCount(1, $validator->getMessages());
-        self::assertSame('Invalid BIC format', $validator->getMessages()[BusinessIdentifierCode::INVALID]);
+        self::assertSame('Invalid BIC format', $validator->getMessages()[BusinessIdentifierCode::INVALID] ?? null);
     }
 
     /** @psalm-return array<string, array{0: string}> */
@@ -106,6 +106,9 @@ final class BusinessIdentifierCodeTest extends TestCase
 
         self::assertFalse($validator->isValid($code));
         self::assertCount(1, $validator->getMessages());
-        self::assertSame('Invalid country code', $validator->getMessages()[BusinessIdentifierCode::NOT_VALID_COUNTRY]);
+        self::assertSame(
+            'Invalid country code',
+            $validator->getMessages()[BusinessIdentifierCode::NOT_VALID_COUNTRY] ?? null,
+        );
     }
 }
