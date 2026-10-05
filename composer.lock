@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0209d8f2c3ea153955eba049ef1f0e5",
+    "content-hash": "10d1505b0c8437faa7b8d20cf961b9e0",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -608,6 +608,7 @@
             },
             "default-branch": true,
             "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
@@ -618,16 +619,16 @@
                 "laminas"
             ],
             "support": {
-                "issues": "https://github.com/laminas/internal-tooling/issues",
-                "source": "https://github.com/laminas/internal-tooling",
-                "rss": "https://github.com/laminas/internal-tooling/releases.atom",
                 "chat": "https://laminas.dev/chat",
-                "forum": "https://discourse.laminas.dev"
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/laminas/internal-tooling/issues",
+                "rss": "https://github.com/laminas/internal-tooling/releases.atom",
+                "source": "https://github.com/laminas/internal-tooling"
             },
             "funding": [
                 {
-                    "type": "custom",
-                    "url": "https://crowdfunding.linuxfoundation.org/initiatives/laminas-project"
+                    "url": "https://crowdfunding.linuxfoundation.org/initiatives/laminas-project",
+                    "type": "custom"
                 }
             ],
             "time": "2026-10-05T16:04:18+00:00"

@@ -51,12 +51,6 @@
         "carthage-software/mago": "^1.51.2",
         "laminas/internal-tooling": "1.0.x-dev"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:laminas/internal-tooling.git"
-        }
-    ],
     "suggest": {
         "laminas/laminas-i18n": "Laminas\\I18n component to allow translation of validation error messages",
         "laminas/laminas-i18n-resources": "Translations of validator messages"
