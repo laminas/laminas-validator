@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "889a33bfc21fb7820f9a646802e8e851",
+    "content-hash": "b0209d8f2c3ea153955eba049ef1f0e5",
     "packages": [
         {
             "name": "brick/varexporter",
@@ -255,16 +255,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v5.8.0",
+            "version": "v5.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "044a6a392ff8ad0d61f14370a5fbbd0a0107152f"
+                "reference": "9e33da9553fe7786f0962b35f4e4ecf01be89def"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/044a6a392ff8ad0d61f14370a5fbbd0a0107152f",
-                "reference": "044a6a392ff8ad0d61f14370a5fbbd0a0107152f",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/9e33da9553fe7786f0962b35f4e4ecf01be89def",
+                "reference": "9e33da9553fe7786f0962b35f4e4ecf01be89def",
                 "shasum": ""
             },
             "require": {
@@ -306,9 +306,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v5.8.0"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.9.0"
             },
-            "time": "2026-07-04T14:30:18+00:00"
+            "time": "2026-09-13T18:51:52+00:00"
         },
         {
             "name": "psr/container",
@@ -527,16 +527,16 @@
     "packages-dev": [
         {
             "name": "carthage-software/mago",
-            "version": "1.47.4",
+            "version": "1.51.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/carthage-software/mago.git",
-                "reference": "398a1904a777a5c0111a5c00eaa7350ae7f78fc5"
+                "reference": "5415d6900d330a5a6a70728aaa7f9c52c7672495"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/carthage-software/mago/zipball/398a1904a777a5c0111a5c00eaa7350ae7f78fc5",
-                "reference": "398a1904a777a5c0111a5c00eaa7350ae7f78fc5",
+                "url": "https://api.github.com/repos/carthage-software/mago/zipball/5415d6900d330a5a6a70728aaa7f9c52c7672495",
+                "reference": "5415d6900d330a5a6a70728aaa7f9c52c7672495",
                 "shasum": ""
             },
             "require": {
@@ -578,7 +578,7 @@
             ],
             "support": {
                 "issues": "https://github.com/carthage-software/mago/issues",
-                "source": "https://github.com/carthage-software/mago/tree/1.47.4"
+                "source": "https://github.com/carthage-software/mago/tree/1.51.2"
             },
             "funding": [
                 {
@@ -586,7 +586,51 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-24T22:11:45+00:00"
+            "time": "2026-10-03T09:05:17+00:00"
+        },
+        {
+            "name": "laminas/internal-tooling",
+            "version": "1.0.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laminas/internal-tooling.git",
+                "reference": "0be7d10f94f064d293732d5da18ee80b647c8011"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laminas/internal-tooling/zipball/0be7d10f94f064d293732d5da18ee80b647c8011",
+                "reference": "0be7d10f94f064d293732d5da18ee80b647c8011",
+                "shasum": ""
+            },
+            "require": {
+                "carthage-software/mago": "^1.51.2",
+                "php": "~8.2 || ~8.3 || ~8.4 || ~8.5 || ~8.6"
+            },
+            "default-branch": true,
+            "type": "library",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Internal tooling configuration and defaults for Laminas and Mezzio projects",
+            "homepage": "https://laminas.dev",
+            "keywords": [
+                "dev",
+                "laminas"
+            ],
+            "support": {
+                "issues": "https://github.com/laminas/internal-tooling/issues",
+                "source": "https://github.com/laminas/internal-tooling",
+                "rss": "https://github.com/laminas/internal-tooling/releases.atom",
+                "chat": "https://laminas.dev/chat",
+                "forum": "https://discourse.laminas.dev"
+            },
+            "funding": [
+                {
+                    "type": "custom",
+                    "url": "https://crowdfunding.linuxfoundation.org/initiatives/laminas-project"
+                }
+            ],
+            "time": "2026-10-05T16:04:18+00:00"
         },
         {
             "name": "laminas/laminas-diactoros",
@@ -1203,16 +1247,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "11.5.56",
+            "version": "11.5.57",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "5f83edffa6967c3db468d48a695ec7bcb02e9256"
+                "reference": "36b75bf56a8535623f5b3e24b27ea1823759da1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/5f83edffa6967c3db468d48a695ec7bcb02e9256",
-                "reference": "5f83edffa6967c3db468d48a695ec7bcb02e9256",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/36b75bf56a8535623f5b3e24b27ea1823759da1a",
+                "reference": "36b75bf56a8535623f5b3e24b27ea1823759da1a",
                 "shasum": ""
             },
             "require": {
@@ -1222,7 +1266,7 @@
                 "ext-libxml": "*",
                 "ext-mbstring": "*",
                 "ext-xmlwriter": "*",
-                "myclabs/deep-copy": "^1.13.4",
+                "myclabs/deep-copy": "^1.14.0",
                 "phar-io/manifest": "^2.0.4",
                 "phar-io/version": "^3.2.1",
                 "php": ">=8.2",
@@ -1285,7 +1329,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.56"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.57"
             },
             "funding": [
                 {
@@ -1293,7 +1337,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2026-07-06T14:52:39+00:00"
+            "time": "2026-10-05T05:47:54+00:00"
         },
         {
             "name": "revolt/event-loop",
@@ -2458,7 +2502,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "laminas/internal-tooling": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
