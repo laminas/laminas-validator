@@ -52,8 +52,7 @@ final class UndisclosedPasswordTest extends TestCase
      */
     public function getConstant(string $constant, string|object $classOrInstance)
     {
-        return (new ReflectionClass($classOrInstance))
-            ->getConstant($constant);
+        return (new ReflectionClass($classOrInstance))->getConstant($constant);
     }
 
     /**
@@ -115,15 +114,16 @@ final class UndisclosedPasswordTest extends TestCase
 
                 $constant = $this->getConstant(
                     'HIBP_K_ANONYMITY_HASH_RANGE_LENGTH',
-                    UndisclosedPassword::class
+                    UndisclosedPassword::class,
                 );
                 self::assertIsInt($constant);
 
-                $this->stream->method('__toString')
+                $this->stream
+                    ->method('__toString')
                     ->willReturn(sprintf(
                         '%s:%d',
                         strtoupper(substr($hash, $constant)),
-                        random_int(0, 100000)
+                        random_int(0, 100_000),
                     ));
 
                 return $this->stream;
@@ -152,16 +152,17 @@ final class UndisclosedPasswordTest extends TestCase
 
                 $constant = $this->getConstant(
                     'HIBP_K_ANONYMITY_HASH_RANGE_LENGTH',
-                    UndisclosedPassword::class
+                    UndisclosedPassword::class,
                 );
 
                 self::assertIsInt($constant);
 
-                $this->stream->method('__toString')
+                $this->stream
+                    ->method('__toString')
                     ->willReturn(sprintf(
                         '%s:%d',
                         strtoupper(substr($hash, $constant)),
-                        random_int(0, 100000)
+                        random_int(0, 100_000),
                     ));
 
                 return $this->stream;

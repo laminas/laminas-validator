@@ -72,7 +72,7 @@ final class ExcludeMimeTypeTest extends TestCase
 
         self::assertFalse($validator->isValid(''));
         self::assertArrayHasKey(ExcludeMimeType::NOT_READABLE, $validator->getMessages());
-        self::assertNotEmpty($validator->getMessages()[ExcludeMimeType::NOT_READABLE]);
+        self::assertNotEmpty($validator->getMessages()[ExcludeMimeType::NOT_READABLE] ?? null);
     }
 
     public function testEmptyArrayFileShouldReturnFalseAdnDisplayNotFoundMessage(): void
@@ -89,7 +89,7 @@ final class ExcludeMimeTypeTest extends TestCase
 
         self::assertFalse($validator->isValid($filesArray));
         self::assertArrayHasKey(ExcludeMimeType::NOT_READABLE, $validator->getMessages());
-        self::assertNotEmpty($validator->getMessages()[ExcludeMimeType::NOT_READABLE]);
+        self::assertNotEmpty($validator->getMessages()[ExcludeMimeType::NOT_READABLE] ?? null);
     }
 
     public function testIsValidRaisesExceptionWithArrayNotInFilesFormat(): void
@@ -108,7 +108,7 @@ final class ExcludeMimeTypeTest extends TestCase
 
         $path = __DIR__ . '/_files/no-read.txt';
         touch($path);
-        chmod($path, 0333);
+        chmod($path, 0o333);
         try {
             self::assertFalse($validator->isValid($path));
             $messages = $validator->getMessages();

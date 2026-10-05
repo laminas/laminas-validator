@@ -1,0 +1,20 @@
+#:schema https://mago.carthage.software/1.51.0/schema.json
+
+extends = "vendor/laminas/internal-tooling/mago/defaults.toml"
+
+version = "1"
+php-version = "8.2.0"
+
+[analyzer]
+
+ignore = [
+    # Many validators set protected properties for message interpolation, so these properties appear unused when they are not.
+    { code = "write-only-property", in = "src/" },
+]
+
+# Exception Hierarchies to ignore
+unchecked-exceptions = [
+    "Error",
+    "LogicException",
+    "Psr\\Container\\ContainerExceptionInterface",
+]

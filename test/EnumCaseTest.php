@@ -52,7 +52,7 @@ final class EnumCaseTest extends TestCase
 
     /** @param class-string<BackedEnum>|class-string<UnitEnum> $enum */
     #[DataProvider('basicProvider')]
-    public function testBasic(string $enum, mixed $value, bool $expect, string|null $errorKey): void
+    public function testBasic(string $enum, mixed $value, bool $expect, ?string $errorKey): void
     {
         $validator = new EnumCase(['enum' => $enum]);
 

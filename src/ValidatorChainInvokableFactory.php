@@ -31,7 +31,7 @@ final class ValidatorChainInvokableFactory implements FactoryInterface
         ?array $options = null,
     ): ValidatorChain {
         $options ??= [];
-        $factory   = $container->get(ValidatorChainFactory::class);
+        $factory = $container->get(ValidatorChainFactory::class);
         return $factory->fromArray($options);
     }
 }

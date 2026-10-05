@@ -65,7 +65,7 @@ final class BarcodeTest extends TestCase
     public function testNonStringValidation(): void
     {
         $barcode = new Barcode(['adapter' => Barcode\Upca::class]);
-        self::assertFalse($barcode->isValid(106510000.4327));
+        self::assertFalse($barcode->isValid(1_065_100_00.4327));
         self::assertArrayHasKey(Barcode::INVALID, $barcode->getMessages());
 
         self::assertFalse($barcode->isValid(['065100004327']));
@@ -472,7 +472,7 @@ final class BarcodeTest extends TestCase
         $message = $barcode->getMessages();
 
         self::assertArrayHasKey('barcodeInvalidLength', $message);
-        self::assertStringContainsString('length of 7/8 characters', $message['barcodeInvalidLength']);
+        self::assertStringContainsString('length of 7/8 characters', $message['barcodeInvalidLength'] ?? null);
     }
 
     #[Group('Laminas-8673')]

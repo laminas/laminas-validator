@@ -36,12 +36,12 @@ final class IsJsonString extends AbstractValidator
     public const ERROR_MAX_DEPTH_EXCEEDED = 'errorMaxDepthExceeded';
     public const ERROR_INVALID_JSON       = 'errorInvalidJson';
 
-    public const ALLOW_INT    = 0b0000001;
-    public const ALLOW_FLOAT  = 0b0000010;
-    public const ALLOW_BOOL   = 0b0000100;
-    public const ALLOW_ARRAY  = 0b0001000;
-    public const ALLOW_OBJECT = 0b0010000;
-    public const ALLOW_ALL    = 0b0011111;
+    public const ALLOW_INT    = 0b000_0001;
+    public const ALLOW_FLOAT  = 0b000_0010;
+    public const ALLOW_BOOL   = 0b000_0100;
+    public const ALLOW_ARRAY  = 0b000_1000;
+    public const ALLOW_OBJECT = 0b001_0000;
+    public const ALLOW_ALL    = 0b001_1111;
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

@@ -58,16 +58,16 @@ final class UriTest extends TestCase
         return [
             // Uri, allowAbsolute, allowRelative, isValid, errorKey
             // Empty String
-            ['', true,         true,         false,  Uri::INVALID],
-            ['', true,         false,        false,  Uri::INVALID],
-            ['', false,        true,         false,  Uri::INVALID],
-            ['https://www.example.com/foo', true, true, true, null],
-            ['https://www.example.com/foo', false, true, false, Uri::NOT_RELATIVE],
-            ['ftp://www.example.com/foo', true, true, true, null],
-            ['ftp://www.example.com/foo', false, true, false, Uri::NOT_RELATIVE],
-            ['/foo', true, false, false, Uri::NOT_ABSOLUTE],
-            ['/foo', true, true, true, null],
-            ['https:///baz', true, true, false, Uri::NOT_URI],
+            ['',                            true,  true,  false, Uri::INVALID],
+            ['',                            true,  false, false, Uri::INVALID],
+            ['',                            false, true,  false, Uri::INVALID],
+            ['https://www.example.com/foo', true,  true,  true,  null],
+            ['https://www.example.com/foo', false, true,  false, Uri::NOT_RELATIVE],
+            ['ftp://www.example.com/foo',   true,  true,  true,  null],
+            ['ftp://www.example.com/foo',   false, true,  false, Uri::NOT_RELATIVE],
+            ['/foo',                        true,  false, false, Uri::NOT_ABSOLUTE],
+            ['/foo',                        true,  true,  true,  null],
+            ['https:///baz',                true,  true,  false, Uri::NOT_URI],
         ];
     }
 
@@ -77,7 +77,7 @@ final class UriTest extends TestCase
         bool $allowAbsolute,
         bool $allowRelative,
         bool $isValid,
-        string|null $expectError,
+        ?string $expectError,
     ): void {
         $validator = new Uri([
             'allowAbsolute' => $allowAbsolute,

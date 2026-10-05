@@ -44,8 +44,8 @@ final class Count extends AbstractValidator
     ];
 
     protected int $count;
-    protected readonly int|null $min;
-    protected readonly int|null $max;
+    protected readonly ?int $min;
+    protected readonly ?int $max;
 
     /**
      * Sets validator options

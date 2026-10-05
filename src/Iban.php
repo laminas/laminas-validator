@@ -184,7 +184,7 @@ final class Iban extends AbstractValidator
         $countryCode = $options['country_code'] ?? null;
         if ($countryCode !== null && ! isset(self::IBAN_REGEX[$countryCode])) {
             throw new InvalidArgumentException(
-                "Country code '{$countryCode}' invalid by ISO 3166-1 or not supported"
+                "Country code '{$countryCode}' invalid by ISO 3166-1 or not supported",
             );
         }
 
@@ -289,7 +289,7 @@ final class Iban extends AbstractValidator
                 '34',
                 '35',
             ],
-            $format
+            $format,
         );
 
         $temp = intval(substr($format, 0, 1));

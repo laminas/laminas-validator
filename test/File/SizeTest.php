@@ -37,7 +37,7 @@ final class SizeTest extends TestCase
             //    Options, isValid Param, Expected value
             [['max' => 794], $testFile, true],
             [['max' => 500], $testFile, false],
-            [['min' => 0, 'max' => 10000], $testFile, true],
+            [['min' => 0, 'max' => 10_000], $testFile, true],
             [['min' => 0, 'max' => '10 MB'], $testFile, true],
             [['min' => '4B', 'max' => '10 MB'], $testFile, true],
             [['min' => 0, 'max' => '10MB'], $testFile, true],
@@ -92,36 +92,36 @@ final class SizeTest extends TestCase
      */
     public function testFailureMessage(): void
     {
-        $validator = new Size(['min' => 9999, 'max' => 10000]);
+        $validator = new Size(['min' => 9999, 'max' => 10_000]);
 
         self::assertFalse($validator->isValid(__DIR__ . '/_files/testsize.mo'));
 
         $messages = $validator->getMessages();
         self::assertArrayHasKey(Size::TOO_SMALL, $messages);
 
-        self::assertStringContainsString('9.76kB', $messages[Size::TOO_SMALL]);
-        self::assertStringContainsString('794B', $messages[Size::TOO_SMALL]);
+        self::assertStringContainsString('9.76kB', $messages[Size::TOO_SMALL] ?? null);
+        self::assertStringContainsString('794B', $messages[Size::TOO_SMALL] ?? null);
 
-        $validator = new Size(['min' => 9999, 'max' => 10000, 'useByteString' => false]);
+        $validator = new Size(['min' => 9999, 'max' => 10_000, 'useByteString' => false]);
 
         self::assertFalse($validator->isValid(__DIR__ . '/_files/testsize.mo'));
 
         $messages = $validator->getMessages();
         self::assertArrayHasKey(Size::TOO_SMALL, $messages);
 
-        self::assertStringContainsString('9999', $messages[Size::TOO_SMALL]);
-        self::assertStringContainsString('794', $messages[Size::TOO_SMALL]);
+        self::assertStringContainsString('9999', $messages[Size::TOO_SMALL] ?? null);
+        self::assertStringContainsString('794', $messages[Size::TOO_SMALL] ?? null);
     }
 
     #[Group('Laminas-11258')]
     public function testLaminas11258(): void
     {
-        $validator = new Size(['min' => 1, 'max' => 10000]);
+        $validator = new Size(['min' => 1, 'max' => 10_000]);
 
         self::assertFalse($validator->isValid(__DIR__ . '/_files/nofile.mo'));
         $messages = $validator->getMessages();
         self::assertArrayHasKey(Size::NOT_FOUND, $messages);
-        self::assertStringContainsString('does not exist', $messages[Size::NOT_FOUND]);
+        self::assertStringContainsString('does not exist', $messages[Size::NOT_FOUND] ?? null);
     }
 
     public function testEmptyFileShouldReturnFalseAndDisplayNotFoundMessage(): void
@@ -164,7 +164,7 @@ final class SizeTest extends TestCase
 
         $path = __DIR__ . '/_files/no-read.txt';
         touch($path);
-        chmod($path, 0333);
+        chmod($path, 0o333);
         try {
             self::assertFalse($validator->isValid($path));
             $messages = $validator->getMessages();

@@ -27,7 +27,7 @@ final class DateIntervalStringTest extends TestCase
     }
 
     #[DataProvider('basicDataProvider')]
-    public function testBasicBehaviour(mixed $value, bool $expect, string|null $errorKey): void
+    public function testBasicBehaviour(mixed $value, bool $expect, ?string $errorKey): void
     {
         $validator = new DateIntervalString();
         self::assertSame($expect, $validator->isValid($value));

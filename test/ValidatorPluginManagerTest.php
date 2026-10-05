@@ -48,14 +48,12 @@ final class ValidatorPluginManagerTest extends TestCase
 
         $container = $this->createMock(ContainerInterface::class);
 
-        $container
-            ->expects(self::once())
+        $container->expects(self::once())
             ->method('has')
             ->with('MvcTranslator')
             ->willReturn(true);
 
-        $container
-            ->expects(self::once())
+        $container->expects(self::once())
             ->method('get')
             ->with('MvcTranslator')
             ->willReturn($translator);
@@ -74,18 +72,16 @@ final class ValidatorPluginManagerTest extends TestCase
 
         $container = $this->createMock(ContainerInterface::class);
 
-        $container
-            ->expects(self::exactly(2))
+        $container->expects(self::exactly(2))
             ->method('has')
             ->willReturnMap(
                 [
-                    ['MvcTranslator', false],
+                    ['MvcTranslator',            false],
                     [TranslatorInterface::class, true],
                 ],
             );
 
-        $container
-            ->expects(self::once())
+        $container->expects(self::once())
             ->method('get')
             ->with(TranslatorInterface::class)
             ->willReturn($translator);
@@ -117,7 +113,7 @@ final class ValidatorPluginManagerTest extends TestCase
         try {
             /** @psalm-suppress InvalidArgument */
             $this->validators->setService('test', $this);
-        } catch (InvalidServiceException | RuntimeException $e) {
+        } catch (InvalidServiceException|RuntimeException $e) {
             self::assertStringContainsString(ValidatorInterface::class, $e->getMessage());
         } catch (Exception $e) {
             self::fail(sprintf(
@@ -144,7 +140,7 @@ final class ValidatorPluginManagerTest extends TestCase
         try {
             $pluginManager->get('test');
             self::fail('An exception should have been thrown');
-        } catch (InvalidServiceException | RuntimeException $e) {
+        } catch (InvalidServiceException|RuntimeException $e) {
             self::assertStringContainsString(ValidatorInterface::class, $e->getMessage());
         } catch (Exception $e) {
             self::fail(sprintf(
@@ -156,8 +152,7 @@ final class ValidatorPluginManagerTest extends TestCase
 
     public function testInjectedValidatorPluginManager(): void
     {
-        $validator = new class implements ValidatorInterface, ValidatorPluginManagerAwareInterface
-        {
+        $validator = new class implements ValidatorInterface, ValidatorPluginManagerAwareInterface {
             private ?ValidatorPluginManager $plugins = null;
 
             public function isValid(mixed $value): bool
@@ -185,7 +180,7 @@ final class ValidatorPluginManagerTest extends TestCase
 
         $plugins = new ValidatorPluginManager(new ServiceManager(), [
             'factories' => [
-                'test' => static fn () => $validator,
+                'test' => static fn() => $validator,
             ],
         ]);
 

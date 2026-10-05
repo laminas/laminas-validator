@@ -86,10 +86,7 @@ final class DateStep extends Date
         $step      = $options['step'] ?? 'P1D';
         $baseValue = $options['baseValue'] ?? null;
 
-        unset(
-            $options['step'],
-            $options['baseValue'],
-        );
+        unset($options['step'], $options['baseValue']);
 
         parent::__construct($options);
 
@@ -156,7 +153,7 @@ final class DateStep extends Date
         }
 
         $valueDate = $this->convertToDateTime($value, false); // avoid duplicate errors
-        $baseDate  = $this->convertToDateTime($this->baseValue, false);
+        $baseDate = $this->convertToDateTime($this->baseValue, false);
 
         if (false === $valueDate || false === $baseDate) {
             return false;
@@ -192,11 +189,13 @@ final class DateStep extends Date
             $intervalUnit = 'days';
             $stepValue    = 1;
             foreach ($intervalParts as $key => $value) {
-                if (0 !== $value) {
-                    $intervalUnit = $key;
-                    $stepValue    = $value;
-                    break;
+                if (0 === $value) {
+                    continue;
                 }
+
+                $intervalUnit = $key;
+                $stepValue    = $value;
+                break;
             }
 
             // Check date units
@@ -204,8 +203,10 @@ final class DateStep extends Date
                 switch ($intervalUnit) {
                     case 'years':
                         if (
-                            0 === $diffParts['months'] && 0 === $diffParts['days']
-                            && 0 === $diffParts['hours'] && 0 === $diffParts['minutes']
+                            0 === $diffParts['months']
+                            && 0 === $diffParts['days']
+                            && 0 === $diffParts['hours']
+                            && 0 === $diffParts['minutes']
                             && 0 === $diffParts['seconds']
                         ) {
                             if (($diffParts['years'] % $stepValue) === 0) {
@@ -215,8 +216,10 @@ final class DateStep extends Date
                         break;
                     case 'months':
                         if (
-                            0 === $diffParts['days'] && 0 === $diffParts['hours']
-                            && 0 === $diffParts['minutes'] && 0 === $diffParts['seconds']
+                            0 === $diffParts['days']
+                            && 0 === $diffParts['hours']
+                            && 0 === $diffParts['minutes']
+                            && 0 === $diffParts['seconds']
                         ) {
                             $months = ($diffParts['years'] * 12) + $diffParts['months'];
                             if (($months % $stepValue) === 0) {
@@ -226,7 +229,8 @@ final class DateStep extends Date
                         break;
                     case 'days':
                         if (
-                            0 === $diffParts['hours'] && 0 === $diffParts['minutes']
+                            0 === $diffParts['hours']
+                            && 0 === $diffParts['minutes']
                             && 0 === $diffParts['seconds']
                         ) {
                             $days = (int) $timeDiff->format('%a'); // Total days
@@ -246,7 +250,8 @@ final class DateStep extends Date
                 if (1 === $stepValue) {
                     if (
                         'hours' === $intervalUnit
-                        && 0 === $diffParts['minutes'] && 0 === $diffParts['seconds']
+                        && 0 === $diffParts['minutes']
+                        && 0 === $diffParts['seconds']
                     ) {
                         return true;
                     } elseif ('minutes' === $intervalUnit && 0 === $diffParts['seconds']) {
@@ -282,9 +287,8 @@ final class DateStep extends Date
                             }
                             break;
                         case 'seconds':
-                            $seconds = ($diffParts['hours'] * 60 * 60)
-                                       + ($diffParts['minutes'] * 60)
-                                       + $diffParts['seconds'];
+                            $seconds =
+                                ($diffParts['hours'] * 60 * 60) + ($diffParts['minutes'] * 60) + $diffParts['seconds'];
                             if (($seconds % $stepValue) === 0) {
                                 return true;
                             }
@@ -318,11 +322,11 @@ final class DateStep extends Date
         DateTimeInterface $valueDate,
         array $intervalParts,
         array $diffParts,
-        DateInterval $step
+        DateInterval $step,
     ): bool {
         [$minSteps, $requiredIterations] = $this->computeMinStepAndRequiredIterations($intervalParts, $diffParts);
-        $minimumInterval                 = $this->computeMinimumInterval($intervalParts, $minSteps);
-        $isIncrementalStepping           = $baseDate < $valueDate;
+        $minimumInterval       = $this->computeMinimumInterval($intervalParts, $minSteps);
+        $isIncrementalStepping = $baseDate < $valueDate;
 
         if ($baseDate instanceof DateTime) {
             $baseDate = DateTimeImmutable::createFromMutable($baseDate);
@@ -337,8 +341,10 @@ final class DateStep extends Date
         }
 
         while (
-            ($isIncrementalStepping && $baseDate < $valueDate)
-            || (! $isIncrementalStepping && $baseDate > $valueDate)
+            ($isIncrementalStepping
+            && $baseDate < $valueDate)
+            || (! $isIncrementalStepping
+            && $baseDate > $valueDate)
         ) {
             if ($isIncrementalStepping) {
                 $baseDate = $baseDate->add($step);
@@ -372,7 +378,7 @@ final class DateStep extends Date
             $intervalParts['days'] * $minSteps,
             $intervalParts['hours'] * $minSteps,
             $intervalParts['minutes'] * $minSteps,
-            $intervalParts['seconds'] * $minSteps
+            $intervalParts['seconds'] * $minSteps,
         ));
     }
 
@@ -425,12 +431,14 @@ final class DateStep extends Date
      */
     private function computeIntervalMaxSeconds(array $intervalParts): int
     {
-        return ($intervalParts['years'] * 60 * 60 * 24 * 366)
+        return (
+            ($intervalParts['years'] * 60 * 60 * 24 * 366)
             + ($intervalParts['months'] * 60 * 60 * 24 * 31)
             + ($intervalParts['days'] * 60 * 60 * 24)
             + ($intervalParts['hours'] * 60 * 60)
             + ($intervalParts['minutes'] * 60)
-            + $intervalParts['seconds'];
+            + $intervalParts['seconds']
+        );
     }
 
     /**
@@ -441,11 +449,13 @@ final class DateStep extends Date
      */
     private function computeDiffMinSeconds(array $diffParts): int
     {
-        return ($diffParts['years'] * 60 * 60 * 24 * 365)
+        return (
+            ($diffParts['years'] * 60 * 60 * 24 * 365)
             + ($diffParts['months'] * 60 * 60 * 24 * 28)
             + ($diffParts['days'] * 60 * 60 * 24)
             + ($diffParts['hours'] * 60 * 60)
             + ($diffParts['minutes'] * 60)
-            + $diffParts['seconds'];
+            + $diffParts['seconds']
+        );
     }
 }

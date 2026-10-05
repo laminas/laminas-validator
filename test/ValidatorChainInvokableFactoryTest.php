@@ -60,8 +60,11 @@ final class ValidatorChainInvokableFactoryTest extends TestCase
         self::assertCount(1, $chain);
 
         self::assertFalse($chain->isValid(''));
-        self::assertSame([
-            NotEmpty::IS_EMPTY => 'Bad News',
-        ], $chain->getMessages());
+        self::assertSame(
+            [
+                NotEmpty::IS_EMPTY => 'Bad News',
+            ],
+            $chain->getMessages(),
+        );
     }
 }

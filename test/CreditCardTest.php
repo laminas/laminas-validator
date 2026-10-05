@@ -22,9 +22,9 @@ final class CreditCardTest extends TestCase
         return [
             ['4111111111111111', true],
             ['5404000000000001', true],
-            ['374200000000004', true],
+            ['374200000000004',  true],
             ['4444555566667777', false],
-            ['ABCDEF', false],
+            ['ABCDEF',           false],
         ];
     }
 
@@ -57,9 +57,9 @@ final class CreditCardTest extends TestCase
         return [
             ['4111111111111111', true],
             ['5404000000000001', false],
-            ['374200000000004', false],
+            ['374200000000004',  false],
             ['4444555566667777', false],
-            ['ABCDEF', false],
+            ['ABCDEF',           false],
         ];
     }
 
@@ -102,9 +102,9 @@ final class CreditCardTest extends TestCase
         return [
             ['4111111111111111', false],
             ['5404000000000001', false],
-            ['374200000000004', false],
+            ['374200000000004',  false],
             ['4444555566667777', false],
-            ['ABCDEF', false],
+            ['ABCDEF',           false],
         ];
     }
 
@@ -130,9 +130,9 @@ final class CreditCardTest extends TestCase
         return [
             ['4111111111111111', false],
             ['5404000000000001', false],
-            ['374200000000004', false],
+            ['374200000000004',  false],
             ['4444555566667777', false],
-            ['ABCDEF', false],
+            ['ABCDEF',           false],
         ];
     }
 
@@ -166,8 +166,8 @@ final class CreditCardTest extends TestCase
             ['3088185545477406', false],
             ['3158854390756173', false],
             ['3088936920428541', false],
-            ['213193692042852', true],
-            ['180012362524156', true],
+            ['213193692042852',  true],
+            ['180012362524156',  true],
         ];
     }
 
@@ -241,10 +241,10 @@ final class CreditCardTest extends TestCase
             ['2203921957923012', true],
             ['2204150479254495', true],
             ['2201123406612104', true],
-            ['2900008996056', false],
-            ['2201969950494', true],
-            ['2201342387927', true],
-            ['2205969950494', false],
+            ['2900008996056',    false],
+            ['2201969950494',    true],
+            ['2201342387927',    true],
+            ['2205969950494',    false],
         ];
     }
 
@@ -304,15 +304,11 @@ final class CreditCardTest extends TestCase
             'foo'       => 'bar',
         ];
 
-        $callback = function (
+        $callback = static function (
             string $cardNumber,
             array $context,
             array $types,
-        ) use (
-            $list,
-            $input,
-            $formPayload,
-        ): bool {
+        ) use ($list, $input, $formPayload): bool {
             self::assertSame($formPayload, $context);
             self::assertSame($list, $types);
             self::assertSame($input, $cardNumber);

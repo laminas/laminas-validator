@@ -19,8 +19,7 @@ final class InMemoryContainer implements ContainerInterface
     public function get($id): mixed
     {
         if (! array_key_exists($id, $this->services)) {
-            throw new class ($id . ' was not found') extends RuntimeException implements NotFoundExceptionInterface {
-            };
+            throw new class($id . ' was not found') extends RuntimeException implements NotFoundExceptionInterface {};
         }
 
         return $this->services[$id];

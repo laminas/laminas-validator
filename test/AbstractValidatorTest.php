@@ -68,8 +68,8 @@ final class AbstractValidatorTest extends TestCase
         $messages = $this->validator->getMessages();
 
         self::assertArrayHasKey('fooMessage', $messages);
-        self::assertStringContainsString('bar', $messages['fooMessage'], var_export($messages, true));
-        self::assertStringContainsString('This is the translated message for bar', $messages['fooMessage']);
+        self::assertStringContainsString('bar', $messages['fooMessage'] ?? null, var_export($messages, true));
+        self::assertStringContainsString('This is the translated message for bar', $messages['fooMessage'] ?? null);
     }
 
     public function testValueIsObfuscatedWheObscureValueFlagIsTrue(): void
@@ -115,8 +115,8 @@ final class AbstractValidatorTest extends TestCase
         $messages = $validator->getMessages();
 
         self::assertArrayHasKey('fooMessage', $messages);
-        self::assertStringContainsString('bar', $messages['fooMessage']);
-        self::assertStringContainsString('This is the translated message for bar', $messages['fooMessage']);
+        self::assertStringContainsString('bar', $messages['fooMessage'] ?? null);
+        self::assertStringContainsString('This is the translated message for bar', $messages['fooMessage'] ?? null);
 
         $validator = new ConcreteValidator([
             'translator'        => $translator,
@@ -128,8 +128,8 @@ final class AbstractValidatorTest extends TestCase
         $messages = $validator->getMessages();
 
         self::assertArrayHasKey('fooMessage', $messages);
-        self::assertStringContainsString('bar', $messages['fooMessage']);
-        self::assertStringContainsString('bar was passed', $messages['fooMessage']);
+        self::assertStringContainsString('bar', $messages['fooMessage'] ?? null);
+        self::assertStringContainsString('bar was passed', $messages['fooMessage'] ?? null);
     }
 
     public function testInvokeProxiesToIsValid(): void
@@ -181,10 +181,13 @@ final class AbstractValidatorTest extends TestCase
         $messages = $this->validator->getMessages();
 
         self::assertCount(2, $messages);
-        self::assertSame([
-            ConcreteValidator::FOO_MESSAGE => 'invalid was passed',
-            ConcreteValidator::BAR_MESSAGE => 'invalid was wrong',
-        ], $messages);
+        self::assertSame(
+            [
+                ConcreteValidator::FOO_MESSAGE => 'invalid was passed',
+                ConcreteValidator::BAR_MESSAGE => 'invalid was wrong',
+            ],
+            $messages,
+        );
     }
 
     public function testIdenticalMessagesNotReturned(): void

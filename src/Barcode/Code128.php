@@ -132,7 +132,7 @@ final class Code128 implements AdapterInterface
 
         $value = $strWrapper->substr($value, 1, null);
         assert($value !== false);
-        while ($strWrapper->strpos($value, 'Š') !== false || ($value !== '')) {
+        while ($strWrapper->strpos($value, 'Š') !== false || $value !== '') {
             $char = $strWrapper->substr($value, 0, 1);
             if ($read === 'C') {
                 $char = $strWrapper->substr($value, 0, 2);
@@ -151,19 +151,19 @@ final class Code128 implements AdapterInterface
                 // Switch to C
                 case 'â':
                     $sum += $pos * $this->ord128($char, $set);
-                    $set  = 'C';
+                    $set = 'C';
                     break;
 
                 // Switch to B
                 case 'ä':
                     $sum += $pos * $this->ord128($char, $set);
-                    $set  = 'B';
+                    $set = 'B';
                     break;
 
                 // Switch to A
                 case 'à':
                     $sum += $pos * $this->ord128($char, $set);
-                    $set  = 'A';
+                    $set = 'A';
                     break;
 
                 case '‡':
@@ -184,14 +184,14 @@ final class Code128 implements AdapterInterface
             $value = $strWrapper->substr($value, 1);
             assert($value !== false);
             ++$pos;
-            if (($strWrapper->strpos($value, 'Š') === 1) && ($strWrapper->strlen($value) === 2)) {
+            if ($strWrapper->strpos($value, 'Š') === 1 && $strWrapper->strlen($value) === 2) {
                 // break by stop and checksum char
                 break;
             }
             $read = $set;
         }
 
-        if (($strWrapper->strpos($value, 'Š') !== 1) || ($strWrapper->strlen($value) !== 2)) {
+        if ($strWrapper->strpos($value, 'Š') !== 1 || $strWrapper->strlen($value) !== 2) {
             // return false if checksum is not readable and true if no startvalue is detected
             return false;
         }
@@ -212,9 +212,9 @@ final class Code128 implements AdapterInterface
         $value = $this->utf8StringWrapper->substr($value, 0, 1);
 
         return match ($value) {
-            '‡' => 'A',
-            'ˆ' => 'B',
-            '‰' => 'C',
+            '‡'     => 'A',
+            'ˆ'     => 'B',
+            '‰'     => 'C',
             default => '',
         };
     }
@@ -260,9 +260,9 @@ final class Code128 implements AdapterInterface
             }
         } elseif ($set === 'C') {
             $val = (int) $value;
-            if (($val >= 0) && ($val <= 99)) {
+            if ($val >= 0 && $val <= 99) {
                 return $val;
-            } elseif (($ord >= 132) && ($ord <= 138)) {
+            } elseif ($ord >= 132 && $ord <= 138) {
                 return $ord - 32;
             } else {
                 return -1;
@@ -315,7 +315,7 @@ final class Code128 implements AdapterInterface
                 return chr($value + 32);
             }
         } elseif ($set === 'C') {
-            if (($value >= 0) && ($value <= 9)) {
+            if ($value >= 0 && $value <= 9) {
                 return '0' . $value;
             } elseif ($value <= 99) {
                 return (string) $value;

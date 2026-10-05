@@ -43,10 +43,10 @@ final class Ip extends AbstractValidator
         self::NOT_IP_ADDRESS => 'The input does not appear to be a valid IP address',
     ];
 
-    private readonly bool $allowipv4;      // Enable IPv4 Validation
-    private readonly bool $allowipv6;      // Enable IPv6 Validation
+    private readonly bool $allowipv4; // Enable IPv4 Validation
+    private readonly bool $allowipv6; // Enable IPv6 Validation
     private readonly bool $allowipvfuture; // Enable IPvFuture Validation
-    private readonly bool $allowliteral;   // Enable IPs in literal format (only IPv6 and IPvFuture)
+    private readonly bool $allowliteral; // Enable IPs in literal format (only IPv6 and IPvFuture)
 
     /** @param OptionsArgument $options */
     public function __construct(array $options = [])
@@ -64,12 +64,7 @@ final class Ip extends AbstractValidator
             throw new Exception\InvalidArgumentException('Nothing to validate. Check your options');
         }
 
-        unset(
-            $options['allowipv4'],
-            $options['allowipv6'],
-            $options['allowipvfuture'],
-            $options['allowliteral'],
-        );
+        unset($options['allowipv4'], $options['allowipv6'], $options['allowipvfuture'], $options['allowliteral']);
 
         parent::__construct($options);
     }
@@ -96,8 +91,10 @@ final class Ip extends AbstractValidator
             }
 
             if (
-                ($this->allowipv6 && $this->validateIPv6($value)) ||
-                ($this->allowipvfuture && $this->validateIPvFuture($value))
+                ($this->allowipv6
+                && $this->validateIPv6($value))
+                || ($this->allowipvfuture
+                && $this->validateIPvFuture($value))
             ) {
                 return true;
             }

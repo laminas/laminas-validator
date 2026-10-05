@@ -25,13 +25,13 @@ final class FileInformation
 {
     public readonly string $baseName;
     public readonly bool $readable;
-    private string|null $mediaType;
+    private ?string $mediaType;
 
     private function __construct(
         public readonly string $path,
         public readonly ?string $clientFileName,
         public readonly ?string $clientMediaType,
-        private Bytes|null $size,
+        private ?Bytes $size,
     ) {
         $this->readable  = is_readable($this->path);
         $this->baseName  = basename($this->path);
