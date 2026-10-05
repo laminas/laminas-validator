@@ -22,19 +22,26 @@ return Architecture::define()
         'src/ConfigProvider.php',
         'src/Module.php',
     ])
-    ->layer('CommonValidator', 'src', [
-        'src/Exception',
-        'src/Translator',
-        'src/AbstractValidator.php',
-        'src/ValidatorInterface.php',
-        'src/ValidatorChainInterface.php',
-        'src/Barcode',
-        'src/Hostname',
-        'src/File',
-        'src/Sitemap',
-        'src/ConfigProvider.php',
-        'src/Module.php',
-    ])
+    ->layer(
+        'CommonValidator',
+        // all validators in src/ marked as CommonValidator
+        'src',
+        // except these directories/files as exclusions
+        // and they are part of specific layers defined above
+        [
+            'src/Exception',
+            'src/Translator',
+            'src/AbstractValidator.php',
+            'src/ValidatorInterface.php',
+            'src/ValidatorChainInterface.php',
+            'src/Barcode',
+            'src/Hostname',
+            'src/File',
+            'src/Sitemap',
+            'src/ConfigProvider.php',
+            'src/Module.php',
+        ]
+    )
     ->ruleset([
         'Exception'        => [],
         'Translator'       => [],
