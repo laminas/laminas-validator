@@ -11,6 +11,7 @@ use function assert;
 use function chr;
 use function is_string;
 use function ord;
+use function strlen;
 
 final class Code128 implements AdapterInterface
 {
@@ -133,9 +134,16 @@ final class Code128 implements AdapterInterface
         $value = $strWrapper->substr($value, 1, null);
         assert($value !== false);
         while ($strWrapper->strpos($value, 'Š') !== false || ($value !== '')) {
+            $step = 1;
             $char = $strWrapper->substr($value, 0, 1);
-            if ($read === 'C') {
-                $char = $strWrapper->substr($value, 0, 2);
+            // Set C encodes one symbol as two digits. Read the pair, but leave
+            // the single checksum character that sits in front of the stop.
+            if ($read === 'C' && $strWrapper->strlen($value) > 2) {
+                $pair = $strWrapper->substr($value, 0, 2);
+                if (is_string($pair) && $this->isDigitPair($pair)) {
+                    $char = $pair;
+                    $step = 2;
+                }
             }
             assert($char !== false);
 
@@ -181,7 +189,7 @@ final class Code128 implements AdapterInterface
                     break;
             }
 
-            $value = $strWrapper->substr($value, 1);
+            $value = $strWrapper->substr($value, $step);
             assert($value !== false);
             ++$pos;
             if (($strWrapper->strpos($value, 'Š') === 1) && ($strWrapper->strlen($value) === 2)) {
@@ -217,6 +225,13 @@ final class Code128 implements AdapterInterface
             '‰' => 'C',
             default => '',
         };
+    }
+
+    private function isDigitPair(string $pair): bool
+    {
+        return strlen($pair) === 2
+            && $pair[0] >= '0' && $pair[0] <= '9'
+            && $pair[1] >= '0' && $pair[1] <= '9';
     }
 
     /**
@@ -315,15 +330,13 @@ final class Code128 implements AdapterInterface
                 return chr($value + 32);
             }
         } elseif ($set === 'C') {
-            if (($value >= 0) && ($value <= 9)) {
-                return '0' . $value;
-            } elseif ($value <= 99) {
-                return (string) $value;
-            } elseif ($value <= 106) {
-                return chr($value + 32);
-            } else {
+            // One checksum symbol, the same character set A and B already use.
+            // A two-digit string can never match the single character before the stop.
+            if ($value > 106) {
                 return -1;
             }
+
+            return chr($value + 32);
         } else {
             if ($value <= 106) {
                 return $value + 32;
