@@ -10,6 +10,7 @@
 /phpunit.xml.dist export-ignore
 /psalm-baseline.xml export-ignore
 /psalm.xml.dist export-ignore
+/structarmed.php export-ignore
 /composer-require-checker.json export-ignore
 /composer.lock export-ignore
 /renovate.json export-ignore

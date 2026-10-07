@@ -68,7 +68,7 @@ final class IsJsonStringTest extends TestCase
             [true],
             [false],
             [
-                new class () {
+                new class {
                 },
             ],
             [[]],

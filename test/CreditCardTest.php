@@ -304,7 +304,7 @@ final class CreditCardTest extends TestCase
             'foo'       => 'bar',
         ];
 
-        $callback = function (
+        $callback = static function (
             string $cardNumber,
             array $context,
             array $types,
