@@ -69,8 +69,7 @@ email address, and want to disable validation of the hostname, you can set the
 validate the hostname part of the email address.
 
 ```php
-$validator = new Laminas\Validator\EmailAddress();
-$validator->setOptions(['useDomainCheck' => false]);
+$validator = new Laminas\Validator\EmailAddress(['useDomainCheck' => false]);
 ```
 
 ## Validating Different Types of Hostnames
