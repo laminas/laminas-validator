@@ -787,8 +787,7 @@ or a <code>\\</code> character in an email address).</p>
 email address, and want to disable validation of the hostname, you can set the
 <code>useDomainCheck</code> option to <code>false</code>. This forces <code>Laminas\Validator\EmailAddress</code> not to
 validate the hostname part of the email address.</p>
-<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\EmailAddress();
-$validator-&gt;setOptions(['useDomainCheck' =&gt; false]);</code></pre>
+<pre class="highlight"><code class="language-php">$validator = new Laminas\Validator\EmailAddress(['useDomainCheck' =&gt; false]);</code></pre>
 <h2 id="validating-different-types-of-hostnames">Validating Different Types of Hostnames</h2>
 <p>The hostname part of an email address is validated against the <a href="../hostname/">Hostname validator</a>.
 By default only DNS hostnames of the form <code>domain.com</code> are accepted, though if
