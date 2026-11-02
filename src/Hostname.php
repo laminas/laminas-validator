@@ -622,7 +622,6 @@ final class Hostname extends AbstractValidator
         'health',
         'healthcare',
         'help',
-        'helsinki',
         'here',
         'hermes',
         'hiphop',
