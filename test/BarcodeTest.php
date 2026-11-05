@@ -513,6 +513,9 @@ final class BarcodeTest extends TestCase
 
         self::assertTrue($barcode->isValid('ˆCODE128:Š'));
         self::assertTrue($barcode->isValid('‡01231[Š'));
+        // Set C weighs each digit pair once. 12, 34, 56 check as symbol 44, the character L.
+        self::assertTrue($barcode->isValid('‰123456LŠ'));
+        self::assertFalse($barcode->isValid('‰123456MŠ'));
 
         $barcode = new Barcode([
             'adapter'     => Barcode\Code128::class,
