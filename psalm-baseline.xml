@@ -21,6 +21,12 @@
     </MixedArgumentTypeCoercion>
   </file>
   <file src="src/Date.php">
+    <MissingClassConstType>
+      <code><![CDATA[FALSEFORMAT  = 'dateFalseFormat']]></code>
+      <code><![CDATA[FORMAT_DEFAULT = 'Y-m-d']]></code>
+      <code><![CDATA[INVALID      = 'dateInvalid']]></code>
+      <code><![CDATA[INVALID_DATE = 'dateInvalidDate']]></code>
+    </MissingClassConstType>
     <MixedArgumentTypeCoercion>
       <code><![CDATA[$value]]></code>
     </MixedArgumentTypeCoercion>
@@ -95,6 +101,13 @@
       <code><![CDATA[$size]]></code>
     </PossiblyUnusedProperty>
   </file>
+  <file src="src/File/MimeType.php">
+    <MissingClassConstType>
+      <code><![CDATA[FALSE_TYPE = 'fileMimeTypeFalse']]></code>
+      <code><![CDATA[NOT_DETECTED = 'fileMimeTypeNotDetected']]></code>
+      <code><![CDATA[NOT_READABLE = 'fileMimeTypeNotReadable']]></code>
+    </MissingClassConstType>
+  </file>
   <file src="src/File/NotExists.php">
     <PossiblyUnusedProperty>
       <code><![CDATA[$directoriesAsString]]></code>
@@ -159,6 +172,11 @@
     <TooManyArguments>
       <code><![CDATA[isValid]]></code>
     </TooManyArguments>
+  </file>
+  <file src="src/ValidatorChainInterface.php">
+    <MissingClassConstType>
+      <code><![CDATA[DEFAULT_PRIORITY = 1]]></code>
+    </MissingClassConstType>
   </file>
   <file src="src/ValidatorPluginManager.php">
     <DeprecatedMethod>
