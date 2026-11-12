@@ -16,7 +16,7 @@ class Translator implements TranslatorInterface
     /** @inheritDoc */
     public function translate(
         $message,
-        $textDomain = self::DEFAULT_TEXT_DOMAIN,
+        $textDomain = 'default',
         $locale = null,
     ): string {
         return $this->translations[$message] ?? $message;
@@ -27,7 +27,7 @@ class Translator implements TranslatorInterface
         $singular,
         $plural,
         $number,
-        $textDomain = self::DEFAULT_TEXT_DOMAIN,
+        $textDomain = 'default',
         $locale = null
     ): string {
         return $number === 1 ? $singular : $plural;
