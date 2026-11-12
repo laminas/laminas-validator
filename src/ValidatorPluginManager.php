@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\Validator;
 
-use Closure;
 use Laminas\ServiceManager\AbstractSingleInstancePluginManager;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 use Laminas\ServiceManager\ServiceManager;

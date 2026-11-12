@@ -209,7 +209,7 @@ final class Iban extends AbstractValidator
         $value = str_replace(' ', '', strtoupper($value));
         $this->setValue($value);
 
-        $countryCode = $this->countryCode;
+        $countryCode   = $this->countryCode;
         $countryCode ??= substr($value, 0, 2);
 
         if (! array_key_exists($countryCode, self::IBAN_REGEX)) {

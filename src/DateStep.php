@@ -19,6 +19,7 @@ use function ceil;
 use function explode;
 use function floor;
 use function in_array;
+use function intval;
 use function is_array;
 use function is_string;
 use function max;

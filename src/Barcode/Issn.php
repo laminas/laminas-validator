@@ -14,7 +14,7 @@ use function substr;
 
 final class Issn implements AdapterInterface
 {
-    private const array LENGTH   = [8, 13];
+    private const array LENGTH    = [8, 13];
     private const string ALPHABET = '0123456789X';
 
     /**
