@@ -15,20 +15,20 @@ class Translator implements TranslatorInterface
 
     /** @inheritDoc */
     public function translate(
-        string $message,
-        string $textDomain = self::DEFAULT_TEXT_DOMAIN,
-        ?string $locale = null,
+        $message,
+        $textDomain = 'default',
+        $locale = null,
     ): string {
         return $this->translations[$message] ?? $message;
     }
 
     /** @inheritDoc */
     public function translatePlural(
-        string $singular,
-        string $plural,
-        int $number,
-        string $textDomain = self::DEFAULT_TEXT_DOMAIN,
-        ?string $locale = null
+        $singular,
+        $plural,
+        $number,
+        $textDomain = 'default',
+        $locale = null
     ): string {
         return $number === 1 ? $singular : $plural;
     }

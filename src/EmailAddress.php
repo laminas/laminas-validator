@@ -44,15 +44,15 @@ use const INTL_IDNA_VARIANT_UTS46;
  */
 final class EmailAddress extends AbstractValidator
 {
-    public const INVALID            = 'emailAddressInvalid';
-    public const INVALID_FORMAT     = 'emailAddressInvalidFormat';
-    public const INVALID_HOSTNAME   = 'emailAddressInvalidHostname';
-    public const INVALID_MX_RECORD  = 'emailAddressInvalidMxRecord';
-    public const INVALID_SEGMENT    = 'emailAddressInvalidSegment';
-    public const DOT_ATOM           = 'emailAddressDotAtom';
-    public const QUOTED_STRING      = 'emailAddressQuotedString';
-    public const INVALID_LOCAL_PART = 'emailAddressInvalidLocalPart';
-    public const LENGTH_EXCEEDED    = 'emailAddressLengthExceeded';
+    public const string INVALID            = 'emailAddressInvalid';
+    public const string INVALID_FORMAT     = 'emailAddressInvalidFormat';
+    public const string INVALID_HOSTNAME   = 'emailAddressInvalidHostname';
+    public const string INVALID_MX_RECORD  = 'emailAddressInvalidMxRecord';
+    public const string INVALID_SEGMENT    = 'emailAddressInvalidSegment';
+    public const string DOT_ATOM           = 'emailAddressDotAtom';
+    public const string QUOTED_STRING      = 'emailAddressQuotedString';
+    public const string INVALID_LOCAL_PART = 'emailAddressInvalidLocalPart';
+    public const string LENGTH_EXCEEDED    = 'emailAddressLengthExceeded';
 
     // phpcs:disable Generic.Files.LineLength.TooLong
 

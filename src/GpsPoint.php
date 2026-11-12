@@ -16,9 +16,9 @@ use function str_replace;
 
 final class GpsPoint extends AbstractValidator
 {
-    public const OUT_OF_BOUNDS         = 'gpsPointOutOfBounds';
-    public const CONVERT_ERROR         = 'gpsPointConvertError';
-    public const INCOMPLETE_COORDINATE = 'gpsPointIncompleteCoordinate';
+    public const string OUT_OF_BOUNDS         = 'gpsPointOutOfBounds';
+    public const string CONVERT_ERROR         = 'gpsPointConvertError';
+    public const string INCOMPLETE_COORDINATE = 'gpsPointIncompleteCoordinate';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

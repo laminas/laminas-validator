@@ -9,7 +9,7 @@ use function substr;
 
 final class Code39 implements AdapterInterface
 {
-    private const CHECK = [
+    private const array CHECK = [
         '0' => 0,
         '1' => 1,
         '2' => 2,
@@ -55,7 +55,7 @@ final class Code39 implements AdapterInterface
         '%' => 42,
     ];
 
-    private const ALPHABET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ -.$/+%';
+    private const string ALPHABET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ -.$/+%';
 
     /**
      * Validates the checksum (Modulo 43)

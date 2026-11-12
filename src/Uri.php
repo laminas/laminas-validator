@@ -24,10 +24,10 @@ use function parse_url;
  */
 final class Uri extends AbstractValidator
 {
-    public const INVALID      = 'uriInvalid';
-    public const NOT_URI      = 'notUri';
-    public const NOT_ABSOLUTE = 'notAbsoluteUri';
-    public const NOT_RELATIVE = 'notRelativeUri';
+    public const string INVALID      = 'uriInvalid';
+    public const string NOT_URI      = 'notUri';
+    public const string NOT_ABSOLUTE = 'notAbsoluteUri';
+    public const string NOT_RELATIVE = 'notRelativeUri';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

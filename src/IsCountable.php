@@ -38,10 +38,10 @@ use function is_countable;
  */
 final class IsCountable extends AbstractValidator
 {
-    public const NOT_COUNTABLE = 'notCountable';
-    public const NOT_EQUALS    = 'notEquals';
-    public const GREATER_THAN  = 'greaterThan';
-    public const LESS_THAN     = 'lessThan';
+    public const string NOT_COUNTABLE = 'notCountable';
+    public const string NOT_EQUALS    = 'notEquals';
+    public const string GREATER_THAN  = 'greaterThan';
+    public const string LESS_THAN     = 'lessThan';
 
     /**
      * Validation failure message template definitions

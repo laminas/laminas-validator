@@ -31,9 +31,9 @@ final class WordCount extends AbstractValidator
     /**
      * @const string Error constants
      */
-    public const TOO_MUCH  = 'fileWordCountTooMuch';
-    public const TOO_LESS  = 'fileWordCountTooLess';
-    public const NOT_FOUND = 'fileWordCountNotFound';
+    public const string TOO_MUCH  = 'fileWordCountTooMuch';
+    public const string TOO_LESS  = 'fileWordCountTooLess';
+    public const string NOT_FOUND = 'fileWordCountNotFound';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

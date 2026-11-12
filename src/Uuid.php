@@ -15,10 +15,10 @@ final class Uuid extends AbstractValidator
     /**
      * Matches Uuid's versions 1 to 7.
      */
-    private const REGEX_UUID = '/^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$/';
+    private const string REGEX_UUID = '/^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}$/';
 
-    public const INVALID    = 'valueNotUuid';
-    public const NOT_STRING = 'valueNotString';
+    public const string INVALID    = 'valueNotUuid';
+    public const string NOT_STRING = 'valueNotString';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

@@ -10,8 +10,8 @@ use function is_string;
 
 final class Hex extends AbstractValidator
 {
-    public const INVALID = 'hexInvalid';
-    public const NOT_HEX = 'notHex';
+    public const string INVALID = 'hexInvalid';
+    public const string NOT_HEX = 'notHex';
 
     /**
      * Validation failure message template definitions

@@ -10,7 +10,7 @@ use function strlen;
 
 final class Intelligentmail implements AdapterInterface
 {
-    private const LENGTH = [20, 25, 29, 31];
+    private const array LENGTH = [20, 25, 29, 31];
 
     public function hasValidLength(string $value): bool
     {

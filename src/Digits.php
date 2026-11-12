@@ -11,9 +11,9 @@ use function preg_replace;
 
 final class Digits extends AbstractValidator
 {
-    public const NOT_DIGITS   = 'notDigits';
-    public const STRING_EMPTY = 'digitsStringEmpty';
-    public const INVALID      = 'digitsInvalid';
+    public const string NOT_DIGITS   = 'notDigits';
+    public const string STRING_EMPTY = 'digitsStringEmpty';
+    public const string INVALID      = 'digitsInvalid';
 
     /**
      * Validation failure message template definitions

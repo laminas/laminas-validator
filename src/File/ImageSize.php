@@ -31,12 +31,12 @@ final class ImageSize extends AbstractValidator
     /**
      * @const string Error constants
      */
-    public const WIDTH_TOO_BIG    = 'fileImageSizeWidthTooBig';
-    public const WIDTH_TOO_SMALL  = 'fileImageSizeWidthTooSmall';
-    public const HEIGHT_TOO_BIG   = 'fileImageSizeHeightTooBig';
-    public const HEIGHT_TOO_SMALL = 'fileImageSizeHeightTooSmall';
-    public const NOT_DETECTED     = 'fileImageSizeNotDetected';
-    public const NOT_READABLE     = 'fileImageSizeNotReadable';
+    public const string WIDTH_TOO_BIG    = 'fileImageSizeWidthTooBig';
+    public const string WIDTH_TOO_SMALL  = 'fileImageSizeWidthTooSmall';
+    public const string HEIGHT_TOO_BIG   = 'fileImageSizeHeightTooBig';
+    public const string HEIGHT_TOO_SMALL = 'fileImageSizeHeightTooSmall';
+    public const string NOT_DETECTED     = 'fileImageSizeNotDetected';
+    public const string NOT_READABLE     = 'fileImageSizeNotReadable';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

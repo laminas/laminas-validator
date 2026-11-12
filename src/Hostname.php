@@ -52,17 +52,17 @@ use function substr;
  */
 final class Hostname extends AbstractValidator
 {
-    public const CANNOT_DECODE_PUNYCODE  = 'hostnameCannotDecodePunycode';
-    public const INVALID                 = 'hostnameInvalid';
-    public const INVALID_DASH            = 'hostnameDashCharacter';
-    public const INVALID_HOSTNAME        = 'hostnameInvalidHostname';
-    public const INVALID_HOSTNAME_SCHEMA = 'hostnameInvalidHostnameSchema';
-    public const INVALID_LOCAL_NAME      = 'hostnameInvalidLocalName';
-    public const INVALID_URI             = 'hostnameInvalidUri';
-    public const IP_ADDRESS_NOT_ALLOWED  = 'hostnameIpAddressNotAllowed';
-    public const LOCAL_NAME_NOT_ALLOWED  = 'hostnameLocalNameNotAllowed';
-    public const UNDECIPHERABLE_TLD      = 'hostnameUndecipherableTld';
-    public const UNKNOWN_TLD             = 'hostnameUnknownTld';
+    public const string CANNOT_DECODE_PUNYCODE  = 'hostnameCannotDecodePunycode';
+    public const string INVALID                 = 'hostnameInvalid';
+    public const string INVALID_DASH            = 'hostnameDashCharacter';
+    public const string INVALID_HOSTNAME        = 'hostnameInvalidHostname';
+    public const string INVALID_HOSTNAME_SCHEMA = 'hostnameInvalidHostnameSchema';
+    public const string INVALID_LOCAL_NAME      = 'hostnameInvalidLocalName';
+    public const string INVALID_URI             = 'hostnameInvalidUri';
+    public const string IP_ADDRESS_NOT_ALLOWED  = 'hostnameIpAddressNotAllowed';
+    public const string LOCAL_NAME_NOT_ALLOWED  = 'hostnameLocalNameNotAllowed';
+    public const string UNDECIPHERABLE_TLD      = 'hostnameUndecipherableTld';
+    public const string UNKNOWN_TLD             = 'hostnameUnknownTld';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [
@@ -84,11 +84,11 @@ final class Hostname extends AbstractValidator
         'tld' => 'tld',
     ];
 
-    public const ALLOW_DNS   = 1;  // Allows Internet domain names (e.g., example.com)
-    public const ALLOW_IP    = 2;  // Allows IP addresses
-    public const ALLOW_LOCAL = 4;  // Allows local network names (e.g., localhost, www.localdomain)
-    public const ALLOW_URI   = 8;  // Allows URI hostnames
-    public const ALLOW_ALL   = 15;  // Allows all types of hostnames
+    public const int ALLOW_DNS   = 1;  // Allows Internet domain names (e.g., example.com)
+    public const int ALLOW_IP    = 2;  // Allows IP addresses
+    public const int ALLOW_LOCAL = 4;  // Allows local network names (e.g., localhost, www.localdomain)
+    public const int ALLOW_URI   = 8;  // Allows URI hostnames
+    public const int ALLOW_ALL   = 15;  // Allows all types of hostnames
 
     /**
      * Array of valid top-level-domains

@@ -32,10 +32,10 @@ use function substr;
  */
 final class Iban extends AbstractValidator
 {
-    public const NOTSUPPORTED     = 'ibanNotSupported';
-    public const SEPANOTSUPPORTED = 'ibanSepaNotSupported';
-    public const FALSEFORMAT      = 'ibanFalseFormat';
-    public const CHECKFAILED      = 'ibanCheckFailed';
+    public const string NOTSUPPORTED     = 'ibanNotSupported';
+    public const string SEPANOTSUPPORTED = 'ibanSepaNotSupported';
+    public const string FALSEFORMAT      = 'ibanFalseFormat';
+    public const string CHECKFAILED      = 'ibanCheckFailed';
 
     /**
      * Validation failure message template definitions
@@ -62,7 +62,7 @@ final class Iban extends AbstractValidator
     /**
      * SEPA ISO 3166-1country codes
      */
-    private const SEPA_COUNTRIES = [
+    private const array SEPA_COUNTRIES = [
         'AT',
         'BE',
         'BG',
@@ -109,7 +109,7 @@ final class Iban extends AbstractValidator
     /**
      * IBAN regexes by country code
      */
-    private const IBAN_REGEX = [
+    private const array IBAN_REGEX = [
         'AD' => 'AD[0-9]{2}[0-9]{4}[0-9]{4}[A-Z0-9]{12}',
         'AE' => 'AE[0-9]{2}[0-9]{3}[0-9]{16}',
         'AL' => 'AL[0-9]{2}[0-9]{8}[A-Z0-9]{16}',
@@ -209,10 +209,8 @@ final class Iban extends AbstractValidator
         $value = str_replace(' ', '', strtoupper($value));
         $this->setValue($value);
 
-        $countryCode = $this->countryCode;
-        if ($countryCode === null) {
-            $countryCode = substr($value, 0, 2);
-        }
+        $countryCode   = $this->countryCode;
+        $countryCode ??= substr($value, 0, 2);
 
         if (! array_key_exists($countryCode, self::IBAN_REGEX)) {
             $this->setValue($countryCode);

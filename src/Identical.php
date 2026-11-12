@@ -26,8 +26,8 @@ use function var_export;
  */
 final class Identical extends AbstractValidator
 {
-    public const NOT_SAME      = 'notSame';
-    public const MISSING_TOKEN = 'missingToken';
+    public const string NOT_SAME      = 'notSame';
+    public const string MISSING_TOKEN = 'missingToken';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

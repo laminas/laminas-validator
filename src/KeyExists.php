@@ -27,8 +27,8 @@ use function preg_match;
  */
 final class KeyExists extends AbstractValidator
 {
-    public const ERR_NOT_ITERABLE  = 'errorNotIterable';
-    public const ERR_KEY_NOT_FOUND = 'errorKeyNotFound';
+    public const string ERR_NOT_ITERABLE  = 'errorNotIterable';
+    public const string ERR_KEY_NOT_FOUND = 'errorKeyNotFound';
 
     protected readonly string|int $key;
     /** @psalm-suppress PossiblyUnusedProperty This property is used in message interpolation. */

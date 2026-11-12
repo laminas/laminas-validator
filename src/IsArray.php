@@ -9,7 +9,7 @@ use function is_array;
 
 final class IsArray extends AbstractValidator
 {
-    public const NOT_ARRAY = 'NotArray';
+    public const string NOT_ARRAY = 'NotArray';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

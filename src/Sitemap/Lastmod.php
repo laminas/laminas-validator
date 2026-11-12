@@ -21,15 +21,15 @@ final class Lastmod extends AbstractValidator
     /**
      * Regular expression to use when validating
      */
-    public const LASTMOD_REGEX = '/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])(T([0-1][0-9]|2[0-3])(:[0-5][0-9])(:[0-5][0-9])?(\\+|-)([0-1][0-9]|2[0-3]):[0-5][0-9])?$/';
+    public const string LASTMOD_REGEX = '/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])(T([0-1][0-9]|2[0-3])(:[0-5][0-9])(:[0-5][0-9])?(\\+|-)([0-1][0-9]|2[0-3]):[0-5][0-9])?$/';
 
     // phpcs:enable
 
     /**
      * Validation key for not valid
      */
-    public const NOT_VALID = 'sitemapLastmodNotValid';
-    public const INVALID   = 'sitemapLastmodInvalid';
+    public const string NOT_VALID = 'sitemapLastmodNotValid';
+    public const string INVALID   = 'sitemapLastmodInvalid';
 
     /**
      * Validation failure message template definitions

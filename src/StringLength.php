@@ -25,9 +25,9 @@ use function is_string;
  */
 final class StringLength extends AbstractValidator
 {
-    public const INVALID   = 'stringLengthInvalid';
-    public const TOO_SHORT = 'stringLengthTooShort';
-    public const TOO_LONG  = 'stringLengthTooLong';
+    public const string INVALID   = 'stringLengthInvalid';
+    public const string TOO_SHORT = 'stringLengthTooShort';
+    public const string TOO_LONG  = 'stringLengthTooLong';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

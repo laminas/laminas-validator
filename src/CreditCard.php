@@ -37,29 +37,29 @@ final class CreditCard extends AbstractValidator
     /**
      * Detected CCI list
      */
-    public const ALL              = 'All';
-    public const AMERICAN_EXPRESS = 'American_Express';
-    public const UNIONPAY         = 'Unionpay';
-    public const DINERS_CLUB      = 'Diners_Club';
-    public const DINERS_CLUB_US   = 'Diners_Club_US';
-    public const DISCOVER         = 'Discover';
-    public const JCB              = 'JCB';
-    public const LASER            = 'Laser';
-    public const MAESTRO          = 'Maestro';
-    public const MASTERCARD       = 'Mastercard';
-    public const SOLO             = 'Solo';
-    public const VISA             = 'Visa';
-    public const MIR              = 'Mir';
+    public const string ALL              = 'All';
+    public const string AMERICAN_EXPRESS = 'American_Express';
+    public const string UNIONPAY         = 'Unionpay';
+    public const string DINERS_CLUB      = 'Diners_Club';
+    public const string DINERS_CLUB_US   = 'Diners_Club_US';
+    public const string DISCOVER         = 'Discover';
+    public const string JCB              = 'JCB';
+    public const string LASER            = 'Laser';
+    public const string MAESTRO          = 'Maestro';
+    public const string MASTERCARD       = 'Mastercard';
+    public const string SOLO             = 'Solo';
+    public const string VISA             = 'Visa';
+    public const string MIR              = 'Mir';
 
-    public const CHECKSUM       = 'creditcardChecksum';
-    public const CONTENT        = 'creditcardContent';
-    public const INVALID        = 'creditcardInvalid';
-    public const LENGTH         = 'creditcardLength';
-    public const PREFIX         = 'creditcardPrefix';
-    public const SERVICE        = 'creditcardService';
-    public const SERVICEFAILURE = 'creditcardServiceFailure';
+    public const string CHECKSUM       = 'creditcardChecksum';
+    public const string CONTENT        = 'creditcardContent';
+    public const string INVALID        = 'creditcardInvalid';
+    public const string LENGTH         = 'creditcardLength';
+    public const string PREFIX         = 'creditcardPrefix';
+    public const string SERVICE        = 'creditcardService';
+    public const string SERVICEFAILURE = 'creditcardServiceFailure';
 
-    private const TYPES = [
+    private const array TYPES = [
         self::AMERICAN_EXPRESS,
         self::DINERS_CLUB,
         self::DINERS_CLUB_US,
@@ -74,7 +74,7 @@ final class CreditCard extends AbstractValidator
         self::MIR,
     ];
 
-    private const CARD_LENGTH = [
+    private const array CARD_LENGTH = [
         self::AMERICAN_EXPRESS => [15],
         self::DINERS_CLUB      => [14],
         self::DINERS_CLUB_US   => [16],
@@ -89,7 +89,7 @@ final class CreditCard extends AbstractValidator
         self::MIR              => [13, 16],
     ];
 
-    private const CARD_PREFIXES = [
+    private const array CARD_PREFIXES = [
         self::AMERICAN_EXPRESS => ['34', '37'],
         self::DINERS_CLUB      => ['300', '301', '302', '303', '304', '305', '36'],
         self::DINERS_CLUB_US   => ['54', '55'],

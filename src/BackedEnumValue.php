@@ -30,8 +30,8 @@ use function sprintf;
  */
 final class BackedEnumValue extends AbstractValidator
 {
-    public const ERR_INVALID_TYPE  = 'errInvalidType';
-    public const ERR_INVALID_VALUE = 'errInvalidValue';
+    public const string ERR_INVALID_TYPE  = 'errInvalidType';
+    public const string ERR_INVALID_VALUE = 'errInvalidValue';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

@@ -19,8 +19,8 @@ final class Changefreq extends AbstractValidator
     /**
      * Validation key for not valid
      */
-    public const NOT_VALID = 'sitemapChangefreqNotValid';
-    public const INVALID   = 'sitemapChangefreqInvalid';
+    public const string NOT_VALID = 'sitemapChangefreqNotValid';
+    public const string INVALID   = 'sitemapChangefreqInvalid';
 
     /**
      * Validation failure message template definitions

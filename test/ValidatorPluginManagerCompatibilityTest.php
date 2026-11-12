@@ -41,7 +41,7 @@ final class ValidatorPluginManagerCompatibilityTest extends TestCase
 {
     use CommonPluginManagerTrait;
 
-    private const SKIP_VALIDATORS = [
+    private const array SKIP_VALIDATORS = [
         Barcode::class,
         ExcludeExtension::class,
         Extension::class,

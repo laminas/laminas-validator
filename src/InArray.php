@@ -30,26 +30,26 @@ use function is_string;
  */
 final class InArray extends AbstractValidator
 {
-    public const NOT_IN_ARRAY = 'notInArray';
+    public const string NOT_IN_ARRAY = 'notInArray';
 
     // Type of Strict check
     /**
      * standard in_array strict checking value and type
      */
-    public const COMPARE_STRICT = 1;
+    public const int COMPARE_STRICT = 1;
 
     /**
      * Non strict check but prevents "asdf" == 0 returning TRUE causing false/positive.
      * This is the most secure option for non-strict checks and replaces strict = false
      * This will only be effective when the input is a string
      */
-    public const COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY = 0;
+    public const int COMPARE_NOT_STRICT_AND_PREVENT_STR_TO_INT_VULNERABILITY = 0;
 
     /**
      * Standard non-strict check where "asdf" == 0 returns TRUE
      * This will be wanted when comparing "0" against int 0
      */
-    public const COMPARE_NOT_STRICT = -1;
+    public const int COMPARE_NOT_STRICT = -1;
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

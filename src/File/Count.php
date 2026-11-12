@@ -25,9 +25,9 @@ use function is_array;
  */
 final class Count extends AbstractValidator
 {
-    public const TOO_MANY        = 'fileCountTooMany';
-    public const TOO_FEW         = 'fileCountTooFew';
-    public const ERROR_NOT_ARRAY = 'fileListNotCountable';
+    public const string TOO_MANY        = 'fileCountTooMany';
+    public const string TOO_FEW         = 'fileCountTooFew';
+    public const string ERROR_NOT_ARRAY = 'fileListNotCountable';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

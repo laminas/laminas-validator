@@ -21,7 +21,7 @@ use function class_exists;
  */
 final class IsInstanceOf extends AbstractValidator
 {
-    public const NOT_INSTANCE_OF = 'notInstanceOf';
+    public const string NOT_INSTANCE_OF = 'notInstanceOf';
 
     /**
      * Validation failure message template definitions

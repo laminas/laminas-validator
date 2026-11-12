@@ -28,7 +28,7 @@ final class HostWithPublicIPv4Address extends AbstractValidator
      * @link https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml
      * @link https://en.wikipedia.org/wiki/Reserved_IP_addresses
      */
-    private const RESERVED_CIDR = [
+    private const array RESERVED_CIDR = [
         '0.0.0.0/8',
         '0.0.0.0/32',
         '10.0.0.0/8',
@@ -58,9 +58,9 @@ final class HostWithPublicIPv4Address extends AbstractValidator
         '255.255.255.255/32',
     ];
 
-    public const ERROR_NOT_STRING            = 'hostnameNotString';
-    public const ERROR_HOSTNAME_NOT_RESOLVED = 'hostnameNotResolved';
-    public const ERROR_PRIVATE_IP_FOUND      = 'privateIpAddressFound';
+    public const string ERROR_NOT_STRING            = 'hostnameNotString';
+    public const string ERROR_HOSTNAME_NOT_RESOLVED = 'hostnameNotResolved';
+    public const string ERROR_PRIVATE_IP_FOUND      = 'privateIpAddressFound';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

@@ -12,8 +12,8 @@ use function is_string;
 
 final class DateIntervalString extends AbstractValidator
 {
-    public const ERR_NOT_STRING = 'errorNotString';
-    public const ERR_INVALID    = 'errorInvalid';
+    public const string ERR_NOT_STRING = 'errorNotString';
+    public const string ERR_INVALID    = 'errorInvalid';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

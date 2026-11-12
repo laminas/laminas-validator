@@ -10,7 +10,7 @@ use function strlen;
 
 final class Upce implements AdapterInterface
 {
-    private const LENGTH = [6, 7, 8];
+    private const array LENGTH = [6, 7, 8];
 
     /**
      * Overrides parent checkLength

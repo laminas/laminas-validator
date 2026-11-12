@@ -31,17 +31,17 @@ use const JSON_THROW_ON_ERROR;
  */
 final class IsJsonString extends AbstractValidator
 {
-    public const ERROR_NOT_STRING         = 'errorNotString';
-    public const ERROR_TYPE_NOT_ALLOWED   = 'errorTypeNotAllowed';
-    public const ERROR_MAX_DEPTH_EXCEEDED = 'errorMaxDepthExceeded';
-    public const ERROR_INVALID_JSON       = 'errorInvalidJson';
+    public const string ERROR_NOT_STRING         = 'errorNotString';
+    public const string ERROR_TYPE_NOT_ALLOWED   = 'errorTypeNotAllowed';
+    public const string ERROR_MAX_DEPTH_EXCEEDED = 'errorMaxDepthExceeded';
+    public const string ERROR_INVALID_JSON       = 'errorInvalidJson';
 
-    public const ALLOW_INT    = 0b0000001;
-    public const ALLOW_FLOAT  = 0b0000010;
-    public const ALLOW_BOOL   = 0b0000100;
-    public const ALLOW_ARRAY  = 0b0001000;
-    public const ALLOW_OBJECT = 0b0010000;
-    public const ALLOW_ALL    = 0b0011111;
+    public const int ALLOW_INT    = 0b0000001;
+    public const int ALLOW_FLOAT  = 0b0000010;
+    public const int ALLOW_BOOL   = 0b0000100;
+    public const int ALLOW_ARRAY  = 0b0001000;
+    public const int ALLOW_OBJECT = 0b0010000;
+    public const int ALLOW_ALL    = 0b0011111;
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

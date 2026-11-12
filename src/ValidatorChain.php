@@ -40,7 +40,7 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorCha
      *
      * @deprecated Use ValidatorChainInterface::DEFAULT_PRIORITY instead.
      */
-    public const DEFAULT_PRIORITY = ValidatorChainInterface::DEFAULT_PRIORITY;
+    public const int DEFAULT_PRIORITY = ValidatorChainInterface::DEFAULT_PRIORITY;
 
     /**
      * Validator chain
@@ -88,9 +88,7 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorCha
      */
     public function getPluginManager(): ValidatorPluginManager
     {
-        if ($this->pluginManager === null) {
-            $this->pluginManager = new ValidatorPluginManager(new ServiceManager());
-        }
+        $this->pluginManager ??= new ValidatorPluginManager(new ServiceManager());
 
         return $this->pluginManager;
     }

@@ -12,9 +12,9 @@ use function chr;
 use function is_string;
 use function ord;
 
-final class Code128 implements AdapterInterface
+final readonly class Code128 implements AdapterInterface
 {
-    private readonly StringWrapperInterface $utf8StringWrapper;
+    private StringWrapperInterface $utf8StringWrapper;
 
     public function __construct()
     {

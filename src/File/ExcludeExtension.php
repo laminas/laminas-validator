@@ -27,9 +27,9 @@ use function is_string;
  */
 final class ExcludeExtension extends AbstractValidator
 {
-    public const FALSE_EXTENSION    = 'fileExcludeExtensionFalse';
-    public const NOT_FOUND          = 'fileExcludeExtensionNotFound';
-    public const ERROR_INVALID_TYPE = 'fileExcludeExtensionInvalidType';
+    public const string FALSE_EXTENSION    = 'fileExcludeExtensionFalse';
+    public const string NOT_FOUND          = 'fileExcludeExtensionNotFound';
+    public const string ERROR_INVALID_TYPE = 'fileExcludeExtensionInvalidType';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [
