@@ -22,8 +22,8 @@ use function preg_match;
  */
 final class Regex extends AbstractValidator
 {
-    public const INVALID   = 'regexInvalid';
-    public const NOT_MATCH = 'regexNotMatch';
+    public const string INVALID   = 'regexInvalid';
+    public const string NOT_MATCH = 'regexNotMatch';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

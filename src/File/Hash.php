@@ -30,9 +30,9 @@ use function strtolower;
  */
 final class Hash extends AbstractValidator
 {
-    public const DOES_NOT_MATCH = 'fileHashDoesNotMatch';
-    public const NOT_DETECTED   = 'fileHashHashNotDetected';
-    public const NOT_FOUND      = 'fileHashNotFound';
+    public const string DOES_NOT_MATCH = 'fileHashDoesNotMatch';
+    public const string NOT_DETECTED   = 'fileHashHashNotDetected';
+    public const string NOT_FOUND      = 'fileHashNotFound';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

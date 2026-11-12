@@ -27,11 +27,11 @@ use function substr;
  */
 final class Isbn extends AbstractValidator
 {
-    public const AUTO    = 'auto';
-    public const ISBN10  = '10';
-    public const ISBN13  = '13';
-    public const INVALID = 'isbnInvalid';
-    public const NO_ISBN = 'isbnNoIsbn';
+    public const string AUTO    = 'auto';
+    public const string ISBN10  = '10';
+    public const string ISBN13  = '13';
+    public const string INVALID = 'isbnInvalid';
+    public const string NO_ISBN = 'isbnNoIsbn';
 
     /**
      * Validation failure message template definitions.

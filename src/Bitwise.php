@@ -23,14 +23,14 @@ use function is_numeric;
  */
 final class Bitwise extends AbstractValidator
 {
-    public const OP_AND = 'and';
-    public const OP_XOR = 'xor';
+    public const string OP_AND = 'and';
+    public const string OP_XOR = 'xor';
 
-    public const NOT_AND        = 'notAnd';
-    public const NOT_AND_STRICT = 'notAndStrict';
-    public const NOT_XOR        = 'notXor';
-    public const NO_OP          = 'noOp';
-    public const NOT_INTEGER    = 'notInteger';
+    public const string NOT_AND        = 'notAnd';
+    public const string NOT_AND_STRICT = 'notAndStrict';
+    public const string NOT_XOR        = 'notXor';
+    public const string NO_OP          = 'noOp';
+    public const string NOT_INTEGER    = 'notInteger';
 
     /**
      * Validation failure message template definitions

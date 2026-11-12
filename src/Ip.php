@@ -34,8 +34,8 @@ use function substr_count;
  */
 final class Ip extends AbstractValidator
 {
-    public const INVALID        = 'ipInvalid';
-    public const NOT_IP_ADDRESS = 'notIpAddress';
+    public const string INVALID        = 'ipInvalid';
+    public const string NOT_IP_ADDRESS = 'notIpAddress';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

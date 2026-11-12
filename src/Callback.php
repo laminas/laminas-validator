@@ -29,8 +29,8 @@ use function is_callable;
  */
 final class Callback extends AbstractValidator
 {
-    public const INVALID_CALLBACK = 'callbackInvalid';
-    public const INVALID_VALUE    = 'callbackValue';
+    public const string INVALID_CALLBACK = 'callbackInvalid';
+    public const string INVALID_VALUE    = 'callbackValue';
 
     /**
      * Validation failure message template definitions

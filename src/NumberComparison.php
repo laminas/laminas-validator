@@ -24,11 +24,11 @@ use function is_numeric;
  */
 final class NumberComparison extends AbstractValidator
 {
-    public const ERROR_NOT_NUMERIC           = 'notNumeric';
-    public const ERROR_NOT_GREATER_INCLUSIVE = 'notGreaterInclusive';
-    public const ERROR_NOT_GREATER           = 'notGreater';
-    public const ERROR_NOT_LESS_INCLUSIVE    = 'notLessInclusive';
-    public const ERROR_NOT_LESS              = 'notLess';
+    public const string ERROR_NOT_NUMERIC           = 'notNumeric';
+    public const string ERROR_NOT_GREATER_INCLUSIVE = 'notGreaterInclusive';
+    public const string ERROR_NOT_GREATER           = 'notGreater';
+    public const string ERROR_NOT_LESS_INCLUSIVE    = 'notLessInclusive';
+    public const string ERROR_NOT_LESS              = 'notLess';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

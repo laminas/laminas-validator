@@ -26,13 +26,13 @@ use function strtolower;
  */
 final class Timezone extends AbstractValidator
 {
-    public const INVALID                       = 'invalidTimezone';
-    public const INVALID_TIMEZONE_LOCATION     = 'invalidTimezoneLocation';
-    public const INVALID_TIMEZONE_ABBREVIATION = 'invalidTimezoneAbbreviation';
+    public const string INVALID                       = 'invalidTimezone';
+    public const string INVALID_TIMEZONE_LOCATION     = 'invalidTimezoneLocation';
+    public const string INVALID_TIMEZONE_ABBREVIATION = 'invalidTimezoneAbbreviation';
 
-    public const LOCATION     = 0b01;
-    public const ABBREVIATION = 0b10;
-    public const ALL          = 0b11;
+    public const int LOCATION     = 0b01;
+    public const int ABBREVIATION = 0b10;
+    public const int ALL          = 0b11;
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

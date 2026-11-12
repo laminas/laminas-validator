@@ -31,16 +31,16 @@ final class UploadFile extends AbstractValidator
     /**
      * @const string Error constants
      */
-    public const INI_SIZE       = 'fileUploadFileErrorIniSize';
-    public const FORM_SIZE      = 'fileUploadFileErrorFormSize';
-    public const PARTIAL        = 'fileUploadFileErrorPartial';
-    public const NO_FILE        = 'fileUploadFileErrorNoFile';
-    public const NO_TMP_DIR     = 'fileUploadFileErrorNoTmpDir';
-    public const CANT_WRITE     = 'fileUploadFileErrorCantWrite';
-    public const EXTENSION      = 'fileUploadFileErrorExtension';
-    public const ATTACK         = 'fileUploadFileErrorAttack';
-    public const FILE_NOT_FOUND = 'fileUploadFileErrorFileNotFound';
-    public const UNKNOWN        = 'fileUploadFileErrorUnknown';
+    public const string INI_SIZE       = 'fileUploadFileErrorIniSize';
+    public const string FORM_SIZE      = 'fileUploadFileErrorFormSize';
+    public const string PARTIAL        = 'fileUploadFileErrorPartial';
+    public const string NO_FILE        = 'fileUploadFileErrorNoFile';
+    public const string NO_TMP_DIR     = 'fileUploadFileErrorNoTmpDir';
+    public const string CANT_WRITE     = 'fileUploadFileErrorCantWrite';
+    public const string EXTENSION      = 'fileUploadFileErrorExtension';
+    public const string ATTACK         = 'fileUploadFileErrorAttack';
+    public const string FILE_NOT_FOUND = 'fileUploadFileErrorFileNotFound';
+    public const string UNKNOWN        = 'fileUploadFileErrorUnknown';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

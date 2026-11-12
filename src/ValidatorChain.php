@@ -88,9 +88,7 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorCha
      */
     public function getPluginManager(): ValidatorPluginManager
     {
-        if ($this->pluginManager === null) {
-            $this->pluginManager = new ValidatorPluginManager(new ServiceManager());
-        }
+        $this->pluginManager ??= new ValidatorPluginManager(new ServiceManager());
 
         return $this->pluginManager;
     }

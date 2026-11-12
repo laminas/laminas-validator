@@ -30,8 +30,8 @@ use function sprintf;
  */
 final class Explode extends AbstractValidator
 {
-    public const INVALID      = 'explodeInvalid';
-    public const INVALID_ITEM = 'invalidItem';
+    public const string INVALID      = 'explodeInvalid';
+    public const string INVALID_ITEM = 'invalidItem';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

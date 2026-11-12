@@ -16,11 +16,11 @@ use function is_callable;
  *     validators: array<array-key, ValidatorSpecification>,
  * }
  */
-final class Conditional implements ValidatorInterface
+final readonly class Conditional implements ValidatorInterface
 {
     /** @var Closure(array<string, mixed>): bool */
-    private readonly Closure $rule;
-    private readonly ValidatorChainInterface $chain;
+    private Closure $rule;
+    private ValidatorChainInterface $chain;
 
     /** @param OptionsArgument $options */
     public function __construct(ValidatorChainFactory $chainFactory, array $options)

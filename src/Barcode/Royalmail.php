@@ -13,10 +13,10 @@ use function substr;
 
 final class Royalmail implements AdapterInterface
 {
-    private const ALPHABET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    private const string ALPHABET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     /** @var array<array-key, int> */
-    private const ROWS = [
+    private const array ROWS = [
         '0' => 1,
         '1' => 1,
         '2' => 1,
@@ -56,7 +56,7 @@ final class Royalmail implements AdapterInterface
     ];
 
     /** @var array<array-key, int> */
-    private const COLUMNS = [
+    private const array COLUMNS = [
         '0' => 1,
         '1' => 2,
         '2' => 3,

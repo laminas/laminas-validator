@@ -10,7 +10,7 @@ use function strlen;
 
 final class Postnet implements AdapterInterface
 {
-    private const LENGTH = [6, 7, 10, 12];
+    private const array LENGTH = [6, 7, 10, 12];
 
     public function hasValidLength(string $value): bool
     {

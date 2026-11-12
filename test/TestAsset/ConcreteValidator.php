@@ -8,8 +8,8 @@ use Laminas\Validator\AbstractValidator;
 
 final class ConcreteValidator extends AbstractValidator
 {
-    public const FOO_MESSAGE = 'fooMessage';
-    public const BAR_MESSAGE = 'barMessage';
+    public const string FOO_MESSAGE = 'fooMessage';
+    public const string BAR_MESSAGE = 'barMessage';
 
     public string $validValue = 'VALID';
 

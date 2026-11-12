@@ -35,9 +35,9 @@ use function trim;
  */
 final class Extension extends AbstractValidator
 {
-    public const FALSE_EXTENSION    = 'fileExtensionFalse';
-    public const NOT_FOUND          = 'fileExtensionNotFound';
-    public const ERROR_INVALID_TYPE = 'fileExtensionInvalidType';
+    public const string FALSE_EXTENSION    = 'fileExtensionFalse';
+    public const string NOT_FOUND          = 'fileExtensionNotFound';
+    public const string ERROR_INVALID_TYPE = 'fileExtensionInvalidType';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

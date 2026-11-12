@@ -20,11 +20,11 @@ use function strlen;
  */
 final class Loc extends AbstractValidator
 {
-    private const URI_MAX_LENGTH = 2048;
+    private const int URI_MAX_LENGTH = 2048;
 
-    public const NOT_VALID = 'sitemapLocNotValid';
-    public const INVALID   = 'sitemapLocInvalid';
-    public const TOO_LONG  = 'sitemapLocTooLong';
+    public const string NOT_VALID = 'sitemapLocNotValid';
+    public const string INVALID   = 'sitemapLocInvalid';
+    public const string TOO_LONG  = 'sitemapLocTooLong';
 
     /**
      * Validation failure message template definitions

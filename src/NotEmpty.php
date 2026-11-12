@@ -48,22 +48,22 @@ use function preg_match;
  */
 final class NotEmpty extends AbstractValidator
 {
-    public const BOOLEAN       = 0b000000000001;
-    public const INTEGER       = 0b000000000010;
-    public const FLOAT         = 0b000000000100;
-    public const STRING        = 0b000000001000;
-    public const ZERO          = 0b000000010000;
-    public const EMPTY_ARRAY   = 0b000000100000;
-    public const NULL          = 0b000001000000;
-    public const PHP           = 0b000001111111;
-    public const SPACE         = 0b000010000000;
-    public const OBJECT        = 0b000100000000;
-    public const OBJECT_STRING = 0b001000000000;
-    public const OBJECT_COUNT  = 0b010000000000;
-    public const ALL           = 0b011111111111;
+    public const int BOOLEAN       = 0b000000000001;
+    public const int INTEGER       = 0b000000000010;
+    public const int FLOAT         = 0b000000000100;
+    public const int STRING        = 0b000000001000;
+    public const int ZERO          = 0b000000010000;
+    public const int EMPTY_ARRAY   = 0b000000100000;
+    public const int NULL          = 0b000001000000;
+    public const int PHP           = 0b000001111111;
+    public const int SPACE         = 0b000010000000;
+    public const int OBJECT        = 0b000100000000;
+    public const int OBJECT_STRING = 0b001000000000;
+    public const int OBJECT_COUNT  = 0b010000000000;
+    public const int ALL           = 0b011111111111;
 
-    public const INVALID  = 'notEmptyInvalid';
-    public const IS_EMPTY = 'isEmpty';
+    public const string INVALID  = 'notEmptyInvalid';
+    public const string IS_EMPTY = 'isEmpty';
 
     private const DEFAULT_TYPE = self::OBJECT
         | self::SPACE
@@ -72,7 +72,7 @@ final class NotEmpty extends AbstractValidator
         | self::STRING
         | self::BOOLEAN;
 
-    private const TYPE_NAMES = [
+    private const array TYPE_NAMES = [
         self::BOOLEAN       => 'boolean',
         self::INTEGER       => 'integer',
         self::FLOAT         => 'float',

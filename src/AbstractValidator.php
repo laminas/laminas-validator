@@ -270,10 +270,8 @@ abstract class AbstractValidator implements
 
     protected function error(string $messageKey, mixed $value = null): void
     {
-        if ($value === null) {
-            /** @psalm-var mixed $value */
-            $value = $this->value;
-        }
+        /** @psalm-var mixed $value */
+        $value ??= $this->value;
 
         $message = $this->createMessage($messageKey, $value);
         if (! is_string($message)) {

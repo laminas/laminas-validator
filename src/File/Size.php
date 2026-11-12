@@ -26,9 +26,9 @@ use function is_string;
  */
 final class Size extends AbstractValidator
 {
-    public const TOO_BIG   = 'fileSizeTooBig';
-    public const TOO_SMALL = 'fileSizeTooSmall';
-    public const NOT_FOUND = 'fileSizeNotFound';
+    public const string TOO_BIG   = 'fileSizeTooBig';
+    public const string TOO_SMALL = 'fileSizeTooSmall';
+    public const string NOT_FOUND = 'fileSizeNotFound';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

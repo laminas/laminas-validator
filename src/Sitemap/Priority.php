@@ -18,8 +18,8 @@ final class Priority extends AbstractValidator
     /**
      * Validation key for not valid
      */
-    public const NOT_VALID = 'sitemapPriorityNotValid';
-    public const INVALID   = 'sitemapPriorityInvalid';
+    public const string NOT_VALID = 'sitemapPriorityNotValid';
+    public const string INVALID   = 'sitemapPriorityInvalid';
 
     /**
      * Validation failure message template definitions

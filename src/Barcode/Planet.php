@@ -10,7 +10,7 @@ use function strlen;
 
 final class Planet implements AdapterInterface
 {
-    private const LENGTH = [12, 14];
+    private const array LENGTH = [12, 14];
 
     public function hasValidLength(string $value): bool
     {

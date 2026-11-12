@@ -47,7 +47,7 @@ final class DateStep extends Date
     /**
      * Validity constants
      */
-    public const NOT_STEP = 'dateStepNotStep';
+    public const string NOT_STEP = 'dateStepNotStep';
 
     /**
      * Default format constant
@@ -173,7 +173,7 @@ final class DateStep extends Date
         // Optimization for simple intervals.
         // Handle intervals of just one date or time unit.
         $intervalParts = explode('|', $step->format('%y|%m|%d|%h|%i|%s'));
-        $intervalParts = array_map('intval', $intervalParts);
+        $intervalParts = array_map(intval(...), $intervalParts);
         $partCounts    = array_count_values($intervalParts);
 
         $unitKeys      = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];
@@ -184,7 +184,7 @@ final class DateStep extends Date
         $absoluteBaseDate  = new DateTime($baseDate->format('Y-m-d H:i:s'), new DateTimeZone('UTC'));
 
         $timeDiff  = $absoluteValueDate->diff($absoluteBaseDate, true);
-        $diffParts = array_map('intval', explode('|', $timeDiff->format('%y|%m|%d|%h|%i|%s')));
+        $diffParts = array_map(intval(...), explode('|', $timeDiff->format('%y|%m|%d|%h|%i|%s')));
         $diffParts = array_combine($unitKeys, $diffParts);
 
         if (5 === $partCounts[0]) {

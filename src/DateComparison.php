@@ -31,12 +31,12 @@ use function preg_match;
  */
 final class DateComparison extends AbstractValidator
 {
-    public const ERROR_INVALID_TYPE          = 'invalidType';
-    public const ERROR_INVALID_DATE          = 'invalidDate';
-    public const ERROR_NOT_GREATER_INCLUSIVE = 'notGreaterInclusive';
-    public const ERROR_NOT_GREATER           = 'notGreater';
-    public const ERROR_NOT_LESS_INCLUSIVE    = 'notLessInclusive';
-    public const ERROR_NOT_LESS              = 'notLess';
+    public const string ERROR_INVALID_TYPE          = 'invalidType';
+    public const string ERROR_INVALID_DATE          = 'invalidDate';
+    public const string ERROR_NOT_GREATER_INCLUSIVE = 'notGreaterInclusive';
+    public const string ERROR_NOT_GREATER           = 'notGreater';
+    public const string ERROR_NOT_LESS_INCLUSIVE    = 'notLessInclusive';
+    public const string ERROR_NOT_LESS              = 'notLess';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [
@@ -194,7 +194,7 @@ final class DateComparison extends AbstractValidator
 
     private function isoDateFromString(string $input): DateTimeImmutable|null
     {
-        if (! preg_match('/^\d{4}-[0-1]\d-[0-3]\d$/', $input)) {
+        if (! preg_match('/^\d{4}-[0-1]\d\-[0-3]\d$/', $input)) {
             return null;
         }
 
@@ -206,7 +206,7 @@ final class DateComparison extends AbstractValidator
 
     private function w3cDateFromString(string $input): DateTimeImmutable|null
     {
-        if (! preg_match('/^\d{4}-[0-1]\d-[0-3]\dT\d{1,2}:[0-5]\d:[0-5]\d$/', $input)) {
+        if (! preg_match('/^\d{4}-[0-1]\d\-[0-3]\dT\d{1,2}:[0-5]\d:[0-5]\d$/', $input)) {
             return null;
         }
 

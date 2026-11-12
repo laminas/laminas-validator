@@ -17,7 +17,7 @@ final class IsCompressed extends MimeType
     public const NOT_DETECTED = 'fileIsCompressedNotDetected';
     public const NOT_READABLE = 'fileIsCompressedNotReadable';
 
-    private const DEFAULT_TYPES = [
+    private const array DEFAULT_TYPES = [
         'application/arj',
         'application/gnutar',
         'application/lha',

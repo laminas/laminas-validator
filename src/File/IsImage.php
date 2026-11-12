@@ -20,7 +20,7 @@ final class IsImage extends MimeType
     /**
      * @link https://www.iana.org/assignments/media-types/media-types.xhtml#image
      */
-    private const DEFAULT_TYPES = [
+    private const array DEFAULT_TYPES = [
         'application/cdf',
         'application/dicom',
         'application/fractals',

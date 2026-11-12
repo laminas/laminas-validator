@@ -35,7 +35,7 @@ use const DIRECTORY_SEPARATOR;
  */
 final class NotExists extends AbstractValidator
 {
-    public const DOES_EXIST = 'fileNotExistsDoesExist';
+    public const string DOES_EXIST = 'fileNotExistsDoesExist';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [
@@ -120,8 +120,7 @@ final class NotExists extends AbstractValidator
 
         return array_values(
             array_filter(
-                array_map(static fn(string $directory): string
-                => trim($directory), $directories)
+                array_map(trim(...), $directories)
             )
         );
     }

@@ -32,10 +32,10 @@ use function ucfirst;
  */
 final class Barcode extends AbstractValidator
 {
-    public const INVALID        = 'barcodeInvalid';
-    public const FAILED         = 'barcodeFailed';
-    public const INVALID_CHARS  = 'barcodeInvalidChars';
-    public const INVALID_LENGTH = 'barcodeInvalidLength';
+    public const string INVALID        = 'barcodeInvalid';
+    public const string FAILED         = 'barcodeFailed';
+    public const string INVALID_CHARS  = 'barcodeInvalidChars';
+    public const string INVALID_LENGTH = 'barcodeInvalidLength';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

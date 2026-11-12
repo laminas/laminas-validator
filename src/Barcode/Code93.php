@@ -16,7 +16,7 @@ final class Code93 implements AdapterInterface
     /**
      * Note that the characters !"§& are only synonyms
      */
-    private const CHECK = [
+    private const array CHECK = [
         '0' => 0,
         '1' => 1,
         '2' => 2,
@@ -66,7 +66,7 @@ final class Code93 implements AdapterInterface
         '&' => 46,
     ];
 
-    private const ALPHABET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ -.$/+%';
+    private const string ALPHABET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ -.$/+%';
 
     /**
      * Validates the checksum (Modulo CK)
