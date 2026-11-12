@@ -13,9 +13,9 @@ use Laminas\Validator\Exception\InvalidArgumentException;
  */
 final class IsImage extends MimeType
 {
-    public const FALSE_TYPE   = 'fileIsImageFalseType';
-    public const NOT_DETECTED = 'fileIsImageNotDetected';
-    public const NOT_READABLE = 'fileIsImageNotReadable';
+    public const string FALSE_TYPE   = 'fileIsImageFalseType';
+    public const string NOT_DETECTED = 'fileIsImageNotDetected';
+    public const string NOT_READABLE = 'fileIsImageNotReadable';
 
     /**
      * @link https://www.iana.org/assignments/media-types/media-types.xhtml#image

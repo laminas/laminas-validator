@@ -40,7 +40,7 @@ final class ValidatorChain implements Countable, IteratorAggregate, ValidatorCha
      *
      * @deprecated Use ValidatorChainInterface::DEFAULT_PRIORITY instead.
      */
-    public const DEFAULT_PRIORITY = ValidatorChainInterface::DEFAULT_PRIORITY;
+    public const int DEFAULT_PRIORITY = ValidatorChainInterface::DEFAULT_PRIORITY;
 
     /**
      * Validator chain

@@ -13,9 +13,9 @@ use Laminas\Validator\Exception\InvalidArgumentException;
  */
 final class IsCompressed extends MimeType
 {
-    public const FALSE_TYPE   = 'fileIsCompressedFalseType';
-    public const NOT_DETECTED = 'fileIsCompressedNotDetected';
-    public const NOT_READABLE = 'fileIsCompressedNotReadable';
+    public const string FALSE_TYPE   = 'fileIsCompressedFalseType';
+    public const string NOT_DETECTED = 'fileIsCompressedNotDetected';
+    public const string NOT_READABLE = 'fileIsCompressedNotReadable';
 
     private const array DEFAULT_TYPES = [
         'application/arj',

@@ -13,9 +13,9 @@ use function in_array;
  */
 final class ExcludeMimeType extends MimeType
 {
-    public const FALSE_TYPE   = 'fileExcludeMimeTypeFalse';
-    public const NOT_DETECTED = 'fileExcludeMimeTypeNotDetected';
-    public const NOT_READABLE = 'fileExcludeMimeTypeNotReadable';
+    public const string FALSE_TYPE   = 'fileExcludeMimeTypeFalse';
+    public const string NOT_DETECTED = 'fileExcludeMimeTypeNotDetected';
+    public const string NOT_READABLE = 'fileExcludeMimeTypeNotReadable';
 
     /** @var array<string, string> */
     protected array $messageTemplates = [

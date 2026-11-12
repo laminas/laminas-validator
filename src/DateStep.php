@@ -52,7 +52,7 @@ final class DateStep extends Date
     /**
      * Default format constant
      */
-    public const FORMAT_DEFAULT = DateTimeInterface::ATOM;
+    public const string FORMAT_DEFAULT = DateTimeInterface::ATOM;
 
     /**
      * Validation failure message template definitions
