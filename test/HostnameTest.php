@@ -377,6 +377,10 @@ final class HostnameTest extends TestCase
             ['xn--brger-x45d2va.com', false],
             ['xn--bürger.com', false],
             ['xn--', false],
+            // input ends in the middle of a variable-length integer
+            ['xn--brger-k.com', false],
+            ['xn--mnchen-3.de', false],
+            ['xn--bcher-kv.de', false],
         ];
     }
 
