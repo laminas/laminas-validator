@@ -1359,7 +1359,6 @@ final class Hostname extends AbstractValidator
         'wtf',
         'xbox',
         'xerox',
-        'xihuan',
         'xin',
         'कॉम',
         'セール',
