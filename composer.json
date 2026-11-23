@@ -50,7 +50,7 @@
         "laminas/laminas-coding-standard": "^3.1.0",
         "laminas/laminas-diactoros": "^3.10.0",
         "phpunit/phpunit": "^11.5.57",
-        "psalm/plugin-phpunit": "^0.19.7",
+        "psalm/plugin-phpunit": "^1.0.0",
         "rector/rector": "*",
         "vimeo/psalm": "^6.20.11"
     },
