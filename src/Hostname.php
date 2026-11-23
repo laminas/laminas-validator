@@ -2076,7 +2076,9 @@ final class Hostname extends AbstractValidator
         for ($indexe = $separator !== false ? $separator + 1 : 0; $indexe < $lengthe; ++$lengthd) {
             for ($oldIndex = $index, $pos = 1, $key = 36; 1; $key += 36) {
                 if (! isset($encoded[$indexe])) {
-                    break 2;
+                    // the input ends in the middle of a variable-length integer
+                    $this->error(self::CANNOT_DECODE_PUNYCODE);
+                    return false;
                 }
 
                 $hex   = ord($encoded[$indexe++]);
